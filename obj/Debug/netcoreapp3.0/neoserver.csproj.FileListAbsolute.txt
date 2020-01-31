@@ -1,0 +1,11 @@
+c:\Users\Caio\Documents\Sources\neoserver\bin\Debug\netcoreapp3.0\neoserver.exe
+C:\Users\Caio\Documents\Sources\neoserver\bin\Debug\netcoreapp3.0\neoserver.deps.json
+C:\Users\Caio\Documents\Sources\neoserver\bin\Debug\netcoreapp3.0\neoserver.runtimeconfig.json
+C:\Users\Caio\Documents\Sources\neoserver\bin\Debug\netcoreapp3.0\neoserver.runtimeconfig.dev.json
+c:\Users\Caio\Documents\Sources\neoserver\bin\Debug\netcoreapp3.0\neoserver.dll
+c:\Users\Caio\Documents\Sources\neoserver\bin\Debug\netcoreapp3.0\neoserver.pdb
+c:\Users\Caio\Documents\Sources\neoserver\obj\Debug\netcoreapp3.0\neoserver.csprojAssemblyReference.cache
+c:\Users\Caio\Documents\Sources\neoserver\obj\Debug\netcoreapp3.0\neoserver.AssemblyInfoInputs.cache
+c:\Users\Caio\Documents\Sources\neoserver\obj\Debug\netcoreapp3.0\neoserver.AssemblyInfo.cs
+c:\Users\Caio\Documents\Sources\neoserver\obj\Debug\netcoreapp3.0\neoserver.dll
+c:\Users\Caio\Documents\Sources\neoserver\obj\Debug\netcoreapp3.0\neoserver.pdb
