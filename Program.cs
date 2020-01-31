@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
@@ -36,9 +37,20 @@ namespace neoserver
 
                 String data = Encoding.UTF8.GetString(bytes);
 
+                List<Byte> response = new List<byte>();
 
-
+                response.Add(0x14);
+                response.AddRange(Encoding.UTF8.GetBytes("Welcome to the Ot Server"));
+                response.Add(0x64);
+                response.Add(1);
+                response.AddRange(Encoding.UTF8.GetBytes("God"));
+                response.AddRange(Encoding.UTF8.GetBytes("NetCore"));
+                response.Add(Convert.ToByte(0));
+                response.Add(Convert.ToByte(23));
+                response.Add(Convert.ToByte(5));
               
+                stream.Write(response.ToArray(), 0, response.ToArray().Length);
+                client.Close();
             }
         }
     }
