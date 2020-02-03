@@ -9,7 +9,7 @@ public class Player
     public int Level { get; }
     public int HealthPoints { get; }
     public int MaxHealthPoints { get; }
-    public Vocation Vocation { get; set; }
+    public VocationType Vocation { get; set; }
     public int Mana { get; }
     public int MaxMana { get; }
     public int FightMode { get; }

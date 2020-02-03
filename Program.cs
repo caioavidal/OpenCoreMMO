@@ -25,8 +25,14 @@ namespace neoserver
             IConfigurationRoot configuration = builder.Build();
 
             var serviceProvider = new ServiceCollection()
-            .Configure<GameConfiguration>(configuration.GetSection("Game"))
-            .BuildServiceProvider();
+            .Configure<GameConfiguration>(configuration.GetSection("Game"));
+            
+
+            JsonLoader.LoadVocation(serviceProvider);
+            
+
+
+            serviceProvider.BuildServiceProvider();
 
         }
     }

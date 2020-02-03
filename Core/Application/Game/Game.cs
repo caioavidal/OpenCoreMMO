@@ -2,6 +2,9 @@ public class Game
 {
     public GameState State { get; private set; }
     
+    public void Load(){
+
+    }
 
     public void Start(){
         State = GameState.STARTUP;
