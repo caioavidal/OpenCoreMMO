@@ -37,3 +37,16 @@ public class Vocation
     public IList<VocationSkill> Skill { get; set; }
 }
 
+
+public class VocationConfig
+{
+    public static IReadOnlyDictionary<string, Vocation> Vocations { get; private set; }
+    public static async void Load()
+    {
+        if (Vocations == null)
+        {
+            Vocations = await JsonLoader.GetLoadedVocations();
+        }
+    }
+}
+

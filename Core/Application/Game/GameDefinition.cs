@@ -4,4 +4,6 @@ public class GameDefinition
 
     public static readonly string ServerName = "The Forgotten Server";
 
+    public static readonly string ServerDevelopers = "Caio Vidal";
+
 }

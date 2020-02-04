@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,14 +16,18 @@ public class JsonLoader
         return JsonConvert.DeserializeObject<T>(myJsonString);
     }
 
-    public static async void LoadVocation(IServiceCollection service)
+    public static async Task<IReadOnlyDictionary<string, Vocation>> GetLoadedVocations()
     {
         Console.WriteLine("Loading vocation!"); //todo: change to event
 
-        var vocation = await ConvertToObject<Vocation>("Data/vocation.json");
+        var vocations = await ConvertToObject<IList<Vocation>>("Data/vocations.json");
 
-        service.AddSingleton<Vocation>(vocation); //todo: change to event
         Console.WriteLine("Vocation loaded!"); //todo: change to event
+
+        return vocations.ToDictionary(x=>x.Name,x=>x);
+
+
+        
     }
 
 }

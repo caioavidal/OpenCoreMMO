@@ -1,3 +1,5 @@
+using System;
+
 public class GameConfiguration
 {
     public bool BindOnlyGlobalAddress { get; private set; }
@@ -6,6 +8,9 @@ public class GameConfiguration
     public string MapName { get; private set; }
     public string MapAuthor { get; private set; }
     public string HouseRentPeriod { get; private set; }
+
+
+
     public string MysqlHost { get; private set; }
     public string MysqlUser { get; private set; }
     public string MysqlPass { get; private set; }
@@ -71,5 +76,11 @@ public class GameConfiguration
     public int MaxMarketOffersAtATimePerPlayer { get; private set; }
     public int MaxPacketsPerSecond { get; private set; }
     public int ServerSaveNotifyDuration { get; private set; }
+
+    private GameConfiguration instance = new GameConfiguration();
+    public static async void Load()
+    {
+        
+    }
 
 }
