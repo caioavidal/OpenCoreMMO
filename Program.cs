@@ -15,24 +15,22 @@ namespace neoserver
     {
         static void Main(string[] args)
         {
-            //AsynchronousSocketListener.StartListening();
+            AsynchronousSocketListener.StartListening();
 
-            var builder = new ConfigurationBuilder()
-      .SetBasePath(Directory.GetCurrentDirectory())
-      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+    //         var builder = new ConfigurationBuilder()
+    //   .SetBasePath(Directory.GetCurrentDirectory())
+    //   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 
-            IConfigurationRoot configuration = builder.Build();
+    //         IConfigurationRoot configuration = builder.Build();
 
-            var serviceProvider = new ServiceCollection()
-            .Configure<GameConfiguration>(configuration.GetSection("Game"));
+    //         var serviceProvider = new ServiceCollection()
+    //         .Configure<GameConfiguration>(configuration.GetSection("Game"));
+            
             
 
-            JsonLoader.LoadVocation(serviceProvider);
-            
 
-
-            serviceProvider.BuildServiceProvider();
+    //         serviceProvider.BuildServiceProvider();
 
         }
     }
