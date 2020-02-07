@@ -115,10 +115,10 @@ public class AsynchronousSocketListener
             var version = BitConverter.ToUInt16(state.buffer[9..11], 0);
             var rsa = state.buffer[23..151];
             
-            var loginData = RsaPemService.PrivateKeyFromPem(rsa);
+            var loginData = RSA.Decrypt(rsa);
             
-            var accountSize = BitConverter.ToUInt16(loginData[16..18]);
-            var account =  Encoding.UTF8.GetString(loginData[18..(18 + accountSize)]);
+            var login = new Authentication(loginData);
+            
 
 
           
