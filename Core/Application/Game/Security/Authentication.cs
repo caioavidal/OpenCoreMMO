@@ -6,7 +6,7 @@ public class Authentication
     public string Account { get; private set; }
     public string Password { get; private set; }
 
-    public Login(byte[] loginData)
+    public Authentication(byte[] loginData)
     {
         LoadAccount(loginData);
     }
@@ -18,6 +18,8 @@ public class Authentication
     }
 
     private void Login(){
+        //todo:database
+
         
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -78,6 +79,7 @@ public class AsynchronousSocketListener
 
     }
 
+    
     public static void AcceptCallback(IAsyncResult ar)
     {
         // Signal the main thread to continue.  
@@ -99,7 +101,6 @@ public class AsynchronousSocketListener
 
     public static void ReadCallback(IAsyncResult ar)
     {
-        String content = String.Empty;
 
         // Retrieve the state object and the handler socket  
         // from the asynchronous state object.  
@@ -114,46 +115,44 @@ public class AsynchronousSocketListener
 
             var version = BitConverter.ToUInt16(state.buffer[9..11], 0);
             var rsa = state.buffer[23..151];
-            
+
             var loginData = RSA.Decrypt(rsa);
             
             var login = new Authentication(loginData);
-            
 
+            var xtea = new uint[4];
 
-          
-            // There  might be more data, so store the data received so far.  
-            
-            
+            xtea[0] = BitConverter.ToUInt32(loginData[0..4]);
+            xtea[1] = BitConverter.ToUInt32(loginData[4..8]);
+            xtea[2] = BitConverter.ToUInt32(loginData[8..12]);
+            xtea[3] = BitConverter.ToUInt32(loginData[12..16]);
 
-            // Check for end-of-file tag. If it is not there, read   
-            // more data.  
-            content = state.sb.ToString();
-            if (content.IndexOf("<EOF>") > -1)
-            {
-                // All the data has been read from the   
-                // client. Display it on the console.  
-                Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                    content.Length, content);
-                // Echo the data back to the client.  
-                Send(handler, $"{content} - {DateTime.Now.ToShortTimeString()}");
-            }
-            else
-            {
-                // Not all data received. Get more.  
-                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                new AsyncCallback(ReadCallback), state);
-            }
+            var accountSize = BitConverter.ToUInt16(loginData[16..18]);
+            var account = Encoding.UTF8.GetString(loginData[18..(18 + accountSize)]);
+
+            var message = "Account name or password is not correct.";
+
+            var output = new OutputMessage(6);
+
+            output.AddUInt16((ushort)43);
+            output.AddByte(0x0A);
+            output.AddUInt16((ushort)message.Length);
+            output.AddString(message);
+
+            Xtea.Encrypt(output, xtea);
+
+            output.AddHeader(true);
+
+            Send(handler, output);
+
         }
     }
 
-    private static void Send(Socket handler, String data)
+    private static void Send(Socket handler, OutputMessage output)
     {
-        // Convert the string data to byte data using ASCII encoding.  
-        byte[] byteData = Encoding.ASCII.GetBytes(data);
-
+        
         // Begin sending the data to the remote device.  
-        handler.BeginSend(byteData, 0, byteData.Length, 0,
+        handler.BeginSend(output.Buffer, 0, output.Length, 0,
             new AsyncCallback(SendCallback), handler);
     }
 
