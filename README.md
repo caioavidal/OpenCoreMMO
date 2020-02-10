@@ -1,2 +1,2 @@
 # NeoServer
-Tibia 8.6 TFS Server rewrited in C#
+Tibia 8.6 TFS Server rewrited in C# .Net Core
