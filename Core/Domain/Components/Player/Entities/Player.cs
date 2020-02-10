@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public class Player
 {
     public int Id { get; }
-    public int Name { get; set; }
+    public string Name { get; set; }
     public ChaseMode ChaseMode { get; }
     public int Capacity { get; }
     public int Level { get; }

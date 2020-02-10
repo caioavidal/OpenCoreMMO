@@ -1,4 +1,5 @@
 using System;
+using System.Net.Sockets;
 
 public class OutputMessage
 {
@@ -8,16 +9,27 @@ public class OutputMessage
 
     private int _position;
 
+     public void Send(Socket socket)
+    {
+        AsynchronousSocketListener.Send(socket, this);
+
+    }
+
     public OutputMessage(int headerLength)
     {
         HeaderLength = headerLength;
         _position = HeaderLength;
     }
 
-    public void AddString(string value) => AddBytes(System.Text.Encoding.UTF8.GetBytes(value));
+    public void AddString(string value)
+    {
+        AddUInt16((ushort)value.Length);
+        AddBytes(System.Text.Encoding.UTF8.GetBytes(value));
+    }
     public void AddUInt32(uint value) => AddBytes(BitConverter.GetBytes(value));
     public void AddUInt16(ushort value) => AddBytes(BitConverter.GetBytes(value));
 
+    public void AddUInt8(sbyte value) => AddBytes(BitConverter.GetBytes(value));
     public void AddByte(byte b) => AddBytes(new[] { b });
 
     public void AddPaddingBytes(int count) => AddBytes(0x33, count);
@@ -32,7 +44,7 @@ public class OutputMessage
         AddLengthToHeader();
 
     }
-    private byte[] GetLengthBytes() =>  BitConverter.GetBytes((ushort)Length);
+    private byte[] GetLengthBytes() => BitConverter.GetBytes((ushort)Length);
 
     private void AddLengthToHeader()
     {

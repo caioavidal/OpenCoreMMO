@@ -1,16 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Encodings;
-using Org.BouncyCastle.Crypto.Engines;
-using Org.BouncyCastle.OpenSsl;
 
 // State object for reading client data asynchronously  
 public class StateObject
@@ -29,10 +21,6 @@ public class AsynchronousSocketListener
 {
     // Thread signal.  
     public static ManualResetEvent allDone = new ManualResetEvent(false);
-
-    public AsynchronousSocketListener()
-    {
-    }
 
     public static void StartListening()
     {
@@ -112,43 +100,44 @@ public class AsynchronousSocketListener
 
         if (bytesRead > 0)
         {
+            LoginConnectionHandler.Handle(state.buffer, handler);
 
-            var version = BitConverter.ToUInt16(state.buffer[9..11], 0);
-            var rsa = state.buffer[23..151];
+            // var version = BitConverter.ToUInt16(state.buffer[9..11], 0);
+            // var rsa = state.buffer[23..151];
 
-            var loginData = RSA.Decrypt(rsa);
+            // var loginData = RSA.Decrypt(rsa);
             
-            var login = new Authentication(loginData);
+            // var login = new Authentication(loginData);
 
-            var xtea = new uint[4];
+            // var xtea = new uint[4];
 
-            xtea[0] = BitConverter.ToUInt32(loginData[0..4]);
-            xtea[1] = BitConverter.ToUInt32(loginData[4..8]);
-            xtea[2] = BitConverter.ToUInt32(loginData[8..12]);
-            xtea[3] = BitConverter.ToUInt32(loginData[12..16]);
+            // xtea[0] = BitConverter.ToUInt32(loginData[0..4]);
+            // xtea[1] = BitConverter.ToUInt32(loginData[4..8]);
+            // xtea[2] = BitConverter.ToUInt32(loginData[8..12]);
+            // xtea[3] = BitConverter.ToUInt32(loginData[12..16]);
 
-            var accountSize = BitConverter.ToUInt16(loginData[16..18]);
-            var account = Encoding.UTF8.GetString(loginData[18..(18 + accountSize)]);
+            // var accountSize = BitConverter.ToUInt16(loginData[16..18]);
+            // var account = Encoding.UTF8.GetString(loginData[18..(18 + accountSize)]);
 
-            var message = "Account name or password is not correct.";
+            // var message = "Account name or password is not correct.";
 
-            var output = new OutputMessage(6);
+            // var output = new OutputMessage(6);
 
-            output.AddUInt16((ushort)43);
-            output.AddByte(0x0A);
-            output.AddUInt16((ushort)message.Length);
-            output.AddString(message);
+            // output.AddUInt16((ushort)43);
+            // output.AddByte(0x0A);
+            // output.AddUInt16((ushort)message.Length);
+            // output.AddString(message);
 
-            Xtea.Encrypt(output, xtea);
+            // Xtea.Encrypt(output, xtea);
 
-            output.AddHeader(true);
+            // output.AddHeader(true);
 
-            Send(handler, output);
+            //Send(handler, output);
 
         }
     }
 
-    private static void Send(Socket handler, OutputMessage output)
+    public static void Send(Socket handler, OutputMessage output)
     {
         
         // Begin sending the data to the remote device.  

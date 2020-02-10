@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Autofac;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,33 +17,38 @@ namespace neoserver
     {
         static void Main(string[] args)
         {
-           // AsynchronousSocketListener.StartListening();
-           MessageQueue.Start();
+            MessageQueue.Start();
 
-           //Enumerable.Range(1,10000000).AsEnumerable().ToList().ForEach((n)=>MessageQueue.Enqueue(n.ToString()));
+            IoC.Load();
+            RSA.LoadPem();
 
+            Database.Connect();
 
+            VocationConfig.Load();
 
-           
+            var loadItemsTask = OtbFile.LoadItems();
 
-           MessageQueue.Enqueue(new LoginCommand(){});
+            ItemConfig.Load();
 
-           Console.Read();
-
-    //         var builder = new ConfigurationBuilder()
-    //   .SetBasePath(Directory.GetCurrentDirectory())
-    //   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            AsynchronousSocketListener.StartListening();
 
 
-    //         IConfigurationRoot configuration = builder.Build();
+            Console.Read();
 
-    //         var serviceProvider = new ServiceCollection()
-    //         .Configure<GameConfiguration>(configuration.GetSection("Game"));
-            
-            
+            //         var builder = new ConfigurationBuilder()
+            //   .SetBasePath(Directory.GetCurrentDirectory())
+            //   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 
-    //         serviceProvider.BuildServiceProvider();
+            //         IConfigurationRoot configuration = builder.Build();
+
+            //         var serviceProvider = new ServiceCollection()
+            //         .Configure<GameConfiguration>(configuration.GetSection("Game"));
+
+
+
+
+            //         serviceProvider.BuildServiceProvider();
 
         }
     }

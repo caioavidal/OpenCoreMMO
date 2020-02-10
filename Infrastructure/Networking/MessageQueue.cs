@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using Autofac;
 
 public class MessageQueue 
 {
@@ -8,7 +9,8 @@ public class MessageQueue
 
     public static void Enqueue<T>(T command) where T : ICommand
     {
-        var commandHandler = (ICommandHandler<T>) Activator.CreateInstance(typeof(ICommandHandler<T>));
+        var commandHandler = IoC.GetCommandHandler<T>();
+
         queue.Add(()=> commandHandler.Handle(command));
     }
 
@@ -24,11 +26,12 @@ public class MessageQueue
                        try
                        {
                            var command = queue.Take();
+                           
 
                            command();
                            //command.Execute(command);
                        }
-                       catch
+                       catch(Exception ex)
                        {
 
                        }

@@ -1,7 +1,8 @@
 public class LoginCommand: ICommand
 {
-    public Authentication Auth { get; private set; }
-    public LoginCommand(Authentication auth)
+    public LoginInput Auth { get; private set; }
+    
+    public LoginCommand(LoginInput auth)
     {
         Auth = auth;
     }
