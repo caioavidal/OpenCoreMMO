@@ -78,9 +78,4 @@ public class GameConfiguration
     public int ServerSaveNotifyDuration { get; private set; }
 
     private GameConfiguration instance = new GameConfiguration();
-    public static async void Load()
-    {
-        
-    }
-
 }

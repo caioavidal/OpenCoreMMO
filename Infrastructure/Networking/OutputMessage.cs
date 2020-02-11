@@ -11,7 +11,7 @@ public class OutputMessage
 
      public void Send(Socket socket)
     {
-        AsynchronousSocketListener.Send(socket, this);
+        LoginListener.Send(socket, this);
 
     }
 

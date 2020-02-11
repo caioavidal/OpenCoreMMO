@@ -17,7 +17,7 @@ public class StateObject
     public StringBuilder sb = new StringBuilder();
 }
 
-public class AsynchronousSocketListener
+public class LoginListener
 {
     // Thread signal.  
     public static ManualResetEvent allDone = new ManualResetEvent(false);
@@ -68,7 +68,7 @@ public class AsynchronousSocketListener
     }
 
     
-    public static void AcceptCallback(IAsyncResult ar)
+    private static void AcceptCallback(IAsyncResult ar)
     {
         // Signal the main thread to continue.  
         allDone.Set();
@@ -87,7 +87,7 @@ public class AsynchronousSocketListener
 
 
 
-    public static void ReadCallback(IAsyncResult ar)
+    private static void ReadCallback(IAsyncResult ar)
     {
 
         // Retrieve the state object and the handler socket  
@@ -165,5 +165,4 @@ public class AsynchronousSocketListener
             Console.WriteLine(e.ToString());
         }
     }
-
 }
