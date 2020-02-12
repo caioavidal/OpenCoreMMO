@@ -14,6 +14,11 @@ public class OutputMessage
         LoginListener.Send(socket, this);
 
     }
+      public void Send2(Socket socket)
+    {
+        LoginListener.Send2(socket, this);
+
+    }
 
     public OutputMessage(int headerLength)
     {

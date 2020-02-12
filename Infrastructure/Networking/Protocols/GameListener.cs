@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading;
 
 // State object for reading client data asynchronously  
-public class StateObject
-{
-    // Client  socket.  
-    public Socket workSocket = null;
-    // Size of receive buffer.  
-    public const int BufferSize = 1024;
-    // Receive buffer.  
-    public byte[] buffer = new byte[BufferSize];
-    // Received data string.  
-    public StringBuilder sb = new StringBuilder();
-}
 
-public class LoginListener
+public class GameListener
 {
+    public class GameStateObject
+    {
+        // Client  socket.  
+        public Socket workSocket = null;
+        // Size of receive buffer.  
+        public const int BufferSize = 1024;
+        // Receive buffer.  
+        public byte[] buffer = new byte[BufferSize];
+        // Received data string.  
+        public StringBuilder sb = new StringBuilder();
+    }
     // Thread signal.  
     public static ManualResetEvent allDone = new ManualResetEvent(false);
 
@@ -29,7 +29,7 @@ public class LoginListener
         // running the listener is "host.contoso.com".  
         IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
         IPAddress ipAddress = ipHostInfo.AddressList[0];
-        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 7171);
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 7172);
 
         // Create a TCP/IP socket.  
         Socket listener = new Socket(ipAddress.AddressFamily,
@@ -47,7 +47,7 @@ public class LoginListener
                 allDone.Reset();
 
                 // Start an asynchronous socket to listen for connections.  
-                Console.WriteLine("Waiting for login connection...");
+                Console.WriteLine("Waiting for game connection...");
                 listener.BeginAccept(
                     new AsyncCallback(AcceptCallback),
                     listener);
@@ -67,7 +67,7 @@ public class LoginListener
 
     }
 
-    
+
     private static void AcceptCallback(IAsyncResult ar)
     {
         // Signal the main thread to continue.  
@@ -78,10 +78,23 @@ public class LoginListener
         Socket handler = listener.EndAccept(ar);
 
         // Create the state object.  
-        StateObject state = new StateObject();
+        GameStateObject state = new GameStateObject();
         state.workSocket = handler;
         handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
             new AsyncCallback(ReadCallback), state);
+
+        var output = new OutputMessage(6);
+
+        output.AddUInt16(6);
+        output.AddByte(0x1F);
+        output.AddUInt32((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+
+        Random rnd = new Random();
+        var bytes = new byte[10];
+        rnd.NextBytes(bytes);
+        output.AddByte(bytes[0]);
+        output.AddHeader(true);
+        Send2(handler,output);
     }
 
 
@@ -90,9 +103,10 @@ public class LoginListener
     private static void ReadCallback(IAsyncResult ar)
     {
 
+
         // Retrieve the state object and the handler socket  
         // from the asynchronous state object.  
-        StateObject state = (StateObject)ar.AsyncState;
+        GameStateObject state = (GameStateObject)ar.AsyncState;
         Socket handler = state.workSocket;
 
         // Read data from the client socket.   
@@ -102,11 +116,19 @@ public class LoginListener
         {
             LoginConnectionHandler.Handle(state.buffer, handler);
 
-         
+
 
         }
     }
-  public static void Send2(Socket handler, OutputMessage output)
+
+    public static void Send(Socket handler, OutputMessage output)
+    {
+
+        // Begin sending the data to the remote device.  
+        handler.BeginSend(output.Buffer, 0, output.Length, 0,
+            new AsyncCallback(SendCallback), handler);
+    }
+    public static void Send2(Socket handler, OutputMessage output)
     {
 
         // Begin sending the data to the remote device.  
@@ -133,13 +155,6 @@ public class LoginListener
         {
             Console.WriteLine(e.ToString());
         }
-    }
-    public static void Send(Socket handler, OutputMessage output)
-    {
-        
-        // Begin sending the data to the remote device.  
-        handler.BeginSend(output.Buffer, 0, output.Length, 0,
-            new AsyncCallback(SendCallback), handler);
     }
 
     private static void SendCallback(IAsyncResult ar)

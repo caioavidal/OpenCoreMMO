@@ -39,10 +39,11 @@ public class CharlistOutput : OutputMessage
             output.AddByte(0);
             output.AddByte(0);
             output.AddByte(1);
-            output.AddUInt16(7171);
-            output.AddUInt16((ushort)account.PremiumTime);
+            output.AddUInt16(7172);
+           
 
         }
+         output.AddUInt16((ushort)account.PremiumTime);
         return output;
     }
 

@@ -31,27 +31,15 @@ public class AccountRepository : AbstractIndexCreationTask<Account>
     }
     public async Task<Account> Get(string account, string password)
     {
-        using (var store = new DocumentStore())
+
+        using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
         {
-            // Open a Session in asynchronous operation mode for cluster-wide transactions
-
-            SessionOptions options = new SessionOptions
-            {
-
-                Database = "neoserver",
-                TransactionMode = TransactionMode.ClusterWide
-            };
-            store.Urls = new[] { "http://localhost:8080" };
-            store.Initialize();
-
-            using (IAsyncDocumentSession Session = store.OpenAsyncSession(options))
-            {
-                return await Session.Query<Account>()
-            .FirstOrDefaultAsync(a => a.AccountName == account &&
-                a.Password == password);
+            return await Session.Query<Account>()
+        .FirstOrDefaultAsync(a => a.AccountName == account &&
+            a.Password == password);
             //.ToListAsync();
-            }
         }
+
     }
 
 }
