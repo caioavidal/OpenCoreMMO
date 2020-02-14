@@ -94,7 +94,7 @@ public class GameListener
         rnd.NextBytes(bytes);
         output.AddByte(bytes[0]);
         output.AddHeader(true);
-        Send2(handler,output);
+        Send(handler, output);
     }
 
 
@@ -114,8 +114,6 @@ public class GameListener
 
         if (bytesRead > 0)
         {
-            LoginConnectionHandler.Handle(state.buffer, handler);
-
 
 
         }
@@ -128,34 +126,14 @@ public class GameListener
         handler.BeginSend(output.Buffer, 0, output.Length, 0,
             new AsyncCallback(SendCallback), handler);
     }
-    public static void Send2(Socket handler, OutputMessage output)
+
+    public static void Disconnect(Socket handler, OutputMessage output)
     {
 
-        // Begin sending the data to the remote device.  
-        handler.BeginSend(output.Buffer, 0, output.Length, 0,
-            new AsyncCallback(SendCallback2), handler);
+        handler.Shutdown(SocketShutdown.Both);
+        handler.Close();
     }
 
-    private static void SendCallback2(IAsyncResult ar)
-    {
-        try
-        {
-            // Retrieve the socket from the state object.  
-            Socket handler = (Socket)ar.AsyncState;
-
-            // Complete sending the data to the remote device.  
-            int bytesSent = handler.EndSend(ar);
-            Console.WriteLine("Sent {0} bytes to client.", bytesSent);
-
-            // handler.Shutdown(SocketShutdown.Both);
-            // handler.Close();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.ToString());
-        }
-    }
 
     private static void SendCallback(IAsyncResult ar)
     {
@@ -167,9 +145,6 @@ public class GameListener
             // Complete sending the data to the remote device.  
             int bytesSent = handler.EndSend(ar);
             Console.WriteLine("Sent {0} bytes to client.", bytesSent);
-
-            handler.Shutdown(SocketShutdown.Both);
-            handler.Close();
 
         }
         catch (Exception e)

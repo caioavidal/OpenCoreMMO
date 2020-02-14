@@ -1,0 +1,231 @@
+[
+    {
+       "id": "1",
+       "name": "player",
+       "access": "0",
+       "maxdepotitems": "0",
+       "maxvipentries": "0"
+    },
+    {
+       "id": "2",
+       "name": "gamemaster",
+       "access": "1",
+       "maxdepotitems": "0",
+       "maxvipentries": "200",
+       "flags": [
+          {
+             "cannotusecombat": "1"
+          },
+          {
+             "cannotattackplayer": "1"
+          },
+          {
+             "cannotattackmonster": "1"
+          },
+          {
+             "cannotbeattacked": "1"
+          },
+          {
+             "canconvinceall": "1"
+          },
+          {
+             "cansummonall": "1"
+          },
+          {
+             "canillusionall": "1"
+          },
+          {
+             "cansenseinvisibility": "1"
+          },
+          {
+             "ignoredbymonsters": "1"
+          },
+          {
+             "notgaininfight": "1"
+          },
+          {
+             "hasinfinitemana": "1"
+          },
+          {
+             "hasinfinitesoul": "1"
+          },
+          {
+             "hasnoexhaustion": "1"
+          },
+          {
+             "canalwayslogin": "1"
+          },
+          {
+             "cannotbepushed": "1"
+          },
+          {
+             "hasinfinitecapacity": "1"
+          },
+          {
+             "cannotpushallcreatures": "1"
+          },
+          {
+             "cantalkredprivate": "1"
+          },
+          {
+             "cantalkredchannel": "1"
+          },
+          {
+             "talkorangehelpchannel": "1"
+          },
+          {
+             "notgainexperience": "1"
+          },
+          {
+             "notgainmana": "1"
+          },
+          {
+             "notgainhealth": "1"
+          },
+          {
+             "notgainskill": "1"
+          },
+          {
+             "setmaxspeed": "1"
+          },
+          {
+             "specialvip": "1"
+          },
+          {
+             "notgenerateloot": "1"
+          },
+          {
+             "cantalkredchannelanonymous": "1"
+          },
+          {
+             "ignoreprotectionzone": "1"
+          },
+          {
+             "ignorespellcheck": "1"
+          },
+          {
+             "ignoreweaponcheck": "1"
+          },
+          {
+             "cannotbemuted": "1"
+          },
+          {
+             "isalwayspremium": "1"
+          }
+       ]
+    },
+    {
+       "id": "3",
+       "name": "god",
+       "access": "1",
+       "maxdepotitems": "0",
+       "maxvipentries": "200",
+       "flags": [
+          {
+             "cannotusecombat": "1"
+          },
+          {
+             "cannotattackplayer": "1"
+          },
+          {
+             "cannotattackmonster": "1"
+          },
+          {
+             "cannotbeattacked": "1"
+          },
+          {
+             "canconvinceall": "1"
+          },
+          {
+             "cansummonall": "1"
+          },
+          {
+             "canillusionall": "1"
+          },
+          {
+             "cansenseinvisibility": "1"
+          },
+          {
+             "ignoredbymonsters": "1"
+          },
+          {
+             "notgaininfight": "1"
+          },
+          {
+             "hasinfinitemana": "1"
+          },
+          {
+             "hasinfinitesoul": "1"
+          },
+          {
+             "hasnoexhaustion": "1"
+          },
+          {
+             "canalwayslogin": "1"
+          },
+          {
+             "canedithouses": "1"
+          },
+          {
+             "cannotbebanned": "1"
+          },
+          {
+             "cannotbepushed": "1"
+          },
+          {
+             "hasinfinitecapacity": "1"
+          },
+          {
+             "cannotpushallcreatures": "1"
+          },
+          {
+             "cantalkredprivate": "1"
+          },
+          {
+             "cantalkredchannel": "1"
+          },
+          {
+             "talkorangehelpchannel": "1"
+          },
+          {
+             "notgainexperience": "1"
+          },
+          {
+             "notgainmana": "1"
+          },
+          {
+             "notgainhealth": "1"
+          },
+          {
+             "notgainskill": "1"
+          },
+          {
+             "setmaxspeed": "1"
+          },
+          {
+             "specialvip": "1"
+          },
+          {
+             "notgenerateloot": "1"
+          },
+          {
+             "cantalkredchannelanonymous": "1"
+          },
+          {
+             "ignoreprotectionzone": "1"
+          },
+          {
+             "ignorespellcheck": "1"
+          },
+          {
+             "ignoreweaponcheck": "1"
+          },
+          {
+             "cannotbemuted": "1"
+          },
+          {
+             "isalwayspremium": "1"
+          }
+       ]
+    }
+ ]

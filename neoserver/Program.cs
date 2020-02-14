@@ -21,18 +21,18 @@ namespace neoserver
 
             Database.Connect();
 
-            // new AccountRepository().Create(new Account
-            // {
-            //     AccountName = "1",
-            //     Password = "1",
-            //     Players = new List<Player>(){
-            //         new Player(){
-            //              Name = "Caio 1"
-            //         }, new Player(){
-            //             Name = "Caio 2"
-            //         }
-            //      }
-            // });
+            new AccountRepository().Create(new Account
+            {
+                AccountName = "1",
+                Password = "1",
+                Players = new List<Player>(){
+                    new Player(){
+                         Name = "Caio 1"
+                    }, new Player(){
+                        Name = "Caio 2"
+                    }
+                 }
+            });
 
             VocationConfig.Load();
 
