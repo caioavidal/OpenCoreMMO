@@ -2,7 +2,7 @@ namespace NeoServer.Server.Security
 {
     public class Xtea
     {
-        public unsafe static bool Encrypt(OutputMessage msg, uint[] key)
+        public unsafe static bool Encrypt(NetworkMessage msg, uint[] key)
         {
             if (key == null)
                 return false;
