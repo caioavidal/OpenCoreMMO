@@ -9,8 +9,6 @@ namespace NeoServer.Networking
 
     public class Connection
     {
-        public bool KeepConnectionAlive { get; }
-
         public event EventHandler<ConnectionEventArgs> OnProcessEvent;
         public event EventHandler<ConnectionEventArgs> OnCloseEvent;
         public event EventHandler<ConnectionEventArgs> OnPostProcessEvent;
@@ -18,7 +16,7 @@ namespace NeoServer.Networking
         private Socket Socket;
         private Stream Stream;
 
-        public NetworkMessage InMessage { get; private set; }
+        public NetworkMessage InMessage { get; private set; } = new NetworkMessage(6);
 
         public void OnAccept(IAsyncResult ar)
         {
@@ -35,7 +33,7 @@ namespace NeoServer.Networking
         }
         public void BeginStreamRead()
         {
-            Stream.BeginRead(InMessage.Buffer, 0, 2, OnRead, null);
+            Stream.BeginRead(InMessage.Buffer, 0, 1024, OnRead, this);
         }
 
         private void OnRead(IAsyncResult ar)
@@ -61,6 +59,15 @@ namespace NeoServer.Networking
                 // TODO: is closing the connection really necesary?
                 // Close();
             }
+        }
+
+        public void Close()
+        {
+            Stream.Close();
+            Socket.Close();
+
+            // Tells the subscribers of this event that this connection has been closed.
+            OnCloseEvent(this, new ConnectionEventArgs(this));
         }
     }
 }

@@ -13,11 +13,18 @@ namespace NeoServer.Networking.Protocols
             connection.OnAccept(ar);
         }
 
-        public void PostProcessMessage(Connection connection)
+        public void PostProcessMessage(object sender, ConnectionEventArgs args)
         {
-            throw new NotImplementedException();
+            if (!KeepConnectionOpen)
+            {
+                args.Connection.Close();
+            }
+            else
+            {
+                args.Connection.BeginStreamRead();
+            }
         }
 
-        public abstract void ProcessMessage(Connection connection);
+        public abstract void ProcessMessage(object sender, ConnectionEventArgs connection);
     }
 }

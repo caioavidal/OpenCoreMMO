@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NeoServer.Networking.Listeners
 {
-    public class OpenTibiaListener : TcpListener, IOpenTibiaListener
+    public abstract class OpenTibiaListener : TcpListener, IOpenTibiaListener
     {
         private readonly IProtocol _protocol;
         public OpenTibiaListener(int port, IProtocol protocol) : base(IPAddress.Any, port)

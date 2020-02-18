@@ -13,12 +13,12 @@ namespace NeoServer.Networking.Protocols
             throw new NotImplementedException();
         }
 
-        public void PostProcessMessage(Connection connection)
+        public void PostProcessMessage(object sender, ConnectionEventArgs args)
         {
             throw new NotImplementedException();
         }
 
-        public void ProcessMessage(Connection connection, NetworkMessage inboundMessage)
+        public void ProcessMessage(object sender, ConnectionEventArgs args)
         {
             throw new NotImplementedException();
         }

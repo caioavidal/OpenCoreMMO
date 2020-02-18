@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeoServer.Networking.Listeners;
+using System;
 
 namespace NeoServer.Server.Standalone
 {
@@ -6,7 +7,9 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new LoginListener().BeginListening();
+
+            Console.Read();
         }
     }
 }
