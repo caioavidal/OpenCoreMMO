@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeoServer.Networking.Connections;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
@@ -16,7 +17,9 @@ namespace NeoServer.Networking
         private Socket Socket;
         private Stream Stream;
 
-        public NetworkMessage InMessage { get; private set; } = new NetworkMessage(6);
+        private byte[] Buffer = new byte[1024];
+
+        public NetworkMessage InMessage { get; private set; }
 
         public void OnAccept(IAsyncResult ar)
         {
@@ -33,7 +36,7 @@ namespace NeoServer.Networking
         }
         public void BeginStreamRead()
         {
-            Stream.BeginRead(InMessage.Buffer, 0, 1024, OnRead, this);
+            Stream.BeginRead(Buffer, 0, 1024, OnRead, this);
         }
 
         private void OnRead(IAsyncResult ar)
@@ -45,6 +48,7 @@ namespace NeoServer.Networking
 
             try
             {
+                InMessage = new NetworkMessage(Buffer);
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent(this, eventArgs);
                 OnPostProcessEvent(this, eventArgs);

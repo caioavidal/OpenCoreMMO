@@ -27,9 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Data", "3 - Data", "{C8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Game", "4 - Game", "{21E55BCB-6126-43FB-BE35-6D93D93EA803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Map", "NeoServer.Game.Map\NeoServer.Game.Map.csproj", "{0E3CD21F-C07E-4790-8F50-1511D37F259B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Map", "NeoServer.Game.Map\NeoServer.Game.Map.csproj", "{0E3CD21F-C07E-4790-8F50-1511D37F259B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.Standalone", "NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj", "{853B0EBF-1BE1-4999-8574-45943790FF7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Standalone", "NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj", "{853B0EBF-1BE1-4999-8574-45943790FF7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Networking.Connections", "NeoServer.Networking.Connection\NeoServer.Networking.Connections.csproj", "{4B4491CD-317B-40FA-A75F-7CFB7EEE1728}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.Security", "NeoServer.Server.Security\NeoServer.Server.Security.csproj", "{BDD1E97A-0A19-482A-B211-320809D40167}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +81,14 @@ Global
 		{853B0EBF-1BE1-4999-8574-45943790FF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{853B0EBF-1BE1-4999-8574-45943790FF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{853B0EBF-1BE1-4999-8574-45943790FF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B4491CD-317B-40FA-A75F-7CFB7EEE1728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B4491CD-317B-40FA-A75F-7CFB7EEE1728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B4491CD-317B-40FA-A75F-7CFB7EEE1728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B4491CD-317B-40FA-A75F-7CFB7EEE1728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDD1E97A-0A19-482A-B211-320809D40167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD1E97A-0A19-482A-B211-320809D40167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD1E97A-0A19-482A-B211-320809D40167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD1E97A-0A19-482A-B211-320809D40167}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +102,8 @@ Global
 		{FDC1CDFD-8CB9-4ED6-B51D-BFCCCF754947} = {C859BCB0-ED88-4607-9687-6CE2B309643F}
 		{ABE177D3-27FA-4E6B-8006-B9E0EAB6CD2C} = {C859BCB0-ED88-4607-9687-6CE2B309643F}
 		{0E3CD21F-C07E-4790-8F50-1511D37F259B} = {21E55BCB-6126-43FB-BE35-6D93D93EA803}
+		{4B4491CD-317B-40FA-A75F-7CFB7EEE1728} = {676FD03A-21CA-45E6-B61A-2AFCE061269B}
+		{BDD1E97A-0A19-482A-B211-320809D40167} = {E0298381-8C65-4339-835B-0F4D230E479E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B3C7097-0071-4218-BE24-5EE9128763B6}

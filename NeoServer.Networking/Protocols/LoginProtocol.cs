@@ -6,7 +6,7 @@ namespace NeoServer.Networking.Protocols
 {
     public class LoginProtocol : OpenTibiaProtocol
     {
-        public override bool KeepConnectionOpen => true;
+        public override bool KeepConnectionOpen => false;
         public LoginProtocol()
         {
         }
