@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Networking.Connection\NeoServer.Networking.Connections.csproj" />
+    <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
   </ItemGroup>
 
 </Project>

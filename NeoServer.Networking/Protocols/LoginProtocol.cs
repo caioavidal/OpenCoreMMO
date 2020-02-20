@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeoServer.Networking.Packets;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace NeoServer.Networking.Protocols
         }
         public override void ProcessMessage(object sender, ConnectionEventArgs connection)
         {
-
+            HandlerFactory.GetHandler(connection.byte)
         }
     }
 }
