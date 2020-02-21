@@ -1,4 +1,6 @@
-﻿using NeoServer.Networking.Listeners;
+﻿using Autofac;
+using NeoServer.Networking.Listeners;
+using NeoServer.Server.Standalone.IoC;
 using System;
 
 namespace NeoServer.Server.Standalone
@@ -7,7 +9,8 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
-            new LoginListener().BeginListening();
+            Container.CompositionRoot().Resolve<LoginListener>().BeginListening();
+            //new LoginListener().BeginListening();
 
             Console.Read();
         }

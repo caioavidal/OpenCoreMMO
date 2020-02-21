@@ -1,9 +1,8 @@
-﻿using NeoServer.Networking.Connections;
-using NeoServer.Server.Model;
+﻿using NeoServer.Server.Model;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
-    public class AccountLoginPacket : PacketIncoming
+    public class AccountLoginPacket : IncomingPacket
     {
         public AccountLoginPacket(NetworkMessage message) : base(message)
         {

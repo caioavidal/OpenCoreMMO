@@ -7,7 +7,7 @@ namespace NeoServer.Networking.Listeners
 {
     public class LoginListener : OpenTibiaListener
     {
-        public LoginListener() : base(7171, new LoginProtocol()) //todo: remover instancia daqui
+        public LoginListener(LoginProtocol protocol) : base(7171, protocol) //todo: remover instancia daqui
         {
 
         }

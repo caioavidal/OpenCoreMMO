@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Networking.Connections
+﻿namespace NeoServer.Networking.Packets
 {
     using System;
     using System.Text;
@@ -14,14 +14,21 @@
             }
         }
         private int _position;
+
+        public GameIncomingPacketType IncomingPacketType
+        {
+            get
+            {
+                return (GameIncomingPacketType) BitConverter.ToInt16(Buffer[0..2]);
+            }
+        }
+
         public NetworkMessage(byte[] buffer)
         {
             Buffer = buffer;
 
             //var login = new LoginInput(loginData, handler);
         }
-
-        public GameIncomingPacketType MyProperty { get; set; }
 
         public ushort GetUInt16()
         {
