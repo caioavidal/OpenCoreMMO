@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets;
+using NeoServer.Networking.Packets.Incoming;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,9 +12,12 @@ namespace NeoServer.Networking.Protocols
         public LoginProtocol()
         {
         }
-        public override void ProcessMessage(object sender, ConnectionEventArgs connection)
+        public override void ProcessMessage(object sender, ConnectionEventArgs args)
         {
-            HandlerFactory.GetHandler(connection.byte)
+            var handler = HandlerFactory.GetHandler(GameIncomingPacketType.AddVip);
+            var packet = (PacketIncoming)Activator.CreateInstance(handler.IncomingPacket, args.Connection.InMessage);
+
+            handler.EventHandler.Handler(args.Connection, packet.Model);
         }
     }
 }

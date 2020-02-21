@@ -1,14 +1,11 @@
 ﻿using NeoServer.Networking.Connections;
-using NeoServer.Server.Model.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NeoServer.Server.Model;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
     public class AccountLoginPacket : PacketIncoming
     {
-        public AccountLoginPacket(NetworkMessage message): base(message)
+        public AccountLoginPacket(NetworkMessage message) : base(message)
         {
             //var packetPayload = message.GetUInt16();
             //var tcpPayload = packetPayload + 2;
@@ -25,7 +22,7 @@ namespace NeoServer.Networking.Packets.Incoming
             //var encryptedData = message.GetBytes(tcpPayload - message.BytesRead);
 
             Version = 860;
-            Account = new Account("caio", "123");
+            Model = new Account("caio", "123");
 
 
 
@@ -36,7 +33,8 @@ namespace NeoServer.Networking.Packets.Incoming
             //LoadAccount(decryptedData);
         }
 
-        public Account Account { get; }
         public int Version { get; }
+
+        public override IServerModel Model { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Connections;
 using NeoServer.Server.Handlers;
+using NeoServer.Server.Model;
 using NeoServer.Server.Security;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,7 @@ namespace NeoServer.Networking.Packets.Incoming
 
             //DecryptedMessage = RSA.Decrypt(encryptedData);
         }
+
+        public abstract IServerModel Model { get; }
     }
 }

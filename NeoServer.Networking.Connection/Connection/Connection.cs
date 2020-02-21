@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Connections;
+using NeoServer.Server.Handlers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Text;
 namespace NeoServer.Networking
 {
 
-    public class Connection
+    public class Connection:IConnection
     {
         public event EventHandler<ConnectionEventArgs> OnProcessEvent;
         public event EventHandler<ConnectionEventArgs> OnCloseEvent;

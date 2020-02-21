@@ -5,4 +5,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Server.Handlers\NeoServer.Server.Handlers.csproj" />
+  </ItemGroup>
+
 </Project>

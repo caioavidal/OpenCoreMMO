@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeoServer.Data.RavenDB
+namespace NeoServer.Server.Contracts
 {
     public class Class1
     {
