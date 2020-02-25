@@ -8,38 +8,18 @@ using System.Net.Sockets;
 namespace NeoServer.Networking
 {
 
-    public class Connection:IConnection
+    public class Connection
     {
         public event EventHandler<ConnectionEventArgs> OnProcessEvent;
         public event EventHandler<ConnectionEventArgs> OnCloseEvent;
         public event EventHandler<ConnectionEventArgs> OnPostProcessEvent;
 
-        private Func<NetworkMessage, IncomingPacket> _packetFactory;
         private Socket Socket;
         private Stream Stream;
-
-
-        public Connection(Func<NetworkMessage, IncomingPacket> packetFactory)
-        {
-            _packetFactory = packetFactory;
-        }
 
         private byte[] Buffer = new byte[1024];
 
         public NetworkMessage InMessage { get; private set; }
-
-        
-
-        public IncomingPacket Packet { get
-            {
-                if(InMessage == null)
-                {
-                    throw new ArgumentNullException(nameof(InMessage));
-                }
-
-                return _packetFactory(InMessage);
-            }
-        }
 
         public void OnAccept(IAsyncResult ar)
         {

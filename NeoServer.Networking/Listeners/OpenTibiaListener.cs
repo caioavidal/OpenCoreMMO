@@ -23,17 +23,23 @@ namespace NeoServer.Networking.Listeners
 
         public void OnAccept(IAsyncResult ar)
         {
+            var connection = CreateConnection();
+
+            //  _connections.Add(connection);
+
+            _protocol.OnAcceptNewConnection(connection, ar);
+
+            BeginAcceptSocket(OnAccept, this);
+        }
+
+        private Connection CreateConnection()
+        {
             var connection = new Connection();
 
             connection.OnCloseEvent += OnConnectionClose;
             connection.OnProcessEvent += _protocol.ProcessMessage;
             connection.OnPostProcessEvent += _protocol.PostProcessMessage;
-
-          //  _connections.Add(connection);
-
-            _protocol.OnAcceptNewConnection(connection, ar);
-
-            BeginAcceptSocket(OnAccept, this);
+            return connection;
         }
 
         private void OnConnectionClose(object sender, ConnectionEventArgs args)

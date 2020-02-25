@@ -4,7 +4,7 @@ using System;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
-    public class AccountLoginEventHandler : IEventHandler
+    public class AccountLoginEventHandler: IEventHandler
     {
         private readonly IAccountRepository _repository;
 
@@ -13,8 +13,9 @@ namespace NeoServer.Server.Handlers.Authentication
             _repository = repository;
         }
 
-        public void Handler(object sender, IServerModel model)
+        public void OnIncomingMessage(object sender, ServerEventArgs args)
         {
+            var account = args.Model as Account;
             Console.WriteLine("login");
         }
     }

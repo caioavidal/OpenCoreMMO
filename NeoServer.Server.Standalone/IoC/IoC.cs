@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using NeoServer.Data.RavenDB;
+using NeoServer.Networking;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
@@ -7,6 +8,7 @@ using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
+using NeoServer.Server.Model;
 using System;
 
 namespace NeoServer.Server.Standalone.IoC
@@ -16,48 +18,34 @@ namespace NeoServer.Server.Standalone.IoC
         public static IContainer CompositionRoot()
         {
             var builder = new ContainerBuilder();
+
             builder.RegisterType<AccountRepository>().As<IAccountRepository>();
+            
             builder.RegisterType<LoginProtocol>();
             builder.RegisterType<LoginListener>();
 
-            BuildHandlerFactory(builder);
-            BuildIncomingPacketFactory(builder);
+            builder.RegisterType<AccountLoginEventHandler>().SingleInstance();
 
+            builder.RegisterType<AccountLoginPacket>();
+
+            BuildIncomingPacketFactory(builder);
 
             return builder.Build();
 
 
         }
 
-        private static void BuildHandlerFactory(ContainerBuilder builder)
-        {
-            builder.Register<IEventHandler>((c, p) =>
-            {
-                var type = p.TypedAs<GameIncomingPacketType>();
 
-                switch (type)
-                {
-                    case GameIncomingPacketType.AddVip:
-                        return new AccountLoginEventHandler(c.Resolve<AccountRepository>());
-                    default:
-                        throw new ArgumentException("Invalid game incoming type");
-                }
-            });
-        }
 
         private static void BuildIncomingPacketFactory(ContainerBuilder builder)
         {
             builder.Register<IncomingPacket>((c, p) =>
             {
-                var inMessage = p.TypedAs<NetworkMessage>();
+                var networkMessage = p.TypedAs<NetworkMessage>();
 
-                switch (inMessage.IncomingPacketType)
-                {
-                    case GameIncomingPacketType.AddVip:
-                        return new AccountLoginPacket(inMessage);
-                    default:
-                        throw new ArgumentException("Invalid game incoming type");
-                }
+                var packetType = IncomingDictionaryData.Data[networkMessage.IncomingPacketType];
+
+                return (IncomingPacket) c.Resolve(packetType, new PositionalParameter(0, networkMessage));
             });
         }
     }

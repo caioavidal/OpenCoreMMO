@@ -7,6 +7,6 @@ namespace NeoServer.Server.Handlers
 {
     public interface IEventHandler
     {
-        void Handler(object sender, IServerModel model);
+        void OnIncomingMessage(object sender, ServerEventArgs model);
     }
 }

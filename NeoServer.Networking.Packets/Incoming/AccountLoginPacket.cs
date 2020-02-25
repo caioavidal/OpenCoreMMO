@@ -1,10 +1,14 @@
-﻿using NeoServer.Server.Model;
+﻿using System;
+using NeoServer.Server.Handlers;
+using NeoServer.Server.Handlers.Authentication;
+using NeoServer.Server.Model;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
     public class AccountLoginPacket : IncomingPacket
     {
-        public AccountLoginPacket(NetworkMessage message) : base(message)
+
+        public AccountLoginPacket(NetworkMessage message, AccountLoginEventHandler handler) : base(handler)
         {
             //var packetPayload = message.GetUInt16();
             //var tcpPayload = packetPayload + 2;
@@ -19,6 +23,8 @@ namespace NeoServer.Networking.Packets.Incoming
             //message.SkipBytes(10);
 
             //var encryptedData = message.GetBytes(tcpPayload - message.BytesRead);
+
+            
 
             Version = 860;
             Model = new Account("caio", "123");

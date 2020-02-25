@@ -1,6 +1,6 @@
 public enum GameIncomingPacketType : byte
 {
-    PlayerLoginRequest = 0x0A,
+    PlayerLoginRequest = 149,
     PlayerLogOut = 0x14, // logout
     Ping = 0x1E, // keep alive / ping response
     AutoMove = 0x64, // move with autowalk

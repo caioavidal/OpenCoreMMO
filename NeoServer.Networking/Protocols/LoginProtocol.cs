@@ -1,6 +1,7 @@
 ﻿using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Handlers;
+using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,21 @@ namespace NeoServer.Networking.Protocols
     public class LoginProtocol : OpenTibiaProtocol
     {
         public override bool KeepConnectionOpen => false;
-        private Func<GameIncomingPacketType, IEventHandler> _handlerFactory;
-        public LoginProtocol()
+        // private Func<GameIncomingPacketType, IEventHandler> _handlerFactory;
+        private Func<NetworkMessage, IncomingPacket> _packetFactory;
+        public LoginProtocol(Func<NetworkMessage, IncomingPacket> packetFactory)
         {
+            _packetFactory = packetFactory;
         }
 
         public override void ProcessMessage(object sender, ConnectionEventArgs args)
         {
 
-            var handler = _handlerFactory(GameIncomingPacketType.AddVip);
-            //var handler = HandlerFactory.GetHandler(GameIncomingPacketType.AddVip);
-            //var packet = (IncomingPacket)Activator.CreateInstance(handler.IncomingPacket, args.Connection.InMessage);
+            var packet = _packetFactory(args.Connection.InMessage);      
 
-            //handler.EventHandler.Handler(args.Connection, packet.Model);
+            var eventArgs = new ServerEventArgs(packet.Model);
+
+            packet.OnIncomingPacket(args.Connection, eventArgs);
         }
     }
 }
