@@ -6,7 +6,7 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public abstract class IncomingPacket
     {
-        public EventHandler<ServerEventArgs> OnIncomingPacket {get;}
+        public EventHandler<ServerEventArgs> OnIncomingPacket { get; }
         protected byte[] DecryptedMessage { get; }
         public IncomingPacket(IEventHandler handler)
         {
@@ -17,5 +17,14 @@ namespace NeoServer.Networking.Packets.Incoming
         }
 
         public abstract IServerModel Model { get; }
+        public uint[] Xtea { get; } = new uint[4];
+
+        protected void LoadXtea(NetworkMessage message)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Xtea[i] = message.GetUInt32();
+            }
+        }
     }
 }

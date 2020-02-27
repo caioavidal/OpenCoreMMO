@@ -9,6 +9,7 @@ using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model;
+using NeoServer.Server.Security;
 using System;
 
 namespace NeoServer.Server.Standalone.IoC
@@ -20,7 +21,7 @@ namespace NeoServer.Server.Standalone.IoC
             var builder = new ContainerBuilder();
 
             builder.RegisterType<AccountRepository>().As<IAccountRepository>();
-            
+
             builder.RegisterType<LoginProtocol>();
             builder.RegisterType<LoginListener>();
 
@@ -28,7 +29,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<AccountLoginPacket>();
 
-            BuildIncomingPacketFactory(builder);
+            RegisterIncomingPacketFactory(builder);
 
             return builder.Build();
 
@@ -37,7 +38,7 @@ namespace NeoServer.Server.Standalone.IoC
 
 
 
-        private static void BuildIncomingPacketFactory(ContainerBuilder builder)
+        private static void RegisterIncomingPacketFactory(ContainerBuilder builder)
         {
             builder.Register<IncomingPacket>((c, p) =>
             {

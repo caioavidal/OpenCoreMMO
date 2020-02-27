@@ -5,7 +5,7 @@ using Org.BouncyCastle.Crypto.Engines;
 
 namespace NeoServer.Server.Security
 {
-    public class RSA
+    public static class RSA
     {
         private static AsymmetricCipherKeyPair asymmetricCipherKeyPair;
         public static byte[] Decrypt(byte[] data)

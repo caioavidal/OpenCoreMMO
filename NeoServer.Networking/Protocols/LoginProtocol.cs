@@ -22,11 +22,14 @@ namespace NeoServer.Networking.Protocols
         public override void ProcessMessage(object sender, ConnectionEventArgs args)
         {
 
-            var packet = _packetFactory(args.Connection.InMessage);      
+            var packet = _packetFactory(args.Connection.InMessage);
+            args.Connection.SetXtea(packet.Xtea);
+
 
             var eventArgs = new ServerEventArgs(packet.Model);
 
             packet.OnIncomingPacket(args.Connection, eventArgs);
+            
         }
     }
 }

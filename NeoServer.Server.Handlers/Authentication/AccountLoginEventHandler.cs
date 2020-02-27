@@ -16,6 +16,8 @@ namespace NeoServer.Server.Handlers.Authentication
         public void OnIncomingMessage(object sender, ServerEventArgs args)
         {
             var account = args.Model as Account;
+
+            
             Console.WriteLine("login");
         }
     }

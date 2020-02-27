@@ -8,7 +8,7 @@ using System.Net.Sockets;
 namespace NeoServer.Networking
 {
 
-    public class Connection
+    public class Connection 
     {
         public event EventHandler<ConnectionEventArgs> OnProcessEvent;
         public event EventHandler<ConnectionEventArgs> OnCloseEvent;
@@ -20,6 +20,8 @@ namespace NeoServer.Networking
         private byte[] Buffer = new byte[1024];
 
         public NetworkMessage InMessage { get; private set; }
+
+        public uint[] Xtea {get; private set;}
 
         public void OnAccept(IAsyncResult ar)
         {
@@ -35,6 +37,11 @@ namespace NeoServer.Networking
 
         }
         public void BeginStreamRead() => Stream.BeginRead(Buffer, 0, 1024, OnRead, this);
+
+        public void SetXtea(uint[] xtea)
+        {
+            Xtea = xtea;
+        }
 
         private void OnRead(IAsyncResult ar)
         {
