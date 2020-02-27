@@ -17,6 +17,7 @@ namespace NeoServer.Server.Handlers.Authentication
         {
             var account = args.Model as Account;
 
+            args.OutputFunc(account);
             
             Console.WriteLine("login");
         }

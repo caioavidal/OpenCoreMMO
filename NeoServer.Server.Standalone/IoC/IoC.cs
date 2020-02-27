@@ -40,7 +40,7 @@ namespace NeoServer.Server.Standalone.IoC
 
         private static void RegisterIncomingPacketFactory(ContainerBuilder builder)
         {
-            builder.Register<IncomingPacket>((c, p) =>
+            builder.Register((c, p) =>
             {
                 var networkMessage = p.TypedAs<NetworkMessage>();
 

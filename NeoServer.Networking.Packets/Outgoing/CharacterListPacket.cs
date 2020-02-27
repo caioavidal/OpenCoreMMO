@@ -6,18 +6,11 @@ using NeoServer.Server.Model;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class CharacterListPacket
+    public class CharacterListPacket : OutgoingPacket
     {
-        private NetworkMessage OutputMessage {get;} = new NetworkMessage();
         public CharacterListPacket(Account account)
         {
-            
-        }
-        private void LoadOutput(Account account, uint[] xtea)
-        {
             AddCharList(account);
-            Xtea.Encrypt(OutputMessage, xtea);
-            AddHeader(true);
         }
 
         private void AddCharList(Account account)
@@ -26,7 +19,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             var payloadLength = charListOutput.Length;
 
             OutputMessage.AddUInt16((ushort)payloadLength);
-
+            //todo: refact
             for (int i = 0; i < payloadLength; i++)
             {
                 OutputMessage.AddByte(charListOutput.Buffer[i]);
@@ -48,8 +41,6 @@ namespace NeoServer.Networking.Packets.Outgoing
                 output.AddByte(0);
                 output.AddByte(1);
                 output.AddUInt16(7172);
-
-
             }
             output.AddUInt16((ushort)account.PremiumTime);
             return output;

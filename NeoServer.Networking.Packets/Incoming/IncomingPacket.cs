@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Model;
 
@@ -7,6 +8,7 @@ namespace NeoServer.Networking.Packets.Incoming
     public abstract class IncomingPacket
     {
         public EventHandler<ServerEventArgs> OnIncomingPacket { get; }
+        public abstract Func<IServerModel, OutgoingPacket> OutputFunc { get; }
         protected byte[] DecryptedMessage { get; }
         public IncomingPacket(IEventHandler handler)
         {

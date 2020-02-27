@@ -1,21 +1,17 @@
 ﻿namespace NeoServer.Networking.Packets
 {
+    using NeoServer.Server.Security;
     using System;
+    using System.Linq;
     using System.Text;
 
     public class NetworkMessage
     {
+        public byte[] Header { get; private set; }
+        public int HeaderLength { get; private set; } = 6;
         public byte[] Buffer { get; private set; }
-        public int BytesRead
-        {
-            get
-            {
-                return _position;
-            }
-        }
+        public int BytesRead { get; private set; } = 0;
         public int Length { get; private set; } = 0;
-
-        private int _position;
 
         public GameIncomingPacketType IncomingPacketType
         {
@@ -34,40 +30,41 @@
         public NetworkMessage()
         {
             Buffer = new byte[24590];
+            Header = new byte[HeaderLength];
         }
 
         public ushort GetUInt16()
         {
-            var to = _position + 2;
-            var value = BitConverter.ToUInt16(Buffer[_position..to], 0);
-            _position = to;
+            var to = BytesRead + 2;
+            var value = BitConverter.ToUInt16(Buffer[BytesRead..to], 0);
+            BytesRead = to;
             return value;
 
         }
         public uint GetUInt32()
         {
-            var to = _position + 4;
-            var value = BitConverter.ToUInt32(Buffer[_position..to], 0);
-            _position = to;
+            var to = BytesRead + 4;
+            var value = BitConverter.ToUInt32(Buffer[BytesRead..to], 0);
+            BytesRead = to;
             return value;
         }
 
-        public void SkipBytes(int length) => _position += length;
+        public void SkipBytes(int length) => BytesRead += length;
 
-        public void ResetPosition() => _position = 0;
+        public void ResetPosition() => BytesRead = 0;
 
         public byte GetByte()
         {
-            var to = _position + 1;
-            var value = Buffer[_position..to];
-            _position = to;
+            var to = BytesRead + 1;
+            var value = Buffer[BytesRead..to];
+            BytesRead = to;
             return value[0];
         }
         public byte[] GetBytes(int length)
         {
-            var to = _position + length;
-            var value = Buffer[_position..to];
-            _position = to;
+            var to = BytesRead + length;
+            var value = Buffer[BytesRead..to];
+            BytesRead = to;
             return value;
         }
 
@@ -77,10 +74,10 @@
         {
 
             var length = GetUInt16();
-            var to = _position + length;
+            var to = BytesRead + length;
 
-            var value = Encoding.UTF8.GetString(Buffer[_position..to]);
-            _position = to;
+            var value = Encoding.UTF8.GetString(Buffer[BytesRead..to]);
+            BytesRead = to;
 
             return value;
         }
@@ -93,6 +90,7 @@
             AddUInt16((ushort)value.Length);
             AddBytes(System.Text.Encoding.UTF8.GetBytes(value));
         }
+
         public void AddUInt32(uint value) => AddBytes(BitConverter.GetBytes(value));
         public void AddUInt16(ushort value) => AddBytes(BitConverter.GetBytes(value));
 
@@ -101,16 +99,29 @@
 
         public void AddPaddingBytes(int count) => AddBytes(0x33, count);
 
-        // public void AddHeader(bool addChecksum)
-        // {
-        //     if (addChecksum)
-        //     {
-        //         var adlerChecksum = AdlerChecksum.Checksum(Buffer, HeaderLength, Length);
-        //         AddChecksumToHeader(BitConverter.GetBytes(adlerChecksum));
-        //     }
-        //     AddLengthToHeader();
+        private void AddHeader(bool addChecksum)
+        {
+            var checkSumBytes = new byte[4];
+            if (addChecksum)
+            {
+                var adlerChecksum = AdlerChecksum.Checksum(Buffer, 6, Length); //todo: 6 is the header length
+                checkSumBytes = BitConverter.GetBytes(adlerChecksum);
+            }
+            var lengthInBytes = BitConverter.GetBytes((ushort)Length + checkSumBytes.Length);
 
-        // }
+            Header = lengthInBytes.Concat(checkSumBytes).ToArray();
+        }
+
+
+        /// <summary>
+        /// Get network message with the body buffer within header (length and adler)
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetMessageInBytes()
+        {
+            AddHeader(true);
+            return Header.Concat(Buffer).ToArray();
+        }
         private byte[] GetLengthBytes() => BitConverter.GetBytes((ushort)Length);
 
         private void AddLengthToHeader()
@@ -123,14 +134,7 @@
             }
         }
 
-        // private void AddChecksumToHeader(byte[] checksum)
-        // {
-        //     var cIndex = 0;
-        //     for (int i = 2; i < HeaderLength; i++)
-        //     {
-        //         WriteByte(checksum[cIndex++], i);
-        //     }
-        // }
+
 
         private void AddBytes(byte[] bytes)
         {
@@ -155,7 +159,7 @@
         private void WriteByte(byte b)
         {
             Length++;
-            Buffer[_position++] = b;
+            Buffer[BytesRead++] = b;
         }
 
 

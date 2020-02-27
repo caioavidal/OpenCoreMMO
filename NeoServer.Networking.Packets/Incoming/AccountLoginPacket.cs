@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model;
@@ -32,5 +33,8 @@ namespace NeoServer.Networking.Packets.Incoming
 
         public int Version { get; }
         public override IServerModel Model { get; }
+
+        public override Func<IServerModel, OutgoingPacket> OutputFunc => (model) => new CharacterListPacket((Account)model);
+        
     }
 }

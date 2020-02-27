@@ -10,5 +10,6 @@ namespace NeoServer.Server.Handlers
             Model = model;
         }
         public IServerModel Model { get; }
+        public Func<Account, object> OutputFunc{ get;}
     }
 }
