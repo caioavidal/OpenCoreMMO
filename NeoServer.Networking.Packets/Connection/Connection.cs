@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Handlers;
 using System;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Net.Sockets;
 namespace NeoServer.Networking
 {
 
-    public class Connection 
+    public class Connection
     {
         public event EventHandler<ConnectionEventArgs> OnProcessEvent;
         public event EventHandler<ConnectionEventArgs> OnCloseEvent;
@@ -21,7 +22,7 @@ namespace NeoServer.Networking
 
         public NetworkMessage InMessage { get; private set; }
 
-        public uint[] Xtea {get; private set;}
+        public uint[] Xtea { get; private set; }
 
         public void OnAccept(IAsyncResult ar)
         {
@@ -76,6 +77,25 @@ namespace NeoServer.Networking
 
             // Tells the subscribers of this event that this connection has been closed.
             OnCloseEvent(this, new ConnectionEventArgs(this));
+        }
+
+        private void SendMessage(NetworkMessage message)
+        {
+            try
+            {
+                Stream.BeginWrite(message.GetMessageInBytes(), 0, message.Length, null, null);
+
+            }
+            catch (ObjectDisposedException)
+            {
+                Close();
+            }
+        }
+
+        public void Send(OutgoingPacket packet)
+        {
+            var message = packet.GetMessage(Xtea);
+            SendMessage(message);
         }
     }
 }

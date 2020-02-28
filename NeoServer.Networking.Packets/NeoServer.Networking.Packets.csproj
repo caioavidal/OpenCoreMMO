@@ -5,6 +5,10 @@
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Server.Handlers\NeoServer.Server.Handlers.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />

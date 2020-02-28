@@ -44,7 +44,7 @@ namespace NeoServer.Server.Standalone.IoC
             {
                 var networkMessage = p.TypedAs<NetworkMessage>();
 
-                var packetType = IncomingDictionaryData.Data[networkMessage.IncomingPacketType];
+                var packetType = IncomingDictionaryData.Data[GameIncomingPacketType.PlayerLoginRequest];
 
                 return (IncomingPacket) c.Resolve(packetType, new PositionalParameter(0, networkMessage));
             });
