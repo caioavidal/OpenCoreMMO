@@ -10,8 +10,12 @@ using Raven.Client.Documents.Session;
 namespace NeoServer.Data.RavenDB
 {
 
-    public class AccountRepository : AbstractIndexCreationTask<Account>, IAccountRepository
+    public class AccountRepository : BaseRepository<Account>, IAccountRepository
     {
+        public AccountRepository(Database database) : base(database)
+        {
+        }
+
         public async void Create(Account account)
         {
             using (var store = new DocumentStore())

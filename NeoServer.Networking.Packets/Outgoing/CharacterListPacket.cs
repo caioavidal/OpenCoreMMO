@@ -16,7 +16,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         private void AddCharList(Account account)
         {
             var charListOutput = GetCharList(account);
-            var payloadLength = charListOutput.Length;
+            var payloadLength = charListOutput.BufferLength;
 
             OutputMessage.AddUInt16((ushort)payloadLength);
             //todo: refact

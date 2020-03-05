@@ -1,16 +1,11 @@
 ﻿using Autofac;
 using NeoServer.Data.RavenDB;
-using NeoServer.Networking;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
-using NeoServer.Server.Model;
-using NeoServer.Server.Security;
-using System;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -20,10 +15,16 @@ namespace NeoServer.Server.Standalone.IoC
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<Database>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IAccountRepository>();
 
             builder.RegisterType<LoginProtocol>();
             builder.RegisterType<LoginListener>();
+            builder.RegisterType<GameProtocol>();
+            builder.RegisterType<GameListener>();
+
+            //builder.RegisterType<NetworkQueue>().As<INetworkQueue>();
+            //builder.RegisterType<OutputStreamMessage>().As<IOutputStreamMessage>();
 
             builder.RegisterType<AccountLoginEventHandler>().SingleInstance();
 

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
 using System;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Net.Sockets;
 namespace NeoServer.Networking
 {
 
-    public class Connection
+    public class Connection : IConnection
     {
         public event EventHandler<ConnectionEventArgs> OnProcessEvent;
         public event EventHandler<ConnectionEventArgs> OnCloseEvent;
@@ -56,7 +57,7 @@ namespace NeoServer.Networking
                 InMessage = new NetworkMessage(Buffer);
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent(this, eventArgs);
-                OnPostProcessEvent(this, eventArgs);
+                
             }
             catch (Exception e)
             {
@@ -79,11 +80,16 @@ namespace NeoServer.Networking
             OnCloseEvent(this, new ConnectionEventArgs(this));
         }
 
-        private void SendMessage(NetworkMessage message)
+        private void SendMessage(INetworkMessage message)
         {
             try
             {
-                Stream.BeginWrite(message.GetMessageInBytes(), 0, message.Length, null, null);
+                var streamMessage = message.GetMessageInBytes();
+                var result = Stream.BeginWrite(streamMessage, 0, message.TotalLength, null, null);
+                Stream.EndWrite(result);
+
+                var eventArgs = new ConnectionEventArgs(this);
+                OnPostProcessEvent(this, eventArgs);
 
             }
             catch (ObjectDisposedException)
@@ -92,9 +98,14 @@ namespace NeoServer.Networking
             }
         }
 
-        public void Send(OutgoingPacket packet)
+        public void Send(IOutgoingPacket packet)
         {
             var message = packet.GetMessage(Xtea);
+            SendMessage(message);
+        }
+        public void Send(string text)
+        {
+            var message = new TextMessagePacket(text).GetMessage(Xtea);
             SendMessage(message);
         }
     }

@@ -24,7 +24,7 @@ namespace NeoServer.Networking.Protocols
             var packet = _packetFactory(args.Connection.InMessage);
             args.Connection.SetXtea(packet.Xtea);
 
-            var eventArgs = new ServerEventArgs(packet.Model, packet.OutputFunc);
+            var eventArgs = new ServerEventArgs(packet.Model, args.Connection, packet.SuccessFunc);
 
             packet.OnIncomingPacket(args.Connection, eventArgs);   
         }

@@ -7,6 +7,9 @@ public class LoginHandler : ICommandHandler<LoginCommand>
     {
         var socket = command.Auth.Socket;
 
+          new LoginErrorOutput($"Invalid account name.", command.Auth.Xtea)
+            .Send(socket);
+
         if(string.IsNullOrWhiteSpace(command.Auth.AccountName)){
             new LoginErrorOutput($"Invalid account name.", command.Auth.Xtea)
             .Send(socket);

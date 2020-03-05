@@ -4,8 +4,8 @@ using System.Text;
 
 namespace NeoServer.Server.Contracts.Network
 {
-    public interface INetworkQueue
+    public interface IOutgoingPacket
     {
-        //void Enqueue(IOutputStreamMessage message);
+        INetworkMessage GetMessage(uint[] xtea);
     }
 }

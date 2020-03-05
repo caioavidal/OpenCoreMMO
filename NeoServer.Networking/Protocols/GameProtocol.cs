@@ -10,17 +10,18 @@ namespace NeoServer.Networking.Protocols
 
         public void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            Console.WriteLine("Game OnAcceptNewConnection");
         }
 
         public void PostProcessMessage(object sender, ConnectionEventArgs args)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void ProcessMessage(object sender, ConnectionEventArgs args)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Game ProcessMessage");
         }
     }
 }

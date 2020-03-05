@@ -8,6 +8,7 @@
             "args": [
                 "build",
                 "${workspaceFolder}/NeoServer.Server.Standalone/NeoServer.Server.Standalone.csproj",
+                //"${workspaceFolder}/neoserver/neoserver.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -20,6 +21,8 @@
             "args": [
                 "publish",
                 "${workspaceFolder}/NeoServer.Server.Standalone/NeoServer.Server.Standalone.csproj",
+                //"${workspaceFolder}/neoserver/neoserver.csproj",
+
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,6 +36,7 @@
                 "watch",
                 "run",
                 "${workspaceFolder}/NeoServer.Server.Standalone/NeoServer.Server.Standalone.csproj",
+                //"${workspaceFolder}/neoserver/neoserver.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

@@ -1,5 +1,7 @@
 ﻿using System;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model;
@@ -10,7 +12,7 @@ namespace NeoServer.Networking.Packets.Incoming
     public class AccountLoginPacket : IncomingPacket
     {
 
-        public AccountLoginPacket(NetworkMessage message, AccountLoginEventHandler handler) : base(handler)
+        public AccountLoginPacket(IReadOnlyNetworkMessage message, AccountLoginEventHandler handler) : base(handler)
         {
             var packetPayload = message.GetUInt16();
             var tcpPayload = packetPayload + 2;
@@ -34,7 +36,7 @@ namespace NeoServer.Networking.Packets.Incoming
         public int Version { get; }
         public override IServerModel Model { get; }
 
-        public override Func<IServerModel, OutgoingPacket> OutputFunc => (model) => new CharacterListPacket((Account)model);
+        public override Func<IServerModel, IOutgoingPacket> SuccessFunc => (model) => new CharacterListPacket((Account)model);
         
     }
 }
