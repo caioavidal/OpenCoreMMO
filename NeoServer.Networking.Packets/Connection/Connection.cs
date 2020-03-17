@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
@@ -21,7 +22,7 @@ namespace NeoServer.Networking
 
         private byte[] Buffer = new byte[1024];
 
-        public NetworkMessage InMessage { get; private set; }
+        public IReadOnlyNetworkMessage InMessage { get; private set; }
 
         public uint[] Xtea { get; private set; }
 
@@ -54,7 +55,7 @@ namespace NeoServer.Networking
 
             try
             {
-                InMessage = new NetworkMessage(Buffer);
+                InMessage = new ReadOnlyNetworkMessage(Buffer);
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent(this, eventArgs);
                 
@@ -85,7 +86,7 @@ namespace NeoServer.Networking
             try
             {
                 var streamMessage = message.GetMessageInBytes();
-                var result = Stream.BeginWrite(streamMessage, 0, message.TotalLength, null, null);
+                var result = Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
                 Stream.EndWrite(result);
 
                 var eventArgs = new ConnectionEventArgs(this);

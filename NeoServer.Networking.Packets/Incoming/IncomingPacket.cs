@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
@@ -24,7 +25,7 @@ namespace NeoServer.Networking.Packets.Incoming
         public abstract IServerModel Model { get; }
         public uint[] Xtea { get; } = new uint[4];
 
-        protected void LoadXtea(NetworkMessage message)
+        protected void LoadXtea(IReadOnlyNetworkMessage message)
         {
             for (int i = 0; i < 4; i++)
             {

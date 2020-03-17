@@ -3,6 +3,7 @@ using NeoServer.Data.RavenDB;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Handlers.Authentication;
@@ -43,7 +44,7 @@ namespace NeoServer.Server.Standalone.IoC
         {
             builder.Register((c, p) =>
             {
-                var networkMessage = p.TypedAs<NetworkMessage>();
+                var networkMessage = p.TypedAs<IReadOnlyNetworkMessage>();
 
                 var packetType = IncomingDictionaryData.Data[GameIncomingPacketType.PlayerLoginRequest];
 

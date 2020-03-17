@@ -1,62 +1,76 @@
 ﻿namespace NeoServer.Networking.Packets
 {
+    using NeoServer.Networking.Packets.Messages;
     using NeoServer.Server.Contracts.Network;
     using NeoServer.Server.Security;
     using System;
     using System.Linq;
     using System.Text;
 
-    public class NetworkMessage : BaseNetworkMessage, INetworkMessage
+    public class NetworkMessage : ReadOnlyNetworkMessage
     {
         private int Position;
 
         public NetworkMessage()
         {
-            Buffer = new byte[1024];            
+            Buffer = new byte[1024];
         }
 
         public void AddString(string value)
         {
             AddUInt16((ushort)value.Length);
-            AddBytes(System.Text.Encoding.UTF8.GetBytes(value));
+            WriteBytes(Encoding.UTF8.GetBytes(value));
         }
 
-        public void AddUInt32(uint value) => AddBytes(BitConverter.GetBytes(value));
-        public void AddUInt16(ushort value) => AddBytes(BitConverter.GetBytes(value));
+        public void AddUInt32(uint value) => WriteBytes(BitConverter.GetBytes(value));
+        public void AddUInt16(ushort value) => WriteBytes(BitConverter.GetBytes(value));
 
-        public void AddUInt8(sbyte value) => AddBytes(BitConverter.GetBytes(value));
-        public void AddByte(byte b) => AddBytes(new[] { b });
+        public void AddUInt8(sbyte value) => WriteBytes(BitConverter.GetBytes(value));
+        public void AddByte(byte b) => WriteBytes(new[] { b });
 
-        public void AddPaddingBytes(int count) => AddBytes(0x33, count);
-
-        private void AddHeader(bool addChecksum)
+        /// <summary>
+        /// Add bytes with payload length
+        /// </summary>
+        /// <param name="bytes"></param>
+        public void AddBytes(byte[] bytes)
         {
-            var checkSumBytes = new byte[4];
-            if (addChecksum)
-            {
-                var adlerChecksum = AdlerChecksum.Checksum(Buffer, 0, BufferLength); //todo: 6 is the header length
-                checkSumBytes = BitConverter.GetBytes(adlerChecksum);
-            }
-            var lengthInBytes = BitConverter.GetBytes((ushort)(BufferLength + checkSumBytes.Length));
+            AddUInt16((ushort)bytes.Length);
 
-            Header = lengthInBytes.Concat(checkSumBytes).ToArray();
+            foreach (var b in bytes)
+            {
+                WriteByte(b);
+            }
         }
+        public void AddPaddingBytes(int count) => WriteBytes(0x33, count);
+
+        //private void AddHeader(bool addChecksum)
+        //{
+        //    var checkSumBytes = new byte[4];
+        //    if (addChecksum)
+        //    {
+        //        var adlerChecksum = AdlerChecksum.Checksum(Buffer, 0, BufferLength); //todo: 6 is the header length
+        //        checkSumBytes = BitConverter.GetBytes(adlerChecksum);
+        //    }
+        //    var lengthInBytes = BitConverter.GetBytes((ushort)(BufferLength + checkSumBytes.Length));
+
+        //    Header = lengthInBytes.Concat(checkSumBytes).ToArray();
+        //}
 
 
         /// <summary>
         /// Get network message with the body buffer within header (length and adler)
         /// </summary>
         /// <returns></returns>
-        public byte[] GetMessageInBytes(bool addHeader = true)
-        {
-            if (addHeader)
-            {
-                AddHeader(true);
-                return Header.Concat(Buffer).ToArray();
-            };
-            return Buffer.ToArray();
-        }
-        private byte[] GetLengthBytes() => BitConverter.GetBytes((ushort)BufferLength);
+        //public byte[] GetMessageInBytes(bool addHeader = true)
+        //{
+        //    if (addHeader)
+        //    {
+        //        AddHeader(true);
+        //        return Header.Concat(Buffer).ToArray();
+        //    };
+        //    return Buffer.ToArray();
+        //}
+        private byte[] GetLengthBytes() => BitConverter.GetBytes((ushort)Length);
 
         private void AddLengthToHeader()
         {
@@ -70,14 +84,14 @@
 
 
 
-        private void AddBytes(byte[] bytes)
+        private void WriteBytes(byte[] bytes)
         {
             foreach (var b in bytes)
             {
                 WriteByte(b);
             }
         }
-        private void AddBytes(byte b, int times)
+        private void WriteBytes(byte b, int times)
         {
             for (int i = 0; i < times; i++)
             {
@@ -87,12 +101,12 @@
 
         private void WriteByte(byte b, int position)
         {
-            BufferLength++;
+            Length++;
             Buffer[position] = b;
         }
         private void WriteByte(byte b)
         {
-            BufferLength++;
+            Length++;
             Buffer[Position++] = b;
         }
 

@@ -19,7 +19,7 @@ namespace NeoServer.Server.Standalone
 
 
             
-            Console.WriteLine(Convert.ToString(c, toBase: 2));
+            //Console.WriteLine(Convert.ToString(c, toBase: 2));
 
             return;
 

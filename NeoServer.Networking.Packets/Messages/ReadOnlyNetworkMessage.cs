@@ -4,15 +4,13 @@ using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Messages
 {
-    public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
+    public class ReadOnlyNetworkMessage : BaseNetworkMessage, IReadOnlyNetworkMessage
     {
-        private byte[] Buffer;
         public int BytesRead { get; private set; } = 0;
 
-        public ReadOnlyNetworkMessage(byte[] buffer)
-        {
-            Buffer = buffer;
-        }
+        public ReadOnlyNetworkMessage(byte[] buffer) => Buffer = buffer;
+
+        protected ReadOnlyNetworkMessage() { }
 
         public GameIncomingPacketType IncomingPacketType
         {
@@ -38,9 +36,16 @@ namespace NeoServer.Networking.Packets.Messages
             return value;
         }
 
-        public void SkipBytes(int length) => BytesRead += length;
+        public void SkipBytes(int length)
+        {
+            if(length + BytesRead > Buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException("Cannot skip bytes that exceeds the buffer length");
+            }
+            BytesRead += length;
+        }
 
-        public void ResetPosition() => BytesRead = 0;
+        private void ResetPosition() => BytesRead = 0;
 
         public byte GetByte()
         {
@@ -57,6 +62,10 @@ namespace NeoServer.Networking.Packets.Messages
             return value;
         }
 
+        /// <summary>
+        /// Get string value based on payload length
+        /// </summary>
+        /// <returns></returns>
         public string GetString()
         {
 

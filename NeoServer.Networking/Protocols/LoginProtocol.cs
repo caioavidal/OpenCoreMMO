@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model;
@@ -13,8 +14,8 @@ namespace NeoServer.Networking.Protocols
     {
         public override bool KeepConnectionOpen => false;
         // private Func<GameIncomingPacketType, IEventHandler> _handlerFactory;
-        private Func<NetworkMessage, IncomingPacket> _packetFactory;
-        public LoginProtocol(Func<NetworkMessage, IncomingPacket> packetFactory)
+        private Func<IReadOnlyNetworkMessage, IncomingPacket> _packetFactory;
+        public LoginProtocol(Func<IReadOnlyNetworkMessage, IncomingPacket> packetFactory)
         {
             _packetFactory = packetFactory;
         }

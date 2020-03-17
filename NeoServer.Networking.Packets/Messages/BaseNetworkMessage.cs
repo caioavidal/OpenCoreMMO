@@ -6,9 +6,11 @@
     using System.Linq;
     using System.Text;
 
-    public class BaseNetworkMessage
+    public class BaseNetworkMessage: INetworkMessage
     {
         protected byte[] Buffer { get; set; }
-        public int Length { get; private set; } = 0;
+        public int Length { get; protected set; } = 0;
+
+        public byte[] GetMessageInBytes() => Length == 0 ? Buffer.ToArray() : Buffer[0..Length].ToArray();
     }
 }

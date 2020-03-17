@@ -37,7 +37,7 @@ namespace NeoServer.Networking.Tests
 
             var encrypted = Xtea.Encrypt(input, keys);
 
-            var encryptedBytes = encrypted.GetMessageInBytes(false);
+            var encryptedBytes = encrypted.GetMessageInBytes();
 
             var areEqual = encryptedBytes[0..16].SequenceEqual(expected);
             Assert.True(areEqual);
