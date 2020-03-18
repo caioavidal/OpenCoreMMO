@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Contracts"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Tests", "NeoServer.Networking.Tests\NeoServer.Networking.Tests.csproj", "{47360B5F-31E4-409A-9BD7-157374089392}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.World", "NeoServer.Server.World\NeoServer.Server.World.csproj", "{14B66300-624B-40AE-A5E3-0D6A733F898F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{47360B5F-31E4-409A-9BD7-157374089392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47360B5F-31E4-409A-9BD7-157374089392}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47360B5F-31E4-409A-9BD7-157374089392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B66300-624B-40AE-A5E3-0D6A733F898F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B66300-624B-40AE-A5E3-0D6A733F898F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B66300-624B-40AE-A5E3-0D6A733F898F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B66300-624B-40AE-A5E3-0D6A733F898F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{C9F2DE20-662D-490F-BA4F-378D43664CC9} = {E0298381-8C65-4339-835B-0F4D230E479E}
 		{A5D60E73-9D23-4191-9F69-9B31651C2BDB} = {E0298381-8C65-4339-835B-0F4D230E479E}
 		{47360B5F-31E4-409A-9BD7-157374089392} = {676FD03A-21CA-45E6-B61A-2AFCE061269B}
+		{14B66300-624B-40AE-A5E3-0D6A733F898F} = {E0298381-8C65-4339-835B-0F4D230E479E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B3C7097-0071-4218-BE24-5EE9128763B6}

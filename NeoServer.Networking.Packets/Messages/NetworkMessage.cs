@@ -11,9 +11,8 @@
     {
         private int Position;
 
-        public NetworkMessage()
-        {
-            Buffer = new byte[1024];
+        public NetworkMessage():base(new byte[1024])
+        {            
         }
 
         public void AddString(string value)
@@ -41,21 +40,17 @@
                 WriteByte(b);
             }
         }
-        public void AddPaddingBytes(int count) => WriteBytes(0x33, count);
 
-       
-        private byte[] GetLengthBytes() => BitConverter.GetBytes((ushort)Length);
-
-        private void AddLengthToHeader()
+        public void AddPayloadLength()
         {
-            var length = GetLengthBytes();
-
-            for (int i = 0; i < length.Length; i++)
-            {
-                WriteByte(length[i], i);
-            }
+            var bytes = BitConverter.GetBytes((ushort)Length);
+            Buffer[0] = bytes[0];
+            Buffer[1] = bytes[1];
         }
 
+        public void AddPayloadLengthSpace() => Position += 2;
+        
+        public void AddPaddingBytes(int count) => WriteBytes(0x33, count);
 
 
         private void WriteBytes(byte[] bytes)
@@ -73,11 +68,6 @@
             }
         }
 
-        private void WriteByte(byte b, int position)
-        {
-            Length++;
-            Buffer[position] = b;
-        }
         private void WriteByte(byte b)
         {
             Length++;

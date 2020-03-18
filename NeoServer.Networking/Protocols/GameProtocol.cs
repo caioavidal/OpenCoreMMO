@@ -1,27 +1,31 @@
-﻿using System;
+﻿using NeoServer.Networking.Packets;
+using NeoServer.Networking.Packets.Outgoing;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NeoServer.Networking.Protocols
 {
-    public class GameProtocol : IProtocol
+    public class GameProtocol : OpenTibiaProtocol
     {
-        public bool KeepConnectionOpen => throw new NotImplementedException();
+        public override bool KeepConnectionOpen => true;
 
-        public void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
+        public override void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
         {
             //throw new NotImplementedException();
             Console.WriteLine("Game OnAcceptNewConnection");
+            base.OnAcceptNewConnection(connection, ar);
+            HandlerFirstConnection(connection);
         }
 
-        public void PostProcessMessage(object sender, ConnectionEventArgs args)
+        public void HandlerFirstConnection(Connection connection)
         {
-            //throw new NotImplementedException();
+            connection.Send(new FirstConnectionPacket(), false);
         }
 
-        public void ProcessMessage(object sender, ConnectionEventArgs args)
+    
+        public override void ProcessMessage(object sender, ConnectionEventArgs connection)
         {
-            Console.WriteLine("Game ProcessMessage");
         }
     }
 }

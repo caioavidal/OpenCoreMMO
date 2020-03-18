@@ -18,6 +18,8 @@ namespace NeoServer.Networking.Packets.Outgoing
 
             return new GameNetworkMessage(encrypted);
         }
+        public INetworkMessage GetMessage()=> new GameNetworkMessage(OutputMessage);
+        
     }
 
     

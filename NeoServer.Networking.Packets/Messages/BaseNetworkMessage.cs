@@ -8,9 +8,14 @@
 
     public class BaseNetworkMessage: INetworkMessage
     {
-        protected byte[] Buffer { get; set; }
+        protected byte[] Buffer { get; private set; }
         public int Length { get; protected set; } = 0;
 
         public byte[] GetMessageInBytes() => Length == 0 ? Buffer.ToArray() : Buffer[0..Length].ToArray();
+
+        public BaseNetworkMessage(byte[] buffer)
+        {
+            Buffer = buffer;
+        }
     }
 }

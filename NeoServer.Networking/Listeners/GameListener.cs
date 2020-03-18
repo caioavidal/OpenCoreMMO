@@ -7,7 +7,7 @@ namespace NeoServer.Networking.Listeners
 {
     public class GameListener : OpenTibiaListener
     {
-        public GameListener() : base(7172, new GameProtocol())
+        public GameListener(GameProtocol protocol) : base(7172, protocol)
         {
         }
     }

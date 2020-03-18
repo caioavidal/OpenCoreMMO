@@ -15,28 +15,24 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         private void AddCharList(Account account)
         {
-            var charListOutput = GetCharList(account);
-            OutputMessage.AddBytes(charListOutput.GetMessageInBytes());
-        }
-        private NetworkMessage GetCharList(Account account)
-        {
+            OutputMessage.AddPayloadLengthSpace();
 
-            var output = new NetworkMessage();
             //output.AddByte(0x14); todo: modt
-            output.AddByte(0x64); //todo charlist
-            output.AddByte((byte)account.Players.Count);
+            OutputMessage.AddByte(0x64); //todo charlist
+            OutputMessage.AddByte((byte)account.Players.Count);
             foreach (var player in account.Players)
             {
-                output.AddString(player.Name);
-                output.AddString("NeoServer"); //todo change to const
-                output.AddByte(127);
-                output.AddByte(0);
-                output.AddByte(0);
-                output.AddByte(1);
-                output.AddUInt16(7172);
+                OutputMessage.AddString(player.Name);
+                OutputMessage.AddString("NeoServer"); //todo change to const
+                OutputMessage.AddByte(127);
+                OutputMessage.AddByte(0);
+                OutputMessage.AddByte(0);
+                OutputMessage.AddByte(1);
+                OutputMessage.AddUInt16(7172);
             }
-            output.AddUInt16((ushort)account.PremiumTime);
-            return output;
+            OutputMessage.AddUInt16((ushort)account.PremiumTime);
+
+            OutputMessage.AddPayloadLength();
         }
 
         private void AddWorlds()

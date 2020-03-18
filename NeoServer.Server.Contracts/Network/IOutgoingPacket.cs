@@ -7,5 +7,6 @@ namespace NeoServer.Server.Contracts.Network
     public interface IOutgoingPacket
     {
         INetworkMessage GetMessage(uint[] xtea);
+        INetworkMessage GetMessage();
     }
 }

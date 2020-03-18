@@ -43,7 +43,7 @@ namespace neoserver
             
 
             Task.Run(()=>LoginListener.StartListening());
-            //Task.Run(()=>GameListener.StartListening());
+            Task.Run(()=>GameListener.StartListening());
 
 
             Console.Read();

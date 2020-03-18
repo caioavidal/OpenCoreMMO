@@ -8,7 +8,7 @@ namespace NeoServer.Networking.Protocols
     {
         public virtual bool KeepConnectionOpen { get; protected set; }
 
-        public void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
+        public virtual void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
         {
             connection.OnAccept(ar);
         }

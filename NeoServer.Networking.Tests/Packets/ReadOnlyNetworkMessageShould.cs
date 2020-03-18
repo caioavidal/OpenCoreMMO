@@ -39,7 +39,7 @@ namespace NeoServer.Networking.Tests.Packets
 
             var s = sup.GetString();
 
-            Assert.Equal(s, "0000069874");
+            Assert.Equal("0000069874", s);
         }
 
         [Fact]
@@ -49,19 +49,19 @@ namespace NeoServer.Networking.Tests.Packets
             var sup = new ReadOnlyNetworkMessage(Encoding.ASCII.GetBytes(data));
 
             sup.GetUInt16();
-            Assert.Equal(sup.BytesRead, 2);
+            Assert.Equal(2, sup.BytesRead);
 
             sup.GetUInt32();
-            Assert.Equal(sup.BytesRead, 6);
+            Assert.Equal(6, sup.BytesRead);
 
             sup.GetByte();
-            Assert.Equal(sup.BytesRead, 7);
+            Assert.Equal(7, sup.BytesRead);
 
             sup.SkipBytes(3);
-            Assert.Equal(sup.BytesRead, 10);
+            Assert.Equal(10, sup.BytesRead);
 
             sup.GetString();
-            Assert.Equal(sup.BytesRead, 22);
+            Assert.Equal(22, sup.BytesRead);
 
         }
 
@@ -70,8 +70,6 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = 1652365;
             var sup = new ReadOnlyNetworkMessage(BitConverter.GetBytes(data));
-
-            var expected = new int[] { 141, 54 };
             Assert.Equal((uint)1652365, sup.GetUInt32());
         }
 

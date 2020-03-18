@@ -99,9 +99,9 @@ namespace NeoServer.Networking
             }
         }
 
-        public void Send(IOutgoingPacket packet)
+        public void Send(IOutgoingPacket packet, bool encrypt = true)
         {
-            var message = packet.GetMessage(Xtea);
+            var message = encrypt ? packet.GetMessage(Xtea) : packet.GetMessage();
             SendMessage(message);
         }
         public void Send(string text)

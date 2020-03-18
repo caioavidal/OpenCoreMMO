@@ -9,7 +9,8 @@ namespace NeoServer.Networking.Packets.Incoming
     {
         public static readonly IReadOnlyDictionary<GameIncomingPacketType, Type> Data =
         new Dictionary<GameIncomingPacketType, Type>(){
-            { GameIncomingPacketType.PlayerLoginRequest, typeof(AccountLoginPacket)}
+            { GameIncomingPacketType.PlayerLoginRequest, typeof(AccountLoginPacket)},
+            { GameIncomingPacketType.PlayerLogIn, typeof(AccountLoginPacket)}
         };
 
     }

@@ -9,11 +9,9 @@ namespace NeoServer.Networking.Packets.Messages
     {
         public int BytesRead { get; private set; } = 0;
 
-        public ReadOnlyNetworkMessage(byte[] buffer) => Buffer = buffer;
+        public ReadOnlyNetworkMessage(byte[] buffer) : base(buffer) { }
 
         private void IncreaseByteRead(int length) => BytesRead += length;
-
-        protected ReadOnlyNetworkMessage() { }
 
         public static int SizeOf<T>() where T : struct => Marshal.SizeOf(default(T));
 
@@ -56,7 +54,8 @@ namespace NeoServer.Networking.Packets.Messages
         public byte GetByte() => Convert((buffer, index) => Buffer[BytesRead]);
 
         public byte[] GetBytes(int length) =>
-            Convert((buffer, index) => {
+            Convert((buffer, index) =>
+            {
                 var to = BytesRead + length;
                 return Buffer[BytesRead..to];
             }, length);
@@ -65,8 +64,9 @@ namespace NeoServer.Networking.Packets.Messages
         /// Get string value based on payload length
         /// </summary>
         /// <returns></returns>
-        public string GetString(){
-        
+        public string GetString()
+        {
+
             var length = GetUInt16();
 
             return Convert((buffer, index) =>
@@ -74,8 +74,8 @@ namespace NeoServer.Networking.Packets.Messages
                 return Encoding.UTF8.GetString(Buffer, BytesRead, length);
             }, length);
         }
-            
-        
+
+
     }
 
 }

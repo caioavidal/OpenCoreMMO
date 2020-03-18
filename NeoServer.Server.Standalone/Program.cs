@@ -17,27 +17,21 @@ namespace NeoServer.Server.Standalone
         static void Main(string[] args)
         {
 
-
-            
-            //Console.WriteLine(Convert.ToString(c, toBase: 2));
-
-            return;
-
             var container = Container.CompositionRoot();
             container.Resolve<Database>().Connect();
 
-            // Container.CompositionRoot().Resolve<IAccountRepository>().Create(new Account
-            // {
-            //     AccountName = "1",
-            //     Password = "1",
-            //     Players = new List<Player>(){
+            //Container.CompositionRoot().Resolve<IAccountRepository>().Create(new Account
+            //{
+            //    AccountName = "1",
+            //    Password = "1",
+            //    Players = new List<Player>(){
             //         new Player(){
             //              Name = "Caio 1"
             //         }, new Player(){
             //             Name = "Caio 2"
             //         }
             //      }
-            //  });
+            //});
 
             RSA.LoadPem();
 
