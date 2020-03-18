@@ -43,33 +43,7 @@
         }
         public void AddPaddingBytes(int count) => WriteBytes(0x33, count);
 
-        //private void AddHeader(bool addChecksum)
-        //{
-        //    var checkSumBytes = new byte[4];
-        //    if (addChecksum)
-        //    {
-        //        var adlerChecksum = AdlerChecksum.Checksum(Buffer, 0, BufferLength); //todo: 6 is the header length
-        //        checkSumBytes = BitConverter.GetBytes(adlerChecksum);
-        //    }
-        //    var lengthInBytes = BitConverter.GetBytes((ushort)(BufferLength + checkSumBytes.Length));
-
-        //    Header = lengthInBytes.Concat(checkSumBytes).ToArray();
-        //}
-
-
-        /// <summary>
-        /// Get network message with the body buffer within header (length and adler)
-        /// </summary>
-        /// <returns></returns>
-        //public byte[] GetMessageInBytes(bool addHeader = true)
-        //{
-        //    if (addHeader)
-        //    {
-        //        AddHeader(true);
-        //        return Header.Concat(Buffer).ToArray();
-        //    };
-        //    return Buffer.ToArray();
-        //}
+       
         private byte[] GetLengthBytes() => BitConverter.GetBytes((ushort)Length);
 
         private void AddLengthToHeader()

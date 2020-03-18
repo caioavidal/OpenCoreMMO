@@ -6,16 +6,19 @@ using System.Text;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class OutgoingPacket:IOutgoingPacket
+    public class OutgoingPacket : IOutgoingPacket
     {
         protected NetworkMessage OutputMessage { get; } = new NetworkMessage();
 
 
         public INetworkMessage GetMessage(uint[] xtea)
         {
-            Xtea.Encrypt(OutputMessage, xtea);
-            return OutputMessage;
-        }
 
+            var encrypted = Xtea.Encrypt(OutputMessage, xtea);
+
+            return new GameNetworkMessage(encrypted);
+        }
     }
+
+    
 }

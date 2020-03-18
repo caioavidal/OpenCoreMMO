@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using NeoServer.Server.Contracts.Network;
 
@@ -10,7 +11,26 @@ namespace NeoServer.Networking.Packets.Messages
 
         public ReadOnlyNetworkMessage(byte[] buffer) => Buffer = buffer;
 
+        private void IncreaseByteRead(int length) => BytesRead += length;
+
         protected ReadOnlyNetworkMessage() { }
+
+        public static int SizeOf<T>() where T : struct => Marshal.SizeOf(default(T));
+
+
+        private T Convert<T>(Func<byte[], int, T> converter) where T : struct
+        {
+            var result = converter(Buffer, BytesRead);
+            IncreaseByteRead(SizeOf<T>());
+            return result;
+        }
+
+        private T Convert<T>(Func<byte[], int, T> converter, int length)
+        {
+            var result = converter(Buffer, BytesRead);
+            IncreaseByteRead(length);
+            return result;
+        }
 
         public GameIncomingPacketType IncomingPacketType
         {
@@ -20,63 +40,42 @@ namespace NeoServer.Networking.Packets.Messages
             }
         }
 
-        public ushort GetUInt16()
-        {
-            var to = BytesRead + sizeof(ushort);
-            var value = BitConverter.ToUInt16(Buffer[BytesRead..to], 0);
-            BytesRead = to;
-            return value;
+        public ushort GetUInt16() => Convert(BitConverter.ToUInt16);
 
-        }
-        public uint GetUInt32()
-        {
-            var to = BytesRead + sizeof(uint);
-            var value = BitConverter.ToUInt32(Buffer[BytesRead..to], 0);
-            BytesRead = to;
-            return value;
-        }
+        public uint GetUInt32() => Convert(BitConverter.ToUInt32);
 
         public void SkipBytes(int length)
         {
-            if(length + BytesRead > Buffer.Length)
+            if (length + BytesRead > Buffer.Length)
             {
                 throw new ArgumentOutOfRangeException("Cannot skip bytes that exceeds the buffer length");
             }
-            BytesRead += length;
+            IncreaseByteRead(length);
         }
 
-        private void ResetPosition() => BytesRead = 0;
+        public byte GetByte() => Convert((buffer, index) => Buffer[BytesRead]);
 
-        public byte GetByte()
-        {
-            var to = BytesRead + sizeof(byte);
-            var value = Buffer[BytesRead..to];
-            BytesRead = to;
-            return value[0];
-        }
-        public byte[] GetBytes(int length)
-        {
-            var to = BytesRead + length;
-            var value = Buffer[BytesRead..to];
-            BytesRead = to;
-            return value;
-        }
+        public byte[] GetBytes(int length) =>
+            Convert((buffer, index) => {
+                var to = BytesRead + length;
+                return Buffer[BytesRead..to];
+            }, length);
 
         /// <summary>
         /// Get string value based on payload length
         /// </summary>
         /// <returns></returns>
-        public string GetString()
-        {
-
+        public string GetString(){
+        
             var length = GetUInt16();
-            var to = BytesRead + length;
 
-            var value = Encoding.UTF8.GetString(Buffer[BytesRead..to]);
-            BytesRead = to;
-
-            return value;
+            return Convert((buffer, index) =>
+            {
+                return Encoding.UTF8.GetString(Buffer, BytesRead, length);
+            }, length);
         }
+            
+        
     }
 
 }

@@ -6,12 +6,11 @@ using Xunit;
 
 namespace NeoServer.Networking.Tests.Packets
 {
-    public class ReadOnlyNetworkMessageShould : IClassFixture<ReadOnlyNetworkMessageFixture>
+    public class ReadOnlyNetworkMessageShould
     {
-        private readonly ReadOnlyNetworkMessageFixture _fixture;
-        public ReadOnlyNetworkMessageShould(ReadOnlyNetworkMessageFixture fixture)
+        public ReadOnlyNetworkMessageShould()
         {
-            _fixture = fixture;
+           
         }
 
         [Fact]
@@ -23,6 +22,49 @@ namespace NeoServer.Networking.Tests.Packets
             var expected = new byte[] { 141, 54 };
             Assert.Equal(BitConverter.ToUInt16(expected, 0), sup.GetUInt16());
         }
+
+        [Fact]
+        public void Return_Values()
+        {
+            var data = "1652365658\n\0000006987451230246545648945646";
+            var sup = new ReadOnlyNetworkMessage(Encoding.ASCII.GetBytes(data));
+
+            Assert.Equal(BitConverter.ToUInt16(new byte[] { 49, 54 }, 0), sup.GetUInt16());
+
+            Assert.Equal(BitConverter.ToUInt32(new byte[] { 53, 50, 51, 54 }, 0), sup.GetUInt32());
+
+            sup.SkipBytes(3);
+
+            Assert.Equal((byte)56, sup.GetByte());
+
+            var s = sup.GetString();
+
+            Assert.Equal(s, "0000069874");
+        }
+
+        [Fact]
+        public void Increase_BytesRead()
+        {
+            var data = "1652365658\n\0000006987451230246545648945646";
+            var sup = new ReadOnlyNetworkMessage(Encoding.ASCII.GetBytes(data));
+
+            sup.GetUInt16();
+            Assert.Equal(sup.BytesRead, 2);
+
+            sup.GetUInt32();
+            Assert.Equal(sup.BytesRead, 6);
+
+            sup.GetByte();
+            Assert.Equal(sup.BytesRead, 7);
+
+            sup.SkipBytes(3);
+            Assert.Equal(sup.BytesRead, 10);
+
+            sup.GetString();
+            Assert.Equal(sup.BytesRead, 22);
+
+        }
+
         [Fact]
         public void Return_UInt()
         {
@@ -76,19 +118,11 @@ namespace NeoServer.Networking.Tests.Packets
         [Fact]
         public void GetString()
         {
-            var data = "hello world";
+            var data = "\a\0hello world";
 
-            var payload = Encoding.ASCII.GetBytes(data);
-            var payloadLength = BitConverter.GetBytes((ushort)payload.Length);
+            var sup = new ReadOnlyNetworkMessage(Encoding.ASCII.GetBytes(data));
 
-            var dataBytes = new byte[13];
-            payloadLength.CopyTo(dataBytes, 0);
-
-            payload.CopyTo(dataBytes, 2);
-
-            var sup = new ReadOnlyNetworkMessage(dataBytes);
-
-            var expected = "hello world";
+            var expected = "hello w";
             Assert.Equal(expected, sup.GetString());
         }
 

@@ -7,7 +7,7 @@ namespace NeoServer.Server.Contracts.Network
     public interface INetworkMessage
     {
         byte[] GetMessageInBytes();
-        //int BufferLength { get; }
-        //int TotalLength { get; }
     }
+
+    
 }
