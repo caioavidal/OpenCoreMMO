@@ -15,7 +15,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         private void AddCharList(Account account)
         {
-            OutputMessage.AddPayloadLengthSpace();
+           // OutputMessage.AddPayloadLengthSpace();
 
             //output.AddByte(0x14); todo: modt
             OutputMessage.AddByte(0x64); //todo charlist
@@ -32,7 +32,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
             OutputMessage.AddUInt16((ushort)account.PremiumTime);
 
-            OutputMessage.AddPayloadLength();
+         //   OutputMessage.AddPayloadLength();
         }
 
         private void AddWorlds()

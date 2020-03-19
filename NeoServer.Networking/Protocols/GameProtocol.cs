@@ -11,18 +11,16 @@ namespace NeoServer.Networking.Protocols
 {
     public class GameProtocol : OpenTibiaProtocol
     {
-        private Func<IReadOnlyNetworkMessage, IncomingPacket> _packetFactory;
-
-        public GameProtocol(Func<IReadOnlyNetworkMessage, IncomingPacket> packetFactory)
+        private Func<IReadOnlyNetworkMessage, IPacketHandler> _handlerFactory;
+        public GameProtocol(Func<IReadOnlyNetworkMessage, IPacketHandler> handlerFactory)
         {
-            _packetFactory = packetFactory;
+            _handlerFactory = handlerFactory;
         }
 
         public override bool KeepConnectionOpen => true;
 
         public override void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
         {
-            //throw new NotImplementedException();
             Console.WriteLine("Game OnAcceptNewConnection");
             base.OnAcceptNewConnection(connection, ar);
             HandlerFirstConnection(connection);
@@ -36,12 +34,10 @@ namespace NeoServer.Networking.Protocols
     
         public override void ProcessMessage(object sender, ConnectionEventArgs args)
         {
-            var packet = _packetFactory(args.Connection.InMessage);
-            args.Connection.SetXtea(packet.Xtea);
+            args.Connection.ResetBuffer();
+            var handler = _handlerFactory(args.Connection.InMessage);
+            handler.HandlerMessage(args.Connection.InMessage, args.Connection);
 
-            var eventArgs = new ServerEventArgs(packet.Model, args.Connection, packet.SuccessFunc);
-
-            packet.OnIncomingPacket(args.Connection, eventArgs);
         }
     }
 }

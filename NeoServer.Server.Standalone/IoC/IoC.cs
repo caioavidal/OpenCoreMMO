@@ -6,6 +6,7 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Repositories;
+using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model.Items;
 using NeoServer.Server.World;
@@ -17,6 +18,9 @@ namespace NeoServer.Server.Standalone.IoC
         public static IContainer CompositionRoot()
         {
             var builder = new ContainerBuilder();
+
+            //server
+            builder.RegisterType<ServerState>().SingleInstance();
 
             builder.RegisterType<Database>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IAccountRepository>();
@@ -31,9 +35,11 @@ namespace NeoServer.Server.Standalone.IoC
             //builder.RegisterType<OutputStreamMessage>().As<IOutputStreamMessage>();
 
             builder.RegisterType<AccountLoginEventHandler>().SingleInstance();
+            builder.RegisterType<PlayerLogInEventHandler>().SingleInstance();
+            
 
             builder.RegisterType<AccountLoginPacket>();
-            builder.RegisterType<PlayerLoginPacket>();
+            //builder.RegisterType<PlayerLoginPacket>();
 
             RegisterIncomingPacketFactory(builder);
 
@@ -58,9 +64,9 @@ namespace NeoServer.Server.Standalone.IoC
             {
                 var networkMessage = p.TypedAs<IReadOnlyNetworkMessage>();
 
-                var packetType = IncomingDictionaryData.Data[networkMessage.IncomingPacketType];
+                var handlerType = IncomingPacketHandlerData.Data[networkMessage.IncomingPacketType];
 
-                return (IncomingPacket) c.Resolve(packetType, new PositionalParameter(0, networkMessage));
+                return (IPacketHandler) c.Resolve(handlerType);
             });
         }
 

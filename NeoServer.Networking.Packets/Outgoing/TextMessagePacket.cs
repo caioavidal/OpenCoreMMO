@@ -10,7 +10,6 @@ namespace NeoServer.Networking.Packets.Outgoing
     {
         public TextMessagePacket(string text)
         {
-            OutputMessage.AddUInt16((ushort)(text.Length + 3));
             OutputMessage.AddByte(0x0A);
             OutputMessage.AddString(text);
         }

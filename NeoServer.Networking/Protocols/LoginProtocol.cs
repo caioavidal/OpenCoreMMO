@@ -13,21 +13,16 @@ namespace NeoServer.Networking.Protocols
     public class LoginProtocol : OpenTibiaProtocol
     {
         public override bool KeepConnectionOpen => false;
-        // private Func<GameIncomingPacketType, IEventHandler> _handlerFactory;
-        private Func<IReadOnlyNetworkMessage, IncomingPacket> _packetFactory;
-        public LoginProtocol(Func<IReadOnlyNetworkMessage, IncomingPacket> packetFactory)
+        private Func<IReadOnlyNetworkMessage, IPacketHandler> _handlerFactory;
+        public LoginProtocol(Func<IReadOnlyNetworkMessage, IPacketHandler> packetFactory)
         {
-            _packetFactory = packetFactory;
+            _handlerFactory = packetFactory;
         }
 
         public override void ProcessMessage(object sender, ConnectionEventArgs args)
         {
-            var packet = _packetFactory(args.Connection.InMessage);
-            args.Connection.SetXtea(packet.Xtea);
-
-            var eventArgs = new ServerEventArgs(packet.Model, args.Connection, packet.SuccessFunc);
-
-            packet.OnIncomingPacket(args.Connection, eventArgs);   
+            var handler = _handlerFactory(args.Connection.InMessage);
+            handler.HandlerMessage(args.Connection.InMessage, args.Connection);
         }
     }
 }

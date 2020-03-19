@@ -21,6 +21,7 @@ namespace NeoServer.Networking.Protocols
             }
             else
             {
+
                 args.Connection.BeginStreamRead();
             }
         }

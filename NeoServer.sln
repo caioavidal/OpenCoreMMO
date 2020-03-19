@@ -47,6 +47,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.2 - World", "1.2 - World"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.World.Tests", "NeoServer.Server.World.Tests\NeoServer.Server.World.Tests.csproj", "{1C21381B-FDDE-42A9-9C27-1205B962D215}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{41BDC285-DCA8-4350-B31F-325227D6F824}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

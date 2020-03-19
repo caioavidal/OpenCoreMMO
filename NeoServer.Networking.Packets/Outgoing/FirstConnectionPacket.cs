@@ -8,7 +8,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class FirstConnectionPacket : OutgoingPacket
     {
-        public FirstConnectionPacket()
+        public FirstConnectionPacket():base(false)
         {
             AddMessage();
         }

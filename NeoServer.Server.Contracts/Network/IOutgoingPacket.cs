@@ -6,6 +6,7 @@ namespace NeoServer.Server.Contracts.Network
 {
     public interface IOutgoingPacket
     {
+        bool Disconnect { get; }
         INetworkMessage GetMessage(uint[] xtea);
         INetworkMessage GetMessage();
     }
