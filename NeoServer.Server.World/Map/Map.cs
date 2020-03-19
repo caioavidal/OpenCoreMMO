@@ -7,12 +7,13 @@
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
 using NeoServer.Server.Model.World.Structs;
+using NeoServer.Server.World;
 using NeoServer.Server.World.Map;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Server.Map
+namespace NeoServer.Server.World.Map
 {
     public class Map
     {
@@ -22,11 +23,11 @@ namespace NeoServer.Server.Map
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
         public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
 		
-        private IMapLoader _loader { get; }
+        private World _world { get; }
 
-        public Map(IMapLoader mapLoader)  { _loader = mapLoader; }
+        public Map(World world)  { _world = world; }
 		
-        public ITile this[Location location] => _loader.GetTile(location);
+        public ITile this[Location location] => _world.GetTile(location);
 
         public ITile this[ushort x, ushort y, sbyte z] => this[new Location { X = x, Y = y, Z = z }];
 

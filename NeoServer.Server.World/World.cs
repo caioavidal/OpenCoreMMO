@@ -15,7 +15,7 @@ namespace NeoServer.Server.World {
 	/// to be just test the world loading functionality.
 	/// We will refactor and improve it later.
 	/// </summary>
-	public sealed class World : IMapLoader {
+	public class World {
 
 		public byte PercentageComplete => 100;
 		public bool HasLoaded(int x, int y, byte z) => _worldTiles.Any();

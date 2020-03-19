@@ -14,7 +14,5 @@ namespace NeoServer.Server.Map
         byte PercentageComplete { get; }
 		
         bool HasLoaded(int x, int y, byte z);
-
-		ITile GetTile(Location location);
     }
 }

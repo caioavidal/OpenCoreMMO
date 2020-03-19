@@ -1,3 +1,4 @@
+using NeoServer.Server.Helpers;
 using NeoServer.Server.Map;
 using NeoServer.Server.Model.World.Structs;
 using NeoServer.Server.World.Map;
@@ -5,7 +6,8 @@ using System;
 
 namespace NeoServer.Server.World
 {
-	public sealed class WorldLoader : IMapLoader {
+	public sealed class WorldLoader : IWorldLoader
+	{
 		private World _world;
 
 		public byte PercentageComplete {
@@ -24,11 +26,18 @@ namespace NeoServer.Server.World
 				return _world.HasLoaded(x, y, z);
 		}
 		
-		public ITile GetTile(Location location) => _world.GetTile(location);
+		
 
-		public WorldLoader(Memory<byte> serializedWorldData)
-		{ 
-			_world = OTBMWorldLoader.LoadWorld(serializedWorldData); 
+		private readonly OTBMWorldLoader _OTBMWorldLoader;
+		public WorldLoader(OTBMWorldLoader OTBMWorldLoader)
+		{
+			_OTBMWorldLoader = OTBMWorldLoader;
+		}
+
+		public void Load()
+		{
+			var serializedWorldData = ServerResourcesManager.GetMap();
+			_world = _OTBMWorldLoader.LoadWorld(serializedWorldData);
 			Console.WriteLine($"Tiles loaded in world: {_world.LoadedTilesCount()}");
 		}
 	}

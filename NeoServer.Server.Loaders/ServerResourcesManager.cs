@@ -9,12 +9,12 @@ namespace NeoServer.Server.Helpers
 	public class ServerResourcesManager
 	{
 		public const string ItemsFilesDirectory = "NeoServer.Server.Items.Data";
-		public const string MapFilesDirectory = "NeoServer.Server.Data.Map";
-		public const string MapName = "COMMO.otbm";
+		public const string MapFilesDirectory = "NeoServer.Server.World.Data";
+		public const string MapName = "test.otbm";
 
 		public static byte[] GetMap()
 		{
-			var assembly = Assembly.GetExecutingAssembly();
+			var assembly = Assembly.GetCallingAssembly();
 			using (var stream = assembly.GetManifestResourceStream(MapFilesDirectory + "." + MapName))
 				return ReadFully(stream);
 		}

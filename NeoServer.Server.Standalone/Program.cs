@@ -7,6 +7,7 @@ using NeoServer.Server.Model;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
+using NeoServer.Server.World;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,6 +38,10 @@ namespace NeoServer.Server.Standalone
             RSA.LoadPem();
 
             ItemLoader.Load();
+
+            container.Resolve<IWorldLoader>().Load();
+
+            container.Resolve<World.Map.Map>();
 
             Task.Run(() => container.Resolve<LoginListener>().BeginListening());
             Task.Run(() => container.Resolve<GameListener>().BeginListening());

@@ -5,7 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\neoserver.otbm" />
+    <None Remove="Data\test.otbm" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\test.otbm" />
+    <EmbeddedResource Include="Data\neoserver.otbm" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Server.Loaders\NeoServer.Server.Helpers.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.OTB\NeoServer.Server.OTB.csproj" />
   </ItemGroup>
 
 </Project>

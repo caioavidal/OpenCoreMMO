@@ -8,6 +8,7 @@ using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model.Items;
+using NeoServer.Server.World;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -19,6 +20,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<Database>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IAccountRepository>();
+
 
             builder.RegisterType<LoginProtocol>();
             builder.RegisterType<LoginListener>();
@@ -35,6 +37,12 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterIncomingPacketFactory(builder);
 
             RegisterItemFactory(builder);
+
+            //world
+            builder.RegisterType<World.World>().SingleInstance();
+            builder.RegisterType<WorldLoader>().As<IWorldLoader>();
+            builder.RegisterType<OTBMWorldLoader>();
+            builder.RegisterType<World.Map.Map>();
 
             return builder.Build();
 
