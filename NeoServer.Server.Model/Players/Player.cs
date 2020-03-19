@@ -4,15 +4,19 @@ namespace NeoServer.Server.Model.Players
     public class Player
     {
         public int Id { get; }
-        public string Name { get; set; }
-        public ChaseMode ChaseMode { get; }
+        public string CharacterName { get; set; }
+
+        public Account Account { get; set; }
+        public ChaseMode ChaseMode { get; set; }
         public int Capacity { get; }
-        public int Level { get; }
+        public uint Level { get; }
         public int HealthPoints { get; }
         public int MaxHealthPoints { get; }
         public VocationType Vocation { get; set; }
-        public int Mana { get; }
-        public int MaxMana { get; }
+        public Gender Gender { get; set; }
+        public bool Online { get; set; }
+        public int Mana { get; set; }
+        public int MaxMana { get; set; }
         public int FightMode { get; }
         public int SoulPoints { get; set; }
         public int MaxSoulPoints { get; set; }

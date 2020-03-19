@@ -22,20 +22,9 @@ namespace NeoServer.Server.Standalone
             var container = Container.CompositionRoot();
             container.Resolve<Database>().Connect();
 
-            //Container.CompositionRoot().Resolve<IAccountRepository>().Create(new Account
-            //{
-            //    AccountName = "1",
-            //    Password = "1",
-            //    Players = new List<Player>(){
-            //         new Player(){
-            //              Name = "Caio 1"
-            //         }, new Player(){
-            //             Name = "Caio 2"
-            //         }
-            //      }
-            //});
+            //CreateChar();
 
-            RSA.LoadPem();
+           RSA.LoadPem();
 
             ItemLoader.Load();
 
@@ -45,9 +34,33 @@ namespace NeoServer.Server.Standalone
 
             Task.Run(() => container.Resolve<LoginListener>().BeginListening());
             Task.Run(() => container.Resolve<GameListener>().BeginListening());
-            //new LoginListener().BeginListening();
+
             Console.WriteLine("NeoServer is up!");
             Console.Read();
+        }
+
+        public static void CreateChar()
+        {
+            var a = new Account
+            {
+                AccountName = "1",
+                Password = "1"
+            };
+            a.Players = new List<Player>(){
+                     new Player(){
+                          CharacterName = "Caio",
+                       
+                            ChaseMode = ChaseMode.Follow,
+                             Gender = Gender.Male,
+                              MaxSoulPoints = 100,
+                               Online = false,
+                                 SoulPoints = 100,
+                                 
+                                  Vocation = VocationType.Knight
+
+                     }
+                  };
+            Container.CompositionRoot().Resolve<IAccountRepository>().Create(a);
         }
     }
 }

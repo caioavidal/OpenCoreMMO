@@ -22,7 +22,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             OutputMessage.AddByte((byte)account.Players.Count);
             foreach (var player in account.Players)
             {
-                OutputMessage.AddString(player.Name);
+                OutputMessage.AddString(player.CharacterName);
                 OutputMessage.AddString("NeoServer"); //todo change to const
                 OutputMessage.AddByte(127);
                 OutputMessage.AddByte(0);

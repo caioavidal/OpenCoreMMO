@@ -33,6 +33,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<AccountLoginEventHandler>().SingleInstance();
 
             builder.RegisterType<AccountLoginPacket>();
+            builder.RegisterType<PlayerLoginPacket>();
 
             RegisterIncomingPacketFactory(builder);
 
@@ -57,7 +58,7 @@ namespace NeoServer.Server.Standalone.IoC
             {
                 var networkMessage = p.TypedAs<IReadOnlyNetworkMessage>();
 
-                var packetType = IncomingDictionaryData.Data[GameIncomingPacketType.PlayerLoginRequest];
+                var packetType = IncomingDictionaryData.Data[networkMessage.IncomingPacketType];
 
                 return (IncomingPacket) c.Resolve(packetType, new PositionalParameter(0, networkMessage));
             });

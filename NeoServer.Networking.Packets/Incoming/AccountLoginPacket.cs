@@ -9,10 +9,10 @@ using NeoServer.Server.Security;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
-    public class AccountLoginPacket : IncomingPacket
+    public class AccountLoginPacketHandler : IncomingPacket
     {
 
-        public AccountLoginPacket(IReadOnlyNetworkMessage message, AccountLoginEventHandler handler) : base(handler)
+        public AccountLoginPacketHandler(IReadOnlyNetworkMessage message, AccountLoginEventHandler handler) : base(handler)
         {
             var packetPayload = message.GetUInt16();
             var tcpPayload = packetPayload + 2;

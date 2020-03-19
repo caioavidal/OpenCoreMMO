@@ -34,7 +34,7 @@ namespace NeoServer.Networking.Packets.Messages
         {
             get
             {
-                return (GameIncomingPacketType)BitConverter.ToInt16(Buffer[0..2]);
+                return (GameIncomingPacketType) Buffer[6];
             }
         }
 
