@@ -32,9 +32,10 @@ namespace NeoServer.Server.Model.Items
             OpenedBy = new Dictionary<uint, byte>();
             openedByLock = new object();
 
-            OnContentUpdated += Game.Instance.OnContainerContentUpdated;
-            OnContentAdded += Game.Instance.OnContainerContentAdded;
-            OnContentRemoved += Game.Instance.OnContainerContentRemoved;
+            //todo
+            //OnContentUpdated += Game.Instance.OnContainerContentUpdated;
+            //OnContentAdded += Game.Instance.OnContainerContentAdded;
+            //OnContentRemoved += Game.Instance.OnContainerContentRemoved;
         }
 
         // ~Container()
@@ -58,10 +59,10 @@ namespace NeoServer.Server.Model.Items
                 {
                     // this is a flag an is unexpected.
                     // TODO: proper logging.
-                    if (!ServerConfiguration.SupressInvalidItemWarnings)
-                    {
-                        Console.WriteLine($"Container.AddContent: Unexpected flag {element.Attributes?.First()?.Name}, ignoring.");
-                    }
+                    //if (!ServerConfiguration.SupressInvalidItemWarnings)
+                    //{
+                    //    Console.WriteLine($"Container.AddContent: Unexpected flag {element.Attributes?.First()?.Name}, ignoring.");
+                    //}
 
                     continue;
                 }
@@ -72,10 +73,11 @@ namespace NeoServer.Server.Model.Items
 
                     if (item == null)
                     {
-                        if (!ServerConfiguration.SupressInvalidItemWarnings)
-                        {
-                            Console.WriteLine($"Container.AddContent: Item with id {element.Data} not found in the catalog, skipping.");
-                        }
+                        //todo
+                        //if (!ServerConfiguration.SupressInvalidItemWarnings)
+                        //{
+                        //    Console.WriteLine($"Container.AddContent: Item with id {element.Data} not found in the catalog, skipping.");
+                        //}
 
                         continue;
                     }
@@ -88,10 +90,10 @@ namespace NeoServer.Server.Model.Items
                 catch (ArgumentException)
                 {
                     // TODO: proper logging.
-                    if (!ServerConfiguration.SupressInvalidItemWarnings)
-                    {
-                        Console.WriteLine($"Item.AddContent: Invalid item {element.Data} in item contents, skipping.");
-                    }
+                    //if (!ServerConfiguration.SupressInvalidItemWarnings)
+                    //{
+                    //    Console.WriteLine($"Item.AddContent: Invalid item {element.Data} in item contents, skipping.");
+                    //}
                 }
             }
         }

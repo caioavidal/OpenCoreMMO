@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NeoServer.Server.Loaders\NeoServer.Server.Loaders.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Items\NeoServer.Server.Items.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Loaders\NeoServer.Server.Helpers.csproj" />
   </ItemGroup>
 
 </Project>

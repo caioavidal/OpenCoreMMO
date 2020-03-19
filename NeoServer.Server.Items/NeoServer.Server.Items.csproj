@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\items.otb" />
+    <None Remove="Data\items.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\items.otb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Server.Loaders\NeoServer.Server.Helpers.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.OTB\NeoServer.Server.OTB.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\items.xml" />
+  </ItemGroup>
+
+</Project>

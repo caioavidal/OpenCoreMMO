@@ -161,7 +161,8 @@ namespace NeoServer.Server.Model.Creatures
 
         public decimal BaseDefenseSpeed { get; }
 
-        public TimeSpan CombatCooldownTimeRemaining => CalculateRemainingCooldownTime(CooldownType.Combat, Game.Instance.CombatSynchronizationTime);
+        public TimeSpan CombatCooldownTimeRemaining => throw new NotImplementedException(); //TODO
+                                                                                            //CalculateRemainingCooldownTime(CooldownType.Combat, Game.Instance.CombatSynchronizationTime);
 
         public DateTime LastAttackTime => Cooldowns[CooldownType.Combat].Item1;
 
@@ -284,82 +285,87 @@ namespace NeoServer.Server.Model.Creatures
 
         public void SetAttackTarget(uint targetId)
         {
-            if (targetId == CreatureId || AutoAttackTargetId == targetId)
-            {
-                // if we want to attack ourselves or if the current target is already the one we want... no change needed.
-                return;
-            }
+            throw new NotImplementedException(); //TODO
+            //if (targetId == CreatureId || AutoAttackTargetId == targetId)
+            //{
+            //    // if we want to attack ourselves or if the current target is already the one we want... no change needed.
+            //    return;
+            //}
 
-            // save the previus target to report
-            var oldTargetId = AutoAttackTargetId;
+            //// save the previus target to report
+            //var oldTargetId = AutoAttackTargetId;
 
-            if (targetId == 0)
-            {
-                // clearing our target.
-                if (AutoAttackTargetId != 0)
-                {
-                    var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId);
+            //if (targetId == 0)
+            //{
+            //    // clearing our target.
+            //    if (AutoAttackTargetId != 0)
+            //    {
+            //        var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId);
 
-                    if (attackTarget != null)
-                    {
-                        attackTarget.OnThingChanged -= CheckAutoAttack;
-                    }
+            //        if (attackTarget != null)
+            //        {
+            //            attackTarget.OnThingChanged -= CheckAutoAttack;
+            //        }
 
-                    AutoAttackTargetId = 0;
-                }
-            }
-            else
-            {
-                // TODO: verify against Hostiles.Union(Friendly).
-                // if (creature != null)
-                // {
-                AutoAttackTargetId = targetId;
+            //        AutoAttackTargetId = 0;
+            //    }
+            //}
+            //else
+            //{
+            //    // TODO: verify against Hostiles.Union(Friendly).
+            //    // if (creature != null)
+            //    // {
+            //    AutoAttackTargetId = targetId;
 
-                var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId);
+            //    var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId);
 
-                if (attackTarget != null)
-                {
-                    attackTarget.OnThingChanged += CheckAutoAttack;
-                }
+            //    if (attackTarget != null)
+            //    {
+            //        attackTarget.OnThingChanged += CheckAutoAttack;
+            //    }
 
-                // }
-                // else
-                // {
-                //    Console.WriteLine("Taget creature not found in attacker\'s view.");
-                // }
-            }
+            //    // }
+            //    // else
+            //    // {
+            //    //    Console.WriteLine("Taget creature not found in attacker\'s view.");
+            //    // }
+            //}
 
-            // report the change to our subscribers.
-            OnTargetChanged?.Invoke(oldTargetId, targetId);
-            CheckAutoAttack(this, new ThingStateChangedEventArgs() { PropertyChanged = nameof(location) });
+            //// report the change to our subscribers.
+            //OnTargetChanged?.Invoke(oldTargetId, targetId);
+            //CheckAutoAttack(this, new ThingStateChangedEventArgs() { PropertyChanged = nameof(location) });
         }
 
         public void UpdateLastAttack(TimeSpan exahust)
         {
-            Cooldowns[CooldownType.Combat] = new Tuple<DateTime, TimeSpan>(Game.Instance.CombatSynchronizationTime, exahust);
+            throw new NotImplementedException(); //TODO
+
+            //Cooldowns[CooldownType.Combat] = new Tuple<DateTime, TimeSpan>(Game.Instance.CombatSynchronizationTime, exahust);
         }
 
         public void CheckAutoAttack(IThing thingChanged, ThingStateChangedEventArgs eventAgrs)
         {
-            if (AutoAttackTargetId == 0)
-            {
-                return;
-            }
+            throw new NotImplementedException(); //TODO
 
-            var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId);
+            //if (AutoAttackTargetId == 0)
+            //{
+            //    return;
+            //}
 
-            if (attackTarget == null || (thingChanged != this && thingChanged != attackTarget) || eventAgrs.PropertyChanged != nameof(Thing.Location))
-            {
-                return;
-            }
+            //var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId);
 
-            var locationDiff = Location - attackTarget.Location;
-            var inRange = CanSee(attackTarget) && locationDiff.Z == 0 && locationDiff.MaxValueIn2D <= AutoAttackRange;
+            //if (attackTarget == null || (thingChanged != this && thingChanged != attackTarget) || eventAgrs.PropertyChanged != nameof(Thing.Location))
+            //{
+            //    return;
+            //}
 
-            if (inRange)
-            {
-                Game.Instance.SignalAttackReady();
-            }
+            //var locationDiff = Location - attackTarget.Location;
+            //var inRange = CanSee(attackTarget) && locationDiff.Z == 0 && locationDiff.MaxValueIn2D <= AutoAttackRange;
+
+            //if (inRange)
+            //{
+            //    Game.Instance.SignalAttackReady();
+            //}
         }
 
         public void StopWalking()
@@ -373,22 +379,24 @@ namespace NeoServer.Server.Model.Creatures
 
         public void AutoWalk(params Direction[] directions)
         {
-            lock (_enqueueWalkLock)
-            {
-                if (WalkingQueue.Count > 0)
-                {
-                    StopWalking();
-                }
+            throw new NotImplementedException(); //TODO
 
-                var nextStepId = NextStepId;
+            //lock (_enqueueWalkLock)
+            //{
+            //    if (WalkingQueue.Count > 0)
+            //    {
+            //        StopWalking();
+            //    }
 
-                foreach (var direction in directions)
-                {
-                    WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
-                }
+            //    var nextStepId = NextStepId;
 
-                Game.Instance.SignalWalkAvailable();
-            }
+            //    foreach (var direction in directions)
+            //    {
+            //        WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+            //    }
+
+            //    Game.Instance.SignalWalkAvailable();
+            //}
         }
 
         public TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)

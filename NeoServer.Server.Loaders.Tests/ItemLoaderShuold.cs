@@ -1,18 +1,21 @@
-﻿using System;
+﻿using NeoServer.Server.Loaders;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace NeoServer.Server.Loaders.Tests
+namespace NeoServer.Server.Items.Tests
 {
     public class ItemLoaderShould
     {
         [Fact]
         public void LoadItems()
         {
-            var sup = new ItemLoader();
+            ItemLoader.Load();
 
-            var a = sup.LoadItems();
+            var result = ItemData.Items;
+
+            Assert.Equal(12561, result.Count);
         }
     }
 }

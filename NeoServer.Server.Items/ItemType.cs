@@ -107,7 +107,7 @@ namespace NeoServer.Server.Model.Items
             DefaultAttributes[attribute] = attributeValue;
         }
 
-        public void ParseOTFlags(UInt32 flags)
+        public void ParseOTFlags(uint flags)
         {
             if (HasOTFlag(flags, 1 << 0)) // blockSolid
                 SetFlag(ItemFlag.CollisionEvent);

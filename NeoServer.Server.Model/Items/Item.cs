@@ -14,6 +14,13 @@ namespace NeoServer.Server.Model.Items
 
         public event ItemAmountChangeEvent OnAmountChanged;
 
+        private readonly Func<ushort, Item> _itemFactory;
+
+        public Item(Func<ushort, Item> itemFactory)
+        {
+            _itemFactory = itemFactory;
+        }
+
         public IItemType Type { get; }
 
         public override ushort ThingId => Type.ClientId;
@@ -237,7 +244,7 @@ namespace NeoServer.Server.Model.Items
 
         private uint holder;
 
-        public Item(ItemType type)
+        public Item(IItemType type)
         {
             Type = type;
             // UniqueId = Guid.NewGuid().ToString().Substring(0, 8);
@@ -265,10 +272,11 @@ namespace NeoServer.Server.Model.Items
 
                     if (!Enum.TryParse(attribute.Name, out itemAttr))
                     {
-                        if (!ServerConfiguration.SupressInvalidItemWarnings)
-                        {
-                            Console.WriteLine($"Item.AddContent: Unexpected attribute with name {attribute.Name} on item {Type.Name}, igoring.");
-                        }
+                        //todo
+                        //if (!ServerConfiguration.SupressInvalidItemWarnings)
+                        //{
+                        //    Console.WriteLine($"Item.AddContent: Unexpected attribute with name {attribute.Name} on item {Type.Name}, igoring.");
+                        //}
 
                         continue;
                     }
@@ -336,7 +344,7 @@ namespace NeoServer.Server.Model.Items
 
             if (Amount > 0)
             {
-                splitItem = ItemFactory.Create(Type.TypeId);
+                splitItem = _itemFactory(Type.TypeId);
                 splitItem.SetAmount(amount);
             }
 

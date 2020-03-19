@@ -188,72 +188,73 @@ namespace NeoServer.Server.Map
                 count++;
             }
 
-            foreach (var creatureId in tile.CreatureIds)
-            {
-                var creature = Game.Instance.GetCreatureWithId(creatureId);
+            //todo
+            //foreach (var creatureId in tile.CreatureIds)
+            //{
+            //    var creature = Game.Instance.GetCreatureWithId(creatureId);
 
-                if (creature == null)
-                {
-                    continue;
-                }
+            //    if (creature == null)
+            //    {
+            //        continue;
+            //    }
 
-                if (count == numberOfObjectsLimit)
-                {
-                    break;
-                }
+            //    if (count == numberOfObjectsLimit)
+            //    {
+            //        break;
+            //    }
 
-                if (player.KnowsCreatureWithId(creatureId))
-                {
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)GameOutgoingPacketType.AddKnownCreature));
-                    tempBytes.AddRange(BitConverter.GetBytes(creatureId));
-                }
-                else
-                {
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)GameOutgoingPacketType.AddUnknownCreature));
-                    tempBytes.AddRange(BitConverter.GetBytes(player.ChooseToRemoveFromKnownSet()));
-                    tempBytes.AddRange(BitConverter.GetBytes(creatureId));
+            //    if (player.KnowsCreatureWithId(creatureId))
+            //    {
+            //        tempBytes.AddRange(BitConverter.GetBytes((ushort)GameOutgoingPacketType.AddKnownCreature));
+            //        tempBytes.AddRange(BitConverter.GetBytes(creatureId));
+            //    }
+            //    else
+            //    {
+            //        tempBytes.AddRange(BitConverter.GetBytes((ushort)GameOutgoingPacketType.AddUnknownCreature));
+            //        tempBytes.AddRange(BitConverter.GetBytes(player.ChooseToRemoveFromKnownSet()));
+            //        tempBytes.AddRange(BitConverter.GetBytes(creatureId));
 
-                    player.AddKnownCreature(creatureId);
+            //        player.AddKnownCreature(creatureId);
 
-                    var creatureNameBytes = Encoding.Default.GetBytes(creature.Name);
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)creatureNameBytes.Length));
-                    tempBytes.AddRange(creatureNameBytes);
-                }
+            //        var creatureNameBytes = Encoding.Default.GetBytes(creature.Name);
+            //        tempBytes.AddRange(BitConverter.GetBytes((ushort)creatureNameBytes.Length));
+            //        tempBytes.AddRange(creatureNameBytes);
+            //    }
 
-                tempBytes.Add((byte)Math.Min(100, creature.Hitpoints * 100 / creature.MaxHitpoints));
-                tempBytes.Add((byte)creature.ClientSafeDirection);
+            //    tempBytes.Add((byte)Math.Min(100, creature.Hitpoints * 100 / creature.MaxHitpoints));
+            //    tempBytes.Add((byte)creature.ClientSafeDirection);
 
-                if (player.CanSee(creature))
-                {
-                    // Add creature outfit
-                    tempBytes.AddRange(BitConverter.GetBytes(creature.Outfit.Id));
+            //    if (player.CanSee(creature))
+            //    {
+            //        // Add creature outfit
+            //        tempBytes.AddRange(BitConverter.GetBytes(creature.Outfit.Id));
 
-                    if (creature.Outfit.Id > 0)
-                    {
-                        tempBytes.Add(creature.Outfit.Head);
-                        tempBytes.Add(creature.Outfit.Body);
-                        tempBytes.Add(creature.Outfit.Legs);
-                        tempBytes.Add(creature.Outfit.Feet);
-                    }
-                    else
-                    {
-                        tempBytes.AddRange(BitConverter.GetBytes(creature.Outfit.LikeType));
-                    }
-                }
-                else
-                {
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)0));
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)0));
-                }
+            //        if (creature.Outfit.Id > 0)
+            //        {
+            //            tempBytes.Add(creature.Outfit.Head);
+            //            tempBytes.Add(creature.Outfit.Body);
+            //            tempBytes.Add(creature.Outfit.Legs);
+            //            tempBytes.Add(creature.Outfit.Feet);
+            //        }
+            //        else
+            //        {
+            //            tempBytes.AddRange(BitConverter.GetBytes(creature.Outfit.LikeType));
+            //        }
+            //    }
+            //    else
+            //    {
+            //        tempBytes.AddRange(BitConverter.GetBytes((ushort)0));
+            //        tempBytes.AddRange(BitConverter.GetBytes((ushort)0));
+            //    }
 
-                tempBytes.Add(creature.LightBrightness);
-                tempBytes.Add(creature.LightColor);
+            //    tempBytes.Add(creature.LightBrightness);
+            //    tempBytes.Add(creature.LightColor);
 
-                tempBytes.AddRange(BitConverter.GetBytes(creature.Speed));
+            //    tempBytes.AddRange(BitConverter.GetBytes(creature.Speed));
 
-                tempBytes.Add(creature.Skull);
-                tempBytes.Add(creature.Shield);
-            }
+            //    tempBytes.Add(creature.Skull);
+            //    tempBytes.Add(creature.Shield);
+            //}
 
             foreach (var item in tile.DownItems)
             {

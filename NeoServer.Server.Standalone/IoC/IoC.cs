@@ -7,6 +7,7 @@ using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Handlers.Authentication;
+using NeoServer.Server.Model.Items;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -33,6 +34,8 @@ namespace NeoServer.Server.Standalone.IoC
 
             RegisterIncomingPacketFactory(builder);
 
+            RegisterItemFactory(builder);
+
             return builder.Build();
 
 
@@ -49,6 +52,17 @@ namespace NeoServer.Server.Standalone.IoC
                 var packetType = IncomingDictionaryData.Data[GameIncomingPacketType.PlayerLoginRequest];
 
                 return (IncomingPacket) c.Resolve(packetType, new PositionalParameter(0, networkMessage));
+            });
+        }
+
+        private static void RegisterItemFactory(ContainerBuilder builder)
+        {
+            builder.Register((c, p) =>
+            {
+                var typeId = p.TypedAs<ushort>();
+
+
+                return ItemFactory.Create(typeId);
             });
         }
     }

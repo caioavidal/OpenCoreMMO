@@ -13,6 +13,7 @@
     <ProjectReference Include="..\NeoServer.Data.RavenDB\NeoServer.Data.RavenDB.csproj" />
     <ProjectReference Include="..\NeoServer.Networking\NeoServer.Networking.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Items\NeoServer.Server.Items.csproj" />
   </ItemGroup>
 
   <ItemGroup>

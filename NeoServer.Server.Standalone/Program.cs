@@ -2,6 +2,7 @@
 using NeoServer.Data.RavenDB;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server.Contracts.Repositories;
+using NeoServer.Server.Loaders;
 using NeoServer.Server.Model;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Security;
@@ -34,6 +35,8 @@ namespace NeoServer.Server.Standalone
             //});
 
             RSA.LoadPem();
+
+            ItemLoader.Load();
 
             Task.Run(() => container.Resolve<LoginListener>().BeginListening());
             Task.Run(() => container.Resolve<GameListener>().BeginListening());

@@ -18,6 +18,11 @@ using NeoServer.Server.World.Map;
 namespace NeoServer.Server.Map
 {
 	public class Tile : ITile {
+
+		public Tile()
+		{
+
+		}
 		private readonly Stack<uint> _creatureIdsOnTile;
 
 		private readonly Stack<IItem> _topItems1OnTile;
@@ -222,122 +227,124 @@ namespace NeoServer.Server.Map
 		}
 
 		public void AddThing(ref IThing thing, byte count) {
-			if (count == 0) {
-				throw new ArgumentException("Invalid count zero.");
-			}
+			throw new NotImplementedException(); //todo
+			//if (count == 0) {
+			//	throw new ArgumentException("Invalid count zero.");
+			//}
 
-			var item = thing as Item;
+			//var item = thing as Item;
 
-			if (thing is Creature creature) {
-				_creatureIdsOnTile.Push(creature.CreatureId);
-				creature.Tile = this;
-				creature.Added();
+			//if (thing is Creature creature) {
+			//	_creatureIdsOnTile.Push(creature.CreatureId);
+			//	creature.Tile = this;
+			//	creature.Added();
 
-				// invalidate the cache.
-				_cachedDescription = null;
-			} else if (item != null) {
-				if (item.IsGround) {
-					Ground = item;
-					item.Added();
-				} else if (item.IsTop1) {
-					_topItems1OnTile.Push(item);
-					item.Added();
-				} else if (item.IsTop2) {
-					_topItems2OnTile.Push(item);
-					item.Added();
-				} else {
-					if (item.IsCumulative) {
-						var currentItem = _downItemsOnTile.Count > 0 ? _downItemsOnTile.Peek() as Item : null;
+			//	// invalidate the cache.
+			//	_cachedDescription = null;
+			//} else if (item != null) {
+			//	if (item.IsGround) {
+			//		Ground = item;
+			//		item.Added();
+			//	} else if (item.IsTop1) {
+			//		_topItems1OnTile.Push(item);
+			//		item.Added();
+			//	} else if (item.IsTop2) {
+			//		_topItems2OnTile.Push(item);
+			//		item.Added();
+			//	} else {
+			//		if (item.IsCumulative) {
+			//			var currentItem = _downItemsOnTile.Count > 0 ? _downItemsOnTile.Peek() as Item : null;
 
-						if (currentItem != null && currentItem.Type == item.Type && currentItem.Amount < 100) {
-							// add these up.
-							var remaining = currentItem.Amount + count;
+			//			if (currentItem != null && currentItem.Type == item.Type && currentItem.Amount < 100) {
+			//				// add these up.
+			//				var remaining = currentItem.Amount + count;
 
-							var newCount = (byte)Math.Min(remaining, 100);
+			//				var newCount = (byte)Math.Min(remaining, 100);
 
-							currentItem.Amount = newCount;
+			//				currentItem.Amount = newCount;
 
-							remaining -= newCount;
+			//				remaining -= newCount;
 
-							if (remaining > 0) {
-								IThing newThing = ItemFactory.Create(item.Type.TypeId);
-								AddThing(ref newThing, (byte)remaining);
-								thing = newThing;
-							}
-						} else {
-							item.Amount = count;
-							_downItemsOnTile.Push(item);
-							item.Added();
-						}
-					} else {
-						_downItemsOnTile.Push(item);
-						item.Added();
-					}
-				}
+			//				if (remaining > 0) {
+			//					IThing newThing = ItemFactory.Create(item.Type.TypeId);
+			//					AddThing(ref newThing, (byte)remaining);
+			//					thing = newThing;
+			//				}
+			//			} else {
+			//				item.Amount = count;
+			//				_downItemsOnTile.Push(item);
+			//				item.Added();
+			//			}
+			//		} else {
+			//			_downItemsOnTile.Push(item);
+			//			item.Added();
+			//		}
+			//	}
 
-				item.Tile = this;
+			//	item.Tile = this;
 
-				// invalidate the cache.
-				_cachedDescription = null;
-			}
+			//	// invalidate the cache.
+			//	_cachedDescription = null;
+			//}
 		}
 
 		public void RemoveThing(ref IThing thing, byte count) {
-			if (count == 0) {
-				throw new ArgumentException("Invalid count zero.");
-			}
+			throw new NotImplementedException(); //todo
+			//if (count == 0) {
+			//	throw new ArgumentException("Invalid count zero.");
+			//}
 
-			var item = thing as Item;
+			//var item = thing as Item;
 
-			if (thing is Creature creature) {
-				RemoveCreature(creature);
-				creature.Tile = null;
-				creature.Removed();
-			} else if (item != null) {
-				var removeItem = true;
+			//if (thing is Creature creature) {
+			//	RemoveCreature(creature);
+			//	creature.Tile = null;
+			//	creature.Removed();
+			//} else if (item != null) {
+			//	var removeItem = true;
 
-				if (item.IsGround) {
-					Ground = null;
-					item.Removed();
-					removeItem = false;
-				} else if (item.IsTop1) {
-					_topItems1OnTile.Pop();
-					item.Removed();
-					removeItem = false;
-				} else if (item.IsTop2) {
-					_topItems2OnTile.Pop();
-					item.Removed();
-					removeItem = false;
-				} else {
-					if (item.IsCumulative) {
-						if (item.Amount < count) // throwing because this should have been checked before.
-						{
-							throw new ArgumentException("Remove count is greater than available.");
-						}
+			//	if (item.IsGround) {
+			//		Ground = null;
+			//		item.Removed();
+			//		removeItem = false;
+			//	} else if (item.IsTop1) {
+			//		_topItems1OnTile.Pop();
+			//		item.Removed();
+			//		removeItem = false;
+			//	} else if (item.IsTop2) {
+			//		_topItems2OnTile.Pop();
+			//		item.Removed();
+			//		removeItem = false;
+			//	} else {
+			//		if (item.IsCumulative) {
+			//			if (item.Amount < count) // throwing because this should have been checked before.
+			//			{
+			//				throw new ArgumentException("Remove count is greater than available.");
+			//			}
 
-						if (item.Amount > count) {
-							// create a new item (it got split...)
-							var newItem = ItemFactory.Create(item.Type.TypeId);
-							newItem.SetAmount(count);
-							item.Amount -= count;
+			//			if (item.Amount > count) {
+			//				// create a new item (it got split...)
+			//				var newItem = ItemFactory.Create(item.Type.TypeId);
+			//				newItem.SetAmount(count);
+			//				item.Amount -= count;
 
-							thing = newItem;
-							removeItem = false;
-						}
-					}
-				}
+			//				thing = newItem;
+			//				removeItem = false;
+			//			}
+			//		}
+			//	}
 
-				if (removeItem) {
-					_downItemsOnTile.Pop();
-					item.Removed();
-					item.Tile = null;
-				}
-			} else {
-				throw new InvalidCastException("Thing did not cast to either a CreatureId or Item.");
-			}
+			//	if (removeItem) {
+			//		_downItemsOnTile.Pop();
+			//		item.Removed();
+			//		item.Tile = null;
+			//	}
+			//} else {
+			//	throw new InvalidCastException("Thing did not cast to either a CreatureId or Item.");
+			//}
 
-			// invalidate the cache.
-			_cachedDescription = null;
+			//// invalidate the cache.
+			//_cachedDescription = null;
 		}
 
 		public void RemoveCreature(ICreature c) {
@@ -499,43 +506,44 @@ namespace NeoServer.Server.Map
 		}
 
 		public IThing GetThingAtStackPosition(byte stackPosition) {
-			if (stackPosition == 0 && Ground != null) {
-				return Ground;
-			}
+			throw new NotImplementedException();// todo
+			//if (stackPosition == 0 && Ground != null) {
+			//	return Ground;
+			//}
 
-			var currentPos = Ground == null ? -1 : 0;
+			//var currentPos = Ground == null ? -1 : 0;
 
-			if (stackPosition > currentPos + _topItems1OnTile.Count) {
-				currentPos += _topItems1OnTile.Count;
-			} else {
-				foreach (var item in TopItems1) {
-					if (++currentPos == stackPosition) {
-						return item;
-					}
-				}
-			}
+			//if (stackPosition > currentPos + _topItems1OnTile.Count) {
+			//	currentPos += _topItems1OnTile.Count;
+			//} else {
+			//	foreach (var item in TopItems1) {
+			//		if (++currentPos == stackPosition) {
+			//			return item;
+			//		}
+			//	}
+			//}
 
-			if (stackPosition > currentPos + _topItems2OnTile.Count) {
-				currentPos += _topItems2OnTile.Count;
-			} else {
-				foreach (var item in TopItems2) {
-					if (++currentPos == stackPosition) {
-						return item;
-					}
-				}
-			}
+			//if (stackPosition > currentPos + _topItems2OnTile.Count) {
+			//	currentPos += _topItems2OnTile.Count;
+			//} else {
+			//	foreach (var item in TopItems2) {
+			//		if (++currentPos == stackPosition) {
+			//			return item;
+			//		}
+			//	}
+			//}
 
-			if (stackPosition > currentPos + _creatureIdsOnTile.Count) {
-				currentPos += _creatureIdsOnTile.Count;
-			} else {
-				foreach (var creatureId in CreatureIds) {
-					if (++currentPos == stackPosition) {
-						return Game.Instance.GetCreatureWithId(creatureId);
-					}
-				}
-			}
+			//if (stackPosition > currentPos + _creatureIdsOnTile.Count) {
+			//	currentPos += _creatureIdsOnTile.Count;
+			//} else {
+			//	foreach (var creatureId in CreatureIds) {
+			//		if (++currentPos == stackPosition) {
+			//			return Game.Instance.GetCreatureWithId(creatureId);
+			//		}
+			//	}
+			//}
 
-			return stackPosition <= currentPos + _downItemsOnTile.Count ? DownItems.FirstOrDefault(item => ++currentPos == stackPosition) : null;
+			//return stackPosition <= currentPos + _downItemsOnTile.Count ? DownItems.FirstOrDefault(item => ++currentPos == stackPosition) : null;
 		}
 
 		public byte GetStackPosition(IThing thing) {
