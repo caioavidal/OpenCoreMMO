@@ -1,21 +1,20 @@
 ﻿using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Model.Players;
 using NeoServer.Server.Security;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
     public class ChangeModePacket : IncomingPacket
     {
-        public string Account { get; }
-        public string Password { get; }
-        public ushort ProtocolVersion { get; }
+        public FightMode FightMode { get; }
+        public ChaseMode ChaseMode { get; }
+        public byte SecureMode { get; }
 
         public ChangeModePacket(IReadOnlyNetworkMessage message)
         {
-            
+            FightMode = (FightMode) message.GetByte();
+            ChaseMode = (ChaseMode)message.GetByte();
+            SecureMode = message.GetByte();
         }
-
-        public bool IsValid() => !(string.IsNullOrWhiteSpace(Account) || string.IsNullOrWhiteSpace(Password));
-
-
     }
 }

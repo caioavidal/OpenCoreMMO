@@ -163,6 +163,8 @@ namespace NeoServer.Server.Model.Players
 
         public override byte AutoAttackRange => Math.Max((byte)1, Inventory.AttackRange);
 
+        public byte SecureMode { get; private set; }
+
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Math.Min(100, Skills[skill].Count * 100 / (Skills[skill].Target + 1));
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -353,6 +355,20 @@ namespace NeoServer.Server.Model.Players
                         break;
                 }
             }
+        }
+
+        public void SetFightMode(FightMode mode)
+        {
+            FightMode = mode;
+        }
+        public void SetChaseMode(ChaseMode mode)
+        {
+            ChaseMode = mode;
+        }
+
+        public void SetSecureMode(byte mode)
+        {
+            SecureMode = mode;
         }
 
     }

@@ -28,23 +28,15 @@ namespace NeoServer.Server.Handlers.Authentication
             _map = map;
         }
 
-        public async override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
+        public override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
         {
-            // No other content in message.
-            //var player = _game.GetCreature(connection.PlayerId) as Player;
+            var changeMode = new ChangeModePacket(message);
 
-            //if (player == null)
-            //{
-            //    return;
-            //}
+            var player = _game.GetCreature(connection.PlayerId) as Player;
 
-            //var rawFightMode = message.GetByte(); // 1 - offensive, 2 - balanced, 3 - defensive
-            //var rawChaseMode = message.GetByte(); // 0 - stand while fightning, 1 - chase opponent
-            //var rawSafeMode = message.GetByte();
-
-            //var fightMode = (FightMode)rawFightMode;
-
-            // TODO: correctly implement.
+            player.SetFightMode(changeMode.FightMode);
+            player.SetChaseMode(changeMode.ChaseMode);
+            player.SetSecureMode(changeMode.SecureMode);
         }
     }
 }

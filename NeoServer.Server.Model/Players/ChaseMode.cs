@@ -1,7 +1,8 @@
 namespace NeoServer.Server.Model.Players
 {
-    public enum ChaseMode
+    public enum ChaseMode : byte
     {
-        Follow = 1
+        Follow = 1,
+        Stand = 0
     }
 }
