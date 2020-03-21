@@ -13,7 +13,7 @@ namespace NeoServer.Networking.Tests.Packets
             var data = "test to get messages from readonly array";
             var buffer = Encoding.ASCII.GetBytes(data);
 
-            ReadOnlyNetworkMessage = new ReadOnlyNetworkMessage(buffer);
+            ReadOnlyNetworkMessage = new ReadOnlyNetworkMessage(buffer, buffer.Length);
         }
     }
 }

@@ -8,12 +8,12 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class CharacterListPacket : OutgoingPacket
     {
-        public CharacterListPacket(Account account)
+        public CharacterListPacket(AccountModel account)
         {
             AddCharList(account);
         }
 
-        private void AddCharList(Account account)
+        private void AddCharList(AccountModel account)
         {
            // OutputMessage.AddPayloadLengthSpace();
 

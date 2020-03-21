@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Data\NeoServer.Data.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Packets\" />
   </ItemGroup>
 
   <PropertyGroup>

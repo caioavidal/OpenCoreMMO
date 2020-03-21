@@ -12,7 +12,9 @@ namespace NeoServer.Networking.Packets.Incoming
         public static readonly IReadOnlyDictionary<GameIncomingPacketType, Type> Data =
         new Dictionary<GameIncomingPacketType, Type>(){
             { GameIncomingPacketType.PlayerLoginRequest, typeof(AccountLoginEventHandler)},
-            { GameIncomingPacketType.PlayerLogIn, typeof(PlayerLogInEventHandler)}
+            { GameIncomingPacketType.PlayerLogIn, typeof(PlayerLogInEventHandler)},
+            { GameIncomingPacketType.ChangeModes, typeof(PlayerChangesModeEventHandler)},
+            { GameIncomingPacketType.PlayerLogOut, typeof(PlayerLogOutEventHandler)}
         };
     }
 }

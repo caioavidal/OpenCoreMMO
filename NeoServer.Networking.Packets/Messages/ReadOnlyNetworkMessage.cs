@@ -1,15 +1,43 @@
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Messages
 {
-    public class ReadOnlyNetworkMessage : BaseNetworkMessage, IReadOnlyNetworkMessage
+    public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     {
+        public byte[] Buffer { get; protected set; }
+        public int Length { get; protected set; } = 0;
+        public byte[] GetMessageInBytes() => Length == 0 ? Buffer.ToArray() : Buffer[0..Length].ToArray();
+
         public int BytesRead { get; private set; } = 0;
 
-        public ReadOnlyNetworkMessage(byte[] buffer) : base(buffer) { }
+        public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
+        {
+            if (isAuthenticated)
+            {
+           
+
+                SkipBytes(6);
+                var length = GetUInt16();
+
+                var packetType = (GameIncomingPacketType) GetByte();
+                return packetType;
+            }
+
+            return (GameIncomingPacketType)Buffer[6];
+        }
+
+    
+        public ReadOnlyNetworkMessage(byte[] buffer, int length)
+        {
+            Buffer = buffer;
+            Length = length;
+            BytesRead = 0;
+        }
 
         private void IncreaseByteRead(int length) => BytesRead += length;
 
@@ -30,13 +58,7 @@ namespace NeoServer.Networking.Packets.Messages
             return result;
         }
 
-        public GameIncomingPacketType IncomingPacketType
-        {
-            get
-            {
-                return (GameIncomingPacketType) Buffer[6];
-            }
-        }
+     
 
         public ushort GetUInt16() => Convert(BitConverter.ToUInt16);
 

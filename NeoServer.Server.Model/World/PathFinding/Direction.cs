@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Server.World.PathFinding
+namespace NeoServer.Server.Model.World.PathFinding
 {
     public enum Direction : byte
     {

@@ -10,14 +10,15 @@ namespace NeoServer.Networking.Tests.Packets
     {
         public ReadOnlyNetworkMessageShould()
         {
-           
+
         }
 
         [Fact]
         public void Return_Ushort()
         {
             var data = 1652365;
-            var sup = new ReadOnlyNetworkMessage(BitConverter.GetBytes(data));
+            var dataBytes = BitConverter.GetBytes(data);
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = new byte[] { 141, 54 };
             Assert.Equal(BitConverter.ToUInt16(expected, 0), sup.GetUInt16());
@@ -27,7 +28,8 @@ namespace NeoServer.Networking.Tests.Packets
         public void Return_Values()
         {
             var data = "1652365658\n\0000006987451230246545648945646";
-            var sup = new ReadOnlyNetworkMessage(Encoding.ASCII.GetBytes(data));
+            var dataBytes = Encoding.ASCII.GetBytes(data);
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             Assert.Equal(BitConverter.ToUInt16(new byte[] { 49, 54 }, 0), sup.GetUInt16());
 
@@ -46,7 +48,9 @@ namespace NeoServer.Networking.Tests.Packets
         public void Increase_BytesRead()
         {
             var data = "1652365658\n\0000006987451230246545648945646";
-            var sup = new ReadOnlyNetworkMessage(Encoding.ASCII.GetBytes(data));
+            var dataBytes = Encoding.ASCII.GetBytes(data);
+
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             sup.GetUInt16();
             Assert.Equal(2, sup.BytesRead);
@@ -69,7 +73,9 @@ namespace NeoServer.Networking.Tests.Packets
         public void Return_UInt()
         {
             var data = 1652365;
-            var sup = new ReadOnlyNetworkMessage(BitConverter.GetBytes(data));
+            var dataBytes = BitConverter.GetBytes(data);
+
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
             Assert.Equal((uint)1652365, sup.GetUInt32());
         }
 
@@ -77,7 +83,9 @@ namespace NeoServer.Networking.Tests.Packets
         public void SkipBytes()
         {
             var data = 1652365;
-            var sup = new ReadOnlyNetworkMessage(BitConverter.GetBytes(data));
+            var dataBytes = BitConverter.GetBytes(data);
+
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             sup.SkipBytes(2);
 
@@ -88,16 +96,20 @@ namespace NeoServer.Networking.Tests.Packets
         public void ThrowException_SkipBytes()
         {
             var data = 1652365;
-            var sup = new ReadOnlyNetworkMessage(BitConverter.GetBytes(data));
+            var dataBytes = BitConverter.GetBytes(data);
 
-            Assert.Throws<ArgumentOutOfRangeException>(()=>sup.SkipBytes(20));
+            var sup = new ReadOnlyNetworkMessage(dataBytes,dataBytes.Length);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sup.SkipBytes(20));
         }
 
         [Fact]
         public void GetByte()
         {
             var data = 1652365;
-            var sup = new ReadOnlyNetworkMessage(BitConverter.GetBytes(data));
+            var dataBytes = BitConverter.GetBytes(data);
+
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = (byte)141;
             Assert.Equal(expected, sup.GetByte());
@@ -107,7 +119,9 @@ namespace NeoServer.Networking.Tests.Packets
         public void GetBytes()
         {
             var data = 1652365;
-            var sup = new ReadOnlyNetworkMessage(BitConverter.GetBytes(data));
+            var dataBytes = BitConverter.GetBytes(data);
+
+            var sup = new ReadOnlyNetworkMessage(dataBytes,dataBytes.Length);
 
             var expected = new byte[] { 141, 54, 25 };
             Assert.Equal(expected, sup.GetBytes(3));
@@ -117,8 +131,8 @@ namespace NeoServer.Networking.Tests.Packets
         public void GetString()
         {
             var data = "\a\0hello world";
-
-            var sup = new ReadOnlyNetworkMessage(Encoding.ASCII.GetBytes(data));
+            var dataBytes = Encoding.ASCII.GetBytes(data);
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = "hello w";
             Assert.Equal(expected, sup.GetString());

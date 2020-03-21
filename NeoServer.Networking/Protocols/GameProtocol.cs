@@ -2,6 +2,7 @@
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Handlers;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace NeoServer.Networking.Protocols
 {
     public class GameProtocol : OpenTibiaProtocol
     {
-        private Func<IReadOnlyNetworkMessage, IPacketHandler> _handlerFactory;
-        public GameProtocol(Func<IReadOnlyNetworkMessage, IPacketHandler> handlerFactory)
+        private Func<Connection, IPacketHandler> _handlerFactory;
+        public GameProtocol(Func<Connection, IPacketHandler> handlerFactory)
         {
             _handlerFactory = handlerFactory;
         }
@@ -31,13 +32,18 @@ namespace NeoServer.Networking.Protocols
             connection.Send(new FirstConnectionPacket(), false);
         }
 
-    
+
         public override void ProcessMessage(object sender, ConnectionEventArgs args)
         {
-            args.Connection.ResetBuffer();
-            var handler = _handlerFactory(args.Connection.InMessage);
-            handler.HandlerMessage(args.Connection.InMessage, args.Connection);
+            var connection = args.Connection;
 
+            if (connection.IsAuthenticated)
+            {
+                Xtea.Decrypt(connection.InMessage, 6, connection.XteaKey);
+            }
+
+            var handler = _handlerFactory(args.Connection);
+            handler.HandlerMessage(args.Connection.InMessage, args.Connection);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NeoServer.Server.Model
 {
-    public class Account : IServerModel
+    public class Account
     {
         public Account(string accountName, string password)
         {

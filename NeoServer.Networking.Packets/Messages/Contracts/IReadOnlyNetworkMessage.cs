@@ -1,10 +1,13 @@
 using NeoServer.Server.Contracts.Network;
+using System.Collections.Generic;
 
 namespace NeoServer.Networking.Packets.Messages
 {
-    public interface IReadOnlyNetworkMessage: INetworkMessage
+    public interface IReadOnlyNetworkMessage
     {
-        GameIncomingPacketType IncomingPacketType { get; }
+        byte[] Buffer { get; }
+
+        int Length { get; }
         int BytesRead { get; }
         ushort GetUInt16();
         uint GetUInt32();
@@ -12,5 +15,7 @@ namespace NeoServer.Networking.Packets.Messages
         byte GetByte();
         byte[] GetBytes(int length);
         string GetString();
+        byte[] GetMessageInBytes();
+        GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated);
     }
 }

@@ -128,6 +128,7 @@ namespace NeoServer.Server.World
 		private void ParseTileAreaNode(OTBNode tileAreaNode, World world) {
 			if (tileAreaNode == null)
 				throw new ArgumentNullException(nameof(tileAreaNode));
+
 			if (tileAreaNode.Type != OTBNodeType.TileArea)
 				throw new InvalidOperationException();
 
@@ -164,7 +165,7 @@ namespace NeoServer.Server.World
 			if (world == null)
 				throw new ArgumentNullException(nameof(world));
 			if (tileNode.Type != OTBNodeType.HouseTile && tileNode.Type != OTBNodeType.NormalTile)
-				throw new InvalidOperationException();
+				throw new InvalidOperationException("Unknown tile node.");
 
 			var stream = new OTBParsingStream(tileNode.Data);
 
@@ -184,29 +185,43 @@ namespace NeoServer.Server.World
 			}
 
 			// We create the tile early and mutate it along the method
-			var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z);
+			var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z, _itemFactory);
 
 			// Parsing the tile attributes
 			var tileFlags = TileFlags.None;
 			var tilesItems = new List<Item>();
+		
 
 			var tileNodeAttribute = (OTBMWorldNodeAttribute)stream.ReadByte();
-			switch (tileNodeAttribute) {
+			//if((byte)tileNodeAttribute == 254)
+			//{
 
-				case OTBMWorldNodeAttribute.TileFlags:
-				var newFlags = (OTBMTileFlags)stream.ReadUInt32();
-				tileFlags = UpdateTileFlags(tileFlags, newFlags);
-				break;
+			//}
+			//if(!tileNode.Children.Any())
+			//{
+				switch (tileNodeAttribute)
+				{
 
-				case OTBMWorldNodeAttribute.Item:
-				var item = ParseItemData(stream);
+					case OTBMWorldNodeAttribute.TileFlags:
+						{
+							var newFlags = (OTBMTileFlags)stream.ReadUInt32();
+							tileFlags = UpdateTileFlags(tileFlags, newFlags);
+							break;
+						}
+
+					case OTBMWorldNodeAttribute.Item:
+						{
+							var item = ParseItemData(stream);
 #warning Not sure if this is the proper method
-				tile.AddContent(item);
-				break;
+							tile.AddContent(item);
+							break;
+						}
 
-				default:
-				throw new Exception("TFS just threw a exception here, so shall we... Reason: unknown tile attribute.");
-			}
+					default:
+						throw new Exception("TFS just threw a exception here, so shall we... Reason: unknown tile attribute.");
+				}
+		//	}
+			
 
 			// var items = tileNode.Children.Select(node => ParseTilesItemNode(node));
 			var items = tileNode

@@ -15,7 +15,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         private void AddMessage()
         {
-            OutputMessage.AddUInt16(6);
+            OutputMessage.AddUInt16(0x0006);
             OutputMessage.AddByte(0x1F);
             OutputMessage.AddUInt32((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 

@@ -28,7 +28,7 @@ namespace NeoServer.Server.Model.Players.Contracts
 
       //  IAction PendingAction { get; }
 
-        void SetOutfit(Outfit outfit);
+        void ChangeOutfit(Outfit outfit);
 
         uint ChooseToRemoveFromKnownSet();
 

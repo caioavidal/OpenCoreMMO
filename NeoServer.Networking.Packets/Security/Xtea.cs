@@ -1,3 +1,4 @@
+using NeoServer.Networking.Packets.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ namespace NeoServer.Networking.Packets.Security
 {
     public class Xtea
     {
-        public static NetworkMessage Encrypt(NetworkMessage msg, uint[] key)
+        public static INetworkMessage Encrypt(INetworkMessage msg, uint[] key)
         {
             if (key == null)
                 throw new ArgumentException("Key invalid");
@@ -35,13 +36,43 @@ namespace NeoServer.Networking.Packets.Security
 
             var newBytes = words.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
 
-            var encrypted = new NetworkMessage();
+            return new NetworkMessage(newBytes, msg.Length);
 
-            foreach (var item in newBytes)
+            
+        }
+
+        public static unsafe bool Decrypt(IReadOnlyNetworkMessage msg, int index, uint[] key)
+        {
+            var length = msg.Length;
+            var buffer = msg.Buffer;
+
+            if (length <= index || (length - index) % 8 > 0 || key == null)
             {
-                encrypted.AddByte(item);
+                return false;
             }
-            return encrypted;
+
+            fixed (byte* bufferPtr = buffer)
+            {
+                uint* words = (uint*)(bufferPtr + index);
+                int msgSize = length - index;
+
+                for (int pos = 0; pos < msgSize / 4; pos += 2)
+                {
+                    uint xCount = 32, xSum = 0xC6EF3720, xDelta = 0x9E3779B9;
+
+                    while (xCount-- > 0)
+                    {
+                        words[pos + 1] -= (words[pos] << 4 ^ words[pos] >> 5) + words[pos] ^ xSum
+                            + key[xSum >> 11 & 3];
+                        xSum -= xDelta;
+                        words[pos] -= (words[pos + 1] << 4 ^ words[pos + 1] >> 5) + words[pos + 1] ^ xSum
+                            + key[xSum & 3];
+                    }
+                }
+            }
+
+            length = BitConverter.ToUInt16(buffer, index) + 2 + index;
+            return true;
         }
 
         private static IEnumerable<uint> Split(byte[] array)

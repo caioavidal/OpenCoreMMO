@@ -1,14 +1,16 @@
-﻿using NeoServer.Networking.Packets.Messages;
+﻿using NeoServer.Networking.Packets;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 
 namespace NeoServer.Networking
 {
 
-    public class Connection : IConnection
+    public class Connection
     {
         public event EventHandler<ConnectionEventArgs> OnProcessEvent;
         public event EventHandler<ConnectionEventArgs> OnCloseEvent;
@@ -21,7 +23,9 @@ namespace NeoServer.Networking
 
         public IReadOnlyNetworkMessage InMessage { get; private set; }
 
-        public uint[] Xtea { get; private set; }
+        public uint[] XteaKey { get; private set; }
+        public uint PlayerId { get; set; }
+        public bool IsAuthenticated { get; set; } = false;
 
         public void OnAccept(IAsyncResult ar)
         {
@@ -41,14 +45,14 @@ namespace NeoServer.Networking
         {
             Socket = null;
             Stream = null;
-            Xtea = new uint[4];
+            XteaKey = new uint[4];
             ResetBuffer();
         }
-        public void BeginStreamRead() => Stream.BeginRead(Buffer, 0, 1024, OnRead, null);
+        public void BeginStreamRead() => Stream.BeginRead(Buffer, 0, 16394, OnRead, null);
 
         public void SetXtea(uint[] xtea)
         {
-            Xtea = xtea;
+            XteaKey = xtea;
         }
 
         public void ResetBuffer()
@@ -81,7 +85,7 @@ namespace NeoServer.Networking
             {
                 //Stream.Read(Buffer, 0, length);
 
-                InMessage = new ReadOnlyNetworkMessage(Buffer);
+                InMessage = new ReadOnlyNetworkMessage(Buffer, length);
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent(this, eventArgs);
 
@@ -97,6 +101,8 @@ namespace NeoServer.Networking
                 // Close();
             }
         }
+
+
 
         public void Close()
         {
@@ -114,11 +120,11 @@ namespace NeoServer.Networking
             {
 
 
-                var streamMessage = message.GetMessageInBytes();
+                var streamMessage = message.AddHeader();
                 Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
 
                 var eventArgs = new ConnectionEventArgs(this);
-                OnPostProcessEvent(this, eventArgs);
+                OnPostProcessEvent?.Invoke(this, eventArgs);
 
             }
             catch (ObjectDisposedException)
@@ -130,13 +136,39 @@ namespace NeoServer.Networking
         public void Send(IOutgoingPacket packet, bool encrypt = true)
         {
 
-            var message = encrypt ? packet.GetMessage(Xtea) : packet.GetMessage();
+            var message = encrypt ? Packets.Security.Xtea.Encrypt(packet.GetMessage(), XteaKey) : packet.GetMessage();
+
+
             SendMessage(message, packet.Disconnect);
 
         }
+
+        public void Send(Queue<OutgoingPacket> outgoingPackets)
+        {
+
+            var joinedPackets = new byte[16394];
+            int totalLength = 0;
+
+            foreach (var outPacket in outgoingPackets)
+            {
+                var networkMessage = outPacket.GetMessage();
+                var buffer = networkMessage.Buffer;
+
+                System.Buffer.BlockCopy(buffer, 0, joinedPackets, totalLength, networkMessage.Length);
+
+                totalLength += networkMessage.Length;
+            }
+
+            INetworkMessage joinedMessage = new NetworkMessage(joinedPackets, totalLength);
+            joinedMessage.AddLength();
+
+            joinedMessage = Packets.Security.Xtea.Encrypt(joinedMessage, XteaKey);
+
+            SendMessage(joinedMessage);
+        }
         public void Send(string text)
         {
-            var message = new TextMessagePacket(text).GetMessage(Xtea);
+            var message = Packets.Security.Xtea.Encrypt(new TextMessagePacket(text).GetMessage(), XteaKey);
             SendMessage(message);
         }
     }

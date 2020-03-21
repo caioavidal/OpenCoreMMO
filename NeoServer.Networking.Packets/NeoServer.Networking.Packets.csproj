@@ -13,6 +13,7 @@
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Security\NeoServer.Server.Security.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.World\NeoServer.Server.World.csproj" />
   </ItemGroup>
 
 </Project>

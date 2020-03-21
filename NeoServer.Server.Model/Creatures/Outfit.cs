@@ -2,7 +2,7 @@ namespace NeoServer.Server.Model.Creatures
 {
     public class Outfit
     {
-        public ushort LikeType { get; set; }
+        public ushort LookType { get; set; }
 
         public ushort Id { get; set; }
 
@@ -13,6 +13,7 @@ namespace NeoServer.Server.Model.Creatures
         public byte Legs { get; set; }
 
         public byte Feet { get; set; }
+        public byte Addon { get; set; }
     }
 
 }

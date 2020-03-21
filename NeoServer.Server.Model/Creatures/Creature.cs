@@ -1,12 +1,11 @@
 ﻿using NeoServer.Server.Model.Creatures.Contracts;
 using NeoServer.Server.Model.Items;
 using NeoServer.Server.Model.Items.Contracts;
+using NeoServer.Server.Model.World.PathFinding;
 using NeoServer.Server.Model.World.Structs;
-using NeoServer.Server.World.PathFinding;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Model.Creatures
 {
@@ -59,7 +58,7 @@ namespace NeoServer.Server.Model.Creatures
             Outfit = new Outfit
             {
                 Id = 0,
-                LikeType = 0
+                LookType = 0
             };
 
             Speed = 220;
@@ -106,7 +105,7 @@ namespace NeoServer.Server.Model.Creatures
 
         public decimal CarryStrength { get; protected set; }
 
-        public Outfit Outfit { get; protected set; }
+        public abstract Outfit Outfit { get; protected set; }
 
         public Direction Direction { get; protected set; }
 
@@ -345,14 +344,14 @@ namespace NeoServer.Server.Model.Creatures
 
         public void CheckAutoAttack(IThing thingChanged, ThingStateChangedEventArgs eventAgrs)
         {
-            throw new NotImplementedException(); //TODO
 
-            //if (AutoAttackTargetId == 0)
-            //{
-            //    return;
-            //}
+            if (AutoAttackTargetId == 0)
+            {
+                return;
+            }
 
-            //var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId);
+            throw new NotImplementedException();
+            //var attackTarget = Game.Instance.GetCreatureWithId(AutoAttackTargetId); //todo
 
             //if (attackTarget == null || (thingChanged != this && thingChanged != attackTarget) || eventAgrs.PropertyChanged != nameof(Thing.Location))
             //{
@@ -364,7 +363,7 @@ namespace NeoServer.Server.Model.Creatures
 
             //if (inRange)
             //{
-            //    Game.Instance.SignalAttackReady();
+            //    //Game.Instance.SignalAttackReady(); //todo
             //}
         }
 

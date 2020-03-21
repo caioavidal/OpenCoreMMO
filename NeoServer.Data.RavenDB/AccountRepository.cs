@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model;
@@ -10,13 +12,13 @@ using Raven.Client.Documents.Session;
 namespace NeoServer.Data.RavenDB
 {
 
-    public class AccountRepository : BaseRepository<Account>, IAccountRepository
+    public class AccountRepository : BaseRepository<AccountModel>, IAccountRepository
     {
         public AccountRepository(Database database) : base(database)
         {
         }
 
-        public async void Create(Account account)
+        public async void Create(AccountModel account)
         {
             using (var store = new DocumentStore())
             {
@@ -38,12 +40,22 @@ namespace NeoServer.Data.RavenDB
                 }
             }
         }
-        public async Task<Account> Get(string account, string password)
+
+        public async Task<AccountModel> FirstOrDefaultAsync(Expression<Func<AccountModel, bool>> filter)
         {
 
             using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
             {
-                return await Session.Query<Account>()
+                return await Session.Query<AccountModel>().FirstOrDefaultAsync(filter);
+            }
+
+        }
+        public async Task<AccountModel> Get(string account, string password)
+        {
+
+            using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
+            {
+                return await Session.Query<AccountModel>()
             .FirstOrDefaultAsync(a => a.AccountName == account &&
                 a.Password == password);
             }

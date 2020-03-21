@@ -19,10 +19,8 @@ namespace NeoServer.Server.Map
 {
 	public class Tile : ITile {
 
-		public Tile()
-		{
-
-		}
+		private readonly Func<ushort, Item> _itemFactory;
+	
 		private readonly Stack<uint> _creatureIdsOnTile;
 
 		private readonly Stack<IItem> _topItems1OnTile;
@@ -214,78 +212,100 @@ namespace NeoServer.Server.Map
 		// public static HashSet<string> PropSet = new HashSet<string>();
 
 		// public string LoadedFrom { get; set; }
-		public Tile(ushort x, ushort y, sbyte z)
-			: this(new Location { X = x, Y = y, Z = z }) {
+		public Tile(ushort x, ushort y, sbyte z, Func<ushort, Item> itemFactory)
+			: this(new Location { X = x, Y = y, Z = z }, itemFactory)
+		{
+			_itemFactory = itemFactory;
 		}
 
-		public Tile(Location loc) {
+		public Tile(Location loc, Func<ushort, Item> itemFactory)
+		{
 			Location = loc;
 			_creatureIdsOnTile = new Stack<uint>();
 			_topItems1OnTile = new Stack<IItem>();
 			_topItems2OnTile = new Stack<IItem>();
 			_downItemsOnTile = new Stack<IItem>();
+			_itemFactory = itemFactory;
 		}
 
 		public void AddThing(ref IThing thing, byte count) {
-			throw new NotImplementedException(); //todo
-			//if (count == 0) {
-			//	throw new ArgumentException("Invalid count zero.");
-			//}
+			
+			if (count == 0)
+			{
+				throw new ArgumentException("Invalid count zero.");
+			}
 
-			//var item = thing as Item;
+			var item = thing as Item;
 
-			//if (thing is Creature creature) {
-			//	_creatureIdsOnTile.Push(creature.CreatureId);
-			//	creature.Tile = this;
-			//	creature.Added();
+			if (thing is Creature creature)
+			{
+				_creatureIdsOnTile.Push(creature.CreatureId);
+				creature.Tile = this;
+				creature.Added();
 
-			//	// invalidate the cache.
-			//	_cachedDescription = null;
-			//} else if (item != null) {
-			//	if (item.IsGround) {
-			//		Ground = item;
-			//		item.Added();
-			//	} else if (item.IsTop1) {
-			//		_topItems1OnTile.Push(item);
-			//		item.Added();
-			//	} else if (item.IsTop2) {
-			//		_topItems2OnTile.Push(item);
-			//		item.Added();
-			//	} else {
-			//		if (item.IsCumulative) {
-			//			var currentItem = _downItemsOnTile.Count > 0 ? _downItemsOnTile.Peek() as Item : null;
+				// invalidate the cache.
+				_cachedDescription = null;
+			}
+			else if (item != null)
+			{
+				if (item.IsGround)
+				{
+					Ground = item;
+					item.Added();
+				}
+				else if (item.IsTop1)
+				{
+					_topItems1OnTile.Push(item);
+					item.Added();
+				}
+				else if (item.IsTop2)
+				{
+					_topItems2OnTile.Push(item);
+					item.Added();
+				}
+				else
+				{
+					if (item.IsCumulative)
+					{
+						var currentItem = _downItemsOnTile.Count > 0 ? _downItemsOnTile.Peek() as Item : null;
 
-			//			if (currentItem != null && currentItem.Type == item.Type && currentItem.Amount < 100) {
-			//				// add these up.
-			//				var remaining = currentItem.Amount + count;
+						if (currentItem != null && currentItem.Type == item.Type && currentItem.Amount < 100)
+						{
+							// add these up.
+							var remaining = currentItem.Amount + count;
 
-			//				var newCount = (byte)Math.Min(remaining, 100);
+							var newCount = (byte)Math.Min(remaining, 100);
 
-			//				currentItem.Amount = newCount;
+							currentItem.Amount = newCount;
 
-			//				remaining -= newCount;
+							remaining -= newCount;
 
-			//				if (remaining > 0) {
-			//					IThing newThing = ItemFactory.Create(item.Type.TypeId);
-			//					AddThing(ref newThing, (byte)remaining);
-			//					thing = newThing;
-			//				}
-			//			} else {
-			//				item.Amount = count;
-			//				_downItemsOnTile.Push(item);
-			//				item.Added();
-			//			}
-			//		} else {
-			//			_downItemsOnTile.Push(item);
-			//			item.Added();
-			//		}
-			//	}
+							if (remaining > 0)
+							{
+								IThing newThing = _itemFactory(item.Type.TypeId);
+								AddThing(ref newThing, (byte)remaining);
+								thing = newThing;
+							}
+						}
+						else
+						{
+							item.Amount = count;
+							_downItemsOnTile.Push(item);
+							item.Added();
+						}
+					}
+					else
+					{
+						_downItemsOnTile.Push(item);
+						item.Added();
+					}
+				}
 
-			//	item.Tile = this;
+				item.Tile = this;
 
-			//	// invalidate the cache.
-			//	_cachedDescription = null;
-			//}
+				// invalidate the cache.
+				_cachedDescription = null;
+			}
 		}
 
 		public void RemoveThing(ref IThing thing, byte count) {

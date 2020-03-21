@@ -22,8 +22,9 @@ namespace NeoServer.Networking.Packets.Incoming
 
             //// todo: version validation
 
-            var encryptedData = message.GetBytes(tcpPayload - message.BytesRead);
-            var data = new ReadOnlyNetworkMessage(RSA.Decrypt(encryptedData));
+            var encryptedDataLength = tcpPayload - message.BytesRead;
+            var encryptedData = message.GetBytes(encryptedDataLength);
+            var data = new ReadOnlyNetworkMessage(RSA.Decrypt(encryptedData), encryptedDataLength);
 
             LoadXtea(data);
 

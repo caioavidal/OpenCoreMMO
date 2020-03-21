@@ -6,7 +6,7 @@
 
 using System;
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.World.PathFinding;
+using NeoServer.Server.Model.World.PathFinding;
 using NeoServer.Server.World.Structs;
 
 namespace NeoServer.Server.Model.World.Structs

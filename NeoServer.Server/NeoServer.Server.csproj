@@ -20,4 +20,9 @@
     <Folder Include="Items\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.World\NeoServer.Server.World.csproj" />
+  </ItemGroup>
+
 </Project>

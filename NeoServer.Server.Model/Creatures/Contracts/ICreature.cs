@@ -9,9 +9,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 using NeoServer.Server.Model.Items.Contracts;
-using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.World.PathFinding;
 using NeoServer.Server.Model.World.Structs;
-using NeoServer.Server.World.PathFinding;
 
 namespace NeoServer.Server.Model.Creatures.Contracts
 {
