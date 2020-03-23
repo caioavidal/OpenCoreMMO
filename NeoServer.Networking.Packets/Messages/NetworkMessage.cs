@@ -1,12 +1,10 @@
 ﻿namespace NeoServer.Networking.Packets
 {
+    using NeoServer.Game.Contracts.Item;
+    using NeoServer.Game.Enums.Location.Structs;
     using NeoServer.Networking.Packets.Messages;
-    using NeoServer.Server.Contracts.Network;
-    using NeoServer.Server.Model.Items.Contracts;
-    using NeoServer.Server.Model.World.Structs;
     using NeoServer.Server.Security;
     using System;
-    using System.Linq;
     using System.Text;
 
     public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage

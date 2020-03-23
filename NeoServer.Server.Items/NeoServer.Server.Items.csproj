@@ -17,6 +17,9 @@
     <ProjectReference Include="..\NeoServer.Server.Loaders\NeoServer.Server.Helpers.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Server.OTB\NeoServer.Server.OTB.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Game.Model.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

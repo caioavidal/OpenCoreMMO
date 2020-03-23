@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using NeoServer.Server.Model;
+using NeoServer.Data.Model;
 
 namespace NeoServer.Server.Contracts.Repositories
 {

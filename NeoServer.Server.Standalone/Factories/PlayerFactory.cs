@@ -1,6 +1,8 @@
-﻿using NeoServer.Server.Model.Items;
+﻿using NeoServer.Game.Contracts.Item;
+using NeoServer.Server.Model.Items;
 using NeoServer.Server.Model.Items.Contracts;
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +12,13 @@ namespace NeoServer.Server.Standalone.Factories
 {
     internal class PlayerFactory
     {
-        private readonly Func<ushort, Item> _itemFactory;
-        public PlayerFactory(Func<ushort, Item> itemFactory)
+        private readonly Func<ushort, IItem> _itemFactory;
+        public PlayerFactory(Func<ushort, IItem> itemFactory)
         {
             _itemFactory = itemFactory;
         }
         private readonly static Random random = new Random();
-        public Player Create(PlayerModel player)
+        public IPlayer Create(PlayerModel player)
         {
             var id = (uint)random.Next();
 
@@ -38,8 +40,8 @@ namespace NeoServer.Server.Standalone.Factories
                 player.StaminaMinutes,
                 player.Outfit,
                 ConvertToInventory(player.Inventory)
-               // player.Location
-                ); 
+                // player.Location
+                );
         }
 
         private IDictionary<Slot, Tuple<IItem, ushort>> ConvertToInventory(Dictionary<Slot, ushort> inventory)
@@ -47,7 +49,7 @@ namespace NeoServer.Server.Standalone.Factories
             var inventoryDic = new Dictionary<Slot, Tuple<IItem, ushort>>();
             foreach (var slot in inventory)
             {
-                inventoryDic.Add(slot.Key,new Tuple<IItem, ushort>(_itemFactory(slot.Value),slot.Value));
+                inventoryDic.Add(slot.Key, new Tuple<IItem, ushort>(_itemFactory(slot.Value), slot.Value));
             }
             return inventoryDic;
         }

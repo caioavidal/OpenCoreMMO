@@ -16,6 +16,7 @@
     <ProjectReference Include="..\NeoServer.Server.Items\NeoServer.Server.Items.csproj" />
     <ProjectReference Include="..\NeoServer.Server.World\NeoServer.Server.World.csproj" />
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
   </ItemGroup>
 
   <ItemGroup>

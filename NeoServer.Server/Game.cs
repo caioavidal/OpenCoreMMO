@@ -1,7 +1,8 @@
-﻿using NeoServer.Networking;
-using NeoServer.Server.Model.Creatures;
-using NeoServer.Server.Model.Items.Contracts;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creature;
+using NeoServer.Networking;
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
 
@@ -14,37 +15,35 @@ namespace NeoServer.Server
         /// </summary>
         private ConcurrentDictionary<uint, Connection> Connections { get; }
 
-
         public byte LightLevel => 250;
         public byte LightColor => 215;
 
 
-        private readonly Func<PlayerModel, Player> _playerFactory;
-        private readonly World.Map.Map _map;
+        private readonly Func<PlayerModel, IPlayer> _playerFactory;
+        public World.Map.Map Map { get; }
 
-        public Game(Func<PlayerModel, Player> playerFactory, World.Map.Map map)
+        public ICreatureGameInstance CreatureInstances {get;}
+
+        public Game(Func<PlayerModel, IPlayer> playerFactory, World.Map.Map map, 
+            ICreatureGameInstance creatureInstances)
         {
             Connections = new ConcurrentDictionary<uint, Connection>();
+
             _playerFactory = playerFactory;
-            _map = map;
+            Map = map;
+            CreatureInstances = creatureInstances;
         }
 
-        public Player LogInPlayer(PlayerModel playerRecord, Connection connection)
+        public IPlayer LogInPlayer(PlayerModel playerRecord, Connection connection)
         {
             var player = _playerFactory(playerRecord);
 
-            _map.AddPlayerOnMap(player);
-            _map.AddCreature(player);
-         
+            Map.AddPlayerOnMap(player);
+            CreatureInstances.Add(player);
+
             return player;
         }
-
-        public Creature GetCreature(uint id)
-        {
-            return _map.Creatures[id];
-        }
-      
-
+     
         public DateTime CombatSynchronizationTime { get; private set; }
     }
 }

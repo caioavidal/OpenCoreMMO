@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NeoServer.Networking.Packets.Security;
-using NeoServer.Server.Model;
+﻿using NeoServer.Data.Model;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

@@ -1,14 +1,13 @@
-﻿using NeoServer.Server.Model.Creatures;
+﻿using NeoServer.Game.Creatures.Enums;
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
     public class PlayerStatusPacket:OutgoingPacket
     {
-        public PlayerStatusPacket(Player player) : base(false)
+        public PlayerStatusPacket(IPlayer player) : base(false)
         {
             OutputMessage.AddByte((byte)GameOutgoingPacketType.PlayerStatus);
             OutputMessage.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Hitpoints));

@@ -7,19 +7,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Server.Model.Creatures;
-using NeoServer.Server.Model.Creatures.Contracts;
-using NeoServer.Server.Model.Items;
-using NeoServer.Server.Model.Items.Contracts;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.World.Map;
-using NeoServer.Server.Model.World.Structs;
-using NeoServer.Server.World.Map;
 
 namespace NeoServer.Server.Map
 {
-	public class Tile : ITile {
+    public class Tile : ITile {
 
-		private readonly Func<ushort, Item> _itemFactory;
+		private readonly Func<ushort, IItem> _itemFactory;
 	
 		private readonly Stack<uint> _creatureIdsOnTile;
 
@@ -200,11 +198,11 @@ namespace NeoServer.Server.Map
 				throw new ArgumentException("Invalid count zero.", nameof(count));
 			}
 
-			var creaturesCheck = thing is Creature creature && _creatureIdsOnTile.Contains(creature.CreatureId);
+			var creaturesCheck = thing is ICreature creature && _creatureIdsOnTile.Contains(creature.CreatureId);
 
-			var top1Check = thing is Item && _topItems1OnTile.Count > 0 && _topItems1OnTile.Peek() == thing && thing.Count >= count;
-			var top2Check = thing is Item && _topItems2OnTile.Count > 0 && _topItems2OnTile.Peek() == thing && thing.Count >= count;
-			var downCheck = thing is Item && _downItemsOnTile.Count > 0 && _downItemsOnTile.Peek() == thing && thing.Count >= count;
+			var top1Check = thing is IItem && _topItems1OnTile.Count > 0 && _topItems1OnTile.Peek() == thing && thing.Count >= count;
+			var top2Check = thing is IItem && _topItems2OnTile.Count > 0 && _topItems2OnTile.Peek() == thing && thing.Count >= count;
+			var downCheck = thing is IItem && _downItemsOnTile.Count > 0 && _downItemsOnTile.Peek() == thing && thing.Count >= count;
 
 			return creaturesCheck || top1Check || top2Check || downCheck;
 		}
@@ -212,13 +210,13 @@ namespace NeoServer.Server.Map
 		// public static HashSet<string> PropSet = new HashSet<string>();
 
 		// public string LoadedFrom { get; set; }
-		public Tile(ushort x, ushort y, sbyte z, Func<ushort, Item> itemFactory)
+		public Tile(ushort x, ushort y, sbyte z, Func<ushort, IItem> itemFactory)
 			: this(new Location { X = x, Y = y, Z = z }, itemFactory)
 		{
 			_itemFactory = itemFactory;
 		}
 
-		public Tile(Location loc, Func<ushort, Item> itemFactory)
+		public Tile(Location loc, Func<ushort, IItem> itemFactory)
 		{
 			Location = loc;
 			_creatureIdsOnTile = new Stack<uint>();
@@ -235,9 +233,9 @@ namespace NeoServer.Server.Map
 				throw new ArgumentException("Invalid count zero.");
 			}
 
-			var item = thing as Item;
+			var item = thing as IItem;
 
-			if (thing is Creature creature)
+			if (thing is ICreature creature)
 			{
 				_creatureIdsOnTile.Push(creature.CreatureId);
 				creature.Tile = this;
@@ -267,7 +265,7 @@ namespace NeoServer.Server.Map
 				{
 					if (item.IsCumulative)
 					{
-						var currentItem = _downItemsOnTile.Count > 0 ? _downItemsOnTile.Peek() as Item : null;
+						var currentItem = _downItemsOnTile.Count > 0 ? _downItemsOnTile.Peek() as IItem : null;
 
 						if (currentItem != null && currentItem.Type == item.Type && currentItem.Amount < 100)
 						{
@@ -417,7 +415,7 @@ namespace NeoServer.Server.Map
 			}
 		}
 
-		public void AddContent(Item item)
+		public void AddContent(IItem item)
 		{
 			var downItemStackToReverse = new Stack<IItem>();
 			var top1ItemStackToReverse = new Stack<IItem>();

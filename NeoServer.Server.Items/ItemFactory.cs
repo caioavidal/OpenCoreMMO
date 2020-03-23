@@ -1,4 +1,6 @@
-﻿using NeoServer.Server.Items;
+﻿using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums;
+using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +9,7 @@ namespace NeoServer.Server.Model.Items
 {
     public class ItemFactory
     {
-        public static Item Create(ushort typeId)
+        public static IItem Create(ushort typeId)
         {
             if (typeId < 100 || !ItemData.Items.ContainsKey(typeId))
             {

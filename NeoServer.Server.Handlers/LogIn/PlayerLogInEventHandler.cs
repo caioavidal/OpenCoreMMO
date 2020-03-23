@@ -1,11 +1,9 @@
-﻿using NeoServer.Networking;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Networking;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model;
-using NeoServer.Server.Model.Creatures;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,18 +48,18 @@ namespace NeoServer.Server.Handlers.Authentication
 
             var outgoingPackets = new Queue<OutgoingPacket>();
 
-            outgoingPackets.Enqueue(new SelfAppearPacket(player)); //8
-            outgoingPackets.Enqueue(new MapDescriptionPacket(player, _map)); //1260
-            outgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.BubbleBlue)); //7
-            outgoingPackets.Enqueue(new PlayerInventoryPacket(player.Inventory)); //22
-            outgoingPackets.Enqueue(new PlayerStatusPacket(player)); //25
-            outgoingPackets.Enqueue(new PlayerSkillsPacket(player)); //15
+            outgoingPackets.Enqueue(new SelfAppearPacket(player));
+            outgoingPackets.Enqueue(new MapDescriptionPacket(player, _map));
+            outgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.BubbleBlue));
+            outgoingPackets.Enqueue(new PlayerInventoryPacket(player.Inventory));
+            outgoingPackets.Enqueue(new PlayerStatusPacket(player));
+            outgoingPackets.Enqueue(new PlayerSkillsPacket(player));
 
-            outgoingPackets.Enqueue(new WorldLightPacket(_game.LightLevel, _game.LightColor));//3
+            outgoingPackets.Enqueue(new WorldLightPacket(_game.LightLevel, _game.LightColor));
 
-            outgoingPackets.Enqueue(new CreatureLightPacket(player)); //7
+            outgoingPackets.Enqueue(new CreatureLightPacket(player));
 
-            outgoingPackets.Enqueue(new PlayerConditionsPacket()); //3
+            outgoingPackets.Enqueue(new PlayerConditionsPacket());
 
             connection.Send(outgoingPackets);
         }

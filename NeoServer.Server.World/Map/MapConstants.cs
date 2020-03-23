@@ -13,5 +13,7 @@ namespace NeoServer.Server.Model.World.Map
         public const int MaxViewInY = 11;         // min value: max
         public const int MaxClientViewportX = 8;
         public const int MaxClientViewportY = 6;
+        public const int LimitOfObjectsOnTile = 9;
+
     }
 }

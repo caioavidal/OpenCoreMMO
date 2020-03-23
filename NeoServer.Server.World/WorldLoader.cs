@@ -1,12 +1,9 @@
 using NeoServer.Server.Helpers;
-using NeoServer.Server.Map;
-using NeoServer.Server.Model.World.Structs;
-using NeoServer.Server.World.Map;
 using System;
 
 namespace NeoServer.Server.World
 {
-	public sealed class WorldLoader : IWorldLoader
+    public sealed class WorldLoader : IWorldLoader
 	{
 		private World _world;
 

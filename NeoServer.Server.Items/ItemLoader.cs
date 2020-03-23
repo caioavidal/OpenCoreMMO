@@ -4,7 +4,6 @@ using NeoServer.Server.Model.Items;
 using NeoServer.Server.World.OTB;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 

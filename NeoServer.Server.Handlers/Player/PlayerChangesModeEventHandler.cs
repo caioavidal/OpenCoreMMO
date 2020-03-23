@@ -1,14 +1,8 @@
 ﻿using NeoServer.Networking;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model;
-using NeoServer.Server.Model.Creatures;
 using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
@@ -32,7 +26,7 @@ namespace NeoServer.Server.Handlers.Authentication
         {
             var changeMode = new ChangeModePacket(message);
 
-            var player = _game.GetCreature(connection.PlayerId) as Player;
+            var player = _game.CreatureInstances[connection.PlayerId] as Player;
 
             player.SetFightMode(changeMode.FightMode);
             player.SetChaseMode(changeMode.ChaseMode);

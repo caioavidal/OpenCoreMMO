@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Server.Model
+namespace NeoServer.Data.Model
 {
     public class AccountModel
     {

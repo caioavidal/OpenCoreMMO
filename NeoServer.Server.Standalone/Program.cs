@@ -1,14 +1,16 @@
 ﻿using Autofac;
+using NeoServer.Data.Model;
 using NeoServer.Data.RavenDB;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Creature.Model;
+using NeoServer.Game.Creatures.Enums;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Loaders;
 using NeoServer.Server.Model;
-using NeoServer.Server.Model.Creatures;
-using NeoServer.Server.Model.Creatures.Contracts;
 
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.World.Structs;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.World;
@@ -33,8 +35,6 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<IWorldLoader>().Load();
 
-            container.Resolve<World.Map.Map>();
-
             Task.Run(() => container.Resolve<LoginListener>().BeginListening());
             Task.Run(() => container.Resolve<GameListener>().BeginListening());
 
@@ -54,8 +54,6 @@ namespace NeoServer.Server.Standalone
                 AccountName = "1",
                 Password = "1"
             };
-
-            var factory = Container.CompositionRoot().Resolve<Func<ushort, Model.Items.Item>>();
 
             a.Players = new List<PlayerModel>(){
                      new PlayerModel(){

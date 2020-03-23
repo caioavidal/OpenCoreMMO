@@ -1,8 +1,5 @@
-﻿using NeoServer.Server.Model.Creatures;
-using NeoServer.Server.Model.World.Structs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

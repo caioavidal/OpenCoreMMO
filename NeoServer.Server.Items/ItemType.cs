@@ -1,4 +1,6 @@
-﻿using NeoServer.Server.Model.Items.Contracts;
+﻿using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums;
+using NeoServer.Server.Model.Items.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;

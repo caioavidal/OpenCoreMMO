@@ -1,29 +1,28 @@
-using COMMO.Server.Data.Models.Structs;
-using NeoServer.Server.Map;
-using NeoServer.Server.Model.World.Structs;
-using NeoServer.Server.World.Map;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Enums.Location.Structs;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
 
-namespace NeoServer.Server.World {
+namespace NeoServer.Server.World
+{
 
 
-	/// <summary>
-	/// This class is meant to be a in-memory substitute for <see cref="SectorMapLoader"/>.
-	/// The current implementation of <see cref="World"/> is slow and memory hungry, but it's meant
-	/// to be just test the world loading functionality.
-	/// We will refactor and improve it later.
-	/// </summary>
-	public class World {
+    /// <summary>
+    /// This class is meant to be a in-memory substitute for <see cref="SectorMapLoader"/>.
+    /// The current implementation of <see cref="World"/> is slow and memory hungry, but it's meant
+    /// to be just test the world loading functionality.
+    /// We will refactor and improve it later.
+    /// </summary>
+    public class World {
 
 		public byte PercentageComplete => 100;
 		public bool HasLoaded(int x, int y, byte z) => _worldTiles.Any();
 		public int LoadedTilesCount() => _worldTiles.Count();
 
-		private readonly ConcurrentDictionary<Coordinate, Tile> _worldTiles = new ConcurrentDictionary<Coordinate, Tile>();
+		private readonly ConcurrentDictionary<Coordinate, ITile> _worldTiles = new ConcurrentDictionary<Coordinate, ITile>();
 		
-		public void AddTile(Tile tile) {
+		public void AddTile(ITile tile) {
 			if (tile == null)
 				throw new ArgumentNullException(nameof(tile));
 
@@ -37,7 +36,7 @@ namespace NeoServer.Server.World {
 
 		public ITile GetTile(Location location)
 		{
-			if(_worldTiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out Tile tile))
+			if(_worldTiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITile tile))
 				return tile;
 
 			return null;

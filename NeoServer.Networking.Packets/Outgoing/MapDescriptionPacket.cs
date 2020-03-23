@@ -1,4 +1,5 @@
 ﻿using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.World.Map;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class MapDescriptionPacket:OutgoingPacket
     {
-        public MapDescriptionPacket(Player player,  Map map) : base(false)
+        public MapDescriptionPacket(IPlayer player,  Map map) : base(false)
         {
             OutputMessage.AddByte((int)GameOutgoingPacketType.MapDescription);
             OutputMessage.AddLocation(player.Location);
@@ -18,7 +19,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         }
 
-        private byte[] GetMapDescrition(Player player, Map map)
+        private byte[] GetMapDescrition(IPlayer player, Map map)
         {
             var location = player.Location;
             //c++	GetMapDescription(pos.x - 8, pos.y - 6, pos.z, 18, 14, msg);

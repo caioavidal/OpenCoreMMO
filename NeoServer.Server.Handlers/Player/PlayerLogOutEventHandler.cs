@@ -21,9 +21,9 @@ namespace NeoServer.Server.Handlers.Authentication
             _map = map;
         }
 
-        public async override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
+        public override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
         {
-            var player = _game.GetCreature(connection.PlayerId) as Player;
+            var player = _game.CreatureInstances[connection.PlayerId];
 
             if (player == null)
             {

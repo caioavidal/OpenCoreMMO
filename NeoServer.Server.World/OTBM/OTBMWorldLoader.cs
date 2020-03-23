@@ -1,3 +1,5 @@
+using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Map;
 using NeoServer.Server.Model.Items;
 using NeoServer.Server.World.OTB;
@@ -13,10 +15,10 @@ namespace NeoServer.Server.World
     public class OTBMWorldLoader
     {
 
-        private readonly Func<ushort, Item> _itemFactory;
+        private readonly Func<ushort, IItem> _itemFactory;
         private readonly World _world;
 
-        public OTBMWorldLoader(Func<ushort, Item> itemFactory, World world)
+        public OTBMWorldLoader(Func<ushort, IItem> itemFactory, World world)
         {
             _itemFactory = itemFactory;
             _world = world;
@@ -201,7 +203,7 @@ namespace NeoServer.Server.World
 
             // Parsing the tile attributes
             var tileFlags = TileFlags.None;
-            var tilesItems = new List<Item>();
+            var tilesItems = new List<IItem>();
 
             if (!stream.IsOver)
             {
@@ -327,7 +329,7 @@ namespace NeoServer.Server.World
 
 
 
-        private Item ParseItemData(OTBParsingStream stream)
+        private IItem ParseItemData(OTBParsingStream stream)
         {
             var newItemId = GetItemIdAndConvertPvpFieldsToPermanentFields(stream);
 

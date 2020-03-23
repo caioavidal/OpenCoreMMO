@@ -4,16 +4,12 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using NeoServer.Server.Model.Creatures;
-using NeoServer.Server.Model.Items.Contracts;
-using NeoServer.Server.Model.Players;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
-using NeoServer.Server.Model.World.Structs;
-using NeoServer.Server.World;
-using NeoServer.Server.World.Map;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,18 +23,7 @@ namespace NeoServer.Server.World.Map
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
         public static Location VeteranStart = new Location { X = 126, Y = 433, Z = 7 };
 
-        public ConcurrentDictionary<uint, Creature> Creatures { get; }
-
-        public void AddCreature(Player player)
-        {
-            if (!Creatures.TryAdd(player.CreatureId, player))
-            {
-                // TODO: proper logging
-                Console.WriteLine($"WARNING: Failed to add {player.Name} to the global dictionary.");
-            }
-        }
-
-        public void AddPlayerOnMap(Player player)
+        public void AddPlayerOnMap(IPlayer player)
         {
             IThing playerThing = player;
 
@@ -46,11 +31,13 @@ namespace NeoServer.Server.World.Map
         }
 
 
-        private World _world { get; }
+        private readonly World _world;
+        private readonly CreatureDescription _creatureDescription;
 
-        public Map(World world) { 
+        public Map(World world, CreatureDescription creatureDescription)
+        {
             _world = world;
-            Creatures = new ConcurrentDictionary<uint, Creature>();
+            _creatureDescription = creatureDescription;
         }
 
         public ITile this[Location location] => _world.GetTile(location);
@@ -173,8 +160,7 @@ namespace NeoServer.Server.World.Map
 
             var tempBytes = new List<byte>();
 
-            var count = 0;
-            const int numberOfObjectsLimit = 9;
+            var objectsOnTile = 0;
 
             if (tile.CachedDescription != null)
             {
@@ -184,7 +170,7 @@ namespace NeoServer.Server.World.Map
             if (tile.Ground != null)
             {
                 tempBytes.AddRange(BitConverter.GetBytes(tile.Ground.Type.ClientId));
-                count++;
+                objectsOnTile++;
             }
 
 
@@ -192,115 +178,40 @@ namespace NeoServer.Server.World.Map
             foreach (var item in tile.TopItems1)
             {
 
-                if (count == numberOfObjectsLimit)
+                if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
                 {
                     break;
                 }
 
                 AddItem(tempBytes, item);
 
-                count++;
+                objectsOnTile++;
             }
 
             foreach (var item in tile.TopItems2)
             {
-                if (count == numberOfObjectsLimit)
+                if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
                 {
                     break;
                 }
 
                 AddItem(tempBytes, item);
 
-                count++;
+                objectsOnTile++;
             }
 
-
-            //todo
-            foreach (var creatureId in tile.CreatureIds)
-            {
-                var creature = Creatures[creatureId];
-
-                if (creature == null)
-                {
-                    continue;
-                }
-
-                if (count == numberOfObjectsLimit)
-                {
-                    break;
-                }
-
-                if (player.KnowsCreatureWithId(creatureId))
-                {
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)0x62));
-                    tempBytes.AddRange(BitConverter.GetBytes(creatureId));
-                }
-                else
-                {
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)0x61));
-                    tempBytes.AddRange(BitConverter.GetBytes(player.ChooseToRemoveFromKnownSet()));
-                    tempBytes.AddRange(BitConverter.GetBytes(creatureId));
-
-                    player.AddKnownCreature(creatureId);
-
-                    var creatureNameBytes = Encoding.Default.GetBytes(creature.Name);
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)creatureNameBytes.Length));
-                    tempBytes.AddRange(creatureNameBytes);
-                }
-
-                tempBytes.Add((byte)Math.Min(100, creature.Hitpoints * 100 / creature.MaxHitpoints));
-                tempBytes.Add((byte)creature.ClientSafeDirection);
-
-                if (player.CanSee(creature))
-                {
-                    // Add creature outfit
-                    tempBytes.AddRange(BitConverter.GetBytes(creature.Outfit.LookType));
-
-                    if (creature.Outfit.LookType > 0)
-                    {
-                        tempBytes.Add(creature.Outfit.Head);
-                        tempBytes.Add(creature.Outfit.Body);
-                        tempBytes.Add(creature.Outfit.Legs);
-                        tempBytes.Add(creature.Outfit.Feet);
-                        tempBytes.Add(creature.Outfit.Addon);
-                    }
-                    else
-                    {
-                        tempBytes.AddRange(BitConverter.GetBytes(creature.Outfit.LookType));
-                    }
-                }
-                else
-                {
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)0));
-                    tempBytes.AddRange(BitConverter.GetBytes((ushort)0));
-                }
-
-                tempBytes.Add(creature.LightBrightness);
-                tempBytes.Add(creature.LightColor);
-
-                tempBytes.AddRange(BitConverter.GetBytes(creature.Speed));
-
-                tempBytes.Add(creature.Skull);
-                tempBytes.Add(creature.Shield);
-
-                tempBytes.Add(0x00); //guild emblem
-
-                tempBytes.Add(0x00);
-
-                if (++count == 10)
-                {
-                    return tempBytes;
-                }
-            }
+            tempBytes.AddRange(_creatureDescription.GetCreaturesOnTile(player, tile, ref objectsOnTile));
 
             foreach (var item in tile.DownItems)
             {
-                if (count == numberOfObjectsLimit)
+                if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
                 {
                     break;
                 }
 
                 AddItem(tempBytes, item);
+
+                objectsOnTile++;
             }
 
             return tempBytes;

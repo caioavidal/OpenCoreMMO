@@ -1,14 +1,12 @@
-﻿using NeoServer.Server.Model.Creatures;
+﻿using NeoServer.Game.Creatures.Enums;
 using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
     public class PlayerSkillsPacket:OutgoingPacket
     {
-        public PlayerSkillsPacket(Player player) : base(false)
+        public PlayerSkillsPacket(IPlayer player) : base(false)
         {
             OutputMessage.AddByte((byte)GameOutgoingPacketType.PlayerSkills);
             OutputMessage.AddByte(player.GetSkillInfo(SkillType.Fist));

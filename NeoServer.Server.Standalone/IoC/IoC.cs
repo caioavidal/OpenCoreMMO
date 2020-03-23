@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using NeoServer.Data.RavenDB;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creature;
 using NeoServer.Networking;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets;
@@ -13,6 +15,7 @@ using NeoServer.Server.Model.Items;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Standalone.Factories;
 using NeoServer.Server.World;
+using NeoServer.Server.World.Map;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -56,10 +59,14 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<WorldLoader>().As<IWorldLoader>();
             builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<World.Map.Map>().SingleInstance();
+            builder.RegisterType<CreatureDescription>();
 
 
             //factories
             builder.RegisterType<PlayerFactory>().SingleInstance();
+
+            //creature
+            builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
             return builder.Build();
 

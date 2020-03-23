@@ -1,4 +1,5 @@
 ﻿using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         private byte GraphicsSpeed => 0x32; //  beat duration (50)
         private byte CanReportBugs => 0x00;
 
-        public SelfAppearPacket(Player player): base(false)
+        public SelfAppearPacket(IPlayer player): base(false)
         {
             OutputMessage.AddByte((byte)GameOutgoingPacketType.SelfAppear);
 

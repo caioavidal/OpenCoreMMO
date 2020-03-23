@@ -1,9 +1,10 @@
-﻿using NeoServer.Server.Model.Items.Contracts;
-using NeoServer.Server.Model.World.Structs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Server.Model.Items
 {
