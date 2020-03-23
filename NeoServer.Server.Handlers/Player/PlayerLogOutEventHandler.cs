@@ -1,14 +1,7 @@
 ﻿using NeoServer.Networking;
-using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model;
-using NeoServer.Server.Model.Creatures;
 using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {

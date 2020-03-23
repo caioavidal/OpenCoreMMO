@@ -38,7 +38,8 @@ namespace NeoServer.Server.Standalone.Factories
                 player.StaminaMinutes,
                 player.Outfit,
                 ConvertToInventory(player.Inventory)
-                ); ;
+               // player.Location
+                ); 
         }
 
         private IDictionary<Slot, Tuple<IItem, ushort>> ConvertToInventory(Dictionary<Slot, ushort> inventory)

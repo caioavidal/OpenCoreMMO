@@ -39,6 +39,7 @@ namespace NeoServer.Server.World.OTB
 				{
 					case OTBMarkupByte.Start:
 						var nodeType = (OTBNodeType)stream.ReadByte();
+						
 						treeBuilder.AddNodeDataBegin(
 							start: stream.Position,
 							type: nodeType);

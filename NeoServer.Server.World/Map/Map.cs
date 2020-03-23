@@ -25,7 +25,7 @@ namespace NeoServer.Server.World.Map
 
         // Start positions
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
-        public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
+        public static Location VeteranStart = new Location { X = 126, Y = 433, Z = 7 };
 
         public ConcurrentDictionary<uint, Creature> Creatures { get; }
 
@@ -127,6 +127,9 @@ namespace NeoServer.Server.World.Map
         {
             var tempBytes = new List<byte>();
 
+            byte start = 0xFE;
+            byte end = 0xFF;
+
             for (var nx = 0; nx < width; nx++)
             {
                 for (var ny = 0; ny < height; ny++)
@@ -138,17 +141,17 @@ namespace NeoServer.Server.World.Map
                         if (skip >= 0)
                         {
                             tempBytes.Add((byte)skip);
-                            tempBytes.Add(0xFF);
+                            tempBytes.Add(end);
                         }
 
                         skip = 0;
 
                         tempBytes.AddRange(GetTileDescription(player, tile));
                     }
-                    else if (skip == 0xFE)
+                    else if (skip == start)
                     {
-                        tempBytes.Add(0xFF);
-                        tempBytes.Add(0xFF);
+                        tempBytes.Add(end);
+                        tempBytes.Add(end);
                         skip = -1;
                     }
                     else

@@ -55,7 +55,7 @@ namespace NeoServer.Server.World.OTB
 			// Fiding this node's children
 			if (!_childrenCounts.TryPop(out var childCount))
 				throw new InvalidOperationException();
-
+				
 			// Since we are using a queue, we need to store the children in reverse order
 			var currentNodeChildren = new OTBNode[childCount];
 			for (int i = childCount - 1; i >= 0; i--)

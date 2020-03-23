@@ -1,6 +1,8 @@
 using NeoServer.Server.Model.Creatures;
 using NeoServer.Server.Model.Creatures.Contracts;
 using NeoServer.Server.Model.Items.Contracts;
+using NeoServer.Server.Model.World.Structs;
+using NeoServer.Server.World;
 using System;
 using System.Collections.Generic;
 namespace NeoServer.Server.Model.Players
@@ -31,6 +33,7 @@ namespace NeoServer.Server.Model.Players
         public ushort StaminaMinutes { get; set; }
 
         public Dictionary<Slot, ushort> Inventory { get; set; }
+       // public Location Location { get; set; }
 
         public bool IsMounted()
         {

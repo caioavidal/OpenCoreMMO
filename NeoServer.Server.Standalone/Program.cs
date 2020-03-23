@@ -8,6 +8,7 @@ using NeoServer.Server.Model.Creatures;
 using NeoServer.Server.Model.Creatures.Contracts;
 
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.World.Structs;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.World;
@@ -41,7 +42,7 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<ServerState>().OpenServer();
 
-       //     CreateChar();
+            CreateChar();
 
             Console.Read();
         }
@@ -69,11 +70,17 @@ namespace NeoServer.Server.Standalone
                         Gender = Gender.Male,
                         MaxSoulPoints = 100,
                         Online = false,
+                        // Location = new Location{
+                        //     X = 160,
+                        //     Y = 54,
+                        //     Z = 7
+                        // },
                         SoulPoints = 100,
                         Vocation = VocationType.Knight,
                         Outfit = new Outfit
                         {
-                            Id = 75,
+                            LookType = 75,
+                            Addon = 0,
                             Head = 0,
                             Body = 0,
                             Legs = 0,

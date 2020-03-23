@@ -17,7 +17,8 @@ namespace NeoServer.Server.Model.Players
     {
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
-            Outfit outfit, IDictionary<Slot, Tuple<IItem, ushort>> inventory) : base(id, characterName, string.Empty, maxHealthPoints, maxMana, 4240, healthPoints, mana)
+            Outfit outfit, IDictionary<Slot, Tuple<IItem, ushort>> inventory)
+             : base(id, characterName, string.Empty, maxHealthPoints, maxMana, 4240, healthPoints, mana)
         {
             Id = id;
             CharacterName = characterName;
@@ -36,6 +37,8 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
+
+            //Location = location;
 
             OpenContainers = new IContainer[MaxContainers]; //todo: db
 
