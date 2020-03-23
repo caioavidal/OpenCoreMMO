@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Helpers", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Items.Tests", "NeoServer.Server.Loaders.Tests\NeoServer.Server.Items.Tests.csproj", "{0F9160FD-C5E1-41D3-876D-34E37764F8DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.Items", "NeoServer.Server.Items\NeoServer.Server.Items.csproj", "{F92268DF-7DBD-4EE1-BFC9-B1732CD1D9C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Items", "NeoServer.Game.Items\NeoServer.Game.Items.csproj", "{F92268DF-7DBD-4EE1-BFC9-B1732CD1D9C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1 - Items", "1.1 - Items", "{2A5CBABA-8C49-4FC0-8920-FB32F0D5AB70}"
 EndProject
@@ -49,7 +49,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Creatures", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Game", "4 - Game", "{8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Model", "NeoServer.Server.Model\NeoServer.Game.Model.csproj", "{7A62411B-C4E4-443A-9BFB-8C67480712CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Model", "NeoServer.Game.Model\NeoServer.Game.Model.csproj", "{7A62411B-C4E4-443A-9BFB-8C67480712CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Contracts", "NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj", "{58058793-4793-4B60-8ACF-90D49A00900B}"
 EndProject
