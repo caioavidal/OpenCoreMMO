@@ -44,9 +44,9 @@ namespace NeoServer.Server.Model.Items
             }
         }
 
-        public override bool CanBeMoved => !Type.Flags.Contains(ItemFlag.Unmove);
+        public override bool CanBeMoved => !Type.Flags.Contains(ItemFlag.Moveable);
 
-        public bool HasCollision => Type.Flags.Contains(ItemFlag.CollisionEvent);
+        public bool HasCollision => Type.Flags.Contains(ItemFlag.BlockSolid);
 
         public bool HasSeparation => Type.Flags.Contains(ItemFlag.SeparationEvent);
 
@@ -74,7 +74,7 @@ namespace NeoServer.Server.Model.Items
 
         public Dictionary<ItemAttribute, IConvertible> Attributes { get; }
 
-        public bool IsCumulative => Type.Flags.Contains(ItemFlag.Cumulative);
+        public bool IsCumulative => Type.Flags.Contains(ItemFlag.Stackable);
 
         public byte Amount
         {
@@ -95,7 +95,7 @@ namespace NeoServer.Server.Model.Items
 
         public bool IsPathBlocking(byte avoidType = 0)
         {
-            var blocking = Type.Flags.Contains(ItemFlag.Unpass);
+            var blocking = Type.Flags.Contains(ItemFlag.BlockPathFind);
 
             if (blocking)
             {
@@ -112,13 +112,13 @@ namespace NeoServer.Server.Model.Items
             Console.WriteLine($"Item.AddContent: Item with id {Type.TypeId} is not a Container, ignoring content.");
         }
 
-        public bool IsContainer => Type.Flags.Contains(ItemFlag.Container) || Type.Flags.Contains(ItemFlag.Chest); // TODO: chest actually means a quest chest...
+        public bool IsContainer => Type.Group == ItemGroup.GroundContainer;
 
         public bool IsDressable => Type.Flags.Contains(ItemFlag.Clothes);
 
         public byte DressPosition => Attributes.ContainsKey(ItemAttribute.BodyPosition) ? Convert.ToByte(Attributes[ItemAttribute.BodyPosition]) : (byte)Slot.WhereEver;
 
-        public bool IsGround => Type.Flags.Contains(ItemFlag.Bank);
+        public bool IsGround => Type.Group == ItemGroup.Ground;
 
         public byte MovementPenalty
         {
@@ -133,7 +133,7 @@ namespace NeoServer.Server.Model.Items
             }
         }
 
-        public bool IsTop1 => Type.Flags.Contains(ItemFlag.Top) || Type.Flags.Contains(ItemFlag.Clip) || Type.Flags.Contains(ItemFlag.Hang);
+        public bool IsTop1 => Type.Flags.Contains(ItemFlag.AlwaysOnTop) || Type.Flags.Contains(ItemFlag.Clip) || Type.Flags.Contains(ItemFlag.Hangable);
 
         public bool IsTop2 => Type.Flags.Contains(ItemFlag.Bottom);
 
@@ -143,7 +143,7 @@ namespace NeoServer.Server.Model.Items
 
         public bool IsLiquidSource => Type.Flags.Contains(ItemFlag.LiquidSource);
 
-        public bool IsLiquidContainer => Type.Flags.Contains(ItemFlag.LiquidContainer);
+        public bool IsLiquidContainer => Type.Group == ItemGroup.ITEM_GROUP_FLUID;
 
         public byte LiquidType
         {
@@ -234,13 +234,13 @@ namespace NeoServer.Server.Model.Items
             }
         }
 
-        public bool BlocksThrow => Type.Flags.Contains(ItemFlag.Unthrow);
+        public bool BlocksThrow => Type.Flags.Contains(ItemFlag.BlockProjectTile);
 
-        public bool BlocksPass => Type.Flags.Contains(ItemFlag.Unpass);
+        public bool BlocksPass => Type.Flags.Contains(ItemFlag.BlockPathFind);
 
         public bool BlocksLay => Type.Flags.Contains(ItemFlag.Unlay);
 
-        public decimal Weight => (Type.Flags.Contains(ItemFlag.Take) ? Convert.ToDecimal(Attributes[ItemAttribute.Weight]) / 100 : default(decimal)) * Amount;
+        public decimal Weight => (Type.Flags.Contains(ItemFlag.Pickupable) ? Convert.ToDecimal(Attributes[ItemAttribute.Weight]) / 100 : default(decimal)) * Amount;
 
         public IContainer Parent { get; private set; }
 

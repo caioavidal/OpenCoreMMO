@@ -24,6 +24,66 @@ namespace NeoServer.Server.Model.Items
 
         public ushort ClientId { get; private set; }
 
+        public ItemTypeAttribute TypeAttribute { get; private set; }
+
+        public ItemGroup Group { get; private set; }
+        public ushort WareId { get; private set; }
+        public LightBlock LightBlock { get; private set; }
+        public byte AlwaysOnTopOrder { get; private set; }
+        public ushort Speed { get; private set; }
+
+        void ThrowIfLocked()
+        {
+            if (Locked)
+            {
+                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
+            }
+        }
+        public void SetGroup(byte type)
+        {
+            ThrowIfLocked();
+            Group = (ItemGroup)type;
+
+        }
+
+        public void SetType(byte type)
+        {
+            ThrowIfLocked();
+            switch ((ItemGroup)type)
+            {
+                case ItemGroup.GroundContainer:
+                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_CONTAINER;
+                    break;
+                case ItemGroup.ITEM_GROUP_DOOR:
+                    //not used
+                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_DOOR;
+                    break;
+                case ItemGroup.ITEM_GROUP_MAGICFIELD:
+                    //not used
+                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_MAGICFIELD;
+                    break;
+                case ItemGroup.ITEM_GROUP_TELEPORT:
+                    //not used
+                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_TELEPORT;
+                    break;
+                case ItemGroup.None:
+                case ItemGroup.Ground:
+                case ItemGroup.ITEM_GROUP_SPLASH:
+                case ItemGroup.ITEM_GROUP_FLUID:
+                case ItemGroup.ITEM_GROUP_CHARGES:
+                case ItemGroup.ITEM_GROUP_DEPRECATED:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void SetSpeed(ushort speed)
+        {
+            ThrowIfLocked();
+            Speed = speed;
+        }
+
         public ItemType()
         {
             TypeId = 0;
@@ -34,17 +94,32 @@ namespace NeoServer.Server.Model.Items
             Locked = false;
         }
 
+        public void SetAlwaysOnTopOrder(byte alwaysOnTopOrder)
+        {
+            ThrowIfLocked();
+            AlwaysOnTopOrder = alwaysOnTopOrder;
+        }
+
+        public void SetLight(LightBlock lightBlock)
+        {
+            ThrowIfLocked();
+            LightBlock = lightBlock;
+        }
+
         public void LockChanges()
         {
             Locked = true;
         }
 
+        public void SetWareId(ushort wareId)
+        {
+            ThrowIfLocked();
+            WareId = wareId;
+        }
+
         public void SetId(ushort typeId)
         {
-            if (Locked)
-            {
-                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
-            }
+            ThrowIfLocked();
 
             TypeId = typeId;
         }
@@ -56,50 +131,35 @@ namespace NeoServer.Server.Model.Items
 
         public void SetName(string name)
         {
-            if (Locked)
-            {
-                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
-            }
+            ThrowIfLocked();
 
             Name = name;
         }
 
         public void SetDescription(string description)
         {
-            if (Locked)
-            {
-                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
-            }
+            ThrowIfLocked();
 
             Description = description.Trim('"');
         }
 
         public void SetFlag(ItemFlag flag)
         {
-            if (Locked)
-            {
-                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
-            }
+            ThrowIfLocked();
 
             Flags.Add(flag);
         }
 
         public void SetAttribute(ItemAttribute attribute, int attributeValue)
         {
-            if (Locked)
-            {
-                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
-            }
+            ThrowIfLocked();
 
             DefaultAttributes[attribute] = attributeValue;
         }
 
         public void SetAttribute(string attributeName, int attributeValue)
         {
-            if (Locked)
-            {
-                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
-            }
+            ThrowIfLocked();
 
             if (!Enum.TryParse(attributeName, out ItemAttribute attribute))
             {
@@ -112,28 +172,28 @@ namespace NeoServer.Server.Model.Items
         public void ParseOTFlags(uint flags)
         {
             if (HasOTFlag(flags, 1 << 0)) // blockSolid
-                SetFlag(ItemFlag.CollisionEvent);
+                SetFlag(ItemFlag.BlockSolid);
 
             if (HasOTFlag(flags, 1 << 1)) // blockProjectile
-                SetFlag(ItemFlag.Unthrow);
+                SetFlag(ItemFlag.BlockProjectTile);
 
             if (HasOTFlag(flags, 1 << 2)) // blockPathFind
-                SetFlag(ItemFlag.Unpass);
+                SetFlag(ItemFlag.BlockPathFind);
 
             if (HasOTFlag(flags, 1 << 3)) // hasElevation
-                SetFlag(ItemFlag.Height);
+                SetFlag(ItemFlag.HasHeight);
 
             if (HasOTFlag(flags, 1 << 4)) // isUsable
-                SetFlag(ItemFlag.UseEvent);
+                SetFlag(ItemFlag.Useable);
 
             if (HasOTFlag(flags, 1 << 5)) // isPickupable
-                SetFlag(ItemFlag.Take);
+                SetFlag(ItemFlag.Pickupable);
 
             if (HasOTFlag(flags, 1 << 6)) // isMoveable
-                SetFlag(ItemFlag.Unmove);
+                SetFlag(ItemFlag.Moveable);
 
             if (HasOTFlag(flags, 1 << 7)) // isStackable
-                SetFlag(ItemFlag.Cumulative);
+                SetFlag(ItemFlag.Stackable);
 
             //if (HasFlag(flags, 1 << 8)) // floorChangeDown -- unused
 
@@ -146,39 +206,37 @@ namespace NeoServer.Server.Model.Items
             //if (HasFlag(flags, 1 << 12)) // floorChangeWest -- unused
 
             if (HasOTFlag(flags, 1 << 13)) // alwaysOnTop
-                SetFlag(ItemFlag.Top);
+                SetFlag(ItemFlag.AlwaysOnTop);
 
             if (HasOTFlag(flags, 1 << 14)) // isReadable
-                SetFlag(ItemFlag.Text);
+                SetFlag(ItemFlag.Readable);
 
             if (HasOTFlag(flags, 1 << 15)) // isRotatable
-                SetFlag(ItemFlag.Rotate);
+                SetFlag(ItemFlag.Rotatable);
 
             if (HasOTFlag(flags, 1 << 16)) // isHangable
-                SetFlag(ItemFlag.Hang);
+                SetFlag(ItemFlag.Hangable);
 
             if (HasOTFlag(flags, 1 << 17)) // isVertical
-                SetFlag(ItemFlag.HookEast);
+                SetFlag(ItemFlag.Vertical);
 
             if (HasOTFlag(flags, 1 << 18)) // isHorizontal
-                SetFlag(ItemFlag.HookSouth);
+                SetFlag(ItemFlag.Horizontal);
 
             //if (HasFlag(flags, 1 << 19)) // cannotDecay -- unused
 
             if (HasOTFlag(flags, 1 << 20)) // allowDistRead
-                SetFlag(ItemFlag.DistUse);
+                SetFlag(ItemFlag.AllowDistRead);
 
             //if (HasFlag(flags, 1 << 21)) // unused -- unused
 
             //if (HasFlag(flags, 1 << 22)) // isAnimation -- unused
 
             if (HasOTFlag(flags, 1 << 23)) // lookTrough
-                SetFlag(ItemFlag.Top);
-            else
-                SetFlag(ItemFlag.Bottom);
+                SetFlag(ItemFlag.LookTrough);
 
-            if (HasOTFlag(flags, 1 << 25)) // fullTile
-                SetFlag(ItemFlag.Bank);
+
+
 
             if (HasOTFlag(flags, 1 << 26)) // forceUse
                 SetFlag(ItemFlag.ForceUse);

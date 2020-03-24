@@ -1,4 +1,6 @@
-﻿using NeoServer.Server.Helpers;
+﻿using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums;
+using NeoServer.Server.Helpers;
 using NeoServer.Server.Items;
 using NeoServer.Server.Model.Items;
 using NeoServer.Server.World.OTB;
@@ -14,9 +16,9 @@ namespace NeoServer.Server.Loaders
 
         public static void Load() => ItemData.Load(LoadItems());
 
-        private static Dictionary<ushort, ItemType> LoadItems()
+        private static Dictionary<ushort, IItemType> LoadItems()
         {
-            var itemDictionary = new Dictionary<UInt16, ItemType>();
+            var itemDictionary = new Dictionary<UInt16, IItemType>();
 
             var attrsNotSuported = 0;
             var attrsNotValid = 0;
@@ -24,11 +26,13 @@ namespace NeoServer.Server.Loaders
             var fileTree = OTBDeserializer.DeserializeOTBData(new ReadOnlyMemory<byte>(ServerResourcesManager.GetItemsBytes("items.otb"))); //todo
             foreach (var itemChildren in fileTree.Children)
             {
+                var type = (ItemGroup)itemChildren.Type;
                 var current = new ItemType();
                 var itemStream = new OTBParsingStream(itemChildren.Data);
 
                 var flags = itemStream.ReadUInt32();
                 current.ParseOTFlags(flags);
+
 
                 while (!itemStream.IsOver)
                 {
@@ -40,26 +44,53 @@ namespace NeoServer.Server.Loaders
                         case ItemAttributes.ServerId:
                             var serverId = itemStream.ReadUInt16();
 
-                            if (serverId == 4535)
+                            if (serverId > 30000 && serverId < 30100)
                             {
-                                serverId = 4535;
+                                serverId -= 30000;
                             }
 
-                            if (serverId > 30000 && serverId < 30100)
-                                serverId -= 30000;
 
                             current.SetId(serverId);
+
                             break;
 
                         case ItemAttributes.ClientId:
                             current.SetClientId(itemStream.ReadUInt16());
                             break;
 
+                        case ItemAttributes.Speed:
+                            //current.setSpeed() //todo
+                            var speed = itemStream.ReadUInt16();
+                            current.SetSpeed(speed);
+                            break;
+                        case ItemAttributes.Light2:
+                            //todo
+                            var lightLevel = (byte)itemStream.ReadUInt16();
+                            var lightColor = (byte)itemStream.ReadUInt16();
+
+                            current.SetLight(new LightBlock(lightLevel, lightColor));
+                            break;
+                        case ItemAttributes.TopOrder:
+                            var alwaysOnTopOrder = itemStream.ReadByte();
+                            current.SetAlwaysOnTopOrder(alwaysOnTopOrder);
+                            break;
+                        case ItemAttributes.WareId:
+                            var wareId = itemStream.ReadUInt16();
+                            current.SetWareId(wareId);
+                            break;
+
+
                         default:
                             itemStream.Skip(dataSize);
                             break;
                     }
                 }
+
+                current.SetGroup((byte)itemChildren.Type);
+                current.SetType((byte)itemChildren.Type);
+                
+
+
                 itemDictionary.Add(current.TypeId, current);
             }
 
@@ -93,7 +124,7 @@ namespace NeoServer.Server.Loaders
 
                 for (ushort key = serverId; key < serverId + aplyTo; key++)
                 {
-                    if (!itemDictionary.TryGetValue(key, out ItemType current))
+                    if (!itemDictionary.TryGetValue(key, out IItemType current))
                         continue;
 
                     var name = element.Attribute("name");

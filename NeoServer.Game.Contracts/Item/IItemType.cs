@@ -22,6 +22,24 @@ namespace NeoServer.Game.Contracts.Item
 
         IDictionary<ItemAttribute, IConvertible> DefaultAttributes { get; } // TODO: get rid of this and add all attributes as properties.
 
+        ItemTypeAttribute TypeAttribute { get; }
+
+        ItemGroup Group { get; }
+
         ushort ClientId { get; }
+        ushort WareId { get; }
+        LightBlock LightBlock { get; }
+        byte AlwaysOnTopOrder { get; }
+        ushort Speed { get; }
+
+        void SetName(string value);
+        void SetDescription(string value);
+        bool ParseOTWeaponType(string value);
+        void SetAttribute(ItemAttribute attr, int value);
+        void LockChanges();
+        void SetSpeed(ushort speed);
+        void SetAlwaysOnTopOrder(byte alwaysOnTopOrder);
+        void SetLight(LightBlock lightBlock);
+        void SetWareId(ushort wareId);
     }
 }

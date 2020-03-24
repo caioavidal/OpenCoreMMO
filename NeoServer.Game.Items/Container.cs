@@ -26,7 +26,7 @@ namespace NeoServer.Server.Model.Items
 
         public new Location Location => Parent?.Location ?? base.Location;
 
-        public Container(ItemType type)
+        public Container(IItemType type)
             : base(type)
         {
             Content = new List<IItem>();

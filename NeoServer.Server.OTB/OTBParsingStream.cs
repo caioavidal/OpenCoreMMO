@@ -63,6 +63,7 @@ namespace NeoServer.Server.World.OTB
 
 			return BitConverter.ToUInt16(_parsingBuffer, 0);
 		}
+		
 
 		/// <summary>
 		/// Reads a bytes from the underlaying stream, considering OTB's escape values,

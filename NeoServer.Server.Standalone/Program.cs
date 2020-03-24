@@ -42,7 +42,7 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<ServerState>().OpenServer();
 
-            CreateChar();
+            //CreateChar();
 
             Console.Read();
         }
