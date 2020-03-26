@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Networking.Packets.Messages;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class WorldLightPacket:OutgoingPacket
+    public class WorldLightPacket : OutgoingPacket
     {
-        public WorldLightPacket(byte Level, byte Color) : base(false)
+        private readonly byte Level;
+        private readonly byte Color;
+        public WorldLightPacket(byte level, byte color)
         {
-            OutputMessage.AddByte((byte)GameOutgoingPacketType.WorldLight);
+            Level = level;
+            Color = color;
+        }
 
-            OutputMessage.AddByte(Level);
-            OutputMessage.AddByte(Color);
+        public override void WriteToMessage(INetworkMessage message)
+        {
+            message.AddByte((byte)GameOutgoingPacketType.WorldLight);
+
+            message.AddByte(Level);
+            message.AddByte(Color);
         }
     }
 }

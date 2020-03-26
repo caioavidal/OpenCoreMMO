@@ -1,4 +1,5 @@
 using NeoServer.Server.Handlers.Authentication;
+using NeoServer.Server.Handlers.Players;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -14,7 +15,11 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.PlayerLoginRequest, typeof(AccountLoginEventHandler)},
             { GameIncomingPacketType.PlayerLogIn, typeof(PlayerLogInEventHandler)},
             { GameIncomingPacketType.ChangeModes, typeof(PlayerChangesModeEventHandler)},
-            { GameIncomingPacketType.PlayerLogOut, typeof(PlayerLogOutEventHandler)}
+            { GameIncomingPacketType.PlayerLogOut, typeof(PlayerLogOutEventHandler)},
+            { GameIncomingPacketType.WalkEast, typeof(PlayerMoveEastEventHandler)},
+            { GameIncomingPacketType.WalkWest, typeof(PlayerMoveWestEventHandler)},
+            { GameIncomingPacketType.WalkNorth, typeof(PlayerMoveNorthEventHandler)},
+            { GameIncomingPacketType.WalkSouth, typeof(PlayerMoveSouthEventHandler)}
         };
     }
 }

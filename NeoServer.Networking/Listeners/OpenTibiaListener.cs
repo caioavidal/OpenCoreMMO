@@ -19,6 +19,8 @@ namespace NeoServer.Networking.Listeners
         {
             Start();
             BeginAcceptSocket(OnAccept, this);
+
+            Console.WriteLine($"{_protocol} is online");
         }
 
         public void OnAccept(IAsyncResult ar)

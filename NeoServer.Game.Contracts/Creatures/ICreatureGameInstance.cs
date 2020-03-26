@@ -5,5 +5,6 @@ namespace NeoServer.Game.Contracts.Creatures
         ICreature this[uint id] { get; }
 
         void Add(ICreature creature);
+        void Remove(uint id);
     }
 }

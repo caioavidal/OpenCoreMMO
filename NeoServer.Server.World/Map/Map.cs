@@ -15,7 +15,8 @@ using System.Text;
 
 namespace NeoServer.Server.World.Map
 {
-    public class Map
+   
+    public class Map : IMap
     {
         private static readonly TimeSpan _mapLoadPercentageReportDelay = TimeSpan.FromSeconds(7);
 
@@ -69,6 +70,24 @@ namespace NeoServer.Server.World.Map
             }
 
             return creatureList;
+        }
+
+        public IEnumerable<ITile> GetTilesNear(Location location)
+        {
+            var fromX = location.X - 8;
+            var fromY = location.Y - 6;
+
+            var toX = location.X + 8;
+            var toY = location.Y + 6;
+
+            for (var x = fromX; x <= toX; x++)
+            {
+                for (var y = fromY; y <= toY; y++)
+                {
+                    var tile = this[(ushort)x, (ushort)y, location.Z];
+                    yield return tile;
+                }
+            }
         }
 
         public IList<byte> GetDescription(IPlayer player, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)

@@ -1,30 +1,37 @@
 ﻿using NeoServer.Game.Creatures.Enums;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class PlayerStatusPacket:OutgoingPacket
+    public class PlayerStatusPacket : OutgoingPacket
     {
-        public PlayerStatusPacket(IPlayer player) : base(false)
+        private readonly IPlayer player;
+        public PlayerStatusPacket(IPlayer player)
         {
-            OutputMessage.AddByte((byte)GameOutgoingPacketType.PlayerStatus);
-            OutputMessage.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Hitpoints));
-            OutputMessage.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxHitpoints));
-            OutputMessage.AddUInt32(Convert.ToUInt32(player.CarryStrength));
-            
-            OutputMessage.AddUInt32(Math.Min(0x7FFFFFFF, player.Experience)); // Experience: Client debugs after 2,147,483,647 exp
-            
-            OutputMessage.AddUInt16(player.Level);
-            OutputMessage.AddByte(player.LevelPercent);
-            OutputMessage.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Manapoints));
-            OutputMessage.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxManapoints));
-            OutputMessage.AddByte(player.GetSkillInfo(SkillType.Magic));
-            OutputMessage.AddByte(player.GetSkillPercent(SkillType.Magic));
-            
-            OutputMessage.AddByte(player.SoulPoints);
-            OutputMessage.AddUInt16(player.StaminaMinutes);
+            this.player = player;
+        }
+
+        public override void WriteToMessage(INetworkMessage message)
+        {
+            message.AddByte((byte)GameOutgoingPacketType.PlayerStatus);
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Hitpoints));
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxHitpoints));
+            message.AddUInt32(Convert.ToUInt32(player.CarryStrength));
+
+            message.AddUInt32(Math.Min(0x7FFFFFFF, player.Experience)); // Experience: Client debugs after 2,147,483,647 exp
+
+            message.AddUInt16(player.Level);
+            message.AddByte(player.LevelPercent);
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Manapoints));
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxManapoints));
+            message.AddByte(player.GetSkillInfo(SkillType.Magic));
+            message.AddByte(player.GetSkillPercent(SkillType.Magic));
+
+            message.AddByte(player.SoulPoints);
+            message.AddUInt16(player.StaminaMinutes);
         }
     }
 }

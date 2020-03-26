@@ -1,27 +1,34 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Model.Players;
 using System;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class PlayerInventoryPacket:OutgoingPacket
+    public class PlayerInventoryPacket : OutgoingPacket
     {
-        public PlayerInventoryPacket(IInventory inventory) : base(false)
+        private readonly IInventory inventory;
+        public PlayerInventoryPacket(IInventory inventory)
+        {
+            this.inventory = inventory;
+        }
+
+        public override void WriteToMessage(INetworkMessage message)
         {
             var addInventoryItem = new Action<Slot>(slot =>
-            {
-                if (inventory[(byte)slot] == null)
-                {
-                    OutputMessage.AddByte((byte)GameOutgoingPacketType.InventoryEmpty);
-                    OutputMessage.AddByte((byte)slot);
-                }
-                else
-                {
-                    OutputMessage.AddByte((byte)GameOutgoingPacketType.InventoryItem);
-                    OutputMessage.AddByte((byte)slot);
-                    OutputMessage.AddItem(inventory[(byte)slot]);
-                }
-            });
+          {
+              if (inventory[(byte)slot] == null)
+              {
+                  message.AddByte((byte)GameOutgoingPacketType.InventoryEmpty);
+                  message.AddByte((byte)slot);
+              }
+              else
+              {
+                  message.AddByte((byte)GameOutgoingPacketType.InventoryItem);
+                  message.AddByte((byte)slot);
+                  message.AddItem(inventory[(byte)slot]);
+              }
+          });
 
             addInventoryItem(Slot.Head);
             addInventoryItem(Slot.Necklace);

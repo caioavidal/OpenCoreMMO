@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Networking.Packets.Messages;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
     public sealed class GameServerDisconnectPacket : OutgoingPacket
     {
+        private readonly string reason;
         public GameServerDisconnectPacket(string reason)
         {
-            OutputMessage.AddByte((byte)GameOutgoingPacketType.Disconnect);
-            OutputMessage.AddString(reason);
+            this.reason = reason;
         }
 
-        public override bool Disconnect { get; protected set; } = true;
+        public override void WriteToMessage(INetworkMessage message)
+        {
+            message.AddByte((byte)GameOutgoingPacketType.Disconnect);
+            message.AddString(reason);
+        }
     }
 }

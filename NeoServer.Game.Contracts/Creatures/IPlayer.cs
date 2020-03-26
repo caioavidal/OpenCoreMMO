@@ -41,7 +41,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ClearPendingActions();
 
         void CheckInventoryContainerProximity(IThing thingChanging, IThingStateChangedEventArgs eventArgs);
-
+        void Logout();
         sbyte OpenContainer(IContainer thingAsContainer);
 
         sbyte GetContainerId(IContainer thingAsContainer);
@@ -51,5 +51,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void OpenContainerAt(IContainer thingAsContainer, byte index);
 
         IContainer GetContainer(byte container);
+        void ResetIdleTime();
     }
 }

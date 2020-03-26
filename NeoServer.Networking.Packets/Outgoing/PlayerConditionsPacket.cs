@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Networking.Packets.Messages;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class PlayerConditionsPacket:OutgoingPacket
+    public class PlayerConditionsPacket : OutgoingPacket
     {
-        public PlayerConditionsPacket() : base(false)
+        public PlayerConditionsPacket()
         {
-            OutputMessage.AddByte((byte)GameOutgoingPacketType.PlayerConditions);
-            OutputMessage.AddUInt16(0x00);
+
+        }
+
+        public override void WriteToMessage(INetworkMessage message)
+        {
+            message.AddByte((byte)GameOutgoingPacketType.PlayerConditions);
+            message.AddUInt16(0x00);
         }
     }
 }

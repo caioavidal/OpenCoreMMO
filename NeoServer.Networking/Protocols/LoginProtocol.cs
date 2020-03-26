@@ -24,5 +24,8 @@ namespace NeoServer.Networking.Protocols
             var handler = _handlerFactory(args.Connection);
             handler.HandlerMessage(args.Connection.InMessage, args.Connection);
         }
+
+        public override string ToString() => "Login Protocol";
+
     }
 }

@@ -58,7 +58,6 @@
         public void AddUInt32(uint value) => WriteBytes(BitConverter.GetBytes(value));
         public void AddUInt16(ushort value) => WriteBytes(BitConverter.GetBytes(value));
 
-        public void AddUInt8(sbyte value) => WriteBytes(BitConverter.GetBytes(value));
         public void AddByte(byte b) => WriteBytes(new[] { b });
 
         /// <summary>
@@ -139,6 +138,7 @@
                 newArray[i] = length[i];
             }
             Length = Length + 2;
+            Cursor += 2;
             Buffer = newArray;
         }
 

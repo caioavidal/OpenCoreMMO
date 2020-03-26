@@ -1,12 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Item;
-using NeoServer.Server.Model.Items;
-using NeoServer.Server.Model.Items.Contracts;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NeoServer.Server.Standalone.Factories
 {

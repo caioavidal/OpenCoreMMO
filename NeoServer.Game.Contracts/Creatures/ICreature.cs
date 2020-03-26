@@ -83,5 +83,6 @@ namespace NeoServer.Game.Contracts.Creatures
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
+        void Move(Direction direction, IMap map);
     }
 }

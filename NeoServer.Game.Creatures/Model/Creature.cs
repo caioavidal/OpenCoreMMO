@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
@@ -63,7 +64,7 @@ namespace NeoServer.Game.Creatures.Model
                 LookType = 0
             };
 
-            Speed = 220;
+            Speed = 1220;
 
             WalkingQueue = new ConcurrentQueue<Tuple<byte, Direction>>();
 
@@ -76,6 +77,8 @@ namespace NeoServer.Game.Creatures.Model
             Hostiles = new HashSet<uint>();
             Friendly = new HashSet<uint>();
         }
+
+
 
         public event OnAttackTargetChange OnTargetChanged;
 
@@ -133,6 +136,7 @@ namespace NeoServer.Game.Creatures.Model
                 }
             }
         }
+
 
         public byte LightBrightness { get; protected set; }
 
@@ -277,6 +281,48 @@ namespace NeoServer.Game.Creatures.Model
         public byte GetStackPosition()
         {
             return Tile.GetStackPosition(this);
+        }
+
+        public void Move(Direction direction, IMap map)
+        {
+            var toLocation = Location;
+            switch (direction)
+            {
+                case Direction.East:
+                    toLocation.X += 1;
+                    break;
+                case Direction.West:
+                    toLocation.X -= 1;
+                    break;
+                case Direction.North:
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.South:
+                    toLocation.Y += 1;
+                    break;
+                case Direction.NorthEast:
+                    toLocation.X += 1;
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.NorthWest:
+                    toLocation.X -= 1;
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.SouthEast:
+                    toLocation.X += 1;
+                    toLocation.Y += 1;
+                    break;
+                case Direction.SouthWest:
+                    toLocation.X -= 1;
+                    toLocation.Y += 1;
+                    break;
+
+            }
+
+            Location = toLocation;
+
+            Tile.RemoveCreature(this);
+            map[toLocation].AddCreature(this);
         }
 
         public void TurnToDirection(Direction direction)

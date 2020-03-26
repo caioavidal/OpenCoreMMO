@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using NeoServer.Data.RavenDB;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature;
 using NeoServer.Networking;
@@ -11,8 +12,11 @@ using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
+using NeoServer.Server.Handlers.Players;
 using NeoServer.Server.Model.Items;
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Schedulers;
+using NeoServer.Server.Schedulers.Map;
 using NeoServer.Server.Standalone.Factories;
 using NeoServer.Server.World;
 using NeoServer.Server.World.Map;
@@ -21,7 +25,7 @@ namespace NeoServer.Server.Standalone.IoC
 {
     public class Container
     {
-        public static IContainer CompositionRoot()
+        public static Autofac.IContainer CompositionRoot()
         {
             var builder = new ContainerBuilder();
 
@@ -43,6 +47,10 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<PlayerLogInEventHandler>().SingleInstance();
             builder.RegisterType<PlayerChangesModeEventHandler>().SingleInstance();
             builder.RegisterType<PlayerLogOutEventHandler>().SingleInstance();
+            builder.RegisterType<PlayerMoveEastEventHandler>().SingleInstance();
+            builder.RegisterType<PlayerMoveWestEventHandler>().SingleInstance();
+            builder.RegisterType<PlayerMoveNorthEventHandler>().SingleInstance();
+            builder.RegisterType<PlayerMoveSouthEventHandler>().SingleInstance();
 
 
             builder.RegisterType<AccountLoginPacket>();
@@ -58,7 +66,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<World.World>().SingleInstance();
             builder.RegisterType<WorldLoader>().As<IWorldLoader>();
             builder.RegisterType<OTBMWorldLoader>();
-            builder.RegisterType<World.Map.Map>().SingleInstance();
+            builder.RegisterType<World.Map.Map>().As<IMap>().SingleInstance();
             builder.RegisterType<CreatureDescription>();
 
 
@@ -67,6 +75,10 @@ namespace NeoServer.Server.Standalone.IoC
 
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
+
+            //scheduler
+            builder.RegisterType<PingScheduler>().SingleInstance();
+            builder.RegisterType<MapScheduler>().SingleInstance();
 
             return builder.Build();
 

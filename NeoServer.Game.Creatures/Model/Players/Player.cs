@@ -53,6 +53,8 @@ namespace NeoServer.Server.Model.Players
             Inventory = new PlayerInventory(this, inventory);
         }
 
+        private uint IdleTime;
+
         public uint Id { get; private set; }
         public string CharacterName { get; private set; }
 
@@ -102,6 +104,11 @@ namespace NeoServer.Server.Model.Players
                 return $"You are {Vocation}";
             }
             return "";
+        }
+
+        public void ResetIdleTime()
+        {
+            IdleTime = 0;
         }
 
         /////
@@ -374,6 +381,13 @@ namespace NeoServer.Server.Model.Players
             SecureMode = mode;
         }
 
+        public void Logout()
+        {
+            if (CanLogout)
+            {
+                Tile.RemoveCreature(this);
+            }
+        }
     }
 
 

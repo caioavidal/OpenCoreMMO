@@ -1,4 +1,5 @@
-﻿using NeoServer.Server.Model.Players;
+﻿using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,21 @@ namespace NeoServer.Networking.Packets.Outgoing
     {
         private byte GraphicsSpeed => 0x32; //  beat duration (50)
         private byte CanReportBugs => 0x00;
+        private readonly IPlayer player;
 
-        public SelfAppearPacket(IPlayer player): base(false)
+        public SelfAppearPacket(IPlayer player)
         {
-            OutputMessage.AddByte((byte)GameOutgoingPacketType.SelfAppear);
+            this.player = player;
+        }
 
-            OutputMessage.AddUInt32(player.CreatureId);
-            OutputMessage.AddUInt16(GraphicsSpeed);
-            OutputMessage.AddByte(CanReportBugs); 	// can report bugs? todo: create tutor account type
+        public override void WriteToMessage(INetworkMessage message)
+        {
+           
+            message.AddByte((byte)GameOutgoingPacketType.SelfAppear);
+
+            message.AddUInt32(player.CreatureId);
+            message.AddUInt16(GraphicsSpeed);
+            message.AddByte(CanReportBugs); 	// can report bugs? todo: create tutor account type
         }
     }
 }

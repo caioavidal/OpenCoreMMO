@@ -46,6 +46,7 @@ namespace NeoServer.Networking
             Socket = null;
             Stream = null;
             XteaKey = new uint[4];
+            IsAuthenticated = false;
             ResetBuffer();
         }
         public void BeginStreamRead() => Stream.BeginRead(Buffer, 0, 16394, OnRead, null);
@@ -62,10 +63,7 @@ namespace NeoServer.Networking
 
         private void OnRead(IAsyncResult ar)
         {
-            //if (!CompleteRead(ar))
-            //{
-            //    return;
-            //}
+
             if (!Stream.CanRead)
             {
                 return;
@@ -79,13 +77,11 @@ namespace NeoServer.Networking
                 return;
             }
 
-
-
             try
             {
-                //Stream.Read(Buffer, 0, length);
 
                 InMessage = new ReadOnlyNetworkMessage(Buffer, length);
+                //Buffer = new byte[16394];
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent(this, eventArgs);
 
@@ -114,12 +110,10 @@ namespace NeoServer.Networking
 
         }
 
-        private void SendMessage(INetworkMessage message, bool disconnect = false)
+        private void SendMessage(INetworkMessage message)
         {
             try
             {
-
-
                 var streamMessage = message.AddHeader();
                 Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
 
@@ -133,42 +127,53 @@ namespace NeoServer.Networking
             }
         }
 
+        public void SendFirstConnection()
+        {
+            var message = new NetworkMessage();
+
+            new FirstConnectionPacket().WriteToMessage(message);
+
+            SendMessage(message);
+        }
+
         public void Send(IOutgoingPacket packet, bool encrypt = true)
         {
+            var message = new NetworkMessage();
 
-            var message = encrypt ? Packets.Security.Xtea.Encrypt(packet.GetMessage(), XteaKey) : packet.GetMessage();
+            packet.WriteToMessage(message);
 
+            message.AddLength();
 
-            SendMessage(message, packet.Disconnect);
+            var encryptedMessage = encrypt ? Packets.Security.Xtea.Encrypt(message, XteaKey) : message;
+
+            SendMessage(encryptedMessage);
 
         }
 
         public void Send(Queue<OutgoingPacket> outgoingPackets)
         {
-
-            var joinedPackets = new byte[16394];
-            int totalLength = 0;
+            var message = new NetworkMessage();
 
             foreach (var outPacket in outgoingPackets)
             {
-                var networkMessage = outPacket.GetMessage();
-                var buffer = networkMessage.Buffer;
+                outPacket.WriteToMessage(message);
 
-                System.Buffer.BlockCopy(buffer, 0, joinedPackets, totalLength, networkMessage.Length);
-
-                totalLength += networkMessage.Length;
             }
 
-            INetworkMessage joinedMessage = new NetworkMessage(joinedPackets, totalLength);
-            joinedMessage.AddLength();
+            message.AddLength();
 
-            joinedMessage = Packets.Security.Xtea.Encrypt(joinedMessage, XteaKey);
+            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
 
-            SendMessage(joinedMessage);
+            SendMessage(encryptedMessage);
         }
         public void Send(string text)
         {
-            var message = Packets.Security.Xtea.Encrypt(new TextMessagePacket(text).GetMessage(), XteaKey);
+            var message = new NetworkMessage();
+
+            new TextMessagePacket(text).WriteToMessage(message);
+
+            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
+
             SendMessage(message);
         }
     }

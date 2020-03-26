@@ -1,44 +1,47 @@
 ﻿using NeoServer.Data.Model;
+using NeoServer.Networking.Packets.Messages;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
     public class CharacterListPacket : OutgoingPacket
     {
+        private readonly AccountModel _acountModel;
         public CharacterListPacket(AccountModel account)
         {
-            AddCharList(account);
+            _acountModel = account;
+
         }
 
-        private void AddCharList(AccountModel account)
+        public override void WriteToMessage(INetworkMessage message)
         {
-           // OutputMessage.AddPayloadLengthSpace();
+            AddCharList(message);
+        }
 
-            //output.AddByte(0x14); todo: modt
-            OutputMessage.AddByte(0x64); //todo charlist
-            OutputMessage.AddByte((byte)account.Players.Count);
-            foreach (var player in account.Players)
+        private void AddCharList(INetworkMessage message)
+        {
+            message.AddByte(0x64); //todo charlist
+            message.AddByte((byte)_acountModel.Players.Count);
+            foreach (var player in _acountModel.Players)
             {
-                OutputMessage.AddString(player.CharacterName);
-                OutputMessage.AddString("NeoServer"); //todo change to const
-                OutputMessage.AddByte(127);
-                OutputMessage.AddByte(0);
-                OutputMessage.AddByte(0);
-                OutputMessage.AddByte(1);
-                OutputMessage.AddUInt16(7172);
+                message.AddString(player.CharacterName);
+                message.AddString("NeoServer"); //todo change to const
+                message.AddByte(127);
+                message.AddByte(0);
+                message.AddByte(0);
+                message.AddByte(1);
+                message.AddUInt16(7172);
             }
-            OutputMessage.AddUInt16((ushort)account.PremiumTime);
-
-         //   OutputMessage.AddPayloadLength();
+            message.AddUInt16((ushort)_acountModel.PremiumTime);
         }
 
-        private void AddWorlds()
-        {
-            OutputMessage.AddByte(1); // number of worlds
-            OutputMessage.AddByte(0); // world id
-            OutputMessage.AddString("NeoServer"); //todo change to const
-            OutputMessage.AddString("localhost");
-            OutputMessage.AddUInt16(7171);
-            OutputMessage.AddByte(0);
-        }
+        // private void AddWorlds()
+        // {
+        //     message.AddByte(1); // number of worlds
+        //     message.AddByte(0); // world id
+        //     message.AddString("NeoServer"); //todo change to const
+        //     message.AddString("localhost");
+        //     message.AddUInt16(7171);
+        //     message.AddByte(0);
+        // }
     }
 }

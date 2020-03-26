@@ -1,7 +1,9 @@
-﻿using NeoServer.Networking;
+﻿using NeoServer.Game.Contracts;
+using NeoServer.Networking;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
@@ -11,9 +13,9 @@ namespace NeoServer.Server.Handlers.Authentication
         private readonly ServerState _serverState;
 
         private readonly Game _game;
-        private readonly World.Map.Map _map;
+        private readonly IMap _map;
 
-        public PlayerLogOutEventHandler(IAccountRepository repository, ServerState serverState, Game game, World.Map.Map map)
+        public PlayerLogOutEventHandler(IAccountRepository repository, ServerState serverState, Game game, IMap map)
         {
             _repository = repository;
             _serverState = serverState;
@@ -23,12 +25,16 @@ namespace NeoServer.Server.Handlers.Authentication
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
         {
-            var player = _game.CreatureInstances[connection.PlayerId];
+            var player = _game.CreatureInstances[connection.PlayerId] as IPlayer;
 
             if (player == null)
             {
                 return;
             }
+
+            player.Logout();
+
+            _game.LogOutPlayer(connection);
 
             //if (Game.Instance.AttemptLogout(player)) todo
             {

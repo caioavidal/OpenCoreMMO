@@ -1,10 +1,12 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature;
 using NeoServer.Networking;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace NeoServer.Server
 {
@@ -13,18 +15,18 @@ namespace NeoServer.Server
         /// <summary>
         /// Gets the <see cref="ConcurrentDictionary{TKey,TValue}"/> of all <see cref="Connection"/>s in the game, in which the Key is the <see cref="Creature.CreatureId"/>.
         /// </summary>
-        private ConcurrentDictionary<uint, Connection> Connections { get; }
+        public ConcurrentDictionary<uint, Connection> Connections { get; }
 
         public byte LightLevel => 250;
         public byte LightColor => 215;
 
 
         private readonly Func<PlayerModel, IPlayer> _playerFactory;
-        public World.Map.Map Map { get; }
+        public IMap Map { get; }
 
-        public ICreatureGameInstance CreatureInstances {get;}
+        public ICreatureGameInstance CreatureInstances { get; }
 
-        public Game(Func<PlayerModel, IPlayer> playerFactory, World.Map.Map map, 
+        public Game(Func<PlayerModel, IPlayer> playerFactory, IMap map,
             ICreatureGameInstance creatureInstances)
         {
             Connections = new ConcurrentDictionary<uint, Connection>();
@@ -41,9 +43,17 @@ namespace NeoServer.Server
             Map.AddPlayerOnMap(player);
             CreatureInstances.Add(player);
 
+            Connections.TryAdd(player.CreatureId, connection);
+
             return player;
         }
-     
+        public void LogOutPlayer(Connection connection)
+        {
+            CreatureInstances.Remove(connection.PlayerId);
+
+            Connections.Remove(connection.PlayerId, out connection);
+        }
+
         public DateTime CombatSynchronizationTime { get; private set; }
     }
 }

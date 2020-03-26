@@ -1,15 +1,24 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Networking.Packets.Messages;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class MagicEffectPacket: OutgoingPacket
+    public class MagicEffectPacket : OutgoingPacket
     {
-        public MagicEffectPacket(Location location, EffectT effect) : base(false)
+        private readonly Location location;
+        private readonly EffectT effect;
+        public MagicEffectPacket(Location location, EffectT effect)
         {
-            OutputMessage.AddByte((byte)GameOutgoingPacketType.MagicEffect);
-            OutputMessage.AddLocation(location);
-            OutputMessage.AddByte((byte)effect);
+            this.location = location;
+            this.effect = effect;
+        }
+
+        public override void WriteToMessage(INetworkMessage message)
+        {
+            message.AddByte((byte)GameOutgoingPacketType.MagicEffect);
+            message.AddLocation(location);
+            message.AddByte((byte)effect);
         }
     }
 }

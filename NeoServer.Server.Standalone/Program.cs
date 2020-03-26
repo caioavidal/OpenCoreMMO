@@ -11,11 +11,14 @@ using NeoServer.Server.Loaders;
 using NeoServer.Server.Model;
 
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Schedulers;
+using NeoServer.Server.Schedulers.Map;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.World;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NeoServer.Server.Standalone
@@ -24,6 +27,8 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
 
             var container = Container.CompositionRoot();
             container.Resolve<Database>().Connect();
@@ -35,16 +40,35 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<IWorldLoader>().Load();
 
-            Task.Run(() => container.Resolve<LoginListener>().BeginListening());
-            Task.Run(() => container.Resolve<GameListener>().BeginListening());
+            //Task.Run(() => container.Resolve<PingScheduler>().Start());
 
-            Console.WriteLine("NeoServer is up!");
+
+            var listeningTask = StartListening(container, cancellationToken);
+
+            var mapScheduler = container.Resolve<MapScheduler>();
+            
+            Task.Factory.StartNew(() => mapScheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
+
 
             container.Resolve<ServerState>().OpenServer();
 
-            //CreateChar();
+            Console.WriteLine("NeoServer is up!");
 
-            Console.Read();
+
+            listeningTask.Wait(cancellationToken);
+            
+            //   CreateChar();
+        }
+
+        private static async Task StartListening(IContainer container, CancellationToken token)
+        {
+            container.Resolve<LoginListener>().BeginListening();
+            container.Resolve<GameListener>().BeginListening();
+
+            while (!token.IsCancellationRequested)
+            {
+               await Task.Delay(TimeSpan.FromSeconds(1), token);
+            }
         }
 
         public static void CreateChar()

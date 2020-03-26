@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Protocols
         {
             _handlerFactory = handlerFactory;
         }
-
+        public override string ToString() => "Game Protocol";
         public override bool KeepConnectionOpen => true;
 
         public override void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
@@ -29,7 +29,7 @@ namespace NeoServer.Networking.Protocols
 
         public void HandlerFirstConnection(Connection connection)
         {
-            connection.Send(new FirstConnectionPacket(), false);
+            connection.SendFirstConnection();
         }
 
 
