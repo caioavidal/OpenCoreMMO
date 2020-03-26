@@ -123,7 +123,8 @@ namespace NeoServer.Server.Standalone
                         Inventory = new Dictionary<Slot, ushort>
                         {
                             { Slot.Backpack, 2854 }
-                        }
+                        },
+                        Speed = 800
 
                      }
                   };

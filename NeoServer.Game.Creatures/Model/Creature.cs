@@ -64,8 +64,6 @@ namespace NeoServer.Game.Creatures.Model
                 LookType = 0
             };
 
-            Speed = 1220;
-
             WalkingQueue = new ConcurrentQueue<Tuple<byte, Direction>>();
 
             // Subscribe any attack-impacting conditions here
@@ -142,7 +140,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public byte LightColor { get; protected set; }
 
-        public ushort Speed { get; protected set; }
+        public ushort Speed { get; protected set; } = 220;
 
         public uint Flags { get; private set; }
 

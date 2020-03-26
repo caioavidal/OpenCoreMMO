@@ -35,7 +35,8 @@ namespace NeoServer.Server.Standalone.Factories
                 player.Skills,
                 player.StaminaMinutes,
                 player.Outfit,
-                ConvertToInventory(player.Inventory)
+                ConvertToInventory(player.Inventory),
+                player.Speed
                 // player.Location
                 );
         }

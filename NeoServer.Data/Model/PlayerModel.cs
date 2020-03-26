@@ -30,7 +30,9 @@ namespace NeoServer.Server.Model.Players
         public ushort StaminaMinutes { get; set; }
 
         public Dictionary<Slot, ushort> Inventory { get; set; }
-       // public Location Location { get; set; }
+        public ushort Speed { get; set; }
+
+        // public Location Location { get; set; }
 
         public bool IsMounted()
         {

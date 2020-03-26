@@ -1,10 +1,11 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace NeoServer.Server.Model.Players
 {
-    public class Skill:ISkill
+    public class Skill : ISkill
     {
         public event OnLevelAdvance OnAdvance;
 
@@ -20,9 +21,24 @@ namespace NeoServer.Server.Model.Players
 
         public double Rate { get; }
 
-        public double Target { get; private set; }
+        public double Target { get; }
 
         public double BaseIncrease { get; }
+
+        public double Percentage { get; }
+
+        //BaseIncrease and Rate
+        private IDictionary<SkillType, Tuple<double, double>> SkillsRates = new Dictionary<SkillType, Tuple<double, double>>()
+        {
+            {SkillType.Fist, new Tuple<double,double>(50,1.5) },
+            {SkillType.Club, new Tuple<double,double>(50,2.0) },
+            {SkillType.Sword, new Tuple<double,double>(50,2.0) },
+            {SkillType.Axe, new Tuple<double,double>(50,2.0) },
+            {SkillType.Distance, new Tuple<double,double>(30,2.0) },
+            {SkillType.Shield, new Tuple<double,double>(100,1.5) },
+            {SkillType.Fishing, new Tuple<double,double>(20,1.1) },
+            {SkillType.Magic, new Tuple<double,double>(0,4) },
+        };
 
         public Skill(SkillType type, ushort defaultLevel, double rate, double baseIncrease, ushort level = 0, ushort maxLevel = 1, double count = 0)
         {
@@ -63,37 +79,79 @@ namespace NeoServer.Server.Model.Players
             Rate = rate;
             BaseIncrease = baseIncrease;
 
-            Target = CalculateNextTarget();
-            Count = Math.Min(count, Target);
+            //Target = CalculateNextTarget(count);
+            Percentage = CalculatePercentage(count);
+            Count = count;
         }
 
-        private double CalculateNextTarget()
-        {
-            var nextTarget = (Target * Rate) + BaseIncrease;
+        private double GetExpForLevel(int Level) => ((50 * Math.Pow(Level, 3)) / 3) - (100 * Math.Pow(Level, 2)) + ((850 * Level) / 3) - 200;
 
-            if (Math.Abs(Target) < 0.001) // need to recalculate everything.
+        private double CalculatePercentage(double count, double nextLevelCount) => Math.Min(100, (count * 100) / nextLevelCount);
+        private double CalculatePercentage(double count)
+        {
+            if (Type == SkillType.Level)
             {
-                for (int i = 0; i < DefaultLevel - Level; i++) // how many advances we need to calculate
+                var currentLevelExp = GetExpForLevel(Level);
+
+                var nextLevelExp = GetExpForLevel(Level + 1);
+
+                if (count < currentLevelExp || count > nextLevelExp)
                 {
-                    nextTarget = (nextTarget * Rate) + BaseIncrease;
+                    Count = currentLevelExp;
                 }
+                return CalculatePercentage(count - currentLevelExp, nextLevelExp - currentLevelExp);
+            }
+            else if (Type == SkillType.Magic)
+            {
+                return GetManaPercentage(count);
+            }
+            else
+            {
+
+                var baseIncrease = SkillsRates[Type].Item1;
+                var rate = SkillsRates[Type].Item2;
+
+                var nextSkillTries = baseIncrease * Math.Pow((rate), Level - 10);
+                return CalculatePercentage(count, nextSkillTries);
+            }
+        }
+
+        private double GetManaPercentage(double manaSpent)
+        {
+            var rate = SkillsRates[Type].Item2;
+
+            var reqMana = 1600 * Math.Pow(rate, Level);
+            var modResult = reqMana % 20;
+            if (modResult < 10)
+            {
+                reqMana -= modResult;
+            }
+            else
+            {
+                reqMana -= modResult + 20;
             }
 
-            return nextTarget;
+            if (manaSpent > reqMana)
+            {
+                manaSpent = 0;
+            }
+
+            return CalculatePercentage(manaSpent, reqMana);
         }
 
         public void IncreaseCounter(double value)
         {
-            Count = Math.Min(Target, Count + value);
+            //todo
+            // Count = Math.Min(Target, Count + value);
 
-            if (Math.Abs(Count - Target) < 0.001) // Skill level advance
-            {
-                Level++;
-                Target = CalculateNextTarget();
+            // if (Math.Abs(Count - Target) < 0.001) // Skill level advance
+            // {
+            //     Level++;
+            //     Target = CalculateNextTarget(Count);
 
-                // Invoke any subscribers to the level advance.
-                OnAdvance?.Invoke(Type);
-            }
+            //     // Invoke any subscribers to the level advance.
+            //     OnAdvance?.Invoke(Type);
+            // }
         }
     }
 }

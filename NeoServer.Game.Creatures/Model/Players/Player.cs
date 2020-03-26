@@ -17,13 +17,13 @@ namespace NeoServer.Server.Model.Players
     {
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
-            IOutfit outfit, IDictionary<Slot, Tuple<IItem, ushort>> inventory)
+            IOutfit outfit, IDictionary<Slot, Tuple<IItem, ushort>> inventory, ushort speed)
              : base(id, characterName, string.Empty, maxHealthPoints, maxMana, 4240, healthPoints, mana)
         {
             Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
-            Capacity = capacity;
+            CarryStrength = capacity;
             HealthPoints = healthPoints;
             MaxHealthPoints = maxHealthPoints;
             Vocation = vocation;
@@ -37,7 +37,8 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
-
+            Speed = speed;
+           
             //Location = location;
 
             OpenContainers = new IContainer[MaxContainers]; //todo: db
@@ -176,7 +177,7 @@ namespace NeoServer.Server.Model.Players
         public byte SecureMode { get; private set; }
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
-        public byte GetSkillPercent(SkillType skill) => (byte)Math.Min(100, Skills[skill].Count * 100 / (Skills[skill].Target + 1));
+        public byte GetSkillPercent(SkillType skill) => (byte) Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
 
         public void AddKnownCreature(uint creatureId)

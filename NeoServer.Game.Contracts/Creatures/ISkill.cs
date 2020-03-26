@@ -27,6 +27,7 @@ namespace NeoServer.Game.Contracts.Creatures
         double Target { get; }
 
         double BaseIncrease { get; }
+        double Percentage { get; }
 
         void IncreaseCounter(double value);
     }
