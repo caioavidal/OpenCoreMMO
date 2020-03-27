@@ -2,10 +2,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Schedulers.Map;
 
 namespace NeoServer.Server.Schedulers
 {
-    public class PingScheduler
+    public class PingScheduler: Scheduler
     {
         private readonly Game _game;
 

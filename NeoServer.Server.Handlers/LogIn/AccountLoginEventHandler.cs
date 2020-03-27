@@ -26,13 +26,13 @@ namespace NeoServer.Server.Handlers.Authentication
 
             if (account == null)
             { //todo: use option
-                connection.Send("Invalid account.");
+                connection.Disconnect("Invalid account.");
                 return;
             }
 
             if (!account.IsValid())
             {
-                connection.Send("Invalid account name or password."); //todo: use gameserverdisconnect
+                connection.Disconnect("Invalid account name or password."); //todo: use gameserverdisconnect
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace NeoServer.Server.Handlers.Authentication
 
             if (foundedAccount == null)
             {
-                connection.Send("Account name or password is not correct.");
+                connection.Disconnect("Account name or password is not correct.");
                 return;
             }
 

@@ -23,7 +23,7 @@ namespace NeoServer.Server.Model.Players
             Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
-            CarryStrength = capacity;
+            CarryStrength = capacity * 100;
             HealthPoints = healthPoints;
             MaxHealthPoints = maxHealthPoints;
             Vocation = vocation;

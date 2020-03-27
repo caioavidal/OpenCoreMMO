@@ -166,15 +166,18 @@ namespace NeoServer.Networking
 
             SendMessage(encryptedMessage);
         }
-        public void Send(string text)
+        public void Disconnect(string text)
         {
             var message = new NetworkMessage();
 
             new TextMessagePacket(text).WriteToMessage(message);
 
+            message.AddLength();
+
             var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
 
-            SendMessage(message);
+            SendMessage(encryptedMessage);
+            Close();
         }
     }
 }

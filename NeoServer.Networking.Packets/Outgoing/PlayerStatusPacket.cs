@@ -19,7 +19,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddByte((byte)GameOutgoingPacketType.PlayerStatus);
             message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Hitpoints));
             message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxHitpoints));
-            message.AddUInt32(Convert.ToUInt32(player.CarryStrength));
+            message.AddUInt32((uint)player.CarryStrength);
 
             message.AddUInt32(Math.Min(0x7FFFFFFF, player.Experience)); // Experience: Client debugs after 2,147,483,647 exp
 
