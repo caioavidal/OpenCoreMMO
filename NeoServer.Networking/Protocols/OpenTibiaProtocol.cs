@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Protocols
 {
@@ -8,12 +9,12 @@ namespace NeoServer.Networking.Protocols
     {
         public virtual bool KeepConnectionOpen { get; protected set; }
 
-        public virtual void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
+        public virtual void OnAcceptNewConnection(IConnection connection, IAsyncResult ar)
         {
             connection.OnAccept(ar);
         }
 
-        public void PostProcessMessage(object sender, ConnectionEventArgs args)
+        public void PostProcessMessage(object sender, IConnectionEventArgs args)
         {
             if (!KeepConnectionOpen)
             {
@@ -26,6 +27,6 @@ namespace NeoServer.Networking.Protocols
             }
         }
 
-        public abstract void ProcessMessage(object sender, ConnectionEventArgs connection);
+        public abstract void ProcessMessage(object sender, IConnectionEventArgs connection);
     }
 }

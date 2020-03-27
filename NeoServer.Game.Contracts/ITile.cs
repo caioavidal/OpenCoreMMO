@@ -46,7 +46,7 @@ namespace NeoServer.Game.Contracts
 
         IThing GetThingAtStackPosition(byte stackPosition);
 
-        byte GetStackPosition(IThing thing);
+        byte GetStackPositionOfThing(IThing thing);
 
         void SetFlag(TileFlag flag);
 

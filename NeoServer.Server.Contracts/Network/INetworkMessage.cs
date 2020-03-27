@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums.Location.Structs;
 
-namespace NeoServer.Networking.Packets.Messages
+namespace NeoServer.Server.Contracts.Network
 {
     public interface INetworkMessage : IReadOnlyNetworkMessage
     {

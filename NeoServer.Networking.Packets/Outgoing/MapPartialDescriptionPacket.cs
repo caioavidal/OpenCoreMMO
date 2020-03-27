@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.World.Map;
 
@@ -10,13 +11,13 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class MapPartialDescriptionPacket : OutgoingPacket
     {
-        private readonly Player player;
+        private readonly IThing thing;
         private readonly Location toLocation;
         private readonly IMap map;
         private readonly Direction direction;
-        public MapPartialDescriptionPacket(Player player, Location toLocation, Direction direction, IMap map)
+        public MapPartialDescriptionPacket(IThing thing, Location toLocation, Direction direction, IMap map)
         {
-            this.player = player;
+            this.thing = thing;
             this.toLocation = toLocation;
             this.map = map;
             this.direction = direction;
@@ -42,10 +43,10 @@ namespace NeoServer.Networking.Packets.Outgoing
                     //throw new InvalidArgumentExpcetion();
             }
 
-            message.AddBytes(GetDescription(player, toLocation, map));
+            message.AddBytes(GetDescription(thing, toLocation, map));
         }
 
-        private byte[] GetDescription(Player player, Location toLocation, IMap map)
+        private byte[] GetDescription(IThing thing, Location toLocation, IMap map)
         {
             var newLocation = toLocation;
 
@@ -77,10 +78,10 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
 
             return
-                map.GetDescription(player, (ushort)(newLocation.X),
+                map.GetDescription(thing, (ushort)(newLocation.X),
                 (ushort)(newLocation.Y),
                 toLocation.Z,
-                player.Location.IsUnderground, width, height).ToArray();
+                thing.Location.IsUnderground, width, height).ToArray();
         }
     }
 }

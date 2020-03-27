@@ -1,3 +1,4 @@
+using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Handlers.Players;
 using System;

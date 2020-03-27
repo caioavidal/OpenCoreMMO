@@ -10,6 +10,8 @@ using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Protocols;
+using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
@@ -97,7 +99,7 @@ namespace NeoServer.Server.Standalone.IoC
         {
             builder.Register((c, p) =>
             {
-                var conn = p.TypedAs<Connection>();
+                var conn = p.TypedAs<IConnection>();
 
                 var packet = GameIncomingPacketType.PlayerLogOut;
 

@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Networking;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Schedulers.Map;
@@ -12,7 +13,7 @@ namespace NeoServer.Server.Handlers.Players
 {
     public class PlayerMovementHandler
     {
-        public static void Handler(Player player, IMap map, Direction direction, Connection connection)
+        public static void Handler(Player player, IMap map, Direction direction, IConnection connection)
         {
             player.ResetIdleTime();
 
@@ -27,7 +28,7 @@ namespace NeoServer.Server.Handlers.Players
             var toLocation = player.Location;
 
 
-            var outgoingPackets = new Queue<OutgoingPacket>();
+            var outgoingPackets = new Queue<IOutgoingPacket>();
 
             outgoingPackets.Enqueue(new CreatureMovedPacket(location, toLocation, stackPosition));
             outgoingPackets.Enqueue(new MapPartialDescriptionPacket(player, toLocation, direction, map));

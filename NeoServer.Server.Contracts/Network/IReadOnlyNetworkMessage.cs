@@ -1,7 +1,8 @@
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Contracts.Network.Enums;
 using System.Collections.Generic;
 
-namespace NeoServer.Networking.Packets.Messages
+namespace NeoServer.Server.Contracts.Network
 {
     public interface IReadOnlyNetworkMessage
     {

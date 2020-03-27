@@ -9,12 +9,11 @@ using System.Net.Sockets;
 
 namespace NeoServer.Networking
 {
-
-    public class Connection
+    public class Connection : IConnection
     {
-        public event EventHandler<ConnectionEventArgs> OnProcessEvent;
-        public event EventHandler<ConnectionEventArgs> OnCloseEvent;
-        public event EventHandler<ConnectionEventArgs> OnPostProcessEvent;
+        public event EventHandler<IConnectionEventArgs> OnProcessEvent;
+        public event EventHandler<IConnectionEventArgs> OnCloseEvent;
+        public event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
 
         private Socket Socket;
         private Stream Stream;
@@ -151,7 +150,7 @@ namespace NeoServer.Networking
 
         }
 
-        public void Send(Queue<OutgoingPacket> outgoingPackets)
+        public void Send(Queue<IOutgoingPacket> outgoingPackets)
         {
             var message = new NetworkMessage();
 

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Protocols;
+using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -44,7 +45,7 @@ namespace NeoServer.Networking.Listeners
             return connection;
         }
 
-        private void OnConnectionClose(object sender, ConnectionEventArgs args)
+        private void OnConnectionClose(object sender, IConnectionEventArgs args)
         {
             // De-subscribe to this event first.
             args.Connection.OnCloseEvent -= OnConnectionClose;

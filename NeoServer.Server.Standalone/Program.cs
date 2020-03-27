@@ -16,6 +16,7 @@ using NeoServer.Server.Schedulers.Map;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.World;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -27,6 +28,12 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
+            var log = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            log.Information("Starting Server...");
+
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
@@ -46,7 +53,7 @@ namespace NeoServer.Server.Standalone
             var listeningTask = StartListening(container, cancellationToken);
 
             var mapScheduler = container.Resolve<MapScheduler>();
-            
+
             Task.Factory.StartNew(() => mapScheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
 
 
@@ -56,7 +63,7 @@ namespace NeoServer.Server.Standalone
 
 
             listeningTask.Wait(cancellationToken);
-            
+
             //   CreateChar();
         }
 
@@ -67,7 +74,7 @@ namespace NeoServer.Server.Standalone
 
             while (!token.IsCancellationRequested)
             {
-               await Task.Delay(TimeSpan.FromSeconds(1), token);
+                await Task.Delay(TimeSpan.FromSeconds(1), token);
             }
         }
 

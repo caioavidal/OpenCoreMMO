@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Security;
 
 namespace NeoServer.Networking.Packets.Incoming

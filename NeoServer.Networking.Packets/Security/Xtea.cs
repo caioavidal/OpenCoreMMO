@@ -1,4 +1,5 @@
 using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;

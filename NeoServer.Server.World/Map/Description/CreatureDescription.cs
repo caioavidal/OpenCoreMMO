@@ -18,7 +18,7 @@ namespace NeoServer.Server.World.Map
             _creatureInstances = creatureInstances;
         }
 
-        public List<byte> GetCreaturesOnTile(IPlayer player, ITile tile, ref int objectsOnTile)
+        public List<byte> GetCreaturesOnTile(IThing thing, ITile tile, ref int objectsOnTile)
         {
             var stream = new List<byte>();
 
@@ -36,6 +36,8 @@ namespace NeoServer.Server.World.Map
                 {
                     continue;
                 }
+
+                var player = thing as IPlayer;
 
                 if (player.KnowsCreatureWithId(creatureId))
                 {

@@ -1,6 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Messages;
-using System;
-using System.Collections.Generic;
+using NeoServer.Server.Contracts.Network;
 using System.Text;
 
 namespace NeoServer.Networking.Tests.Packets

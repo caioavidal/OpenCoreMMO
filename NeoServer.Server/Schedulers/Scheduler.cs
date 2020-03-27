@@ -5,17 +5,16 @@ using NeoServer.Game.Contracts;
 
 namespace NeoServer.Server.Schedulers
 {
+    
     public class Scheduler
     {
-
+        public const int MaxQueueNodes = 3000;
         private ConcurrentQueue<Action> actions;
-
         public object _queueLock = new object();
         public Scheduler()
         {
             actions = new ConcurrentQueue<Action>();
         }
-
         public void Enqueue(Action action)
         {
 
@@ -33,7 +32,7 @@ namespace NeoServer.Server.Schedulers
             {
                 lock (_queueLock)
                 {
-                    Monitor.Wait(_queueLock);
+                    Monitor.Wait(_queueLock, TimeSpan.FromSeconds(5));
                 }
             }
 

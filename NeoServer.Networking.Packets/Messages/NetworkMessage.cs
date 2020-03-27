@@ -3,6 +3,7 @@
     using NeoServer.Game.Contracts.Item;
     using NeoServer.Game.Enums.Location.Structs;
     using NeoServer.Networking.Packets.Messages;
+    using NeoServer.Server.Contracts.Network;
     using NeoServer.Server.Security;
     using System;
     using System.Text;
@@ -106,7 +107,7 @@
         }
 
 
-     
+
 
         /// <summary>
         /// Add header bytes and return the whole packet
@@ -115,7 +116,7 @@
         /// <returns></returns>
         public byte[] AddHeader(bool addChecksum = true)
         {
-          
+
             var newArray = new byte[Length + 6];
 
             var header = GetHeader();

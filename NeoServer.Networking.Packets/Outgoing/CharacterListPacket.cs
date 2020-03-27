@@ -1,5 +1,5 @@
 ﻿using NeoServer.Data.Model;
-using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

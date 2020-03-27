@@ -7,6 +7,8 @@ using NeoServer.Networking;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Schedulers.Map;
@@ -31,7 +33,7 @@ namespace NeoServer.Server.Handlers.Players
             _mapScheduler = mapScheduler;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
+        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             Direction direction = ParseMovementPacket(message.IncomingPacket);
 

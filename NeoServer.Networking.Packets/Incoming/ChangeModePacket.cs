@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Security;
 
@@ -12,7 +13,7 @@ namespace NeoServer.Networking.Packets.Incoming
 
         public ChangeModePacket(IReadOnlyNetworkMessage message)
         {
-            FightMode = (FightMode) message.GetByte();
+            FightMode = (FightMode)message.GetByte();
             ChaseMode = (ChaseMode)message.GetByte();
             SecureMode = message.GetByte();
         }

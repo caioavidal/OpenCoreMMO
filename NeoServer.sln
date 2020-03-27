@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Contracts", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Enums", "NeoServer.Game.Enums\NeoServer.Game.Enums.csproj", "{7B722163-1780-42FE-83AE-46F665BAF792}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Commands", "NeoServer.Game.Commands\NeoServer.Game.Commands.csproj", "{64FD1616-263E-4974-9640-775BFFB5725E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,11 +121,17 @@ Global
 		{7B722163-1780-42FE-83AE-46F665BAF792}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B722163-1780-42FE-83AE-46F665BAF792}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B722163-1780-42FE-83AE-46F665BAF792}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64FD1616-263E-4974-9640-775BFFB5725E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64FD1616-263E-4974-9640-775BFFB5725E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64FD1616-263E-4974-9640-775BFFB5725E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64FD1616-263E-4974-9640-775BFFB5725E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{64FD1616-263E-4974-9640-775BFFB5725E} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
+		{853B0EBF-1BE1-4999-8574-45943790FF7D} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
 		{7B722163-1780-42FE-83AE-46F665BAF792} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
 		{58058793-4793-4B60-8ACF-90D49A00900B} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
 		{7A62411B-C4E4-443A-9BFB-8C67480712CC} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}

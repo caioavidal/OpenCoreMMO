@@ -1,6 +1,7 @@
 ﻿using NeoServer.Networking;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model.Players;
 
@@ -15,7 +16,7 @@ namespace NeoServer.Server.Handlers.Authentication
             _game = game;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
+        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var changeMode = new ChangeModePacket(message);
 

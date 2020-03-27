@@ -11,9 +11,7 @@ namespace NeoServer.Game.Contracts
         ITile this[ushort x, ushort y, sbyte z] { get; }
 
         void AddPlayerOnMap(ICreature player);
-        IList<byte> GetDescription(IPlayer player, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
-        IList<byte> GetFloorDescription(IPlayer player, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip);
-        IList<byte> GetTileDescription(IPlayer player, ITile tile);
+        IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
         IEnumerable<ITile> GetTilesNear(Location location);
     }
 }

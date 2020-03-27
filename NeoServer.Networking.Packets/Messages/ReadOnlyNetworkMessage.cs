@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Contracts.Network.Enums;
 
 namespace NeoServer.Networking.Packets.Messages
 {

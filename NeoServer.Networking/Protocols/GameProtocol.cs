@@ -3,6 +3,7 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Security;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
 using System;
 using System.Collections.Generic;
@@ -12,28 +13,28 @@ namespace NeoServer.Networking.Protocols
 {
     public class GameProtocol : OpenTibiaProtocol
     {
-        private Func<Connection, IPacketHandler> _handlerFactory;
-        public GameProtocol(Func<Connection, IPacketHandler> handlerFactory)
+        private Func<IConnection, IPacketHandler> _handlerFactory;
+        public GameProtocol(Func<IConnection, IPacketHandler> handlerFactory)
         {
             _handlerFactory = handlerFactory;
         }
         public override string ToString() => "Game Protocol";
         public override bool KeepConnectionOpen => true;
 
-        public override void OnAcceptNewConnection(Connection connection, IAsyncResult ar)
+        public override void OnAcceptNewConnection(IConnection connection, IAsyncResult ar)
         {
             Console.WriteLine("Game OnAcceptNewConnection");
             base.OnAcceptNewConnection(connection, ar);
             HandlerFirstConnection(connection);
         }
 
-        public void HandlerFirstConnection(Connection connection)
+        public void HandlerFirstConnection(IConnection connection)
         {
             connection.SendFirstConnection();
         }
 
 
-        public override void ProcessMessage(object sender, ConnectionEventArgs args)
+        public override void ProcessMessage(object sender, IConnectionEventArgs args)
         {
             var connection = args.Connection;
 

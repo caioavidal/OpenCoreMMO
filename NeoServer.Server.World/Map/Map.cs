@@ -87,7 +87,7 @@ namespace NeoServer.Server.World.Map
             }
         }
 
-        public IList<byte> GetDescription(IPlayer player, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
+        public IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
         {
             var tempBytes = new List<byte>();
 
@@ -115,7 +115,7 @@ namespace NeoServer.Server.World.Map
 
             for (var nz = crawlFrom; nz != crawlTo + crawlDelta; nz += crawlDelta)
             {
-                tempBytes.AddRange(GetFloorDescription(player, fromX, fromY, (sbyte)nz, windowSizeX, windowSizeY, currentZ - nz, ref skip));
+                tempBytes.AddRange(GetFloorDescription(thing, fromX, fromY, (sbyte)nz, windowSizeX, windowSizeY, currentZ - nz, ref skip));
             }
 
             if (skip >= 0)
@@ -127,7 +127,7 @@ namespace NeoServer.Server.World.Map
             return tempBytes;
         }
 
-        public IList<byte> GetFloorDescription(IPlayer player, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip)
+        private IList<byte> GetFloorDescription(IThing thing, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip)
         {
             var tempBytes = new List<byte>();
 
@@ -150,7 +150,7 @@ namespace NeoServer.Server.World.Map
 
                         skip = 0;
 
-                        tempBytes.AddRange(GetTileDescription(player, tile));
+                        tempBytes.AddRange(GetTileDescription(thing, tile));
                     }
                     else if (skip == start)
                     {
@@ -168,7 +168,7 @@ namespace NeoServer.Server.World.Map
             return tempBytes;
         }
 
-        public IList<byte> GetTileDescription(IPlayer player, ITile tile)
+        private IList<byte> GetTileDescription(IThing thing, ITile tile)
         {
             if (tile == null)
             {
@@ -217,7 +217,7 @@ namespace NeoServer.Server.World.Map
                 objectsOnTile++;
             }
 
-            tempBytes.AddRange(_creatureDescription.GetCreaturesOnTile(player, tile, ref objectsOnTile));
+            tempBytes.AddRange(_creatureDescription.GetCreaturesOnTile(thing, tile, ref objectsOnTile));
 
             foreach (var item in tile.DownItems)
             {

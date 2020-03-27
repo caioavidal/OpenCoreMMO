@@ -2,6 +2,7 @@
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model;
 using System;
@@ -18,7 +19,7 @@ namespace NeoServer.Server.Handlers.Authentication
             _repository = repository;
         }
 
-        public async override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
+        public async override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var account = new AccountLoginPacket(message);
 

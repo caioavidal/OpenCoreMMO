@@ -278,7 +278,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public byte GetStackPosition()
         {
-            return Tile.GetStackPosition(this);
+            return Tile.GetStackPositionOfThing(this);
         }
 
         public void Move(Direction direction, IMap map)

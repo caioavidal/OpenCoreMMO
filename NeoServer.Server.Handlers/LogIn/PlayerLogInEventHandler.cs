@@ -4,6 +4,7 @@ using NeoServer.Networking;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace NeoServer.Server.Handlers.Authentication
             _map = map;
         }
 
-        public async override void HandlerMessage(IReadOnlyNetworkMessage message, Connection connection)
+        public async override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var packet = new PlayerLogInPacket(message);
 
@@ -48,7 +49,7 @@ namespace NeoServer.Server.Handlers.Authentication
             connection.PlayerId = player.CreatureId;
             connection.IsAuthenticated = true;
 
-            var outgoingPackets = new Queue<OutgoingPacket>();
+            var outgoingPackets = new Queue<IOutgoingPacket>();
 
             outgoingPackets.Enqueue(new SelfAppearPacket(player));
             outgoingPackets.Enqueue(new MapDescriptionPacket(player, _map));

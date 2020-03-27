@@ -650,7 +650,7 @@ namespace NeoServer.Server.Map
             //return stackPosition <= currentPos + _downItemsOnTile.Count ? DownItems.FirstOrDefault(item => ++currentPos == stackPosition) : null;
         }
 
-        public byte GetStackPosition(IThing thing)
+        public byte GetStackPositionOfThing(IThing thing)
         {
             if (thing == null)
             {

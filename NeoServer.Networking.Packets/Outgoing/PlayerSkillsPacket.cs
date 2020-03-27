@@ -1,11 +1,10 @@
 ﻿using NeoServer.Game.Creatures.Enums;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Server.Model.Players;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
-    public class PlayerSkillsPacket:OutgoingPacket
+    public class PlayerSkillsPacket : OutgoingPacket
     {
         private readonly IPlayer player;
         public PlayerSkillsPacket(IPlayer player)
@@ -18,22 +17,22 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddByte((byte)GameOutgoingPacketType.PlayerSkills);
             message.AddByte(player.GetSkillInfo(SkillType.Fist));
             message.AddByte(player.GetSkillPercent(SkillType.Fist));
-            
+
             message.AddByte(player.GetSkillInfo(SkillType.Club));
             message.AddByte(player.GetSkillPercent(SkillType.Club));
-            
+
             message.AddByte(player.GetSkillInfo(SkillType.Sword));
             message.AddByte(player.GetSkillPercent(SkillType.Sword));
-            
+
             message.AddByte(player.GetSkillInfo(SkillType.Axe));
             message.AddByte(player.GetSkillPercent(SkillType.Axe));
-            
+
             message.AddByte(player.GetSkillInfo(SkillType.Distance));
             message.AddByte(player.GetSkillPercent(SkillType.Distance));
-            
+
             message.AddByte(player.GetSkillInfo(SkillType.Shield));
             message.AddByte(player.GetSkillPercent(SkillType.Shield));
-            
+
             message.AddByte(player.GetSkillInfo(SkillType.Fishing));
             message.AddByte(player.GetSkillPercent(SkillType.Fishing));
         }

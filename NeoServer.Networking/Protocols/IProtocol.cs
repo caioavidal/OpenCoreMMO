@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Protocols
 {
@@ -16,19 +17,19 @@ namespace NeoServer.Networking.Protocols
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="ar">The result of connecting.</param>
-        void OnAcceptNewConnection(Connection connection, IAsyncResult ar);
+        void OnAcceptNewConnection(IConnection connection, IAsyncResult ar);
 
         /// <summary>
         /// Processes an incomming message from the connection.
         /// </summary>
         /// <param name="connection">The connection where the message is being read from.</param>
         /// <param name="inboundMessage">The message to process.</param>
-        void ProcessMessage(object sender, ConnectionEventArgs args);
+        void ProcessMessage(object sender, IConnectionEventArgs args);
 
         /// <summary>
         /// Runs after processing a message from the connection.
         /// </summary>
         /// <param name="connection">The connection where the message is from.</param>
-        void PostProcessMessage(object sender, ConnectionEventArgs args);
+        void PostProcessMessage(object sender, IConnectionEventArgs args);
     }
 }
