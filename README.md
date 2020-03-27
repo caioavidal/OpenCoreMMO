@@ -4,6 +4,12 @@
 
 > Tibia 8.6 Server based on TFS rewrited in C# .Net Core
 
+## ✨ Demo
+
+<p align="center">
+  <img width="700" align="center" src="https://github.com/caioavidal/OpenTibiaMMO/blob/develop/opentibiammo.gif?raw=true" alt="demo"/>
+</p>
+
 ## Usage
 
 ```sh
