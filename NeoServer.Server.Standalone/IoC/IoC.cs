@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -105,9 +106,12 @@ namespace NeoServer.Server.Standalone.IoC
                     packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
                 }
 
-                var handlerType = IncomingPacketHandlerData.Data[packet];
+                Type handlerType = null;
 
-
+                if (!IncomingPacketHandlerData.Data.TryGetValue(packet, out handlerType))
+                {
+                    Console.WriteLine($"Incomingo Packet not handled: {packet}");
+                }
                 return (IPacketHandler)c.Resolve(handlerType);
             });
         }
