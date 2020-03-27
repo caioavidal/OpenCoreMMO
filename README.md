@@ -7,6 +7,7 @@
 ## Usage
 
 ```sh
+dotnet run "NeoServer.Server.Standalone"
 docker run --rm -d -p 8080:8080 -p 38888:38888 -v /opt/RavenDb/Data:/opt/RavenDB/Server/RavenData ravendb/ravendb
 ```
 
