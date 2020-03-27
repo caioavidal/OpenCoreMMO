@@ -1,6 +1,7 @@
 using NeoServer.Data.Model;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Location.Structs;
 using System.Collections.Generic;
 namespace NeoServer.Server.Model.Players
 {
@@ -32,7 +33,7 @@ namespace NeoServer.Server.Model.Players
         public Dictionary<Slot, ushort> Inventory { get; set; }
         public ushort Speed { get; set; }
 
-        // public Location Location { get; set; }
+        public Location Location { get; set; }
 
         public bool IsMounted()
         {

@@ -15,6 +15,8 @@ namespace NeoServer.Networking.Packets.Messages
 
         public int BytesRead { get; private set; } = 0;
 
+        public GameIncomingPacketType IncomingPacket { get; private set; }
+
         public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
         {
             if (isAuthenticated)
@@ -25,8 +27,10 @@ namespace NeoServer.Networking.Packets.Messages
                 var length = GetUInt16();
 
                 var packetType = (GameIncomingPacketType) GetByte();
+                IncomingPacket = packetType;
                 return packetType;
             }
+            IncomingPacket = (GameIncomingPacketType)Buffer[6];
 
             return (GameIncomingPacketType)Buffer[6];
         }

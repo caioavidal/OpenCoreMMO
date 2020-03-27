@@ -27,6 +27,8 @@ namespace NeoServer.Networking
         public uint PlayerId { get; set; }
         public bool IsAuthenticated { get; set; } = false;
 
+        public bool Disconnected { get; private set; } = false;
+
         public void OnAccept(IAsyncResult ar)
         {
             if (ar == null)
@@ -73,8 +75,7 @@ namespace NeoServer.Networking
 
             if (length == 0)
             {
-                Close();
-                return;
+                Disconnected = true;
             }
 
             try

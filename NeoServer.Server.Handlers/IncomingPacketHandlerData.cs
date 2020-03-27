@@ -16,10 +16,14 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.PlayerLogIn, typeof(PlayerLogInEventHandler)},
             { GameIncomingPacketType.ChangeModes, typeof(PlayerChangesModeEventHandler)},
             { GameIncomingPacketType.PlayerLogOut, typeof(PlayerLogOutEventHandler)},
-            { GameIncomingPacketType.WalkEast, typeof(PlayerMoveEastEventHandler)},
-            { GameIncomingPacketType.WalkWest, typeof(PlayerMoveWestEventHandler)},
-            { GameIncomingPacketType.WalkNorth, typeof(PlayerMoveNorthEventHandler)},
-            { GameIncomingPacketType.WalkSouth, typeof(PlayerMoveSouthEventHandler)}
+            { GameIncomingPacketType.WalkEast, typeof(PlayerMoveEventHandler)},
+            { GameIncomingPacketType.WalkWest, typeof(PlayerMoveEventHandler)},
+            { GameIncomingPacketType.WalkSouth, typeof(PlayerMoveEventHandler)},
+            { GameIncomingPacketType.WalkNorth, typeof(PlayerMoveEventHandler)},
+            { GameIncomingPacketType.WalkNorteast, typeof(PlayerMoveEventHandler)},
+            { GameIncomingPacketType.WalkNorthwest, typeof(PlayerMoveEventHandler)},
+            { GameIncomingPacketType.WalkSoutheast, typeof(PlayerMoveEventHandler)},
+            { GameIncomingPacketType.WalkSouthwest, typeof(PlayerMoveEventHandler)}
         };
     }
 }

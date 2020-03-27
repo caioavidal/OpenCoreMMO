@@ -5,6 +5,7 @@
 // </copyright>
 
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
@@ -15,7 +16,7 @@ using System.Text;
 
 namespace NeoServer.Server.World.Map
 {
-   
+
     public class Map : IMap
     {
         private static readonly TimeSpan _mapLoadPercentageReportDelay = TimeSpan.FromSeconds(7);
@@ -25,12 +26,8 @@ namespace NeoServer.Server.World.Map
         public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
         //public static Location VeteranStart = new Location { X = 490, Y = 171, Z = 7 };
 
-        public void AddPlayerOnMap(IPlayer player)
-        {
-            IThing playerThing = player;
+        public void AddPlayerOnMap(ICreature player) => this[player.Location].AddCreature(player);
 
-            this[VeteranStart].AddThing(ref playerThing);
-        }
 
 
         private readonly World _world;

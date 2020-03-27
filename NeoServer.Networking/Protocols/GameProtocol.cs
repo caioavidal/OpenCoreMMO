@@ -37,7 +37,7 @@ namespace NeoServer.Networking.Protocols
         {
             var connection = args.Connection;
 
-            if (connection.IsAuthenticated)
+            if (connection.IsAuthenticated && !connection.Disconnected)
             {
                 Xtea.Decrypt(connection.InMessage, 6, connection.XteaKey);
             }

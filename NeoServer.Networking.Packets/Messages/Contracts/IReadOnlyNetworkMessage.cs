@@ -9,6 +9,8 @@ namespace NeoServer.Networking.Packets.Messages
 
         int Length { get; }
         int BytesRead { get; }
+        GameIncomingPacketType IncomingPacket { get; }
+
         ushort GetUInt16();
         uint GetUInt32();
         void SkipBytes(int count);

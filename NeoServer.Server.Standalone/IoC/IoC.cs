@@ -47,10 +47,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<PlayerLogInEventHandler>().SingleInstance();
             builder.RegisterType<PlayerChangesModeEventHandler>().SingleInstance();
             builder.RegisterType<PlayerLogOutEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerMoveEastEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerMoveWestEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerMoveNorthEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerMoveSouthEventHandler>().SingleInstance();
+            builder.RegisterType<PlayerMoveEventHandler>().SingleInstance();
 
 
             builder.RegisterType<AccountLoginPacket>();
@@ -101,9 +98,15 @@ namespace NeoServer.Server.Standalone.IoC
             {
                 var conn = p.TypedAs<Connection>();
 
-                var packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
+                var packet = GameIncomingPacketType.PlayerLogOut;
+
+                if (!conn.Disconnected)
+                {
+                    packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
+                }
 
                 var handlerType = IncomingPacketHandlerData.Data[packet];
+
 
                 return (IPacketHandler)c.Resolve(handlerType);
             });

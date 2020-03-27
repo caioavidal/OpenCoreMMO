@@ -420,7 +420,7 @@ namespace NeoServer.Server.Map
             _cachedDescription = null;
 
 
-            Console.WriteLine($"Added creature {creature.Name} at {Location}");
+            //Console.WriteLine($"Added creature {creature.Name} at {Location}");
         }
         public void RemoveCreature(ICreature c)
         {
