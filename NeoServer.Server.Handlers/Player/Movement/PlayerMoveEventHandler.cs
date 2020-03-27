@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Commands;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -11,6 +12,7 @@ using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Schedulers;
 using NeoServer.Server.Schedulers.Map;
 
 namespace NeoServer.Server.Handlers.Players
@@ -22,15 +24,17 @@ namespace NeoServer.Server.Handlers.Players
 
         private readonly Game _game;
         private readonly IMap _map;
-        private readonly MapScheduler _mapScheduler;
+        private readonly Scheduler scheduler;
 
-        public PlayerMoveEventHandler(IAccountRepository repository, ServerState serverState, Game game, IMap map, MapScheduler mapScheduler)
+
+
+        public PlayerMoveEventHandler(IAccountRepository repository, ServerState serverState, Game game, IMap map, Scheduler scheduler)
         {
             _repository = repository;
             _serverState = serverState;
             _game = game;
             _map = map;
-            _mapScheduler = mapScheduler;
+            this.scheduler = scheduler;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -39,12 +43,7 @@ namespace NeoServer.Server.Handlers.Players
 
             var player = _game.CreatureInstances[connection.PlayerId] as Player;
 
-            _mapScheduler.Enqueue(() =>
-            {
-                PlayerMovementHandler.Handler(player, _map, direction, connection);
-            });
-
-
+            scheduler.Enqueue(new MapToMapMovementCommand(player, player.Tile.Location, direction, _map, connection));
         }
 
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)

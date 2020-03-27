@@ -23,6 +23,8 @@ using NeoServer.Server.Schedulers.Map;
 using NeoServer.Server.Standalone.Factories;
 using NeoServer.Server.World;
 using NeoServer.Server.World.Map;
+using Serilog;
+using Serilog.Core;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -34,6 +36,10 @@ namespace NeoServer.Server.Standalone.IoC
 
             //server
             builder.RegisterType<ServerState>().SingleInstance();
+
+            builder.RegisterInstance<Logger>(new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger()).SingleInstance();
 
             builder.RegisterType<Database>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IAccountRepository>();
@@ -78,7 +84,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             //scheduler
             builder.RegisterType<PingScheduler>().SingleInstance();
-            builder.RegisterType<MapScheduler>().SingleInstance();
+            builder.RegisterType<Scheduler>().SingleInstance();
 
             return builder.Build();
 

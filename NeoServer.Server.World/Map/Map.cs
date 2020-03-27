@@ -7,6 +7,7 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
@@ -166,6 +167,46 @@ namespace NeoServer.Server.World.Map
             }
 
             return tempBytes;
+        }
+
+        public ITile GetNextTile(Location fromLocation, Direction direction)
+        {
+            var toLocation = fromLocation;
+            
+            switch (direction)
+            {
+                case Direction.East:
+                    toLocation.X += 1;
+                    break;
+                case Direction.West:
+                    toLocation.X -= 1;
+                    break;
+                case Direction.North:
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.South:
+                    toLocation.Y += 1;
+                    break;
+                case Direction.NorthEast:
+                    toLocation.X += 1;
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.NorthWest:
+                    toLocation.X -= 1;
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.SouthEast:
+                    toLocation.X += 1;
+                    toLocation.Y += 1;
+                    break;
+                case Direction.SouthWest:
+                    toLocation.X -= 1;
+                    toLocation.Y += 1;
+                    break;
+
+            }
+            
+            return this[toLocation];
         }
 
         private IList<byte> GetTileDescription(IThing thing, ITile tile)

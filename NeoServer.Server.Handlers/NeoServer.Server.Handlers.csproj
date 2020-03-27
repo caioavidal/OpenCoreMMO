@@ -9,6 +9,7 @@
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Commands\NeoServer.Game.Commands.csproj" />
   </ItemGroup>
 
 </Project>

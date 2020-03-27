@@ -5,38 +5,40 @@ using NeoServer.Game.Contracts;
 
 namespace NeoServer.Server.Schedulers
 {
-    
+
     public class Scheduler
     {
         public const int MaxQueueNodes = 3000;
-        private ConcurrentQueue<Action> actions;
+        private ConcurrentQueue<IEvent> events;
         public object _queueLock = new object();
         public Scheduler()
         {
-            actions = new ConcurrentQueue<Action>();
+            events = new ConcurrentQueue<IEvent>();
         }
-        public void Enqueue(Action action)
-        {
 
-            actions.Enqueue(action);
+      
+        public void Enqueue(IEvent evt)
+        {
+            events.Enqueue(evt);
             lock (_queueLock)
             {
                 Monitor.Pulse(_queueLock);
             }
         }
+    
 
         private void Consume()
         {
-            Action action = null;
-            if (actions.Count == 0 || !actions.TryDequeue(out action))
+            IEvent evt = null;
+            if (events.Count == 0 || !events.TryDequeue(out evt))
             {
                 lock (_queueLock)
                 {
-                    Monitor.Wait(_queueLock, TimeSpan.FromSeconds(5));
+                    Monitor.Wait(_queueLock);
                 }
             }
 
-            action?.Invoke();
+            evt?.Execute();
         }
 
         public void Start(CancellationToken token)

@@ -17,6 +17,7 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.World;
 using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -28,17 +29,17 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
-            var log = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger();
 
-            log.Information("Starting Server...");
+
+
 
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             var container = Container.CompositionRoot();
             container.Resolve<Database>().Connect();
+
+            var logger = container.Resolve<Logger>();
 
 
             RSA.LoadPem();
@@ -52,14 +53,14 @@ namespace NeoServer.Server.Standalone
 
             var listeningTask = StartListening(container, cancellationToken);
 
-            var mapScheduler = container.Resolve<MapScheduler>();
+            var mapScheduler = container.Resolve<Scheduler>();
 
             Task.Factory.StartNew(() => mapScheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
 
 
             container.Resolve<ServerState>().OpenServer();
 
-            Console.WriteLine("NeoServer is up!");
+            logger.Information("Server is up!");
 
 
             listeningTask.Wait(cancellationToken);
