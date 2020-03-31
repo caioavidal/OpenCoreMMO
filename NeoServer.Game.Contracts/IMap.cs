@@ -10,10 +10,12 @@ namespace NeoServer.Game.Contracts
     {
         ITile this[Location location] { get; }
         ITile this[ushort x, ushort y, sbyte z] { get; }
-
-        void AddPlayerOnMap(ICreature player);
         IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
         ITile GetNextTile(Location fromLocation, Direction direction);
-        IEnumerable<ITile> GetTilesNear(Location location);
+        IEnumerable<uint> GetCreaturesAtPositionZone(Location location);
+        IEnumerable<ITile> GetOffsetTiles(Location location);
+        void AddPlayerOnMap(IPlayer player);
+        void MoveThing(ref IThing thing, Location toLocation, byte count);
+        void RemoveThing(ref IThing thing, ITile tile, byte count);
     }
 }

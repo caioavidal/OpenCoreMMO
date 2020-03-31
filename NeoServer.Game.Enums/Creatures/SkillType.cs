@@ -1,4 +1,4 @@
-namespace NeoServer.Game.Creatures.Enums
+namespace NeoServer.Game.Enums.Creatures
 {
     public enum SkillType: byte
     {

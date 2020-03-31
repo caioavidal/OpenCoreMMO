@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace NeoServer.Server.Loaders
+namespace NeoServer.Game.Items
 {
     public class ItemLoader
     {

@@ -6,41 +6,35 @@ using System.Linq;
 
 namespace NeoServer.Server.World
 {
+    public class World
+    {
 
+        public byte PercentageComplete => 100;
+        public bool HasLoaded(int x, int y, byte z) => worldTiles.Any();
+        public int LoadedTilesCount() => worldTiles.Count();
 
-    /// <summary>
-    /// This class is meant to be a in-memory substitute for <see cref="SectorMapLoader"/>.
-    /// The current implementation of <see cref="World"/> is slow and memory hungry, but it's meant
-    /// to be just test the world loading functionality.
-    /// We will refactor and improve it later.
-    /// </summary>
-    public class World {
+        private readonly ConcurrentDictionary<Coordinate, ITile> worldTiles = new ConcurrentDictionary<Coordinate, ITile>();
 
-		public byte PercentageComplete => 100;
-		public bool HasLoaded(int x, int y, byte z) => _worldTiles.Any();
-		public int LoadedTilesCount() => _worldTiles.Count();
+        public void AddTile(ITile tile)
+        {
+            if (tile == null)
+                throw new ArgumentNullException(nameof(tile));
 
-		private readonly ConcurrentDictionary<Coordinate, ITile> _worldTiles = new ConcurrentDictionary<Coordinate, ITile>();
-		
-		public void AddTile(ITile tile) {
-			if (tile == null)
-				throw new ArgumentNullException(nameof(tile));
+            var tilesCoordinates = new Coordinate(
+                x: tile.Location.X,
+                y: tile.Location.Y,
+                z: tile.Location.Z);
 
-			var tilesCoordinates = new Coordinate(
-				x: tile.Location.X,
-				y: tile.Location.Y,
-				z: tile.Location.Z);
+            worldTiles[tilesCoordinates] = tile;
+        }
 
-			_worldTiles[tilesCoordinates] = tile;
-		}
+        public ITile GetTile(Location location)
+        {
+            if (worldTiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITile tile))
+                return tile;
 
-		public ITile GetTile(Location location)
-		{
-			if(_worldTiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITile tile))
-				return tile;
+            return null;
+        }
 
-			return null;
-		} 
-
-	}
+    }
 }

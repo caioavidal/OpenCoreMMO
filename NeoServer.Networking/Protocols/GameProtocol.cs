@@ -21,11 +21,12 @@ namespace NeoServer.Networking.Protocols
         public override string ToString() => "Game Protocol";
         public override bool KeepConnectionOpen => true;
 
-        public override void OnAcceptNewConnection(IConnection connection, IAsyncResult ar)
+        public override void OnAcceptNewConnection(IConnection connection)
         {
             Console.WriteLine("Game OnAcceptNewConnection");
-            base.OnAcceptNewConnection(connection, ar);
             HandlerFirstConnection(connection);
+            //base.OnAcceptNewConnection(connection);
+            
         }
 
         public void HandlerFirstConnection(IConnection connection)

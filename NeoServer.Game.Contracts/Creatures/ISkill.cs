@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;

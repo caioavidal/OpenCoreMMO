@@ -1,7 +1,8 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Enums.Players;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
@@ -21,8 +22,11 @@ namespace NeoServer.Server.Model.Players.Contracts
         ushort StaminaMinutes { get; }
 
         Location LocationInFront { get; }
+        FightMode FightMode { get; }
+        ChaseMode ChaseMode { get; }
+        byte SecureMode { get; }
 
-      //  IAction PendingAction { get; }
+        //  IAction PendingAction { get; }
 
         void ChangeOutfit(IOutfit outfit);
 
@@ -31,7 +35,9 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool KnowsCreatureWithId(uint creatureId);
 
         byte GetSkillInfo(SkillType fist);
-
+        void SetFightMode(FightMode fightMode);
+        void SetChaseMode(ChaseMode chaseMode);
+        void SetSecureMode(byte secureMode);
         byte GetSkillPercent(SkillType type);
 
         void AddKnownCreature(uint creatureId);
@@ -41,7 +47,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ClearPendingActions();
 
         void CheckInventoryContainerProximity(IThing thingChanging, IThingStateChangedEventArgs eventArgs);
-        void Logout();
         sbyte OpenContainer(IContainer thingAsContainer);
 
         sbyte GetContainerId(IContainer thingAsContainer);

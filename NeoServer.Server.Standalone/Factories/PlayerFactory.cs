@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;

@@ -10,11 +10,11 @@ using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
-    public class AccountLoginEventHandler : PacketHandler
+    public class AccountLoginHandler : PacketHandler
     {
         private readonly IAccountRepository _repository;
 
-        public AccountLoginEventHandler(IAccountRepository repository)
+        public AccountLoginHandler(IAccountRepository repository)
         {
             _repository = repository;
         }

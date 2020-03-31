@@ -9,10 +9,13 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Events;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NeoServer.Server.World.Map
@@ -27,50 +30,67 @@ namespace NeoServer.Server.World.Map
         public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
         //public static Location VeteranStart = new Location { X = 490, Y = 171, Z = 7 };
 
-        public void AddPlayerOnMap(ICreature player) => this[player.Location].AddCreature(player);
-
-
-
-        private readonly World _world;
-        private readonly CreatureDescription _creatureDescription;
-
-        public Map(World world, CreatureDescription creatureDescription)
+        public void AddPlayerOnMap(IPlayer player)
         {
-            _world = world;
-            _creatureDescription = creatureDescription;
+            var thing = player as IThing;
+
+            this[player.Location].AddThing(ref thing);
+            dispatcher.Dispatch(new PlayerAddedOnMapEvent(player));
         }
 
-        public ITile this[Location location] => _world.GetTile(location);
+        private readonly World world;
+        private readonly CreatureDescription creatureDescription;
+        private readonly IDispatcher dispatcher;
+
+        public Map(World world, CreatureDescription creatureDescription, IDispatcher dispatcher)
+        {
+            this.world = world;
+            this.creatureDescription = creatureDescription;
+            this.dispatcher = dispatcher;
+        }
+
+        public ITile this[Location location] => world.GetTile(location);
 
         public ITile this[ushort x, ushort y, sbyte z] => this[new Location { X = x, Y = y, Z = z }];
 
-        internal IEnumerable<uint> GetCreatureIdsAt(Location location)
+        public void MoveThing(ref IThing thing, Location toLocation, byte count)
         {
-            var fromX = location.X - 8;
-            var fromY = location.Y - 6;
+            this[thing.Location].RemoveThing(ref thing, count);
+            this[toLocation].AddThing(ref thing, count);
+        }
+        public void RemoveThing(ref IThing thing, ITile tile, byte count)
+        {
+            var stackPosition = thing.GetStackPosition();
+            tile.RemoveThing(ref thing, count);
 
-            var toX = location.X + 8;
-            var toY = location.Y + 6;
+            dispatcher.Dispatch(new ThingRemovedFromTileEvent(tile, stackPosition));
+        }
 
-            var creatureList = new List<uint>();
 
-            for (var x = fromX; x <= toX; x++)
+        public IEnumerable<uint> GetCreaturesAtPositionZone(Location location)
+        {
+            var minX = (ushort)(location.X + MapViewPort.MinViewPortX);
+            var minY = (ushort)(location.Y + MapViewPort.MinViewPortY);
+            var maxX = (ushort)(location.X + MapViewPort.MaxViewPortX);
+            var maxY = (ushort)(location.Y + MapViewPort.MaxViewPortY);
+
+            for (ushort x = minX; x <= maxX; x++)
             {
-                for (var y = fromY; y <= toY; y++)
+                for (ushort y = minY; y <= maxY; y++)
                 {
-                    var creaturesInTile = this[(ushort)x, (ushort)y, location.Z]?.CreatureIds;
-
-                    if (creaturesInTile != null)
+                    ITile tile = this[x, y, location.Z];
+                    if (tile != null)
                     {
-                        creatureList.AddRange(creaturesInTile);
+                        foreach (var creature in tile.CreatureIds)
+                        {
+                            yield return creature;
+                        }
                     }
                 }
             }
-
-            return creatureList;
         }
 
-        public IEnumerable<ITile> GetTilesNear(Location location)
+        public IEnumerable<ITile> GetOffsetTiles(Location location)
         {
             var fromX = location.X - 8;
             var fromY = location.Y - 6;
@@ -172,7 +192,7 @@ namespace NeoServer.Server.World.Map
         public ITile GetNextTile(Location fromLocation, Direction direction)
         {
             var toLocation = fromLocation;
-            
+
             switch (direction)
             {
                 case Direction.East:
@@ -205,7 +225,7 @@ namespace NeoServer.Server.World.Map
                     break;
 
             }
-            
+
             return this[toLocation];
         }
 
@@ -258,7 +278,7 @@ namespace NeoServer.Server.World.Map
                 objectsOnTile++;
             }
 
-            tempBytes.AddRange(_creatureDescription.GetCreaturesOnTile(thing, tile, ref objectsOnTile));
+            tempBytes.AddRange(creatureDescription.GetCreaturesOnTile(thing, tile, ref objectsOnTile));
 
             foreach (var item in tile.DownItems)
             {

@@ -5,7 +5,7 @@
 // </copyright>
 
 using System;
-using NeoServer.Server.Model.Players;
+using NeoServer.Game.Enums.Players;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {

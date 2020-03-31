@@ -9,9 +9,9 @@ namespace NeoServer.Networking.Protocols
     {
         public virtual bool KeepConnectionOpen { get; protected set; }
 
-        public virtual void OnAcceptNewConnection(IConnection connection, IAsyncResult ar)
+        public virtual void OnAcceptNewConnection(IConnection connection)
         {
-            connection.OnAccept(ar);
+            connection.BeginStreamRead();
         }
 
         public void PostProcessMessage(object sender, IConnectionEventArgs args)
@@ -19,13 +19,14 @@ namespace NeoServer.Networking.Protocols
             if (!KeepConnectionOpen)
             {
                 args.Connection.Close();
+                return;
             }
-            else
-            {
 
-                args.Connection.BeginStreamRead();
-            }
+            args.Connection.InMessage.Reset();
+
+            args.Connection.BeginStreamRead();
         }
+
 
         public abstract void ProcessMessage(object sender, IConnectionEventArgs connection);
     }

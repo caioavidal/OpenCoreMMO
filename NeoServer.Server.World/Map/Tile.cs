@@ -11,13 +11,15 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Events;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.World.Map;
 
 namespace NeoServer.Server.Map
 {
     public class Tile : ITile
     {
-
+        private readonly IDispatcher dispatcher;
         private readonly Func<ushort, IItem> _itemFactory;
 
         private readonly Stack<uint> _creatureIdsOnTile;
@@ -251,13 +253,16 @@ namespace NeoServer.Server.Map
         // public static HashSet<string> PropSet = new HashSet<string>();
 
         // public string LoadedFrom { get; set; }
-        public Tile(ushort x, ushort y, sbyte z, Func<ushort, IItem> itemFactory)
-            : this(new Location { X = x, Y = y, Z = z }, itemFactory)
+
+
+        public Tile(ushort x, ushort y, sbyte z, Func<ushort, IItem> itemFactory, IDispatcher dispatcher)
+            : this(new Location { X = x, Y = y, Z = z }, itemFactory, dispatcher)
         {
             _itemFactory = itemFactory;
+            this.dispatcher = dispatcher;
         }
 
-        public Tile(Location loc, Func<ushort, IItem> itemFactory)
+        public Tile(Location loc, Func<ushort, IItem> itemFactory, IDispatcher dispatcher)
         {
             Location = loc;
             _creatureIdsOnTile = new Stack<uint>();
@@ -265,6 +270,7 @@ namespace NeoServer.Server.Map
             _topItems2OnTile = new Stack<IItem>();
             _downItemsOnTile = new Stack<IItem>();
             _itemFactory = itemFactory;
+            this.dispatcher = dispatcher;
         }
 
         public void AddThing(ref IThing thing, byte count)
@@ -282,9 +288,7 @@ namespace NeoServer.Server.Map
                 _creatureIdsOnTile.Push(creature.CreatureId);
                 creature.Tile = this;
                 creature.Added();
-
-                // invalidate the cache.
-                _cachedDescription = null;
+                
             }
             else if (item != null)
             {
@@ -343,67 +347,89 @@ namespace NeoServer.Server.Map
 
                 item.Tile = this;
 
+
                 // invalidate the cache.
-                _cachedDescription = null;
             }
+
+            _cachedDescription = null;
+
+            //var stackPos = GetStackPositionOfThing(thing);
+            //thing.OnThingRemoved += (thing) => dispatcher.Dispatch(new ThingRemovedFromTileEvent(this, stackPos));
+
         }
 
         public void RemoveThing(ref IThing thing, byte count)
         {
 
-            if (count == 0) {
-            	throw new ArgumentException("Invalid count zero.");
+            if (count == 0)
+            {
+                throw new ArgumentException("Invalid count zero.");
             }
 
             var item = thing as IItem;
 
-            if (thing is ICreature creature) {
-            	RemoveCreature(creature);
-            	creature.Tile = null;
-            	creature.Removed();
-            } else if (item != null) {
-            	var removeItem = true;
+            if (thing is ICreature creature)
+            {
+                RemoveCreature(creature);
+                creature.Tile = null;
+                creature.Removed();
+            }
+            else if (item != null)
+            {
+                var removeItem = true;
 
-            	if (item.IsGround) {
-            		Ground = null;
-            		item.Removed();
-            		removeItem = false;
-            	} else if (item.IsTop1) {
-            		_topItems1OnTile.Pop();
-            		item.Removed();
-            		removeItem = false;
-            	} else if (item.IsTop2) {
-            		_topItems2OnTile.Pop();
-            		item.Removed();
-            		removeItem = false;
-            	} else {
-            		if (item.IsCumulative) {
-            			if (item.Amount < count) // throwing because this should have been checked before.
-            			{
-            				throw new ArgumentException("Remove count is greater than available.");
-            			}
+                if (item.IsGround)
+                {
+                    Ground = null;
+                    item.Removed();
+                    removeItem = false;
+                }
+                else if (item.IsTop1)
+                {
+                    _topItems1OnTile.Pop();
+                    item.Removed();
+                    removeItem = false;
+                }
+                else if (item.IsTop2)
+                {
+                    _topItems2OnTile.Pop();
+                    item.Removed();
+                    removeItem = false;
+                }
+                else
+                {
+                    if (item.IsCumulative)
+                    {
+                        if (item.Amount < count) // throwing because this should have been checked before.
+                        {
+                            throw new ArgumentException("Remove count is greater than available.");
+                        }
 
-            			if (item.Amount > count) {
+                        if (item.Amount > count)
+                        {
                             throw new NotImplementedException(); //todo
-            				// create a new item (it got split...)
-                            
-            				// var newItem = ItemFactory.Create(item.Type.TypeId);
-            				// newItem.SetAmount(count);
-            				// item.Amount -= count;
+                                                                 // create a new item (it got split...)
 
-            				// thing = newItem;
-            				// removeItem = false;
-            			}
-            		}
-            	}
+                            // var newItem = ItemFactory.Create(item.Type.TypeId);
+                            // newItem.SetAmount(count);
+                            // item.Amount -= count;
 
-            	if (removeItem) {
-            		_downItemsOnTile.Pop();
-            		item.Removed();
-            		item.Tile = null;
-            	}
-            } else {
-            	throw new InvalidCastException("Thing did not cast to either a CreatureId or Item.");
+                            // thing = newItem;
+                            // removeItem = false;
+                        }
+                    }
+                }
+
+                if (removeItem)
+                {
+                    _downItemsOnTile.Pop();
+                    item.Removed();
+                    item.Tile = null;
+                }
+            }
+            else
+            {
+                throw new InvalidCastException("Thing did not cast to either a CreatureId or Item.");
             }
 
             // invalidate the cache.

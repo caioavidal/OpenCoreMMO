@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Handlers\NeoServer.Server.Handlers.csproj" />
-    <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />
   </ItemGroup>
 
 </Project>

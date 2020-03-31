@@ -24,5 +24,8 @@
             "request": "attach",
             "processId": "${command:pickProcess}"
         }
-    ]
+    ],
+    "logging": {
+        "moduleLoad": false
+    }
 }

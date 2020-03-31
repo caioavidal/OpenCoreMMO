@@ -20,5 +20,7 @@ namespace NeoServer.Server.Contracts.Network
         string GetString();
         byte[] GetMessageInBytes();
         GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated);
+        void Resize(int length);
+        void Reset();
     }
 }

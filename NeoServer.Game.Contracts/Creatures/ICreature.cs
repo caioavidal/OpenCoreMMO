@@ -8,6 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 
@@ -68,8 +69,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         IInventory Inventory { get; }
 
-        byte GetStackPosition();
-
         bool CanSee(ICreature creature);
 
         bool CanSee(Location location);
@@ -83,6 +82,6 @@ namespace NeoServer.Game.Contracts.Creatures
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
-        void Move(Direction direction, IMap map);
+        
     }
 }

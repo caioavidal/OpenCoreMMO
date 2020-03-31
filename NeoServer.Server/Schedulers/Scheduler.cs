@@ -1,35 +1,42 @@
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
-using NeoServer.Game.Contracts;
+using Autofac;
+using NeoServer.Server.Schedulers.Contracts;
 
 namespace NeoServer.Server.Schedulers
 {
 
-    public class Scheduler
+
+    public class Scheduler : IScheduler
     {
         public const int MaxQueueNodes = 3000;
-        private ConcurrentQueue<IEvent> events;
+        private ConcurrentQueue<Action> events;
         public object _queueLock = new object();
-        public Scheduler()
+        private readonly IComponentContext context;
+
+        public Scheduler(IComponentContext context)
         {
-            events = new ConcurrentQueue<IEvent>();
+            events = new ConcurrentQueue<Action>();
+            this.context = context;
         }
 
-      
-        public void Enqueue(IEvent evt)
+        public void Enqueue<TEvent>(TEvent evt) where TEvent : IEvent
         {
-            events.Enqueue(evt);
+            var handler = context.Resolve<IEventHandler<TEvent>>();
+
+            events.Enqueue(() => handler?.Execute(evt));
+
             lock (_queueLock)
             {
                 Monitor.Pulse(_queueLock);
             }
         }
-    
+
 
         private void Consume()
         {
-            IEvent evt = null;
+            Action evt = null;
             if (events.Count == 0 || !events.TryDequeue(out evt))
             {
                 lock (_queueLock)
@@ -38,7 +45,8 @@ namespace NeoServer.Server.Schedulers
                 }
             }
 
-            evt?.Execute();
+            evt?.Invoke();
+            //Console.WriteLine($"Event invoked");
         }
 
         public void Start(CancellationToken token)

@@ -13,18 +13,18 @@ namespace NeoServer.Networking.Packets.Incoming
     {
         public static readonly IReadOnlyDictionary<GameIncomingPacketType, Type> Data =
         new Dictionary<GameIncomingPacketType, Type>(){
-            { GameIncomingPacketType.PlayerLoginRequest, typeof(AccountLoginEventHandler)},
-            { GameIncomingPacketType.PlayerLogIn, typeof(PlayerLogInEventHandler)},
-            { GameIncomingPacketType.ChangeModes, typeof(PlayerChangesModeEventHandler)},
-            { GameIncomingPacketType.PlayerLogOut, typeof(PlayerLogOutEventHandler)},
-            { GameIncomingPacketType.WalkEast, typeof(PlayerMoveEventHandler)},
-            { GameIncomingPacketType.WalkWest, typeof(PlayerMoveEventHandler)},
-            { GameIncomingPacketType.WalkSouth, typeof(PlayerMoveEventHandler)},
-            { GameIncomingPacketType.WalkNorth, typeof(PlayerMoveEventHandler)},
-            { GameIncomingPacketType.WalkNorteast, typeof(PlayerMoveEventHandler)},
-            { GameIncomingPacketType.WalkNorthwest, typeof(PlayerMoveEventHandler)},
-            { GameIncomingPacketType.WalkSoutheast, typeof(PlayerMoveEventHandler)},
-            { GameIncomingPacketType.WalkSouthwest, typeof(PlayerMoveEventHandler)}
+            { GameIncomingPacketType.PlayerLoginRequest, typeof(AccountLoginHandler)},
+            { GameIncomingPacketType.PlayerLogIn, typeof(PlayerLogInHandler)},
+            { GameIncomingPacketType.ChangeModes, typeof(PlayerChangesModeHandler)},
+            { GameIncomingPacketType.PlayerLogOut, typeof(PlayerLogOutHandler)},
+            { GameIncomingPacketType.WalkEast, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.WalkWest, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.WalkSouth, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.WalkNorth, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.WalkNorteast, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.WalkNorthwest, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.WalkSoutheast, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.WalkSouthwest, typeof(PlayerMoveHandler)}
         };
     }
 }

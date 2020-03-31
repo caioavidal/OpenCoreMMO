@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
@@ -77,7 +78,7 @@ namespace NeoServer.Game.Creatures.Model
         }
 
 
-
+        
         public event OnAttackTargetChange OnTargetChanged;
 
         public override ushort ThingId => CreatureThingId;
@@ -274,53 +275,6 @@ namespace NeoServer.Game.Creatures.Model
             }
 
             return false;
-        }
-
-        public byte GetStackPosition()
-        {
-            return Tile.GetStackPositionOfThing(this);
-        }
-
-        public void Move(Direction direction, IMap map)
-        {
-            var toLocation = Location;
-            switch (direction)
-            {
-                case Direction.East:
-                    toLocation.X += 1;
-                    break;
-                case Direction.West:
-                    toLocation.X -= 1;
-                    break;
-                case Direction.North:
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.South:
-                    toLocation.Y += 1;
-                    break;
-                case Direction.NorthEast:
-                    toLocation.X += 1;
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.NorthWest:
-                    toLocation.X -= 1;
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.SouthEast:
-                    toLocation.X += 1;
-                    toLocation.Y += 1;
-                    break;
-                case Direction.SouthWest:
-                    toLocation.X -= 1;
-                    toLocation.Y += 1;
-                    break;
-
-            }
-
-            Location = toLocation;
-
-            Tile.RemoveCreature(this);
-            map[toLocation].AddCreature(this);
         }
 
         public void TurnToDirection(Direction direction)

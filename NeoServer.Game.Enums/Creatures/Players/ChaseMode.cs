@@ -1,4 +1,4 @@
-namespace NeoServer.Server.Model.Players
+namespace NeoServer.Game.Enums.Players
 {
     public enum ChaseMode : byte
     {

@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NeoServer.Server.Loaders\NeoServer.Server.Helpers.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Server.OTB\NeoServer.Server.OTB.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />

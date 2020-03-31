@@ -22,12 +22,12 @@ namespace NeoServer.Networking.Packets.Messages
         {
             if (isAuthenticated)
             {
-           
+
 
                 SkipBytes(6);
                 var length = GetUInt16();
 
-                var packetType = (GameIncomingPacketType) GetByte();
+                var packetType = (GameIncomingPacketType)GetByte();
                 IncomingPacket = packetType;
                 return packetType;
             }
@@ -36,7 +36,7 @@ namespace NeoServer.Networking.Packets.Messages
             return (GameIncomingPacketType)Buffer[6];
         }
 
-    
+
         public ReadOnlyNetworkMessage(byte[] buffer, int length)
         {
             Buffer = buffer;
@@ -63,7 +63,7 @@ namespace NeoServer.Networking.Packets.Messages
             return result;
         }
 
-     
+
 
         public ushort GetUInt16() => Convert(BitConverter.ToUInt16);
 
@@ -100,6 +100,19 @@ namespace NeoServer.Networking.Packets.Messages
             {
                 return Encoding.UTF8.GetString(Buffer, BytesRead, length);
             }, length);
+        }
+
+        public void Resize(int length)
+        {
+            Length = length;
+            BytesRead = 0;
+        }
+
+        public void Reset()
+        {
+            Buffer = new byte[16394];
+            BytesRead = 0;
+            Length = 0;
         }
 
 

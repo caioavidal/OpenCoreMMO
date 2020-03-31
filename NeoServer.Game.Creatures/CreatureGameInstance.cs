@@ -26,13 +26,15 @@ namespace NeoServer.Game.Creature
                 Console.WriteLine($"WARNING: Failed to add {creature.Name} to the global dictionary.");
             }
         }
-        public void Remove(uint id)
+        public bool TryRemove(uint id)
         {
             if (!GameInstances.TryRemove(id, out ICreature creature))
             {
                 // TODO: proper logging
                 Console.WriteLine($"WARNING: Failed to add {creature.Name} to the global dictionary.");
+                return false;
             }
+            return true;
         }
     }
 }

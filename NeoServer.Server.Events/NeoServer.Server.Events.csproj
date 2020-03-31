@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
+    <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+        <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Schedulers.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+</Project>

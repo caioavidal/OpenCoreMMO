@@ -1,6 +1,6 @@
-namespace NeoServer.Server.Model.Players
+namespace NeoServer.Game.Enums.Players
 {
-    public enum FightMode: ushort
+    public enum FightMode: byte
     {
         Attack = 1,
         Balanced = 2,

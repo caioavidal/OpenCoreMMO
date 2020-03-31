@@ -5,6 +5,7 @@ using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Sockets;
 
 namespace NeoServer.Networking
@@ -17,8 +18,9 @@ namespace NeoServer.Networking
 
         private Socket Socket;
         private Stream Stream;
+        private object writeLock;
 
-        private byte[] Buffer = new byte[16394];
+
 
         public IReadOnlyNetworkMessage InMessage { get; private set; }
 
@@ -28,29 +30,21 @@ namespace NeoServer.Networking
 
         public bool Disconnected { get; private set; } = false;
 
-        public void OnAccept(IAsyncResult ar)
+        public Connection(Socket socket)
         {
-            if (ar == null)
-            {
-                throw new ArgumentNullException(nameof(ar));
-            }
-
-            Socket = ((TcpListener)ar.AsyncState).EndAcceptSocket(ar);
+            Socket = socket;
             Stream = new NetworkStream(Socket);
-
-            BeginStreamRead();
-
-        }
-
-        public Connection()
-        {
-            Socket = null;
-            Stream = null;
             XteaKey = new uint[4];
             IsAuthenticated = false;
-            ResetBuffer();
+            InMessage = new ReadOnlyNetworkMessage(new byte[16394], 0);
+            writeLock = new object();
+
         }
-        public void BeginStreamRead() => Stream.BeginRead(Buffer, 0, 16394, OnRead, null);
+        public void BeginStreamRead()
+        {
+            Stream.BeginRead(InMessage.Buffer, 0, 2, OnRead, null);
+
+        }
 
         public void SetXtea(uint[] xtea)
         {
@@ -59,32 +53,36 @@ namespace NeoServer.Networking
 
         public void ResetBuffer()
         {
-            Buffer = new byte[16394];
+
         }
 
         private void OnRead(IAsyncResult ar)
         {
-
-            if (!Stream.CanRead)
+            var clientDisconnected = !this.CompleteRead(ar);
+            if (clientDisconnected && !IsAuthenticated)
             {
-                return;
+                Close();
             }
-
-            int length = Stream.EndRead(ar);
-
-            if (length == 0)
+            if (clientDisconnected && IsAuthenticated)
             {
                 Disconnected = true;
             }
 
+            // if (length == 0)
+            // {
+            //     Disconnected = true;
+            // }
+
             try
             {
-
-                InMessage = new ReadOnlyNetworkMessage(Buffer, length);
                 //Buffer = new byte[16394];
-                var eventArgs = new ConnectionEventArgs(this);
-                OnProcessEvent(this, eventArgs);
 
+                var eventArgs = new ConnectionEventArgs(this);
+                OnProcessEvent?.Invoke(this, eventArgs);
+                if (Disconnected)
+                {
+                    Close();
+                }
             }
             catch (Exception e)
             {
@@ -96,6 +94,50 @@ namespace NeoServer.Networking
                 // TODO: is closing the connection really necesary?
                 // Close();
             }
+        }
+
+        private bool CompleteRead(IAsyncResult ar)
+        {
+            try
+            {
+                int read = Stream.EndRead(ar);
+
+
+                if (read == 0)
+                {
+                    // client disconnected
+                    //this.Close();
+
+                    return false;
+                }
+
+                int size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
+
+                while (read < size)
+                {
+                    if (Stream.CanRead)
+                    {
+                        read += Stream.Read(InMessage.Buffer, read, size - read);
+                    }
+                }
+
+                InMessage.Resize(size);
+
+                Console.WriteLine($"{size} bytes read on connection {PlayerId}");
+
+
+
+                return true;
+            }
+            catch (Exception e)
+            {
+
+
+                // TODO: is closing the connection really necesary?
+                this.Close();
+            }
+
+            return false;
         }
 
 
@@ -110,15 +152,20 @@ namespace NeoServer.Networking
 
         }
 
-        private void SendMessage(INetworkMessage message)
+        private void SendMessage(INetworkMessage message, bool notification = false)
         {
             try
             {
-                var streamMessage = message.AddHeader();
-                Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
+                lock (writeLock)
+                {
+                    var streamMessage = message.AddHeader();
+                    Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
+                }
+
 
                 var eventArgs = new ConnectionEventArgs(this);
                 OnPostProcessEvent?.Invoke(this, eventArgs);
+
 
             }
             catch (ObjectDisposedException)
@@ -136,7 +183,7 @@ namespace NeoServer.Networking
             SendMessage(message);
         }
 
-        public void Send(IOutgoingPacket packet, bool encrypt = true)
+        public void Send(IOutgoingPacket packet, bool notification = false)
         {
             var message = new NetworkMessage();
 
@@ -144,27 +191,26 @@ namespace NeoServer.Networking
 
             message.AddLength();
 
-            var encryptedMessage = encrypt ? Packets.Security.Xtea.Encrypt(message, XteaKey) : message;
+            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
 
-            SendMessage(encryptedMessage);
+            SendMessage(encryptedMessage, notification);
 
         }
 
-        public void Send(Queue<IOutgoingPacket> outgoingPackets)
+        public void Send(Queue<IOutgoingPacket> outgoingPackets, bool notification = false)
         {
             var message = new NetworkMessage();
 
-            foreach (var outPacket in outgoingPackets)
+            while (outgoingPackets.Any())
             {
-                outPacket.WriteToMessage(message);
-
+                outgoingPackets.Dequeue().WriteToMessage(message);
             }
 
             message.AddLength();
 
             var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
 
-            SendMessage(encryptedMessage);
+            SendMessage(encryptedMessage, notification);
         }
         public void Disconnect(string text)
         {

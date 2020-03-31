@@ -9,6 +9,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         NoType = 0x00,
         Ping = 0x1E,
         SelfAppear = 0x0A,
+        PlayerModes = 0xA7,
         Disconnect = 0x14,
         AddUnknownCreature = 0x61,
         AddKnownCreature = 0x62,

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Server.Model.Players
+namespace NeoServer.Game.Enums.Players
 {
     public enum Gender:byte
     {

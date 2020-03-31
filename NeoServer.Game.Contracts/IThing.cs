@@ -10,10 +10,11 @@ using NeoServer.Game.Enums.Location.Structs;
 namespace NeoServer.Game.Contracts
 {
     public delegate void OnThingStateChanged(IThing thingThatChanged, IThingStateChangedEventArgs eventArgs);
-
+    public delegate void OnThingRemoved(IThing thing);
     public interface IThing
     {
         event OnThingStateChanged OnThingChanged;
+        event OnThingRemoved OnThingRemoved;
 
         ushort ThingId { get; }
 
@@ -21,7 +22,7 @@ namespace NeoServer.Game.Contracts
 
         Location Location { get; }
 
-        ITile Tile { get; set;}
+        ITile Tile { get; set; }
 
         string InspectionText { get; }
 
@@ -32,5 +33,6 @@ namespace NeoServer.Game.Contracts
         void Added();
 
         void Removed();
+        byte GetStackPosition();
     }
 }

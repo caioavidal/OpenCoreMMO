@@ -3,8 +3,10 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -193,7 +195,7 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        const int KnownCreatureLimit = 100; // TODO: not sure of the number for this version... debugs will tell :|
+        const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
         public uint ChooseToRemoveFromKnownSet()
         {
             // if the buffer is full we need to choose a vitim.
@@ -383,13 +385,7 @@ namespace NeoServer.Server.Model.Players
             SecureMode = mode;
         }
 
-        public void Logout()
-        {
-            if (CanLogout)
-            {
-                Tile.RemoveCreature(this);
-            }
-        }
+     
     }
 
 

@@ -18,6 +18,8 @@
     <ProjectReference Include="..\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
     <ProjectReference Include="..\NeoServer.Server.World\NeoServer.Server.World.csproj" />
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Schedulers.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
   </ItemGroup>

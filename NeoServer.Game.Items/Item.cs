@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Model;
 using NeoServer.Server.Model.Players;
 using System;

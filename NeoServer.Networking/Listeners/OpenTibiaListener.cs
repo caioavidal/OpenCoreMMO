@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NeoServer.Networking.Listeners
 {
@@ -18,26 +19,26 @@ namespace NeoServer.Networking.Listeners
 
         public void BeginListening()
         {
-            Start();
-            BeginAcceptSocket(OnAccept, this);
+            Task.Run(async () =>
+            {
+                Start();
+                Console.WriteLine($"{_protocol} is online");
 
-            Console.WriteLine($"{_protocol} is online");
+                while (true)
+                {
+                    var connection = await CreateConnection();
+
+                    _protocol.OnAcceptNewConnection(connection);
+                }
+                
+            });
         }
 
-        public void OnAccept(IAsyncResult ar)
+        private async Task<IConnection> CreateConnection()
         {
-            var connection = CreateConnection();
+            var socket = await AcceptSocketAsync().ConfigureAwait(false);
 
-            //  _connections.Add(connection);
-
-            _protocol.OnAcceptNewConnection(connection, ar);
-
-            BeginAcceptSocket(OnAccept, this);
-        }
-
-        private Connection CreateConnection()
-        {
-            var connection = new Connection();
+            var connection = new Connection(socket);
 
             connection.OnCloseEvent += OnConnectionClose;
             connection.OnProcessEvent += _protocol.ProcessMessage;
@@ -52,7 +53,7 @@ namespace NeoServer.Networking.Listeners
             args.Connection.OnProcessEvent -= _protocol.ProcessMessage;
             args.Connection.OnPostProcessEvent -= _protocol.PostProcessMessage;
 
-          //  _connections.Remove(connection);
+            //  _connections.Remove(connection);
         }
 
 

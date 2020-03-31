@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creature;
 using NeoServer.Networking;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
@@ -48,11 +47,27 @@ namespace NeoServer.Server
 
             return player;
         }
-        public void LogOutPlayer(IConnection connection)
-        {
-            CreatureInstances.Remove(connection.PlayerId);
 
-            Connections.Remove(connection.PlayerId, out connection);
+        /// <summary>
+        /// Removes player from game instances, connection pool and close player connection;
+        /// </summary>
+
+        public bool LogOutPlayerFromGame(IPlayer player)
+        {
+            if (!CreatureInstances.TryRemove(player.CreatureId))
+            {
+                return false;
+            }
+
+            IConnection connection = null;
+            if (!Connections.TryRemove(player.CreatureId, out connection))
+            {
+                return false;
+            }
+
+            connection.Close();
+            
+            return true;
         }
 
         public DateTime CombatSynchronizationTime { get; private set; }

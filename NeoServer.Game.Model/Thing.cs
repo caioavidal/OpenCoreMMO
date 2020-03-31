@@ -6,6 +6,7 @@ namespace NeoServer.Game.Model
     public abstract class Thing : IThing
     {
         public event OnThingStateChanged OnThingChanged;
+        public event OnThingRemoved OnThingRemoved;
 
         protected ITile tile;
         protected Location location;
@@ -57,14 +58,23 @@ namespace NeoServer.Game.Model
             }
         }
 
+        public byte GetStackPosition()
+        {
+            return Tile.GetStackPositionOfThing(this);
+        }
+
         public void Added()
+        {
+            // OnThingAdded?.Invoke();
+        }
+        public void Moved()
         {
             // OnThingAdded?.Invoke();
         }
 
         public void Removed()
         {
-            // OnThingRemoved?.Invoke();
+             OnThingRemoved?.Invoke(this);
         }
     }
 }

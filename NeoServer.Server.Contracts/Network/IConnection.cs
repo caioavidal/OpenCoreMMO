@@ -20,10 +20,9 @@ namespace NeoServer.Server.Contracts.Network
         void BeginStreamRead();
         void Close();
         void Disconnect(string text);
-        void OnAccept(IAsyncResult ar);
         void ResetBuffer();
-        void Send(IOutgoingPacket packet, bool encrypt = true);
-        void Send(Queue<IOutgoingPacket> outgoingPackets);
+        void Send(IOutgoingPacket packet, bool notification = false);
+        void Send(Queue<IOutgoingPacket> outgoingPackets, bool notification = false);
         void SendFirstConnection();
         void SetXtea(uint[] xtea);
     }

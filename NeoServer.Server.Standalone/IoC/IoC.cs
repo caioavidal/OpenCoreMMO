@@ -1,25 +1,27 @@
 ﻿using System;
+using System.Reflection;
 using Autofac;
 using NeoServer.Data.RavenDB;
+using NeoServer.Game.Commands;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature;
-using NeoServer.Networking;
 using NeoServer.Networking.Listeners;
-using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Protocols;
+using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
+using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Handlers.Players;
 using NeoServer.Server.Model.Items;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Schedulers;
-using NeoServer.Server.Schedulers.Map;
+using NeoServer.Server.Schedulers.Contracts;
 using NeoServer.Server.Standalone.Factories;
 using NeoServer.Server.World;
 using NeoServer.Server.World.Map;
@@ -52,15 +54,23 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<Game>().SingleInstance();
 
-            builder.RegisterType<AccountLoginEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerLogInEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerChangesModeEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerLogOutEventHandler>().SingleInstance();
-            builder.RegisterType<PlayerMoveEventHandler>().SingleInstance();
+            builder.RegisterType<AccountLoginHandler>().SingleInstance();
+            builder.RegisterType<PlayerLogInHandler>().SingleInstance();
+            builder.RegisterType<PlayerChangesModeHandler>().SingleInstance();
+            builder.RegisterType<PlayerLogOutHandler>().SingleInstance();
+            builder.RegisterType<PlayerMoveHandler>().SingleInstance();
+
 
 
             builder.RegisterType<AccountLoginPacket>();
             //builder.RegisterType<PlayerLoginPacket>();
+
+            builder.RegisterType<Scheduler>().As<IScheduler>().SingleInstance();
+            //commands
+            builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
+
+            RegisterEvents(builder);
+            //RegisterCommands(builder);
 
             RegisterIncomingPacketFactory(builder);
 
@@ -83,12 +93,29 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
             //scheduler
-            builder.RegisterType<PingScheduler>().SingleInstance();
-            builder.RegisterType<Scheduler>().SingleInstance();
+            //builder.RegisterType<PingScheduler>().SingleInstance();
+
+
+
 
             return builder.Build();
 
 
+        }
+
+        private static void RegisterCommands(ContainerBuilder builder)
+        {
+            var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommandHandler));
+
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
+        }
+        private static void RegisterEvents(ContainerBuilder builder)
+        {
+            var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
+            var assemblyCommands = Assembly.GetAssembly(typeof(PlayerLogInCommandHandler));
+
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IEventHandler<>));
+            builder.RegisterAssemblyTypes(assemblyCommands).AsClosedTypesOf(typeof(IEventHandler<>));
         }
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
@@ -118,7 +145,7 @@ namespace NeoServer.Server.Standalone.IoC
 
                 if (!IncomingPacketHandlerData.Data.TryGetValue(packet, out handlerType))
                 {
-                    Console.WriteLine($"Incomingo Packet not handled: {packet}");
+                    Console.WriteLine($"Incoming Packet not handled: {packet}");
                 }
                 return (IPacketHandler)c.Resolve(handlerType);
             });

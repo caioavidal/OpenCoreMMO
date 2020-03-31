@@ -1,5 +1,6 @@
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Map;
 using NeoServer.Server.Model.Items;
 using NeoServer.Server.World.OTB;
@@ -15,13 +16,15 @@ namespace NeoServer.Server.World
     public class OTBMWorldLoader
     {
 
-        private readonly Func<ushort, IItem> _itemFactory;
-        private readonly World _world;
+        private readonly Func<ushort, IItem> itemFactory;
+        private readonly World world;
+        private readonly IDispatcher dispatcher;
 
-        public OTBMWorldLoader(Func<ushort, IItem> itemFactory, World world)
+        public OTBMWorldLoader(Func<ushort, IItem> itemFactory, World world, IDispatcher dispatcher)
         {
-            _itemFactory = itemFactory;
-            _world = world;
+            this.itemFactory = itemFactory;
+            this.world = world;
+            this.dispatcher = dispatcher;
         }
         /// <summary>
         /// This class only support items encoded using this major version.
@@ -45,11 +48,11 @@ namespace NeoServer.Server.World
             ParseOTBTreeRootNode(rootNode);
 
             var worldDataNode = rootNode.Children[0];
-            ParseWorldDataNode(worldDataNode, _world);
+            ParseWorldDataNode(worldDataNode, world);
 
             //Console.WriteLine($"Tiles Loaded: {world.c}");
 
-            return _world;
+            return world;
         }
 
         /// <summary>
@@ -199,7 +202,7 @@ namespace NeoServer.Server.World
             }
 
             // We create the tile early and mutate it along the method
-            var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z, _itemFactory);
+            var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z, itemFactory, dispatcher);
 
             // Parsing the tile attributes
             var tileFlags = TileFlags.None;
@@ -333,7 +336,7 @@ namespace NeoServer.Server.World
         {
             var newItemId = GetItemIdAndConvertPvpFieldsToPermanentFields(stream);
 
-            var item = _itemFactory(newItemId);
+            var item = itemFactory(newItemId);
             if (item == null)
             {
                 //_logger.Warn($"{nameof(ItemFactory)} was unable to create a item with id: {newItemId}."); TODO

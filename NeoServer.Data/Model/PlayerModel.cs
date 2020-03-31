@@ -1,7 +1,8 @@
 using NeoServer.Data.Model;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Enums.Players;
 using System.Collections.Generic;
 namespace NeoServer.Server.Model.Players
 {

@@ -1,49 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.Game.Commands;
+﻿using NeoServer.Game.Commands;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Networking;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Schedulers;
-using NeoServer.Server.Schedulers.Map;
 
 namespace NeoServer.Server.Handlers.Players
 {
-    public class PlayerMoveEventHandler : PacketHandler
+    public class PlayerMoveHandler : PacketHandler
     {
-        private readonly IAccountRepository _repository;
-        private readonly ServerState _serverState;
-
-        private readonly Game _game;
-        private readonly IMap _map;
-        private readonly Scheduler scheduler;
+        private readonly Game game;
+        private readonly IMap map;
+        private readonly IDispatcher dispatcher;
 
 
 
-        public PlayerMoveEventHandler(IAccountRepository repository, ServerState serverState, Game game, IMap map, Scheduler scheduler)
+        public PlayerMoveHandler(Game game, IDispatcher dispatcher, IMap map)
         {
-            _repository = repository;
-            _serverState = serverState;
-            _game = game;
-            _map = map;
-            this.scheduler = scheduler;
+            this.game = game;
+            this.dispatcher = dispatcher;
+            this.map = map;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             Direction direction = ParseMovementPacket(message.IncomingPacket);
 
-            var player = _game.CreatureInstances[connection.PlayerId] as Player;
+            var player = game.CreatureInstances[connection.PlayerId] as IThing;
 
-            scheduler.Enqueue(new MapToMapMovementCommand(player, player.Tile.Location, direction, _map, connection));
+            var nextTile = map.GetNextTile(player.Location, direction); //todo temporary. the best place is not here
+
+            dispatcher.Dispatch(new MapToMapMovementCommand(player, player.Location, nextTile.Location));
         }
 
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)

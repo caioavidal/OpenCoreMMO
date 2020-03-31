@@ -2,21 +2,19 @@
 using NeoServer.Data.Model;
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Items;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Loaders;
-using NeoServer.Server.Model;
 
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Schedulers;
-using NeoServer.Server.Schedulers.Map;
+using NeoServer.Server.Schedulers.Contracts;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.World;
-using Serilog;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
@@ -53,9 +51,9 @@ namespace NeoServer.Server.Standalone
 
             var listeningTask = StartListening(container, cancellationToken);
 
-            var mapScheduler = container.Resolve<Scheduler>();
+            var scheduler = container.Resolve<IScheduler>();
 
-            Task.Factory.StartNew(() => mapScheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
+            Task.Factory.StartNew(() => scheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
 
 
             container.Resolve<ServerState>().OpenServer();

@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Data\NeoServer.Data.csproj" />
-    <ProjectReference Include="..\NeoServer.Server.Model\NeoServer.Server.Model.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Schedulers.Contracts.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

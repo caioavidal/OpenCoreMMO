@@ -25,10 +25,10 @@ namespace NeoServer.Networking.Packets.Outgoing
             {
                 message.AddString(player.CharacterName);
                 message.AddString("NeoServer"); //todo change to const
-                message.AddByte(127);
+                message.AddByte(192);
+                message.AddByte(168);
                 message.AddByte(0);
-                message.AddByte(0);
-                message.AddByte(1);
+                message.AddByte(25);
                 message.AddUInt16(7172);
             }
             message.AddUInt16((ushort)_acountModel.PremiumTime);
