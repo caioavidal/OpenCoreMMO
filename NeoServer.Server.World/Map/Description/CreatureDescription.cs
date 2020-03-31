@@ -39,7 +39,9 @@ namespace NeoServer.Server.World.Map
 
                 var player = thing as IPlayer;
 
-                if (player.KnowsCreatureWithId(creatureId))
+                var known = player.KnowsCreatureWithId(creatureId);
+
+                if (known)
                 {
                     stream.AddRange(BitConverter.GetBytes((ushort)0x62));
                     stream.AddRange(BitConverter.GetBytes(creatureId));
@@ -92,7 +94,10 @@ namespace NeoServer.Server.World.Map
                 stream.Add(creature.Skull);
                 stream.Add(creature.Shield);
 
-                stream.Add(0x00); //guild emblem
+                if (!known)
+                {
+                    stream.Add(0x00); //guild emblem
+                }
 
                 stream.Add(0x00);
 

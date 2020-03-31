@@ -37,6 +37,7 @@ namespace NeoServer.Server.Events
                 }
                 else
                 {
+                    continue;
                     var spectator = game.CreatureInstances[spectatorId] as IPlayer;
                     SendPacketsToSpectator(spectator, player, outgoingPackets);
                     Console.WriteLine($"spectator: {spectator.Name}");

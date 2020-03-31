@@ -34,7 +34,7 @@ namespace NeoServer.Server.World.Map
         {
             var thing = player as IThing;
 
-            this[player.Location].AddThing(ref thing);
+            this[player.Location].AddThing(ref thing);            
             dispatcher.Dispatch(new PlayerAddedOnMapEvent(player));
         }
 
@@ -159,7 +159,12 @@ namespace NeoServer.Server.World.Map
             {
                 for (var ny = 0; ny < height; ny++)
                 {
+                    
                     var tile = this[(ushort)(fromX + nx + verticalOffset), (ushort)(fromY + ny + verticalOffset), currentZ];
+
+                    if(tile?.Location == new Location(){X = 1016, Y=994, Z=8}){
+                        Console.WriteLine($"{tile?.Location} - {tile?.CreatureIds.Count()}");
+                    }
 
                     if (tile != null)
                     {
@@ -236,6 +241,8 @@ namespace NeoServer.Server.World.Map
                 return new byte[0];
             }
 
+
+
             var tempBytes = new List<byte>();
 
             var objectsOnTile = 0;
@@ -244,6 +251,8 @@ namespace NeoServer.Server.World.Map
             {
                 return tile.CachedDescription;
             }
+
+            Console.WriteLine($"Tile: {tile.Location} - {tile.CreatureIds}");
 
             if (tile.Ground != null)
             {

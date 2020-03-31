@@ -36,10 +36,12 @@ namespace NeoServer.Game.Commands
                 //todo logger here
                 return;
             }
-            
+
             map.RemoveThing(ref thing, thing.Tile, 1);
 
             game.LogOutPlayerFromGame(player);
+
+            Console.WriteLine($"Online connections: {game.Connections.Count}");
         }
     }
 }

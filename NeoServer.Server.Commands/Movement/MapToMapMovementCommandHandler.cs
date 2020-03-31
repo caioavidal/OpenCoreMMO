@@ -72,8 +72,8 @@ namespace NeoServer.Game.Commands
                 }
                 else
                 {
-                    outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
-                    spectatorConnnection.Send(outgoingPackets.Dequeue());
+                  //  outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
+                   // spectatorConnnection.Send(outgoingPackets.Dequeue());
                 }
             }
         }

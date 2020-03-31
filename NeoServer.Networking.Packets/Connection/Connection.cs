@@ -103,8 +103,11 @@ namespace NeoServer.Networking
                 int read = Stream.EndRead(ar);
 
 
+
+
                 if (read == 0)
                 {
+                    Console.WriteLine($"{read} bytes read from {PlayerId}");
                     // client disconnected
                     //this.Close();
 
