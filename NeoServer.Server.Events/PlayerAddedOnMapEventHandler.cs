@@ -30,14 +30,14 @@ namespace NeoServer.Server.Events
 
             foreach (var spectatorId in map.GetCreaturesAtPositionZone(player.Location))
             {
-                if (player.CreatureId == spectatorId)
+                var isSpectator = !(player.CreatureId == spectatorId);
+                if (!isSpectator)
                 {
                     SendPacketsToPlayer(player, outgoingPackets);
                     Console.WriteLine($"player: {player.Name}");
                 }
                 else
                 {
-                    continue;
                     var spectator = game.CreatureInstances[spectatorId] as IPlayer;
                     SendPacketsToSpectator(spectator, player, outgoingPackets);
                     Console.WriteLine($"spectator: {spectator.Name}");
@@ -45,7 +45,7 @@ namespace NeoServer.Server.Events
 
                 if (game.Connections.TryGetValue(spectatorId, out IConnection connection))
                 {
-                    connection.Send(outgoingPackets);
+                    connection.Send(outgoingPackets, isSpectator);
                     Console.WriteLine($"Packet sent to {spectatorId}");
                 }
             }

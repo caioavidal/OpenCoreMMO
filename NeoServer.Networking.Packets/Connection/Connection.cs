@@ -30,6 +30,8 @@ namespace NeoServer.Networking
 
         public bool Disconnected { get; private set; } = false;
 
+        public int BeginStreamReadCalls { get; set; }
+
         public Connection(Socket socket)
         {
             Socket = socket;
@@ -43,7 +45,6 @@ namespace NeoServer.Networking
         public void BeginStreamRead()
         {
             Stream.BeginRead(InMessage.Buffer, 0, 2, OnRead, null);
-
         }
 
         public void SetXtea(uint[] xtea)
@@ -51,22 +52,24 @@ namespace NeoServer.Networking
             XteaKey = xtea;
         }
 
-        public void ResetBuffer()
-        {
-
-        }
 
         private void OnRead(IAsyncResult ar)
         {
+
+
+
             var clientDisconnected = !this.CompleteRead(ar);
             if (clientDisconnected && !IsAuthenticated)
             {
                 Close();
+                return;
             }
             if (clientDisconnected && IsAuthenticated)
             {
                 Disconnected = true;
             }
+
+
 
             // if (length == 0)
             // {
@@ -79,10 +82,7 @@ namespace NeoServer.Networking
 
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent?.Invoke(this, eventArgs);
-                if (Disconnected)
-                {
-                    Close();
-                }
+
             }
             catch (Exception e)
             {
@@ -165,9 +165,11 @@ namespace NeoServer.Networking
                     Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
                 }
 
-
-                var eventArgs = new ConnectionEventArgs(this);
-                OnPostProcessEvent?.Invoke(this, eventArgs);
+                if (!notification)
+                {
+                    var eventArgs = new ConnectionEventArgs(this);
+                    OnPostProcessEvent?.Invoke(this, eventArgs);
+                }
 
 
             }

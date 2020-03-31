@@ -23,13 +23,13 @@ namespace NeoServer.Server.Events
             var outgoingPackets = new Queue<IOutgoingPacket>();
             foreach (var spectatorId in map.GetCreaturesAtPositionZone(evt.Tile.Location))
             {
-                // if (game.Connections.TryGetValue(spectatorId, out IConnection connection))
-                // {
-                //     outgoingPackets.Enqueue(new RemoveTileThingPacket(evt.Tile, evt.StackPosition));
-                //     outgoingPackets.Enqueue(new MagicEffectPacket(evt.Tile.Location, EffectT.Puff));
+                if (game.Connections.TryGetValue(spectatorId, out IConnection connection))
+                {
+                    outgoingPackets.Enqueue(new RemoveTileThingPacket(evt.Tile, evt.StackPosition));
+                    outgoingPackets.Enqueue(new MagicEffectPacket(evt.Tile.Location, EffectT.Puff));
 
-                //     connection.Send(outgoingPackets);
-                // }
+                    connection.Send(outgoingPackets, true);
+                }
             }
         }
     }

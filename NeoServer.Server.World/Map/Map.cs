@@ -162,10 +162,6 @@ namespace NeoServer.Server.World.Map
                     
                     var tile = this[(ushort)(fromX + nx + verticalOffset), (ushort)(fromY + ny + verticalOffset), currentZ];
 
-                    if(tile?.Location == new Location(){X = 1016, Y=994, Z=8}){
-                        Console.WriteLine($"{tile?.Location} - {tile?.CreatureIds.Count()}");
-                    }
-
                     if (tile != null)
                     {
                         if (skip >= 0)

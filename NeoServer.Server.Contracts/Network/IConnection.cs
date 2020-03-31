@@ -20,7 +20,6 @@ namespace NeoServer.Server.Contracts.Network
         void BeginStreamRead();
         void Close();
         void Disconnect(string text);
-        void ResetBuffer();
         void Send(IOutgoingPacket packet, bool notification = false);
         void Send(Queue<IOutgoingPacket> outgoingPackets, bool notification = false);
         void SendFirstConnection();
