@@ -20,6 +20,8 @@ namespace NeoServer.Game.Creatures.Model
 
         private readonly object _enqueueWalkLock;
 
+        public event OnTurnedToDirection OnTurnedToDirection;
+
         protected Creature(
             uint id,
             string name,
@@ -78,7 +80,7 @@ namespace NeoServer.Game.Creatures.Model
         }
 
 
-        
+
         public event OnAttackTargetChange OnTargetChanged;
 
         public override ushort ThingId => CreatureThingId;
@@ -277,9 +279,10 @@ namespace NeoServer.Game.Creatures.Model
             return false;
         }
 
-        public void TurnToDirection(Direction direction)
+        public void TurnTo(Direction direction)
         {
             Direction = direction;
+            OnTurnedToDirection?.Invoke(direction);
         }
 
         public void SetAttackTarget(uint targetId)

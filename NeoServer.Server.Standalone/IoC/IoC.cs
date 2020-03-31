@@ -54,16 +54,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<Game>().SingleInstance();
 
-            builder.RegisterType<AccountLoginHandler>().SingleInstance();
-            builder.RegisterType<PlayerLogInHandler>().SingleInstance();
-            builder.RegisterType<PlayerChangesModeHandler>().SingleInstance();
-            builder.RegisterType<PlayerLogOutHandler>().SingleInstance();
-            builder.RegisterType<PlayerMoveHandler>().SingleInstance();
-
-
-
-            builder.RegisterType<AccountLoginPacket>();
-            //builder.RegisterType<PlayerLoginPacket>();
+            RegisterPacketHandlers(builder);
 
             builder.RegisterType<Scheduler>().As<IScheduler>().SingleInstance();
             //commands
@@ -85,22 +76,19 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<World.Map.Map>().As<IMap>().SingleInstance();
             builder.RegisterType<CreatureDescription>();
 
-
             //factories
             builder.RegisterType<PlayerFactory>().SingleInstance();
 
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
-            //scheduler
-            //builder.RegisterType<PingScheduler>().SingleInstance();
-
-
-
-
             return builder.Build();
+        }
 
-
+        private static void RegisterPacketHandlers(ContainerBuilder builder)
+        {
+            var assemblies = Assembly.GetAssembly(typeof(PacketHandler));
+            builder.RegisterAssemblyTypes(assemblies);
         }
 
         private static void RegisterCommands(ContainerBuilder builder)

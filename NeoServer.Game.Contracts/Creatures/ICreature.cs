@@ -15,6 +15,8 @@ using NeoServer.Game.Enums.Location.Structs;
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void OnCreatureStateChange();
+    public delegate void OnTurnedToDirection(Direction direction);
+
 
     public interface ICreature : IThing, INeedsCooldowns
     {
@@ -69,11 +71,13 @@ namespace NeoServer.Game.Contracts.Creatures
 
         IInventory Inventory { get; }
 
+        event OnTurnedToDirection OnTurnedToDirection;
+
         bool CanSee(ICreature creature);
 
         bool CanSee(Location location);
 
-        void TurnToDirection(Direction direction);
+        void TurnTo(Direction direction);
 
         void StopWalking();
 
@@ -82,6 +86,6 @@ namespace NeoServer.Game.Contracts.Creatures
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
-        
+
     }
 }

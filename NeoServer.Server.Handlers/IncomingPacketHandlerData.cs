@@ -24,7 +24,11 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.WalkNorteast, typeof(PlayerMoveHandler)},
             { GameIncomingPacketType.WalkNorthwest, typeof(PlayerMoveHandler)},
             { GameIncomingPacketType.WalkSoutheast, typeof(PlayerMoveHandler)},
-            { GameIncomingPacketType.WalkSouthwest, typeof(PlayerMoveHandler)}
+            { GameIncomingPacketType.WalkSouthwest, typeof(PlayerMoveHandler)},
+            { GameIncomingPacketType.TurnEast, typeof(PlayerTurnHandler)},
+            { GameIncomingPacketType.TurnWest, typeof(PlayerTurnHandler)},
+            { GameIncomingPacketType.TurnNorth, typeof(PlayerTurnHandler)},
+            { GameIncomingPacketType.TurnSouth, typeof(PlayerTurnHandler)},
         };
     }
 }
