@@ -28,7 +28,6 @@ namespace NeoServer.Server.World.Map
         // Start positions
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
         public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
-        //public static Location VeteranStart = new Location { X = 490, Y = 171, Z = 7 };
 
         public void AddPlayerOnMap(IPlayer player)
         {

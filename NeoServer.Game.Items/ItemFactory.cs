@@ -17,7 +17,14 @@ namespace NeoServer.Server.Model.Items
                 // throw new ArgumentException("Invalid type.", nameof(typeId));
             }
 
-            if (ItemData.Items[typeId].Flags.Contains(ItemFlag.Container) || ItemData.Items[typeId].Flags.Contains(ItemFlag.Chest))
+            var item = ItemData.Items[typeId];
+
+            if (item.Group == ItemGroup.ITEM_GROUP_DEPRECATED)
+            {
+                return null;
+            }
+
+            if (item.Flags.Contains(ItemFlag.Container) || item.Flags.Contains(ItemFlag.Chest))
             {
                 return new Container(ItemData.Items[typeId]);
             }

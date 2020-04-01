@@ -202,7 +202,7 @@ namespace NeoServer.Server.World
             }
 
             // We create the tile early and mutate it along the method
-            var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z, itemFactory, dispatcher);
+            var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z, itemFactory);
 
             // Parsing the tile attributes
             var tileFlags = TileFlags.None;
@@ -252,17 +252,15 @@ namespace NeoServer.Server.World
 
         private TileFlags UpdateTileFlags(TileFlags oldFlags, OTBMTileFlags newFlags)
         {
-            if ((newFlags & OTBMTileFlags.NoLogout) != 0)
-                oldFlags |= TileFlags.NoLogout;
-
-            // I think we should throw if a tile contains contradictory flags, instead of just
-            // ignoring them like tfs does...
             if ((newFlags & OTBMTileFlags.ProtectionZone) != 0)
                 oldFlags |= TileFlags.ProtectionZone;
             else if ((newFlags & OTBMTileFlags.NoPvpZone) != 0)
                 oldFlags |= TileFlags.NoPvpZone;
             else if ((newFlags & OTBMTileFlags.PvpZone) != 0)
                 oldFlags |= TileFlags.PvpZone;
+
+            if ((newFlags & OTBMTileFlags.NoLogout) != 0)
+                oldFlags |= TileFlags.NoLogout;
 
             return oldFlags;
         }

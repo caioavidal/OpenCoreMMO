@@ -255,14 +255,13 @@ namespace NeoServer.Server.Map
         // public string LoadedFrom { get; set; }
 
 
-        public Tile(ushort x, ushort y, sbyte z, Func<ushort, IItem> itemFactory, IDispatcher dispatcher)
-            : this(new Location { X = x, Y = y, Z = z }, itemFactory, dispatcher)
+        public Tile(ushort x, ushort y, sbyte z, Func<ushort, IItem> itemFactory)
+            : this(new Location { X = x, Y = y, Z = z }, itemFactory)
         {
             _itemFactory = itemFactory;
-            this.dispatcher = dispatcher;
         }
 
-        public Tile(Location loc, Func<ushort, IItem> itemFactory, IDispatcher dispatcher)
+        public Tile(Location loc, Func<ushort, IItem> itemFactory)
         {
             Location = loc;
             _creatureIdsOnTile = new Stack<uint>();
@@ -270,7 +269,6 @@ namespace NeoServer.Server.Map
             _topItems2OnTile = new Stack<IItem>();
             _downItemsOnTile = new Stack<IItem>();
             _itemFactory = itemFactory;
-            this.dispatcher = dispatcher;
         }
 
         public void AddThing(ref IThing thing, byte count)
