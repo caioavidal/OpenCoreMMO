@@ -18,7 +18,6 @@ namespace NeoServer.Networking.Packets.Messages
         /// </summary>
         public byte[] GetMessageInBytes()
         {
-            Buffer.ThrowIfNull();
             Length.ThrowIfLessThanZero();
             return Length == 0 ? Buffer : Buffer[0..Length];
         }
@@ -29,7 +28,6 @@ namespace NeoServer.Networking.Packets.Messages
 
         public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
         {
-            Buffer.ThrowIfNull();
             
             if (isAuthenticated)
             {
@@ -119,7 +117,7 @@ namespace NeoServer.Networking.Packets.Messages
         public void Resize(int length)
         {
             length.ThrowIfLessThanZero();
-            
+
             Length = length;
             BytesRead = 0;
         }

@@ -177,14 +177,6 @@ namespace NeoServer.Networking.Tests.Packets
         }
 
         [Fact]
-        public void ThrowNullExpecetion_When_Buffer_Is_Null_GetMessageInBytes()
-        {
-            var length = 3;
-            var sup = new ReadOnlyNetworkMessage(null, length);
-
-            Assert.Throws<NullReferenceException>(sup.GetMessageInBytes);
-        }
-        [Fact]
         public void ThrowArgumentExpecetion_When_Length_Less_Than_0_GetMessageInBytes()
         {
             var length = -1;
@@ -251,15 +243,6 @@ namespace NeoServer.Networking.Tests.Packets
 
             Assert.Throws<ArgumentOutOfRangeException>(() => sup.GetIncomingPacketType(false));
         }
-
-        [Fact]
-        public void ThrowException_When_Buffer_Is_Null_GetIncomingPacketType()
-        {
-            var sup = new ReadOnlyNetworkMessage(null, 3);
-
-            Assert.Throws<NullReferenceException>(() => sup.GetIncomingPacketType(false));
-        }
-
 
         [Fact]
         public void ThrowException_When_Buffer_Is_Null_Constructor()
