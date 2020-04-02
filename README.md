@@ -1,8 +1,12 @@
 <h1 align="center">Welcome to OpenTibiaMMO 👋</h1>
-<p>
+<p align="center">
+  <a href="https://travis-ci.com/caioavidal/OpenTibiaMMO" target="_blank">
+  <img align="center" src="https://travis-ci.com/caioavidal/OpenTibiaMMO.svg?branch=develop" target="_blank"  />
+  </a>
 </p>
 
-> Tibia 8.6 Server based on TFS rewrited in C# .Net Core
+> It's a `Open Source MMO Server` writed in C# .Net Core based on `ForgottenServer`
+> <br>You can use the `OTClient 8.6`
 
 ## ✨ Demo
 
