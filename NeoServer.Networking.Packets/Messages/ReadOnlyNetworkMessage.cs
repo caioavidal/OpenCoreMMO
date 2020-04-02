@@ -12,17 +12,28 @@ namespace NeoServer.Networking.Packets.Messages
     {
         public byte[] Buffer { get; protected set; }
         public int Length { get; protected set; } = 0;
-        public byte[] GetMessageInBytes() => Length == 0 ? Buffer.ToArray() : Buffer[0..Length].ToArray();
+
+        /// <summary>
+        /// Get the message's buffer
+        /// </summary>
+        public byte[] GetMessageInBytes()
+        {
+            Buffer.ThrowIfNull();
+            Length.ThrowIfLessThanZero();
+            return Length == 0 ? Buffer : Buffer[0..Length];
+        }
 
         public int BytesRead { get; private set; } = 0;
 
-        public GameIncomingPacketType IncomingPacket { get; private set; }
+        public GameIncomingPacketType IncomingPacket { get; private set; } = GameIncomingPacketType.None;
 
         public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
         {
+            Buffer.ThrowIfNull();
+            
             if (isAuthenticated)
             {
-
+                Buffer.Length.ThrowIfLessThan(9);
 
                 SkipBytes(6);
                 var length = GetUInt16();
@@ -31,14 +42,17 @@ namespace NeoServer.Networking.Packets.Messages
                 IncomingPacket = packetType;
                 return packetType;
             }
-            IncomingPacket = (GameIncomingPacketType)Buffer[6];
 
+            Buffer.Length.ThrowIfLessThan(6);
+            IncomingPacket = (GameIncomingPacketType)Buffer[6];
             return (GameIncomingPacketType)Buffer[6];
         }
 
 
         public ReadOnlyNetworkMessage(byte[] buffer, int length)
         {
+            buffer.ThrowIfNull();
+
             Buffer = buffer;
             Length = length;
             BytesRead = 0;
@@ -46,7 +60,7 @@ namespace NeoServer.Networking.Packets.Messages
 
         private void IncreaseByteRead(int length) => BytesRead += length;
 
-        public static int SizeOf<T>() where T : struct => Marshal.SizeOf(default(T));
+        private static int SizeOf<T>() where T : struct => Marshal.SizeOf(default(T));
 
 
         private T Convert<T>(Func<byte[], int, T> converter) where T : struct
@@ -104,6 +118,8 @@ namespace NeoServer.Networking.Packets.Messages
 
         public void Resize(int length)
         {
+            length.ThrowIfLessThanZero();
+            
             Length = length;
             BytesRead = 0;
         }

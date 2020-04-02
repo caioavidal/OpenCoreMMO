@@ -1,6 +1,8 @@
 ﻿using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -98,7 +100,7 @@ namespace NeoServer.Networking.Tests.Packets
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes,dataBytes.Length);
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => sup.SkipBytes(20));
         }
@@ -121,7 +123,7 @@ namespace NeoServer.Networking.Tests.Packets
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes,dataBytes.Length);
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = new byte[] { 141, 54, 25 };
             Assert.Equal(expected, sup.GetBytes(3));
@@ -138,6 +140,148 @@ namespace NeoServer.Networking.Tests.Packets
             Assert.Equal(expected, sup.GetString());
         }
 
+        [Fact]
+        public void ReturnBytes_When_GetMessageInBytes()
+        {
+            var data = "\a\0hello world";
+            var dataBytes = Encoding.ASCII.GetBytes(data);
+            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
+            var expected = dataBytes;
+
+            Assert.Equal(expected, sup.GetMessageInBytes());
+        }
+        [Fact]
+        public void ReturnEntireBuffer_When_Length_Equals_0_GetMessageInBytes()
+        {
+            var data = "\a\0hello world";
+            var dataBytes = Encoding.ASCII.GetBytes(data);
+            var sup = new ReadOnlyNetworkMessage(dataBytes, 0);
+
+            var expected = dataBytes;
+
+            Assert.Equal(expected, sup.GetMessageInBytes());
+        }
+
+        [Fact]
+        public void ReturnSlicedBuffer_When_Length_NotEquals_0_GetMessageInBytes()
+        {
+            var data = "\a\0hello world";
+            var dataBytes = Encoding.ASCII.GetBytes(data);
+            var length = 3;
+            var sup = new ReadOnlyNetworkMessage(dataBytes, length);
+
+            var expected = dataBytes.Take(length);
+
+            Assert.Equal(expected, sup.GetMessageInBytes());
+        }
+
+        [Fact]
+        public void ThrowNullExpecetion_When_Buffer_Is_Null_GetMessageInBytes()
+        {
+            var length = 3;
+            var sup = new ReadOnlyNetworkMessage(null, length);
+
+            Assert.Throws<NullReferenceException>(sup.GetMessageInBytes);
+        }
+        [Fact]
+        public void ThrowArgumentExpecetion_When_Length_Less_Than_0_GetMessageInBytes()
+        {
+            var length = -1;
+            var sup = new ReadOnlyNetworkMessage(new byte[4], length);
+
+            Assert.Throws<ArgumentException>(sup.GetMessageInBytes);
+        }
+
+        [Fact]
+        public void Return_None_When_IncomingPacket_Is_Not_Setted()
+        {
+
+            var sup = new ReadOnlyNetworkMessage(new byte[4], 4);
+
+            Assert.Equal(GameIncomingPacketType.None, sup.IncomingPacket);
+        }
+
+        [Fact]
+        public void Return_IncomingPacket_When_Setted()
+        {
+            var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0x01 };
+
+            var sup = new ReadOnlyNetworkMessage(data, 9);
+
+            sup.GetIncomingPacketType(true);
+
+            Assert.Equal(GameIncomingPacketType.PlayerLoginRequest, sup.IncomingPacket);
+        }
+
+        [Fact]
+        public void Return_IncomingPacket_When_GetIncomingPacketType_Authenticated()
+        {
+            var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0x14 };
+
+            var sup = new ReadOnlyNetworkMessage(data, 9);
+
+            Assert.Equal(GameIncomingPacketType.PlayerLogOut, sup.GetIncomingPacketType(true));
+        }
+        [Fact]
+        public void Return_IncomingPacket_When_GetIncomingPacketType_Not_Authenticated()
+        {
+            var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0x14, 0, 0 };
+
+            var sup = new ReadOnlyNetworkMessage(data, 9);
+
+            Assert.Equal(GameIncomingPacketType.PlayerLogOut, sup.GetIncomingPacketType(false));
+        }
+
+        [Fact]
+        public void ThrowException_When_Buffer_Less_Than_9_Bytes_GetIncomingPacketType_Is_Authenticated()
+        {
+            var data = new byte[3] { 0, 0, 0 };
+
+            var sup = new ReadOnlyNetworkMessage(data, 3);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sup.GetIncomingPacketType(false));
+        }
+        [Fact]
+        public void ThrowException_When_Buffer_Less_Than_6_Bytes_GetIncomingPacketType_Is_Not_Authenticated()
+        {
+            var data = new byte[3] { 0, 0, 0 };
+
+            var sup = new ReadOnlyNetworkMessage(data, 3);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sup.GetIncomingPacketType(false));
+        }
+
+        [Fact]
+        public void ThrowException_When_Buffer_Is_Null_GetIncomingPacketType()
+        {
+            var sup = new ReadOnlyNetworkMessage(null, 3);
+
+            Assert.Throws<NullReferenceException>(() => sup.GetIncomingPacketType(false));
+        }
+
+
+        [Fact]
+        public void ThrowException_When_Buffer_Is_Null_Constructor()
+        {
+            Assert.Throws<NullReferenceException>(() => new ReadOnlyNetworkMessage(null, 3));
+        }
+
+        [Fact]
+        public void ThrowException_When_Length_Less_Than_0_Resize()
+        {
+            var sup = new ReadOnlyNetworkMessage(new byte[3], 3);
+            Assert.Throws<ArgumentException>(() => sup.Resize(-1));
+        }
+
+        [Fact]
+        public void Return_Set_Length_And_BytesRead_Resize()
+        {
+            var sup = new ReadOnlyNetworkMessage(new byte[3], 3);
+
+            sup.Resize(5);
+            Assert.Equal(5, sup.Length);
+            Assert.Equal(0, sup.BytesRead);
+        }
     }
 }

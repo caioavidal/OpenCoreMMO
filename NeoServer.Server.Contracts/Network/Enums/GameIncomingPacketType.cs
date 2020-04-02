@@ -2,6 +2,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
 {
     public enum GameIncomingPacketType : byte
     {
+        None = 0x00,
         PlayerLoginRequest = 0x01,
         PlayerLogIn = 0x0A,
         PlayerLogOut = 0x14, // logout
