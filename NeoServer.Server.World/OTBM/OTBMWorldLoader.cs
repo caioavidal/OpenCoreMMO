@@ -202,7 +202,7 @@ namespace NeoServer.Server.World
             }
 
             // We create the tile early and mutate it along the method
-            var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z, itemFactory);
+            var tile = new Tile((ushort)tilePosition.X, (ushort)tilePosition.Y, tilePosition.Z);
 
             // Parsing the tile attributes
             var tileFlags = TileFlags.None;
