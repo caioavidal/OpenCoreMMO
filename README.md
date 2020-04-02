@@ -8,7 +8,7 @@
 </a>
 </p>
 
-> It's a `Open Source MMO Server` writed in C# .Net Core based on `ForgottenServer`
+> It's a `Open Source MMO Server` written in C# .Net Core based on `ForgottenServer`
 > <br>You can use the `OTClient 8.6`
 
 ## ✨ Demo
