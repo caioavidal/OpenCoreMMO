@@ -3,6 +3,9 @@
   <a href="https://travis-ci.com/caioavidal/OpenTibiaMMO" target="_blank">
   <img align="center" src="https://travis-ci.com/caioavidal/OpenTibiaMMO.svg?branch=develop" target="_blank"  />
   </a>
+  <a href="https://codecov.io/gh/caioavidal/OpenTibiaMMO">
+  <img align="center" src="https://codecov.io/gh/caioavidal/OpenTibiaMMO/branch/develop/graph/badge.svg" />
+</a>
 </p>
 
 > It's a `Open Source MMO Server` writed in C# .Net Core based on `ForgottenServer`
