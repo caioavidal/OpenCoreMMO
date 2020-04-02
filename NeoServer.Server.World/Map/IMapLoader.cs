@@ -7,9 +7,7 @@
 namespace NeoServer.Server.Map
 {
     public interface IMapLoader
-    {
-        byte PercentageComplete { get; }
-		
+    {		
         bool HasLoaded(int x, int y, byte z);
     }
 }

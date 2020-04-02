@@ -7,15 +7,6 @@ namespace NeoServer.Server.World
 	{
 		private World _world;
 
-		public byte PercentageComplete {
-			get {
-				if (_world == null)
-					return 0;
-				else
-					return _world.PercentageComplete;
-			}
-		}
-
 		public bool HasLoaded(int x, int y, byte z) {
 			if (_world == null)
 				return false;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Server.Model.World.Map
+namespace NeoServer.Game.Enums.Location
 {
     public enum TileFlag : byte
     {

@@ -7,6 +7,7 @@ using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items;
 using NeoServer.Networking.Listeners;
+using NeoServer.OTBM;
 using NeoServer.Server.Contracts.Repositories;
 
 using NeoServer.Server.Model.Players;
@@ -30,7 +31,6 @@ namespace NeoServer.Server.Standalone
 
 
 
-
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
@@ -44,7 +44,9 @@ namespace NeoServer.Server.Standalone
 
             ItemLoader.Load();
 
-            container.Resolve<IWorldLoader>().Load();
+            //container.Resolve<IWorldLoader>().Load();
+
+            container.Resolve<OTBM.WorldLoader>().Load();
 
             //Task.Run(() => container.Resolve<PingScheduler>().Start());
 

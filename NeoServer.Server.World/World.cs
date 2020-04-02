@@ -1,4 +1,5 @@
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location.Structs;
 using System;
 using System.Collections.Concurrent;
@@ -8,30 +9,60 @@ namespace NeoServer.Server.World
 {
     public class World
     {
+        public bool HasLoaded(int x, int y, byte z) => tiles.Any();
+        public int LoadedTilesCount() => tiles.Count();
+        public int LoadedTownsCount() => towns.Count();
+        public int LoadedWaypointsCount() => waypoints.Count();
 
-        public byte PercentageComplete => 100;
-        public bool HasLoaded(int x, int y, byte z) => worldTiles.Any();
-        public int LoadedTilesCount() => worldTiles.Count();
-
-        private readonly ConcurrentDictionary<Coordinate, ITile> worldTiles = new ConcurrentDictionary<Coordinate, ITile>();
+        private readonly ConcurrentDictionary<Coordinate, ITile> tiles = new ConcurrentDictionary<Coordinate, ITile>();
+        private readonly ConcurrentDictionary<Coordinate, ITown> towns = new ConcurrentDictionary<Coordinate, ITown>();
+        private readonly ConcurrentDictionary<Coordinate, IWaypoint> waypoints = new ConcurrentDictionary<Coordinate, IWaypoint>();
 
         public void AddTile(ITile tile)
         {
-            if (tile == null)
-                throw new ArgumentNullException(nameof(tile));
+            tile.ThrowIfNull();
 
             var tilesCoordinates = new Coordinate(
                 x: tile.Location.X,
                 y: tile.Location.Y,
                 z: tile.Location.Z);
 
-            worldTiles[tilesCoordinates] = tile;
+            tiles[tilesCoordinates] = tile;
         }
 
         public ITile GetTile(Location location)
         {
-            if (worldTiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITile tile))
+            if (tiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITile tile))
                 return tile;
+
+            return null;
+        }
+
+        public void AddTown(ITown town)
+        {
+            town.ThrowIfNull();
+            towns[town.Coordinate] = town;
+        }
+
+        public ITown GetTown(Location location)
+        {
+            if (towns.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITown town))
+                return town;
+
+            return null;
+        }
+
+        public void AddWaypoint(IWaypoint waypoint)
+        {
+            waypoint.ThrowIfNull();
+
+            waypoints[waypoint.Coordinate] = waypoint;
+        }
+
+        public IWaypoint GetWaypoint(Location location)
+        {
+            if (waypoints.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out IWaypoint waypoint))
+                return waypoint;
 
             return null;
         }

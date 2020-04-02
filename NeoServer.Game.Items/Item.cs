@@ -244,6 +244,10 @@ namespace NeoServer.Server.Model.Items
         public decimal Weight => (Type.Flags.Contains(ItemFlag.Pickupable) ? Convert.ToDecimal(Attributes[ItemAttribute.Weight]) / 100 : default(decimal)) * Amount;
 
         public IContainer Parent { get; private set; }
+        public bool LoadedFromMap { get; set; }
+        public bool CanDecay { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public bool HasCharges => throw new NotImplementedException();
 
         private uint holder;
 
@@ -352,6 +356,12 @@ namespace NeoServer.Server.Model.Items
             }
 
             return true;
+        }
+
+        public void StartDecaying()
+        {
+            //todo
+            //throw new NotImplementedException();
         }
     }
 }

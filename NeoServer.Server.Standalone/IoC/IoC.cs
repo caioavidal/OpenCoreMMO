@@ -9,6 +9,7 @@ using NeoServer.Game.Creature;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
+using NeoServer.OTBM;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
@@ -71,7 +72,11 @@ namespace NeoServer.Server.Standalone.IoC
 
             //world
             builder.RegisterType<World.World>().SingleInstance();
-            builder.RegisterType<WorldLoader>().As<IWorldLoader>();
+            builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
+
+            builder.RegisterType<OTBM.WorldLoader>();
+            builder.RegisterType<OTBMLoader>();
+
             builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<World.Map.Map>().As<IMap>().SingleInstance();
             builder.RegisterType<CreatureDescription>();

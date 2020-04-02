@@ -10,17 +10,14 @@ using System.Linq;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Events;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.World.Map;
 
 namespace NeoServer.Server.Map
 {
     public class Tile : ITile
     {
-        private readonly IDispatcher dispatcher;
-        private readonly Func<ushort, IItem> _itemFactory;
 
         private readonly Stack<uint> _creatureIdsOnTile;
 
@@ -255,20 +252,28 @@ namespace NeoServer.Server.Map
         // public string LoadedFrom { get; set; }
 
 
-        public Tile(ushort x, ushort y, sbyte z, Func<ushort, IItem> itemFactory)
-            : this(new Location { X = x, Y = y, Z = z }, itemFactory)
+
+        public Tile(Coordinate coordinate): this(new Location()
+            {
+                X = coordinate.X,
+                Y = coordinate.Y,
+                Z = coordinate.Z
+            })
         {
-            _itemFactory = itemFactory;
+        }
+        public Tile(ushort x, ushort y, sbyte z)
+            : this(new Location { X = x, Y = y, Z = z })
+        {
+            
         }
 
-        public Tile(Location loc, Func<ushort, IItem> itemFactory)
+        public Tile(Location loc)
         {
             Location = loc;
             _creatureIdsOnTile = new Stack<uint>();
             _topItems1OnTile = new Stack<IItem>();
             _topItems2OnTile = new Stack<IItem>();
             _downItemsOnTile = new Stack<IItem>();
-            _itemFactory = itemFactory;
         }
 
         public void AddThing(ref IThing thing, byte count)
@@ -286,7 +291,7 @@ namespace NeoServer.Server.Map
                 _creatureIdsOnTile.Push(creature.CreatureId);
                 creature.Tile = this;
                 creature.Added();
-                
+
             }
             else if (item != null)
             {
@@ -324,9 +329,9 @@ namespace NeoServer.Server.Map
 
                             if (remaining > 0)
                             {
-                                IThing newThing = _itemFactory(item.Type.TypeId);
-                                AddThing(ref newThing, (byte)remaining);
-                                thing = newThing;
+                                item.Amount = (byte)remaining;
+                                _downItemsOnTile.Push(item);
+                                item.Added();
                             }
                         }
                         else

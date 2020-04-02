@@ -58,6 +58,8 @@ namespace NeoServer.Game.Contracts.Item
 
         bool BlocksPass { get; }
 
+        void StartDecaying();
+
         bool BlocksLay { get; }
 
         bool IsCumulative { get; }
@@ -79,6 +81,9 @@ namespace NeoServer.Game.Contracts.Item
         decimal Weight { get; }
 
         byte Amount { get; set; }
+        bool LoadedFromMap { get; set; }
+        bool CanDecay { get; set; }
+        bool HasCharges { get; }
 
         bool IsPathBlocking(byte avoidType = 0);
 
