@@ -17,12 +17,28 @@
   <img width="700" align="center" src="https://github.com/caioavidal/OpenTibiaMMO/blob/develop/opentibiammo.gif?raw=true" alt="demo"/>
 </p>
 
+
+
 ## Usage
 
 ```sh
 dotnet run -p "NeoServer.Server.Standalone"
 docker run --rm -d -p 8080:8080 -p 38888:38888 -v /opt/RavenDb/Data:/opt/RavenDB/Server/RavenData ravendb/ravendb
 ```
+
+## What we have done so far
+
+- [x] Reading OTB and OTBM File structure
+- [x] Loading OTBM Tile Area, Towns and Waypoints
+- [ ] Loading OTBM Spawn Areas
+- [ ] Loading OTBM House Tiles
+- [x] LogIn and LogOut Player on Game
+- [x] Player basic movements
+- [ ] Player going down or up stairs
+- [x] Multiplayer connection
+- [ ] Load Monsters
+- [ ] Load NPC
+- [ ] Lua Scripting
 
 ## Technologies
 
