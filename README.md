@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to OpenTibiaMMO 👋</h1>
+<h1 align="center">Welcome to OpenCoreMMO 👋</h1>
 <p align="center">
   <a href="https://travis-ci.com/caioavidal/OpenTibiaMMO" target="_blank">
   <img align="center" src="https://travis-ci.com/caioavidal/OpenTibiaMMO.svg?branch=develop" target="_blank"  />
