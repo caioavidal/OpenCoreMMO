@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.OTBM.Helpers
+namespace NeoServer.OTB.DataStructures
 {
 
 	public static class ArrayExtensions
@@ -58,8 +58,7 @@ namespace NeoServer.OTBM.Helpers
 		/// </remarks>
 		public static ReadOnlyArray<T> WrapCollection(T[] items)
 		{
-			if (items == null)
-				throw new ArgumentNullException(nameof(items));
+			items.ThrowIfNull();
 
 			return new ReadOnlyArray<T>(items);
 		}

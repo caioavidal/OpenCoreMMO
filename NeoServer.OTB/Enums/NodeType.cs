@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.OTBM.Enums
+namespace NeoServer.OTB.Enums
 {
 	public enum NodeType : byte
 	{

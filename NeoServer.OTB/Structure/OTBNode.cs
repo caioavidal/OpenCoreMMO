@@ -1,10 +1,10 @@
-﻿using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
+﻿using NeoServer.OTB.DataStructures;
+using NeoServer.OTB.Enums;
 using System;
 
-namespace NeoServer.OTBM.Structure
+namespace NeoServer.OTB.Structure
 {
-    public sealed class OTBMNode
+    public sealed class OTBNode
 	{
 		/// <summary>
 		/// The type of the node.
@@ -14,7 +14,7 @@ namespace NeoServer.OTBM.Structure
 		/// <summary>
 		/// The children of this node.
 		/// </summary>
-		public readonly ReadOnlyArray<OTBMNode> Children;
+		public readonly ReadOnlyArray<OTBNode> Children;
 
 		/// <summary>
 		/// The data of this node.
@@ -24,7 +24,7 @@ namespace NeoServer.OTBM.Structure
 		/// <summary>
 		/// Creates a new instance of a <see cref="OTBNode"/>.
 		/// </summary>
-		public OTBMNode(NodeType type, ReadOnlyArray<OTBMNode> children, ReadOnlyMemory<byte> data)
+		public OTBNode(NodeType type, ReadOnlyArray<OTBNode> children, ReadOnlyMemory<byte> data)
 		{
 			if (children == null)
 				throw new ArgumentNullException(nameof(children));

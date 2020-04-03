@@ -6,6 +6,7 @@ using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items;
+using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.OTBM;
 using NeoServer.Server.Contracts.Repositories;
@@ -15,7 +16,6 @@ using NeoServer.Server.Schedulers;
 using NeoServer.Server.Schedulers.Contracts;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
-using NeoServer.Server.World;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
@@ -46,7 +46,7 @@ namespace NeoServer.Server.Standalone
 
             //container.Resolve<IWorldLoader>().Load();
 
-            container.Resolve<OTBM.WorldLoader>().Load();
+            container.Resolve<WorldLoader>().Load();
 
             //Task.Run(() => container.Resolve<PingScheduler>().Start());
 

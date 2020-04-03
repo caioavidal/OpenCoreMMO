@@ -1,10 +1,10 @@
-﻿using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
-using System;
+﻿using System;
 using System.Text;
+using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.OTB.DataStructures;
+using NeoServer.OTB.Enums;
 
-namespace NeoServer.OTBM.Helpers
+namespace NeoServer.OTB.Parsers
 {
     public sealed class OTBParsingStream
     {

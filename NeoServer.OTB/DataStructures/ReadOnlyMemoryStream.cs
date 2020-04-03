@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace NeoServer.OTBM.Helpers
+namespace NeoServer.OTB.DataStructures
 {
     public sealed class ReadOnlyMemoryStream
     {
@@ -16,8 +14,9 @@ namespace NeoServer.OTBM.Helpers
         /// <param name="position"></param>
         public ReadOnlyMemoryStream(ReadOnlyMemory<Byte> buffer, int position = 0)
         {
-            if (position < 0 || position > buffer.Length)
-                throw new ArgumentOutOfRangeException(nameof(position));
+            buffer.ThrowIfNull();
+            position.ThrowIfLessThanZero(); 
+            position.ThrowIfBiggerThan(buffer.Length);
 
             _buffer = buffer;
             Position = position;

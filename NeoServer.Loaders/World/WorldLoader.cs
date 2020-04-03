@@ -5,20 +5,20 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
-using NeoServer.OTBM.Enums;
+using NeoServer.OTB.Enums;
+using NeoServer.OTBM;
 using NeoServer.OTBM.Structure;
 using NeoServer.Server.Map;
-using NeoServer.Server.World;
 
-namespace NeoServer.OTBM
+namespace NeoServer.Loaders.World
 {
     public class WorldLoader
     {
         private readonly OTBMLoader otbmLoader;
         private readonly Func<ushort, IItem> itemFactory;
-        private World world;
+        private Server.World.World world;
 
-        public WorldLoader(OTBMLoader otbmLoader, Func<ushort, IItem> itemFactory, World world)
+        public WorldLoader(OTBMLoader otbmLoader, Func<ushort, IItem> itemFactory, Server.World.World world)
         {
             this.otbmLoader = otbmLoader;
             this.itemFactory = itemFactory;
@@ -55,7 +55,7 @@ namespace NeoServer.OTBM
             }
         }
 
-        private IEnumerable<ITile> GetTiles(Structure.OTBM otbm)
+        private IEnumerable<ITile> GetTiles(OTBM.Structure.OTBM otbm)
         {
             foreach (var tileNode in otbm.TileAreas.SelectMany(t => t.Tiles))
             {

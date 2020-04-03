@@ -72,12 +72,12 @@ namespace NeoServer.Server.Standalone.IoC
 
             //world
             builder.RegisterType<World.World>().SingleInstance();
-            builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
+            //builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
 
-            builder.RegisterType<OTBM.WorldLoader>();
+            builder.RegisterType<Loaders.World.WorldLoader>();
             builder.RegisterType<OTBMLoader>();
 
-            builder.RegisterType<OTBMWorldLoader>();
+            //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<World.Map.Map>().As<IMap>().SingleInstance();
             builder.RegisterType<CreatureDescription>();
 

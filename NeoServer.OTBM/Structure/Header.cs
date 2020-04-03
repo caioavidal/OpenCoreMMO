@@ -1,5 +1,5 @@
-﻿using System;
-using NeoServer.OTBM.Helpers;
+﻿using NeoServer.OTB.Parsers;
+using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -11,7 +11,7 @@ namespace NeoServer.OTBM.Structure
         public ushort Width { get; set; }
         public ushort Heigth { get; set; }
 
-        public Header(OTBMNode node)
+        public Header(OTBNode node)
         {
 
             var stream = new OTBParsingStream(node.Data);

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
+using NeoServer.OTB.Enums;
+using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Structure;
 
 namespace NeoServer.OTBM
@@ -14,7 +14,7 @@ namespace NeoServer.OTBM
         {
             otbm = new Structure.OTBM();
         }
-        public Structure.OTBM Parse(OTBMNode node)
+        public Structure.OTBM Parse(OTBNode node)
         {
 
             otbm.Header = new Header(node);
@@ -38,7 +38,7 @@ namespace NeoServer.OTBM
 
 
 
-        public OTBMNode GetWorldData(OTBMNode node)
+        public OTBNode GetWorldData(OTBNode node)
         {
             var mapData = node.Children.SingleOrDefault();
 

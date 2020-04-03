@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using NeoServer.OTB.Parsers;
 using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
 
 namespace NeoServer.OTBM.Structure
 {

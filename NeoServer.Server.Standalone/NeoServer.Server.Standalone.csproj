@@ -23,6 +23,7 @@
     <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\NeoServer.OTBM\NeoServer.OTBM.csproj" />
+    <ProjectReference Include="..\NeoServer.Loaders\NeoServer.Loaders.csproj" />
   </ItemGroup>
 
   <ItemGroup>

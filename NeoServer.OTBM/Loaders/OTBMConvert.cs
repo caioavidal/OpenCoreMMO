@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 using System.Reflection;
-using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
-using NeoServer.OTBM.Structure;
+using NeoServer.OTB.DataStructures;
+using NeoServer.OTB.Enums;
+using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTBM
 {
@@ -19,7 +19,7 @@ namespace NeoServer.OTBM
             return GetMap();
         }
 
-        public static OTBMNode Deserialize(ReadOnlyMemory<byte> otbmStream)
+        public static OTBNode Deserialize(ReadOnlyMemory<byte> otbmStream)
         {
             var serializedOTBMData = otbmStream.Slice(IdentifierLength);
             var stream = new ReadOnlyMemoryStream(serializedOTBMData);

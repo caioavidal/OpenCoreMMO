@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.OTB.Enums;
+using NeoServer.OTB.Parsers;
+using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -16,7 +17,7 @@ namespace NeoServer.OTBM.Structure
             ItemId = ParseItemId(stream);
         }
 
-        public ItemNode(TileNode tile, OTBMNode node)
+        public ItemNode(TileNode tile, OTBNode node)
         {
             if (node.Type != NodeType.Item)
             {

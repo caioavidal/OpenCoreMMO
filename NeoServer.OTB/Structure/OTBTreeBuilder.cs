@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Structure;
+using NeoServer.OTB.DataStructures;
+using NeoServer.OTB.Enums;
 
-namespace NeoServer.OTBM.Helpers
+namespace NeoServer.OTB.Structure
 {
     public sealed class OTBTreeBuilder
 	{
@@ -11,7 +11,7 @@ namespace NeoServer.OTBM.Helpers
 		private readonly Stack<int> _nodeStarts = new Stack<int>();
 		private readonly Stack<NodeType> _nodeTypes = new Stack<NodeType>();
 		private readonly Stack<int> _childrenCounts = new Stack<int>();
-		private readonly Stack<OTBMNode> _builtNodes = new Stack<OTBMNode>();
+		private readonly Stack<OTBNode> _builtNodes = new Stack<OTBNode>();
 
 		public OTBTreeBuilder(ReadOnlyMemory<byte> serializedTreeData)
 		{
@@ -57,7 +57,7 @@ namespace NeoServer.OTBM.Helpers
 				throw new InvalidOperationException();
 				
 			// Since we are using a queue, we need to store the children in reverse order
-			var currentNodeChildren = new OTBMNode[childCount];
+			var currentNodeChildren = new OTBNode[childCount];
 			for (int i = childCount - 1; i >= 0; i--)
 				currentNodeChildren[i] = _builtNodes.Pop();
 
@@ -69,14 +69,14 @@ namespace NeoServer.OTBM.Helpers
 			}
 
 			// Creating node and storing it
-			var node = new OTBMNode(
+			var node = new OTBNode(
 				type: _nodeTypes.Pop(),
-				children: ReadOnlyArray<OTBMNode>.WrapCollection(currentNodeChildren),
+				children: ReadOnlyArray<OTBNode>.WrapCollection(currentNodeChildren),
 				data: nodeData);
 			_builtNodes.Push(node);
 		}
 
-		public OTBMNode BuildTree()
+		public OTBNode BuildTree()
 		{
 			if (_builtNodes.Count != 1)
 				throw new InvalidOperationException();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.OTB.Enums;
 using NeoServer.OTBM.Enums;
 
 namespace NeoServer.OTBM.Structure

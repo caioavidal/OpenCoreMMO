@@ -1,4 +1,5 @@
 using System;
+using NeoServer.OTB.Enums;
 using NeoServer.OTBM.Enums;
 
 namespace NeoServer.OTBM.Structure

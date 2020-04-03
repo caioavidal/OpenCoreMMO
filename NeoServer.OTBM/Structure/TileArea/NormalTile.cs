@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.OTB.Enums;
+using NeoServer.OTB.Parsers;
+using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -11,7 +13,7 @@ namespace NeoServer.OTBM.Structure
         public override NodeType NodeType => NodeType.NormalTile;
 
 
-        public NormalTile(TileArea tileArea, OTBMNode node)
+        public NormalTile(TileArea tileArea, OTBNode node)
         {
             var stream = new OTBParsingStream(node.Data);
 
