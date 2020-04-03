@@ -45,6 +45,7 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v /opt/RavenDb/Data:/opt/RavenDB
 * C#
 * .Net Core 3.1
 * ReavenDB - NoSQL Database
+* XUnit Testing
 
 ## Author
 
