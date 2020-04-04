@@ -449,9 +449,6 @@ namespace NeoServer.Server.Map
 
             // invalidate the cache.
             _cachedDescription = null;
-
-
-            //Console.WriteLine($"Added creature {creature.Name} at {Location}");
         }
         public void RemoveCreature(ICreature c)
         {
@@ -480,7 +477,6 @@ namespace NeoServer.Server.Map
                 }
             }
 
-            // Console.WriteLine($"Removed creature {c.Name} at {Location}");
         }
 
         private void AddTopItem1(IItem i)

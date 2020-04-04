@@ -9,6 +9,7 @@ using NeoServer.OTB.Enums;
 using NeoServer.OTBM;
 using NeoServer.OTBM.Structure;
 using NeoServer.Server.Map;
+using Serilog.Core;
 
 namespace NeoServer.Loaders.World
 {
@@ -17,13 +18,15 @@ namespace NeoServer.Loaders.World
         private readonly OTBMLoader otbmLoader;
         private readonly Func<ushort, IItem> itemFactory;
         private Server.World.World world;
+        private readonly Logger logger;
 
-        public WorldLoader(OTBMLoader otbmLoader, Func<ushort, IItem> itemFactory, Server.World.World world)
+
+        public WorldLoader(OTBMLoader otbmLoader, Func<ushort, IItem> itemFactory, Server.World.World world, Logger logger)
         {
             this.otbmLoader = otbmLoader;
             this.itemFactory = itemFactory;
             this.world = world;
-
+            this.logger = logger;
         }
         public void Load()
         {
@@ -53,6 +56,9 @@ namespace NeoServer.Loaders.World
                     Name = waypointNode.Name
                 });
             }
+
+            logger.Information($"{world.LoadedTilesCount} tiles, {world.LoadedTownsCount} towns and {world.LoadedWaypointsCount} waypoints loaded");
+
         }
 
         private IEnumerable<ITile> GetTiles(OTBM.Structure.OTBM otbm)
@@ -92,7 +98,7 @@ namespace NeoServer.Loaders.World
 
                 if (item.CanBeMoved && tileNode.NodeType == NodeType.HouseTile)
                 {
-                    Console.WriteLine($"Warning] Moveable item with ID: {itemNode.ItemId} in house at position {tileNode.Coordinate}.");
+                    logger.Warning($"Moveable item with ID: {itemNode.ItemId} in house at position {tileNode.Coordinate}.");
                 }
                 else
                 {

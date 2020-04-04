@@ -247,7 +247,6 @@ namespace NeoServer.Server.World.Map
                 return tile.CachedDescription;
             }
 
-            Console.WriteLine($"Tile: {tile.Location} - {tile.CreatureIds}");
 
             if (tile.Ground != null)
             {

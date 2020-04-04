@@ -17,7 +17,6 @@ namespace NeoServer.OTBM
             var otbmNode = OTBMConvert.Deserialize(otbmStream);
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
-            Console.WriteLine($"{otbm.TileAreas.SelectMany(t=>t.Tiles).Count()} tiles loaded");
 
             return otbm;
         }

@@ -46,7 +46,6 @@ namespace NeoServer.Server.Schedulers
             }
 
             evt?.Invoke();
-            //Console.WriteLine($"Event invoked");
         }
 
         public void Start(CancellationToken token)

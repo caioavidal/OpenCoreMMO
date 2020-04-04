@@ -20,6 +20,7 @@ using NeoServer.Server.Standalone.IoC;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,6 +30,9 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
+            var sw = new Stopwatch();
+            sw.Start();
+
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
@@ -37,17 +41,11 @@ namespace NeoServer.Server.Standalone
 
             var logger = container.Resolve<Logger>();
 
-
             RSA.LoadPem();
-
-            //ItemLoader.Load();
 
             container.Resolve<ItemTypeLoader>().Load();
 
             container.Resolve<WorldLoader>().Load();
-
-            //Task.Run(() => container.Resolve<PingScheduler>().Start());
-
 
             var listeningTask = StartListening(container, cancellationToken);
 
@@ -58,7 +56,9 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<ServerState>().OpenServer();
 
-            logger.Information("Server is up!");
+
+            sw.Stop();
+            logger.Information($"Server is up! Took {sw.ElapsedMilliseconds} Milliseconds");
 
 
             listeningTask.Wait(cancellationToken);

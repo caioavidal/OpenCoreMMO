@@ -10,9 +10,9 @@ namespace NeoServer.Server.World
     public class World
     {
         public bool HasLoaded(int x, int y, byte z) => tiles.Any();
-        public int LoadedTilesCount() => tiles.Count();
-        public int LoadedTownsCount() => towns.Count();
-        public int LoadedWaypointsCount() => waypoints.Count();
+        public int LoadedTilesCount => tiles.Count();
+        public int LoadedTownsCount => towns.Count();
+        public int LoadedWaypointsCount => waypoints.Count();
 
         private readonly ConcurrentDictionary<Coordinate, ITile> tiles = new ConcurrentDictionary<Coordinate, ITile>();
         private readonly ConcurrentDictionary<Coordinate, ITown> towns = new ConcurrentDictionary<Coordinate, ITown>();

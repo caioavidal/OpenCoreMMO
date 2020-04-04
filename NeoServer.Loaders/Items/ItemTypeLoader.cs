@@ -6,28 +6,35 @@ using NeoServer.Game.Contracts.Item;
 using NeoServer.OTB.Parsers;
 using NeoServer.Server.Items;
 using Newtonsoft.Json;
+using Serilog.Core;
 
 namespace NeoServer.Loaders.Items
 {
     public class ItemTypeLoader
     {
+
+        private readonly Logger logger;
+        public ItemTypeLoader(Logger logger)
+        {
+            this.logger = logger;
+        }
         /// <summary>
         /// Loads the OTB and XML files into a collection of ItemType objects
         /// </summary>
         public void Load()
         {
-            var basePath = "/home/caio/sources/neoserver/data/items/";
+            var basePath = "./data/items/";
             var itemTypes = LoadOTB(basePath);
             LoadItemsJson(basePath, itemTypes);
 
             ItemTypeData.Load(itemTypes);
 
-            Console.WriteLine($"{itemTypes.Count} items loaded");
+            logger.Information($"{itemTypes.Count} items loaded");
         }
 
         private Dictionary<ushort, IItemType> LoadOTB(string basePath)
         {
-            var fileStream = File.ReadAllBytes($"{basePath}/items.otb");
+            var fileStream = File.ReadAllBytes(Path.Combine(basePath, "items.otb"));
             var otbNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
             var otb = new OTB.Structure.OTB(otbNode);
 
@@ -37,7 +44,8 @@ namespace NeoServer.Loaders.Items
 
         private void LoadItemsJson(string basePath, Dictionary<ushort, IItemType> itemTypes)
         {
-            var itemTypeMetadatas = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(File.ReadAllText($"{basePath}/items.json"));
+            var jsonString = File.ReadAllText(Path.Combine(basePath, "items.json"));
+            var itemTypeMetadatas = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(jsonString);
 
 
             var itemTypeMetadataParser = new ItemTypeMetadataParser(itemTypes);
