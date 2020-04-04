@@ -6,6 +6,7 @@ using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items;
+using NeoServer.Loaders.Items;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.OTBM;
@@ -28,9 +29,6 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
-
-
-
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
@@ -42,9 +40,9 @@ namespace NeoServer.Server.Standalone
 
             RSA.LoadPem();
 
-            ItemLoader.Load();
+            //ItemLoader.Load();
 
-            //container.Resolve<IWorldLoader>().Load();
+            container.Resolve<ItemTypeLoader>().Load();
 
             container.Resolve<WorldLoader>().Load();
 

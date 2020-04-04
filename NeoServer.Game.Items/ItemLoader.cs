@@ -11,10 +11,11 @@ using System.Xml.Linq;
 
 namespace NeoServer.Game.Items
 {
+    [Obsolete]
     public class ItemLoader
     {
 
-        public static void Load() => ItemData.Load(LoadItems());
+        public static void Load() => ItemTypeData.Load(LoadItems());
 
         private static Dictionary<ushort, IItemType> LoadItems()
         {

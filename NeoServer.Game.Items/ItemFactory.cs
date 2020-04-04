@@ -7,17 +7,22 @@ using System.Text;
 
 namespace NeoServer.Server.Model.Items
 {
+   
     public class ItemFactory
     {
+        /// <summary>
+        /// Creates a item instance from typeId
+        /// </summary>
+        /// <param name="typeId"></param>
+        /// <returns></returns>
         public static IItem Create(ushort typeId)
         {
-            if (typeId < 100 || !ItemData.Items.ContainsKey(typeId))
+            if (typeId < 100 || !ItemTypeData.InMemory.ContainsKey(typeId))
             {
                 return null;
-                // throw new ArgumentException("Invalid type.", nameof(typeId));
             }
 
-            var item = ItemData.Items[typeId];
+            var item = ItemTypeData.InMemory[typeId];
 
             if (item.Group == ItemGroup.ITEM_GROUP_DEPRECATED)
             {
@@ -26,10 +31,10 @@ namespace NeoServer.Server.Model.Items
 
             if (item.Flags.Contains(ItemFlag.Container) || item.Flags.Contains(ItemFlag.Chest))
             {
-                return new Container(ItemData.Items[typeId]);
+                return new Container(ItemTypeData.InMemory[typeId]);
             }
 
-            return new Item(ItemData.Items[typeId]);
+            return new Item(ItemTypeData.InMemory[typeId]);
         }
     }
 }

@@ -27,6 +27,10 @@ namespace NeoServer.Game.Contracts.Item
         ItemGroup Group { get; }
 
         ushort ClientId { get; }
+
+        void SetArticle(string article);
+        void SetPlural(string plural);
+
         ushort WareId { get; }
         LightBlock LightBlock { get; }
         byte AlwaysOnTopOrder { get; }
@@ -35,7 +39,7 @@ namespace NeoServer.Game.Contracts.Item
         void SetName(string value);
         void SetDescription(string value);
         bool ParseOTWeaponType(string value);
-        void SetAttribute(ItemAttribute attr, int value);
+        void SetAttribute(ItemAttribute attr, IConvertible value);
         void LockChanges();
         void SetSpeed(ushort speed);
         void SetAlwaysOnTopOrder(byte alwaysOnTopOrder);

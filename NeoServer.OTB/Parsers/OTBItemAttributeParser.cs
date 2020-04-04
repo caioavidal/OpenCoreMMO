@@ -43,32 +43,32 @@ namespace NeoServer.OTB.Parsers
                 case OTBItemAttribute.ServerId:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
 
-                    attributes.Add(OTBItemAttribute.ServerId, stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.ServerId, stream.ReadUInt16());
                     break;
 
                 case OTBItemAttribute.ClientId:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
-                    attributes.Add(OTBItemAttribute.ClientId, stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.ClientId, stream.ReadUInt16());
                     break;
 
                 case OTBItemAttribute.Speed:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
-                    attributes.Add(OTBItemAttribute.Speed, stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.Speed, stream.ReadUInt16());
 
                     break;
                 case OTBItemAttribute.Light2:
                     //todo validation
 
-                    attributes.Add(OTBItemAttribute.LightLevel, (byte)stream.ReadUInt16());
-                    attributes.Add(OTBItemAttribute.LightColor, (byte) stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.LightLevel, (byte)stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.LightColor, (byte) stream.ReadUInt16());
                     break;
                 case OTBItemAttribute.TopOrder:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(byte));
-                    attributes.Add(OTBItemAttribute.TopOrder, (byte)stream.ReadByte());
+                    attributes.TryAdd(OTBItemAttribute.TopOrder, (byte)stream.ReadByte());
                     break;
                 case OTBItemAttribute.WareId:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
-                    attributes.Add(OTBItemAttribute.WareId, stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.WareId, stream.ReadUInt16());
                     break;
 
                 default:

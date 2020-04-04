@@ -31,6 +31,8 @@ namespace NeoServer.Server.Model.Items
         public LightBlock LightBlock { get; private set; }
         public byte AlwaysOnTopOrder { get; private set; }
         public ushort Speed { get; private set; }
+        public string Article { get; private set; }
+        public string Plural { get; private set; }
 
         void ThrowIfLocked()
         {
@@ -156,6 +158,12 @@ namespace NeoServer.Server.Model.Items
 
             DefaultAttributes[attribute] = attributeValue;
         }
+        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue)
+        {
+            ThrowIfLocked();
+
+            DefaultAttributes[attribute] = attributeValue;
+        }
 
         public void SetAttribute(string attributeName, int attributeValue)
         {
@@ -194,16 +202,6 @@ namespace NeoServer.Server.Model.Items
 
             if (HasOTFlag(flags, 1 << 7)) // isStackable
                 SetFlag(ItemFlag.Stackable);
-
-            //if (HasFlag(flags, 1 << 8)) // floorChangeDown -- unused
-
-            //if (HasFlag(flags, 1 << 9)) // floorChangeNorth -- unused
-
-            //if (HasFlag(flags, 1 << 10)) // floorChangeEast -- unused
-
-            //if (HasFlag(flags, 1 << 11)) // floorChangeSouth -- unused
-
-            //if (HasFlag(flags, 1 << 12)) // floorChangeWest -- unused
 
             if (HasOTFlag(flags, 1 << 13)) // alwaysOnTop
                 SetFlag(ItemFlag.AlwaysOnTop);
@@ -264,5 +262,14 @@ namespace NeoServer.Server.Model.Items
             return true;
         }
 
+        public void SetArticle(string article)
+        {
+            Article = article;
+        }
+
+        public void SetPlural(string plural)
+        {
+            Plural = plural;
+        }
     }
 }

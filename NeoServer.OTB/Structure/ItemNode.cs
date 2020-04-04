@@ -13,7 +13,16 @@ namespace NeoServer.OTB.Structure
         /// <value></value>
         public uint Flags { get; set; }
 
-        private ushort serverId;
+        private T GetValue<T>(OTBItemAttribute attribute)
+        {
+            if (Attributes.TryGetValue(attribute, out IConvertible value))
+            {
+                return (T)value;
+            }
+            
+            return default(T);
+        }
+
 
         /// <summary>
         /// Gets the item's ServerId
@@ -23,7 +32,7 @@ namespace NeoServer.OTB.Structure
         {
             get
             {
-                var value = (ushort)Attributes[OTBItemAttribute.ServerId];
+                var value = GetValue<ushort>(OTBItemAttribute.ServerId);
                 if (value > 30000 && value < 30100)
                 {
                     value -= 30000;
@@ -32,15 +41,15 @@ namespace NeoServer.OTB.Structure
             }
         }
 
-        public ushort ClientId => (ushort)Attributes[OTBItemAttribute.ClientId];
+        public ushort ClientId => GetValue<ushort>(OTBItemAttribute.ClientId);
 
-        public ushort Speed => (ushort)Attributes[OTBItemAttribute.Speed];
+        public ushort Speed => GetValue<ushort>(OTBItemAttribute.Speed);
 
-        public ushort WareId => (ushort)Attributes[OTBItemAttribute.WareId];
+        public ushort WareId => GetValue<ushort>(OTBItemAttribute.WareId);
 
-        public byte LightLevel => (byte)Attributes[OTBItemAttribute.LightLevel];
-        public byte LightColor => (byte)Attributes[OTBItemAttribute.LightColor];
-        public byte AlwaysOnTop => (byte)Attributes[OTBItemAttribute.TopOrder];
+        public byte LightLevel => GetValue<byte>(OTBItemAttribute.LightLevel);
+        public byte LightColor => GetValue<byte>(OTBItemAttribute.LightColor);
+        public byte AlwaysOnTop => GetValue<byte>(OTBItemAttribute.TopOrder);
 
         /// <summary>
         /// Gets the item's type

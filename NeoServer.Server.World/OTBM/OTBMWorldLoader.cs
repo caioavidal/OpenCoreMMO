@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace NeoServer.Server.World
 {
+    [Obsolete]
     /// <summary>
     /// This class contains the methods necessary to load a .otbm file.
     /// </summary>
