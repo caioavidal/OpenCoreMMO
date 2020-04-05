@@ -18,7 +18,7 @@ namespace NeoServer.OTBM.Structure
             Z = (sbyte)stream.ReadByte();
 
             var houseTiles = node.Children.Where(c => c.Type == NodeType.HouseTile)
-                                          .Select(c => new HouseTile()); //todo iomap 250
+                                          .Select(c => new HouseTile(this, c)); //todo iomap 250
 
             var normalTiles = node.Children.Where(c => c.Type == NodeType.NormalTile)
                                           .Select(c => new NormalTile(this, c));

@@ -19,7 +19,8 @@ namespace NeoServer.OTBM.Structure
             Version = stream.ReadUInt32();
             Width = stream.ReadUInt16();
             Heigth = stream.ReadUInt16();
-            MajorVersionItems = stream.ReadUInt32();
+            MajorVersionItems = stream.ReadByte();
+            stream.Skip(3);
             MinorVersionItems = stream.ReadUInt32();
 
         }

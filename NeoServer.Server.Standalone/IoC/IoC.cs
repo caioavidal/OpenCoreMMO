@@ -77,7 +77,6 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<ItemTypeLoader>();
             builder.RegisterType<Loaders.World.WorldLoader>();
-            builder.RegisterType<OTBMLoader>();
 
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<World.Map.Map>().As<IMap>().SingleInstance();

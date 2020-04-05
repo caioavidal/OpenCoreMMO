@@ -44,7 +44,7 @@ namespace NeoServer.OTBM
 
             if (mapData == null || mapData.Type != NodeType.WorldData)
             {
-                throw new Exception("OTBM_MAP_DATA is invalid");
+                throw new Exception("Could not read root data node");
             }
 
             return mapData;

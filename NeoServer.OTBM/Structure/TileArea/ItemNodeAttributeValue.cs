@@ -22,26 +22,34 @@ namespace NeoServer.OTBM.Structure
                     Value = stream.ReadByte();
                     break;
                 case ItemNodeAttribute.ActionId:
-                    Value = stream.ReadUInt16();
-                    break;
                 case ItemNodeAttribute.UniqueId:
+                case ItemNodeAttribute.Charges:
+                case ItemNodeAttribute.ExtraDefense:
+                case ItemNodeAttribute.DepotId:
                     Value = stream.ReadUInt16();
                     break;
                 case ItemNodeAttribute.Text:
+                case ItemNodeAttribute.WrittenBy:
+                case ItemNodeAttribute.Description:
+                case ItemNodeAttribute.Name:
+                case ItemNodeAttribute.Article:
+                case ItemNodeAttribute.PluralName:
                     Value = stream.ReadString();
                     break;
                 case ItemNodeAttribute.WrittenDate:
+                case ItemNodeAttribute.Weight:
+                case ItemNodeAttribute.Attack:
+                case ItemNodeAttribute.Defense:
+                case ItemNodeAttribute.Armor:
+                case ItemNodeAttribute.HitChance:
+                case ItemNodeAttribute.ShootRange:
+                case ItemNodeAttribute.DecayTo:
+                case ItemNodeAttribute.SleeperGUID:
+                case ItemNodeAttribute.SleepStart:
+                case ItemNodeAttribute.ContainerItems:
                     Value = stream.ReadUInt32();
                     break;
-                case ItemNodeAttribute.WrittenBy:
-                    Value = stream.ReadString();
-                    break;
-                case ItemNodeAttribute.Description:
-                    Value = stream.ReadString();
-                    break;
-                case ItemNodeAttribute.Charges:
-                    Value = stream.ReadUInt16();
-                    break;
+
                 case ItemNodeAttribute.Duration:
                     Value = Math.Max(0, stream.ReadUInt32());
                     break;
@@ -53,56 +61,14 @@ namespace NeoServer.OTBM.Structure
                         Value = ItemDecayingState.Pending;
                     }
                     break;
-                case ItemNodeAttribute.Name:
-                    Value = stream.ReadString();
-                    break;
-                case ItemNodeAttribute.Article:
-                    Value = stream.ReadString();
-                    break;
-                case ItemNodeAttribute.PluralName:
-                    Value = stream.ReadString();
-                    break;
-                case ItemNodeAttribute.Weight:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.Attack:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.Defense:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.ExtraDefense:
-                    Value = stream.ReadUInt16();
-                    break;
-                case ItemNodeAttribute.Armor:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.HitChance:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.ShootRange:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.DecayTo:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.DepotId:
-                    Value = stream.ReadUInt16();
-                    break;
+
                 case ItemNodeAttribute.HouseDoorId:
                     Value = stream.ReadByte();
-                    break;
-                case ItemNodeAttribute.SleeperGUID:
-                    Value = stream.ReadUInt32();
-                    break;
-                case ItemNodeAttribute.SleepStart:
-                    Value = stream.ReadUInt32();
                     break;
                 case ItemNodeAttribute.TeleportDestination:
                     stream.Skip(5); //todo
                     break;
-                case ItemNodeAttribute.ContainerItems:
-                    break;
+
 
                 case ItemNodeAttribute.CustomAttributes:
                     throw new NotImplementedException(); //todo

@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Item;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
 using NeoServer.OTB.Enums;
+using NeoServer.OTB.Parsers;
 using NeoServer.OTBM;
 using NeoServer.OTBM.Structure;
 using NeoServer.Server.Map;
@@ -15,22 +17,22 @@ namespace NeoServer.Loaders.World
 {
     public class WorldLoader
     {
-        private readonly OTBMLoader otbmLoader;
         private readonly Func<ushort, IItem> itemFactory;
         private Server.World.World world;
         private readonly Logger logger;
 
 
-        public WorldLoader(OTBMLoader otbmLoader, Func<ushort, IItem> itemFactory, Server.World.World world, Logger logger)
+        public WorldLoader(Func<ushort, IItem> itemFactory, Server.World.World world, Logger logger)
         {
-            this.otbmLoader = otbmLoader;
             this.itemFactory = itemFactory;
             this.world = world;
             this.logger = logger;
         }
         public void Load()
         {
-            var otbm = otbmLoader.Load();
+            var fileStream = File.ReadAllBytes("./data/world/neoserver.otbm");
+            var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
+            var otbm = new OTBMNodeParser().Parse(otbmNode);
 
             var tiles = GetTiles(otbm);
 
@@ -91,7 +93,7 @@ namespace NeoServer.Loaders.World
 
                 foreach (var attr in itemNode.ItemNodeAttributes)
                 {
-                    item.Attributes.Add((ItemAttribute)attr.AttributeName, attr.Value);
+                    item.Attributes.TryAdd((ItemAttribute)attr.AttributeName, attr.Value);
                 }
 
                 item.LoadedFromMap = true;

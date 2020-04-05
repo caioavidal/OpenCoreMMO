@@ -1,59 +1,50 @@
-
 using System;
-using System.IO;
-using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 using NeoServer.OTB.DataStructures;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTB.Parsers
 {
-    public class OTBBinaryTreeBuilder
+    public sealed class OTBBinaryTreeBuilder
     {
-        private const short IdentifierLength = 4;
-
         public static OTBNode Deserialize(ReadOnlyMemory<byte> otbmStream)
         {
-            var serializedOTBMData = otbmStream.Slice(IdentifierLength);
-            var stream = new ReadOnlyMemoryStream(serializedOTBMData);
+            var serializedOTBMData = otbmStream.Slice(4);
+            var memoryStream = new ReadOnlyMemoryStream(serializedOTBMData);
 
-            var treeBuilder = new OTBTreeBuilder(serializedOTBMData);
-            while (!stream.IsOver)
-            {
-                var currentMark = (OTBMarkupByte)stream.ReadByte();
-                if (currentMark < OTBMarkupByte.Escape)
-                {
-                    // Since <see cref="OTBMarkupByte"/> can only have values Escape (0xFD), Start (0xFE) and
-                    // End (0xFF), if currentMark < Escape, then it's just prop data 
-                    // and we can safely skip it.
-                    continue;
-                }
-
-                switch (currentMark)
-                {
-                    case OTBMarkupByte.Start:
-                        var nodeType = (NodeType)stream.ReadByte();
-
-                        treeBuilder.AddNodeDataBegin(
-                            start: stream.Position,
-                            type: nodeType);
-                        break;
-
-                    case OTBMarkupByte.End:
-                        treeBuilder.AddNodeEnd(stream.Position - 1);
-                        break;
-
-                    case OTBMarkupByte.Escape:
-                        stream.Skip();
-                        break;
-
-                    default:
-                        throw new InvalidOperationException();
-                }
-            }
-
-            return treeBuilder.BuildTree();
+            return BuildTree(new OTBNode(NodeType.NotSetYet), memoryStream).Children.First();
         }
-      
+
+        private static OTBNode BuildTree(OTBNode node, ReadOnlyMemoryStream stream)
+        {
+            var currentByte = stream.ReadByte();
+
+            switch ((OTBMarkupByte)currentByte)
+            {
+                case OTBMarkupByte.Start:
+                    while (currentByte == (byte)OTBMarkupByte.Start)
+                    {
+                        var childNode = new OTBNode((NodeType)stream.ReadByte());
+                        node.AddChild(BuildTree(childNode,stream));
+                        if(stream.IsOver){
+                            break;
+                        }
+                        currentByte = stream.ReadByte();
+                    }
+                    return node;
+                
+                case OTBMarkupByte.Escape:
+                    node.AddData(currentByte);
+                    node.AddData(stream.ReadByte());
+                    return BuildTree(node, stream);
+                case OTBMarkupByte.End:
+                    return node;
+                default:
+                    node.AddData(currentByte);
+                    return BuildTree(node,stream);
+            }
+        }
     }
 }
