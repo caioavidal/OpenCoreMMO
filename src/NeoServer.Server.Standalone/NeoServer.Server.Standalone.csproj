@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.1.2" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Data.RavenDB\NeoServer.Data.RavenDB.csproj" />
+    <ProjectReference Include="..\NeoServer.Networking\NeoServer.Networking.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+    <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Schedulers.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\NeoServer.OTBM\NeoServer.OTBM.csproj" />
+    <ProjectReference Include="..\NeoServer.Loaders\NeoServer.Loaders.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)..\data\*.*&quot; &quot;$(OutDir)\data&quot;/Y /I /E" />
+  </Target>
+
+</Project>
