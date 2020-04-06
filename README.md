@@ -1,10 +1,10 @@
 <h1 align="center">Welcome to OpenCoreMMO 👋</h1>
 <p align="center">
-  <a href="https://travis-ci.com/caioavidal/OpenTibiaMMO" target="_blank">
-  <img align="center" src="https://travis-ci.com/caioavidal/OpenTibiaMMO.svg?branch=develop" target="_blank"  />
+  <a href="https://travis-ci.com/caioavidal/OpenCoreMMO" target="_blank">
+  <img align="center" src="https://travis-ci.com/caioavidal/OpenCoreMMO.svg?branch=develop" target="_blank"  />
   </a>
-  <a href="https://codecov.io/gh/caioavidal/OpenTibiaMMO">
-  <img align="center" src="https://codecov.io/gh/caioavidal/OpenTibiaMMO/branch/develop/graph/badge.svg" />
+  <a href="https://codecov.io/gh/caioavidal/OpenCoreMMO">
+  <img align="center" src="https://codecov.io/gh/caioavidal/OpenCoreMMO/branch/develop/graph/badge.svg" />
 </a>
 </p>
 
