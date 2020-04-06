@@ -1,6 +1,6 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Enums.Creatures;

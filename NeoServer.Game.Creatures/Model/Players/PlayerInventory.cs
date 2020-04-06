@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Players;
 using System;
 using System.Collections.Generic;

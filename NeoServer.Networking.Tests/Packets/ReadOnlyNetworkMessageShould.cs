@@ -182,7 +182,7 @@ namespace NeoServer.Networking.Tests.Packets
             var length = -1;
             var sup = new ReadOnlyNetworkMessage(new byte[4], length);
 
-            Assert.Throws<ArgumentException>(sup.GetMessageInBytes);
+            Assert.Throws<ArgumentOutOfRangeException>(sup.GetMessageInBytes);
         }
 
         [Fact]
@@ -254,7 +254,7 @@ namespace NeoServer.Networking.Tests.Packets
         public void ThrowException_When_Length_Less_Than_0_Resize()
         {
             var sup = new ReadOnlyNetworkMessage(new byte[3], 3);
-            Assert.Throws<ArgumentException>(() => sup.Resize(-1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sup.Resize(-1));
         }
 
         [Fact]

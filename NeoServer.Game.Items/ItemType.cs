@@ -1,12 +1,10 @@
-﻿using NeoServer.Game.Contracts.Item;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
-using NeoServer.Server.Model.Items.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace NeoServer.Server.Model.Items
+namespace NeoServer.Game.Items
 {
     public class ItemType : IItemType
     {
@@ -31,6 +29,8 @@ namespace NeoServer.Server.Model.Items
         public LightBlock LightBlock { get; private set; }
         public byte AlwaysOnTopOrder { get; private set; }
         public ushort Speed { get; private set; }
+        public string Article { get; private set; }
+        public string Plural { get; private set; }
 
         void ThrowIfLocked()
         {
@@ -156,6 +156,12 @@ namespace NeoServer.Server.Model.Items
 
             DefaultAttributes[attribute] = attributeValue;
         }
+        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue)
+        {
+            ThrowIfLocked();
+
+            DefaultAttributes[attribute] = attributeValue;
+        }
 
         public void SetAttribute(string attributeName, int attributeValue)
         {
@@ -194,16 +200,6 @@ namespace NeoServer.Server.Model.Items
 
             if (HasOTFlag(flags, 1 << 7)) // isStackable
                 SetFlag(ItemFlag.Stackable);
-
-            //if (HasFlag(flags, 1 << 8)) // floorChangeDown -- unused
-
-            //if (HasFlag(flags, 1 << 9)) // floorChangeNorth -- unused
-
-            //if (HasFlag(flags, 1 << 10)) // floorChangeEast -- unused
-
-            //if (HasFlag(flags, 1 << 11)) // floorChangeSouth -- unused
-
-            //if (HasFlag(flags, 1 << 12)) // floorChangeWest -- unused
 
             if (HasOTFlag(flags, 1 << 13)) // alwaysOnTop
                 SetFlag(ItemFlag.AlwaysOnTop);
@@ -247,22 +243,16 @@ namespace NeoServer.Server.Model.Items
             return (flags & flag) != 0;
         }
 
-        public bool ParseOTWeaponType(string type)
-        {
-            var value = OpenTibiaTranslationMap.TranslateMeeleWeaponTypeName(type, out bool success);
-            if (success)
-                SetAttribute(ItemAttribute.WeaponType, value);
-            else
-            {
-                var flag = OpenTibiaTranslationMap.TranslateToItemFlag(type, out success);
-                if (success)
-                    SetFlag(flag);
-                else
-                    return false;
-            }
+    
 
-            return true;
+        public void SetArticle(string article)
+        {
+            Article = article;
         }
 
+        public void SetPlural(string plural)
+        {
+            Plural = plural;
+        }
     }
 }

@@ -29,13 +29,34 @@ namespace NeoServer.OTBM.Structure
 	|--- OTBM_ITEM_DEF (not implemented)
 */
     #endregion
+
+	/// <summary>
+	/// OTBM class which represents the OTBM structure
+	/// </summary>
     public class OTBM
     {
+		/// <summary>
+		/// OTBM Header data
+		/// </summary>
         public Header Header { get; set; }
+		/// <summary>
+		/// OTBM Map metadata
+		/// </summary>
+		public MapData MapData { get; set; }
 
-        public IEnumerable<TileArea> TileAreas { get; set; }
-        // public MapType Spawns { get; set; }
+		/// <summary>
+		/// OTBM Tile Areas
+		/// </summary>
+		public IEnumerable<TileArea> TileAreas { get; set; }
+        
+		/// <summary>
+		/// OTBM Towns
+		/// </summary>
         public IEnumerable<TownNode> Towns { get; set; }
+
+		/// <summary>
+		/// OTBM Waypoints
+		/// </summary>
         public IEnumerable<WaypointNode> Waypoints { get; set; }
 
     }

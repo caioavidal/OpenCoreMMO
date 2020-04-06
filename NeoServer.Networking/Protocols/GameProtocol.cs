@@ -23,7 +23,6 @@ namespace NeoServer.Networking.Protocols
 
         public override void OnAcceptNewConnection(IConnection connection)
         {
-            Console.WriteLine("Game OnAcceptNewConnection");
             HandlerFirstConnection(connection);
             //base.OnAcceptNewConnection(connection);
             

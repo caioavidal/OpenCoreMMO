@@ -5,20 +5,18 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Items;
+using NeoServer.Loaders.Items;
+using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
-using NeoServer.OTBM;
 using NeoServer.Server.Contracts.Repositories;
-
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Schedulers;
 using NeoServer.Server.Schedulers.Contracts;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
-using NeoServer.Server.World;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,8 +26,8 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
-
-
+            var sw = new Stopwatch();
+            sw.Start();
 
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
@@ -39,17 +37,11 @@ namespace NeoServer.Server.Standalone
 
             var logger = container.Resolve<Logger>();
 
-
             RSA.LoadPem();
 
-            ItemLoader.Load();
+            container.Resolve<ItemTypeLoader>().Load();
 
-            //container.Resolve<IWorldLoader>().Load();
-
-            container.Resolve<OTBM.WorldLoader>().Load();
-
-            //Task.Run(() => container.Resolve<PingScheduler>().Start());
-
+            container.Resolve<WorldLoader>().Load();
 
             var listeningTask = StartListening(container, cancellationToken);
 
@@ -60,7 +52,9 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<ServerState>().OpenServer();
 
-            logger.Information("Server is up!");
+
+            sw.Stop();
+            logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");
 
 
             listeningTask.Wait(cancellationToken);

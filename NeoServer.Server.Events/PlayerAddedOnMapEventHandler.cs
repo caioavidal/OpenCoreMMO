@@ -34,19 +34,16 @@ namespace NeoServer.Server.Events
                 if (!isSpectator)
                 {
                     SendPacketsToPlayer(player, outgoingPackets);
-                    Console.WriteLine($"player: {player.Name}");
                 }
                 else
                 {
                     var spectator = game.CreatureInstances[spectatorId] as IPlayer;
                     SendPacketsToSpectator(spectator, player, outgoingPackets);
-                    Console.WriteLine($"spectator: {spectator.Name}");
                 }
 
                 if (game.Connections.TryGetValue(spectatorId, out IConnection connection))
                 {
                     connection.Send(outgoingPackets, isSpectator);
-                    Console.WriteLine($"Packet sent to {spectatorId}");
                 }
             }
 

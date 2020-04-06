@@ -6,10 +6,10 @@ using NeoServer.Game.Commands;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature;
+using NeoServer.Loaders.Items;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
-using NeoServer.OTBM;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
@@ -17,17 +17,15 @@ using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
-using NeoServer.Server.Handlers.Authentication;
-using NeoServer.Server.Handlers.Players;
-using NeoServer.Server.Model.Items;
+using NeoServer.Game.Items;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Schedulers;
 using NeoServer.Server.Schedulers.Contracts;
 using NeoServer.Server.Standalone.Factories;
-using NeoServer.Server.World;
-using NeoServer.Server.World.Map;
+using NeoServer.Game.World.Map;
 using Serilog;
 using Serilog.Core;
+using NeoServer.Game.World;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -71,14 +69,14 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterPlayerFactory(builder);
 
             //world
-            builder.RegisterType<World.World>().SingleInstance();
-            builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
+            builder.RegisterType<World>().SingleInstance();
+            //builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
 
-            builder.RegisterType<OTBM.WorldLoader>();
-            builder.RegisterType<OTBMLoader>();
+            builder.RegisterType<ItemTypeLoader>();
+            builder.RegisterType<Loaders.World.WorldLoader>();
 
-            builder.RegisterType<OTBMWorldLoader>();
-            builder.RegisterType<World.Map.Map>().As<IMap>().SingleInstance();
+            //builder.RegisterType<OTBMWorldLoader>();
+            builder.RegisterType<Map>().As<IMap>().SingleInstance();
             builder.RegisterType<CreatureDescription>();
 
             //factories

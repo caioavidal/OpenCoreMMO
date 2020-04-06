@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.OTBM.Enums;
-using NeoServer.OTBM.Helpers;
+using NeoServer.OTB.Enums;
+using NeoServer.OTB.Parsers;
+using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTBM.Structure
 {
     public class TileArea
     {
-        public TileArea(OTBMNode node)
+        public TileArea(OTBNode node)
         {
             var stream = new OTBParsingStream(node.Data);
 
@@ -18,7 +18,7 @@ namespace NeoServer.OTBM.Structure
             Z = (sbyte)stream.ReadByte();
 
             var houseTiles = node.Children.Where(c => c.Type == NodeType.HouseTile)
-                                          .Select(c => new HouseTile()); //todo iomap 250
+                                          .Select(c => new HouseTile(this, c)); //todo iomap 250
 
             var normalTiles = node.Children.Where(c => c.Type == NodeType.NormalTile)
                                           .Select(c => new NormalTile(this, c));

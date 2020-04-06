@@ -1,5 +1,6 @@
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.OTBM.Helpers;
+using NeoServer.OTB.Parsers;
+using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -9,7 +10,7 @@ namespace NeoServer.OTBM.Structure
         public Coordinate Coordinate { get; set; }
 
 
-        public WaypointNode(OTBMNode node)
+        public WaypointNode(OTBNode node)
         {
             var stream = new OTBParsingStream(node.Data);
 
