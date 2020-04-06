@@ -16,7 +16,7 @@
     <ProjectReference Include="..\NeoServer.Networking\NeoServer.Networking.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-    <ProjectReference Include="..\NeoServer.Server.World\NeoServer.Server.World.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.World\NeoServer.Game.World.csproj" />
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Schedulers.Contracts.csproj" />

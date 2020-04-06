@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.OTB.Parsers;
 using NeoServer.Server.Items;
 using Newtonsoft.Json;

@@ -8,7 +8,7 @@ namespace NeoServer.OTB.Enums
 	{
 		NotSetYet = 0,          // Added on C# version
 		RootVersion1 = 1,       // OTBM_ROOTV1
-		WorldData = 2,          // OTBM_MAP_DATA
+		MapData = 2,          // OTBM_MAP_DATA
 		ItemDefinition = 3,     // OTBM_ITEM_DEF
 		TileArea = 4,           // OTBM_TILE_AREA
 		NormalTile = 5,         // OTBM_TILE

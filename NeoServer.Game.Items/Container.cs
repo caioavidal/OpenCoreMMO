@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 
-namespace NeoServer.Server.Model.Items
+namespace NeoServer.Game.Items
 {
     public class Container : Item, IContainer
     {

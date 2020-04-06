@@ -1,12 +1,10 @@
-﻿using NeoServer.Game.Contracts.Item;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
-using NeoServer.Server.Model.Items.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace NeoServer.Server.Model.Items
+namespace NeoServer.Game.Items
 {
     public class ItemType : IItemType
     {
@@ -245,22 +243,7 @@ namespace NeoServer.Server.Model.Items
             return (flags & flag) != 0;
         }
 
-        public bool ParseOTWeaponType(string type)
-        {
-            var value = OpenTibiaTranslationMap.TranslateMeeleWeaponTypeName(type, out bool success);
-            if (success)
-                SetAttribute(ItemAttribute.WeaponType, value);
-            else
-            {
-                var flag = OpenTibiaTranslationMap.TranslateToItemFlag(type, out success);
-                if (success)
-                    SetFlag(flag);
-                else
-                    return false;
-            }
-
-            return true;
-        }
+    
 
         public void SetArticle(string article)
         {

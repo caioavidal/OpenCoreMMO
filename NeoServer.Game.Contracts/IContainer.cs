@@ -5,7 +5,7 @@
 // </copyright>
 
 using System.Collections.Generic;
-using NeoServer.Game.Contracts.Item;
+using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Game.Contracts
 {

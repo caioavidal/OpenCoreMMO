@@ -1,10 +1,6 @@
-﻿using NeoServer.Game.Contracts.Item;
-using NeoServer.Server.Model.Items;
-using System;
+﻿using NeoServer.Game.Contracts.Items;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using System.Text;
 
 namespace NeoServer.Server.Items
 {

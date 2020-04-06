@@ -33,47 +33,25 @@ namespace NeoServer.OTB.Structure
 			Type = type;
 		}
 
+		/// <summary>
+		/// Adds child node
+		/// </summary>
+		/// <param name="node"></param>
+
 		public void AddChild(OTBNode node)
 		{
 			children.Add(node);
 		}
+
+		/// <summary>
+		/// Adds byte to node's data
+		/// </summary>
+		/// <param name="b">The byte data to add</param>
 		public void AddData(byte b){
 			data.Add(b);
 		}
+
+	
+	
 	}
 }
-
-
-// namespace NeoServer.OTB.Structure
-// {
-//     public sealed class OTBNode
-// 	{
-// 		/// <summary>
-// 		/// The type of the node.
-// 		/// </summary>
-// 		public readonly NodeType Type;
-
-// 		/// <summary>
-// 		/// The children of this node.
-// 		/// </summary>
-// 		public readonly ReadOnlyArray<OTBNode> Children;
-
-// 		/// <summary>
-// 		/// The data of this node.
-// 		/// </summary>
-// 		public readonly ReadOnlyMemory<byte> Data;
-
-// 		/// <summary>
-// 		/// Creates a new instance of a <see cref="OTBNode"/>.
-// 		/// </summary>
-// 		public OTBNode(NodeType type, ReadOnlyArray<OTBNode> children, ReadOnlyMemory<byte> data)
-// 		{
-// 			if (children == null)
-// 				throw new ArgumentNullException(nameof(children));
-
-// 			Type = type;
-// 			Children = children;
-// 			Data = data;
-// 		}
-// 	}
-// }

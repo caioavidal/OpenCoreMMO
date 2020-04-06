@@ -9,6 +9,12 @@ namespace NeoServer.OTB.Parsers
 {
     public sealed class OTBBinaryTreeBuilder
     {
+
+        /// <summary>
+        /// Creates a OTBNode Binary Tree from otbm stream
+        /// </summary>
+        /// <param name="otbmStream"></param>
+        /// <returns></returns>
         public static OTBNode Deserialize(ReadOnlyMemory<byte> otbmStream)
         {
             var serializedOTBMData = otbmStream.Slice(4);
@@ -17,7 +23,7 @@ namespace NeoServer.OTB.Parsers
             return BuildTree(new OTBNode(NodeType.NotSetYet), memoryStream).Children.First();
         }
 
-        private static OTBNode BuildTree(OTBNode node, ReadOnlyMemoryStream stream)
+        private static OTBNode BuildTree(OTBNode node, ReadOnlyMemoryStream stream) //recursive method to create a binary tree
         {
             var currentByte = stream.ReadByte();
 

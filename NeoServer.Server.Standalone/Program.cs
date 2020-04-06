@@ -5,15 +5,11 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Items;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
-using NeoServer.OTBM;
 using NeoServer.Server.Contracts.Repositories;
-
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Schedulers;
 using NeoServer.Server.Schedulers.Contracts;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
@@ -58,7 +54,7 @@ namespace NeoServer.Server.Standalone
 
 
             sw.Stop();
-            logger.Information($"Server is up! Took {sw.ElapsedMilliseconds} Milliseconds");
+            logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");
 
 
             listeningTask.Wait(cancellationToken);

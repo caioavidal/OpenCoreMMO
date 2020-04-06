@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Networking.Packets
 {
-    using NeoServer.Game.Contracts.Item;
+    using NeoServer.Game.Contracts.Items;
     using NeoServer.Game.Enums.Location.Structs;
     using NeoServer.Networking.Packets.Messages;
     using NeoServer.Server.Contracts.Network;

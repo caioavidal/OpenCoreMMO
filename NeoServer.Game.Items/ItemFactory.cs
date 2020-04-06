@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Contracts.Item;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Server.Model.Items
+namespace NeoServer.Game.Items
 {
    
     public class ItemFactory

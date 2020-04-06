@@ -6,7 +6,11 @@ using NeoServer.OTBM.Structure;
 
 namespace NeoServer.OTBM
 {
-    public class OTBMNodeParser
+
+    /// <summary>
+    /// A class to parse <see cref="OTBNode"></see> structure to <see cref="Structure.OTBM"/> instance
+    /// </summary>
+    public sealed class OTBMNodeParser
     {
         private readonly Structure.OTBM otbm;
 
@@ -14,21 +18,31 @@ namespace NeoServer.OTBM
         {
             otbm = new Structure.OTBM();
         }
+
+        /// <summary>
+        /// Parses the OTBNode binary tree structure to a OTBM instance <see cref="OTBM.Structure.OTBM"></see>
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public Structure.OTBM Parse(OTBNode node)
         {
 
             otbm.Header = new Header(node);
 
-            var worldData = GetWorldData(node);
+            var mapData = node.Children.SingleOrDefault();
 
-            otbm.TileAreas = worldData.Children.Where(c => c.Type == NodeType.TileArea)
+            otbm.MapData = GetMapData(mapData);
+
+            
+
+            otbm.TileAreas = mapData.Children.Where(c => c.Type == NodeType.TileArea)
                                                .Select(c => new TileArea(c));
 
-            otbm.Towns = worldData.Children.Where(c => c.Type == NodeType.TownCollection)
+            otbm.Towns = mapData.Children.Where(c => c.Type == NodeType.TownCollection)
                                            .SelectMany(c => c.Children)
                                            .Select(c => new TownNode(c));
 
-            otbm.Waypoints = worldData.Children
+            otbm.Waypoints = mapData.Children
                                       .Where(c => c.Type == NodeType.WayPointCollection && otbm.Header.Version > 1)
                                       .SelectMany(c => c.Children)
                                       .Select(c => new WaypointNode(c));
@@ -38,16 +52,15 @@ namespace NeoServer.OTBM
 
 
 
-        public OTBNode GetWorldData(OTBNode node)
+        private MapData GetMapData(OTBNode mapData)
         {
-            var mapData = node.Children.SingleOrDefault();
-
-            if (mapData == null || mapData.Type != NodeType.WorldData)
+            if (mapData == null || mapData.Type != NodeType.MapData)
             {
                 throw new Exception("Could not read root data node");
             }
 
-            return mapData;
+
+            return new MapData(mapData);
         }
     }
 }

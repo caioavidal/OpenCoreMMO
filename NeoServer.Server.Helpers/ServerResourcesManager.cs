@@ -9,7 +9,7 @@ namespace NeoServer.Server.Helpers
     public class ServerResourcesManager
     {
         public const string ItemsFilesDirectory = "NeoServer.Game.Items.Data";
-        public const string MapFilesDirectory = "NeoServer.Server.World.Data";
+        public const string MapFilesDirectory = "NeoServer.Game.World.Data";
         public const string MapName = "neoserver.otbm";
 
         public static byte[] GetMap()

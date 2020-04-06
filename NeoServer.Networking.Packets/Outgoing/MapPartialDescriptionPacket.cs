@@ -5,7 +5,7 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.World.Map;
+using NeoServer.Game.World.Map;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

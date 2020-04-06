@@ -1,12 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
   </ItemGroup>
 
