@@ -25,7 +25,11 @@ namespace NeoServer.Server.Events
 
             foreach (var spectatorId in map.GetCreaturesAtPositionZone(tile.Location))
             {
-                var connection = game.CreatureManager.GetPlayerConnection(spectatorId);
+                IConnection connection = null;
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+                {
+                    continue;
+                }
 
                 if (!player.IsDead)
                 {
@@ -34,7 +38,7 @@ namespace NeoServer.Server.Events
 
                 connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, fromStackPosition));
 
-                connection.Send(true);
+                connection.Send();
             }
         }
     }

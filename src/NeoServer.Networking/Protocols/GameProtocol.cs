@@ -11,7 +11,7 @@ using System.Text;
 
 namespace NeoServer.Networking.Protocols
 {
-    public class GameProtocol : OpenTibiaProtocol
+    public class GameProtocol : Protocol
     {
         private Func<IConnection, IPacketHandler> _handlerFactory;
         public GameProtocol(Func<IConnection, IPacketHandler> handlerFactory)
@@ -21,10 +21,10 @@ namespace NeoServer.Networking.Protocols
         public override string ToString() => "Game Protocol";
         public override bool KeepConnectionOpen => true;
 
-        public override void OnAcceptNewConnection(IConnection connection)
+        public override void OnAccept(IConnection connection)
         {
             HandlerFirstConnection(connection);
-            //base.OnAcceptNewConnection(connection);
+            base.OnAccept(connection);
             
         }
 
@@ -44,7 +44,7 @@ namespace NeoServer.Networking.Protocols
             }
 
             var handler = _handlerFactory(args.Connection);
-            handler.HandlerMessage(args.Connection.InMessage, args.Connection);
+            handler?.HandlerMessage(args.Connection.InMessage, args.Connection);
         }
     }
 }

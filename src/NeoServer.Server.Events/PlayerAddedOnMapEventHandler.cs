@@ -39,9 +39,13 @@ namespace NeoServer.Server.Events
                     SendPacketsToSpectator(spectator, player, outgoingPackets);
                 }
 
-                var connection = game.CreatureManager.GetPlayerConnection(spectatorId);
+                IConnection connection = null;
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+                {
+                    continue;
+                }
 
-                connection.Send(outgoingPackets, isSpectator);
+                connection.Send(outgoingPackets);
 
             }
 

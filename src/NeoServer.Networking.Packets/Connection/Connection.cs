@@ -13,6 +13,9 @@ namespace NeoServer.Networking
 {
     public class Connection : IConnection
     {
+        private const int NETWORK_MESSAGE_MAXSIZE = 24590 - 16;
+        private const int HEADER_LENGTH = 2;
+
         public event EventHandler<IConnectionEventArgs> OnProcessEvent;
         public event EventHandler<IConnectionEventArgs> OnCloseEvent;
         public event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
@@ -20,6 +23,7 @@ namespace NeoServer.Networking
         private Socket Socket;
         private Stream Stream;
         private object writeLock;
+        private object connectionLock;
 
 
         public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
@@ -32,20 +36,29 @@ namespace NeoServer.Networking
         public bool Disconnected { get; private set; } = false;
 
         public int BeginStreamReadCalls { get; set; }
+        public long LastPingRequest { get; set; }
+        public long LastPingResponse { get; set; }
+
+        public string IP { get; }
 
         public Connection(Socket socket)
         {
             Socket = socket;
+            IP = socket.RemoteEndPoint.ToString();
             Stream = new NetworkStream(Socket);
             XteaKey = new uint[4];
             IsAuthenticated = false;
             InMessage = new ReadOnlyNetworkMessage(new byte[16394], 0);
             writeLock = new object();
+            connectionLock = new object();
 
         }
         public void BeginStreamRead()
         {
-            Stream.BeginRead(InMessage.Buffer, 0, 2, OnRead, null);
+            if (Stream.CanRead || Socket.Connected)
+            {
+                Stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
+            }
         }
 
         public void SetXtea(uint[] xtea)
@@ -56,9 +69,7 @@ namespace NeoServer.Networking
 
         private void OnRead(IAsyncResult ar)
         {
-
-
-
+           
             var clientDisconnected = !this.CompleteRead(ar);
             if (clientDisconnected && !IsAuthenticated)
             {
@@ -67,6 +78,7 @@ namespace NeoServer.Networking
             }
             if (clientDisconnected && IsAuthenticated)
             {
+                
                 Disconnected = true;
             }
 
@@ -83,7 +95,7 @@ namespace NeoServer.Networking
 
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent?.Invoke(this, eventArgs);
-
+                BeginStreamRead();
             }
             catch (Exception e)
             {
@@ -101,33 +113,38 @@ namespace NeoServer.Networking
         {
             try
             {
-                int read = Stream.EndRead(ar);
-
-
-
-
-                if (read == 0)
+                lock (connectionLock)
                 {
-                    Console.WriteLine($"{read} bytes read from {PlayerId}");
-                    // client disconnected
-                    //this.Close();
+                    int read = Stream.EndRead(ar);
 
-                    return false;
-                }
-
-                int size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
-
-                while (read < size)
-                {
-                    if (Stream.CanRead)
+                    if (read == 0)
                     {
-                        read += Stream.Read(InMessage.Buffer, read, size - read);
+                        Console.WriteLine($"{read} bytes read from {PlayerId}");
+                        // client disconnected
+                        //this.Close();
+
+                        return false;
                     }
+
+                    int size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
+
+                    if (size >= NETWORK_MESSAGE_MAXSIZE)
+                    {
+                        Close(true);
+                        return false;
+                    }
+
+                    while (read < size)
+                    {
+                        if (Stream.CanRead)
+                        {
+                            read += Stream.Read(InMessage.Buffer, read, size - read);
+                        }
+                    }
+
+                    InMessage.Resize(size);
+                    Console.WriteLine($"{size} bytes read on connection {PlayerId}");
                 }
-
-                InMessage.Resize(size);
-
-                Console.WriteLine($"{size} bytes read on connection {PlayerId}");
 
 
 
@@ -146,17 +163,51 @@ namespace NeoServer.Networking
 
 
 
-        public void Close()
+        public void Close(bool force = false)
         {
-            Stream.Close();
-            Socket.Close();
+            //todo needs to remove this connection from pool
+            lock (connectionLock)
+            {
+                if (!Socket.Connected)
+                {
+                    if (Stream.CanRead)
+                    {
+                        Stream.Close();
+                    }
+                    return;
+                }
+
+                if (OutgoingPackets == null || !OutgoingPackets.Any() || force)
+                {
+                    CloseSocket();
+                }
+                else
+                {
+                    //need to close connection when outgoing queue is empty;
+                }
+            }
 
             // Tells the subscribers of this event that this connection has been closed.
             OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
 
         }
 
-        private void SendMessage(INetworkMessage message, bool notification = false)
+        private void CloseSocket()
+        {
+            try
+            {
+                Socket.Shutdown(SocketShutdown.Both);
+                Socket.Close();
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Error on socket closing");
+            }
+
+        }
+
+        private void SendMessage(INetworkMessage message)
         {
             try
             {
@@ -166,16 +217,13 @@ namespace NeoServer.Networking
                     Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
                 }
 
-                if (!notification)
-                {
+               
                     var eventArgs = new ConnectionEventArgs(this);
                     OnPostProcessEvent?.Invoke(this, eventArgs);
-                }
-
-
             }
             catch (ObjectDisposedException)
             {
+                Console.WriteLine("Network error - Send Message fail");
                 Close();
             }
         }
@@ -189,7 +237,7 @@ namespace NeoServer.Networking
             SendMessage(message);
         }
 
-        public void Send(IOutgoingPacket packet, bool notification = false)
+        public void Send(IOutgoingPacket packet)
         {
             var message = new NetworkMessage();
 
@@ -199,7 +247,7 @@ namespace NeoServer.Networking
 
             var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
 
-            SendMessage(encryptedMessage, notification);
+            SendMessage(encryptedMessage);
 
         }
 
@@ -207,7 +255,7 @@ namespace NeoServer.Networking
         /// Sends all packets in connection's outgoing packets queue and clean
         /// </summary>
         /// <param name="notification"></param>
-        public void Send(bool notification = false)
+        public void Send()
         {
             var message = new NetworkMessage();
 
@@ -220,10 +268,10 @@ namespace NeoServer.Networking
 
             var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
 
-            SendMessage(encryptedMessage, notification);
+            SendMessage(encryptedMessage);
         }
 
-        public void Send(Queue<IOutgoingPacket> outgoingPackets, bool notification = false)
+        public void Send(Queue<IOutgoingPacket> outgoingPackets)
         {
             var message = new NetworkMessage();
 
@@ -236,7 +284,7 @@ namespace NeoServer.Networking
 
             var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
 
-            SendMessage(encryptedMessage, notification);
+            SendMessage(encryptedMessage);
         }
         public void Disconnect(string text)
         {
@@ -256,7 +304,7 @@ namespace NeoServer.Networking
 
         public void SetConnectionOwner(IPlayer player)
         {
-            
+
             if (PlayerId != 0)
             {
                 throw new InvalidOperationException("Connection already has a Player Id");

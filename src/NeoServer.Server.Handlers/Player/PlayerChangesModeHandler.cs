@@ -28,8 +28,6 @@ namespace NeoServer.Server.Handlers.Authentication
             player.SetChaseMode(changeMode.ChaseMode);
             player.SetSecureMode(changeMode.SecureMode);
 
-            connection.BeginStreamRead();
-
         }
     }
 }

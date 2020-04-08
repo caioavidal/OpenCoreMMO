@@ -59,7 +59,12 @@ namespace NeoServer.Server.Commands
 
             foreach (var spectatorId in spectators)
             {
-                var spectatorConnnection = game.CreatureManager.GetPlayerConnection(spectatorId);
+                IConnection spectatorConnnection = null;
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out spectatorConnnection))
+                {
+                    continue;
+                }
+
                 var spectator = game.CreatureManager.GetCreature(spectatorId);
 
                 if (spectatorId == player.CreatureId)
@@ -73,7 +78,7 @@ namespace NeoServer.Server.Commands
                 if (spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
                 {
                     outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
-                    spectatorConnnection.Send(outgoingPackets, true);
+                    spectatorConnnection.Send(outgoingPackets);
                     continue;
                 }
 
@@ -81,7 +86,7 @@ namespace NeoServer.Server.Commands
                 {
                     //happens when player leaves spectator'ss view area
                     outgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
-                    spectatorConnnection.Send(outgoingPackets, true);
+                    spectatorConnnection.Send(outgoingPackets);
 
                     continue;
                 }
@@ -91,7 +96,7 @@ namespace NeoServer.Server.Commands
                     //happens when player enters spectator's view area
                     outgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
                     outgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
-                    spectatorConnnection.Send(outgoingPackets, true);
+                    spectatorConnnection.Send(outgoingPackets);
                     continue;
                 }
 

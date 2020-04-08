@@ -128,7 +128,24 @@ namespace NeoServer.Server.Model.Players
 
         public bool CannotLogout => !Tile.ProtectionZone && InFight;
 
-      
+        public bool CanLogout
+        {
+            get
+            {
+                //todo inconnection validation
+
+                if (Tile.CannotLogout)
+                {
+                    return false;
+                }
+                if (Tile.ProtectionZone)
+                {
+                    return true;
+                }
+
+                return !CannotLogout;
+            }
+        }
 
         public Location LocationInFront
         {

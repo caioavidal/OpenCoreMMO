@@ -10,6 +10,7 @@ using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
+using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Model.Players;
 
 using NeoServer.Server.Security;
@@ -53,6 +54,7 @@ namespace NeoServer.Server.Standalone
             Task.Factory.StartNew(() => dispatcher.Start(cancellationToken), TaskCreationOptions.LongRunning);
             Task.Factory.StartNew(() => scheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
 
+            Task.Factory.StartNew(container.Resolve<GameCreatureJob>().StartCheckingCreatures, TaskCreationOptions.LongRunning);
 
             container.Resolve<EventSubscriber>().AttachEvents();
 

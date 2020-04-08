@@ -24,7 +24,7 @@ using NeoServer.Game.World;
 using NeoServer.Server.Tasks;
 using NeoServer.Server.Tasks.Contracts;
 using NeoServer.Server.Events;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Jobs.Creatures;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -86,6 +86,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
             builder.RegisterType<EventSubscriber>().SingleInstance();
+            builder.RegisterType<GameCreatureJob>().SingleInstance();
 
             return builder.Build();
         }
@@ -133,7 +134,9 @@ namespace NeoServer.Server.Standalone.IoC
                 if (!InputHandlerMap.Data.TryGetValue(packet, out handlerType))
                 {
                     Console.WriteLine($"Incoming Packet not handled: {packet}");
+                    
                 }
+                Console.WriteLine($"Incoming Packet: {packet}");
                 return (IPacketHandler)c.Resolve(handlerType);
             });
         }

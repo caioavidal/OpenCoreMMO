@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NeoServer.Networking.Listeners
 {
-    public class LoginListener : OpenTibiaListener
+    public class LoginListener : Listener
     {
         public LoginListener(LoginProtocol protocol) : base(7171, protocol) 
         {

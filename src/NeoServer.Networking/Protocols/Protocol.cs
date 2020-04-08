@@ -5,13 +5,17 @@ using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Protocols
 {
-    public abstract class OpenTibiaProtocol : IProtocol
+    public abstract class Protocol : IProtocol
     {
         public virtual bool KeepConnectionOpen { get; protected set; }
 
-        public virtual void OnAcceptNewConnection(IConnection connection)
+
+
+        public virtual void OnAccept(IConnection connection)
         {
             connection.BeginStreamRead();
+
+            //todo ip ban validation
         }
 
         public void PostProcessMessage(object sender, IConnectionEventArgs args)
@@ -21,10 +25,6 @@ namespace NeoServer.Networking.Protocols
                 args.Connection.Close();
                 return;
             }
-
-            args.Connection.InMessage.Reset();
-
-            args.Connection.BeginStreamRead();
         }
 
 

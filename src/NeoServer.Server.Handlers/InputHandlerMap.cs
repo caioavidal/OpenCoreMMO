@@ -1,5 +1,6 @@
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Handlers.Authentication;
+using NeoServer.Server.Handlers.Player;
 using NeoServer.Server.Handlers.Players;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.TurnNorth, typeof(PlayerTurnHandler)},
             { GameIncomingPacketType.TurnSouth, typeof(PlayerTurnHandler)},
             { GameIncomingPacketType.AutoMove, typeof(PlayerAutoWalkHandler)},
+            { GameIncomingPacketType.Ping, typeof(PlayerPingResponseHandler)},
         };
     }
 }

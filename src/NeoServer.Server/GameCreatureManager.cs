@@ -18,6 +18,9 @@ namespace NeoServer.Server
         private readonly Dictionary<uint, ICreature> Npcs;
 
         private readonly Func<PlayerModel, IPlayer> playerFactory;
+
+        public IEnumerable<ICreature> GetCreatures() => creatureInstances.All();
+
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
         private IMap map;
         public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Func<PlayerModel, IPlayer> playerFactory)
@@ -73,19 +76,17 @@ namespace NeoServer.Server
 
         public bool RemovePlayer(IPlayer player)
         {
-            IConnection connection = null;
-            if (!playersConnection.TryRemove(player.CreatureId, out connection))
+            if (playersConnection.TryRemove(player.CreatureId, out IConnection connection))
             {
-                return false;
+                connection.Close();
             }
-
-            connection.Close();
 
             RemoveCreature(player);
 
             return true;
         }
 
-        public IConnection GetPlayerConnection(uint playerId) => playersConnection[playerId];
+        public bool GetPlayerConnection(uint playerId, out IConnection connection) => playersConnection.TryGetValue(playerId, out connection);
+
     }
 }

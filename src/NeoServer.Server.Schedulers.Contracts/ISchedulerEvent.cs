@@ -8,6 +8,6 @@ namespace NeoServer.Server.Tasks.Contracts
         uint EventId { get; }
    
         void SetEventId(uint eventId);
-        TimeSpan ExpirationTime { get; }
+        int ExpirationDelay { get; }
     }
 }

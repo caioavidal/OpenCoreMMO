@@ -30,9 +30,13 @@ namespace NeoServer.Server.Events
 
                 outgoingPackets.Enqueue(new TurnToDirectionPacket((IPlayer)player, direction));
 
-                var connection = game.CreatureManager.GetPlayerConnection(spectatorId);
+                IConnection connection = null;
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+                {
+                    continue;
+                }
 
-                connection.Send(outgoingPackets, isSpectator);
+                connection.Send(outgoingPackets);
 
 
             }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creature
@@ -17,6 +18,7 @@ namespace NeoServer.Game.Creature
 
         public ICreature this[uint id] => GameInstances[id];
 
+        public IEnumerable<ICreature> All() => GameInstances.Values;
 
         public void Add(ICreature creature)
         {

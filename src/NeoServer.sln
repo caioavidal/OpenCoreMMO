@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.Tasks", "N
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Tasks", "1 - Tasks", "{79547C63-1947-4CB7-9D11-240930DDA604}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.Jobs", "NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj", "{966C5E69-B1DF-4594-8C6F-C7F32C02866F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,10 @@ Global
 		{7E1103DD-F4C2-4E77-ABFA-6300739279C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E1103DD-F4C2-4E77-ABFA-6300739279C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E1103DD-F4C2-4E77-ABFA-6300739279C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{966C5E69-B1DF-4594-8C6F-C7F32C02866F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966C5E69-B1DF-4594-8C6F-C7F32C02866F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966C5E69-B1DF-4594-8C6F-C7F32C02866F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966C5E69-B1DF-4594-8C6F-C7F32C02866F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,6 +207,7 @@ Global
 		{EEE980F3-5916-45FD-9ABA-8F5D078E115C} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
 		{7E1103DD-F4C2-4E77-ABFA-6300739279C7} = {79547C63-1947-4CB7-9D11-240930DDA604}
 		{79547C63-1947-4CB7-9D11-240930DDA604} = {E0298381-8C65-4339-835B-0F4D230E479E}
+		{966C5E69-B1DF-4594-8C6F-C7F32C02866F} = {E0298381-8C65-4339-835B-0F4D230E479E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B3C7097-0071-4218-BE24-5EE9128763B6}

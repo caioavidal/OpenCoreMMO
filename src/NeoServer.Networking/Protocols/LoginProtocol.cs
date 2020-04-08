@@ -11,7 +11,7 @@ using System.Text;
 
 namespace NeoServer.Networking.Protocols
 {
-    public class LoginProtocol : OpenTibiaProtocol
+    public class LoginProtocol : Protocol
     {
         public override bool KeepConnectionOpen => false;
         private Func<IConnection, IPacketHandler> _handlerFactory;

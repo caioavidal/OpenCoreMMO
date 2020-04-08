@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Networking.Listeners
 {
-    internal interface IOpenTibiaListener
+    internal interface IListener
     {
         void BeginListening();
         void EndListening();

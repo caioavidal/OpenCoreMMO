@@ -14,20 +14,23 @@ namespace NeoServer.Server.Contracts.Network
         bool IsAuthenticated { get; }
         bool Disconnected { get; }
         Queue<IOutgoingPacket> OutgoingPackets { get; }
+        long LastPingRequest { get; set; }
+        long LastPingResponse { get; set; }
+        string IP { get; }
 
         event EventHandler<IConnectionEventArgs> OnProcessEvent;
         event EventHandler<IConnectionEventArgs> OnCloseEvent;
         event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
 
         void BeginStreamRead();
-        void Close();
+        void Close(bool force = false);
         void Disconnect(string text);
-        void Send(IOutgoingPacket packet, bool notification = false);
-        void Send(Queue<IOutgoingPacket> outgoingPackets, bool notification = false);
+        void Send(IOutgoingPacket packet);
+        void Send(Queue<IOutgoingPacket> outgoingPackets);
         void SendFirstConnection();
         void SetXtea(uint[] xtea);
         void SetAsAuthenticated();
         void SetConnectionOwner(IPlayer player);
-        void Send(bool notification = false);
+        void Send();
     }
 }

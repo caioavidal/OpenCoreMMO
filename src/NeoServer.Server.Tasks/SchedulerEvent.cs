@@ -14,10 +14,10 @@ namespace NeoServer.Server.Tasks
         }
         public ShedulerEvent(uint delay, Action action) : base(delay, action)
         {
-            ExpirationTime = DateTime.Now.AddMilliseconds(delay).TimeOfDay;
+            ExpirationDelay = DateTime.Now.AddMilliseconds(delay).Millisecond;
         }
 
-        public TimeSpan ExpirationTime { get; }
+        public int ExpirationDelay { get; }
 
         public uint EventId { get; private set; }
 

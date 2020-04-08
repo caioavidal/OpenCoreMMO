@@ -13,33 +13,41 @@ namespace NeoServer.Server.Commands
     {
         private readonly Game game;
         private readonly IPlayer player;
-        public PlayerLogOutCommand(IPlayer player, Game game)
+        private readonly bool forced;
+        public PlayerLogOutCommand(IPlayer player, Game game, bool forced = false)
         {
             this.player = player;
             this.game = game;
+            this.forced = forced;
         }
 
         public override void Execute()
         {
-            var connection = game.CreatureManager.GetPlayerConnection(player.CreatureId);
-
-            if (player.Tile.CannotLogout)
+            if (!player.IsRemoved)
             {
-                connection.Send(new TextMessagePacket("You can not logout here.", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
+                game.CreatureManager.RemovePlayer(player);
                 return;
             }
 
-            if (player.CannotLogout)
+            if (forced)
             {
-                connection.Send(new TextMessagePacket("You may not logout during or immediately after a fight!", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
                 return;
             }
 
-           
+            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out IConnection connection))
+            {
+                if (player.Tile.CannotLogout)
+                {
+                    connection.Send(new TextMessagePacket("You can not logout here.", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
+                    return;
+                }
 
-
-
-            game.CreatureManager.RemovePlayer(player);
+                if (player.CannotLogout)
+                {
+                    connection.Send(new TextMessagePacket("You may not logout during or immediately after a fight!", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
+                    return;
+                }
+            }
         }
     }
 }

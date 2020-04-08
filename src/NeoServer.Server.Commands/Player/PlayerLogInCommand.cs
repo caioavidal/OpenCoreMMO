@@ -33,6 +33,12 @@ namespace NeoServer.Server.Commands
         {
             var playerRecord = account.Players.FirstOrDefault(p => p.CharacterName == characterName);
 
+            if(playerRecord == null)
+            {
+                //todo validations here
+                return;
+            }
+
             game.CreatureManager.AddPlayer(playerRecord, connection);
         }
     }

@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Protocols
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="ar">The result of connecting.</param>
-        void OnAcceptNewConnection(IConnection connection);
+        void OnAccept(IConnection connection);
 
         /// <summary>
         /// Processes an incomming message from the connection.

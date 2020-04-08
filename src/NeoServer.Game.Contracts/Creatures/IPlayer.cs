@@ -27,6 +27,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte SecureMode { get; }
 
         bool InFight { get; }
+        bool CanLogout { get; }
 
         //  IAction PendingAction { get; }
 

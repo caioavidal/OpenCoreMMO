@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Networking.Listeners
 {
-    public abstract class OpenTibiaListener : TcpListener, IOpenTibiaListener
+    public abstract class Listener : TcpListener, IListener
     {
-        private readonly IProtocol _protocol;
-        public OpenTibiaListener(int port, IProtocol protocol) : base(IPAddress.Any, port)
+        private readonly IProtocol protocol;
+        public Listener(int port, IProtocol protocol) : base(IPAddress.Any, port)
         {
-            _protocol = protocol;
+            this.protocol = protocol;
         }
 
         public void BeginListening()
@@ -22,13 +22,13 @@ namespace NeoServer.Networking.Listeners
             Task.Run(async () =>
             {
                 Start();
-                Console.WriteLine($"{_protocol} is online");
+                Console.WriteLine($"{protocol} is online");
 
                 while (true)
                 {
                     var connection = await CreateConnection();
 
-                    _protocol.OnAcceptNewConnection(connection);
+                    protocol.OnAccept(connection);
                 }
                 
             });
@@ -41,8 +41,8 @@ namespace NeoServer.Networking.Listeners
             var connection = new Connection(socket);
 
             connection.OnCloseEvent += OnConnectionClose;
-            connection.OnProcessEvent += _protocol.ProcessMessage;
-            connection.OnPostProcessEvent += _protocol.PostProcessMessage;
+            connection.OnProcessEvent += protocol.ProcessMessage;
+            connection.OnPostProcessEvent += protocol.PostProcessMessage;
             return connection;
         }
 
@@ -50,8 +50,8 @@ namespace NeoServer.Networking.Listeners
         {
             // De-subscribe to this event first.
             args.Connection.OnCloseEvent -= OnConnectionClose;
-            args.Connection.OnProcessEvent -= _protocol.ProcessMessage;
-            args.Connection.OnPostProcessEvent -= _protocol.PostProcessMessage;
+            args.Connection.OnProcessEvent -= protocol.ProcessMessage;
+            args.Connection.OnPostProcessEvent -= protocol.PostProcessMessage;
 
             //  _connections.Remove(connection);
         }

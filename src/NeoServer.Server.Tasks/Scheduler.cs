@@ -67,7 +67,6 @@ namespace NeoServer.Server.Tasks
             {
                 Monitor.Enter(eventLock);
 
-                var timeout = false;
 
                 if (!eventQueue.Any())
                 {
@@ -75,11 +74,12 @@ namespace NeoServer.Server.Tasks
                 }
                 else
                 {
+                  
                     //waits the delay expire
-                    timeout = Monitor.Wait(eventLock, eventQueue.Peek().ExpirationTime);
+                    Monitor.Wait(eventLock, eventQueue.Peek().ExpirationDelay);
                 }
 
-                if(timeout && eventQueue.Any())
+                if(eventQueue.Any())
                 {
                     //ok the event had a timeout and the quere is not empty
                     var evt = eventQueue.Dequeue();
