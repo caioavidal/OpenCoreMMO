@@ -1,10 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
     <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
-        <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Schedulers.Contracts.csproj" />
+        <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Tasks.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
   </ItemGroup>

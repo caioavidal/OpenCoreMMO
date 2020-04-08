@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Events;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Schedulers.Contracts;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {
-    public class ThingRemovedFromTileEventHandler : IEventHandler<ThingRemovedFromTileEvent>
+    public class ThingRemovedFromTileEventHandler
     {
         private readonly IMap map;
         private readonly Game game;
@@ -18,18 +19,22 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(ThingRemovedFromTileEvent evt)
+        public void Execute(IThing thing, ITile tile, byte fromStackPosition)
         {
-            var outgoingPackets = new Queue<IOutgoingPacket>();
-            foreach (var spectatorId in map.GetCreaturesAtPositionZone(evt.Tile.Location))
-            {
-                if (game.Connections.TryGetValue(spectatorId, out IConnection connection))
-                {
-                    outgoingPackets.Enqueue(new RemoveTileThingPacket(evt.Tile, evt.StackPosition));
-                    outgoingPackets.Enqueue(new MagicEffectPacket(evt.Tile.Location, EffectT.Puff));
+            var player = thing as IPlayer;
 
-                    connection.Send(outgoingPackets, true);
+            foreach (var spectatorId in map.GetCreaturesAtPositionZone(tile.Location))
+            {
+                var connection = game.CreatureManager.GetPlayerConnection(spectatorId);
+
+                if (!player.IsDead)
+                {
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
                 }
+
+                connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, fromStackPosition));
+
+                connection.Send(true);
             }
         }
     }

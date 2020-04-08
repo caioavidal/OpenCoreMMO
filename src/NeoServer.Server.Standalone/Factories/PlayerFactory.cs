@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Events;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Events;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -12,11 +11,13 @@ namespace NeoServer.Server.Standalone.Factories
     internal class PlayerFactory
     {
         private readonly Func<ushort, IItem> itemFactory;
-        private readonly IDispatcher dispatcher;
-        public PlayerFactory(Func<ushort, IItem> itemFactory, IDispatcher dispatcher)
+        private readonly PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler;
+        
+
+        public PlayerFactory(Func<ushort, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler)
         {
             this.itemFactory = itemFactory;
-            this.dispatcher = dispatcher;
+            this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
         }
         private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
@@ -45,7 +46,7 @@ namespace NeoServer.Server.Standalone.Factories
                 player.Location
                 );
 
-            newPlayer.OnTurnedToDirection += (direction) => dispatcher.Dispatch(new PlayerTurnToDirectionEvent(newPlayer, direction));
+            newPlayer.OnTurnedToDirection += playerTurnToDirectionEventHandler.Execute;
             return newPlayer;
         }
 

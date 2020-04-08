@@ -2,11 +2,11 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Schedulers.Contracts;
+
 
 namespace NeoServer.Game.Events
 {
-    public class PlayerTurnToDirectionEvent : IEvent
+    public class PlayerTurnToDirectionEvent 
     {
         public PlayerTurnToDirectionEvent(IPlayer player, Direction direction)
         {

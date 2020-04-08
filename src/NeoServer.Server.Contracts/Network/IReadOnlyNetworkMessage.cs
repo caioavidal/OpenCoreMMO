@@ -1,3 +1,4 @@
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using System.Collections.Generic;
@@ -22,5 +23,6 @@ namespace NeoServer.Server.Contracts.Network
         GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated);
         void Resize(int length);
         void Reset();
+        Location GetLocation();
     }
 }

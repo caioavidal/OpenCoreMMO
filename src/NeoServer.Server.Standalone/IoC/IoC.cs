@@ -2,7 +2,6 @@
 using System.Reflection;
 using Autofac;
 using NeoServer.Data.RavenDB;
-using NeoServer.Game.Commands;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature;
@@ -10,22 +9,22 @@ using NeoServer.Loaders.Items;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
 using NeoServer.Game.Items;
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Schedulers;
-using NeoServer.Server.Schedulers.Contracts;
+
 using NeoServer.Server.Standalone.Factories;
 using NeoServer.Game.World.Map;
 using Serilog;
 using Serilog.Core;
 using NeoServer.Game.World;
+using NeoServer.Server.Tasks;
+using NeoServer.Server.Tasks.Contracts;
+using NeoServer.Server.Events;
+using NeoServer.Server.Contracts;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -36,7 +35,7 @@ namespace NeoServer.Server.Standalone.IoC
             var builder = new ContainerBuilder();
 
             //server
-            builder.RegisterType<ServerState>().SingleInstance();
+            builder.RegisterType<GameState>().SingleInstance();
 
             builder.RegisterInstance<Logger>(new LoggerConfiguration()
                 .WriteTo.Console()
@@ -52,6 +51,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameListener>();
 
             builder.RegisterType<Game>().SingleInstance();
+            builder.RegisterType<GameCreatureManager>().SingleInstance();
 
             RegisterPacketHandlers(builder);
 
@@ -60,7 +60,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
 
             RegisterEvents(builder);
-            //RegisterCommands(builder);
+            
 
             RegisterIncomingPacketFactory(builder);
 
@@ -85,6 +85,8 @@ namespace NeoServer.Server.Standalone.IoC
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
+            builder.RegisterType<EventSubscriber>().SingleInstance();
+
             return builder.Build();
         }
 
@@ -94,19 +96,13 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(assemblies);
         }
 
-        private static void RegisterCommands(ContainerBuilder builder)
-        {
-            var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommandHandler));
 
-            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
-        }
         private static void RegisterEvents(ContainerBuilder builder)
         {
             var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
-            var assemblyCommands = Assembly.GetAssembly(typeof(PlayerLogInCommandHandler));
 
-            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IEventHandler<>));
-            builder.RegisterAssemblyTypes(assemblyCommands).AsClosedTypesOf(typeof(IEventHandler<>));
+            builder.RegisterAssemblyTypes(assembly);
+
         }
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
@@ -134,7 +130,7 @@ namespace NeoServer.Server.Standalone.IoC
 
                 Type handlerType = null;
 
-                if (!IncomingPacketHandlerData.Data.TryGetValue(packet, out handlerType))
+                if (!InputHandlerMap.Data.TryGetValue(packet, out handlerType))
                 {
                     Console.WriteLine($"Incoming Packet not handled: {packet}");
                 }

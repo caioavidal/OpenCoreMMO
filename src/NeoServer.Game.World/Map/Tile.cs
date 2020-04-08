@@ -18,6 +18,8 @@ namespace NeoServer.Game.World.Map
     public class Tile : Contracts.ITile
     {
 
+        public event RemoveThing OnThingRemovedFromTile;
+
         private readonly Stack<uint> _creatureIdsOnTile;
 
         private readonly Stack<IItem> _topItems1OnTile;
@@ -34,6 +36,20 @@ namespace NeoServer.Game.World.Map
 
         public IItem Ground { get; set; }
 
+        public FloorDirection FloorDestination
+        {
+
+            get
+            {
+
+                if (Ground.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out IConvertible direction))
+                {
+                    return FloorDirection.Down;//todo create parse
+                }
+                return FloorDirection.None;
+            }
+        }
+
         public IEnumerable<uint> CreatureIds => _creatureIdsOnTile;
 
         public IEnumerable<IItem> TopItems1 => _topItems1OnTile;
@@ -41,6 +57,11 @@ namespace NeoServer.Game.World.Map
         public IEnumerable<IItem> TopItems2 => _topItems2OnTile;
 
         public IEnumerable<IItem> DownItems => _downItemsOnTile;
+
+        public bool CannotLogout => HasFlag(TileFlags.NoLogout);
+        public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
+
+        private bool HasFlag(TileFlags flag) => ((uint)flag & Flags) != 0;
 
         public bool HandlesCollision
         {
@@ -252,18 +273,18 @@ namespace NeoServer.Game.World.Map
 
 
 
-        public Tile(Coordinate coordinate): this(new Location()
-            {
-                X = coordinate.X,
-                Y = coordinate.Y,
-                Z = coordinate.Z
-            })
+        public Tile(Coordinate coordinate) : this(new Location()
+        {
+            X = coordinate.X,
+            Y = coordinate.Y,
+            Z = coordinate.Z
+        })
         {
         }
         public Tile(ushort x, ushort y, sbyte z)
             : this(new Location { X = x, Y = y, Z = z })
         {
-            
+
         }
 
         public Tile(Location loc)
@@ -362,6 +383,7 @@ namespace NeoServer.Game.World.Map
 
         public void RemoveThing(ref IThing thing, byte count)
         {
+            var fromStackPosition = thing.GetStackPosition();
 
             if (count == 0)
             {
@@ -374,7 +396,7 @@ namespace NeoServer.Game.World.Map
             {
                 RemoveCreature(creature);
                 creature.Tile = null;
-                creature.Removed();
+                //creature.Removed();
             }
             else if (item != null)
             {
@@ -433,7 +455,6 @@ namespace NeoServer.Game.World.Map
             {
                 throw new InvalidCastException("Thing did not cast to either a CreatureId or Item.");
             }
-
             // invalidate the cache.
             _cachedDescription = null;
         }

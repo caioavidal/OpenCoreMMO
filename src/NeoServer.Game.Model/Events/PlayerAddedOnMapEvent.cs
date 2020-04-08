@@ -1,11 +1,8 @@
-
-using NeoServer.Game.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Schedulers.Contracts;
 
 namespace NeoServer.Game.Events
 {
-    public class PlayerAddedOnMapEvent : IEvent
+    public class PlayerAddedOnMapEvent
     {
         public PlayerAddedOnMapEvent(IPlayer player)
         {

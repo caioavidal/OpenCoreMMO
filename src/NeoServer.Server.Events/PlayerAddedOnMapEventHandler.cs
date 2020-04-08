@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Events;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Schedulers;
-using NeoServer.Server.Schedulers.Contracts;
 
 namespace NeoServer.Server.Events
 {
-    public class PlayerAddedOnMapEventHandler : IEventHandler<PlayerAddedOnMapEvent>
+    public class PlayerAddedOnMapEventHandler : IEventHandler
     {
         private readonly IMap map;
         private readonly Game game;
@@ -22,9 +20,9 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(PlayerAddedOnMapEvent evt)
+        public void Execute(IPlayer player)
+
         {
-            var player = evt.Player;
 
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
@@ -37,14 +35,14 @@ namespace NeoServer.Server.Events
                 }
                 else
                 {
-                    var spectator = game.CreatureInstances[spectatorId] as IPlayer;
+                    var spectator = game.CreatureManager.GetCreature(spectatorId) as IPlayer;
                     SendPacketsToSpectator(spectator, player, outgoingPackets);
                 }
 
-                if (game.Connections.TryGetValue(spectatorId, out IConnection connection))
-                {
-                    connection.Send(outgoingPackets, isSpectator);
-                }
+                var connection = game.CreatureManager.GetPlayerConnection(spectatorId);
+
+                connection.Send(outgoingPackets, isSpectator);
+
             }
 
 

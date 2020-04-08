@@ -18,13 +18,15 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
 
-        bool CanLogout { get; }
+        bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
 
         Location LocationInFront { get; }
         FightMode FightMode { get; }
         ChaseMode ChaseMode { get; }
         byte SecureMode { get; }
+
+        bool InFight { get; }
 
         //  IAction PendingAction { get; }
 

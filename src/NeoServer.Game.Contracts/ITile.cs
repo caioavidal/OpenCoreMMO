@@ -6,6 +6,7 @@ using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Contracts
 {
+    public delegate void RemoveThing(IThing thing, ITile tile, byte stackPosition);
     public interface ITile
     {
         bool HandlesCollision { get; }
@@ -39,6 +40,10 @@ namespace NeoServer.Game.Contracts
         IEnumerable<IItem> DownItems { get; }
 
         byte[] CachedDescription { get; }
+        bool CannotLogout { get; }
+        bool ProtectionZone { get; }
+
+        event RemoveThing OnThingRemovedFromTile;
 
         void AddThing(ref IThing thing, byte count = 1);
 

@@ -1,5 +1,4 @@
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Schedulers.Contracts;
+using NeoServer.Server.Tasks.Contracts;
 
 namespace NeoServer.Server.Contracts.Commands
 {

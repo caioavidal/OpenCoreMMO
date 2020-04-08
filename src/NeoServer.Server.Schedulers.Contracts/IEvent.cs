@@ -1,9 +1,15 @@
-namespace NeoServer.Server.Schedulers.Contracts
+using System;
+
+namespace NeoServer.Server.Tasks.Contracts
 {
     public interface IEvent
     {
-        string EventId { get; }
-        uint RequestorId { get; }
-        string ErrorMessage { get; }
+     
+        Action Action { get; }
+
+        bool HasExpired { get; }
+        bool HasNoTimeout { get; }
+
+        void SetToNotExpire();
     }
 }

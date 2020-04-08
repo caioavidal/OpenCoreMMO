@@ -1,10 +1,10 @@
-using NeoServer.Server.Schedulers.Contracts;
+//using NeoServer.Server.Schedulers.Contracts;
 
-namespace NeoServer.Server.Contracts.Commands
-{
+//namespace NeoServer.Server.Contracts.Commands
+//{
 
-    public interface ICommandHandler<TCommand> : IEventHandler<TCommand> where TCommand : ICommand
-    {
+//    public interface ICommandHandler<TCommand> : IEventHandler<TCommand> where TCommand : ICommand
+//    {
 
-    }
-}
+//    }
+//}

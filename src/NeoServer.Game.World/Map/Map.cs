@@ -5,6 +5,7 @@
 // </copyright>
 
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -26,23 +27,21 @@ namespace NeoServer.Game.World.Map
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
         public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
 
-        public void AddPlayerOnMap(IPlayer player)
-        {
-            var thing = player as IThing;
+        
 
-            this[player.Location].AddThing(ref thing);            
-            dispatcher.Dispatch(new PlayerAddedOnMapEvent(player));
-        }
+        public event PlaceCreatureOnMap CreatureAddedOnMap;
+        public event RemoveThingFromTile ThingRemovedFromTile;
+
+
 
         private readonly World world;
         private readonly CreatureDescription creatureDescription;
-        private readonly IDispatcher dispatcher;
 
-        public Map(World world, CreatureDescription creatureDescription, IDispatcher dispatcher)
+        public Map(World world, CreatureDescription creatureDescription)
         {
             this.world = world;
             this.creatureDescription = creatureDescription;
-            this.dispatcher = dispatcher;
+
         }
 
         public ITile this[Location location] => world.GetTile(location);
@@ -56,10 +55,10 @@ namespace NeoServer.Game.World.Map
         }
         public void RemoveThing(ref IThing thing, ITile tile, byte count)
         {
-            var stackPosition = thing.GetStackPosition();
+            var fromStackPosition = thing.GetStackPosition();
             tile.RemoveThing(ref thing, count);
 
-            dispatcher.Dispatch(new ThingRemovedFromTileEvent(tile, stackPosition));
+            ThingRemovedFromTile(thing, tile, fromStackPosition);
         }
 
 
@@ -155,7 +154,7 @@ namespace NeoServer.Game.World.Map
             {
                 for (var ny = 0; ny < height; ny++)
                 {
-                    
+
                     var tile = this[(ushort)(fromX + nx + verticalOffset), (ushort)(fromY + ny + verticalOffset), currentZ];
 
                     if (tile != null)
@@ -307,6 +306,15 @@ namespace NeoServer.Game.World.Map
             {
                 tempBytes.Add(item.LiquidType);
             }
+        }
+
+        public void AddCreature(ICreature creature)
+        {
+            var thing = creature as IThing;
+            this[creature.Location].AddThing(ref thing);
+
+            CreatureAddedOnMap(creature);
+
         }
     }
 }

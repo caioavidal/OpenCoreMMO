@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />

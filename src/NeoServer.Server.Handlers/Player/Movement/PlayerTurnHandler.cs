@@ -1,14 +1,8 @@
-﻿using NeoServer.Game.Commands;
-using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
-using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Schedulers;
 
 namespace NeoServer.Server.Handlers.Players
 {
@@ -16,14 +10,14 @@ namespace NeoServer.Server.Handlers.Players
     {
         private readonly Game game;
         private readonly IMap map;
-        private readonly IDispatcher dispatcher;
+        
 
 
 
-        public PlayerTurnHandler(Game game, IDispatcher dispatcher, IMap map)
+        public PlayerTurnHandler(Game game, IMap map)
         {
             this.game = game;
-            this.dispatcher = dispatcher;
+            
             this.map = map;
         }
 
@@ -31,7 +25,7 @@ namespace NeoServer.Server.Handlers.Players
         {
             Direction direction = ParseTurnPacket(message.IncomingPacket);
 
-            var player = game.CreatureInstances[connection.PlayerId] as ICreature;
+            var player = game.CreatureManager.GetCreature(connection.PlayerId) as ICreature;
 
             player.TurnTo(direction);
         }

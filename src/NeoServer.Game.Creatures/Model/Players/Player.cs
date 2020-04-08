@@ -126,7 +126,9 @@ namespace NeoServer.Server.Model.Players
 
         public IAction PendingAction { get; private set; }
 
-        public bool CanLogout => AutoAttackTargetId == 0;
+        public bool CannotLogout => !Tile.ProtectionZone && InFight;
+
+      
 
         public Location LocationInFront
         {
@@ -178,6 +180,8 @@ namespace NeoServer.Server.Model.Players
         public override byte AutoAttackRange => Math.Max((byte)1, Inventory.AttackRange);
 
         public byte SecureMode { get; private set; }
+
+     
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte) Skills[skill].Percentage;

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
@@ -28,7 +29,7 @@ namespace NeoServer.Networking.Packets.Messages
 
         public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
         {
-            
+
             if (isAuthenticated)
             {
                 Buffer.Length.ThrowIfLessThan(9);
@@ -128,6 +129,9 @@ namespace NeoServer.Networking.Packets.Messages
             BytesRead = 0;
             Length = 0;
         }
+
+        public Location GetLocation() => new Location() { X = GetUInt16(), Y = GetUInt16(), Z = (sbyte) GetByte() };
+
 
 
     }

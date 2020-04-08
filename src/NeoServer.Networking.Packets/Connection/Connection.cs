@@ -2,6 +2,7 @@
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,12 +22,12 @@ namespace NeoServer.Networking
         private object writeLock;
 
 
-
+        public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
         public IReadOnlyNetworkMessage InMessage { get; private set; }
 
         public uint[] XteaKey { get; private set; }
-        public uint PlayerId { get; set; }
-        public bool IsAuthenticated { get; set; } = false;
+        public uint PlayerId { get; private set; }
+        public bool IsAuthenticated { get; private set; } = false;
 
         public bool Disconnected { get; private set; } = false;
 
@@ -202,6 +203,26 @@ namespace NeoServer.Networking
 
         }
 
+        /// <summary>
+        /// Sends all packets in connection's outgoing packets queue and clean
+        /// </summary>
+        /// <param name="notification"></param>
+        public void Send(bool notification = false)
+        {
+            var message = new NetworkMessage();
+
+            while (OutgoingPackets.Any())
+            {
+                OutgoingPackets.Dequeue().WriteToMessage(message);
+            }
+
+            message.AddLength();
+
+            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
+
+            SendMessage(encryptedMessage, notification);
+        }
+
         public void Send(Queue<IOutgoingPacket> outgoingPackets, bool notification = false)
         {
             var message = new NetworkMessage();
@@ -221,7 +242,7 @@ namespace NeoServer.Networking
         {
             var message = new NetworkMessage();
 
-            new TextMessagePacket(text).WriteToMessage(message);
+            new LoginFailurePacket(text).WriteToMessage(message);
 
             message.AddLength();
 
@@ -229,6 +250,22 @@ namespace NeoServer.Networking
 
             SendMessage(encryptedMessage);
             Close();
+        }
+
+        public void SetAsAuthenticated() => IsAuthenticated = true;
+
+        public void SetConnectionOwner(IPlayer player)
+        {
+            
+            if (PlayerId != 0)
+            {
+                throw new InvalidOperationException("Connection already has a Player Id");
+            }
+            SetAsAuthenticated();
+
+            OutgoingPackets = new Queue<IOutgoingPacket>();
+
+            PlayerId = player.CreatureId;
         }
     }
 }

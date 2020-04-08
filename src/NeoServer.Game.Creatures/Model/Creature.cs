@@ -7,6 +7,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
@@ -19,6 +20,8 @@ namespace NeoServer.Game.Creatures.Model
         private static uint _idCounter = 1;
 
         private readonly object _enqueueWalkLock;
+
+        public event RemoveCreature OnCreatureRemoved;
 
         public event OnTurnedToDirection OnTurnedToDirection;
 
@@ -79,7 +82,12 @@ namespace NeoServer.Game.Creatures.Model
             Friendly = new HashSet<uint>();
         }
 
+        public override void Removed()
+        {
+            IsRemoved = true;
+        }
 
+        public bool IsDead => Hitpoints == 0;
 
         public event OnAttackTargetChange OnTargetChanged;
 
@@ -115,6 +123,10 @@ namespace NeoServer.Game.Creatures.Model
 
         public Direction Direction { get; protected set; }
 
+        public List<ICondition> Conditions { get; set; } = new List<ICondition>();
+
+        public bool InFight => Conditions.Any(x => x.Type == ConditionType.InFight);
+
         public Direction ClientSafeDirection
         {
             get
@@ -137,8 +149,6 @@ namespace NeoServer.Game.Creatures.Model
                 }
             }
         }
-
-
         public byte LightBrightness { get; protected set; }
 
         public byte LightColor { get; protected set; }
@@ -196,6 +206,8 @@ namespace NeoServer.Game.Creatures.Model
         public HashSet<uint> Friendly { get; }
 
         public abstract IInventory Inventory { get; protected set; }
+
+        public bool IsRemoved { get; private set; }
 
         public static uint GetNewId()
         {
@@ -282,7 +294,7 @@ namespace NeoServer.Game.Creatures.Model
         public void TurnTo(Direction direction)
         {
             Direction = direction;
-            OnTurnedToDirection?.Invoke(direction);
+            OnTurnedToDirection?.Invoke(this, direction);
         }
 
         public void SetAttackTarget(uint targetId)

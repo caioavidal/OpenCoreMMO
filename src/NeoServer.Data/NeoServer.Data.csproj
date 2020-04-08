@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
   </ItemGroup>

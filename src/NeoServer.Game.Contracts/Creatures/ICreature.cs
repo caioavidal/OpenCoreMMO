@@ -15,8 +15,9 @@ using NeoServer.Game.Enums.Location.Structs;
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void OnCreatureStateChange();
-    public delegate void OnTurnedToDirection(Direction direction);
-
+    public delegate void OnTurnedToDirection(ICreature creature, Direction direction);
+    public delegate void RemoveCreature(ICreature creature);
+    
 
     public interface ICreature : IThing, INeedsCooldowns
     {
@@ -70,8 +71,11 @@ namespace NeoServer.Game.Contracts.Creatures
 
 
         IInventory Inventory { get; }
+        bool IsDead { get; }
+        bool IsRemoved { get; }
 
         event OnTurnedToDirection OnTurnedToDirection;
+        event RemoveCreature OnCreatureRemoved;
 
         bool CanSee(ICreature creature);
 

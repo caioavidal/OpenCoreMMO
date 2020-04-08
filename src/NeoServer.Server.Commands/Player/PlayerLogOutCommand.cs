@@ -1,23 +1,45 @@
+using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Contracts;
+using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 
-namespace NeoServer.Game.Commands
+namespace NeoServer.Server.Commands
 {
-    public class PlayerLogOutCommand : ICommand
+    public class PlayerLogOutCommand : Command
     {
-        public PlayerLogOutCommand(IPlayer player)
+        private readonly Game game;
+        private readonly IPlayer player;
+        public PlayerLogOutCommand(IPlayer player, Game game)
         {
-            Player = player;
+            this.player = player;
+            this.game = game;
         }
 
-        public IPlayer Player { get; }
+        public override void Execute()
+        {
+            var connection = game.CreatureManager.GetPlayerConnection(player.CreatureId);
 
-        public string EventId => throw new System.NotImplementedException();
+            if (player.Tile.CannotLogout)
+            {
+                connection.Send(new TextMessagePacket("You can not logout here.", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
+                return;
+            }
 
-        public uint RequestorId => throw new System.NotImplementedException();
+            if (player.CannotLogout)
+            {
+                connection.Send(new TextMessagePacket("You may not logout during or immediately after a fight!", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
+                return;
+            }
 
-        public string ErrorMessage => throw new System.NotImplementedException();
+           
+
+
+
+            game.CreatureManager.RemovePlayer(player);
+        }
     }
 }

@@ -14,11 +14,18 @@ namespace NeoServer.Networking.Packets.Incoming
         public string CharacterName { get; set; }
         public bool GameMaster { get; set; }
         public byte[] GameServerNonce { get; set; }
+        public ushort OS { get; set; }
+        public ushort Version { get; set; }
         public PlayerLogInPacket(IReadOnlyNetworkMessage message)
         {
             var packetLength = message.GetUInt16();
             var tcpPayload = packetLength + 2;
-            message.SkipBytes(9);
+            message.SkipBytes(5);
+
+            OS = message.GetUInt16();
+            Version = message.GetUInt16();
+
+            //message.SkipBytes(9);
 
             //// todo: version validation
 
@@ -34,8 +41,5 @@ namespace NeoServer.Networking.Packets.Incoming
             Password = data.GetString();
             GameServerNonce = data.GetBytes(5);
         }
-
-
-
     }
 }

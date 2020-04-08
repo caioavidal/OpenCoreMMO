@@ -5,14 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.1.30" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
-    <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Schedulers.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Tasks.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

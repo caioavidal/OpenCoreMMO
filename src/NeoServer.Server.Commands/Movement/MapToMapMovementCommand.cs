@@ -1,35 +1,101 @@
-using System;
 using System.Collections.Generic;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Schedulers;
-using NeoServer.Server.Schedulers.Contracts;
 
-namespace NeoServer.Game.Commands
+namespace NeoServer.Server.Commands
 {
-    public class MapToMapMovementCommand : ICommand
+    public class MapToMapMovementCommand : Command
     {
-        public MapToMapMovementCommand(IThing thing, Location fromLocation, Location toLocation)
+        private IThing thing;
+        private readonly Location fromLocation;
+        private readonly Location toLocation;
+        private readonly Game game;
+        public MapToMapMovementCommand(IThing thing, Location fromLocation, Location toLocation, Game game)
         {
-            Thing = thing;
-            FromLocation = fromLocation;
-            ToLocation = toLocation;
+            this.thing = thing;
+            this.fromLocation = fromLocation;
+            this.toLocation = toLocation;
+            this.game = game;
         }
 
-        public string EventId => Guid.NewGuid().ToString();
 
-        public uint RequestorId { get; private set; }
+        public override void Execute()
+        {
+            var fromTile = game.Map[fromLocation];
+            var toTile = game.Map[toLocation];
 
-        public string ErrorMessage => throw new System.NotImplementedException();
+            var fromStackPosition = fromTile.GetStackPositionOfThing(thing);
 
-        public IThing Thing { get; }
-        public Location FromLocation { get; }
-        public Location ToLocation { get; }
+            game.Map.MoveThing(ref thing, toLocation, 1);
+
+            var toDirection = fromLocation.DirectionTo(toLocation, true);
+
+            MoveCreatures(fromStackPosition, toDirection,
+            fromLocation, toLocation,
+            thing, fromTile);
+        }
+
+        private void MoveCreatures(byte fromStackPosition, Direction toDirection, Location fromLocation,
+     Location toLocation, IThing thing, ITile fromTile)
+        { //todo: performance issues
+            var outgoingPackets = new Queue<IOutgoingPacket>();
+
+            var spectators = new HashSet<uint>();
+            foreach (var spectator in game.Map.GetCreaturesAtPositionZone(fromLocation))
+            {
+                spectators.Add(spectator);
+            }
+            foreach (var spectator in game.Map.GetCreaturesAtPositionZone(toLocation))
+            {
+                spectators.Add(spectator);
+            }
+
+            var player = thing as IPlayer;
+
+
+            foreach (var spectatorId in spectators)
+            {
+                var spectatorConnnection = game.CreatureManager.GetPlayerConnection(spectatorId);
+                var spectator = game.CreatureManager.GetCreature(spectatorId);
+
+                if (spectatorId == player.CreatureId)
+                {
+                    outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
+                    outgoingPackets.Enqueue(new MapPartialDescriptionPacket(thing, fromLocation, toLocation, toDirection, game.Map));
+                    spectatorConnnection.Send(outgoingPackets);
+                    continue;
+                }
+
+                if (spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
+                {
+                    outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
+                    spectatorConnnection.Send(outgoingPackets, true);
+                    continue;
+                }
+
+                if (spectator.CanSee(fromLocation)) //spectator can see old position but not the new
+                {
+                    //happens when player leaves spectator'ss view area
+                    outgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
+                    spectatorConnnection.Send(outgoingPackets, true);
+
+                    continue;
+                }
+
+                if (spectator.CanSee(toLocation)) //spectator can't see old position but the new
+                {
+                    //happens when player enters spectator's view area
+                    outgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
+                    outgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
+                    spectatorConnnection.Send(outgoingPackets, true);
+                    continue;
+                }
+
+            }
+        }
     }
 }

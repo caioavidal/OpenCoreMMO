@@ -1,11 +1,11 @@
 
 using NeoServer.Game.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Schedulers.Contracts;
+
 
 namespace NeoServer.Game.Events
 {
-    public class ThingRemovedFromTileEvent : IEvent
+    public class ThingRemovedFromTileEvent 
     {
         public ThingRemovedFromTileEvent(ITile tile, byte stackPosition)
         {

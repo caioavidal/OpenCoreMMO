@@ -1,40 +1,30 @@
-﻿using NeoServer.Game.Commands;
-using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Schedulers;
+using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Players
 {
     public class PlayerMoveHandler : PacketHandler
     {
         private readonly Game game;
-        private readonly IMap map;
-        private readonly IDispatcher dispatcher;
-
-
-
-        public PlayerMoveHandler(Game game, IDispatcher dispatcher, IMap map)
+        
+        public PlayerMoveHandler(Game game)
         {
             this.game = game;
-            this.dispatcher = dispatcher;
-            this.map = map;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             Direction direction = ParseMovementPacket(message.IncomingPacket);
 
-            var player = game.CreatureInstances[connection.PlayerId] as IThing;
+            var player = game.CreatureManager.GetCreature(connection.PlayerId) as IThing;
 
-            var nextTile = map.GetNextTile(player.Location, direction); //todo temporary. the best place is not here
+            var nextTile = game.Map.GetNextTile(player.Location, direction); //todo temporary. the best place is not here
 
-            dispatcher.Dispatch(new MapToMapMovementCommand(player, player.Location, nextTile.Location));
+            game.Dispatcher.AddEvent(new Event(new MapToMapMovementCommand(player, player.Location, nextTile.Location, game).Execute));
         }
 
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)

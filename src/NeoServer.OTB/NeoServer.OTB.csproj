@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
   </ItemGroup>

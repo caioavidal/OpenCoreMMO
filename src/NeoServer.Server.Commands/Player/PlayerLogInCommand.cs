@@ -1,26 +1,39 @@
+using NeoServer.Data.Model;
+using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Tasks.Contracts;
+using System.Linq;
 
-namespace NeoServer.Game.Commands
+namespace NeoServer.Server.Commands
 {
-    public class PlayerLogInCommand : ICommand
+    public class PlayerLogInCommand : Command
     {
-        public PlayerLogInCommand(PlayerModel player, IConnection connection)
+        private readonly AccountModel account;
+        private readonly string characterName;
+        private readonly Game game;
+        private readonly IConnection connection;
+
+
+        public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection)
         {
-            PlayerRecord = player;
-            Connection = connection;
+            this.account = account;
+            this.characterName = characterName;
+
+            this.game = game;
+            this.connection = connection;
         }
 
-        public PlayerModel PlayerRecord { get; }
 
-        public IConnection Connection { get; }
+        public override async void Execute()
+        {
+            var playerRecord = account.Players.FirstOrDefault(p => p.CharacterName == characterName);
 
-        public string EventId => throw new System.NotImplementedException();
-
-        public uint RequestorId => throw new System.NotImplementedException();
-
-        public string ErrorMessage => throw new System.NotImplementedException();
+            game.CreatureManager.AddPlayer(playerRecord, connection);
+        }
     }
 }

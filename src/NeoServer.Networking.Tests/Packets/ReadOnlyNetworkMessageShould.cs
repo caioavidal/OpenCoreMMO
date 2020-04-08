@@ -1,4 +1,5 @@
-﻿using NeoServer.Networking.Packets.Messages;
+﻿using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network.Enums;
 using System;
 using System.Collections.Generic;
@@ -115,6 +116,21 @@ namespace NeoServer.Networking.Tests.Packets
 
             var expected = (byte)141;
             Assert.Equal(expected, sup.GetByte());
+        }
+
+        [Fact]
+        public void GetLocation_ReturnsLocation()
+        {
+            var data = new List<byte>();
+
+            data.AddRange(BitConverter.GetBytes((ushort)1000));
+            data.AddRange(BitConverter.GetBytes((ushort)900));
+            data.Add(7);
+
+            var sup = new ReadOnlyNetworkMessage(data.ToArray(), data.Count);
+
+            var expected = new Location { X = 1000, Y = 900, Z = 7 };
+            Assert.Equal(expected, sup.GetLocation());
         }
 
         [Fact]

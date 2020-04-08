@@ -22,7 +22,7 @@ namespace NeoServer.Server.Handlers.Authentication
         {
             var changeMode = new ChangeModePacket(message);
 
-            var player = game.CreatureInstances[connection.PlayerId] as IPlayer;
+            var player = game.CreatureManager.GetCreature(connection.PlayerId) as IPlayer;
 
             player.SetFightMode(changeMode.FightMode);
             player.SetChaseMode(changeMode.ChaseMode);

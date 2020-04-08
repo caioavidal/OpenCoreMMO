@@ -9,10 +9,12 @@ using NeoServer.Loaders.Items;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server.Contracts.Repositories;
+using NeoServer.Server.Events;
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Schedulers.Contracts;
+
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
+using NeoServer.Server.Tasks.Contracts;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
@@ -46,11 +48,15 @@ namespace NeoServer.Server.Standalone
             var listeningTask = StartListening(container, cancellationToken);
 
             var scheduler = container.Resolve<IScheduler>();
+            var dispatcher = container.Resolve<IDispatcher>();
 
+            Task.Factory.StartNew(() => dispatcher.Start(cancellationToken), TaskCreationOptions.LongRunning);
             Task.Factory.StartNew(() => scheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
 
 
-            container.Resolve<ServerState>().OpenServer();
+            container.Resolve<EventSubscriber>().AttachEvents();
+
+            container.Resolve<Game>().Open();
 
 
             sw.Stop();

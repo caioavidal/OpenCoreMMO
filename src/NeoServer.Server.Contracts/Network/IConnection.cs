@@ -1,3 +1,4 @@
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +10,10 @@ namespace NeoServer.Server.Contracts.Network
     {
         IReadOnlyNetworkMessage InMessage { get; }
         uint[] XteaKey { get; }
-        uint PlayerId { get; set; }
-        bool IsAuthenticated { get; set; }
+        uint PlayerId { get; }
+        bool IsAuthenticated { get; }
         bool Disconnected { get; }
+        Queue<IOutgoingPacket> OutgoingPackets { get; }
 
         event EventHandler<IConnectionEventArgs> OnProcessEvent;
         event EventHandler<IConnectionEventArgs> OnCloseEvent;
@@ -24,5 +26,8 @@ namespace NeoServer.Server.Contracts.Network
         void Send(Queue<IOutgoingPacket> outgoingPackets, bool notification = false);
         void SendFirstConnection();
         void SetXtea(uint[] xtea);
+        void SetAsAuthenticated();
+        void SetConnectionOwner(IPlayer player);
+        void Send(bool notification = false);
     }
 }

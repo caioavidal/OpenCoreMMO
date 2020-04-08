@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 namespace NeoServer.Networking.Packets.Incoming
 {
 
-    public class IncomingPacketHandlerData
+    public sealed class InputHandlerMap
     {
         public static readonly IReadOnlyDictionary<GameIncomingPacketType, Type> Data =
         new Dictionary<GameIncomingPacketType, Type>(){
@@ -29,6 +29,7 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.TurnWest, typeof(PlayerTurnHandler)},
             { GameIncomingPacketType.TurnNorth, typeof(PlayerTurnHandler)},
             { GameIncomingPacketType.TurnSouth, typeof(PlayerTurnHandler)},
+            { GameIncomingPacketType.AutoMove, typeof(PlayerAutoWalkHandler)},
         };
     }
 }
