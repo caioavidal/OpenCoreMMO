@@ -66,6 +66,7 @@ namespace NeoServer.Server.Tasks
                 }
                 if (eventList.Any()) //process eventList
                 {
+                    
                     var evt = eventList.First();
                     eventList.RemoveAt(0); //todo: too expensive O(n) n= count
 
@@ -74,14 +75,14 @@ namespace NeoServer.Server.Tasks
                     if (!evt.HasExpired || evt.HasNoTimeout)
                     {
                         ++cycles;
-                        evt.Action?.Invoke(); //execute event
+                        evt.Action.Invoke(); //execute event
                     }
                 }
                 else
                 {
                     Monitor.Exit(eventLock);
                 }
-
+                Console.WriteLine(eventList.Count);
             }
         }
     }

@@ -12,9 +12,9 @@ namespace NeoServer.Server.Tasks
         {
 
         }
-        public ShedulerEvent(uint delay, Action action) : base(delay, action)
+        public ShedulerEvent(int delay, Action action) : base(delay, action)
         {
-            ExpirationDelay = DateTime.Now.AddMilliseconds(delay).Millisecond;
+            ExpirationDelay = delay;
         }
 
         public int ExpirationDelay { get; }

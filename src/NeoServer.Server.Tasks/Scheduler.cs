@@ -31,8 +31,6 @@ namespace NeoServer.Server.Tasks
 
         public uint AddEvent(ISchedulerEvent evt)
         {
-            var shouldPulse = false;
-
             lock (eventLock)
             {
                 if (cancellationToken.IsCancellationRequested)
@@ -48,8 +46,7 @@ namespace NeoServer.Server.Tasks
                 activeEventIds.Add(evt.EventId);
                 eventQueue.Enqueue(evt);
 
-                shouldPulse = eventQueue.Count == 1;
-
+                bool shouldPulse = eventQueue.Count == 1;
                 if (shouldPulse)
                 {
                     Monitor.Pulse(eventLock);
@@ -72,14 +69,12 @@ namespace NeoServer.Server.Tasks
                 {
                     Monitor.Wait(eventLock);
                 }
-                else
-                {
-                  
-                    //waits the delay expire
-                    Monitor.Wait(eventLock, eventQueue.Peek().ExpirationDelay);
-                }
 
-                if(eventQueue.Any())
+                //waits the delay expire
+                Monitor.Wait(eventLock, eventQueue.Peek().ExpirationDelay);
+
+
+                if (eventQueue.Any())
                 {
                     //ok the event had a timeout and the quere is not empty
                     var evt = eventQueue.Dequeue();
@@ -106,7 +101,7 @@ namespace NeoServer.Server.Tasks
 
         public bool CancelEvent(uint eventId)
         {
-            if(eventId == 0)
+            if (eventId == 0)
             {
                 return false;
             }
@@ -120,7 +115,7 @@ namespace NeoServer.Server.Tasks
         }
 
         private bool EventIsCancelled(uint eventId) => !activeEventIds.Contains(eventId);
-            
+
         private uint GenerateEventId()
         {
             if (++lastEventId == 0)

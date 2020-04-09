@@ -13,7 +13,7 @@ namespace NeoServer.Server.Tasks
             Action = action;
             HasNoTimeout = true;
         }
-        public Event(uint expirationMs, Action action)
+        public Event(int expirationMs, Action action)
         {
             Action = action;
             expirationTime = DateTime.Now.AddMilliseconds(expirationMs).TimeOfDay;
