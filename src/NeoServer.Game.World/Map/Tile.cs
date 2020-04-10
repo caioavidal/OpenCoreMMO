@@ -159,14 +159,14 @@ namespace NeoServer.Game.World.Map
             get
             {
                 IConvertible floorChange;
-                if (Ground.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
+                if (Ground?.Attributes != null && Ground.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
                 {
                     return ParseFloorChange((string)floorChange);
                 }
 
                 foreach (var item in TopItems1)
                 {
-                    if (item.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
+                    if (item?.Attributes != null && item.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
                     {
                         return ParseFloorChange((string)floorChange);
                     }

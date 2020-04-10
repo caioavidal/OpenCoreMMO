@@ -32,6 +32,7 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.TurnSouth, typeof(PlayerTurnHandler)},
             { GameIncomingPacketType.AutoMove, typeof(PlayerAutoWalkHandler)},
             { GameIncomingPacketType.Ping, typeof(PlayerPingResponseHandler)},
+            { GameIncomingPacketType.CancelAutoWalk, typeof(PlayerCancelAutoWalkHandler)},
         };
     }
 }

@@ -2,10 +2,8 @@ namespace NeoServer.Server.Model.World.Map
 {
     public enum MapViewPort
     {
-        MaxViewPortX = 11,
-        MaxViewPortY = 11,
-        MinViewPortX = -11,
-        MinViewPortY = -11,
-
+        ViewPortX = 11,
+        ViewPortY = 11,
+     
     }
 }

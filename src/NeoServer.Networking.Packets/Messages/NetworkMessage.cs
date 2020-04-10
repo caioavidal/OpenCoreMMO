@@ -129,18 +129,21 @@
 
         public void AddLength()
         {
-            var newArray = new byte[16394];
-            System.Buffer.BlockCopy(Buffer, 0, newArray, 2, Length);
+           
+            var srcBuffer = Buffer.AsSpan(0, Length);
+            var newArray = new byte[Length + 50].AsSpan(); //added 50 for xtea padding
 
-            var length = BitConverter.GetBytes((ushort)Length);
+            var lengthBytes = BitConverter.GetBytes((ushort)Length);
+            newArray[0] = lengthBytes[0];
+            newArray[1] = lengthBytes[1];
 
-            for (int i = 0; i < 2; i++)
-            {
-                newArray[i] = length[i];
-            }
+            srcBuffer.CopyTo(newArray.Slice(2, Length));
+
+
             Length = Length + 2;
             Cursor += 2;
-            Buffer = newArray;
+            Buffer = newArray.ToArray();
+
         }
 
         private byte[] GetHeader(bool addChecksum = true)

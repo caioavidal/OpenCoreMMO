@@ -36,8 +36,8 @@ namespace NeoServer.Server.Commands.Player
                 if (player.WalkingQueue.TryDequeue(out Tuple<byte, Direction> direction))
                 {
 
-                    var cooldownMove = player.StepDelayTicks;
-                    game.Scheduler.AddEvent(new ShedulerEvent(200, () =>
+                    var cooldownMove = Convert.ToInt32(player.StepDelayTicks);
+                    game.Scheduler.AddEvent(new ShedulerEvent(150, () =>
                     {
                         MovePlayer(thing, direction);
                     }));

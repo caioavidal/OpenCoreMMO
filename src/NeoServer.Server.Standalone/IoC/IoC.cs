@@ -134,10 +134,15 @@ namespace NeoServer.Server.Standalone.IoC
                 if (!InputHandlerMap.Data.TryGetValue(packet, out handlerType))
                 {
                     Console.WriteLine($"Incoming Packet not handled: {packet}");
-                    
+                    return null;
                 }
                 Console.WriteLine($"Incoming Packet: {packet}");
-                return (IPacketHandler)c.Resolve(handlerType);
+
+                if(c.TryResolve(handlerType, out object instance))
+                {
+                    return (IPacketHandler)instance;
+                }
+                return null;
             });
         }
 

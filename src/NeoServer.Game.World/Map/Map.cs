@@ -14,6 +14,7 @@ using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.World.Map
@@ -190,13 +191,15 @@ namespace NeoServer.Game.World.Map
             ThingRemovedFromTile(thing, tile, fromStackPosition);
         }
 
-
         public IEnumerable<uint> GetCreaturesAtPositionZone(Location location)
         {
-            var minX = (ushort)(location.X + MapViewPort.MinViewPortX);
-            var minY = (ushort)(location.Y + MapViewPort.MinViewPortY);
-            var maxX = (ushort)(location.X + MapViewPort.MaxViewPortX);
-            var maxY = (ushort)(location.Y + MapViewPort.MaxViewPortY);
+            var viewPortX = (ushort)MapViewPort.ViewPortX;
+            var viewPortY = (ushort)MapViewPort.ViewPortY;
+
+            var minX = (ushort)(location.X + -viewPortX);
+            var minY = (ushort)(location.Y + -viewPortY);
+            var maxX = (ushort)(location.X + viewPortX);
+            var maxY = (ushort)(location.Y + viewPortY);
 
             for (ushort x = minX; x <= maxX; x++)
             {
@@ -212,6 +215,57 @@ namespace NeoServer.Game.World.Map
                     }
                 }
             }
+        }
+        public HashSet<uint> GetCreaturesAtPositionZone(Location location, Location toLocation)
+        {
+
+            var creaturedIds = new HashSet<uint>();
+
+            var viewPortX = (ushort)MapViewPort.ViewPortX;
+            var viewPortY = (ushort)MapViewPort.ViewPortY;
+
+            if (location.X != toLocation.X)
+            {
+                viewPortX++;
+            }
+            if (location.Y != toLocation.Y)
+            {
+                viewPortY++;
+            }
+
+            var floors = new List<sbyte>();
+            floors.Add(location.Z);
+
+            if(location.Z != toLocation.Z)
+            {
+                floors.Add(toLocation.Z);
+
+            }
+
+            var minX = (ushort)(location.X + -viewPortX);
+            var minY = (ushort)(location.Y + -viewPortY);
+            var maxX = (ushort)(location.X + viewPortX);
+            var maxY = (ushort)(location.Y + viewPortY);
+
+            for (ushort x = minX; x <= maxX; x++)
+            {
+                for (ushort y = minY; y <= maxY; y++)
+                {
+                    foreach (var floor in floors)
+                    {
+                        ITile tile = this[x, y, floor];
+
+                        if (tile != null)
+                        {
+                            foreach (var id in tile.CreatureIds)
+                            {
+                                creaturedIds.Add(id);
+                            }
+                        }
+                    }
+                }
+            }
+            return creaturedIds;
         }
 
         public IEnumerable<ITile> GetOffsetTiles(Location location)

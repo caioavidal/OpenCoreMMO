@@ -145,5 +145,29 @@ namespace NeoServer.Game.Enums.Location.Structs
 		/// <see cref="Coordinate"/> objects are unequal.
 		/// </summary>
 		public static bool operator !=(Coordinate first, Coordinate second) => !(first == second);
+
+		public static bool operator >=(Coordinate first, Coordinate second)
+		{
+			try
+			{
+				return first.X >= second.X || first.Y >= second.Y || first.Z >= second.Z;
+			}
+			catch (NullReferenceException)
+			{
+				return false;
+			}
+		}
+
+		public static bool operator <=(Coordinate first, Coordinate second)
+		{
+			try
+			{
+				return first.X <= second.X || first.Y <= second.Y || first.Z <= second.Z;
+			}
+			catch (NullReferenceException)
+			{
+				return false;
+			}
+		}
 	}
 }

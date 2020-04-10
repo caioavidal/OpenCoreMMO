@@ -41,6 +41,8 @@ namespace NeoServer.Networking
 
         public string IP { get; }
 
+        public bool Closed => !Stream.CanRead || !Socket.Connected;
+
         public Connection(Socket socket)
         {
             Socket = socket;
@@ -82,10 +84,10 @@ namespace NeoServer.Networking
                 Disconnected = true;
             }
 
+            var eventArgs = new ConnectionEventArgs(this);
 
             try
-            {
-                var eventArgs = new ConnectionEventArgs(this);
+            {  
                 OnProcessEvent?.Invoke(this, eventArgs);
                 BeginStreamRead();
             }
@@ -97,7 +99,8 @@ namespace NeoServer.Networking
                 Console.WriteLine(e.StackTrace);
 
                 // TODO: is closing the connection really necesary?
-                // Close();
+                Disconnected = true;
+                OnProcessEvent?.Invoke(this, eventArgs);
             }
         }
 
@@ -205,6 +208,10 @@ namespace NeoServer.Networking
             {
                 lock (writeLock)
                 {
+                    if (Closed)
+                    {
+                        return;
+                    }
                     var streamMessage = message.AddHeader();
                     Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
                 }

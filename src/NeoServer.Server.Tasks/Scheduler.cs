@@ -31,12 +31,13 @@ namespace NeoServer.Server.Tasks
 
         public uint AddEvent(ISchedulerEvent evt)
         {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return 0;
+            }
+
             lock (eventLock)
             {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    return 0;
-                }
 
                 if (evt.EventId == 0)
                 {

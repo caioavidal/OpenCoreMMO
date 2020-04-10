@@ -212,6 +212,7 @@ namespace NeoServer.Game.Creatures.Model
         public bool IsRemoved { get; private set; }
 
         private uint lastStepCost = 1;
+        private bool cancelWalk;
 
         public static uint GetNewId()
         {
@@ -392,6 +393,7 @@ namespace NeoServer.Game.Creatures.Model
             {
                 WalkingQueue.Clear(); // reset the actual queue
                 UpdateLastStepInfo(0);
+                cancelWalk = true;
             }
         }
 
@@ -490,7 +492,7 @@ namespace NeoServer.Game.Creatures.Model
 
             uint calculatedStepSpeed = 1;
 
-            if (Speed > -speedA)
+            if (Speed > -speedB)
             {
                 calculatedStepSpeed = (uint)Math.Floor((speedA * Math.Log((Speed / 2) + speedB) + speedC) + 0.5);
                 if (calculatedStepSpeed == 0)

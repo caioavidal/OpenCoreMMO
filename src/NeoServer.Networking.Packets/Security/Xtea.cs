@@ -8,6 +8,7 @@ namespace NeoServer.Networking.Packets.Security
 {
     public class Xtea
     {
+     
         public static INetworkMessage Encrypt(INetworkMessage msg, uint[] key)
         {
             if (key == null)
@@ -19,7 +20,7 @@ namespace NeoServer.Networking.Packets.Security
                 msg.AddPaddingBytes(8 - pad);
             }
 
-            var words = Split(msg.GetMessageInBytes()).ToArray();
+            var words = Split(msg.Buffer.AsSpan(0,msg.Length));
 
             for (int pos = 0; pos < msg.Length / 4; pos += 2)
             {
@@ -35,11 +36,11 @@ namespace NeoServer.Networking.Packets.Security
                 }
             }
 
-            var newBytes = words.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
+            var newBytes = ConvertToBytes(words); //words.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
 
             return new NetworkMessage(newBytes, msg.Length);
 
-            
+
         }
 
         public static unsafe bool Decrypt(IReadOnlyNetworkMessage msg, int index, uint[] key)
@@ -76,13 +77,36 @@ namespace NeoServer.Networking.Packets.Security
             return true;
         }
 
-        private static IEnumerable<uint> Split(byte[] array)
+        private static byte[] ConvertToBytes(Span<uint> array)
         {
+            var bytes = new byte[array.Length * 4];
+            var index = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                var newBytes = BitConverter.GetBytes(array[i]);
+
+                bytes[index] = newBytes[0];
+                bytes[index + 1] = newBytes[1];
+                bytes[index + 2] = newBytes[2];
+                bytes[index + 3] = newBytes[3];
+
+                index+=4;
+            }
+            return bytes;
+        }
+
+
+        private static Span<uint> Split(ReadOnlySpan<byte> array)
+        {
+            var newArray = new uint[array.Length / 4];
+
+            var index = 0;
             for (var i = 0; i < array.Length; i += sizeof(uint))
             {
-                var to = i + 4;
-                yield return BitConverter.ToUInt32(array[i..to], 0);
+                newArray[index] = BitConverter.ToUInt32(array.Slice(i, 4));
+                index++;
             }
+            return newArray.AsSpan();
         }
 
     }

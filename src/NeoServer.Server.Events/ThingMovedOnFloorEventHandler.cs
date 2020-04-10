@@ -30,6 +30,7 @@ namespace NeoServer.Server.Events
         { //todo: performance issues
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
+            //  var spectators = game.Map.GetCreaturesAtPositionZone(fromLocation, toLocation);
             var spectators = new HashSet<uint>();
             foreach (var spectator in game.Map.GetCreaturesAtPositionZone(fromLocation))
             {
@@ -39,7 +40,6 @@ namespace NeoServer.Server.Events
             {
                 spectators.Add(spectator);
             }
-
             var player = thing as IPlayer;
 
 
