@@ -30,13 +30,9 @@ namespace NeoServer.Game.World
             tiles[tilesCoordinates] = tile;
         }
 
-        public ITile GetTile(Location location)
-        {
-            if (tiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITile tile))
-                return tile;
-
-            return null;
-        }
+        public bool TryGetTile(Location location, out ITile tile) => tiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out tile);
+           
+        
 
         public void AddTown(ITown town)
         {
@@ -44,13 +40,7 @@ namespace NeoServer.Game.World
             towns[town.Coordinate] = town;
         }
 
-        public ITown GetTown(Location location)
-        {
-            if (towns.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out ITown town))
-                return town;
-
-            return null;
-        }
+        public bool TryGetTown(Location location, out ITown town) => towns.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out town);
 
         public void AddWaypoint(IWaypoint waypoint)
         {
@@ -59,13 +49,9 @@ namespace NeoServer.Game.World
             waypoints[waypoint.Coordinate] = waypoint;
         }
 
-        public IWaypoint GetWaypoint(Location location)
-        {
-            if (waypoints.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out IWaypoint waypoint))
-                return waypoint;
-
-            return null;
-        }
+        public bool TryGetWaypoint(Location location, IWaypoint waypoint) => waypoints.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out waypoint);
+                
+        
 
     }
 }

@@ -1,5 +1,10 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Commands;
+using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Players
 {
@@ -10,7 +15,7 @@ namespace NeoServer.Server.Handlers.Players
 
 
 
-        public PlayerAutoWalkHandler(Game game,  IMap map)
+        public PlayerAutoWalkHandler(Game game, IMap map)
         {
             this.game = game;
             this.map = map;
@@ -18,15 +23,11 @@ namespace NeoServer.Server.Handlers.Players
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            //var autoWalk = new AutoWalkPacket(message);
+            var autoWalk = new AutoWalkPacket(message);
 
-            //var player = game.CreatureInstances[connection.PlayerId] as IThing;
+            var player = game.CreatureManager.GetCreature(connection.PlayerId) as IPlayer;
 
-            //foreach (var step in autoWalk.Steps)
-            //{
-            //    var nextTile = map.GetNextTile(player.Location, step); //todo temporary. the best place is not here
-            //    dispatcher.Dispatch(new MapToMapMovementCommand(player, player.Location, nextTile.Location));
-            //}
+            game.Dispatcher.AddEvent(new Event(new PlayerWalkCommand(player, game, autoWalk.Steps.ToArray()).Execute));
         }
     }
 }

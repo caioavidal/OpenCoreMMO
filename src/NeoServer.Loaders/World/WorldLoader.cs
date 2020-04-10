@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;

@@ -73,6 +73,8 @@ namespace NeoServer.Game.Contracts.Creatures
         IInventory Inventory { get; }
         bool IsDead { get; }
         bool IsRemoved { get; }
+        long StepDelayTicks { get; }
+        double LastStep { get; }
 
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
@@ -85,7 +87,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         void StopWalking();
 
-        void AutoWalk(params Direction[] directions);
+        void WalkTo(params Direction[] directions);
 
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 

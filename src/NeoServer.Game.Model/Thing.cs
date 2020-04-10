@@ -67,9 +67,13 @@ namespace NeoServer.Game.Model
         {
             // OnThingAdded?.Invoke();
         }
-        public void Moved()
+        public virtual void Moved()
         {
             // OnThingAdded?.Invoke();
+        }
+        public virtual void Moved(ITile fromTile, ITile toTile)
+        {
+
         }
 
         public virtual void Removed()

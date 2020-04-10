@@ -34,5 +34,6 @@ namespace NeoServer.Game.Contracts
 
         void Removed();
         byte GetStackPosition();
+        void Moved(ITile fromTile, ITile toTile);
     }
 }

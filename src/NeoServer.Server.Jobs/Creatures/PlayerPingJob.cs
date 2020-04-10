@@ -41,6 +41,13 @@ namespace NeoServer.Server.Jobs
                 connection.Send(new PingPacket());
             }
 
+            //todo
+            //int64_t noPongTime = timeNow - lastPong;
+            //if ((hasLostConnection || noPongTime >= 7000) && attackedCreature && attackedCreature->getPlayer())
+            //{
+            //    setAttackedCreature(nullptr);
+            //}
+
             var noPongTime = TimeSpan.FromTicks(now - connection.LastPingResponse).TotalMilliseconds;
 
             if(noPongTime >= CONNECTION_LOST_INTERVAL && player.CanLogout && connection.LastPingResponse > 0)

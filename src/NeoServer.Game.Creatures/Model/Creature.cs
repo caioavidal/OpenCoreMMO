@@ -149,6 +149,8 @@ namespace NeoServer.Game.Creatures.Model
                 }
             }
         }
+
+
         public byte LightBrightness { get; protected set; }
 
         public byte LightColor { get; protected set; }
@@ -208,6 +210,8 @@ namespace NeoServer.Game.Creatures.Model
         public abstract IInventory Inventory { get; protected set; }
 
         public bool IsRemoved { get; private set; }
+
+        private uint lastStepCost = 1;
 
         public static uint GetNewId()
         {
@@ -391,26 +395,39 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-        public void AutoWalk(params Direction[] directions)
+        public override void Moved(ITile fromTile, ITile toTile)
         {
-            throw new NotImplementedException(); //TODO
+            LastStep = DateTime.Now.TimeOfDay.TotalMilliseconds;
 
-            //lock (_enqueueWalkLock)
-            //{
-            //    if (WalkingQueue.Count > 0)
-            //    {
-            //        StopWalking();
-            //    }
+            if (fromTile.Location.Z != toTile.Location.Z)
+            {
+                lastStepCost = 2;
+            }
+            else if (fromTile.Location.IsDiagonalMovement(toTile.Location))
+            {
+                lastStepCost = 3;
+            }       
+        }
 
-            //    var nextStepId = NextStepId;
+        public virtual void WalkTo(params Direction[] directions)
+        {
 
-            //    foreach (var direction in directions)
-            //    {
-            //        WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
-            //    }
+            lock (_enqueueWalkLock)
+            {
+                if (WalkingQueue.Count > 0)
+                {
+                    StopWalking();
+                }
 
-            //    Game.Instance.SignalWalkAvailable();
-            //}
+                var nextStepId = NextStepId;
+
+                var firstStep = true;
+
+                foreach (var direction in directions)
+                {
+                    WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+                }
+            }
         }
 
         public TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
@@ -437,6 +454,57 @@ namespace NeoServer.Game.Creatures.Model
             Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000 * totalPenalty / (double)Math.Max(1, (int)Speed)));
 
             NextStepId = (byte)(lastStepId + 1);
+        }
+
+        private long stepDelay
+        {
+            get
+            {
+                var stepDuration = CalculateStepDuration() * lastStepCost;
+                return (int)(stepDuration - (DateTime.Now.TimeOfDay.TotalMilliseconds - LastStep));
+
+            
+            }
+        }
+        public long StepDelayTicks
+        {
+            get
+            {
+                if (stepDelay > 0)
+                {
+                    return stepDelay;
+                }
+
+                return CalculateStepDuration() * lastStepCost;
+            }
+        }
+
+        public double LastStep { get; private set; }
+
+        private long CalculateStepDuration()
+        {
+
+            double speedA = 857.36;
+            double speedB = 261.29;
+            double speedC = -4795.01;
+
+            uint calculatedStepSpeed = 1;
+
+            if (Speed > -speedA)
+            {
+                calculatedStepSpeed = (uint)Math.Floor((speedA * Math.Log((Speed / 2) + speedB) + speedC) + 0.5);
+                if (calculatedStepSpeed == 0)
+                {
+                    calculatedStepSpeed = 1;
+                }
+            }
+
+            var duration = Math.Floor((double)(1000 * Tile.GroundStepSpeed / calculatedStepSpeed));
+
+            var stepDuration = Math.Ceiling(duration / 50) * 50;
+
+            //todo check monster creature.cpp 1367
+            return (long)stepDuration;
         }
     }
 }

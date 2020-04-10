@@ -10,6 +10,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
  <ItemGroup>
     <ProjectReference Include="..\NeoServer.Game.World\NeoServer.Game.World.csproj" />

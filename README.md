@@ -23,7 +23,7 @@
 
 ```sh
 dotnet run -p "NeoServer.Server.Standalone"
-docker run --rm -d -p 8080:8080 -p 38888:38888 -v /opt/RavenDb/Data:/opt/RavenDB/Server/RavenData ravendb/ravendb
+docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/Server/RavenData -v C:/RavenDB/Config:/opt/RavenDB/config ravendb/ravendb
 ```
 
 ## What we have done so far

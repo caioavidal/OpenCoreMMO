@@ -24,7 +24,7 @@ namespace NeoServer.Networking.Packets.Incoming
                 Steps.Add(ParseByte(message.GetByte()));
             }
 
-            Steps.Reverse();
+           // Steps.Reverse();
         }
 
         private Direction ParseByte(byte b)

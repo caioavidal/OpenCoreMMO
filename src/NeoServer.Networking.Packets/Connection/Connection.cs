@@ -69,7 +69,7 @@ namespace NeoServer.Networking
 
         private void OnRead(IAsyncResult ar)
         {
-           
+
             var clientDisconnected = !this.CompleteRead(ar);
             if (clientDisconnected && !IsAuthenticated)
             {
@@ -78,21 +78,13 @@ namespace NeoServer.Networking
             }
             if (clientDisconnected && IsAuthenticated)
             {
-                
+
                 Disconnected = true;
             }
 
 
-
-            // if (length == 0)
-            // {
-            //     Disconnected = true;
-            // }
-
             try
             {
-                //Buffer = new byte[16394];
-
                 var eventArgs = new ConnectionEventArgs(this);
                 OnProcessEvent?.Invoke(this, eventArgs);
                 BeginStreamRead();
@@ -217,9 +209,8 @@ namespace NeoServer.Networking
                     Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
                 }
 
-               
-                    var eventArgs = new ConnectionEventArgs(this);
-                    OnPostProcessEvent?.Invoke(this, eventArgs);
+                var eventArgs = new ConnectionEventArgs(this);
+                OnPostProcessEvent?.Invoke(this, eventArgs);
             }
             catch (ObjectDisposedException)
             {
@@ -254,7 +245,6 @@ namespace NeoServer.Networking
         /// <summary>
         /// Sends all packets in connection's outgoing packets queue and clean
         /// </summary>
-        /// <param name="notification"></param>
         public void Send()
         {
             var message = new NetworkMessage();

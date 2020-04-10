@@ -42,13 +42,13 @@ namespace NeoServer.Server.Standalone.IoC
                 .CreateLogger()).SingleInstance();
 
             builder.RegisterType<Database>().SingleInstance();
-            builder.RegisterType<AccountRepository>().As<IAccountRepository>();
+            builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
 
 
-            builder.RegisterType<LoginProtocol>();
-            builder.RegisterType<LoginListener>();
-            builder.RegisterType<GameProtocol>();
-            builder.RegisterType<GameListener>();
+            builder.RegisterType<LoginProtocol>().SingleInstance();
+            builder.RegisterType<LoginListener>().SingleInstance();
+            builder.RegisterType<GameProtocol>().SingleInstance();
+            builder.RegisterType<GameListener>().SingleInstance();
 
             builder.RegisterType<Game>().SingleInstance();
             builder.RegisterType<GameCreatureManager>().SingleInstance();
@@ -72,8 +72,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<World>().SingleInstance();
             //builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
 
-            builder.RegisterType<ItemTypeLoader>();
-            builder.RegisterType<Loaders.World.WorldLoader>();
+            builder.RegisterType<ItemTypeLoader>().SingleInstance(); ;
+            builder.RegisterType<Loaders.World.WorldLoader>().SingleInstance(); ;
 
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
@@ -94,7 +94,7 @@ namespace NeoServer.Server.Standalone.IoC
         private static void RegisterPacketHandlers(ContainerBuilder builder)
         {
             var assemblies = Assembly.GetAssembly(typeof(PacketHandler));
-            builder.RegisterAssemblyTypes(assemblies);
+            builder.RegisterAssemblyTypes(assemblies).SingleInstance(); 
         }
 
 

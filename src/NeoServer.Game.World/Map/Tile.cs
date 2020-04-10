@@ -35,20 +35,10 @@ namespace NeoServer.Game.World.Map
         public byte Flags { get; private set; }
 
         public IItem Ground { get; set; }
+        public uint GroundStepSpeed => Ground?.Type?.Speed != 0 ? Ground.Type.Speed : (uint)150;
 
-        public FloorDirection FloorDestination
-        {
 
-            get
-            {
 
-                if (Ground.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out IConvertible direction))
-                {
-                    return FloorDirection.Down;//todo create parse
-                }
-                return FloorDirection.None;
-            }
-        }
 
         public IEnumerable<uint> CreatureIds => _creatureIdsOnTile;
 
@@ -153,6 +143,76 @@ namespace NeoServer.Game.World.Map
                 }
 
                 return _cachedDescription;
+            }
+        }
+
+        public bool HasAnyFloorDestination => FloorChangeDestination != FloorChangeDirection.None;
+        
+
+        public bool HasFloorDestination(FloorChangeDirection direction)
+        {
+            return FloorChangeDestination == direction;
+        }
+
+        public FloorChangeDirection FloorChangeDestination
+        {
+            get
+            {
+                IConvertible floorChange;
+                if (Ground.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
+                {
+                    return ParseFloorChange((string)floorChange);
+                }
+
+                foreach (var item in TopItems1)
+                {
+                    if (item.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
+                    {
+                        return ParseFloorChange((string)floorChange);
+                    }
+
+                }
+                return FloorChangeDirection.None;
+            }
+        }
+
+        private FloorChangeDirection ParseFloorChange(string floorChange)
+        {
+            switch (floorChange)
+            {
+                case "down": return FloorChangeDirection.Down;
+                case "north": return FloorChangeDirection.North;
+                case "south": return FloorChangeDirection.South;
+                case "southalt": return FloorChangeDirection.SouthAlternative;
+                case "west": return FloorChangeDirection.West;
+                case "east": return FloorChangeDirection.East;
+                case "eastalt": return FloorChangeDirection.EastAlternative;
+                default: break;
+            }
+            return FloorChangeDirection.None;
+        }
+
+        public FloorChangeDirection FloorDirection
+        {
+
+            get
+            {
+                var location = new Location() { X = Location.X, Y = Location.Y, Z = Location.Z };
+                //todo: create a map for floorchange
+                IConvertible floorChange;
+                if (!Ground.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
+                {
+                    return FloorChangeDirection.None;
+                }
+
+                if ((string)floorChange == "down")
+                {
+                    return FloorChangeDirection.Down;
+                }
+
+
+
+                return FloorChangeDirection.None;
             }
         }
 

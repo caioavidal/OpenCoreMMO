@@ -3,6 +3,7 @@ using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace NeoServer.Server.Jobs.Creatures
 {
@@ -16,9 +17,12 @@ namespace NeoServer.Server.Jobs.Creatures
             this.game = game;
         }
 
+      
+
         public void StartCheckingCreatures()
         {
             game.Scheduler.AddEvent(new ShedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartCheckingCreatures));
+            
 
             foreach (var creature in game.CreatureManager.GetCreatures())
             {
@@ -26,11 +30,11 @@ namespace NeoServer.Server.Jobs.Creatures
                 {
                     continue;
                 }
-                if(creature is IPlayer)
+                if (creature is IPlayer)
                 {
                     PlayerPingJob.Execute((IPlayer)creature, game);
                 }
-                
+
             }
 
         }

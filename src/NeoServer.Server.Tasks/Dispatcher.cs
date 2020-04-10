@@ -82,7 +82,6 @@ namespace NeoServer.Server.Tasks
                 {
                     Monitor.Exit(eventLock);
                 }
-                Console.WriteLine(eventList.Count);
             }
         }
     }

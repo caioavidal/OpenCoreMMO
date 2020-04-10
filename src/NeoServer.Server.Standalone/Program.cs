@@ -15,6 +15,7 @@ using NeoServer.Server.Model.Players;
 
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
+using NeoServer.Server.Tasks;
 using NeoServer.Server.Tasks.Contracts;
 using Serilog.Core;
 using System;
@@ -51,10 +52,10 @@ namespace NeoServer.Server.Standalone
             var scheduler = container.Resolve<IScheduler>();
             var dispatcher = container.Resolve<IDispatcher>();
 
-            Task.Factory.StartNew(() => dispatcher.Start(cancellationToken), TaskCreationOptions.LongRunning);
-            Task.Factory.StartNew(() => scheduler.Start(cancellationToken), TaskCreationOptions.LongRunning);
+            Task.Run(() => dispatcher.Start(cancellationToken));
+            Task.Run(() => scheduler.Start(cancellationToken));
 
-            Task.Factory.StartNew(container.Resolve<GameCreatureJob>().StartCheckingCreatures, TaskCreationOptions.LongRunning);
+            scheduler.AddEvent(new ShedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
 
             container.Resolve<EventSubscriber>().AttachEvents();
 

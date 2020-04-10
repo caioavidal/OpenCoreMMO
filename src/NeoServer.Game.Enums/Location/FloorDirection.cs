@@ -4,10 +4,16 @@ using System.Text;
 
 namespace NeoServer.Game.Enums.Location
 {
-    public enum FloorDirection : byte
+    public enum FloorChangeDirection : byte
     {
         None,
         Up,
-        Down
+        Down,
+        South,
+        SouthAlternative,
+        EastAlternative,
+        North,
+        East,
+        West
     }
 }

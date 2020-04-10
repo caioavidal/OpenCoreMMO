@@ -18,6 +18,7 @@ namespace NeoServer.Game.Enums.Location.Structs
         public sbyte Z { get; set; }
 
         public bool IsUnderground => Z > 7;
+        public bool IsSurface => Z == 7;
 
         public LocationType Type
         {
@@ -154,6 +155,14 @@ namespace NeoServer.Game.Enums.Location.Structs
                 (long)origin.Y - targetLocation.Y,
                 (long)origin.Z - targetLocation.Z
             };
+        }
+
+        public bool IsDiagonalMovement(Location targetLocation)
+        {
+            return DirectionTo(targetLocation, true) == Direction.NorthEast ||
+                DirectionTo(targetLocation, true) == Direction.NorthWest ||
+                DirectionTo(targetLocation, true) == Direction.SouthEast ||
+                DirectionTo(targetLocation, true) == Direction.SouthWest;
         }
 
         public Direction DirectionTo(Location targetLocation, bool returnDiagonals = false)

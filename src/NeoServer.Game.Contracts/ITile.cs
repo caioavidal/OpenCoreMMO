@@ -42,6 +42,9 @@ namespace NeoServer.Game.Contracts
         byte[] CachedDescription { get; }
         bool CannotLogout { get; }
         bool ProtectionZone { get; }
+        uint GroundStepSpeed { get; }
+        FloorChangeDirection FloorDirection { get; }
+        bool HasAnyFloorDestination { get; }
 
         event RemoveThing OnThingRemovedFromTile;
 
@@ -64,5 +67,6 @@ namespace NeoServer.Game.Contracts
         bool CanBeWalked(byte avoidDamageType = 0);
         void RemoveCreature(ICreature c);
         void AddCreature(ICreature creature);
+        bool HasFloorDestination(FloorChangeDirection direction);
     }
 }

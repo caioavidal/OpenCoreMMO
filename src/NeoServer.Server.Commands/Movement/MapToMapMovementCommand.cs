@@ -25,82 +25,9 @@ namespace NeoServer.Server.Commands
 
         public override void Execute()
         {
-            var fromTile = game.Map[fromLocation];
-            var toTile = game.Map[toLocation];
-
-            var fromStackPosition = fromTile.GetStackPositionOfThing(thing);
-
             game.Map.MoveThing(ref thing, toLocation, 1);
-
-            var toDirection = fromLocation.DirectionTo(toLocation, true);
-
-            MoveCreatures(fromStackPosition, toDirection,
-            fromLocation, toLocation,
-            thing, fromTile);
         }
 
-        private void MoveCreatures(byte fromStackPosition, Direction toDirection, Location fromLocation,
-     Location toLocation, IThing thing, ITile fromTile)
-        { //todo: performance issues
-            var outgoingPackets = new Queue<IOutgoingPacket>();
-
-            var spectators = new HashSet<uint>();
-            foreach (var spectator in game.Map.GetCreaturesAtPositionZone(fromLocation))
-            {
-                spectators.Add(spectator);
-            }
-            foreach (var spectator in game.Map.GetCreaturesAtPositionZone(toLocation))
-            {
-                spectators.Add(spectator);
-            }
-
-            var player = thing as IPlayer;
-
-
-            foreach (var spectatorId in spectators)
-            {
-                IConnection spectatorConnnection = null;
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out spectatorConnnection))
-                {
-                    continue;
-                }
-
-                var spectator = game.CreatureManager.GetCreature(spectatorId);
-
-                if (spectatorId == player.CreatureId)
-                {
-                    outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
-                    outgoingPackets.Enqueue(new MapPartialDescriptionPacket(thing, fromLocation, toLocation, toDirection, game.Map));
-                    spectatorConnnection.Send(outgoingPackets);
-                    continue;
-                }
-
-                if (spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
-                {
-                    outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
-                    spectatorConnnection.Send(outgoingPackets);
-                    continue;
-                }
-
-                if (spectator.CanSee(fromLocation)) //spectator can see old position but not the new
-                {
-                    //happens when player leaves spectator'ss view area
-                    outgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
-                    spectatorConnnection.Send(outgoingPackets);
-
-                    continue;
-                }
-
-                if (spectator.CanSee(toLocation)) //spectator can't see old position but the new
-                {
-                    //happens when player enters spectator's view area
-                    outgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
-                    outgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
-                    spectatorConnnection.Send(outgoingPackets);
-                    continue;
-                }
-
-            }
-        }
+      
     }
 }
