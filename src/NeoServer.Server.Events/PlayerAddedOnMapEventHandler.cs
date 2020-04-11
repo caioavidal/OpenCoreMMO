@@ -35,11 +35,16 @@ namespace NeoServer.Server.Events
                 }
                 else
                 {
-                    var spectator = game.CreatureManager.GetCreature(spectatorId) as IPlayer;
-                    SendPacketsToSpectator(spectator, player, outgoingPackets);
+                    ICreature spectator;
+                    if (!game.CreatureManager.TryGetCreature(spectatorId, out spectator))
+                    {
+                        continue;
+                    }
+
+                    SendPacketsToSpectator((IPlayer)spectator, player, outgoingPackets);
                 }
 
-                IConnection connection = null;
+                IConnection connection;
                 if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
                 {
                     continue;

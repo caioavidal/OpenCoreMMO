@@ -10,14 +10,14 @@ namespace NeoServer.Server.Handlers.Players
     {
         private readonly Game game;
         private readonly IMap map;
-        
+
 
 
 
         public PlayerTurnHandler(Game game, IMap map)
         {
             this.game = game;
-            
+
             this.map = map;
         }
 
@@ -25,9 +25,10 @@ namespace NeoServer.Server.Handlers.Players
         {
             Direction direction = ParseTurnPacket(message.IncomingPacket);
 
-            var player = game.CreatureManager.GetCreature(connection.PlayerId) as ICreature;
-
-            player.TurnTo(direction);
+            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
+            {
+                player.TurnTo(direction);
+            }
         }
 
         private Direction ParseTurnPacket(GameIncomingPacketType turnPacket)

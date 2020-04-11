@@ -16,6 +16,7 @@ using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Game.World.Map
 {
@@ -63,6 +64,8 @@ namespace NeoServer.Game.World.Map
 
         public void MoveThing(ref IThing thing, Location toLocation, byte count)
         {
+      
+            //var wrongTile = this[178, 371, 7];
             var fromTile = this[thing.Location];
             var toTile = this[toLocation];
             var fromStackPosition = thing.GetStackPosition();
@@ -78,7 +81,7 @@ namespace NeoServer.Game.World.Map
 
             var tileDestination = GetTileDestination(toTile);
 
-            if(tileDestination == toTile)
+            if (tileDestination == toTile)
             {
                 return;
             }
@@ -107,7 +110,7 @@ namespace NeoServer.Game.World.Map
 
                 var eastDownTile = this[(ushort)(x - 1), y, z];
 
-                if(eastDownTile != null && eastDownTile.HasFloorDestination(FloorChangeDirection.EastAlternative))
+                if (eastDownTile != null && eastDownTile.HasFloorDestination(FloorChangeDirection.EastAlternative))
                 {
                     x -= 2;
                     return this[x, y, z] ?? tile;
@@ -236,7 +239,7 @@ namespace NeoServer.Game.World.Map
             var floors = new List<sbyte>();
             floors.Add(location.Z);
 
-            if(location.Z != toLocation.Z)
+            if (location.Z != toLocation.Z)
             {
                 floors.Add(toLocation.Z);
 
@@ -433,9 +436,9 @@ namespace NeoServer.Game.World.Map
                 objectsOnTile++;
             }
 
+            
 
-
-            foreach (var item in tile.TopItems1)
+            foreach (var item in tile.TopItems1.Reverse())
             {
 
                 if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
@@ -448,7 +451,7 @@ namespace NeoServer.Game.World.Map
                 objectsOnTile++;
             }
 
-            foreach (var item in tile.TopItems2)
+            foreach (var item in tile.TopItems2.Reverse())
             {
                 if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
                 {
@@ -462,7 +465,7 @@ namespace NeoServer.Game.World.Map
 
             tempBytes.AddRange(creatureDescription.GetCreaturesOnTile(thing, tile, ref objectsOnTile));
 
-            foreach (var item in tile.DownItems)
+            foreach (var item in tile.DownItems.Reverse())
             {
                 if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
                 {

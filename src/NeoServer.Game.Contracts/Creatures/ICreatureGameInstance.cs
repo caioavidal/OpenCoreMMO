@@ -4,8 +4,7 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public interface ICreatureGameInstance
     {
-        ICreature this[uint id] { get; }
-
+        bool TryGetCreature(uint id, out ICreature creature);
         void Add(ICreature creature);
         IEnumerable<ICreature> All();
         bool TryRemove(uint id);

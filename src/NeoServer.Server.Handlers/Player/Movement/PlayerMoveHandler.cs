@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
@@ -20,11 +21,13 @@ namespace NeoServer.Server.Handlers.Players
         {
             Direction direction = ParseMovementPacket(message.IncomingPacket);
 
-            var player = game.CreatureManager.GetCreature(connection.PlayerId) as IThing;
+            if(game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature creature))
+            {
+                var nextTile = game.Map.GetNextTile(creature.Location, direction); //todo temporary. the best place is not here
 
-            var nextTile = game.Map.GetNextTile(player.Location, direction); //todo temporary. the best place is not here
+                game.Dispatcher.AddEvent(new Event(new MapToMapMovementCommand(creature, creature.Location, nextTile.Location, game).Execute));
+            }
 
-            game.Dispatcher.AddEvent(new Event(new MapToMapMovementCommand(player, player.Location, nextTile.Location, game).Execute));
         }
 
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)

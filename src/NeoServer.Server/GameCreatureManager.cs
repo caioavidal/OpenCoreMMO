@@ -39,7 +39,7 @@ namespace NeoServer.Server
             return true;
         }
 
-        public ICreature GetCreature(uint id) => creatureInstances[id];
+        public bool TryGetCreature(uint id, out ICreature creature) => creatureInstances.TryGetCreature(id, out creature);
 
         public bool RemoveCreature(ICreature creature)
         {

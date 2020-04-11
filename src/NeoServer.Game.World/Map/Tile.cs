@@ -216,7 +216,7 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        private byte[] GetItemDescriptionBytes()
+        private byte[] GetItemDescriptionBytes() //todo: code duplication
         {
             // not valid to cache response if there are creatures.
             if (_creatureIdsOnTile.Count > 0)
@@ -235,7 +235,7 @@ namespace NeoServer.Game.World.Map
                 count++;
             }
 
-            foreach (var item in TopItems1)
+            foreach (var item in TopItems1.Reverse())
             {
                 if (count == numberOfObjectsLimit)
                 {
@@ -256,7 +256,7 @@ namespace NeoServer.Game.World.Map
                 count++;
             }
 
-            foreach (var item in TopItems2)
+            foreach (var item in TopItems2.Reverse())
             {
                 if (count == numberOfObjectsLimit)
                 {
@@ -277,7 +277,7 @@ namespace NeoServer.Game.World.Map
                 count++;
             }
 
-            foreach (var item in DownItems)
+            foreach (var item in DownItems.Reverse())
             {
                 if (count == numberOfObjectsLimit)
                 {

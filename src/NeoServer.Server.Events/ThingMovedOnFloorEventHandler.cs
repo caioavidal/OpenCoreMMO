@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Events;
@@ -51,11 +52,15 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                var spectator = game.CreatureManager.GetCreature(spectatorId);
+                ICreature spectator;
+                if (!game.CreatureManager.TryGetCreature(connection.PlayerId, out spectator))
+                {
+                    continue;
+                }
 
                 if (spectatorId == player.CreatureId) //myself
                 {
-                    if(fromLocation.Z != toLocation.Z)
+                    if (fromLocation.Z != toLocation.Z)
                     {
                         connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
                         connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));

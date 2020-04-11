@@ -12,10 +12,10 @@ namespace NeoServer.Game.World.Map
 {
     public class CreatureDescription
     {
-        private readonly ICreatureGameInstance _creatureInstances;
+        private readonly ICreatureGameInstance creatureInstances;
         public CreatureDescription(ICreatureGameInstance creatureInstances)
         {
-            _creatureInstances = creatureInstances;
+            this.creatureInstances = creatureInstances;
         }
 
         public List<byte> GetCreaturesOnTile(IThing thing, ITile tile, ref int objectsOnTile)
@@ -30,9 +30,8 @@ namespace NeoServer.Game.World.Map
                     return stream;
                 }
 
-                var creature = _creatureInstances[creatureId];
-
-                if (creature == null)
+                ICreature creature;
+                if (!creatureInstances.TryGetCreature(creatureId, out creature))
                 {
                     continue;
                 }

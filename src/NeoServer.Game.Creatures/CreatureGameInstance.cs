@@ -16,7 +16,10 @@ namespace NeoServer.Game.Creature
             GameInstances = new ConcurrentDictionary<uint, ICreature>();
         }
 
-        public ICreature this[uint id] => GameInstances[id];
+        public bool TryGetCreature(uint id, out ICreature creature) => GameInstances.TryGetValue(id, out creature);
+
+
+
 
         public IEnumerable<ICreature> All() => GameInstances.Values;
 
