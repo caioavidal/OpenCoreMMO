@@ -22,7 +22,7 @@ namespace NeoServer.Server.Jobs.Creatures
         public void StartCheckingCreatures()
         {
             game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartCheckingCreatures));
-            
+
 
             foreach (var creature in game.CreatureManager.GetCreatures())
             {

@@ -73,7 +73,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IInventory Inventory { get; }
         bool IsDead { get; }
         bool IsRemoved { get; }
-        long StepDelayTicks { get; }
+        int StepDelayMilliseconds { get; }
         double LastStep { get; }
 
         event OnTurnedToDirection OnTurnedToDirection;

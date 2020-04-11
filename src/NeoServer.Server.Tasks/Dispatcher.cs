@@ -12,9 +12,11 @@ namespace NeoServer.Server.Tasks
 {
     public class Dispatcher : IDispatcher
     {
+        private readonly ChannelWriter<IEvent> priorityWriter;
+        private readonly ChannelReader<IEvent> priorityReader;
+
         private readonly ChannelWriter<IEvent> writer;
         private readonly ChannelReader<IEvent> reader;
-        private CancellationToken cancellationToken;
         private ulong cycles = 0;
 
         public Dispatcher()
@@ -22,18 +24,21 @@ namespace NeoServer.Server.Tasks
             var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions() { SingleReader = true });
             reader = channel.Reader;
             writer = channel.Writer;
+
+            priorityReader = channel.Reader;
+            priorityWriter = channel.Writer;
         }
 
         public void AddEvent(IEvent evt, bool hasPriority = false)
         {
-
-
-            if (cancellationToken.IsCancellationRequested)
+            if (hasPriority)
             {
-                return;
+                priorityWriter.TryWrite(evt);
             }
-
-            writer.TryWrite(evt);
+            else
+            {
+                writer.TryWrite(evt);
+            }
         }
 
 
@@ -45,7 +50,25 @@ namespace NeoServer.Server.Tasks
 
         public void Start(CancellationToken token)
         {
-            cancellationToken = token;
+            Task.Run(async () =>
+            {
+                while (await priorityReader.WaitToReadAsync())
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        priorityWriter.Complete();
+                    }
+                    // Fast loop around available jobs
+                    while (priorityReader.TryRead(out var evt))
+                    {
+                        if (!evt.HasExpired || evt.HasNoTimeout)
+                        {
+                            ++cycles;
+                            evt.Action.Invoke(); //execute event
+                        }
+                    }
+                }
+            });
 
             Task.Run(async () =>
             {

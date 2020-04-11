@@ -454,7 +454,7 @@ namespace NeoServer.Game.Creatures.Model
             NextStepId = (byte)(lastStepId + 1);
         }
 
-        private long stepDelay
+        private int stepDelay
         {
             get
             {
@@ -464,7 +464,7 @@ namespace NeoServer.Game.Creatures.Model
 
             }
         }
-        public long StepDelayTicks
+        public int StepDelayMilliseconds
         {
             get
             {
@@ -473,36 +473,36 @@ namespace NeoServer.Game.Creatures.Model
                     return stepDelay;
                 }
 
-                return CalculateStepDuration() * lastStepCost;
+                return (int)(CalculateStepDuration() * lastStepCost);
             }
         }
 
         public double LastStep { get; private set; }
 
-        private long CalculateStepDuration()
+        private int CalculateStepDuration()
         {
 
-            double speedA = 857.36;
-            double speedB = 261.29;
-            double speedC = -4795.01;
+            //double speedA = 857.36;
+            //double speedB = 261.29;
+            //double speedC = -4795.01;
 
-            uint calculatedStepSpeed = 1;
+            //uint calculatedStepSpeed = 1;
 
-            if (Speed > -speedB)
-            {
-                calculatedStepSpeed = (uint)Math.Floor((speedA * Math.Log((Speed / 2) + speedB) + speedC) + 0.5);
-                if (calculatedStepSpeed == 0)
-                {
-                    calculatedStepSpeed = 1;
-                }
-            }
+            //if (Speed > -speedB)
+            //{
+            //    calculatedStepSpeed = (uint)Math.Floor((speedA * Math.Log((Speed / 2) + speedB) + speedC) + 0.5);
+            //    if (calculatedStepSpeed == 0)
+            //    {
+            //        calculatedStepSpeed = 1;
+            //    }
+            //}
 
-            var duration = Math.Floor((double)(1000 * Tile.GroundStepSpeed / calculatedStepSpeed));
+            var duration = Math.Floor((double)(1000 * Tile.GroundStepSpeed / Speed));
 
-            var stepDuration = Math.Ceiling(duration / 50) * 50;
+            var stepDuration = (int)Math.Ceiling(duration / 50) * 50;
 
             //todo check monster creature.cpp 1367
-            return (long)stepDuration;
+            return stepDuration;
         }
     }
 }

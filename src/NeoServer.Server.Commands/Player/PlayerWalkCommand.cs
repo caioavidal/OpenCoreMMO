@@ -25,7 +25,7 @@ namespace NeoServer.Server.Commands.Player
 
             var thing = player as IThing;
 
-            var cooldownMove = Convert.ToInt32(player.StepDelayTicks);
+          
             MovePlayer(thing);
         }
 
@@ -52,7 +52,9 @@ namespace NeoServer.Server.Commands.Player
 
             }
 
-            game.Scheduler.AddEvent(new SchedulerEvent(5, () =>
+            Console.WriteLine($"{ player.StepDelayMilliseconds}");
+
+            game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () =>
             {
                 MovePlayer(thing);
             }));

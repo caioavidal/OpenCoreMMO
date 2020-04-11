@@ -60,12 +60,17 @@ namespace NeoServer.Server.Tasks
                             continue;
                         }
 
-                        await Task.Delay(evt.ExpirationDelay);
-                        evt.SetToNotExpire();
-                        dispatcher.AddEvent(evt, true); //send to dispatcher
+                        DispatchEvent(evt);
                     }
                 }
             });
+        }
+
+        private async void DispatchEvent(ISchedulerEvent evt)
+        {
+            await Task.Delay(evt.ExpirationDelay);
+            evt.SetToNotExpire();
+            dispatcher.AddEvent(evt, true); //send to dispatcher
         }
 
         public bool CancelEvent(uint eventId)
