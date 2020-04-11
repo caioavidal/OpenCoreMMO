@@ -6,13 +6,13 @@ using System.Text;
 
 namespace NeoServer.Server.Tasks
 {
-    public class ShedulerEvent : Event, ISchedulerEvent
+    public class SchedulerEvent : Event, ISchedulerEvent
     {
-        public ShedulerEvent(Action action) : base(action)
+        public SchedulerEvent(Action action) : base(action)
         {
 
         }
-        public ShedulerEvent(int delay, Action action) : base(delay, action)
+        public SchedulerEvent(int delay, Action action) : base(delay, action)
         {
             ExpirationDelay = delay;
         }

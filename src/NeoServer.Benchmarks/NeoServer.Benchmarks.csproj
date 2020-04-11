@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Tasks\NeoServer.Server.Tasks.csproj" />
   </ItemGroup>
 
 </Project>

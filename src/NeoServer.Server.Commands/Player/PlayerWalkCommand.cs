@@ -52,7 +52,7 @@ namespace NeoServer.Server.Commands.Player
 
             }
 
-            game.Scheduler.AddEvent(new ShedulerEvent(150, () =>
+            game.Scheduler.AddEvent(new SchedulerEvent(5, () =>
             {
                 MovePlayer(thing);
             }));

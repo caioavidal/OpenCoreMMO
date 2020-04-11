@@ -5,84 +5,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 
 namespace NeoServer.Server.Tasks
 {
     public class Dispatcher : IDispatcher
     {
-        private object eventLock = new object();
+        private readonly ChannelWriter<IEvent> writer;
+        private readonly ChannelReader<IEvent> reader;
         private CancellationToken cancellationToken;
-
-        private List<IEvent> eventList = new List<IEvent>();
-
         private ulong cycles = 0;
+
+        public Dispatcher()
+        {
+            var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions() { SingleReader = true });
+            reader = channel.Reader;
+            writer = channel.Writer;
+        }
 
         public void AddEvent(IEvent evt, bool hasPriority = false)
         {
-            var pulse = false;
-            lock (eventLock)
+
+
+            if (cancellationToken.IsCancellationRequested)
             {
-                pulse = !eventList.Any(); //send a pulse if eventList is empty
-
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    return;
-                }
-
-                if (hasPriority)
-                {
-                    eventList.Insert(0, evt);
-                }
-                else
-                {
-                    eventList.Add(evt);
-                }
-
-                if (pulse)
-                {
-                    Monitor.Pulse(eventLock);
-                }
+                return;
             }
+
+            writer.TryWrite(evt);
         }
+
 
         public ulong GetCycles()
         {
             return cycles;
         }
 
-     
+
         public void Start(CancellationToken token)
         {
-          
             cancellationToken = token;
 
-            while (!token.IsCancellationRequested)
+            Task.Run(async () =>
             {
-                Monitor.Enter(eventLock); //block threads
-
-                if (!eventList.Any())
+                while (await reader.WaitToReadAsync())
                 {
-                    Monitor.Wait(eventLock);
-                }
-                if (eventList.Any()) //process eventList
-                {
-                    
-                    var evt = eventList.First();
-                    eventList.RemoveAt(0); //todo: too expensive O(n) n= count
-
-                    Monitor.Exit(eventLock); //can release threads after event removed
-
-                    if (!evt.HasExpired || evt.HasNoTimeout)
+                    if (token.IsCancellationRequested)
                     {
-                        ++cycles;
-                        evt.Action.Invoke(); //execute event
+                        writer.Complete();
+                    }
+                    // Fast loop around available jobs
+                    while (reader.TryRead(out var evt))
+                    {
+                        if (!evt.HasExpired || evt.HasNoTimeout)
+                        {
+                            ++cycles;
+                            evt.Action.Invoke(); //execute event
+                        }
                     }
                 }
-                else
-                {
-                    Monitor.Exit(eventLock);
-                }
-            }
+            });
         }
     }
 }

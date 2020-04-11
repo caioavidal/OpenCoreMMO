@@ -4,7 +4,7 @@ using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTBM.Structure
 {
-    public class WaypointNode
+    public struct WaypointNode
     {
         public string Name { get; set; }
         public Coordinate Coordinate { get; set; }

@@ -55,7 +55,7 @@ namespace NeoServer.Server.Standalone
             Task.Run(() => dispatcher.Start(cancellationToken));
             Task.Run(() => scheduler.Start(cancellationToken));
 
-            scheduler.AddEvent(new ShedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
+            scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
 
             container.Resolve<EventSubscriber>().AttachEvents();
 

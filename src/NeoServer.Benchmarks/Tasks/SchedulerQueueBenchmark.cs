@@ -1,32 +1,66 @@
+﻿using BenchmarkDotNet.Attributes;
+using NeoServer.Server.Tasks;
+using NeoServer.Server.Tasks.Contracts;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Autofac;
 
-using NeoServer.Server.Tasks.Contracts;
-
-namespace NeoServer.Server.Tasks
+namespace NeoServer.Benchmarks.Tasks
 {
-
-
-    public class Scheduler : IScheduler
+    [MemoryDiagnoser]
+    public class SchedulerQueueBenchmark
     {
+        private AutoResetEvent _autoResetEvent;
+
+        public SchedulerQueueBenchmark()
+        {
+            _autoResetEvent = new AutoResetEvent(false);
+        }
+        [Benchmark]
+        public void Scheduler()
+        {
+            DoManyJobs(new Scheduler());
+
+        }
+
+        private void DoManyJobs(ISchedulerQueue<ISchedulerEvent> jobQueue)
+        {
+            int jobs = 2;
+            jobQueue.Start();
+            for (int i = 0; i < jobs - 1; i++)
+            {
+                jobQueue.AddEvent(new SchedulerEvent(5, () => { }));
+            }
+            jobQueue.AddEvent(new SchedulerEvent(() => _autoResetEvent.Set()));
+            _autoResetEvent.WaitOne();
+            jobQueue.Stop();
+        }
+    }
+
+    internal interface ISchedulerQueue<T>
+    {
+        uint AddEvent(ISchedulerEvent job);
+        void Stop();
+
+        void Start();
+    }
+
+    public class Scheduler : ISchedulerQueue<ISchedulerEvent>
+    {
+
         private readonly ChannelWriter<ISchedulerEvent> writer;
         private readonly ChannelReader<ISchedulerEvent> reader;
+        private uint lastId = 0;
 
         private ConcurrentDictionary<uint, byte> cancelledEventIds = new ConcurrentDictionary<uint, byte>();
 
-        private uint lastEventId = 0;
-
-        private IDispatcher dispatcher;
-
-        public Scheduler(IDispatcher dispatcher)
+        public Scheduler()
         {
-            this.dispatcher = dispatcher;
             var channel = Channel.CreateUnbounded<ISchedulerEvent>(new UnboundedChannelOptions() { SingleReader = true });
             reader = channel.Reader;
             writer = channel.Writer;
@@ -35,10 +69,10 @@ namespace NeoServer.Server.Tasks
         public uint AddEvent(ISchedulerEvent evt)
         {
 
-
             if (evt.EventId == default)
             {
-                evt.SetEventId(++lastEventId);
+                evt.SetEventId(++lastId);
+
             }
 
             writer.TryWrite(evt);
@@ -46,8 +80,9 @@ namespace NeoServer.Server.Tasks
             return evt.EventId;
         }
 
-        public void Start(CancellationToken token)
+        public void Start()
         {
+
             Task.Run(async () =>
             {
                 while (await reader.WaitToReadAsync())
@@ -60,12 +95,17 @@ namespace NeoServer.Server.Tasks
                             continue;
                         }
 
+
                         await Task.Delay(evt.ExpirationDelay);
-                        evt.SetToNotExpire();
-                        dispatcher.AddEvent(evt, true); //send to dispatcher
+
+                        evt.Action();
                     }
                 }
             });
+        }
+        public void Stop()
+        {
+            writer.Complete();
         }
 
         public bool CancelEvent(uint eventId)
@@ -74,12 +114,16 @@ namespace NeoServer.Server.Tasks
             {
                 return false;
             }
+            // activeEventIds.Remove(eventId);
 
-            return cancelledEventIds.TryAdd(eventId, default);
+            return true;
         }
 
         private bool EventIsCancelled(uint eventId) => cancelledEventIds.ContainsKey(eventId);
 
 
     }
+
+ 
+
 }
