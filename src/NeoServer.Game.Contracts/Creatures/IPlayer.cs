@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 
@@ -44,8 +45,9 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte GetSkillPercent(SkillType type);
 
         void AddKnownCreature(uint creatureId);
+        void SetDirection(Direction direction);
 
-      //  void SetPendingAction(IAction action);
+        //  void SetPendingAction(IAction action);
 
         void ClearPendingActions();
 

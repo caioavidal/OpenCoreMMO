@@ -31,18 +31,11 @@ namespace NeoServer.Server.Events
         { //todo: performance issues
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
-            //  var spectators = game.Map.GetCreaturesAtPositionZone(fromLocation, toLocation);
-            var spectators = new HashSet<uint>();
-            foreach (var spectator in game.Map.GetCreaturesAtPositionZone(fromLocation))
-            {
-                spectators.Add(spectator);
-            }
-            foreach (var spectator in game.Map.GetCreaturesAtPositionZone(toLocation))
-            {
-                spectators.Add(spectator);
-            }
+             var spectators = game.Map.GetCreaturesAtPositionZone(fromLocation, toLocation);
+         
             var player = thing as IPlayer;
 
+            player.SetDirection(toDirection);
 
             foreach (var spectatorId in spectators)
             {
@@ -76,16 +69,28 @@ namespace NeoServer.Server.Events
 
                 if (spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
                 {
-                    outgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
-                    connection.Send(outgoingPackets);
+                    if (fromLocation.Z != toLocation.Z)
+                    {
+                        connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
+                        connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
+
+                        connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
+
+                    }
+                    else
+                    {
+                        connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, fromStackPosition));
+                    }
+                    connection.Send();
+
                     continue;
                 }
 
                 if (spectator.CanSee(fromLocation)) //spectator can see old position but not the new
                 {
                     //happens when player leaves spectator's view area
-                    outgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
-                    connection.Send(outgoingPackets);
+                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
+                    connection.Send();
 
                     continue;
                 }
@@ -93,9 +98,9 @@ namespace NeoServer.Server.Events
                 if (spectator.CanSee(toLocation)) //spectator can't see old position but the new
                 {
                     //happens when player enters spectator's view area
-                    outgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
-                    outgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
-                    connection.Send(outgoingPackets);
+                    connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
+                    connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
+                    connection.Send();
                     continue;
                 }
 

@@ -20,7 +20,8 @@ namespace NeoServer.Networking.Packets.Outgoing
         {
             var creatureId = creatureToAdd.CreatureId;
 
-            if (player.KnowsCreatureWithId(creatureId))
+            var known = player.KnowsCreatureWithId(creatureId);
+            if (known)
             {
                 message.AddUInt16((ushort)GameOutgoingPacketType.AddKnownCreature);
                 message.AddUInt32(creatureId);
@@ -71,7 +72,10 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddByte(creatureToAdd.Skull);
             message.AddByte(creatureToAdd.Shield);
 
-            message.AddByte(0x00); //todo: guild emblem
+            if (!known)
+            {
+                message.AddByte(0x00); //todo: guild emblem
+            }
 
             message.AddByte(0x00); //todo see TFS
         }

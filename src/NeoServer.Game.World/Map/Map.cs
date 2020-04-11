@@ -64,7 +64,7 @@ namespace NeoServer.Game.World.Map
 
         public void MoveThing(ref IThing thing, Location toLocation, byte count)
         {
-      
+
             //var wrongTile = this[178, 371, 7];
             var fromTile = this[thing.Location];
             var toTile = this[toLocation];
@@ -204,16 +204,41 @@ namespace NeoServer.Game.World.Map
             var maxX = (ushort)(location.X + viewPortX);
             var maxY = (ushort)(location.Y + viewPortY);
 
+            int minZ = 0;
+            int maxZ;
+            if (location.IsUnderground)
+            {
+                minZ = Math.Max(location.Z - 2, 0);
+                maxZ = Math.Min(location.Z + 2, 15); //15 = max floor value
+            }
+            else if (location.Z == 6)
+            {
+                maxZ = 8;
+            }
+            else if (location.IsSurface)
+            {
+                maxZ = 9;
+            }
+            else
+            {
+                maxZ = 7;
+            }
+
+
             for (ushort x = minX; x <= maxX; x++)
             {
                 for (ushort y = minY; y <= maxY; y++)
                 {
-                    ITile tile = this[x, y, location.Z];
-                    if (tile != null)
+                    for (sbyte z = (sbyte)minZ; z <= maxZ; z++)
                     {
-                        foreach (var creature in tile.CreatureIds)
+                        ITile tile = this[x, y, z];
+
+                        if (tile != null)
                         {
-                            yield return creature;
+                            foreach (var id in tile.CreatureIds)
+                            {
+                                yield return id;
+                            }
                         }
                     }
                 }
@@ -236,14 +261,32 @@ namespace NeoServer.Game.World.Map
                 viewPortY++;
             }
 
-            var floors = new List<sbyte>();
-            floors.Add(location.Z);
-
-            if (location.Z != toLocation.Z)
+            int minZ = 0;
+            int maxZ;
+            if (location.IsUnderground)
             {
-                floors.Add(toLocation.Z);
-
+                minZ = Math.Max(location.Z - 2, 0);
+                maxZ = Math.Min(location.Z + 2, 15); //15 = max floor value
             }
+            else if (location.Z == 6)
+            {
+                maxZ = 8;
+            }
+            else if (location.IsSurface)
+            {
+                maxZ = 9;
+            }
+            else
+            {
+                maxZ = 7;
+            }
+
+            if (location.Z != toLocation.Z) //if player changed floor, we have to increase the min and max z range
+            {
+                minZ = Math.Max(minZ - 1, 0);
+                maxZ = Math.Max(maxZ + 1, 15);
+            }
+
 
             var minX = (ushort)(location.X + -viewPortX);
             var minY = (ushort)(location.Y + -viewPortY);
@@ -254,9 +297,9 @@ namespace NeoServer.Game.World.Map
             {
                 for (ushort y = minY; y <= maxY; y++)
                 {
-                    foreach (var floor in floors)
+                    for (sbyte z = (sbyte)minZ; z <= maxZ; z++)
                     {
-                        ITile tile = this[x, y, floor];
+                        ITile tile = this[x, y, z];
 
                         if (tile != null)
                         {
@@ -266,6 +309,7 @@ namespace NeoServer.Game.World.Map
                             }
                         }
                     }
+
                 }
             }
             return creaturedIds;
@@ -436,7 +480,7 @@ namespace NeoServer.Game.World.Map
                 objectsOnTile++;
             }
 
-            
+
 
             foreach (var item in tile.TopItems1.Reverse())
             {

@@ -412,7 +412,10 @@ namespace NeoServer.Server.Model.Players
             SecureMode = mode;
         }
 
-     
+        public void SetDirection(Direction direction)
+        {
+            Direction = direction;
+        }
     }
 
 
