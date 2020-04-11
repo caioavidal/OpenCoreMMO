@@ -408,28 +408,24 @@ namespace NeoServer.Game.Creatures.Model
             else if (fromTile.Location.IsDiagonalMovement(toTile.Location))
             {
                 lastStepCost = 3;
-            }       
+            }
         }
 
         public virtual void WalkTo(params Direction[] directions)
         {
 
-            lock (_enqueueWalkLock)
+            if (WalkingQueue.Count > 0)
             {
-                if (WalkingQueue.Count > 0)
-                {
-                    StopWalking();
-                }
-
-                var nextStepId = NextStepId;
-
-                var firstStep = true;
-
-                foreach (var direction in directions)
-                {
-                    WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
-                }
+                StopWalking();
             }
+
+            var nextStepId = NextStepId;
+
+            foreach (var direction in directions)
+            {
+                WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+            }
+
         }
 
         public TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
@@ -465,7 +461,7 @@ namespace NeoServer.Game.Creatures.Model
                 var stepDuration = CalculateStepDuration() * lastStepCost;
                 return (int)(stepDuration - (DateTime.Now.TimeOfDay.TotalMilliseconds - LastStep));
 
-            
+
             }
         }
         public long StepDelayTicks

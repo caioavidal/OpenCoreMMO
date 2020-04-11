@@ -28,8 +28,7 @@ namespace NeoServer.Server.Events
 
 
         private void MoveThing(byte fromStackPosition, Direction toDirection, Location fromLocation, Location toLocation, IThing thing, ITile fromTile)
-        { //todo: performance issues
-            var outgoingPackets = new Queue<IOutgoingPacket>();
+        { 
 
              var spectators = game.Map.GetCreaturesAtPositionZone(fromLocation, toLocation);
          

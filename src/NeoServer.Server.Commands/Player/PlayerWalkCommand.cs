@@ -1,13 +1,8 @@
 ﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
-using NeoServer.Server.Tasks.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -30,34 +25,37 @@ namespace NeoServer.Server.Commands.Player
 
             var thing = player as IThing;
 
-
-            while (!player.WalkingQueue.IsEmpty)
-            {
-                if (player.WalkingQueue.TryDequeue(out Tuple<byte, Direction> direction))
-                {
-
-                    var cooldownMove = Convert.ToInt32(player.StepDelayTicks);
-                    game.Scheduler.AddEvent(new ShedulerEvent(150, () =>
-                    {
-                        MovePlayer(thing, direction);
-                    }));
-                }
-
-            }
+            var cooldownMove = Convert.ToInt32(player.StepDelayTicks);
+            MovePlayer(thing);
         }
 
-        private void MovePlayer(IThing thing, Tuple<byte, Direction> direction)
+        private void MovePlayer(IThing thing)
         {
             var player = (IPlayer)thing;
+
+
+            if (player.WalkingQueue.IsEmpty)
+            {
+                return;
+            }
+
             if (player.IsRemoved)
             {
                 player.StopWalking();
-                return ;
+                return;
             }
-            var toTile = game.Map.GetNextTile(thing.Location, direction.Item2);
-            game.Map.MoveThing(ref thing, toTile.Location, 1);
-   
 
+            if (player.WalkingQueue.TryDequeue(out Tuple<byte, Direction> direction))
+            {
+                var toTile = game.Map.GetNextTile(thing.Location, direction.Item2);
+                game.Map.MoveThing(ref thing, toTile.Location, 1);
+
+            }
+
+            game.Scheduler.AddEvent(new ShedulerEvent(150, () =>
+            {
+                MovePlayer(thing);
+            }));
         }
     }
 }
