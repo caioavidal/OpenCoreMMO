@@ -18,7 +18,7 @@ namespace NeoServer.Server.Tasks
         private readonly ChannelWriter<ISchedulerEvent> writer;
         private readonly ChannelReader<ISchedulerEvent> reader;
 
-        private ConcurrentDictionary<uint, byte> cancelledEventIds = new ConcurrentDictionary<uint, byte>();
+        private ConcurrentDictionary<uint, byte> activeEventIds = new ConcurrentDictionary<uint, byte>();
 
         private uint lastEventId = 0;
 
@@ -41,7 +41,10 @@ namespace NeoServer.Server.Tasks
                 evt.SetEventId(++lastEventId);
             }
 
-            writer.TryWrite(evt);
+            if (activeEventIds.TryAdd(evt.EventId, default))
+            {
+                writer.TryWrite(evt);
+            }
 
             return evt.EventId;
         }
@@ -60,6 +63,7 @@ namespace NeoServer.Server.Tasks
                             continue;
                         }
 
+                        activeEventIds.TryRemove(evt.EventId, out _);
                         DispatchEvent(evt);
                     }
                 }
@@ -80,10 +84,10 @@ namespace NeoServer.Server.Tasks
                 return false;
             }
 
-            return cancelledEventIds.TryAdd(eventId, default);
+            return activeEventIds.TryRemove(eventId, out _);
         }
 
-        private bool EventIsCancelled(uint eventId) => cancelledEventIds.ContainsKey(eventId);
+        private bool EventIsCancelled(uint eventId) => !activeEventIds.ContainsKey(eventId);
 
 
     }

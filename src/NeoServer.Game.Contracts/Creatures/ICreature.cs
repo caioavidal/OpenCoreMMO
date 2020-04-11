@@ -17,7 +17,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void OnCreatureStateChange();
     public delegate void OnTurnedToDirection(ICreature creature, Direction direction);
     public delegate void RemoveCreature(ICreature creature);
-    
+    public delegate void StopWalk(ICreature creature);
 
     public interface ICreature : IThing, INeedsCooldowns
     {
@@ -78,6 +78,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
+        event StopWalk OnStoppedWalking;
 
         bool CanSee(ICreature creature);
 

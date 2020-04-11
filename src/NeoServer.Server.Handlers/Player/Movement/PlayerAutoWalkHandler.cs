@@ -12,14 +12,10 @@ namespace NeoServer.Server.Handlers.Players
     public class PlayerAutoWalkHandler : PacketHandler
     {
         private readonly Game game;
-        private readonly IMap map;
-
-
-
-        public PlayerAutoWalkHandler(Game game, IMap map)
+        
+        public PlayerAutoWalkHandler(Game game)
         {
             this.game = game;
-            this.map = map;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)

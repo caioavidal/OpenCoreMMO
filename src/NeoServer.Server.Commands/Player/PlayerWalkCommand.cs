@@ -3,6 +3,7 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 using System;
+using System.Collections.Generic;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -12,6 +13,9 @@ namespace NeoServer.Server.Commands.Player
         private readonly Game game;
         private IPlayer player;
         private readonly Direction[] directions;
+
+        private List<uint> events = new List<uint>();
+        private bool cancelWalking = false;
         public PlayerWalkCommand(IPlayer player, Game game, params Direction[] directions)
         {
             this.player = player;
@@ -23,21 +27,32 @@ namespace NeoServer.Server.Commands.Player
         {
             player.WalkTo(directions);
 
-            var thing = player as IThing;
+            player.OnStoppedWalking += (_)=>
+            {
+                events.ForEach(e => game.Scheduler.CancelEvent(e));
+                cancelWalking = true;
+            };
 
-          
-            MovePlayer(thing);
+            MovePlayer(player);
+
+
         }
 
-        private void MovePlayer(IThing thing)
+        private void MovePlayer(IPlayer player)
         {
-            var player = (IPlayer)thing;
+            if (cancelWalking)
+            {
+                return;
+            }
+            var thing = player as IThing;
+
 
 
             if (player.WalkingQueue.IsEmpty)
             {
                 return;
             }
+
 
             if (player.IsRemoved)
             {
@@ -52,12 +67,13 @@ namespace NeoServer.Server.Commands.Player
 
             }
 
-            Console.WriteLine($"{ player.StepDelayMilliseconds}");
 
-            game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () =>
+            var evtId = game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () =>
             {
-                MovePlayer(thing);
+                MovePlayer(player);
             }));
+
+            events.Add(evtId);
         }
     }
 }

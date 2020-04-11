@@ -25,6 +25,8 @@ namespace NeoServer.Game.Creatures.Model
 
         public event OnTurnedToDirection OnTurnedToDirection;
 
+        public event StopWalk OnStoppedWalking;
+
         protected Creature(
             uint id,
             string name,
@@ -212,7 +214,6 @@ namespace NeoServer.Game.Creatures.Model
         public bool IsRemoved { get; private set; }
 
         private uint lastStepCost = 1;
-        private bool cancelWalk;
 
         public static uint GetNewId()
         {
@@ -389,12 +390,10 @@ namespace NeoServer.Game.Creatures.Model
 
         public void StopWalking()
         {
-            lock (_enqueueWalkLock)
-            {
-                WalkingQueue.Clear(); // reset the actual queue
-                UpdateLastStepInfo(0);
-                cancelWalk = true;
-            }
+
+            WalkingQueue.Clear(); // reset the actual queue
+            UpdateLastStepInfo(0);
+            OnStoppedWalking?.Invoke(this);
         }
 
         public override void Moved(ITile fromTile, ITile toTile)
@@ -414,18 +413,18 @@ namespace NeoServer.Game.Creatures.Model
         public virtual void WalkTo(params Direction[] directions)
         {
 
-            if (WalkingQueue.Count > 0)
-            {
-                StopWalking();
-            }
+                if (!WalkingQueue.IsEmpty)
+                {
+                    StopWalking();
+                }
 
-            var nextStepId = NextStepId;
+                var nextStepId = NextStepId;
 
-            foreach (var direction in directions)
-            {
-                WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
-            }
-
+                foreach (var direction in directions)
+                {
+                    WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+                }
+            
         }
 
         public TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
@@ -481,22 +480,6 @@ namespace NeoServer.Game.Creatures.Model
 
         private int CalculateStepDuration()
         {
-
-            //double speedA = 857.36;
-            //double speedB = 261.29;
-            //double speedC = -4795.01;
-
-            //uint calculatedStepSpeed = 1;
-
-            //if (Speed > -speedB)
-            //{
-            //    calculatedStepSpeed = (uint)Math.Floor((speedA * Math.Log((Speed / 2) + speedB) + speedC) + 0.5);
-            //    if (calculatedStepSpeed == 0)
-            //    {
-            //        calculatedStepSpeed = 1;
-            //    }
-            //}
-
             var duration = Math.Floor((double)(1000 * Tile.GroundStepSpeed / Speed));
 
             var stepDuration = (int)Math.Ceiling(duration / 50) * 50;
