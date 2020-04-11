@@ -35,6 +35,8 @@ namespace NeoServer.OTBM.Structure
 
             LoadTile(stream);
 
+        
+
             ParseAttributes(stream);
 
             Items.AddRange(node.Children.Select(c => new ItemNode(this, c)));
@@ -44,7 +46,7 @@ namespace NeoServer.OTBM.Structure
 
         private void ParseAttributes(OTBParsingStream stream)
         {
-            if (!stream.IsOver)
+            while (!stream.IsOver)
             {
                 NodeAttribute = (NodeAttribute)stream.ReadByte();
 

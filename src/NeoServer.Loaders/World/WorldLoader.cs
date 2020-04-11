@@ -68,6 +68,8 @@ namespace NeoServer.Loaders.World
         {
             foreach (var tileNode in otbm.TileAreas.SelectMany(t => t.Tiles))
             {
+
+            
                 var tile = new Tile(tileNode.Coordinate);
 
                 var items = GetItemsOnTile(tileNode);
@@ -101,6 +103,7 @@ namespace NeoServer.Loaders.World
 
                 if (item.CanBeMoved && tileNode.NodeType == NodeType.HouseTile)
                 {
+                    yield return item;
                     logger.Warning($"Moveable item with ID: {itemNode.ItemId} in house at position {tileNode.Coordinate}.");
                 }
                 else
