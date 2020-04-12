@@ -8,7 +8,7 @@ branches:
 install:
  - dotnet restore
 script:
- - dotnet build NeoServer.sln
- - dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+ - dotnet build src/NeoServer.sln
+ - dotnet test src --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 after_script:
  - bash <(curl -s https://codecov.io/bash)
