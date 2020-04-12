@@ -6,7 +6,7 @@ branches:
   - master
   - develop
 install:
- - dotnet restore
+ - dotnet restore src
 script:
  - dotnet build src/NeoServer.sln
  - dotnet test src --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
