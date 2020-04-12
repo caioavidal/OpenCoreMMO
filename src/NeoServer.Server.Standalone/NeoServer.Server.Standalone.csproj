@@ -33,7 +33,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
     <Exec Command="xcopy &quot;$(SolutionDir)..\data\*.*&quot; &quot;$(OutDir)\data&quot;/Y /I /E" />
   </Target>
 
