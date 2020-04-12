@@ -8,8 +8,8 @@
 </a>
 </p>
 
-> It's a `Open Source MMO Server` written in C# .Net Core based on `ForgottenServer`
-> <br>You can use the `OTClient 8.6`
+> The OpenCoreMMO is a free and open-source MMORPG server emulator written in C#. It is based on the [forgottenserver](https://github.com/otland/forgottenserver)
+> <br>To connect to the server, you can use [OTClient](https://github.com/edubart/otclient) or [OpenTibiaUnity](https://github.com/slavidodo/OpenTibia-Unity).
 
 ## ✨ Demo
 
@@ -33,8 +33,7 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 - [ ] Loading OTBM Spawn Areas
 - [ ] Loading OTBM House Tiles
 - [x] LogIn and LogOut Player on Game
-- [x] Player basic movements
-- [ ] Player going down or up stairs
+- [x] All player movements
 - [x] Multiplayer connection
 - [ ] Load Monsters
 - [ ] Load NPC
