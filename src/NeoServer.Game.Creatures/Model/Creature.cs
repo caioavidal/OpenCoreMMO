@@ -482,7 +482,7 @@ namespace NeoServer.Game.Creatures.Model
         {
             var duration = Math.Floor((double)(1000 * Tile.GroundStepSpeed / Speed));
 
-            var stepDuration = (int)Math.Ceiling(duration / 50) * 50;
+            var stepDuration = (int)Math.Ceiling(duration / 15) * 15;
 
             //todo check monster creature.cpp 1367
             return stepDuration;
