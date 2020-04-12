@@ -41,7 +41,7 @@ namespace NeoServer.Server.Tasks
             }
         }
 
-
+       
         public ulong GetCycles()
         {
             return cycles;
@@ -50,6 +50,8 @@ namespace NeoServer.Server.Tasks
 
         public void Start(CancellationToken token)
         {
+
+            //todo: need find a better way instead of create two writers and readers
             Task.Run(async () =>
             {
                 while (await priorityReader.WaitToReadAsync())

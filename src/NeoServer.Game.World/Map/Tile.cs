@@ -5,6 +5,7 @@
 // </copyright>
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Contracts;
@@ -147,7 +148,7 @@ namespace NeoServer.Game.World.Map
         }
 
         public bool HasAnyFloorDestination => FloorChangeDestination != FloorChangeDirection.None;
-        
+
 
         public bool HasFloorDestination(FloorChangeDirection direction)
         {
@@ -356,6 +357,7 @@ namespace NeoServer.Game.World.Map
             _downItemsOnTile = new Stack<IItem>();
         }
 
+
         public void AddThing(ref IThing thing, byte count)
         {
 
@@ -369,6 +371,7 @@ namespace NeoServer.Game.World.Map
             if (thing is ICreature creature)
             {
                 _creatureIdsOnTile.Push(creature.CreatureId);
+                
                 creature.Tile = this;
                 creature.Added();
 
@@ -717,44 +720,60 @@ namespace NeoServer.Game.World.Map
 
         public IThing GetThingAtStackPosition(byte stackPosition)
         {
-            throw new NotImplementedException();// todo
-                                                //if (stackPosition == 0 && Ground != null) {
-                                                //	return Ground;
-                                                //}
 
-            //var currentPos = Ground == null ? -1 : 0;
+            if (stackPosition == 0 && Ground != null)
+            {
+                return Ground;
+            }
 
-            //if (stackPosition > currentPos + _topItems1OnTile.Count) {
-            //	currentPos += _topItems1OnTile.Count;
-            //} else {
-            //	foreach (var item in TopItems1) {
-            //		if (++currentPos == stackPosition) {
-            //			return item;
-            //		}
-            //	}
-            //}
+            var currentPos = Ground == null ? -1 : 0;
 
-            //if (stackPosition > currentPos + _topItems2OnTile.Count) {
-            //	currentPos += _topItems2OnTile.Count;
-            //} else {
-            //	foreach (var item in TopItems2) {
-            //		if (++currentPos == stackPosition) {
-            //			return item;
-            //		}
-            //	}
-            //}
+            if (stackPosition > currentPos + _topItems1OnTile.Count)
+            {
+                currentPos += _topItems1OnTile.Count;
+            }
+            else
+            {
+                foreach (var item in TopItems1)
+                {
+                    if (++currentPos == stackPosition)
+                    {
+                        return item;
+                    }
+                }
+            }
 
-            //if (stackPosition > currentPos + _creatureIdsOnTile.Count) {
-            //	currentPos += _creatureIdsOnTile.Count;
-            //} else {
-            //	foreach (var creatureId in CreatureIds) {
-            //		if (++currentPos == stackPosition) {
-            //			return Game.Instance.GetCreatureWithId(creatureId);
-            //		}
-            //	}
-            //}
+            if (stackPosition > currentPos + _topItems2OnTile.Count)
+            {
+                currentPos += _topItems2OnTile.Count;
+            }
+            else
+            {
+                foreach (var item in TopItems2)
+                {
+                    if (++currentPos == stackPosition)
+                    {
+                        return item;
+                    }
+                }
+            }
 
-            //return stackPosition <= currentPos + _downItemsOnTile.Count ? DownItems.FirstOrDefault(item => ++currentPos == stackPosition) : null;
+            if (stackPosition > currentPos + _creatureIdsOnTile.Count)
+            {
+                currentPos += _creatureIdsOnTile.Count;
+            }
+            else
+            {
+                foreach (var creatureId in CreatureIds)
+                {
+                    if (++currentPos == stackPosition)
+                    {
+                    //    return Game.Instance.GetCreatureWithId(creatureId);
+                    }
+                }
+            }
+
+            return stackPosition <= currentPos + _downItemsOnTile.Count ? DownItems.FirstOrDefault(item => ++currentPos == stackPosition) : null;
         }
 
         public byte GetStackPositionOfThing(IThing thing)
