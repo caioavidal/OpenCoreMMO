@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
-using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTBM;
 using NeoServer.OTBM.Structure;
 using Serilog.Core;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace NeoServer.Loaders.World
 {
@@ -33,6 +32,7 @@ namespace NeoServer.Loaders.World
         {
             var fileStream = File.ReadAllBytes("./data/world/neoserver.otbm");
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
+            
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
             var tiles = GetTiles(otbm);
@@ -69,7 +69,7 @@ namespace NeoServer.Loaders.World
             foreach (var tileNode in otbm.TileAreas.SelectMany(t => t.Tiles))
             {
 
-            
+
                 var tile = new Tile(tileNode.Coordinate);
 
                 var items = GetItemsOnTile(tileNode);
@@ -94,9 +94,12 @@ namespace NeoServer.Loaders.World
 
                 item.ThrowIfNull($"Failed to create item on {tileNode.Coordinate}");
 
-                foreach (var attr in itemNode.ItemNodeAttributes)
+                if (itemNode.ItemNodeAttributes != null)
                 {
-                    item.Attributes.TryAdd((ItemAttribute)attr.AttributeName, attr.Value);
+                    foreach (var attr in itemNode.ItemNodeAttributes)
+                    {
+                        item.Attributes.TryAdd((ItemAttribute)attr.AttributeName, attr.Value);
+                    }
                 }
 
                 item.LoadedFromMap = true;

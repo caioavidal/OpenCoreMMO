@@ -27,7 +27,7 @@ namespace NeoServer.Server.Commands.Player
         {
             player.WalkTo(directions);
 
-            player.OnStoppedWalking += (_)=>
+            player.OnStoppedWalking += (_) =>
             {
                 events.ForEach(e => game.Scheduler.CancelEvent(e));
                 cancelWalking = true;

@@ -1,7 +1,5 @@
 ﻿using NeoServer.Server.Model.Players;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Model
 {
@@ -15,7 +13,7 @@ namespace NeoServer.Server.Model
 
         public Account()
         {
-            
+
         }
 
         public string AccountName { get; set; }

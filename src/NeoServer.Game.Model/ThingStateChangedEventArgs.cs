@@ -1,5 +1,5 @@
-﻿using System;
-using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Contracts;
+using System;
 
 namespace NeoServer.Game.Model
 {

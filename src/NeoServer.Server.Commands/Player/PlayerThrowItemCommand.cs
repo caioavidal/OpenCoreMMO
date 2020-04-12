@@ -1,10 +1,5 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -24,9 +19,9 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
-           
+
         }
 
-      
+
     }
 }

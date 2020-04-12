@@ -7,7 +7,7 @@
 namespace NeoServer.Game.World.Map
 {
     public interface IMapLoader
-    {		
+    {
         bool HasLoaded(int x, int y, byte z);
     }
 }

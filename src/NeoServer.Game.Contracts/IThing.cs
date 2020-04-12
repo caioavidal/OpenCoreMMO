@@ -4,7 +4,6 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Contracts

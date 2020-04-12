@@ -15,7 +15,7 @@ namespace NeoServer.OTBM.Structure
             var stream = new OTBParsingStream(node.Data);
 
             Name = stream.ReadString();
-         
+
             Coordinate = stream.ReadCoordinate();
         }
     }

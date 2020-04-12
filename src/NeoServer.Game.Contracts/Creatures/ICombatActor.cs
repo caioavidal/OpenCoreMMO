@@ -1,6 +1,6 @@
-﻿using System;
-using NeoServer.Game.Creatures.Enums;
+﻿using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Location.Structs;
+using System;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

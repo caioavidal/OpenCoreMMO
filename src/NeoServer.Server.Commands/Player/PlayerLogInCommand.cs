@@ -1,12 +1,5 @@
 using NeoServer.Data.Model;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands;
-using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Tasks.Contracts;
 using System.Linq;
 
 namespace NeoServer.Server.Commands
@@ -33,7 +26,7 @@ namespace NeoServer.Server.Commands
         {
             var playerRecord = account.Players.FirstOrDefault(p => p.CharacterName == characterName);
 
-            if(playerRecord == null)
+            if (playerRecord == null)
             {
                 //todo validations here
                 return;

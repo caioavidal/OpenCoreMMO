@@ -1,9 +1,7 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Security;
+using System;
+using System.Linq;
 using Xunit;
 
 namespace NeoServer.Networking.Tests

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Server.Model.World.Map
+﻿namespace NeoServer.Server.Model.World.Map
 {
     public class MapConstants
     {

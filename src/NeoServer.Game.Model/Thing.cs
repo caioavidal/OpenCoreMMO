@@ -78,7 +78,7 @@ namespace NeoServer.Game.Model
 
         public virtual void Removed()
         {
-             OnThingRemoved?.Invoke(this);
+            OnThingRemoved?.Invoke(this);
         }
     }
 }

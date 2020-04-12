@@ -2,8 +2,6 @@
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Conditions
 {
@@ -80,7 +78,7 @@ namespace NeoServer.Game.Creatures.Model.Conditions
 
             if (Ticks == -1 && condition.Ticks > 0) //condition expired
             {
-                return false; 
+                return false;
             }
 
             if (condition.Ticks >= 0 && EndTime > (DateTime.Now.Ticks + condition.Ticks))

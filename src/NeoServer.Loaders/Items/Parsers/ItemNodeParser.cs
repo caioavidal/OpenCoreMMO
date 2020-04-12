@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Items;

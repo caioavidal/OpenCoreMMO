@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NeoServer.Game.Enums;
+﻿using NeoServer.Game.Enums;
 
 namespace NeoServer.OTB.Parsers
 {

@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NeoServer.OTB.DataStructures;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Structure;
+using System;
+using System.Linq;
 
 namespace NeoServer.OTB.Parsers
 {
@@ -33,14 +32,15 @@ namespace NeoServer.OTB.Parsers
                     while (currentByte == (byte)OTBMarkupByte.Start)
                     {
                         var childNode = new OTBNode((NodeType)stream.ReadByte());
-                        node.AddChild(BuildTree(childNode,stream));
-                        if(stream.IsOver){
+                        node.AddChild(BuildTree(childNode, stream));
+                        if (stream.IsOver)
+                        {
                             break;
                         }
                         currentByte = stream.ReadByte();
                     }
                     return node;
-                
+
                 case OTBMarkupByte.Escape:
                     node.AddData(currentByte);
                     node.AddData(stream.ReadByte());
@@ -49,7 +49,7 @@ namespace NeoServer.OTB.Parsers
                     return node;
                 default:
                     node.AddData(currentByte);
-                    return BuildTree(node,stream);
+                    return BuildTree(node, stream);
             }
         }
     }

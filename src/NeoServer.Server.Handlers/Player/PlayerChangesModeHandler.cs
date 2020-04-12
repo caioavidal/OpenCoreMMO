@@ -1,11 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Handlers.Authentication

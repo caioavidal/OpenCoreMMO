@@ -1,8 +1,5 @@
 ﻿using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -14,7 +11,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void Add(ICreature creature, ICondition condition);
         ConditionIcon Icons { get; }
         ConditionType Type { get; }
-        
+
         ICondition Clone();
 
         ConditionSlot ConditionSlot { get; }

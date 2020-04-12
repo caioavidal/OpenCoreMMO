@@ -1,7 +1,5 @@
 ﻿using NeoServer.Server.Tasks.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Tasks
 {
@@ -23,7 +21,7 @@ namespace NeoServer.Server.Tasks
 
         public bool HasNoTimeout { get; private set; } = false;
         public bool HasExpired => DateTime.Now.TimeOfDay > expirationTime;
-        
+
 
         public void SetToNotExpire()
         {

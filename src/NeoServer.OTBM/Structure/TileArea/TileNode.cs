@@ -1,31 +1,38 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.OTBM.Structure
 {
-    public abstract class TileNode : ITileNode
+    public struct TileNode : ITileNode
     {
         public Coordinate Coordinate { get; set; }
         public NodeAttribute NodeAttribute { get; set; }
 
+        public uint HouseId { get; set; }
+
         public bool IsFlag => NodeAttribute == NodeAttribute.TileFlags;
         public bool IsItem => NodeAttribute == NodeAttribute.Item;
-        public abstract NodeType NodeType { get; }
+        public NodeType NodeType { get; }
         public TileFlags Flag { get; set; }
-        public List<ItemNode> Items { get; set; } = new List<ItemNode>();
+        public List<ItemNode> Items { get; set; } 
 
 
-        public abstract void LoadTile(OTBParsingStream stream); //template method
+       // public abstract void LoadTile(OTBParsingStream stream); //template method
 
         public TileNode(TileArea tileArea, OTBNode node)
         {
+            Items = new List<ItemNode>();
+            NodeAttribute = NodeAttribute.None;
+            Flag = TileFlags.None;
+            HouseId = default;
+
             var stream = new OTBParsingStream(node.Data);
 
             ushort x = (ushort)(tileArea.X + stream.ReadByte());
@@ -33,13 +40,17 @@ namespace NeoServer.OTBM.Structure
 
             Coordinate = new Coordinate(x, y, tileArea.Z);
 
-            LoadTile(stream);
+            if(node.Type == NodeType.HouseTile)
+            {
+                  HouseId = stream.ReadUInt32();
+            }
 
-        
+            NodeType = node.Type;
 
             ParseAttributes(stream);
 
-            Items.AddRange(node.Children.Select(c => new ItemNode(this, c)));
+            var tileNode = this;
+            Items.AddRange(node.Children.Select(c => new ItemNode(tileNode, c)));
 
 
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Server.Model.Chat
+﻿namespace NeoServer.Server.Model.Chat
 {
     public enum ChatChannel : ushort
     {

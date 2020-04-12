@@ -41,7 +41,7 @@ namespace NeoServer.Server.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
             Speed = speed;
-           
+
             Location = location;
 
             OpenContainers = new IContainer[MaxContainers]; //todo: db
@@ -198,10 +198,10 @@ namespace NeoServer.Server.Model.Players
 
         public byte SecureMode { get; private set; }
 
-     
+
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
-        public byte GetSkillPercent(SkillType skill) => (byte) Skills[skill].Percentage;
+        public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
 
         public void AddKnownCreature(uint creatureId)

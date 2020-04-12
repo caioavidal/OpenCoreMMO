@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTBM.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace NeoServer.OTBM.Structure
 {
-    public class ItemNodeAttributeValue
+    public struct ItemNodeAttributeValue
     {
         public ItemNodeAttribute AttributeName { get; set; }
         public IConvertible Value { get; set; }
@@ -13,6 +13,10 @@ namespace NeoServer.OTBM.Structure
 
         public ItemNodeAttributeValue(ItemNodeAttribute attribute, OTBParsingStream stream)
         {
+            Value = null;
+            AttributeName = ItemNodeAttribute.None;
+            CustomAttributes = new List<CustomAttribute>();
+
             AttributeName = attribute;
 
             switch (attribute)

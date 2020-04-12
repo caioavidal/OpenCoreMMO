@@ -1,10 +1,5 @@
-﻿using System;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
+﻿using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model;
-using NeoServer.Server.Security;
 
 namespace NeoServer.Networking.Packets.Incoming
 {

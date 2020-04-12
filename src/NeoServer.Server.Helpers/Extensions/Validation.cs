@@ -27,7 +27,7 @@ public static class Validation
         }
 
     }
-     public static void ThrowIfBiggerThan<T>(this T value, T secondValue, string exception = null)
+    public static void ThrowIfBiggerThan<T>(this T value, T secondValue, string exception = null)
     {
         if (Comparer<T>.Default.Compare(value, secondValue) > 0)
         {

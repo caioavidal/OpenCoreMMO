@@ -14,7 +14,7 @@
 
 //        public byte[] GetMessageInBytes() => Length == 0 ? Buffer.ToArray() : Buffer[0..Length].ToArray();
 
-    
+
 
 //        public BaseNetworkMessage(byte[] buffer)
 //        {

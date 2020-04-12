@@ -1,8 +1,6 @@
 ﻿using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Handlers.Player
 {

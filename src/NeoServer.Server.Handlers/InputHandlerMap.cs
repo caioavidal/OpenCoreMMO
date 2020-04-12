@@ -4,8 +4,6 @@ using NeoServer.Server.Handlers.Player;
 using NeoServer.Server.Handlers.Players;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Collections.ObjectModel;
 
 namespace NeoServer.Networking.Packets.Incoming
 {

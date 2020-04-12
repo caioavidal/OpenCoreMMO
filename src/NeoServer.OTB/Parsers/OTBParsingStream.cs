@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
-using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.OTB.DataStructures;
 using NeoServer.OTB.Enums;
+using System;
+using System.Text;
 
 namespace NeoServer.OTB.Parsers
 {

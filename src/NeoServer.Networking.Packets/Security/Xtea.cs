@@ -1,14 +1,11 @@
-using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Networking.Packets.Security
 {
     public class Xtea
     {
-     
+
         public static INetworkMessage Encrypt(INetworkMessage msg, uint[] key)
         {
             if (key == null)
@@ -20,7 +17,7 @@ namespace NeoServer.Networking.Packets.Security
                 msg.AddPaddingBytes(8 - pad);
             }
 
-            var words = Split(msg.Buffer.AsSpan(0,msg.Length));
+            var words = Split(msg.Buffer.AsSpan(0, msg.Length));
 
             for (int pos = 0; pos < msg.Length / 4; pos += 2)
             {
@@ -90,7 +87,7 @@ namespace NeoServer.Networking.Packets.Security
                 bytes[index + 2] = newBytes[2];
                 bytes[index + 3] = newBytes[3];
 
-                index+=4;
+                index += 4;
             }
             return bytes;
         }

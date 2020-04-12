@@ -13,24 +13,26 @@ Licensed under the MIT license.
 See LICENSE file in the project root for full license information.
 */
 
-namespace NeoServer.Game.Enums.Location {
-	/// <summary>
-	/// A* algorithm states while searching for the goal.
-	/// </summary>
-	public enum SearchState {
-		/// <summary>
-		/// The A* algorithm is still searching for the goal.
-		/// </summary>
-		Searching,
+namespace NeoServer.Game.Enums.Location
+{
+    /// <summary>
+    /// A* algorithm states while searching for the goal.
+    /// </summary>
+    public enum SearchState
+    {
+        /// <summary>
+        /// The A* algorithm is still searching for the goal.
+        /// </summary>
+        Searching,
 
-		/// <summary>
-		/// The A* algorithm has found the goal.
-		/// </summary>
-		GoalFound,
+        /// <summary>
+        /// The A* algorithm has found the goal.
+        /// </summary>
+        GoalFound,
 
-		/// <summary>
-		/// The A* algorithm has failed to find a solution.
-		/// </summary>
-		Failed
-	}
+        /// <summary>
+        /// The A* algorithm has failed to find a solution.
+        /// </summary>
+        Failed
+    }
 }

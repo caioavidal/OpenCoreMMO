@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players;
 using System;
 
 namespace NeoServer.Networking.Packets.Outgoing

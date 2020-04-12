@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using NeoServer.OTB.DataStructures;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace NeoServer.OTB.Tests

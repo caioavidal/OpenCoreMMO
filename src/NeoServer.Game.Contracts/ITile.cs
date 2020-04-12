@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts
 {
@@ -39,14 +39,12 @@ namespace NeoServer.Game.Contracts
 
         IEnumerable<IItem> DownItems { get; }
 
-        byte[] CachedDescription { get; }
+        byte[] Cache { get; }
         bool CannotLogout { get; }
         bool ProtectionZone { get; }
         uint GroundStepSpeed { get; }
-        FloorChangeDirection FloorDirection { get; }
         bool HasAnyFloorDestination { get; }
 
-        event RemoveThing OnThingRemovedFromTile;
 
         void AddThing(ref IThing thing, byte count = 1);
 

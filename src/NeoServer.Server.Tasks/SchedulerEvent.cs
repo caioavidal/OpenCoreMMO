@@ -1,8 +1,6 @@
 ﻿
 using NeoServer.Server.Tasks.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Tasks
 {
@@ -26,6 +24,6 @@ namespace NeoServer.Server.Tasks
             EventId = eventId;
         }
 
-    
+
     }
 }

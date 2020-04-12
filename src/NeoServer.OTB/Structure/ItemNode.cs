@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Immutable;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
+using System;
+using System.Collections.Immutable;
 
 namespace NeoServer.OTB.Structure
 {
@@ -19,7 +19,7 @@ namespace NeoServer.OTB.Structure
             {
                 return (T)value;
             }
-            
+
             return default(T);
         }
 

@@ -1,13 +1,7 @@
-﻿using NeoServer.Networking.Packets;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Networking.Packets.Security;
+﻿using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Networking.Protocols
 {
@@ -25,7 +19,7 @@ namespace NeoServer.Networking.Protocols
         {
             HandlerFirstConnection(connection);
             base.OnAccept(connection);
-            
+
         }
 
         public void HandlerFirstConnection(IConnection connection)

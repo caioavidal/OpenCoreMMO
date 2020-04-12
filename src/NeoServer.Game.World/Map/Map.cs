@@ -9,12 +9,8 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Events;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -468,9 +464,9 @@ namespace NeoServer.Game.World.Map
 
             var objectsOnTile = 0;
 
-            if (tile.CachedDescription != null)
+            if (tile.Cache != null)
             {
-                return tile.CachedDescription;
+                return tile.Cache;
             }
 
 

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using NeoServer.OTB.DataStructures;
-using NeoServer.OTB.Enums;
-using NeoServer.OTB.Parsers;
+using System;
 using Xunit;
 
 namespace NeoServer.OTB.Tests
@@ -55,6 +52,6 @@ namespace NeoServer.OTB.Tests
             Assert.NotNull(instance.GetEnumerator());
         }
 
-   
+
     }
 }

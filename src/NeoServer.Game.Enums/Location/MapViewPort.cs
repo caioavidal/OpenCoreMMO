@@ -4,6 +4,6 @@ namespace NeoServer.Server.Model.World.Map
     {
         ViewPortX = 11,
         ViewPortY = 11,
-     
+
     }
 }

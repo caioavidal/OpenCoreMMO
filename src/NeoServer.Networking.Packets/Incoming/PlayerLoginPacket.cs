@@ -1,9 +1,7 @@
-﻿using System;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
+﻿using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model;
 using NeoServer.Server.Security;
+using System;
 
 namespace NeoServer.Networking.Packets.Incoming
 {

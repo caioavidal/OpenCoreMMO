@@ -1,7 +1,6 @@
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Contracts.Network
 {

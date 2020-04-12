@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.OTB.Parsers;
+using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Items
 {

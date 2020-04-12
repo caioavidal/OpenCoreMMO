@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Enums.Creatures.Players
+﻿namespace NeoServer.Game.Enums.Creatures.Players
 {
     public enum ConditionType : uint
     {

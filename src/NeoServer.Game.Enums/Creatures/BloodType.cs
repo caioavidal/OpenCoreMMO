@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Creatures.Enums
+﻿namespace NeoServer.Game.Creatures.Enums
 {
     public enum BloodType : byte
     {

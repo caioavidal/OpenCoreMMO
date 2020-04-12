@@ -1,12 +1,9 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Tasks;
-using NeoServer.Server.Tasks.Contracts;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {

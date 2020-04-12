@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
 using System;
 
 namespace NeoServer.Benchmarks.Networking

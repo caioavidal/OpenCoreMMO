@@ -1,12 +1,7 @@
-﻿using NeoServer.Networking;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Messages;
+﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model;
-using System;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {

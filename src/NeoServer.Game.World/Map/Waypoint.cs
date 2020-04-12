@@ -3,9 +3,7 @@ using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.World.Map
 {
-   
-
-    public class Waypoint : IWaypoint
+    public struct Waypoint : IWaypoint
     {
         public string Name { get; set; }
         public Coordinate Coordinate { get; set; }

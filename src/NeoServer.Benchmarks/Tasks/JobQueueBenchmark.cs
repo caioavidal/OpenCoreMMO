@@ -1,9 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
-using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -58,7 +55,7 @@ namespace NeoServer.Benchmarks.Tasks
         void Stop();
     }
 
-    public class BlockingCollectionQueue: IJobQueue<Action>
+    public class BlockingCollectionQueue : IJobQueue<Action>
     {
         private BlockingCollection<Action> _jobs = new BlockingCollection<Action>(new ConcurrentQueue<Action>());
 
@@ -132,14 +129,14 @@ namespace NeoServer.Benchmarks.Tasks
             var reader = channel.Reader;
 
 
-            var thread = new Thread(new ThreadStart(()=>Start(reader)));
+            var thread = new Thread(new ThreadStart(() => Start(reader)));
             thread.IsBackground = true;
             thread.Start();
         }
 
         public async void Start(ChannelReader<Action> reader)
         {
-           
+
 
             while (await reader.WaitToReadAsync())
             {

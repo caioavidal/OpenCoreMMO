@@ -129,7 +129,7 @@
 
         public void AddLength()
         {
-           
+
             var srcBuffer = Buffer.AsSpan(0, Length);
             var newArray = new byte[Length + 50].AsSpan(); //added 50 for xtea padding
 

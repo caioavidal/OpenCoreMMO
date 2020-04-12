@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Enums.Creatures.Enums
+﻿namespace NeoServer.Enums.Creatures.Enums
 {
     public enum EffectT : byte
     {

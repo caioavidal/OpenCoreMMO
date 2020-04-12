@@ -1,7 +1,6 @@
-﻿using System;
+﻿using NeoServer.Game.Creatures.Enums;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using NeoServer.Game.Creatures.Enums;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

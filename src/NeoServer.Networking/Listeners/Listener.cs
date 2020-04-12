@@ -1,10 +1,8 @@
 ﻿using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Network;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NeoServer.Networking.Listeners
@@ -30,7 +28,7 @@ namespace NeoServer.Networking.Listeners
 
                     protocol.OnAccept(connection);
                 }
-                
+
             });
         }
 

@@ -4,8 +4,8 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System;
 using NeoServer.Game.Enums.Players;
+using System;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {

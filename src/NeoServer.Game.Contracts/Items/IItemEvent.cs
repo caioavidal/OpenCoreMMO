@@ -4,9 +4,9 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Collections.Generic;
 using NeoServer.Game.Enums;
 using NeoServer.Server.Model.Players.Contracts;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Items
 {

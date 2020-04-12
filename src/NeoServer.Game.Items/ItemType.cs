@@ -243,7 +243,7 @@ namespace NeoServer.Game.Items
             return (flags & flag) != 0;
         }
 
-    
+
 
         public void SetArticle(string article)
         {

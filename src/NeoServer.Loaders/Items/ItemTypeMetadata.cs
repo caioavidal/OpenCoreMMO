@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Items
 {
-    public class ItemTypeMetadata
+    public struct ItemTypeMetadata
     {
         public ushort? Id { get; set; }
         public string Name { get; set; }
@@ -14,7 +13,7 @@ namespace NeoServer.Loaders.Items
         public string Plural { get; set; }
         public string Editorsuffix { get; set; }
 
-        public class Attribute
+        public struct Attribute
         {
             public string Key { get; set; }
             public string Value { get; set; }

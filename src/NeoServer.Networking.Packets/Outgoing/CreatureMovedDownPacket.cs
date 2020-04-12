@@ -1,9 +1,7 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
 
 namespace NeoServer.Networking.Packets.Outgoing
@@ -35,7 +33,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             //going from surface to underground
             if (toLocation.Z == 8)
             {
-              
+
                 //todo try to find a better way
                 message.AddBytes(map.GetFloorDescription(creature, x, y, toLocation.Z, 18, 14, -1, ref skip).ToArray());
                 message.AddBytes(map.GetFloorDescription(creature, x, y, (sbyte)(toLocation.Z + 1), 18, 14, -2, ref skip).ToArray());

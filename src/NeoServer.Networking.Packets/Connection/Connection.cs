@@ -87,7 +87,7 @@ namespace NeoServer.Networking
             var eventArgs = new ConnectionEventArgs(this);
 
             try
-            {  
+            {
                 OnProcessEvent?.Invoke(this, eventArgs);
                 BeginStreamRead();
             }

@@ -4,23 +4,19 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Game.World.Map
 {
-    public class Tile : Contracts.ITile
+    public class Tile : ITile
     {
-
-        public event RemoveThing OnThingRemovedFromTile;
-
         private readonly Stack<uint> _creatureIdsOnTile;
 
         private readonly Stack<IItem> _topItems1OnTile;
@@ -37,9 +33,6 @@ namespace NeoServer.Game.World.Map
 
         public IItem Ground { get; set; }
         public uint GroundStepSpeed => Ground?.Type?.Speed != 0 ? Ground.Type.Speed : (uint)150;
-
-
-
 
         public IEnumerable<uint> CreatureIds => _creatureIdsOnTile;
 
@@ -134,7 +127,7 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public byte[] CachedDescription
+        public byte[] Cache
         {
             get
             {
@@ -191,30 +184,6 @@ namespace NeoServer.Game.World.Map
                 default: break;
             }
             return FloorChangeDirection.None;
-        }
-
-        public FloorChangeDirection FloorDirection
-        {
-
-            get
-            {
-                var location = new Location() { X = Location.X, Y = Location.Y, Z = Location.Z };
-                //todo: create a map for floorchange
-                IConvertible floorChange;
-                if (!Ground.Attributes.TryGetValue(Enums.ItemAttribute.FloorChange, out floorChange))
-                {
-                    return FloorChangeDirection.None;
-                }
-
-                if ((string)floorChange == "down")
-                {
-                    return FloorChangeDirection.Down;
-                }
-
-
-
-                return FloorChangeDirection.None;
-            }
         }
 
         private byte[] GetItemDescriptionBytes() //todo: code duplication
@@ -371,7 +340,7 @@ namespace NeoServer.Game.World.Map
             if (thing is ICreature creature)
             {
                 _creatureIdsOnTile.Push(creature.CreatureId);
-                
+
                 creature.Tile = this;
                 creature.Added();
 
@@ -768,7 +737,7 @@ namespace NeoServer.Game.World.Map
                 {
                     if (++currentPos == stackPosition)
                     {
-                    //    return Game.Instance.GetCreatureWithId(creatureId);
+                        //    return Game.Instance.GetCreatureWithId(creatureId);
                     }
                 }
             }
@@ -835,87 +804,5 @@ namespace NeoServer.Game.World.Map
         {
             Flags |= (byte)flag;
         }
-
-        // public FloorChangeDirection FloorChange
-        // {
-        //    get
-        //    {
-        //        if (Ground.HasFlag(ItemFlag.FloorchangeDown))
-        //        {
-        //            return FloorChangeDirection.Down;
-        //        }
-        //        else
-        //        {
-        //            foreach (IItem item in TopItems1)
-        //            {
-        //                if (item.HasFlag(ItemFlag.TopOrder3))
-        //                {
-        //                    switch (item.Type)
-        //                    {
-        //                        case 1126:
-        //                            return (FloorChangeDirection.Up | FloorChangeDirection.East);
-        //                        case 1128:
-        //                            return (FloorChangeDirection.Up | FloorChangeDirection.West);
-        //                        case 1130:
-        //                            return (FloorChangeDirection.Up | FloorChangeDirection.South);
-        //                        default:
-        //                        case 1132:
-        //                            return (FloorChangeDirection.Up | FloorChangeDirection.North);
-        //                    }
-        //                }
-        //            }
-        //        }
-
-        // return FloorChangeDirection.None;
-        //    }
-        // }
-
-        // public bool IsWalkable { get { return Ground != null && !HasFlag(ItemFlag.Blocking); } }
-
-        // public bool HasFlag(ItemFlag flagVal)
-        // {
-        //    if (Ground != null)
-        //    {
-        //        if (ItemReader.FindItem(Ground.Type).hasFlag(flagVal))
-        //            return true;
-        //    }
-
-        // if (TopItems1.Count > 0)
-        //    {
-        //        foreach (IItem item in TopItems1)
-        //        {
-        //            if (ItemReader.FindItem(Ground.Type).hasFlag(flagVal))
-        //                return true;
-        //        }
-        //    }
-
-        // if (TopItems2.Count > 0)
-        //    {
-        //        foreach (IItem item in TopItems2)
-        //        {
-        //            if (ItemReader.FindItem(Ground.Type).hasFlag(flagVal))
-        //                return true;
-        //        }
-        //    }
-
-        // if (CreatureIds.Count > 0)
-        //    {
-        //        foreach (CreatureId creature in CreatureIds)
-        //        {
-        //            if (flagVal == ItemFlag.Blocking)
-        //                return true;
-        //        }
-        //    }
-
-        // if (DownItems.Count > 0)
-        //    {
-        //        foreach (IItem item in DownItems)
-        //        {
-        //            if (ItemReader.FindItem(Ground.Type).hasFlag(flagVal))
-        //                return true;
-        //        }
-        //    }
-        //    return false;
-        // }
     }
 }

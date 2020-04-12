@@ -12,7 +12,7 @@ namespace NeoServer.Server.Standalone.Factories
     {
         private readonly Func<ushort, IItem> itemFactory;
         private readonly PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler;
-        
+
 
         public PlayerFactory(Func<ushort, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler)
         {

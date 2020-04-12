@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTB.Structure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.OTBM.Structure
 {
-    public class TileArea
+    public struct TileArea
     {
         public TileArea(OTBNode node)
         {
@@ -17,14 +17,16 @@ namespace NeoServer.OTBM.Structure
             Y = stream.ReadUInt16();
             Z = (sbyte)stream.ReadByte();
 
-            var houseTiles = node.Children.Where(c => c.Type == NodeType.HouseTile)
-                                          .Select(c => new HouseTile(this, c)); //todo iomap 250
+            Tiles = new List<TileNode>();
 
-            var normalTiles = node.Children.Where(c => c.Type == NodeType.NormalTile)
-                                          .Select(c => new NormalTile(this, c));
-
-            Tiles.AddRange(houseTiles);
-            Tiles.AddRange(normalTiles);
+            foreach (var child in node.Children)
+            {
+                if(child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
+                {
+                    Tiles.Add(new TileNode(this, child));
+                }
+             
+            }
 
             var unknownNodes = node.Children.Count - Tiles.Count;
 
@@ -38,7 +40,7 @@ namespace NeoServer.OTBM.Structure
         public ushort Y { get; set; }
         public sbyte Z { get; set; }
 
-        public List<TileNode> Tiles { get; set; } = new List<TileNode>();
+        public List<TileNode> Tiles { get; set; } 
 
     }
 }

@@ -4,8 +4,8 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts
 {

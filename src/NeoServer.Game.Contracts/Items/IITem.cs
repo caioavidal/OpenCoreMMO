@@ -4,11 +4,11 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
+using System;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Items
 {

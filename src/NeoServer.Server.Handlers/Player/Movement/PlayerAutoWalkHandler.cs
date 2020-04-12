@@ -1,7 +1,5 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands;
 using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
@@ -12,7 +10,7 @@ namespace NeoServer.Server.Handlers.Players
     public class PlayerAutoWalkHandler : PacketHandler
     {
         private readonly Game game;
-        
+
         public PlayerAutoWalkHandler(Game game)
         {
             this.game = game;

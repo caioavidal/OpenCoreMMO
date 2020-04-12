@@ -1,7 +1,7 @@
+using NeoServer.OTB.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using NeoServer.OTB.Enums;
 
 namespace NeoServer.OTB.Parsers
 {
@@ -60,7 +60,7 @@ namespace NeoServer.OTB.Parsers
                     //todo validation
 
                     attributes.TryAdd(OTBItemAttribute.LightLevel, (byte)stream.ReadUInt16());
-                    attributes.TryAdd(OTBItemAttribute.LightColor, (byte) stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.LightColor, (byte)stream.ReadUInt16());
                     break;
                 case OTBItemAttribute.TopOrder:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(byte));

@@ -1,13 +1,6 @@
-﻿using NeoServer.Networking.Packets;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
-using NeoServer.Server.Handlers.Authentication;
-using NeoServer.Server.Model;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Networking.Protocols
 {

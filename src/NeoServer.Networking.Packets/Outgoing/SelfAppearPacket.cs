@@ -16,7 +16,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-           
+
             message.AddByte((byte)GameOutgoingPacketType.SelfAppear);
 
             message.AddUInt32(player.CreatureId);

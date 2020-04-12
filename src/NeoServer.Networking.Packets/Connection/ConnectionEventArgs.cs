@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts.Network;
+using System;
 
 namespace NeoServer.Networking
 {
- 
+
 
     public class ConnectionEventArgs : EventArgs, IConnectionEventArgs
     {

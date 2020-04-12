@@ -1,11 +1,8 @@
-using System.Linq;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players;
-using NeoServer.Game.World.Map;
+using System.Linq;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

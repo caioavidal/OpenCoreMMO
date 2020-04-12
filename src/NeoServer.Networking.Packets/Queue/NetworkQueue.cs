@@ -14,7 +14,7 @@
 
 //         public void Enqueue(OutgoingPacket message)
 //         {
-            
+
 //         }
 
 //         public void Complete() => queue.CompleteAdding();

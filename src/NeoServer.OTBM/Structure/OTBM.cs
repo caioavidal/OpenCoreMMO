@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.OTBM.Structure;
+﻿using System.Collections.Generic;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -30,33 +28,33 @@ namespace NeoServer.OTBM.Structure
 */
     #endregion
 
-	/// <summary>
-	/// OTBM class which represents the OTBM structure
-	/// </summary>
+    /// <summary>
+    /// OTBM class which represents the OTBM structure
+    /// </summary>
     public class OTBM
     {
-		/// <summary>
-		/// OTBM Header data
-		/// </summary>
+        /// <summary>
+        /// OTBM Header data
+        /// </summary>
         public Header Header { get; set; }
-		/// <summary>
-		/// OTBM Map metadata
-		/// </summary>
-		public MapData MapData { get; set; }
+        /// <summary>
+        /// OTBM Map metadata
+        /// </summary>
+        public MapData MapData { get; set; }
 
-		/// <summary>
-		/// OTBM Tile Areas
-		/// </summary>
-		public IEnumerable<TileArea> TileAreas { get; set; }
-        
-		/// <summary>
-		/// OTBM Towns
-		/// </summary>
+        /// <summary>
+        /// OTBM Tile Areas
+        /// </summary>
+        public IEnumerable<TileArea> TileAreas { get; set; }
+
+        /// <summary>
+        /// OTBM Towns
+        /// </summary>
         public IEnumerable<TownNode> Towns { get; set; }
 
-		/// <summary>
-		/// OTBM Waypoints
-		/// </summary>
+        /// <summary>
+        /// OTBM Waypoints
+        /// </summary>
         public IEnumerable<WaypointNode> Waypoints { get; set; }
 
     }

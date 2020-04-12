@@ -1,9 +1,5 @@
 ﻿using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace NeoServer.Server.Jobs.Creatures
 {
@@ -17,7 +13,7 @@ namespace NeoServer.Server.Jobs.Creatures
             this.game = game;
         }
 
-      
+
 
         public void StartCheckingCreatures()
         {

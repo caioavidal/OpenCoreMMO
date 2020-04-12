@@ -1,24 +1,29 @@
-using System;
-using System.Collections.Generic;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace NeoServer.OTBM.Structure
 {
-    public class ItemNode
+    public struct ItemNode
     {
         public ushort ItemId { get; set; }
-        public List<ItemNodeAttributeValue> ItemNodeAttributes { get; set; } = new List<ItemNodeAttributeValue>();
+        public List<ItemNodeAttributeValue> ItemNodeAttributes { get; set; }
 
         public ItemNode(OTBParsingStream stream)
         {
+            ItemNodeAttributes = default;
+            ItemId = default;
             ItemId = ParseItemId(stream);
         }
 
         public ItemNode(TileNode tile, OTBNode node)
         {
+            ItemNodeAttributes = new List<ItemNodeAttributeValue>();
+            ItemId = default;
+
             if (node.Type != NodeType.Item)
             {
                 throw new Exception($"{tile.Coordinate}: Unknown node type");

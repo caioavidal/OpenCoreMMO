@@ -1,8 +1,5 @@
 ﻿using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace NeoServer.OTB.Tests.Parsers

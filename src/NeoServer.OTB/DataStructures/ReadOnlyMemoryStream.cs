@@ -12,10 +12,10 @@ namespace NeoServer.OTB.DataStructures
         /// </summary>
         /// <param name="buffer"></param>
         /// <param name="position"></param>
-        public ReadOnlyMemoryStream(ReadOnlyMemory<Byte> buffer, int position = 0)
+        public ReadOnlyMemoryStream(ReadOnlyMemory<byte> buffer, int position = 0)
         {
             buffer.ThrowIfNull();
-            position.ThrowIfLessThanZero(); 
+            position.ThrowIfLessThanZero();
             position.ThrowIfBiggerThan(buffer.Length);
 
             _buffer = buffer;
@@ -61,34 +61,34 @@ namespace NeoServer.OTB.DataStructures
         /// <summary>
         /// Reads two bytes from the stream and parses them as a UInt16.
         /// </summary>
-        public UInt16 ReadUInt16()
+        public ushort ReadUInt16()
         {
-            if (BytesLeftToRead < sizeof(UInt16))
+            if (BytesLeftToRead < sizeof(ushort))
                 throw new InvalidOperationException();
 
             var rawData = _buffer.Slice(
                 start: Position,
-                length: sizeof(UInt16));
+                length: sizeof(ushort));
 
             var parsedData = BitConverter.ToUInt16(rawData.Span);
-            Position += sizeof(UInt16);
+            Position += sizeof(ushort);
             return parsedData;
         }
 
         /// <summary>
         /// Reads 4 bytes from the stream and parses them as a UInt32.
         /// </summary>
-        public UInt32 ReadUInt32()
+        public uint ReadUInt32()
         {
-            if (BytesLeftToRead < sizeof(UInt32))
+            if (BytesLeftToRead < sizeof(uint))
                 throw new InvalidOperationException();
 
             var rawData = _buffer.Slice(
                 start: Position,
-                length: sizeof(UInt32));
+                length: sizeof(uint));
 
             var parsedData = BitConverter.ToUInt32(rawData.Span);
-            Position += sizeof(UInt32);
+            Position += sizeof(uint);
             return parsedData;
         }
 

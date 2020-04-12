@@ -1,8 +1,5 @@
 ﻿using NeoServer.Game.Enums.Players;
-using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Security;
 
 namespace NeoServer.Networking.Packets.Incoming
 {

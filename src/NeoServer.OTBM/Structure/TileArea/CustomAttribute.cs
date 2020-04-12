@@ -2,7 +2,7 @@ using NeoServer.OTB.Parsers;
 
 namespace NeoServer.OTBM.Structure
 {
-    public class CustomAttribute
+    public struct CustomAttribute
     {
         public string Key { get; set; }
         public object Value { get; set; }
@@ -15,13 +15,13 @@ namespace NeoServer.OTBM.Structure
 
             switch (pos)
             {
-                case 1: 
+                case 1:
                     Value = stream.ReadString();
                     break;
                 case 2:
                     Value = stream.ReadUInt64();
                     break;
-                case 3: 
+                case 3:
                     Value = stream.ReadDouble();
                     break;
                 case 4:

@@ -6,7 +6,7 @@ namespace NeoServer.OTBM.Structure
     /// <summary>
     /// OTBM Header data
     /// </summary>
-    public class Header
+    public struct Header
     {
         /// <summary>
         /// OTBM version
@@ -16,7 +16,7 @@ namespace NeoServer.OTBM.Structure
         /// <summary>
         /// Major version items accepted
         /// </summary>
-        public uint MajorVersionItems { get; set; }
+        public byte MajorVersionItems { get; set; }
 
         /// <summary>
         /// Minor version items accepted

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NeoServer.Data.Model;
+using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NeoServer.Data.Model;
 
 namespace NeoServer.Server.Contracts.Repositories
 {

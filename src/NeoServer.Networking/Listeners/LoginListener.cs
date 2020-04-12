@@ -1,13 +1,10 @@
 ﻿using NeoServer.Networking.Protocols;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Networking.Listeners
 {
     public class LoginListener : Listener
     {
-        public LoginListener(LoginProtocol protocol) : base(7171, protocol) 
+        public LoginListener(LoginProtocol protocol) : base(7171, protocol)
         {
 
         }

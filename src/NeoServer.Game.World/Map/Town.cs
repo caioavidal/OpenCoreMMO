@@ -3,7 +3,7 @@ using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.World.Map
 {
-    public class Town : ITown
+    public struct Town : ITown
     {
         public uint Id { get; set; }
         public string Name { get; set; }

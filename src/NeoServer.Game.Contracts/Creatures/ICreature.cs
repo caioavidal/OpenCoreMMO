@@ -4,13 +4,13 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

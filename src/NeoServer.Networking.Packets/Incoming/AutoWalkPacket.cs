@@ -1,30 +1,25 @@
 ﻿using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Players;
-using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Security;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
     public class AutoWalkPacket : IncomingPacket
     {
         public byte StepDistance { get; }
-        public List<Direction> Steps { get; } = new List<Direction>();
+        public List<Direction> Steps { get; }
 
         public AutoWalkPacket(IReadOnlyNetworkMessage message)
         {
             StepDistance = message.GetByte();
 
-            for(int i = 0; i < StepDistance; i++)
+            Steps = new List<Direction>(StepDistance);
+
+            for (int i = 0; i < StepDistance; i++)
             {
                 Steps.Add(ParseByte(message.GetByte()));
             }
-
-           // Steps.Reverse();
         }
 
         private Direction ParseByte(byte b)
@@ -32,7 +27,7 @@ namespace NeoServer.Networking.Packets.Incoming
             switch (b)
             {
                 case 1: return Direction.East;
-                case 2: return Direction.NorthEast; 
+                case 2: return Direction.NorthEast;
                 case 3: return Direction.North;
                 case 4: return Direction.NorthWest;
                 case 5: return Direction.West;

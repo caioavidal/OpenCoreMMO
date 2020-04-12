@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Enums.Location
+﻿namespace NeoServer.Game.Enums.Location
 {
     public enum Direction : byte
     {

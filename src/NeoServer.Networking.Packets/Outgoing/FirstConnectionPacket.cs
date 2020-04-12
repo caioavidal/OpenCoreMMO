@@ -1,5 +1,5 @@
-﻿using System;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts.Network;
+using System;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

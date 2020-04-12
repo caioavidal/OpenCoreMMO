@@ -1,11 +1,9 @@
-using System;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace NeoServer.Networking.Packets.Messages
 {
@@ -130,7 +128,7 @@ namespace NeoServer.Networking.Packets.Messages
             Length = 0;
         }
 
-        public Location GetLocation() => new Location() { X = GetUInt16(), Y = GetUInt16(), Z = (sbyte) GetByte() };
+        public Location GetLocation() => new Location() { X = GetUInt16(), Y = GetUInt16(), Z = (sbyte)GetByte() };
 
 
 

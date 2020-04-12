@@ -1,13 +1,11 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 using NeoServer.Networking.Packets;
-using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace NeoServer.Benchmarks.Networking
 {
@@ -26,7 +24,7 @@ namespace NeoServer.Benchmarks.Networking
 
         [Benchmark]
 
-        public INetworkMessage WithoutSpan() => Xtea.Encrypt(GetNetworkMessage(),keys);
+        public INetworkMessage WithoutSpan() => Xtea.Encrypt(GetNetworkMessage(), keys);
         [Benchmark]
 
         public INetworkMessage WithSpan() => Xtea.EncryptWithSpan(GetNetworkMessage(), keys);
@@ -107,7 +105,7 @@ namespace NeoServer.Benchmarks.Networking
 
         }
 
-       
+
 
         private static byte[] ConvertToBytes(Span<uint> array)
         {

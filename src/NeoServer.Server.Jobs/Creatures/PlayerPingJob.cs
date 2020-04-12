@@ -2,10 +2,7 @@
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Tasks;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Jobs
 {
@@ -31,7 +28,7 @@ namespace NeoServer.Server.Jobs
                 return;
             }
 
-            
+
             var remainingTime = TimeSpan.FromTicks(now - connection.LastPingRequest).TotalMilliseconds;
 
             if (remainingTime >= PING_INTERVAL)
@@ -50,7 +47,7 @@ namespace NeoServer.Server.Jobs
 
             var noPongTime = TimeSpan.FromTicks(now - connection.LastPingResponse).TotalMilliseconds;
 
-            if(noPongTime >= CONNECTION_LOST_INTERVAL && player.CanLogout && connection.LastPingResponse > 0)
+            if (noPongTime >= CONNECTION_LOST_INTERVAL && player.CanLogout && connection.LastPingResponse > 0)
             {
                 new PlayerLogOutCommand(player, game, true).Execute();
             }

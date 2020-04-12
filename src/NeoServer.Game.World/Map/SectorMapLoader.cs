@@ -49,7 +49,7 @@
 //            _totalLoadedCount = default;
 //            _sectorsLoaded = new bool[SectorXMax - SectorXMin, SectorYMax - SectorYMin, SectorZMax - SectorZMin];
 //        }
-		
+
 
 //        public bool HasLoaded(int x, int y, byte z)
 //        {

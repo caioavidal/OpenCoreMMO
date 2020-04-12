@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
@@ -11,6 +7,10 @@ using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -413,18 +413,18 @@ namespace NeoServer.Game.Creatures.Model
         public virtual void WalkTo(params Direction[] directions)
         {
 
-                if (!WalkingQueue.IsEmpty)
-                {
-                    StopWalking();
-                }
+            if (!WalkingQueue.IsEmpty)
+            {
+                StopWalking();
+            }
 
-                var nextStepId = NextStepId;
+            var nextStepId = NextStepId;
 
-                foreach (var direction in directions)
-                {
-                    WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
-                }
-            
+            foreach (var direction in directions)
+            {
+                WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+            }
+
         }
 
         public TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)

@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Events;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
@@ -28,10 +25,10 @@ namespace NeoServer.Server.Events
 
 
         private void MoveThing(byte fromStackPosition, Direction toDirection, Location fromLocation, Location toLocation, IThing thing, ITile fromTile)
-        { 
+        {
 
-             var spectators = game.Map.GetCreaturesAtPositionZone(fromLocation, toLocation);
-         
+            var spectators = game.Map.GetCreaturesAtPositionZone(fromLocation, toLocation);
+
             var player = thing as IPlayer;
 
             player.SetDirection(toDirection);

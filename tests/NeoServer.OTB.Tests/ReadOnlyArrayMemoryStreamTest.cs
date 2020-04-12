@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NeoServer.OTB.DataStructures;
+using System;
 using Xunit;
 
 namespace NeoServer.OTB.Tests
