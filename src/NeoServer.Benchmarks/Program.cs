@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Running;
+using NeoServer.Benchmarks.Collections;
 using NeoServer.Benchmarks.Tasks;
 using System;
 
@@ -12,7 +13,7 @@ namespace NeoServer.Benchmarks
             //var summary = BenchmarkRunner.Run<BlockCopyVsSpan>();
             //var summary = BenchmarkRunner.Run<JobQueueBenchmark>();
             //var summary = BenchmarkRunner.Run<SchedulerQueueBenchmark>();
-            var summary = BenchmarkRunner.Run<InstanceVsStaticBenchmark>();
+            var summary = BenchmarkRunner.Run<ArrayPoolVsDynamicArrayBenchmark>();
             Console.ReadKey();
         }
     }

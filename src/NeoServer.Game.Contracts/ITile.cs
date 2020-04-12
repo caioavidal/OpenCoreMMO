@@ -63,8 +63,7 @@ namespace NeoServer.Game.Contracts
         IItem BruteRemoveItemWithId(ushort id);
 
         bool CanBeWalked(byte avoidDamageType = 0);
-        void RemoveCreature(ICreature c);
-        void AddCreature(ICreature creature);
+      
         bool HasFloorDestination(FloorChangeDirection direction);
     }
 }

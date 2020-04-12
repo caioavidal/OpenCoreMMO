@@ -400,6 +400,8 @@ namespace NeoServer.Game.Creatures.Model
         {
             LastStep = DateTime.Now.TimeOfDay.TotalMilliseconds;
 
+            lastStepCost = 1;
+
             if (fromTile.Location.Z != toTile.Location.Z)
             {
                 lastStepCost = 2;

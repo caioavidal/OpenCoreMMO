@@ -1,15 +1,11 @@
-// <copyright file="Tile.cs" company="2Dudes">
-// Copyright (c) 2018 2Dudes. All rights reserved.
-// Licensed under the MIT license.
-// See LICENSE file in the project root for full license information.
-// </copyright>
-
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Server.Helpers;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -133,7 +129,7 @@ namespace NeoServer.Game.World.Map
             {
                 if (_cachedDescription == null)
                 {
-                    _cachedDescription = GetItemDescriptionBytes();
+                    _cachedDescription = UpdateCache();
                 }
 
                 return _cachedDescription;
@@ -186,7 +182,8 @@ namespace NeoServer.Game.World.Map
             return FloorChangeDirection.None;
         }
 
-        private byte[] GetItemDescriptionBytes() //todo: code duplication
+
+        private byte[] UpdateCache() //todo: code duplication
         {
             // not valid to cache response if there are creatures.
             if (_creatureIdsOnTile.Count > 0)
@@ -194,81 +191,49 @@ namespace NeoServer.Game.World.Map
                 return null;
             }
 
-            var tempBytes = new List<byte>();
+            var pool = ArrayPool<byte>.Shared;
+            var minimumLength = 27; //max of possible bytes length
+
+            var stream = new StreamArray(pool.Rent(minimumLength));
 
             var count = 0;
             const int numberOfObjectsLimit = 9;
 
             if (Ground != null)
             {
-                tempBytes.AddRange(BitConverter.GetBytes(Ground.Type.ClientId));
+                stream.AddUInt16(Ground.Type.ClientId);
                 count++;
             }
 
-            foreach (var item in TopItems1.Reverse())
+            var items = TopItems1.Reverse().Concat(TopItems2.Reverse()).Concat(DownItems.Reverse());
+
+            foreach (var item in items)
             {
                 if (count == numberOfObjectsLimit)
                 {
                     break;
                 }
 
-                tempBytes.AddRange(BitConverter.GetBytes(item.Type.ClientId));
+                stream.AddUInt16(item.Type.ClientId);
 
                 if (item.IsCumulative)
                 {
-                    tempBytes.Add(item.Amount);
+                    stream.AddByte(item.Amount);
                 }
                 else if (item.IsLiquidPool || item.IsLiquidContainer)
                 {
-                    tempBytes.Add(item.LiquidType);
+                    stream.AddByte(item.LiquidType);
                 }
 
                 count++;
             }
 
-            foreach (var item in TopItems2.Reverse())
-            {
-                if (count == numberOfObjectsLimit)
-                {
-                    break;
-                }
+            var buffer = stream.GetStream();
+            var streamResult = buffer.AsSpan(0, stream.Length).ToArray();
 
-                tempBytes.AddRange(BitConverter.GetBytes(item.Type.ClientId));
+            pool.Return(buffer, true);
+            return streamResult;
 
-                if (item.IsCumulative)
-                {
-                    tempBytes.Add(item.Amount);
-                }
-                else if (item.IsLiquidPool || item.IsLiquidContainer)
-                {
-                    tempBytes.Add(item.LiquidType);
-                }
-
-                count++;
-            }
-
-            foreach (var item in DownItems.Reverse())
-            {
-                if (count == numberOfObjectsLimit)
-                {
-                    break;
-                }
-
-                tempBytes.AddRange(BitConverter.GetBytes(item.Type.ClientId));
-
-                if (item.IsCumulative)
-                {
-                    tempBytes.Add(item.Amount);
-                }
-                else if (item.IsLiquidPool || item.IsLiquidContainer)
-                {
-                    tempBytes.Add(item.LiquidType);
-                }
-
-                count++;
-            }
-
-            return tempBytes.ToArray();
         }
 
         public bool CanBeWalked(byte avoidDamageType = 0)
@@ -491,18 +456,8 @@ namespace NeoServer.Game.World.Map
             _cachedDescription = null;
         }
 
-        public void AddCreature(ICreature creature)
-        {
 
-
-            _creatureIdsOnTile.Push(creature.CreatureId);
-            creature.Tile = this;
-            creature.Added();
-
-            // invalidate the cache.
-            _cachedDescription = null;
-        }
-        public void RemoveCreature(ICreature c)
+        private void RemoveCreature(ICreature c)
         {
             var tempStack = new Stack<uint>();
             ICreature removed = null;

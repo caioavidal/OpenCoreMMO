@@ -464,10 +464,10 @@ namespace NeoServer.Game.World.Map
 
             var objectsOnTile = 0;
 
-            if (tile.Cache != null)
-            {
-                return tile.Cache;
-            }
+            //if (tile.Cache != null)
+            //{
+            //    return tile.Cache;
+            //}
 
 
             if (tile.Ground != null)
