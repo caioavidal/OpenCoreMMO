@@ -68,7 +68,7 @@ namespace NeoServer.Game.Items
                     break;
                 case ItemGroup.None:
                 case ItemGroup.Ground:
-                case ItemGroup.ITEM_GROUP_SPLASH:
+                case ItemGroup.Splash:
                 case ItemGroup.ITEM_GROUP_FLUID:
                 case ItemGroup.ITEM_GROUP_CHARGES:
                 case ItemGroup.ITEM_GROUP_DEPRECATED:

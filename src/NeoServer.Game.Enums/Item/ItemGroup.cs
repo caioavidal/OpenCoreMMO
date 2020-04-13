@@ -14,7 +14,7 @@
         ITEM_GROUP_MAGICFIELD, //deprecated
         ITEM_GROUP_WRITEABLE, //deprecated
         ITEM_GROUP_KEY, //deprecated
-        ITEM_GROUP_SPLASH,
+        Splash,
         ITEM_GROUP_FLUID,
         ITEM_GROUP_DOOR, //deprecated
         ITEM_GROUP_DEPRECATED,

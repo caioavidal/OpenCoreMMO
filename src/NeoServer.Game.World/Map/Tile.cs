@@ -222,7 +222,7 @@ namespace NeoServer.Game.World.Map
                 }
                 else if (item.IsLiquidPool || item.IsLiquidContainer)
                 {
-                    stream.AddByte(item.LiquidType);
+                    stream.AddByte((byte)item.LiquidType);
                 }
 
                 count++;

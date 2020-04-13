@@ -52,7 +52,7 @@
             }
             else if (item.IsLiquidPool || item.IsLiquidSource || item.IsLiquidContainer)
             {
-                AddByte(item.LiquidType);
+                AddByte((byte)item.LiquidType);
             }
         }
 

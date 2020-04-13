@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Model;
@@ -139,21 +140,25 @@ namespace NeoServer.Game.Items
 
         public bool CanBeDressed => Type.Flags.Contains(ItemFlag.Clothes);
 
-        public bool IsLiquidPool => Type.Flags.Contains(ItemFlag.LiquidPool);
+        public bool IsLiquidPool => Type.Group == ItemGroup.Splash;
 
         public bool IsLiquidSource => Type.Flags.Contains(ItemFlag.LiquidSource);
 
         public bool IsLiquidContainer => Type.Group == ItemGroup.ITEM_GROUP_FLUID;
 
-        public byte LiquidType
+        public LiquidColor LiquidType
         {
             get
             {
-                if (!Type.Flags.Contains(ItemFlag.LiquidSource))
+                if (!IsLiquidPool && !IsLiquidContainer)
                 {
                     return 0x00;
                 }
-                return Convert.ToByte(Attributes[ItemAttribute.SourceLiquidType]);
+                if ((byte)Attributes[ItemAttribute.Count] != default)
+                {
+                    return new LiquidTypeMap()[(byte)Attributes[ItemAttribute.Count]];
+                }
+                return LiquidColor.Empty;
             }
 
             set
