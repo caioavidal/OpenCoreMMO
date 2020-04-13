@@ -464,10 +464,10 @@ namespace NeoServer.Game.World.Map
 
             var objectsOnTile = 0;
 
-            //if (tile.Cache != null)
-            //{
-            //    return tile.Cache;
-            //}
+            if (tile.Cache != null)
+            {
+                return tile.Cache;
+            }
 
 
             if (tile.Ground != null)
@@ -530,7 +530,7 @@ namespace NeoServer.Game.World.Map
             }
             else if (item.IsLiquidPool || item.IsLiquidContainer)
             {
-                tempBytes.Add(item.LiquidType);
+                tempBytes.Add((byte)item.LiquidType);
             }
         }
 
