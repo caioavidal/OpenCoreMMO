@@ -58,7 +58,7 @@ namespace NeoServer.Server.Tasks
                             continue;
                         }
 
-                        activeEventIds.TryRemove(evt.EventId, out _);
+                        
                         DispatchEvent(evt);
                     }
                 }
@@ -69,7 +69,12 @@ namespace NeoServer.Server.Tasks
         {
             await Task.Delay(evt.ExpirationDelay);
             evt.SetToNotExpire();
+            if (EventIsCancelled(evt.EventId))
+            {
+                return;
+            }
             dispatcher.AddEvent(evt, true); //send to dispatcher
+            activeEventIds.TryRemove(evt.EventId, out _);
         }
 
         public bool CancelEvent(uint eventId)

@@ -273,10 +273,10 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public override void WalkTo(params Direction[] directions)
+        public override bool TryWalkTo(params Direction[] directions)
         {
             ResetIdleTime();
-            base.WalkTo(directions);
+            return base.TryWalkTo(directions);
         }
 
         public sbyte GetContainerId(IContainer thingAsContainer)

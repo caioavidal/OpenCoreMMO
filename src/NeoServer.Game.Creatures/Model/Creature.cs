@@ -11,6 +11,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -388,11 +389,13 @@ namespace NeoServer.Game.Creatures.Model
             //}
         }
 
+        public bool StopWalkingRequested { get;  set; }
         public void StopWalking()
         {
-
-            WalkingQueue.Clear(); // reset the actual queue
+            StopWalkingRequested = true;
+            //WalkingQueue.Clear(); // reset the actual queue
             UpdateLastStepInfo(0);
+            
             OnStoppedWalking?.Invoke(this);
         }
 
@@ -412,21 +415,41 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-        public virtual void WalkTo(params Direction[] directions)
+        public List<uint> NextSteps { get; set; } = new List<uint>();
+
+        public virtual bool TryWalkTo(params Direction[] directions)
         {
-
-            if (!WalkingQueue.IsEmpty)
+            lock (_enqueueWalkLock)
             {
-                StopWalking();
+                //if (!WalkingQueue.IsEmpty)
+                //{
+                //    StopWalking();
+                //}
+
+                if(NextSteps.Any())
+                {
+                    StopWalking();
+                    return false;
+                }
+
+                StopWalkingRequested = false;
+                WalkingQueue.Clear();
+                
+                var nextStepId = NextStepId;
+                foreach (var direction in directions)
+                {
+                    WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+                }
             }
+            return true;
+        }
 
-            var nextStepId = NextStepId;
-
-            foreach (var direction in directions)
+        public void SignalNextWalkEvent()
+        {
+            lock (_enqueueWalkLock)
             {
-                WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+                Monitor.Pulse(_enqueueWalkLock);
             }
-
         }
 
         public TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
@@ -452,7 +475,7 @@ namespace NeoServer.Game.Creatures.Model
 
             Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000 * totalPenalty / (double)Math.Max(1, (int)Speed)));
 
-            NextStepId = (byte)(lastStepId + 1);
+            //NextStepId = (byte)(lastStepId + 1);
         }
 
         private int stepDelay

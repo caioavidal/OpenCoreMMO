@@ -75,6 +75,8 @@ namespace NeoServer.Game.Contracts.Creatures
         bool IsRemoved { get; }
         int StepDelayMilliseconds { get; }
         double LastStep { get; }
+        bool StopWalkingRequested { get; set; }
+        List<uint> NextSteps { get; set; }
 
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
@@ -88,11 +90,11 @@ namespace NeoServer.Game.Contracts.Creatures
 
         void StopWalking();
 
-        void WalkTo(params Direction[] directions);
+        bool TryWalkTo(params Direction[] directions);
 
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
-
+        void SignalNextWalkEvent();
     }
 }
