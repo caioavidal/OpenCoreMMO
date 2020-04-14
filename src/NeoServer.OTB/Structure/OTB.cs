@@ -24,7 +24,7 @@ namespace NeoServer.OTB.Structure
         /// <param name="node"></param>
         public OTB(OTBNode node)
         {
-            ItemNodes = node.Children.Select(c => new ItemNode(c)).ToList();
+            ItemNodes = node.Children.AsParallel().Select(c => new ItemNode(c)).ToList();
         }
     }
 }

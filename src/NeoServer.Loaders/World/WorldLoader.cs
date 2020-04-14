@@ -32,7 +32,7 @@ namespace NeoServer.Loaders.World
         {
             var fileStream = File.ReadAllBytes("./data/world/neoserver.otbm");
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
-            
+
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
             var tiles = GetTiles(otbm);
@@ -66,24 +66,21 @@ namespace NeoServer.Loaders.World
 
         private IEnumerable<ITile> GetTiles(OTBM.Structure.OTBM otbm)
         {
-            foreach (var tileNode in otbm.TileAreas.SelectMany(t => t.Tiles))
-            {
-
-
-                var tile = new Tile(tileNode.Coordinate);
-
-                var items = GetItemsOnTile(tileNode);
-
-                foreach (var item in items)
+            return otbm.TileAreas.AsParallel().SelectMany(t => t.Tiles)
+                .Select(tileNode =>
                 {
-                    tile.AddContent(item);
-                }
+                    var tile = new Tile(tileNode.Coordinate);
 
-                tile.SetFlag((TileFlag)tileNode.Flag);
+                    var items = GetItemsOnTile(tileNode);
 
-                yield return tile;
-            }
+                    foreach (var item in items)
+                    {
+                        tile.AddContent(item);
+                    }
 
+                    tile.SetFlag((TileFlag)tileNode.Flag);
+                    return tile;
+                }).ToList();
         }
 
         private IEnumerable<IItem> GetItemsOnTile(TileNode tileNode)
@@ -107,7 +104,7 @@ namespace NeoServer.Loaders.World
                 if (item.CanBeMoved && tileNode.NodeType == NodeType.HouseTile)
                 {
                     yield return item;
-                    logger.Warning($"Moveable item with ID: {itemNode.ItemId} in house at position {tileNode.Coordinate}.");
+                    //logger.Warning($"Moveable item with ID: {itemNode.ItemId} in house at position {tileNode.Coordinate}.");
                 }
                 else
                 {

@@ -19,28 +19,37 @@ namespace NeoServer.OTBM.Structure
 
             Tiles = new List<TileNode>();
 
-            foreach (var child in node.Children)
+            var tileArea = this;
+
+            var tileNodes = node.Children.AsParallel().Select<OTBNode,TileNode>(child =>
             {
-                if(child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
+                if (child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
                 {
-                    Tiles.Add(new TileNode(this, child));
+                   return new TileNode(tileArea, child);
                 }
-             
-            }
+                throw new Exception($"unknown tile nodes found.");
+            }).ToList();
+
+            Tiles.AddRange(tileNodes);
 
             var unknownNodes = node.Children.Count - Tiles.Count;
 
-            if (unknownNodes > 0)
-            {
-                throw new Exception($"{unknownNodes} unknown tile nodes found.");
-            }
+            //if (unknownNodes > 0)
+            //{
+            //    throw new Exception($"{unknownNodes} unknown tile nodes found.");
+            //}
         }
 
+        TileNode BuildTile(OTBNode node)
+        {
+           
+                return new TileNode(this, node);
+        }
         public ushort X { get; set; }
         public ushort Y { get; set; }
         public sbyte Z { get; set; }
 
-        public List<TileNode> Tiles { get; set; } 
+        public List<TileNode> Tiles { get; set; }
 
     }
 }

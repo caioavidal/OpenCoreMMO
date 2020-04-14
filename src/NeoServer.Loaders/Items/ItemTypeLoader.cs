@@ -38,7 +38,7 @@ namespace NeoServer.Loaders.Items
             var otbNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
             var otb = new OTB.Structure.OTB(otbNode);
 
-            var itemTypes = otb.ItemNodes.Select(i => ItemNodeParser.Parse(i)).ToDictionary(x => x.TypeId);
+            var itemTypes = otb.ItemNodes.AsParallel().Select(i => ItemNodeParser.Parse(i)).ToDictionary(x => x.TypeId);
             return itemTypes;
         }
 
