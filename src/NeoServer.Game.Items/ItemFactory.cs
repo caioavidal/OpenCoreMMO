@@ -31,6 +31,11 @@ namespace NeoServer.Game.Items
                 return new Container(ItemTypeData.InMemory[typeId]);
             }
 
+            if (item.Flags.Contains(ItemFlag.BlockSolid) || item.Group == ItemGroup.Ground || !item.Flags.Contains(ItemFlag.Moveable)
+                || item.Flags.Contains(ItemFlag.BlockPathFind))
+            {
+                return ItemData.GetItem(typeId);
+            }
             return new Item(ItemTypeData.InMemory[typeId]);
         }
     }

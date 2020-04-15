@@ -1,28 +1,30 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Server.Items;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace NeoServer.Server.Items
+namespace NeoServer.Game.Items
 {
-    public class ItemTypeData
+    public class ItemData
     {
         /// <summary>
         /// InMemory data of all game's item types
         /// </summary>
         /// <value></value>
-        public static ImmutableDictionary<ushort, IItemType> InMemory { get; private set; }
+        public static ConcurrentDictionary<ushort, IItem> InMemory { get; private set; } = new ConcurrentDictionary<ushort, IItem>();
 
-        /// <summary>
-        /// Loads item types into memory
-        /// This data is used in the ItemFactory to create Item instances
-        /// </summary>
-        /// <param name="items"></param>
-        public static void Load(Dictionary<ushort, IItemType> items)
+        public static bool Add(Item item) => InMemory.TryAdd(item.Type.TypeId, item);
+
+        public static IItem GetItem(ushort typeId)
         {
-            if (InMemory == null)
+            if (InMemory.TryGetValue(typeId,out var item))
             {
-                InMemory = items.ToImmutableDictionary();
+                return item;
             }
+            var newItem = new Item(ItemTypeData.InMemory[typeId]);
+            Add(newItem);
+            return newItem;
         }
     }
 }
