@@ -51,6 +51,13 @@ namespace NeoServer.Game.World.Map
             }
         }
 
+        public PathError PathError =>
+             this switch
+             {
+                 { HasCollision: true } => PathError.NotEnoughRoom,
+                 _ => PathError.None
+             };
+
         public IEnumerable<IItem> ItemsWithCollision
         {
             get
@@ -759,5 +766,14 @@ namespace NeoServer.Game.World.Map
         {
             Flags |= (byte)flag;
         }
+
+        public bool HasCollision
+        {
+            get
+            {
+                return Ground != null && (ItemsWithCollision?.Any() ?? false);
+            }
+        }
+
     }
 }

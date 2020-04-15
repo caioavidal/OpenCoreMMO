@@ -1,10 +1,12 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -15,7 +17,6 @@ namespace NeoServer.Server.Commands.Player
         private IPlayer player;
         private readonly Direction[] directions;
 
-        private bool cancelWalking = false;
         public PlayerWalkCommand(IPlayer player, Game game, params Direction[] directions)
         {
             this.player = player;
@@ -25,62 +26,71 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
-
-
-            if (!player.TryWalkTo(directions))
+            if (player.NextStepId != 0)
             {
-                game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, Execute));
-                return;
+                game.Scheduler.CancelEvent(player.NextStepId);
+                player.NextStepId = 0;
             }
 
+            player.StopWalking();
 
-            //player.OnStoppedWalking += (_) =>
-            //{
 
-            //    cancelWalking = true;
-            //};
-
-            MovePlayer(player);
-
+            player.TryWalkTo(directions);
+            
+            AddEventWalk(directions.Length == 1);
         }
 
-        private void MovePlayer(IPlayer player)
+        private void AddEventWalk(bool firstStep)
         {
-           
-            var thing = player as IThing;
+            var creature = player as ICreature;
+            creature.CancelNextWalk = false;
 
-            if (player.IsRemoved)
+            if (creature.EventWalk != 0)
             {
-                player.StopWalking();
                 return;
             }
-
-
-            if (player.StopWalkingRequested || player.WalkingQueue.IsEmpty)
-            {
-                Console.WriteLine("cancelled");
-                player.NextSteps.ForEach(e => game.Scheduler.CancelEvent(e));
-                player.NextSteps.Clear();
-               
-                //player.NextStepId = default;
-                return;
-            }
-
-            if (player.WalkingQueue.TryDequeue(out Tuple<byte, Direction> direction))
-            {
-                var toTile = game.Map.GetNextTile(thing.Location, direction.Item2);
-                game.Map.MoveThing(ref thing, toTile.Location, 1);
-
-            }
-
-            var evtId = game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () =>
+            
+            if (firstStep)
             {
                 MovePlayer(player);
-            }));
+            }
 
-            player.NextStepId = (byte)evtId;
+            creature.EventWalk = game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () => MovePlayer(player)));
+        }
 
-            player.NextSteps.Add(evtId);
+        private void MovePlayer(ICreature creature)
+        {
+
+            var thing = creature as IThing;
+
+            if (creature.TryGetNextStep(out var direction))
+            {
+                var toTile = game.Map.GetNextTile(thing.Location, direction);
+                if (!game.Map.TryMoveThing(ref thing, toTile.Location, 1))
+                {
+                    player.CancelWalk();
+                }
+            }
+            else
+            {
+                if (player.EventWalk != 0)
+                {
+                    game.Scheduler.CancelEvent(player.EventWalk);
+                    player.EventWalk = 0;
+                }
+            }
+
+            if(player.EventWalk != 0)
+            {
+                player.EventWalk = 0;
+                AddEventWalk(false);
+            }
+
+            if (creature.IsRemoved)
+            {
+                creature.StopWalking();
+                return;
+            }
         }
     }
 }

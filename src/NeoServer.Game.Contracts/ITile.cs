@@ -44,7 +44,8 @@ namespace NeoServer.Game.Contracts
         bool ProtectionZone { get; }
         uint GroundStepSpeed { get; }
         bool HasAnyFloorDestination { get; }
-
+        bool HasCollision { get; }
+        PathError PathError { get; }
 
         void AddThing(ref IThing thing, byte count = 1);
 

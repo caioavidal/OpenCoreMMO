@@ -25,12 +25,10 @@ namespace NeoServer.Game.World.Map
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
         public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
 
-        private object movementLock = new object();
-
-
-        public event PlaceCreatureOnMap CreatureAddedOnMap;
-        public event RemoveThingFromTile ThingRemovedFromTile;
-        public event MoveThingOnFloor ThingMovedOnFloor;
+        public event PlaceCreatureOnMap OnCreatureAddedOnMap;
+        public event RemoveThingFromTile OnThingRemovedFromTile;
+        public event MoveThingOnFloor OnThingMoved;
+        public event FailedMoveThing OnThingMovedFailed;
 
 
 
@@ -58,14 +56,18 @@ namespace NeoServer.Game.World.Map
 
         public ITile this[ushort x, ushort y, sbyte z] => this[new Location { X = x, Y = y, Z = z }];
 
-        public void MoveThing(ref IThing thing, Location toLocation, byte count)
-        {
-
-            //var wrongTile = this[178, 371, 7];
+        public bool TryMoveThing(ref IThing thing, Location toLocation, byte count)
+        { 
             var fromTile = this[thing.Location];
             var toTile = this[toLocation];
             var fromStackPosition = thing.GetStackPosition();
 
+            var error = toTile.PathError;
+            if(error != PathError.None)
+            {
+                OnThingMovedFailed(thing, error);
+                return false;
+            }
             //todo not thread safe
             fromTile.RemoveThing(ref thing, count);
 
@@ -73,17 +75,21 @@ namespace NeoServer.Game.World.Map
 
             thing.Moved(fromTile, toTile);
 
-            ThingMovedOnFloor(thing, fromTile, toTile, fromStackPosition);
+            OnThingMoved(thing, fromTile, toTile, fromStackPosition);
 
             var tileDestination = GetTileDestination(toTile);
 
             if (tileDestination == toTile)
             {
-                return;
+                return true;
             }
 
-            MoveThing(ref thing, tileDestination.Location, count);
+            return TryMoveThing(ref thing, tileDestination.Location, count);
         }
+
+        
+          
+        
 
         private ITile GetTileDestination(ITile tile)
         {
@@ -187,7 +193,7 @@ namespace NeoServer.Game.World.Map
             var fromStackPosition = thing.GetStackPosition();
             tile.RemoveThing(ref thing, count);
 
-            ThingRemovedFromTile(thing, tile, fromStackPosition);
+            OnThingRemovedFromTile(thing, tile, fromStackPosition);
         }
 
         public IEnumerable<uint> GetCreaturesAtPositionZone(Location location)
@@ -539,7 +545,7 @@ namespace NeoServer.Game.World.Map
             var thing = creature as IThing;
             this[creature.Location].AddThing(ref thing);
 
-            CreatureAddedOnMap(creature);
+            OnCreatureAddedOnMap(creature);
 
         }
     }

@@ -73,7 +73,7 @@ namespace NeoServer.Game.Creatures.Model
                 LookType = 0
             };
 
-            WalkingQueue = new ConcurrentQueue<Tuple<byte, Direction>>();
+            WalkingQueue = new ConcurrentQueue<Direction>();
 
             // Subscribe any attack-impacting conditions here
             OnThingChanged += CheckAutoAttack;         // Are we in range with our target now/still?
@@ -202,7 +202,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public byte Shield { get; protected set; } // TODO: implement.
 
-        public ConcurrentQueue<Tuple<byte, Direction>> WalkingQueue { get; }
+        public ConcurrentQueue<Direction> WalkingQueue { get; }
 
         public byte NextStepId { get; set; }
 
@@ -389,13 +389,13 @@ namespace NeoServer.Game.Creatures.Model
             //}
         }
 
-        public bool StopWalkingRequested { get;  set; }
+        public bool StopWalkingRequested { get; set; }
         public void StopWalking()
         {
             StopWalkingRequested = true;
-            //WalkingQueue.Clear(); // reset the actual queue
+            WalkingQueue.Clear(); // reset the actual queue
             UpdateLastStepInfo(0);
-            
+
             OnStoppedWalking?.Invoke(this);
         }
 
@@ -415,42 +415,24 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-        public List<uint> NextSteps { get; set; } = new List<uint>();
 
         public virtual bool TryWalkTo(params Direction[] directions)
         {
             lock (_enqueueWalkLock)
             {
-                //if (!WalkingQueue.IsEmpty)
-                //{
-                //    StopWalking();
-                //}
-
-                if(NextSteps.Any())
+                if (!WalkingQueue.IsEmpty)
                 {
-                    StopWalking();
-                    return false;
+                    WalkingQueue.Clear();
                 }
-
-                StopWalkingRequested = false;
-                WalkingQueue.Clear();
-                
-                var nextStepId = NextStepId;
                 foreach (var direction in directions)
                 {
-                    WalkingQueue.Enqueue(new Tuple<byte, Direction>((byte)(nextStepId++ % byte.MaxValue), direction));
+                    WalkingQueue.Enqueue(direction);
                 }
             }
             return true;
         }
 
-        public void SignalNextWalkEvent()
-        {
-            lock (_enqueueWalkLock)
-            {
-                Monitor.Pulse(_enqueueWalkLock);
-            }
-        }
+
 
         public TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
         {
@@ -474,7 +456,7 @@ namespace NeoServer.Game.Creatures.Model
             var totalPenalty = (tilePenalty ?? 200) * (wasDiagonal ? 2 : 1);
 
             Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000 * totalPenalty / (double)Math.Max(1, (int)Speed)));
-
+            lastStepCost = 1;
             //NextStepId = (byte)(lastStepId + 1);
         }
 
@@ -503,14 +485,24 @@ namespace NeoServer.Game.Creatures.Model
 
         public double LastStep { get; private set; }
 
+
+        public List<uint> NextSteps { get; set; }
+        public bool CancelNextWalk { get; set; }
+        public uint EventWalk { get; set; }
+
         private int CalculateStepDuration()
         {
             var duration = Math.Floor((double)(1000 * Tile.GroundStepSpeed / Speed));
 
-            var stepDuration = (int)Math.Ceiling(duration / 15) * 15;
+            var stepDuration = (int)Math.Ceiling(duration / 50) * 50;
 
             //todo check monster creature.cpp 1367
             return stepDuration;
+        }
+
+        public bool TryGetNextStep(out Direction direction)
+        {
+            return WalkingQueue.TryDequeue(out direction);
         }
     }
 }

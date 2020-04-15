@@ -55,7 +55,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         uint Flags { get; }
 
-        ConcurrentQueue<Tuple<byte, Direction>> WalkingQueue { get; }
+        
 
         byte NextStepId { get; set; }
 
@@ -75,8 +75,13 @@ namespace NeoServer.Game.Contracts.Creatures
         bool IsRemoved { get; }
         int StepDelayMilliseconds { get; }
         double LastStep { get; }
+
+        bool TryGetNextStep(out Direction direction);
+
         bool StopWalkingRequested { get; set; }
         List<uint> NextSteps { get; set; }
+        bool CancelNextWalk { get; set; }
+        uint EventWalk { get; set; }
 
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
@@ -89,12 +94,11 @@ namespace NeoServer.Game.Contracts.Creatures
         void TurnTo(Direction direction);
 
         void StopWalking();
-
+        
         bool TryWalkTo(params Direction[] directions);
 
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
-        void SignalNextWalkEvent();
     }
 }

@@ -57,6 +57,9 @@ namespace NeoServer.Server.Model.Players
             Inventory = new PlayerInventory(this, inventory);
         }
 
+        
+        public event CancelWalk OnCancelledWalk;
+
         private uint IdleTime;
 
         public uint Id { get; private set; }
@@ -123,8 +126,6 @@ namespace NeoServer.Server.Model.Players
 
         public override string CloseInspectionText => InspectionText;
         public byte AccessLevel { get; set; } // TODO: implement.
-
-        public IAction PendingAction { get; private set; }
 
         public bool CannotLogout => !Tile.ProtectionZone && InFight;
 
@@ -253,25 +254,6 @@ namespace NeoServer.Server.Model.Players
 
         //    PendingAction = action;
         //}
-
-        public void ClearPendingActions() => PendingAction = null;
-
-        protected override void CheckPendingActions(IThing thingChanged, IThingStateChangedEventArgs eventArgs)
-        {
-            if (PendingAction == null || thingChanged != this || eventArgs.PropertyChanged != nameof(Location))
-            {
-                return;
-            }
-
-            if (Location == PendingAction.RetryLocation)
-            {
-                Task.Delay(CalculateRemainingCooldownTime(CooldownType.Action, DateTime.Now) + TimeSpan.FromMilliseconds(500))
-                    .ContinueWith(previous =>
-                    {
-                        PendingAction.Perform();
-                    });
-            }
-        }
 
         public override bool TryWalkTo(params Direction[] directions)
         {
@@ -416,19 +398,12 @@ namespace NeoServer.Server.Model.Players
         {
             Direction = direction;
         }
-    }
 
-
-    //todo:build pass
-    public interface IAction
-    {
-        // IPacketIncoming Packet { get; }
-
-        Location RetryLocation { get; }
-
-        // IList<IPacketOutgoing> ResponsePackets { get; }
-
-        void Perform();
+        public void CancelWalk()
+        {
+            StopWalking();
+            OnCancelledWalk(this);
+        }
     }
 }
 

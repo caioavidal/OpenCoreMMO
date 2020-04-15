@@ -33,13 +33,13 @@ namespace NeoServer.Server.Commands
             {
                 if (player.Tile.CannotLogout)
                 {
-                    connection.Send(new TextMessagePacket("You can not logout here.", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
+                    connection.Send(new TextMessagePacket("You can not logout here.", TextMessageOutgoingType.Small));
                     return;
                 }
 
                 if (player.CannotLogout)
                 {
-                    connection.Send(new TextMessagePacket("You may not logout during or immediately after a fight!", TextMessageOutgoingType.MESSAGE_STATUS_SMALL));
+                    connection.Send(new TextMessagePacket("You may not logout during or immediately after a fight!", TextMessageOutgoingType.Small));
                     return;
                 }
             }

@@ -12,12 +12,14 @@ namespace NeoServer.Server.Standalone.Factories
     {
         private readonly Func<ushort, IItem> itemFactory;
         private readonly PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler;
+        private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
 
 
-        public PlayerFactory(Func<ushort, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler)
+        public PlayerFactory(Func<ushort, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
+            this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
         }
         private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
@@ -47,6 +49,7 @@ namespace NeoServer.Server.Standalone.Factories
                 );
 
             newPlayer.OnTurnedToDirection += playerTurnToDirectionEventHandler.Execute;
+            newPlayer.OnCancelledWalk += playerWalkCancelledEventHandler.Execute;
             return newPlayer;
         }
 

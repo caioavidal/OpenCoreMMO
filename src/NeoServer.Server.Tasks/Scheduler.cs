@@ -59,13 +59,13 @@ namespace NeoServer.Server.Tasks
                         }
 
                         
-                        DispatchEvent(evt);
+                        await DispatchEvent(evt);
                     }
                 }
             });
         }
 
-        private async void DispatchEvent(ISchedulerEvent evt)
+        private async ValueTask DispatchEvent(ISchedulerEvent evt)
         {
             await Task.Delay(evt.ExpirationDelay);
             evt.SetToNotExpire();

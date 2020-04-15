@@ -7,6 +7,7 @@ using NeoServer.Game.Enums.Players;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
+    public delegate void CancelWalk(IPlayer player);
     public interface IPlayer : ICreature
     {
         ushort Level { get; }
@@ -30,6 +31,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool InFight { get; }
         bool CanLogout { get; }
 
+        event CancelWalk OnCancelledWalk;
+
         //  IAction PendingAction { get; }
 
         void ChangeOutfit(IOutfit outfit);
@@ -47,9 +50,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void AddKnownCreature(uint creatureId);
         void SetDirection(Direction direction);
 
-        //  void SetPendingAction(IAction action);
-
-        void ClearPendingActions();
+       
 
         void CheckInventoryContainerProximity(IThing thingChanging, IThingStateChangedEventArgs eventArgs);
         sbyte OpenContainer(IContainer thingAsContainer);
@@ -62,5 +63,6 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         IContainer GetContainer(byte container);
         void ResetIdleTime();
+        void CancelWalk();
     }
 }
