@@ -52,7 +52,7 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 
 * Github: [@caioavidal](https://github.com/caioavidal)
 * LinkedIn: [https:\/\/www.linkedin.com\/in\/caiovidal](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/caiovidal)
-* Discord Invite: https://discord.gg/DeE6mz
+* Discord Invite: https://discord.gg/Kazq9z2
 ## Show your support
 
 Give a ⭐️ if this project helped you!
