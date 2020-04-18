@@ -1,13 +1,16 @@
-﻿namespace NeoServer.Networking.Packets
-{
-    using NeoServer.Game.Contracts.Items;
-    using NeoServer.Game.Enums.Location.Structs;
-    using NeoServer.Networking.Packets.Messages;
-    using NeoServer.Server.Contracts.Network;
-    using NeoServer.Server.Security;
-    using System;
-    using System.Text;
+﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Security;
+using System;
+using System.Text;
 
+namespace NeoServer.Networking.Packets
+{
+    /// <summary>
+    /// Contains all the methods to handle incoming and outgoing message from/to client
+    /// </summary>
     public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     {
         private int Cursor;
@@ -22,6 +25,10 @@
             Cursor = length;
         }
 
+        /// <summary>
+        /// Inserts a location point on the buffer
+        /// </summary>
+        /// <param name="location"></param>
         public void AddLocation(Location location)
         {
             AddUInt16((ushort)location.X);
@@ -29,12 +36,21 @@
             AddByte((byte)location.Z);
         }
 
+        /// <summary>
+        /// Inserts a string on buffer. This method put the string's length in front of the value itself
+        /// Ex: the string "hello world" will be inserted as 0x0b 0 + string bytes
+        /// </summary>
+        /// <param name="value"></param>
         public void AddString(string value)
         {
             AddUInt16((ushort)value.Length);
             WriteBytes(Encoding.UTF8.GetBytes(value));
         }
 
+        /// <summary>
+        /// Inserts item object into the buffer.
+        /// </summary>
+        /// <param name="item"></param>
         public void AddItem(IItem item)
         {
 
@@ -56,13 +72,26 @@
             }
         }
 
+        /// <summary>
+        /// Adds uint value (4 bytes) to buffer
+        /// </summary>
+        /// <param name="value"></param>
         public void AddUInt32(uint value) => WriteBytes(BitConverter.GetBytes(value));
+
+        /// <summary>
+        /// Adds ushort (2 bytes) to buffer
+        /// </summary>
+        /// <param name="value"></param>
         public void AddUInt16(ushort value) => WriteBytes(BitConverter.GetBytes(value));
 
+        /// <summary>
+        /// Adds a byte value to buffer
+        /// </summary>
+        /// <param name="b"></param>
         public void AddByte(byte b) => WriteBytes(new[] { b });
 
         /// <summary>
-        /// Add bytes with payload length
+        /// Adds a array of bytes to buffer
         /// </summary>
         /// <param name="bytes"></param>
         public void AddBytes(byte[] bytes)
@@ -73,15 +102,10 @@
             }
         }
 
-        public void AddPayloadLength()
-        {
-            var bytes = BitConverter.GetBytes((ushort)Length);
-            Buffer[0] = bytes[0];
-            Buffer[1] = bytes[1];
-        }
-
-        public void AddPayloadLengthSpace() => Cursor += 2;
-
+        /// <summary>
+        /// Adds padding right bytes (0x33) to buffer
+        /// </summary>
+        /// <param name="count">how many times the padding will be added</param>
         public void AddPaddingBytes(int count) => WriteBytes(0x33, count);
 
 
@@ -127,9 +151,14 @@
             return newArray;
         }
 
+
+        /// <summary>
+        /// Add payload length to the buffer
+        /// The ushort bytes will be added in front of buffer
+        /// </summary>
         public void AddLength()
         {
-           
+
             var srcBuffer = Buffer.AsSpan(0, Length);
             var newArray = new byte[Length + 50].AsSpan(); //added 50 for xtea padding
 

@@ -8,8 +8,6 @@ namespace NeoServer.Server.Contracts.Network
         void AddByte(byte b);
         void AddBytes(byte[] bytes);
         void AddPaddingBytes(int count);
-        void AddPayloadLength();
-        void AddPayloadLengthSpace();
         void AddString(string value);
         void AddUInt16(ushort value);
         void AddUInt32(uint value);
