@@ -10,6 +10,10 @@
   <a href="https://codecov.io/gh/caioavidal/OpenCoreMMO">
   <img align="center" src="https://codecov.io/gh/caioavidal/OpenCoreMMO/branch/develop/graph/badge.svg" />
 </a>
+<a href="https://discord.gg/Kazq9z2">
+  <img align="center" src="https://badgen.net/badge/icon/discord?icon=discord&label" />
+</a>
+
 </p>
 
 > The OpenCoreMMO is a free and open-source MMORPG server emulator written in C#. It is based on the [forgottenserver](https://github.com/otland/forgottenserver)
