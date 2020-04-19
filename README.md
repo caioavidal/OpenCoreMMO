@@ -1,7 +1,11 @@
 <h1 align="center">Welcome to OpenCoreMMO 👋</h1>
 <p align="center">
+  
   <a href="https://travis-ci.com/caioavidal/OpenCoreMMO" target="_blank">
   <img align="center" src="https://travis-ci.com/caioavidal/OpenCoreMMO.svg?branch=develop" target="_blank"  />
+  </a>
+  <a href="https://ci.appveyor.com/project/caioavidal/opencoremmo">
+  <img align="center" src="https://ci.appveyor.com/api/projects/status/973j1ut05o6r8ggg?svg=true" target="_blank"  />
   </a>
   <a href="https://codecov.io/gh/caioavidal/OpenCoreMMO">
   <img align="center" src="https://codecov.io/gh/caioavidal/OpenCoreMMO/branch/develop/graph/badge.svg" />
