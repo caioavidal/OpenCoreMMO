@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using NeoServer.Data.Model;
 using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model;
 using Raven.Client.Documents;
-using Raven.Client.Documents.Indexes;
 using Raven.Client.Documents.Session;
 
 namespace NeoServer.Data.RavenDB
@@ -19,6 +15,11 @@ namespace NeoServer.Data.RavenDB
         {
         }
 
+        /// <summary>
+        /// Creates new account
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         public async void Create(AccountModel account)
         {
             using (var store = new DocumentStore())
@@ -42,6 +43,11 @@ namespace NeoServer.Data.RavenDB
             }
         }
 
+        /// <summary>
+        /// Gets account record
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public async Task<AccountModel> FirstOrDefaultAsync(Expression<Func<AccountModel, bool>> filter)
         {
 
@@ -51,6 +57,12 @@ namespace NeoServer.Data.RavenDB
             }
 
         }
+
+        /// <summary>
+        /// Gets account record
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public async Task<AccountModel> Get(string account, string password)
         {
 

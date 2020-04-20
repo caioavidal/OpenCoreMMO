@@ -10,6 +10,10 @@ using System.Text;
 
 namespace NeoServer.Server
 {
+
+    /// <summary>
+    /// Control creatures on game
+    /// </summary>
     public class GameCreatureManager
     {
 
@@ -31,6 +35,11 @@ namespace NeoServer.Server
             playersConnection = new ConcurrentDictionary<uint, IConnection>();
         }
 
+        /// <summary>
+        /// Adds creature to game
+        /// </summary>
+        /// <param name="creature"></param>
+        /// <returns></returns>
         public bool AddCreature(ICreature creature)
         {
             creatureInstances.Add(creature);
@@ -39,8 +48,20 @@ namespace NeoServer.Server
             return true;
         }
 
-        public bool TryGetCreature(uint id, out ICreature creature) => creatureInstances.TryGetCreature(id, out creature);
+        /// <summary>
+        /// Gets creature instance on game
+        /// </summary>
+        /// <param name="id">Creature Id</param>
+        /// <param name="creature">Creature instance</param>
+        /// <returns></returns>
 
+        public bool TryGetCreature(uint id, out ICreature creature) => creatureInstances.TryGetCreature(id, out creature);
+        /// <summary>
+        /// Removes creature from game
+        /// This method also removes creature from map
+        /// </summary>
+        /// <param name="creature"></param>
+        /// <returns></returns>
         public bool RemoveCreature(ICreature creature)
         {
             if (creature.IsRemoved)
@@ -60,6 +81,13 @@ namespace NeoServer.Server
             return true;
         }
 
+        /// <summary>
+        /// Adds player to game
+        /// This methods also adds player to map and to connection pool
+        /// </summary>
+        /// <param name="playerRecord"></param>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public IPlayer AddPlayer(PlayerModel playerRecord, IConnection connection)
         {
             var player = playerFactory(playerRecord);
@@ -74,6 +102,11 @@ namespace NeoServer.Server
             return player;
         }
 
+        /// <summary>
+        /// Removes player from game, map and connection pool
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public bool RemovePlayer(IPlayer player)
         {
             if (playersConnection.TryRemove(player.CreatureId, out IConnection connection))
@@ -86,6 +119,12 @@ namespace NeoServer.Server
             return true;
         }
 
+        /// <summary>
+        /// Gets the player connection
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public bool GetPlayerConnection(uint playerId, out IConnection connection) => playersConnection.TryGetValue(playerId, out connection);
 
     }

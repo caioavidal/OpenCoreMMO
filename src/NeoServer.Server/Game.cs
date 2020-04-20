@@ -17,14 +17,30 @@ namespace NeoServer.Server
         public byte LightLevel => 250;
         public byte LightColor => 215;
 
+        /// <summary>
+        /// Game state
+        /// </summary>
+        /// <value></value>
         public GameState State { get; private set; }
 
-
+        /// <summary>
+        /// Map instance
+        /// </summary>
+        /// <value></value>
         public IMap Map { get; }
 
         public GameCreatureManager CreatureManager { get; }
 
+        /// <summary>
+        /// Dispatcher instance
+        /// </summary>
+        /// <value></value>
         public IDispatcher Dispatcher { get; }
+
+        /// <summary>
+        /// Scheduler instance
+        /// </summary>
+        /// <value></value>
         public IScheduler Scheduler { get; }
 
         public Game(IMap map,
@@ -36,15 +52,16 @@ namespace NeoServer.Server
             Scheduler = scheduler;
             CreatureManager = creatureManager;
         }
-      
+
         /// <summary>
-        /// Removes player from game instances, connection pool and close player connection;
+        /// Sets game state as opened
         /// </summary>
-     
-
         public void Open() => State = GameState.Opened;
-        public void Close() => State = GameState.Closed;
 
-        public DateTime CombatSynchronizationTime { get; private set; }
+        /// <summary>
+        /// Sets game state as closed
+        /// No one can logIn on game expect GM
+        /// </summary>
+        public void Close() => State = GameState.Closed;
     }
 }

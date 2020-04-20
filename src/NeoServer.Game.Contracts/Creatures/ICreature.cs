@@ -31,6 +31,10 @@ namespace NeoServer.Game.Contracts.Creatures
 
         ushort Corpse { get; }
 
+        /// <summary>
+        /// Health points
+        /// </summary>
+        /// <value></value>
         uint Hitpoints { get; }
 
         uint MaxHitpoints { get; }
@@ -80,10 +84,24 @@ namespace NeoServer.Game.Contracts.Creatures
         event RemoveCreature OnCreatureRemoved;
         event StopWalk OnStoppedWalking;
 
+        /// <summary>
+        /// Checks whether creature can see another creature or not
+        /// </summary>
+        /// <param name="creature">Creeature to see</param>
+        /// <returns></returns>
         bool CanSee(ICreature creature);
 
+        /// <summary>
+        /// Checks whether creature can see location or not
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         bool CanSee(Location location);
 
+        /// <summary>
+        /// Turns creature to direction
+        /// </summary>
+        /// <param name="direction"></param>
         void TurnTo(Direction direction);
 
         void StopWalking();
