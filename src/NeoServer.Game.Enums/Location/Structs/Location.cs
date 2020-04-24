@@ -11,6 +11,22 @@ namespace NeoServer.Game.Enums.Location.Structs
 {
     public struct Location
     {
+        
+
+        public Location(int x, int y, sbyte z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
+        public Location(Coordinate coordinate) : this()
+        {
+            X = coordinate.X;
+            Y = coordinate.Y;
+            Z = coordinate.Z;
+        }
+
         public int X { get; set; }
 
         public int Y { get; set; }

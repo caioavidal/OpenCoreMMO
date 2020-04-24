@@ -1,5 +1,8 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Creatures;
@@ -7,15 +10,19 @@ using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
+using NeoServer.Server.Helpers;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 
 namespace NeoServer.Game.Creatures.Model
 {
-    public abstract class Creature : Thing, ICreature, ICombatActor
+    public abstract class Creature : MoveableThing, ICreature, ICombatActor
     {
         private static readonly object _idLock = new object();
         private static uint _idCounter = 1;
@@ -76,8 +83,6 @@ namespace NeoServer.Game.Creatures.Model
             WalkingQueue = new ConcurrentQueue<Direction>();
 
             // Subscribe any attack-impacting conditions here
-            OnThingChanged += CheckAutoAttack;         // Are we in range with our target now/still?
-            OnThingChanged += CheckPendingActions;                    // Are we in range with our pending action?
             // OnTargetChanged += CheckAutoAttack;          // Are we attacking someone new / not attacking anymore?
             // OnInventoryChanged += Mind.AttackConditionsChanged;        // Equipped / DeEquiped something?
             Skills = new Dictionary<SkillType, ISkill>();
@@ -85,7 +90,7 @@ namespace NeoServer.Game.Creatures.Model
             Friendly = new HashSet<uint>();
         }
 
-        public override void Removed()
+        public  void SetAsRemoved()
         {
             IsRemoved = true;
         }
@@ -94,9 +99,9 @@ namespace NeoServer.Game.Creatures.Model
 
         public event OnAttackTargetChange OnTargetChanged;
 
-        public override ushort ThingId => CreatureThingId;
+        //public override ushort ThingId => CreatureThingId;
 
-        public override byte Count => 0x01;
+        //public override byte Count => 0x01;
 
         public override string InspectionText => $"{Article} {Name}";
 
@@ -107,8 +112,6 @@ namespace NeoServer.Game.Creatures.Model
         public uint CreatureId { get; }
 
         public string Article { get; }
-
-        public string Name { get; }
 
         public ushort Corpse { get; }
 
@@ -224,15 +227,8 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-        protected virtual void CheckPendingActions(IThing thingChanged, IThingStateChangedEventArgs eventAgrs) { }
-
-        // ~CreatureId()
-        // {
-        //    OnLocationChanged -= CheckAutoAttack;         // Are we in range with our target now/still?
-        //    OnLocationChanged -= CheckPendingActions;                  // Are we in range with any of our pending actions?
-        //    //OnTargetChanged -= CheckAutoAttack;           // Are we attacking someone new / not attacking anymore?
-        //    //OnInventoryChanged -= Mind.AttackConditionsChanged;      // Equipped / DeEquiped something?
-        // }
+      
+    
         public void IncreaseSkillCounter(SkillType skill, ushort value)
         {
             if (!Skills.ContainsKey(skill))
@@ -302,6 +298,74 @@ namespace NeoServer.Game.Creatures.Model
         {
             Direction = direction;
             OnTurnedToDirection?.Invoke(this, direction);
+        }
+
+        public byte[] GetRaw(IPlayer playerRequesting)
+        {
+            var cache = new List<byte>();
+
+            var known = playerRequesting.KnowsCreatureWithId(CreatureId);
+
+            if (known)
+            {
+                cache.AddRange(BitConverter.GetBytes((ushort)0x62));
+                cache.AddRange(BitConverter.GetBytes(CreatureId));
+            }
+            else
+            {
+                cache.AddRange(BitConverter.GetBytes((ushort)0x61));
+                cache.AddRange(BitConverter.GetBytes(playerRequesting.ChooseToRemoveFromKnownSet()));
+                cache.AddRange(BitConverter.GetBytes(CreatureId));
+
+                playerRequesting.AddKnownCreature(CreatureId);
+
+                var creatureNameBytes = Encoding.Default.GetBytes(Name);
+                cache.AddRange(BitConverter.GetBytes((ushort)creatureNameBytes.Length));
+                cache.AddRange(creatureNameBytes);
+            }
+
+            cache.Add((byte)Math.Min(100, Hitpoints * 100 / MaxHitpoints));
+            cache.Add((byte)ClientSafeDirection);
+
+            if (playerRequesting.CanSee(this))
+            {
+                // Add creature outfit
+                cache.AddRange(BitConverter.GetBytes(Outfit.LookType));
+
+                if (Outfit.LookType > 0)
+                {
+                    cache.Add(Outfit.Head);
+                    cache.Add(Outfit.Body);
+                    cache.Add(Outfit.Legs);
+                    cache.Add(Outfit.Feet);
+                    cache.Add(Outfit.Addon);
+                }
+                else
+                {
+                    cache.AddRange(BitConverter.GetBytes(Outfit.LookType));
+                }
+            }
+            else
+            {
+                cache.AddRange(BitConverter.GetBytes((ushort)0));
+                cache.AddRange(BitConverter.GetBytes((ushort)0));
+            }
+
+            cache.Add(LightBrightness);
+            cache.Add(LightColor);
+
+            cache.AddRange(BitConverter.GetBytes(Speed));
+
+            cache.Add(Skull);
+            cache.Add(Shield);
+
+            if (!known)
+            {
+                cache.Add(0x00); //guild emblem
+            }
+
+            cache.Add(0x00);
+            return cache.ToArray();
         }
 
         public void SetAttackTarget(uint targetId)
@@ -452,7 +516,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true)
         {
-            var tilePenalty = Tile?.Ground?.MovementPenalty;
+            var tilePenalty = Tile?.MovementPenalty;
             var totalPenalty = (tilePenalty ?? 200) * (wasDiagonal ? 2 : 1);
 
             Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000 * totalPenalty / (double)Math.Max(1, (int)Speed)));
@@ -489,10 +553,11 @@ namespace NeoServer.Game.Creatures.Model
         public List<uint> NextSteps { get; set; }
         public bool CancelNextWalk { get; set; }
         public uint EventWalk { get; set; }
+        public IWalkableTile Tile { get; set; }
 
         private int CalculateStepDuration()
         {
-            var duration = Math.Floor((double)(1000 * Tile.GroundStepSpeed / Speed));
+            var duration = Math.Floor((double)(1000 * Tile.StepSpeed / Speed));
 
             var stepDuration = (int)Math.Ceiling(duration / 50) * 50;
 
@@ -504,5 +569,9 @@ namespace NeoServer.Game.Creatures.Model
         {
             return WalkingQueue.TryDequeue(out direction);
         }
+
+        public static bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
+        public static bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;
+
     }
 }

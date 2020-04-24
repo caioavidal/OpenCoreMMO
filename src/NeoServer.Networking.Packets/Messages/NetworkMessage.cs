@@ -1,6 +1,7 @@
 ﻿namespace NeoServer.Networking.Packets
 {
     using NeoServer.Game.Contracts.Items;
+    using NeoServer.Game.Contracts.Items.Types;
     using NeoServer.Game.Enums.Location.Structs;
     using NeoServer.Networking.Packets.Messages;
     using NeoServer.Server.Contracts.Network;
@@ -44,15 +45,15 @@
                 return;
             }
 
-            AddUInt16(item.Type.ClientId);
+            AddUInt16(item.ClientId);
 
             if (item.IsCumulative)
             {
-                AddByte(item.Amount);
+                AddByte((item as ICumulativeItem).Amount);
             }
-            else if (item.IsLiquidPool || item.IsLiquidSource || item.IsLiquidContainer)
+            else if (item is ILiquidItem liquidItem)
             {
-                AddByte((byte)item.LiquidType);
+                AddByte((byte)liquidItem.LiquidColor);
             }
         }
 

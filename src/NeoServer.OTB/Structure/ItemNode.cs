@@ -72,7 +72,7 @@ namespace NeoServer.OTB.Structure
             Flags = stream.ReadUInt32();
 
             Attributes = new OTBParsingItemAttribute(stream).Attributes;
-
+         
         }
     }
 }

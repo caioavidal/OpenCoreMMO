@@ -13,7 +13,9 @@ namespace NeoServer.Benchmarks
             //var summary = BenchmarkRunner.Run<BlockCopyVsSpan>();
             //var summary = BenchmarkRunner.Run<JobQueueBenchmark>();
             //var summary = BenchmarkRunner.Run<SchedulerQueueBenchmark>();
-            var summary = BenchmarkRunner.Run<ArrayPoolVsDynamicArrayBenchmark>();
+            //var summary = BenchmarkRunner.Run<ArrayPoolVsDynamicArrayBenchmark>();
+            var summary = BenchmarkRunner.Run<StackallocVsList>();
+            
             Console.ReadKey();
         }
     }

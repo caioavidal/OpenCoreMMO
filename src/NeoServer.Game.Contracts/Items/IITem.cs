@@ -1,103 +1,33 @@
-// <copyright file="IITem.cs" company="2Dudes">
-// Copyright (c) 2018 2Dudes. All rights reserved.
-// Licensed under the MIT license.
-// See LICENSE file in the project root for full license information.
-// </copyright>
-
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Location;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace NeoServer.Game.Contracts.Items
 {
-    public delegate void ItemHolderChangeEvent(IItem itemChanged, uint oldHolderId);
-
-    public delegate void ItemAmountChangeEvent(IItem itemChanged, byte oldAmount);
-
     public interface IItem : IThing
     {
-        event ItemHolderChangeEvent OnHolderChanged;
+        IItemType Metadata { get; }
+        string IThing.Name => Metadata.Name;
+        string IThing.InspectionText => $"{Metadata.Article} {Metadata.Name}";
+        string IThing.CloseInspectionText => "";
+        ushort ClientId => Metadata.ClientId;
+        Span<byte> GetRaw() => BitConverter.GetBytes(ClientId);
 
-        event ItemAmountChangeEvent OnAmountChanged;
+        bool HasFlag(ItemFlag flag) => Metadata.Flags.Contains(flag);
 
-        IItemType Type { get; }
+        bool CanBeMoved => HasFlag(ItemFlag.Moveable);
+        bool IsBlockeable => HasFlag(ItemFlag.BlockSolid);
+        bool IsCumulative => HasFlag(ItemFlag.Stackable);
+        bool IsAlwaysOnTop => HasFlag(ItemFlag.AlwaysOnTop) ||
+             HasFlag(ItemFlag.Clip) || HasFlag(ItemFlag.Hangable);
 
-        Dictionary<ItemAttribute, IConvertible> Attributes { get; }
+        bool IsPickupable => HasFlag(ItemFlag.Pickupable);
+        bool IsUsable => HasFlag(ItemFlag.Useable);
+        bool IsAntiProjectile => HasFlag(ItemFlag.BlockProjectTile);
 
-        uint HolderId { get; }
-
-        IContainer Parent { get; }
-
-        bool IsGround { get; }
-
-        byte MovementPenalty { get; }
-
-        bool IsTop1 { get; }
-
-        bool IsTop2 { get; }
-
-        bool ChangesOnUse { get; }
-
-        ushort ChangeOnUseTo { get; }
-
-        bool IsLiquidPool { get; }
-
-        bool IsLiquidSource { get; }
-
-        bool IsLiquidContainer { get; }
-
-        LiquidColor LiquidType { get; }
-
-        bool HasCollision { get; }
-
-        bool HasSeparation { get; }
-
-        bool BlocksThrow { get; }
-
-        bool BlocksPass { get; }
-
-        void StartDecaying();
-
-        bool BlocksLay { get; }
-
-        bool IsCumulative { get; }
-
-        bool IsContainer { get; }
-
-        bool IsDressable { get; }
-
-        byte DressPosition { get; }
-
-        byte Attack { get; }
-
-        byte Defense { get; }
-
-        byte Armor { get; }
-
-        int Range { get; }
-
-        decimal Weight { get; }
-
-        byte Amount { get; set; }
-        bool LoadedFromMap { get; set; }
-        bool CanDecay { get; set; }
-        bool HasCharges { get; }
-
-        bool IsPathBlocking(byte avoidType = 0);
-
-        void AddContent(IEnumerable<object> content);
-
-        void SetHolder(ICreature creature, Location fromLocation);
-
-        void SetAmount(byte remainingCount);
-
-        void SetParent(IContainer parentContainer);
-
-        bool Join(IItem otherItem);
-
-        bool Separate(byte amount, out IItem splitItem);
+        bool IsBottom => HasFlag(ItemFlag.Bottom);
+        FloorChangeDirection FloorDirection => Metadata.Attributes.GetFloorChangeDirection();
     }
 }

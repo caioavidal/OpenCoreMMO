@@ -1,4 +1,5 @@
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Contracts.Network;
@@ -69,7 +70,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         }
 
 
-        private byte[] GetDescription(IThing thing, Location fromLocation, Location toLocation, IMap map, Direction direction)
+        private byte[] GetDescription(Game.Contracts.Items.IThing thing, Location fromLocation, Location toLocation, IMap map, Direction direction)
         {
             var newLocation = toLocation;
 

@@ -1,5 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Item;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +18,7 @@ namespace NeoServer.Game.Items
 
         public ISet<ItemFlag> Flags { get; }
 
-        public IDictionary<ItemAttribute, IConvertible> DefaultAttributes { get; }
+        public IItemAttributeList Attributes { get; }
 
         public bool Locked { get; private set; }
 
@@ -90,7 +92,7 @@ namespace NeoServer.Game.Items
             Name = string.Empty;
             Description = string.Empty;
             Flags = new HashSet<ItemFlag>();
-            DefaultAttributes = new Dictionary<ItemAttribute, IConvertible>();
+            Attributes = new ItemAttributeList();
             Locked = false;
         }
 
@@ -150,30 +152,6 @@ namespace NeoServer.Game.Items
             Flags.Add(flag);
         }
 
-        public void SetAttribute(ItemAttribute attribute, int attributeValue)
-        {
-            ThrowIfLocked();
-
-            DefaultAttributes[attribute] = attributeValue;
-        }
-        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue)
-        {
-            ThrowIfLocked();
-
-            DefaultAttributes[attribute] = attributeValue;
-        }
-
-        public void SetAttribute(string attributeName, int attributeValue)
-        {
-            ThrowIfLocked();
-
-            if (!Enum.TryParse(attributeName, out ItemAttribute attribute))
-            {
-                throw new InvalidDataException($"Attempted to set an unknown Item attribute [{attributeName}].");
-            }
-
-            DefaultAttributes[attribute] = attributeValue;
-        }
 
         public void ParseOTFlags(uint flags)
         {
@@ -254,5 +232,7 @@ namespace NeoServer.Game.Items
         {
             Plural = plural;
         }
+
+     
     }
 }

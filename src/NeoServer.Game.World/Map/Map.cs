@@ -1,3 +1,4 @@
+
 // <copyright file="Map.cs" company="2Dudes">
 // Copyright (c) 2018 2Dudes. All rights reserved.
 // Licensed under the MIT license.
@@ -7,8 +8,12 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.World.Map.Tiles;
+using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;
@@ -33,13 +38,11 @@ namespace NeoServer.Game.World.Map
 
 
         private readonly World world;
-        private readonly CreatureDescription creatureDescription;
+        
 
-        public Map(World world, CreatureDescription creatureDescription)
+        public Map(World world)
         {
             this.world = world;
-            this.creatureDescription = creatureDescription;
-
         }
 
         public ITile this[Location location]
@@ -54,26 +57,31 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public ITile this[ushort x, ushort y, sbyte z] => this[new Location { X = x, Y = y, Z = z }];
+        public ITile this[ushort x, ushort y, sbyte z] => this[new Location(x, y, z)];
 
-        public bool TryMoveThing(ref IThing thing, Location toLocation, byte count)
-        { 
-            var fromTile = this[thing.Location];
-            var toTile = this[toLocation];
-            var fromStackPosition = thing.GetStackPosition();
-
-            var error = toTile.PathError;
-            if(error != PathError.None)
+        public bool TryMoveThing(ref IMoveableThing thing, Location toLocation)
+        {
+            if (this[thing.Location] is IImmutableTile)
             {
-                OnThingMovedFailed(thing, error);
+                OnThingMovedFailed(thing, PathError.NotPossible);
                 return false;
             }
-            //todo not thread safe
-            fromTile.RemoveThing(ref thing, count);
 
-            toTile.AddThing(ref thing, count);
+            if (this[toLocation] is IImmutableTile)//immutable tiles cannot be modified
+            {
+                OnThingMovedFailed(thing, PathError.NotEnoughRoom);
+                return false;
+            }
 
-            thing.Moved(fromTile, toTile);
+            var fromTile = this[thing.Location] as IWalkableTile;
+            var toTile = this[toLocation] as IWalkableTile;
+
+            var fromStackPosition = fromTile.GetStackPositionOfThing(thing);          
+
+            //todo: not thead safe
+            fromTile.RemoveThing(ref thing);
+
+            toTile.AddThing(ref thing);
 
             OnThingMoved(thing, fromTile, toTile, fromStackPosition);
 
@@ -84,27 +92,24 @@ namespace NeoServer.Game.World.Map
                 return true;
             }
 
-            return TryMoveThing(ref thing, tileDestination.Location, count);
+            return TryMoveThing(ref thing, tileDestination.Location);
         }
 
-        
-          
-        
-
-        private ITile GetTileDestination(ITile tile)
+        private ITile GetTileDestination(IWalkableTile tile)
         {
+            Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) => tile is IWalkableTile walkable ? walkable.FloorDirection == direction : false;
+
             var x = (ushort)tile.Location.X;
             var y = (ushort)tile.Location.Y;
             var z = tile.Location.Z;
 
-
-            if (tile.HasFloorDestination(FloorChangeDirection.Down))
+            if (hasFloorDestination(tile,FloorChangeDirection.Down))
             {
                 z++;
 
                 var southDownTile = this[x, (ushort)(y - 1), z];
 
-                if (southDownTile != null && southDownTile.HasFloorDestination(FloorChangeDirection.SouthAlternative))
+                if (hasFloorDestination(southDownTile, FloorChangeDirection.SouthAlternative))
                 {
                     y -= 2;
                     return this[x, y, z] ?? tile;
@@ -112,7 +117,7 @@ namespace NeoServer.Game.World.Map
 
                 var eastDownTile = this[(ushort)(x - 1), y, z];
 
-                if (eastDownTile != null && eastDownTile.HasFloorDestination(FloorChangeDirection.EastAlternative))
+                if (hasFloorDestination(eastDownTile, FloorChangeDirection.EastAlternative))
                 {
                     x -= 2;
                     return this[x, y, z] ?? tile;
@@ -125,59 +130,59 @@ namespace NeoServer.Game.World.Map
                     return tile;
                 }
 
-                if (downTile.HasFloorDestination(FloorChangeDirection.North))
+                if (hasFloorDestination(downTile, FloorChangeDirection.North))
                 {
                     ++y;
                 }
-                if (downTile.HasFloorDestination(FloorChangeDirection.South))
+                if (hasFloorDestination(downTile,FloorChangeDirection.South))
                 {
                     --y;
                 }
-                if (downTile.HasFloorDestination(FloorChangeDirection.SouthAlternative))
+                if (hasFloorDestination(downTile,FloorChangeDirection.SouthAlternative))
                 {
                     y -= 2;
                 }
-                if (downTile.HasFloorDestination(FloorChangeDirection.East))
+                if (hasFloorDestination(downTile,FloorChangeDirection.East))
                 {
                     --x;
                 }
-                if (downTile.HasFloorDestination(FloorChangeDirection.EastAlternative))
+                if (hasFloorDestination(downTile, FloorChangeDirection.EastAlternative))
                 {
                     x -= 2;
                 }
-                if (downTile.HasFloorDestination(FloorChangeDirection.West))
+                if (hasFloorDestination(downTile, FloorChangeDirection.West))
                 {
                     ++x;
                 }
 
                 return this[x, y, z] ?? tile;
             }
-            if (tile.HasAnyFloorDestination)
+            if (tile.FloorDirection != default) //has any floor destination check
             {
                 z--;
 
 
-                if (tile.HasFloorDestination(FloorChangeDirection.North))
+                if (hasFloorDestination(tile, FloorChangeDirection.North))
                 {
                     --y;
                 }
-                if (tile.HasFloorDestination(FloorChangeDirection.South))
+                if (hasFloorDestination(tile, FloorChangeDirection.South))
                 {
                     ++y;
                 }
-                if (tile.HasFloorDestination(FloorChangeDirection.SouthAlternative))
+                if (hasFloorDestination(tile, FloorChangeDirection.SouthAlternative))
                 {
                     y += 2;
                 }
-                if (tile.HasFloorDestination(FloorChangeDirection.East))
+                if (hasFloorDestination(tile, FloorChangeDirection.East))
                 {
                     ++x;
                 }
-                if (tile.HasFloorDestination(FloorChangeDirection.EastAlternative))
+                if (hasFloorDestination(tile, FloorChangeDirection.EastAlternative))
                 {
                     x += 2;
                 }
-                if (tile.HasFloorDestination(FloorChangeDirection.West))
+                if (hasFloorDestination(tile, FloorChangeDirection.West))
                 {
                     --x;
                 }
@@ -188,10 +193,10 @@ namespace NeoServer.Game.World.Map
 
             return tile;
         }
-        public void RemoveThing(ref IThing thing, ITile tile, byte count)
+        public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile)//, byte count)
         {
-            var fromStackPosition = thing.GetStackPosition();
-            tile.RemoveThing(ref thing, count);
+            var fromStackPosition = tile.GetStackPositionOfThing(thing);
+            tile.RemoveThing(ref thing);//, count);
 
             OnThingRemovedFromTile(thing, tile, fromStackPosition);
         }
@@ -233,13 +238,13 @@ namespace NeoServer.Game.World.Map
                 {
                     for (sbyte z = (sbyte)minZ; z <= maxZ; z++)
                     {
-                        ITile tile = this[x, y, z];
+                        //ITile tile = this[x, y, z];
 
-                        if (tile != null)
+                        if (this[x, y, z] is IWalkableTile tile)
                         {
-                            foreach (var id in tile.CreatureIds)
+                            foreach (var creature in tile.Creatures)
                             {
-                                yield return id;
+                                yield return creature.CreatureId;
                             }
                         }
                     }
@@ -301,18 +306,18 @@ namespace NeoServer.Game.World.Map
                 {
                     for (sbyte z = (sbyte)minZ; z <= maxZ; z++)
                     {
-                        ITile tile = this[x, y, z];
-
-                        if (tile != null)
+                        if (this[x, y, z] is IWalkableTile tile)
                         {
-                            foreach (var id in tile.CreatureIds)
+                            foreach (var creature in tile.Creatures)
                             {
-                                creaturedIds.Add(id);
+                                creaturedIds.Add(creature.CreatureId);
                             }
-                        }
-                    }
 
+                        }
+
+                    }
                 }
+
             }
             return creaturedIds;
         }
@@ -335,7 +340,7 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
+        public IList<byte> GetDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
         {
             var tempBytes = new List<byte>();
 
@@ -375,7 +380,7 @@ namespace NeoServer.Game.World.Map
             return tempBytes;
         }
 
-        public IList<byte> GetFloorDescription(IThing thing, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip)
+        public IList<byte> GetFloorDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip)
         {
             var tempBytes = new List<byte>();
 
@@ -399,7 +404,15 @@ namespace NeoServer.Game.World.Map
 
                         skip = 0;
 
-                        tempBytes.AddRange(GetTileDescription(thing, tile));
+                        if (tile is IImmutableTile immutableTile)
+                        {
+                            tempBytes.AddRange(immutableTile.Raw);
+                        }
+                        else if (tile is IWalkableTile mutableTile)
+                        {
+                            tempBytes.AddRange(mutableTile.GetRaw(thing as IPlayer));
+                        }
+
                     }
                     else if (skip == start)
                     {
@@ -457,95 +470,19 @@ namespace NeoServer.Game.World.Map
             return this[toLocation];
         }
 
-        private IList<byte> GetTileDescription(IThing thing, ITile tile)
-        {
-            if (tile == null)
-            {
-                return new byte[0];
-            }
-
-
-
-            var tempBytes = new List<byte>();
-
-            var objectsOnTile = 0;
-
-            if (tile.Cache != null)
-            {
-                return tile.Cache;
-            }
-
-
-            if (tile.Ground != null)
-            {
-                tempBytes.AddRange(BitConverter.GetBytes(tile.Ground.Type.ClientId));
-                objectsOnTile++;
-            }
-
-
-
-            foreach (var item in tile.TopItems1.Reverse())
-            {
-
-                if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
-                {
-                    break;
-                }
-
-                AddItem(tempBytes, item);
-
-                objectsOnTile++;
-            }
-
-            foreach (var item in tile.TopItems2.Reverse())
-            {
-                if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
-                {
-                    break;
-                }
-
-                AddItem(tempBytes, item);
-
-                objectsOnTile++;
-            }
-
-            tempBytes.AddRange(creatureDescription.GetCreaturesOnTile(thing, tile, ref objectsOnTile));
-
-            foreach (var item in tile.DownItems.Reverse())
-            {
-                if (objectsOnTile == MapConstants.LimitOfObjectsOnTile)
-                {
-                    break;
-                }
-
-                AddItem(tempBytes, item);
-
-                objectsOnTile++;
-            }
-
-            return tempBytes;
-        }
-
-        private void AddItem(List<byte> tempBytes, IItem item)
-        {
-            tempBytes.AddRange(BitConverter.GetBytes(item.Type.ClientId));
-
-            if (item.IsCumulative)
-            {
-                tempBytes.Add(item.Amount);
-            }
-            else if (item.IsLiquidPool || item.IsLiquidContainer)
-            {
-                tempBytes.Add((byte)item.LiquidType);
-            }
-        }
+     
+    
 
         public void AddCreature(ICreature creature)
         {
-            var thing = creature as IThing;
-            this[creature.Location].AddThing(ref thing);
+            var thing = creature as IMoveableThing;
 
-            OnCreatureAddedOnMap(creature);
+            if (this[creature.Location] is IWalkableTile tile)
+            {
+                tile.AddThing(ref thing);
+                OnCreatureAddedOnMap(creature);
+            }
+
 
         }
     }

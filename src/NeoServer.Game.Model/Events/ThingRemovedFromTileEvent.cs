@@ -6,13 +6,13 @@ namespace NeoServer.Game.Events
 {
     public class ThingRemovedFromTileEvent
     {
-        public ThingRemovedFromTileEvent(ITile tile, byte stackPosition)
+        public ThingRemovedFromTileEvent(INormalTile tile, byte stackPosition)
         {
             Tile = tile;
             StackPosition = stackPosition;
         }
 
-        public ITile Tile { get; }
+        public INormalTile Tile { get; }
         public byte StackPosition { get; }
 
         public string EventId => throw new System.NotImplementedException();

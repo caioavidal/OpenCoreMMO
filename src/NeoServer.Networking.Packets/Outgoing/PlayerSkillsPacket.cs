@@ -30,8 +30,8 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddByte(player.GetSkillInfo(SkillType.Distance));
             message.AddByte(player.GetSkillPercent(SkillType.Distance));
 
-            message.AddByte(player.GetSkillInfo(SkillType.Shield));
-            message.AddByte(player.GetSkillPercent(SkillType.Shield));
+            message.AddByte(player.GetSkillInfo(SkillType.Shielding));
+            message.AddByte(player.GetSkillPercent(SkillType.Shielding));
 
             message.AddByte(player.GetSkillInfo(SkillType.Fishing));
             message.AddByte(player.GetSkillPercent(SkillType.Fishing));

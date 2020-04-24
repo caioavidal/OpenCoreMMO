@@ -1,5 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Enums.Players;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,9 @@ namespace NeoServer.Server.Model.Players
     {
         private IDictionary<Slot, Tuple<IItem, ushort>> Inventory { get; }
 
-        public byte TotalAttack => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1.Attack : 0, Inventory.ContainsKey(Slot.Right) ? Inventory[Slot.Right].Item1.Attack : 0);
+        public byte TotalAttack => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? (Inventory[Slot.Left].Item1 as IWeaponItem).Attack : 0, Inventory.ContainsKey(Slot.Right) ? (Inventory[Slot.Right].Item1 as IWeaponItem).Attack : 0);
 
-        public byte TotalDefense => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1.Defense : 0, Inventory.ContainsKey(Slot.Right) ? Inventory[Slot.Right].Item1.Defense : 0);
+        public byte TotalDefense => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? (Inventory[Slot.Left].Item1 as IWeaponItem).Defense : 0, Inventory.ContainsKey(Slot.Right) ? (Inventory[Slot.Right].Item1 as IWeaponItem).Defense : 0);
 
         public byte TotalArmor
         {
@@ -20,22 +22,44 @@ namespace NeoServer.Server.Model.Players
             {
                 byte totalArmor = 0;
 
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Necklace) ? Inventory[Slot.Necklace].Item1.Armor : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Head) ? Inventory[Slot.Head].Item1.Armor : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Body) ? Inventory[Slot.Body].Item1.Armor : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Legs) ? Inventory[Slot.Legs].Item1.Armor : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Feet) ? Inventory[Slot.Feet].Item1.Armor : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Ring) ? Inventory[Slot.Ring].Item1.Armor : 0);
+                Func<Slot, ushort> getDefenseValue = (Slot slot) => (Inventory[Slot.Head].Item1 as IDefenseEquipmentItem).DefenseValue;
+
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Necklace) ? getDefenseValue(Slot.Necklace) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Head) ? getDefenseValue(Slot.Head) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Body) ? getDefenseValue(Slot.Body) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Legs) ? getDefenseValue(Slot.Legs) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Feet) ? getDefenseValue(Slot.Feet) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Ring) ? getDefenseValue(Slot.Ring) : 0);
 
                 return totalArmor;
             }
         }
 
-        public byte AttackRange => (byte)Math.Max(
-            Math.Max(
-            Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1.Range : 0,
-                Inventory.ContainsKey(Slot.Right) ? Inventory[Slot.Right].Item1.Range : 0),
-            Inventory.ContainsKey(Slot.TwoHanded) ? Inventory[Slot.TwoHanded].Item1.Range : 0);
+        public byte AttackRange
+        {
+            get
+            {
+                var rangeLeft = 0;
+                var rangeRight = 0;
+                var twoHanded = 0;
+
+                if (Inventory.ContainsKey(Slot.Left) && Inventory[Slot.Left] is IDistanceWeaponItem leftWeapon)
+                {
+                    rangeLeft = leftWeapon.MaxAttackDistance;
+                }
+                if (Inventory.ContainsKey(Slot.Right) && Inventory[Slot.Right] is IDistanceWeaponItem rightWeapon)
+                {
+                    rangeRight = rightWeapon.MaxAttackDistance;
+                }
+                if (Inventory.ContainsKey(Slot.TwoHanded) && Inventory[Slot.TwoHanded] is IDistanceWeaponItem twoHandedWeapon)
+                {
+                    rangeRight = twoHandedWeapon.MaxAttackDistance;
+                }
+
+                return (byte)Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
+            }
+        }
+
 
         public ICreature Owner { get; }
 

@@ -4,6 +4,7 @@ using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.World;
@@ -26,6 +27,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Server.Standalone
 {
+ 
     class Program
     {
         static void Main(string[] args)
@@ -127,7 +129,7 @@ namespace NeoServer.Server.Standalone
                             { SkillType.Axe, new Skill(SkillType.Axe, 10, 1.0, 10, 10, 150)},
                             { SkillType.Club, new Skill(SkillType.Club, 10, 1.0, 10, 10, 150)},
                             { SkillType.Sword, new Skill(SkillType.Sword, 10, 1.0, 10, 10, 150)},
-                            { SkillType.Shield, new Skill(SkillType.Shield, 10, 1.0, 10, 10, 150)},
+                            { SkillType.Shielding, new Skill(SkillType.Shielding, 10, 1.0, 10, 10, 150)},
                             { SkillType.Distance, new Skill(SkillType.Distance, 10, 1.0, 10, 10, 150)},
                             { SkillType.Fishing, new Skill(SkillType.Fishing, 10, 1.0, 10, 10, 150)}
                         },

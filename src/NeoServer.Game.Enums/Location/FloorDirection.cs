@@ -2,7 +2,7 @@
 {
     public enum FloorChangeDirection : byte
     {
-        None,
+        None = default,
         Up,
         Down,
         South,

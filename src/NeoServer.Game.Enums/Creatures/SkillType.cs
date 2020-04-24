@@ -8,8 +8,9 @@ namespace NeoServer.Game.Enums.Creatures
         Axe = 3,
         Club = 1,
         Sword = 2,
-        Shield = 5,
+        Shielding = 5,
         Distance = 4,
-        Fishing = 6
+        Fishing = 6,
+        Speed = 9
     }
 }

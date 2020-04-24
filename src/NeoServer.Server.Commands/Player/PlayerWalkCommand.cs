@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
@@ -61,12 +62,12 @@ namespace NeoServer.Server.Commands.Player
         private void MovePlayer(ICreature creature)
         {
 
-            var thing = creature as IThing;
+            var thing = creature as IMoveableThing;
 
             if (creature.TryGetNextStep(out var direction))
             {
                 var toTile = game.Map.GetNextTile(thing.Location, direction);
-                if (!game.Map.TryMoveThing(ref thing, toTile.Location, 1))
+                if (!game.Map.TryMoveThing(ref thing, toTile.Location))
                 {
                     player.CancelWalk();
                 }

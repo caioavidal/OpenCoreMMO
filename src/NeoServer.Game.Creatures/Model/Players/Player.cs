@@ -1,6 +1,7 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Enums.Creatures;
@@ -42,14 +43,15 @@ namespace NeoServer.Server.Model.Players
             Outfit = outfit;
             Speed = speed;
 
-            Location = location;
+            //Location = location;
+            SetNewLocation(location);
 
             OpenContainers = new IContainer[MaxContainers]; //todo: db
 
             KnownCreatures = new Dictionary<uint, long>();//todo
             VipList = new Dictionary<string, bool>(); //todo
 
-            OnThingChanged += CheckInventoryContainerProximity;
+            //OnThingChanged += CheckInventoryContainerProximity;
 
 
 
@@ -120,7 +122,6 @@ namespace NeoServer.Server.Model.Players
 
         /////
         ///
-        public override bool CanBeMoved => AccessLevel == 0;
 
         public override string InspectionText => Name;
 
@@ -339,47 +340,7 @@ namespace NeoServer.Server.Model.Players
             return null;
         }
 
-        public void CheckInventoryContainerProximity(IThing thingChanging, IThingStateChangedEventArgs eventArgs)
-        {
-            for (byte i = 0; i < OpenContainers.Length; i++)
-            {
-                if (OpenContainers[i] == null)
-                {
-                    continue;
-                }
-
-                var containerSourceLoc = OpenContainers[i].Location;
-
-                switch (containerSourceLoc.Type)
-                {
-                    case LocationType.Ground:
-                        var locDiff = Location - containerSourceLoc;
-
-                        if (locDiff.MaxValueIn2D > 1)
-                        {
-                            var container = GetContainer(i);
-                            CloseContainerWithId(i);
-
-                            if (container != null)
-                            {
-                                container.OnThingChanged -= CheckInventoryContainerProximity;
-                            }
-
-                            var containerId = i;
-
-                            //todo: fix
-                            //Game.Instance.NotifySinglePlayer(this, conn => new GenericNotification(conn, new ContainerClosePacket { ContainerId = containerId }));
-                        }
-
-                        break;
-                    case LocationType.Container:
-                        break;
-                    case LocationType.Slot:
-                        break;
-                }
-            }
-        }
-
+       
         public void SetFightMode(FightMode mode)
         {
             FightMode = mode;

@@ -35,7 +35,7 @@ namespace NeoServer.Server.Model.Players
             {SkillType.Sword, new Tuple<double,double>(50,2.0) },
             {SkillType.Axe, new Tuple<double,double>(50,2.0) },
             {SkillType.Distance, new Tuple<double,double>(30,2.0) },
-            {SkillType.Shield, new Tuple<double,double>(100,1.5) },
+            {SkillType.Shielding, new Tuple<double,double>(100,1.5) },
             {SkillType.Fishing, new Tuple<double,double>(20,1.1) },
             {SkillType.Magic, new Tuple<double,double>(0,4) },
         };

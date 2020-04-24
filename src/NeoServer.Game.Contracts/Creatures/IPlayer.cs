@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -19,6 +20,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte AccessLevel { get; } // TODO: implement.
 
         byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
+
+        byte GetStackPosition() => Tile.GetStackPositionOfThing(this);
 
         bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
@@ -50,9 +53,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void AddKnownCreature(uint creatureId);
         void SetDirection(Direction direction);
 
-       
-
-        void CheckInventoryContainerProximity(IThing thingChanging, IThingStateChangedEventArgs eventArgs);
         sbyte OpenContainer(IContainer thingAsContainer);
 
         sbyte GetContainerId(IContainer thingAsContainer);

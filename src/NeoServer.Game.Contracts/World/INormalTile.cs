@@ -1,13 +1,14 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts
 {
-    public delegate void RemoveThing(IThing thing, ITile tile, byte stackPosition);
-    public interface ITile
+    public delegate void RemoveThing(IThing thing, INormalTile tile, byte stackPosition);
+    public interface INormalTile:ITile
     {
         bool HandlesCollision { get; }
 
@@ -39,7 +40,6 @@ namespace NeoServer.Game.Contracts
 
         IEnumerable<IItem> DownItems { get; }
 
-        byte[] Cache { get; }
         bool CannotLogout { get; }
         bool ProtectionZone { get; }
         uint GroundStepSpeed { get; }

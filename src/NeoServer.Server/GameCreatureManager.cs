@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
@@ -47,13 +48,13 @@ namespace NeoServer.Server
                 return false;
             }
 
-            var thing = creature as IThing;
+            var thing = creature as IMoveableThing;
 
-            map.RemoveThing(ref thing, creature.Tile, 1);
+            map.RemoveThing(ref thing, creature.Tile);
 
 
             creatureInstances.TryRemove(creature.CreatureId);
-            creature.Removed();
+            creature.SetAsRemoved();
 
             //todo remove summons
             return true;

@@ -1,8 +1,11 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World.Map;
+using NeoServer.Game.World.Map.Tiles;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTBM;
@@ -17,16 +20,17 @@ namespace NeoServer.Loaders.World
 {
     public class WorldLoader
     {
-        private readonly Func<ushort, IItem> itemFactory;
+        private readonly Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> item1Factory;
         private Game.World.World world;
         private readonly Logger logger;
 
 
-        public WorldLoader(Func<ushort, IItem> itemFactory, Game.World.World world, Logger logger)
+        public WorldLoader(Game.World.World world, Logger logger, Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> item1Factory)
         {
-            this.itemFactory = itemFactory;
+            //this.itemFactory = itemFactory;
             this.world = world;
             this.logger = logger;
+            this.item1Factory = item1Factory;
         }
         public void Load()
         {
@@ -69,16 +73,11 @@ namespace NeoServer.Loaders.World
             return otbm.TileAreas.AsParallel().SelectMany(t => t.Tiles)
                 .Select(tileNode =>
                 {
-                    var tile = new Tile(tileNode.Coordinate);
 
-                    var items = GetItemsOnTile(tileNode);
+                    var items = GetItemsOnTile(tileNode).ToArray();
 
-                    foreach (var item in items)
-                    {
-                        tile.AddContent(item);
-                    }
+                    var tile = TileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
 
-                    tile.SetFlag((TileFlag)tileNode.Flag);
                     return tile;
                 }).ToList();
         }
@@ -87,19 +86,25 @@ namespace NeoServer.Loaders.World
         {
             foreach (var itemNode in tileNode.Items)
             {
-                var item = itemFactory?.Invoke(itemNode.ItemId);
 
-                item.ThrowIfNull($"Failed to create item on {tileNode.Coordinate}");
-
+                IDictionary<ItemAttribute, IConvertible> attributes = null;
                 if (itemNode.ItemNodeAttributes != null)
                 {
+                    attributes = new Dictionary<ItemAttribute, IConvertible>();
                     foreach (var attr in itemNode.ItemNodeAttributes)
                     {
-                        item.Attributes.TryAdd((ItemAttribute)attr.AttributeName, attr.Value);
+                        attributes.TryAdd((ItemAttribute)attr.AttributeName, attr.Value);
                     }
                 }
 
-                item.LoadedFromMap = true;
+                var item = item1Factory?.Invoke(itemNode.ItemId, new Location(tileNode.Coordinate), attributes);
+
+
+                item.ThrowIfNull($"Failed to create item on {tileNode.Coordinate}");
+
+
+
+                // item.LoadedFromMap = true;
 
                 if (item.CanBeMoved && tileNode.NodeType == NodeType.HouseTile)
                 {
@@ -108,7 +113,7 @@ namespace NeoServer.Loaders.World
                 }
                 else
                 {
-                    item.StartDecaying();
+                    //item.StartDecaying();
                     yield return item;
                 }
             }

@@ -1,6 +1,6 @@
 namespace NeoServer.Game.Enums.Players
 {
-    public enum VocationType
+    public enum VocationType:byte
     {
         Knight = 1,
         Sorcerer = 2,

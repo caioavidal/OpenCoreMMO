@@ -5,6 +5,8 @@
 // </copyright>
 
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Item;
 using System;
 using System.Collections.Generic;
 
@@ -19,9 +21,6 @@ namespace NeoServer.Game.Contracts.Items
         string Description { get; }
 
         ISet<ItemFlag> Flags { get; }
-
-        IDictionary<ItemAttribute, IConvertible> DefaultAttributes { get; } // TODO: get rid of this and add all attributes as properties.
-
         ItemTypeAttribute TypeAttribute { get; }
 
         ItemGroup Group { get; }
@@ -35,10 +34,11 @@ namespace NeoServer.Game.Contracts.Items
         LightBlock LightBlock { get; }
         byte AlwaysOnTopOrder { get; }
         ushort Speed { get; }
+        string Article { get; }
+        IItemAttributeList Attributes { get; }
 
         void SetName(string value);
         void SetDescription(string value);
-        void SetAttribute(ItemAttribute attr, IConvertible value);
         void LockChanges();
         void SetSpeed(ushort speed);
         void SetAlwaysOnTopOrder(byte alwaysOnTopOrder);

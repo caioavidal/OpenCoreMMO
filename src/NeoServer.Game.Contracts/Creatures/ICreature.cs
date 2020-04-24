@@ -1,13 +1,11 @@
-// <copyright file="ICreature.cs" company="2Dudes">
-// Copyright (c) 2018 2Dudes. All rights reserved.
-// Licensed under the MIT license.
-// See LICENSE file in the project root for full license information.
-// </copyright>
-
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -19,7 +17,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void RemoveCreature(ICreature creature);
     public delegate void StopWalk(ICreature creature);
 
-    public interface ICreature : IThing, INeedsCooldowns
+    public interface ICreature : INeedsCooldowns, IMoveableThing
     {
         // event OnCreatureStateChange OnZeroHealth;
         // event OnCreatureStateChange OnInventoryChanged;
@@ -56,6 +54,7 @@ namespace NeoServer.Game.Contracts.Creatures
         uint Flags { get; }
 
         
+        IWalkableTile Tile { get; set; }
 
         byte NextStepId { get; set; }
 
@@ -100,5 +99,7 @@ namespace NeoServer.Game.Contracts.Creatures
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
+        byte[] GetRaw(IPlayer playerRequesting);
+        void SetAsRemoved();
     }
 }

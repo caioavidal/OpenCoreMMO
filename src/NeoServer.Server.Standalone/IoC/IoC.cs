@@ -3,6 +3,8 @@ using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature;
+using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
@@ -23,6 +25,8 @@ using NeoServer.Server.Tasks.Contracts;
 using Serilog;
 using Serilog.Core;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace NeoServer.Server.Standalone.IoC
@@ -64,6 +68,7 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterIncomingPacketFactory(builder);
 
             RegisterItemFactory(builder);
+            RegisterNewItemFactory(builder);
 
             RegisterPlayerFactory(builder);
 
@@ -71,12 +76,11 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<World>().SingleInstance();
             //builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
 
-            builder.RegisterType<ItemTypeLoader>().SingleInstance(); ;
-            builder.RegisterType<Loaders.World.WorldLoader>().SingleInstance(); ;
+            builder.RegisterType<ItemTypeLoader>().SingleInstance();
+            builder.RegisterType<Loaders.World.WorldLoader>().SingleInstance();
 
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
-            builder.RegisterType<CreatureDescription>();
 
             //factories
             builder.RegisterType<PlayerFactory>().SingleInstance();
@@ -147,13 +151,27 @@ namespace NeoServer.Server.Standalone.IoC
 
         private static void RegisterItemFactory(ContainerBuilder builder)
         {
+            //builder.Register((c, p) =>
+            //{
+            //    var typeId = p.TypedAs<ushort>();
+
+
+            //    return ItemFactory.Create(typeId);
+            //});
+        }
+
+        private static void RegisterNewItemFactory(ContainerBuilder builder)
+        {
             builder.Register((c, p) =>
             {
                 var typeId = p.TypedAs<ushort>();
+                var location = p.TypedAs<Location>();
+                var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
 
 
-                return ItemFactory.Create(typeId);
+                return ItemFactory.Create(typeId, location, attributes);
             });
         }
+
     }
 }
