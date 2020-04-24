@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location.Structs;
 

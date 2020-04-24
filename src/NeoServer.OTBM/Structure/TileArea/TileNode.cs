@@ -21,10 +21,10 @@ namespace NeoServer.OTBM.Structure
         public bool IsItem => NodeAttribute == NodeAttribute.Item;
         public NodeType NodeType { get; }
         public TileFlags Flag { get; set; }
-        public List<ItemNode> Items { get; set; } 
+        public List<ItemNode> Items { get; set; }
 
 
-       // public abstract void LoadTile(OTBParsingStream stream); //template method
+        // public abstract void LoadTile(OTBParsingStream stream); //template method
 
         public TileNode(TileArea tileArea, OTBNode node)
         {
@@ -40,9 +40,9 @@ namespace NeoServer.OTBM.Structure
 
             Coordinate = new Coordinate(x, y, tileArea.Z);
 
-            if(node.Type == NodeType.HouseTile)
+            if (node.Type == NodeType.HouseTile)
             {
-                  HouseId = stream.ReadUInt32();
+                HouseId = stream.ReadUInt32();
             }
 
             NodeType = node.Type;

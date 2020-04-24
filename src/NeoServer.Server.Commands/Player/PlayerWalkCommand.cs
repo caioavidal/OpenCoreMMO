@@ -1,13 +1,8 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -37,7 +32,7 @@ namespace NeoServer.Server.Commands.Player
 
 
             player.TryWalkTo(directions);
-            
+
             AddEventWalk(directions.Length == 1);
         }
 
@@ -50,7 +45,7 @@ namespace NeoServer.Server.Commands.Player
             {
                 return;
             }
-            
+
             if (firstStep)
             {
                 MovePlayer(player);
@@ -81,7 +76,7 @@ namespace NeoServer.Server.Commands.Player
                 }
             }
 
-            if(player.EventWalk != 0)
+            if (player.EventWalk != 0)
             {
                 player.EventWalk = 0;
                 AddEventWalk(false);

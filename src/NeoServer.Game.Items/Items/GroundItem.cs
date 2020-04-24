@@ -1,10 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -16,7 +11,7 @@ namespace NeoServer.Game.Items.Items
 
         public IItemType Metadata { get; }
 
-        public byte MovementPenalty {get;}
+        public byte MovementPenalty { get; }
 
         public GroundItem(IItemType type, Location location)
         {

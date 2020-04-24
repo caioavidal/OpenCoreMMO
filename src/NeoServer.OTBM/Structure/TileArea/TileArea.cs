@@ -21,14 +21,14 @@ namespace NeoServer.OTBM.Structure
 
             var tileArea = this;
 
-            var tileNodes = node.Children.AsParallel().Select<OTBNode,TileNode>(child =>
-            {
-                if (child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
-                {
-                   return new TileNode(tileArea, child);
-                }
-                throw new Exception($"unknown tile nodes found.");
-            }).ToList();
+            var tileNodes = node.Children.AsParallel().Select<OTBNode, TileNode>(child =>
+             {
+                 if (child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
+                 {
+                     return new TileNode(tileArea, child);
+                 }
+                 throw new Exception($"unknown tile nodes found.");
+             }).ToList();
 
             Tiles.AddRange(tileNodes);
 
@@ -42,8 +42,8 @@ namespace NeoServer.OTBM.Structure
 
         TileNode BuildTile(OTBNode node)
         {
-           
-                return new TileNode(this, node);
+
+            return new TileNode(this, node);
         }
         public ushort X { get; set; }
         public ushort Y { get; set; }

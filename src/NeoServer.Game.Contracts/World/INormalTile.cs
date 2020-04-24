@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -8,7 +7,7 @@ using System.Collections.Generic;
 namespace NeoServer.Game.Contracts
 {
     public delegate void RemoveThing(IThing thing, INormalTile tile, byte stackPosition);
-    public interface INormalTile:ITile
+    public interface INormalTile : ITile
     {
         bool HandlesCollision { get; }
 
@@ -64,7 +63,7 @@ namespace NeoServer.Game.Contracts
         IItem BruteRemoveItemWithId(ushort id);
 
         bool CanBeWalked(byte avoidDamageType = 0);
-      
+
         bool HasFloorDestination(FloorChangeDirection direction);
     }
 }

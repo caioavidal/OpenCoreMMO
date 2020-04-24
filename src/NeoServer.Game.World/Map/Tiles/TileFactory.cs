@@ -1,12 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
@@ -19,7 +14,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public static ITile CreateTile(Coordinate coordinate, TileFlag flag, IItem[] items)
         {
-         
+
             var hasUnpassableItem = false;
             var hasMoveableItem = false;
 

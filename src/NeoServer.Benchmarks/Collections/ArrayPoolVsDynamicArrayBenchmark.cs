@@ -3,7 +3,6 @@ using BenchmarkDotNet.Engines;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Benchmarks.Collections
 {
@@ -21,7 +20,7 @@ namespace NeoServer.Benchmarks.Collections
 
             for (int i = 0; i < 1_00_000; i++)
             {
-                
+
                 data[i] = default;
             }
 

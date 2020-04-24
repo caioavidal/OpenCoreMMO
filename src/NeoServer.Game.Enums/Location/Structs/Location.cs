@@ -11,7 +11,7 @@ namespace NeoServer.Game.Enums.Location.Structs
 {
     public struct Location
     {
-        
+
 
         public Location(int x, int y, sbyte z)
         {

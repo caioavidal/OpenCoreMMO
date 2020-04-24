@@ -10,15 +10,12 @@ using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
-using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -90,7 +87,7 @@ namespace NeoServer.Game.Creatures.Model
             Friendly = new HashSet<uint>();
         }
 
-        public  void SetAsRemoved()
+        public void SetAsRemoved()
         {
             IsRemoved = true;
         }
@@ -227,8 +224,8 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-      
-    
+
+
         public void IncreaseSkillCounter(SkillType skill, ushort value)
         {
             if (!Skills.ContainsKey(skill))

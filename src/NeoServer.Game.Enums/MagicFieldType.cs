@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Enums
+﻿namespace NeoServer.Game.Enums
 {
-    public enum MagicFieldType:byte
+    public enum MagicFieldType : byte
     {
         Fire,
         None

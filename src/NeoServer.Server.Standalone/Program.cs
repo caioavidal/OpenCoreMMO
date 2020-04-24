@@ -4,7 +4,6 @@ using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.World;
@@ -27,7 +26,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Server.Standalone
 {
- 
+
     class Program
     {
         static void Main(string[] args)

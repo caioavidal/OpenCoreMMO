@@ -58,7 +58,7 @@ namespace NeoServer.Server.Tasks
                             continue;
                         }
 
-                        
+
                         await DispatchEvent(evt);
                     }
                 }

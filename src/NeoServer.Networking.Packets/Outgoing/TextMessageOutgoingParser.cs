@@ -1,7 +1,4 @@
 ﻿using NeoServer.Game.Enums.Location;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

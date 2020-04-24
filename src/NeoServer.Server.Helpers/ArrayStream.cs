@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Helpers
 {
@@ -36,7 +34,7 @@ namespace NeoServer.Server.Helpers
                 WriteByte(b);
             }
         }
-        public int Length  => cursor;
+        public int Length => cursor;
 
         private void WriteByte(byte b)
         {

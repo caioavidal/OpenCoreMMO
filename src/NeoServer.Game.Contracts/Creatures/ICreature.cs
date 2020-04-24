@@ -1,5 +1,4 @@
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Creatures;
@@ -7,7 +6,6 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
@@ -53,7 +51,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         uint Flags { get; }
 
-        
+
         IWalkableTile Tile { get; set; }
 
         byte NextStepId { get; set; }
@@ -93,7 +91,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void TurnTo(Direction direction);
 
         void StopWalking();
-        
+
         bool TryWalkTo(params Direction[] directions);
 
         TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);

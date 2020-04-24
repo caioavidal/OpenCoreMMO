@@ -1,8 +1,6 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
@@ -12,7 +10,6 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -59,7 +56,7 @@ namespace NeoServer.Server.Model.Players
             Inventory = new PlayerInventory(this, inventory);
         }
 
-        
+
         public event CancelWalk OnCancelledWalk;
 
         private uint IdleTime;
@@ -340,7 +337,7 @@ namespace NeoServer.Server.Model.Players
             return null;
         }
 
-       
+
         public void SetFightMode(FightMode mode)
         {
             FightMode = mode;

@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Model.Players.Contracts;
@@ -16,7 +15,7 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IThing thing, PathError error)
         {
-            if(thing is IPlayer)
+            if (thing is IPlayer)
             {
 
                 if (game.CreatureManager.GetPlayerConnection(((IPlayer)thing).CreatureId, out var connection))

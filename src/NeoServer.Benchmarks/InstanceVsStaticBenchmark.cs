@@ -1,9 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Benchmarks
 {
@@ -22,7 +20,7 @@ namespace NeoServer.Benchmarks
 
         }
         [Benchmark]
-        public Dictionary<int,int> InstanceMethod()
+        public Dictionary<int, int> InstanceMethod()
         {
 
             return new Instance(Enumerable.Range(0, 1000_000).ToArray()).dicNumbers;

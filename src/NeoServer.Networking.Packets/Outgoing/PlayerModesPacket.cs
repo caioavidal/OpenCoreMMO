@@ -15,7 +15,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddByte((byte)GameOutgoingPacketType.PlayerModes);
             message.AddByte((byte)player.FightMode);
             message.AddByte((byte)player.ChaseMode);
-            message.AddByte((byte)player.SecureMode);
+            message.AddByte(player.SecureMode);
         }
     }
 }

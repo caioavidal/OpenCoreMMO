@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Networking.Packets.Outgoing
 {
-    public enum TextMessageOutgoingType:byte
+    public enum TextMessageOutgoingType : byte
     {
         MESSAGE_STATUS_CONSOLE_RED = 18, /*Red message in the console*/
         MESSAGE_EVENT_ORANGE = 19, /*Orange message in the console*/

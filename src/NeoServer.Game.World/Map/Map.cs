@@ -17,7 +17,6 @@ using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.World.Map
 {
@@ -38,7 +37,7 @@ namespace NeoServer.Game.World.Map
 
 
         private readonly World world;
-        
+
 
         public Map(World world)
         {
@@ -76,7 +75,7 @@ namespace NeoServer.Game.World.Map
             var fromTile = this[thing.Location] as IWalkableTile;
             var toTile = this[toLocation] as IWalkableTile;
 
-            var fromStackPosition = fromTile.GetStackPositionOfThing(thing);          
+            var fromStackPosition = fromTile.GetStackPositionOfThing(thing);
 
             //todo: not thead safe
             fromTile.RemoveThing(ref thing);
@@ -103,7 +102,7 @@ namespace NeoServer.Game.World.Map
             var y = (ushort)tile.Location.Y;
             var z = tile.Location.Z;
 
-            if (hasFloorDestination(tile,FloorChangeDirection.Down))
+            if (hasFloorDestination(tile, FloorChangeDirection.Down))
             {
                 z++;
 
@@ -134,15 +133,15 @@ namespace NeoServer.Game.World.Map
                 {
                     ++y;
                 }
-                if (hasFloorDestination(downTile,FloorChangeDirection.South))
+                if (hasFloorDestination(downTile, FloorChangeDirection.South))
                 {
                     --y;
                 }
-                if (hasFloorDestination(downTile,FloorChangeDirection.SouthAlternative))
+                if (hasFloorDestination(downTile, FloorChangeDirection.SouthAlternative))
                 {
                     y -= 2;
                 }
-                if (hasFloorDestination(downTile,FloorChangeDirection.East))
+                if (hasFloorDestination(downTile, FloorChangeDirection.East))
                 {
                     --x;
                 }
@@ -470,8 +469,8 @@ namespace NeoServer.Game.World.Map
             return this[toLocation];
         }
 
-     
-    
+
+
 
         public void AddCreature(ICreature creature)
         {

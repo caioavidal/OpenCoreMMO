@@ -23,9 +23,7 @@ using NeoServer.Server.Standalone.Factories;
 using NeoServer.Server.Tasks;
 using NeoServer.Server.Tasks.Contracts;
 using Serilog;
-using Serilog.Core;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 

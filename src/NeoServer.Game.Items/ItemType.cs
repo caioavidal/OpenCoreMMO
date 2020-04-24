@@ -1,10 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Item;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace NeoServer.Game.Items
 {
@@ -233,6 +230,6 @@ namespace NeoServer.Game.Items
             Plural = plural;
         }
 
-     
+
     }
 }

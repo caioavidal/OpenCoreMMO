@@ -1,9 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -25,7 +22,7 @@ namespace NeoServer.Game.Items.Items
         public IItemType Metadata { get; }
 
         public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type) == "magicfield";
-        
+
         private MagicFieldType ParseFieldType(string type) => type switch
         {
             "fire" => MagicFieldType.Fire,

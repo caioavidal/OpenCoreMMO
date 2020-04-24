@@ -64,7 +64,7 @@ namespace NeoServer.OTB.Parsers
                     break;
                 case OTBItemAttribute.TopOrder:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(byte));
-                    attributes.TryAdd(OTBItemAttribute.TopOrder, (byte)stream.ReadByte());
+                    attributes.TryAdd(OTBItemAttribute.TopOrder, stream.ReadByte());
                     break;
                 case OTBItemAttribute.WareId:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));

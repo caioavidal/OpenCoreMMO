@@ -4,7 +4,6 @@ using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -28,7 +27,7 @@ namespace NeoServer.Game.Items.Items
             Metadata = type;
             Amount = 1;
 
-            Amount = Math.Min((byte)100, (byte)amount);
+            Amount = Math.Min((byte)100, amount);
 
             ClientId = type.ClientId;
             Weight = type.Attributes.GetAttribute<float>(Enums.ItemAttribute.Weight);

@@ -59,8 +59,8 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
             else
             {
-                message.AddUInt16((ushort)0);
-                message.AddUInt16((ushort)0);
+                message.AddUInt16(0);
+                message.AddUInt16(0);
             }
 
             message.AddByte(creatureToAdd.LightBrightness);
