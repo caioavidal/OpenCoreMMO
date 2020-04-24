@@ -7,8 +7,7 @@ using NeoServer.Server.Security;
 using System;
 using System.Text;
 
-namespace NeoServer.Networking.Packets
-{
+
     
 
 namespace NeoServer.Networking.Packets
