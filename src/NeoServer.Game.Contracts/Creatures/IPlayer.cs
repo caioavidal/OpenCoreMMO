@@ -37,19 +37,50 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         //  IAction PendingAction { get; }
 
+/// <summary>
+/// Changes player outfit
+/// </summary>
+/// <param name="outfit"></param>
         void ChangeOutfit(IOutfit outfit);
 
         uint ChooseToRemoveFromKnownSet();
 
+/// <summary>
+/// Checks if player knows creature with given id
+/// </summary>
+/// <param name="creatureId"></param>
+/// <returns></returns>
         bool KnowsCreatureWithId(uint creatureId);
 
-        byte GetSkillInfo(SkillType fist);
+/// <summary>
+/// Get skill info
+/// </summary>
+/// <param name="skillType"></param>
+/// <returns></returns>
+        byte GetSkillInfo(SkillType skillType);
+
+        /// <summary>
+        /// Changes player's fight mode
+        /// </summary>
+        /// <param name="fightMode"></param>
         void SetFightMode(FightMode fightMode);
+        /// <summary>
+        /// Changes player's chase mode
+        /// </summary>
+        /// <param name="chaseMode"></param>
         void SetChaseMode(ChaseMode chaseMode);
+        /// <summary>
+        /// Toogle Secure Mode 
+        /// </summary>
+        /// <param name="secureMode"></param>
         void SetSecureMode(byte secureMode);
         byte GetSkillPercent(SkillType type);
 
         void AddKnownCreature(uint creatureId);
+        /// <summary>
+        /// Sets where player is turned to
+        /// </summary>
+        /// <param name="direction"></param>
         void SetDirection(Direction direction);
 
         sbyte OpenContainer(IContainer thingAsContainer);

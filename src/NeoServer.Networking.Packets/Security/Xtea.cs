@@ -33,7 +33,7 @@ namespace NeoServer.Networking.Packets.Security
                 }
             }
 
-            var newBytes = ConvertToBytes(words); //words.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
+            var newBytes = ConvertToBytes(words);
 
             return new NetworkMessage(newBytes, msg.Length);
 

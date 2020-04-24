@@ -7,6 +7,9 @@ namespace NeoServer.Data.RavenDB
     {
 
         private DocumentStore store;
+        /// <summary>
+        /// Connects to database
+        /// </summary>
         public void Connect()
         {
             store = new DocumentStore();
