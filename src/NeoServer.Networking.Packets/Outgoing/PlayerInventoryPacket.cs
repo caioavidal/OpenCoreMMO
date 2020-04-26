@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         {
             var addInventoryItem = new Action<Slot>(slot =>
           {
-              if (inventory[(byte)slot] == null)
+              if (inventory[slot] == null)
               {
                   message.AddByte((byte)GameOutgoingPacketType.InventoryEmpty);
                   message.AddByte((byte)slot);
@@ -26,7 +26,7 @@ namespace NeoServer.Networking.Packets.Outgoing
               {
                   message.AddByte((byte)GameOutgoingPacketType.InventoryItem);
                   message.AddByte((byte)slot);
-                  message.AddItem(inventory[(byte)slot]);
+                  message.AddItem(inventory[slot]);
               }
           });
 

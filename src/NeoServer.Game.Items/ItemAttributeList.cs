@@ -59,6 +59,7 @@ namespace NeoServer.Game.Items
             return default;
         }
 
+
         public FloorChangeDirection GetFloorChangeDirection()
         {
             if (_defaultAttributes?.ContainsKey(ItemAttribute.FloorChange) ?? false)

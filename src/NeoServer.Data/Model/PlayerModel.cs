@@ -1,5 +1,6 @@
 using NeoServer.Data.Model;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
@@ -32,6 +33,7 @@ namespace NeoServer.Server.Model.Players
         public ushort StaminaMinutes { get; set; }
 
         public Dictionary<Slot, ushort> Inventory { get; set; }
+        public ItemModel[] Container { get; set; }
         public ushort Speed { get; set; }
 
         public Location Location { get; set; }
@@ -40,5 +42,11 @@ namespace NeoServer.Server.Model.Players
         {
             return false;
         }
+    }
+
+    public class ItemModel
+    {
+        public ushort ServerId { get; set; }
+        public byte Amount { get; set; }
     }
 }

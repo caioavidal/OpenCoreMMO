@@ -13,19 +13,18 @@ namespace NeoServer.Game.Contracts.Items
         ushort ClientId => Metadata.ClientId;
         Span<byte> GetRaw() => BitConverter.GetBytes(ClientId);
 
-        bool HasFlag(ItemFlag flag) => Metadata.Flags.Contains(flag);
 
-        bool CanBeMoved => HasFlag(ItemFlag.Moveable);
-        bool IsBlockeable => HasFlag(ItemFlag.BlockSolid);
-        bool IsCumulative => HasFlag(ItemFlag.Stackable);
-        bool IsAlwaysOnTop => HasFlag(ItemFlag.AlwaysOnTop) ||
-             HasFlag(ItemFlag.Clip) || HasFlag(ItemFlag.Hangable);
+        bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
+        bool IsBlockeable => Metadata.HasFlag(ItemFlag.BlockSolid);
+        bool IsCumulative => Metadata.HasFlag(ItemFlag.Stackable);
+        bool IsAlwaysOnTop => Metadata.HasFlag(ItemFlag.AlwaysOnTop) ||
+             Metadata.HasFlag(ItemFlag.Clip) || Metadata.HasFlag(ItemFlag.Hangable);
 
-        bool IsPickupable => HasFlag(ItemFlag.Pickupable);
-        bool IsUsable => HasFlag(ItemFlag.Useable);
-        bool IsAntiProjectile => HasFlag(ItemFlag.BlockProjectTile);
-
-        bool IsBottom => HasFlag(ItemFlag.Bottom);
+        bool IsPickupable => Metadata.HasFlag(ItemFlag.Pickupable);
+        bool IsUsable => Metadata.HasFlag(ItemFlag.Useable);
+        bool IsAntiProjectile => Metadata.HasFlag(ItemFlag.BlockProjectTile);
+        bool IsBottom => Metadata.HasFlag(ItemFlag.Bottom);
+        bool IsContainer => Metadata.Group == ItemGroup.GroundContainer;
         FloorChangeDirection FloorDirection => Metadata.Attributes.GetFloorChangeDirection();
     }
 }

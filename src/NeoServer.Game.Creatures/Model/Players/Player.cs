@@ -1,6 +1,7 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
@@ -43,7 +44,7 @@ namespace NeoServer.Server.Model.Players
             //Location = location;
             SetNewLocation(location);
 
-            OpenContainers = new IContainer[MaxContainers]; //todo: db
+            openedContainers = new Dictionary<byte, IContainerItem>();
 
             KnownCreatures = new Dictionary<uint, long>();//todo
             VipList = new Dictionary<string, bool>(); //todo
@@ -58,6 +59,7 @@ namespace NeoServer.Server.Model.Players
 
 
         public event CancelWalk OnCancelledWalk;
+        public event CloseContainer OnClosedContainer;
 
         private uint IdleTime;
 
@@ -69,12 +71,12 @@ namespace NeoServer.Server.Model.Players
 
         public new uint Corpse => 4240;
 
-        public IContainer[] OpenContainers { get; private set; }
+        private Dictionary<byte, IContainerItem> openedContainers;
+
+
+
         public Dictionary<uint, long> KnownCreatures { get; }
         public Dictionary<string, bool> VipList { get; }
-
-        private const sbyte MaxContainers = 16; //todo
-
 
         public ChaseMode ChaseMode { get; private set; }
         public uint Capacity { get; private set; }
@@ -242,16 +244,6 @@ namespace NeoServer.Server.Model.Players
 
         public void ChangeOutfit(IOutfit outfit) => Outfit = outfit;
 
-        //todo
-        //public void SetPendingAction(IAction action)
-        //{
-        //    if (action == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(action));
-        //    }
-
-        //    PendingAction = action;
-        //}
 
         public override bool TryWalkTo(params Direction[] directions)
         {
@@ -259,84 +251,52 @@ namespace NeoServer.Server.Model.Players
             return base.TryWalkTo(directions);
         }
 
-        public sbyte GetContainerId(IContainer thingAsContainer)
+        public IContainerItem OpenContainerAt(Location location, byte containerLevel, out bool alreadyOpened)
         {
-            for (sbyte i = 0; i < OpenContainers.Length; i++)
+            alreadyOpened = false;
+
+            IContainerItem container = null;
+
+            if (location.Slot == Slot.Backpack)
             {
-                if (OpenContainers[i] == thingAsContainer)
-                {
-                    return i;
-                }
+                container = Inventory.BackpackSlot;
+
+            }
+            else if(location.Type == LocationType.Container)
+            {
+                var parentContainer = openedContainers[location.ContainerId];
+                parentContainer.GetContainerAt((byte)location.ContainerPosition, out container);
             }
 
-            return -1;
-        }
-
-        public void CloseContainerWithId(byte openContainerId)
-        {
-            try
+            if (openedContainers.ContainsValue(container))
             {
-                OpenContainers[openContainerId].Close(CreatureId);
-                OpenContainers[openContainerId] = null;
-            }
-            catch
-            {
-                // ignored
-            }
-        }
+                CloseContainer(container.Id);
 
-        public sbyte OpenContainer(IContainer container)
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException(nameof(container));
-            }
-
-            for (byte i = 0; i < OpenContainers.Length; i++)
-            {
-                if (OpenContainers[i] != null)
-                {
-                    continue;
-                }
-
-                OpenContainers[i] = container;
-                OpenContainers[i].Open(CreatureId, i);
-
-                return (sbyte)i;
-            }
-
-            var lastIdx = (sbyte)(OpenContainers.Length - 1);
-
-            OpenContainers[lastIdx] = container;
-
-            return lastIdx;
-        }
-
-        public void OpenContainerAt(IContainer thingAsContainer, byte index)
-        {
-            OpenContainers[index]?.Close(CreatureId);
-            OpenContainers[index] = thingAsContainer;
-            OpenContainers[index].Open(CreatureId, index);
-        }
-
-        public IContainer GetContainer(byte index)
-        {
-            try
-            {
-                var container = OpenContainers[index];
-
-                container.Open(CreatureId, index);
-
+                alreadyOpened = true;
                 return container;
             }
-            catch
+
+            container.Id = containerLevel;
+
+            if (openedContainers.ContainsKey(containerLevel))
             {
-                // ignored
+                openedContainers[containerLevel] = container;
+            }
+            else
+            {
+                openedContainers.TryAdd(container.Id, container);
             }
 
-            return null;
+            return container;
+
         }
 
+        public void CloseContainer(byte containerId)
+        {
+            openedContainers.Remove(containerId);
+            OnClosedContainer?.Invoke(this, containerId);
+
+        }
 
         public void SetFightMode(FightMode mode)
         {

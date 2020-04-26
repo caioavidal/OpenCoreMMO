@@ -230,6 +230,7 @@ namespace NeoServer.Game.Items
             Plural = plural;
         }
 
+        public bool HasFlag(ItemFlag flag) => Flags.Contains(flag);
 
     }
 }

@@ -41,5 +41,6 @@ namespace NeoServer.Game.Contracts.Items
         void SetAlwaysOnTopOrder(byte alwaysOnTopOrder);
         void SetLight(LightBlock lightBlock);
         void SetWareId(ushort wareId);
+        bool HasFlag(ItemFlag flag);
     }
 }

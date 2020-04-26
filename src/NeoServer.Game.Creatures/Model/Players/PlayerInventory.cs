@@ -75,7 +75,9 @@ namespace NeoServer.Server.Model.Players
             Inventory = inventory ?? new Dictionary<Slot, Tuple<IItem, ushort>>();
         }
 
-        public IItem this[byte slot] => !Inventory.ContainsKey((Slot)slot) ? null : Inventory[(Slot)slot].Item1;
+        public IItem this[Slot slot] => !Inventory.ContainsKey(slot) ? null : Inventory[slot].Item1;
+
+        public IContainerItem BackpackSlot => this[Slot.Backpack] is IContainerItem container ? container : null;
 
         public bool Add(IItem item, out IItem extraItem, byte positionByte, byte count = 1, ushort lossProbability = 300)
         {
@@ -252,5 +254,6 @@ namespace NeoServer.Server.Model.Players
             //// TODO: exhaustive search of container items here.
             //return null;
         }
+
     }
 }

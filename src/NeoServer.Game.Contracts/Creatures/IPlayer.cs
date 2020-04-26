@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -8,6 +9,7 @@ using NeoServer.Game.Enums.Players;
 namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
+    public delegate void CloseContainer(IPlayer player, byte containerId);
     public interface IPlayer : ICreature
     {
         ushort Level { get; }
@@ -37,26 +39,26 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         //  IAction PendingAction { get; }
 
-/// <summary>
-/// Changes player outfit
-/// </summary>
-/// <param name="outfit"></param>
+        /// <summary>
+        /// Changes player outfit
+        /// </summary>
+        /// <param name="outfit"></param>
         void ChangeOutfit(IOutfit outfit);
 
         uint ChooseToRemoveFromKnownSet();
 
-/// <summary>
-/// Checks if player knows creature with given id
-/// </summary>
-/// <param name="creatureId"></param>
-/// <returns></returns>
+        /// <summary>
+        /// Checks if player knows creature with given id
+        /// </summary>
+        /// <param name="creatureId"></param>
+        /// <returns></returns>
         bool KnowsCreatureWithId(uint creatureId);
 
-/// <summary>
-/// Get skill info
-/// </summary>
-/// <param name="skillType"></param>
-/// <returns></returns>
+        /// <summary>
+        /// Get skill info
+        /// </summary>
+        /// <param name="skillType"></param>
+        /// <returns></returns>
         byte GetSkillInfo(SkillType skillType);
 
         /// <summary>
@@ -83,16 +85,10 @@ namespace NeoServer.Server.Model.Players.Contracts
         /// <param name="direction"></param>
         void SetDirection(Direction direction);
 
-        sbyte OpenContainer(IContainer thingAsContainer);
-
-        sbyte GetContainerId(IContainer thingAsContainer);
-
-        void CloseContainerWithId(byte openContainerIds);
-
-        void OpenContainerAt(IContainer thingAsContainer, byte index);
-
-        IContainer GetContainer(byte container);
         void ResetIdleTime();
         void CancelWalk();
+
+        IContainerItem OpenContainerAt(Location location, byte containerLevel, out bool alreadyOpened);
+        void CloseContainer(byte containerId);
     }
 }

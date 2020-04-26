@@ -31,6 +31,8 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.AutoMove, typeof(PlayerAutoWalkHandler)},
             { GameIncomingPacketType.Ping, typeof(PlayerPingResponseHandler)},
             { GameIncomingPacketType.CancelAutoWalk, typeof(PlayerCancelAutoWalkHandler)},
+            { GameIncomingPacketType.ItemUse, typeof(PlayerUseItemHandler)},
+            { GameIncomingPacketType.ContainerClose, typeof(PlayerCloseContainerHandler)},
         };
     }
 }

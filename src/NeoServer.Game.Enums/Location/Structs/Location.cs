@@ -54,6 +54,7 @@ namespace NeoServer.Game.Enums.Location.Structs
             }
         }
 
+      
         public static Location operator +(Location location1, Location location2)
         {
             return new Location
@@ -77,6 +78,7 @@ namespace NeoServer.Game.Enums.Location.Structs
         public Slot Slot => (Slot)Convert.ToByte(Y);
 
         public byte Container => Convert.ToByte(Y - 0x40);
+        public byte ContainerId => Convert.ToByte(Y & 0x0F);
 
         public sbyte ContainerPosition
         {

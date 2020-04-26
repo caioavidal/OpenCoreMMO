@@ -1,4 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Enums.Players;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -13,8 +15,9 @@ namespace NeoServer.Game.Contracts.Creatures
         byte TotalArmor { get; }
 
         byte AttackRange { get; }
+        IContainerItem BackpackSlot { get; }
 
-        IItem this[byte idx] { get; }
+        IItem this[Slot slot] { get; }
 
         bool Add(IItem item, out IItem extraItem, byte positionByte = 0xFF, byte count = 1, ushort lossProbability = 300);
 
