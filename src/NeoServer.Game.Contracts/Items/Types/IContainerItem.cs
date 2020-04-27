@@ -11,9 +11,9 @@ namespace NeoServer.Game.Contracts.Items.Types
         bool HasParent { get; }
         byte SlotsUsed { get; }
         byte Id { get; set; }
+        IContainerItem Parent { get; }
 
         bool GetContainerAt(byte index, out IContainerItem container);
-        void SetAsOpened();
         void SetParent(IContainerItem container);
         bool TryAddItem(IItem item);
     }

@@ -59,7 +59,8 @@ namespace NeoServer.Server.Model.Players
 
 
         public event CancelWalk OnCancelledWalk;
-        public event CloseContainer OnClosedContainer;
+        public event ClosedContainer OnClosedContainer;
+        public event OpenedContainer OnOpenedContainer;
 
         private uint IdleTime;
 
@@ -251,10 +252,20 @@ namespace NeoServer.Server.Model.Players
             return base.TryWalkTo(directions);
         }
 
-        public IContainerItem OpenContainerAt(Location location, byte containerLevel, out bool alreadyOpened)
+        public void GoBackContainer(byte containerId)
         {
-            alreadyOpened = false;
+            if (openedContainers.TryGetValue(containerId, out var container))
+            {
+                var parentContainer = container.Parent;
+                openedContainers[containerId] = parentContainer;
+                OnOpenedContainer?.Invoke(this, parentContainer);
 
+            }
+
+        }
+
+        public void OpenContainerAt(Location location, byte containerLevel)
+        {
             IContainerItem container = null;
 
             if (location.Slot == Slot.Backpack)
@@ -262,7 +273,7 @@ namespace NeoServer.Server.Model.Players
                 container = Inventory.BackpackSlot;
 
             }
-            else if(location.Type == LocationType.Container)
+            else if (location.Type == LocationType.Container)
             {
                 var parentContainer = openedContainers[location.ContainerId];
                 parentContainer.GetContainerAt((byte)location.ContainerPosition, out container);
@@ -272,8 +283,7 @@ namespace NeoServer.Server.Model.Players
             {
                 CloseContainer(container.Id);
 
-                alreadyOpened = true;
-                return container;
+                return;
             }
 
             container.Id = containerLevel;
@@ -287,7 +297,8 @@ namespace NeoServer.Server.Model.Players
                 openedContainers.TryAdd(container.Id, container);
             }
 
-            return container;
+            OnOpenedContainer?.Invoke(this, container);
+            return;
 
         }
 

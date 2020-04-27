@@ -22,23 +22,10 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
-
-            var container = player.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, out var alreadyOpened);
-
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
+            if (useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)
             {
-                if (alreadyOpened)
-                {
-                    player.CloseContainer(container.Id);
-                    connection.OutgoingPackets.Enqueue(new CloseContainerPacket(container.Id));
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new OpenContainerPacket(container));
-                }
-                connection.Send();
+                player.OpenContainerAt(useItemPacket.Location, useItemPacket.Index);
             }
-
         }
 
 

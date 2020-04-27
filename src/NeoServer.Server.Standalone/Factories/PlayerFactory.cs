@@ -18,14 +18,16 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler;
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
+        private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
 
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler)
+        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
+            this.playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
         }
         private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
@@ -57,6 +59,7 @@ namespace NeoServer.Server.Standalone.Factories
             newPlayer.OnTurnedToDirection += playerTurnToDirectionEventHandler.Execute;
             newPlayer.OnCancelledWalk += playerWalkCancelledEventHandler.Execute;
             newPlayer.OnClosedContainer += playerClosedContainerEventHandler.Execute;
+            newPlayer.OnOpenedContainer += playerOpenedContainerEventHandler.Execute;
             return newPlayer;
         }
 

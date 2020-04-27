@@ -9,7 +9,8 @@ using NeoServer.Game.Enums.Players;
 namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
-    public delegate void CloseContainer(IPlayer player, byte containerId);
+    public delegate void ClosedContainer(IPlayer player, byte containerId);
+    public delegate void OpenedContainer(IPlayer player, IContainerItem container);
     public interface IPlayer : ICreature
     {
         ushort Level { get; }
@@ -88,7 +89,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ResetIdleTime();
         void CancelWalk();
 
-        IContainerItem OpenContainerAt(Location location, byte containerLevel, out bool alreadyOpened);
+        void OpenContainerAt(Location location, byte containerLevel);
         void CloseContainer(byte containerId);
+        void GoBackContainer(byte containerId);
     }
 }

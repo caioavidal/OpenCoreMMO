@@ -15,7 +15,6 @@ namespace NeoServer.Game.Items.Items
             Items = new IItem[Capacity];
         }
         private byte slotIndex;
-        private bool opened;
 
         public byte SlotsUsed => slotIndex;
         public IContainerItem Parent { get; private set; }
@@ -24,8 +23,7 @@ namespace NeoServer.Game.Items.Items
         public IItem[] Items { get; }
         public byte Id { get; set; }
 
-        public void SetAsOpened() => opened = true;
-
+        
         public void SetParent(IContainerItem container)
         {
             Parent = container;
