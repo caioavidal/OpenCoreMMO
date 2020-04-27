@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Items.Items;
 using NeoServer.Server.Events;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
@@ -16,7 +17,7 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory;
         private readonly PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler;
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
-        private readonly PlayerClosedContainerEventHandler  playerClosedContainerEventHandler;
+        private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
 
 
         public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler)
@@ -64,32 +65,32 @@ namespace NeoServer.Server.Standalone.Factories
             var inventoryDic = new Dictionary<Slot, Tuple<IItem, ushort>>();
             foreach (var slot in player.Inventory)
             {
-
                 var createdItem = itemFactory(slot.Value, player.Location, null);
 
                 if (slot.Key == Slot.Backpack)
                 {
                     var container = createdItem as IContainerItem;
 
-                    if(container == null)
+                    if (container == null)
                     {
                         continue;
                     }
 
-                    foreach (var itemModel in player.Container)
-                    {
-                        var item = itemFactory(itemModel.ServerId, player.Location, new Dictionary<ItemAttribute, IConvertible>()
-                        {
-                            {ItemAttribute.Count, itemModel.Amount }
-                        });
+                    BuildContainer(player.Items, 0, player.Location, container);
+                    //foreach (var itemModel in player.Items)
+                    //{
+                    //    var item = itemFactory(itemModel.ServerId, player.Location, new Dictionary<ItemAttribute, IConvertible>()
+                    //    {
+                    //        {ItemAttribute.Count, itemModel.Amount }
+                    //    });
 
-                        if(item is IContainerItem childrenContainer)
-                        {
-                            childrenContainer.SetParent(container);
-                        }
+                    //    if (item is IContainerItem childrenContainer)
+                    //    {
+                    //        childrenContainer.SetParent(container);
+                    //    }
 
-                        container.TryAddItem(item);
-                    }
+                    //    container.TryAddItem(item);
+                    //}
                 }
 
                 inventoryDic.Add(slot.Key, new Tuple<IItem, ushort>(createdItem, slot.Value));
@@ -97,5 +98,35 @@ namespace NeoServer.Server.Standalone.Factories
             }
             return inventoryDic;
         }
+
+        public IContainerItem BuildContainer(ItemModel[] items, int index, Location location, IContainerItem container)
+        {
+            if(items == null || items.Length == index)
+            {
+                return container;
+            }
+
+            var itemModel = items[index];
+
+            var item = itemFactory(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
+                        {
+                            {ItemAttribute.Count, itemModel.Amount }
+                        });
+
+            if (item is IContainerItem childrenContainer)
+            {
+                childrenContainer.SetParent(container);
+                container.TryAddItem(BuildContainer(itemModel.Items, 0, location, childrenContainer));
+            }
+            else
+            {
+                container.TryAddItem(item);
+                
+            }
+
+            return BuildContainer(items, ++index, location, container);
+        }
+
+
     }
 }

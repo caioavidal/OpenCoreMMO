@@ -33,7 +33,7 @@ namespace NeoServer.Server.Model.Players
         public ushort StaminaMinutes { get; set; }
 
         public Dictionary<Slot, ushort> Inventory { get; set; }
-        public ItemModel[] Container { get; set; }
+        public ItemModel[] Items { get; set; }
         public ushort Speed { get; set; }
 
         public Location Location { get; set; }
@@ -48,5 +48,6 @@ namespace NeoServer.Server.Model.Players
     {
         public ushort ServerId { get; set; }
         public byte Amount { get; set; }
+        public ItemModel[] Items { get; set; }
     }
 }
