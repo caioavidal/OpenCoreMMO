@@ -69,9 +69,7 @@ namespace NeoServer.Server.Standalone.Factories
 
                 if (slot.Key == Slot.Backpack)
                 {
-                    var container = createdItem as IContainerItem;
-
-                    if (container == null)
+                    if (!(createdItem is IContainerItem container))
                     {
                         continue;
                     }
