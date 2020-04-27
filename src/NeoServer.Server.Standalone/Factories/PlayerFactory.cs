@@ -77,20 +77,6 @@ namespace NeoServer.Server.Standalone.Factories
                     }
 
                     BuildContainer(player.Items, 0, player.Location, container);
-                    //foreach (var itemModel in player.Items)
-                    //{
-                    //    var item = itemFactory(itemModel.ServerId, player.Location, new Dictionary<ItemAttribute, IConvertible>()
-                    //    {
-                    //        {ItemAttribute.Count, itemModel.Amount }
-                    //    });
-
-                    //    if (item is IContainerItem childrenContainer)
-                    //    {
-                    //        childrenContainer.SetParent(container);
-                    //    }
-
-                    //    container.TryAddItem(item);
-                    //}
                 }
 
                 inventoryDic.Add(slot.Key, new Tuple<IItem, ushort>(createdItem, slot.Value));
