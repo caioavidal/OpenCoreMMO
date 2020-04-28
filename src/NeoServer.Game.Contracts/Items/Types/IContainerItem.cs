@@ -6,7 +6,7 @@ namespace NeoServer.Game.Contracts.Items.Types
 {
     public delegate void RemoveItem(byte slotIndex, IItem item);
     public delegate void AddItem(IItem item);
-    public interface IContainerItem:IItem
+    public interface IContainerItem : IItem
     {
         IItem this[int index] { get; }
 
@@ -20,9 +20,9 @@ namespace NeoServer.Game.Contracts.Items.Types
         event AddItem OnItemAdded;
 
         bool GetContainerAt(byte index, out IContainerItem container);
-        void MoveItemToChild(byte fromSlotIndex, byte toSlotIndex);
+        void MoveItem(byte fromSlotIndex, byte toSlotIndex);
         IItem RemoveItem(byte slotIndex);
         void SetParent(IContainerItem container);
-        bool TryAddItem(IItem item);
+        bool TryAddItem(IItem item, byte? slot = null);
     }
 }
