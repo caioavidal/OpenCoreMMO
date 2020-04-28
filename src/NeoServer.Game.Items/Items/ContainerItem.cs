@@ -12,24 +12,27 @@ namespace NeoServer.Game.Items.Items
         {
             Capacity = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Capacity);
 
-            Items = new IItem[Capacity];
+            Items = new List<IItem>(Capacity);
         }
-        private byte slotIndex;
 
-        public byte SlotsUsed => slotIndex;
+        public event RemoveItem OnItemRemoved;
+        public event AddItem OnItemAdded;
+
+        public byte SlotsUsed { get; private set; }
         public IContainerItem Parent { get; private set; }
         public bool HasParent => Parent != null;
         public byte Capacity { get; }
-        public IItem[] Items { get; }
-        public byte Id { get; set; }
+        public List<IItem> Items { get; }
 
-        
+
+        public IItem this[int index] => Items[index];
+
         public void SetParent(IContainerItem container)
         {
             Parent = container;
         }
 
-        public static bool IsApplicable(IItemType type) => type.Group == Enums.ItemGroup.GroundContainer || 
+        public static bool IsApplicable(IItemType type) => type.Group == Enums.ItemGroup.GroundContainer ||
             type.Attributes.GetAttribute(Enums.ItemAttribute.Type)?.ToLower() == "container";
 
         public bool GetContainerAt(byte index, out IContainerItem container)
@@ -40,17 +43,44 @@ namespace NeoServer.Game.Items.Items
                 container = Items[index] as IContainerItem;
                 return true;
             }
-            
+
             return false;
         }
         public bool TryAddItem(IItem item)
         {
-            if (slotIndex + 1 >= Capacity)
+            if (SlotsUsed + 1 >= Capacity)
             {
                 return false;
             }
-            Items[slotIndex++] = item;
+
+            Items.Insert(0, item);
+            SlotsUsed++;
+
+            OnItemAdded?.Invoke(item);
             return true;
+        }
+        public void MoveItemToChild(byte fromSlotIndex, byte toSlotIndex)
+        {
+            if (GetContainerAt(toSlotIndex, out var container))
+            {
+                var item = RemoveItem(fromSlotIndex);
+                container.TryAddItem(item);
+                if(item is IContainerItem itemContainer)
+                {
+                    itemContainer.SetParent(container);
+                }
+            }
+        }
+        public IItem RemoveItem(byte slotIndex)
+        {
+            var item = Items[slotIndex];
+
+            Items.RemoveAt(slotIndex);
+        
+            SlotsUsed--;
+
+            OnItemRemoved?.Invoke(slotIndex, item);
+            return item;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace NeoServer.Server.Handlers.Player
             {
                 game.Dispatcher.AddEvent(new Event(() =>
                 {
-                    (player as IPlayer).CloseContainer(containerId);
+                    (player as IPlayer).Containers.CloseContainer(containerId);
                 }));
             }
         }

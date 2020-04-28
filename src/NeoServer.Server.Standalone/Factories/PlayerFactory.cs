@@ -19,15 +19,17 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
+        private readonly ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler;
 
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler)
+        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
             this.playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
+            this.contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
         }
         private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
@@ -58,8 +60,15 @@ namespace NeoServer.Server.Standalone.Factories
 
             newPlayer.OnTurnedToDirection += playerTurnToDirectionEventHandler.Execute;
             newPlayer.OnCancelledWalk += playerWalkCancelledEventHandler.Execute;
-            newPlayer.OnClosedContainer += playerClosedContainerEventHandler.Execute;
-            newPlayer.OnOpenedContainer += playerOpenedContainerEventHandler.Execute;
+            newPlayer.Containers.OnClosedContainer += playerClosedContainerEventHandler.Execute;
+            newPlayer.Containers.OnOpenedContainer += playerOpenedContainerEventHandler.Execute;
+
+            newPlayer.Containers.RemoveItemAction += (player, containerId, slotIndex, item) => 
+                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved,containerId,slotIndex,item);
+
+            newPlayer.Containers.AddItemAction += (player, containerId, item) =>
+                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId,0, item);
+
             return newPlayer;
         }
 

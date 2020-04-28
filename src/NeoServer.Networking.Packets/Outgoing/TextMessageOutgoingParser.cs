@@ -4,10 +4,11 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public sealed class TextMessageOutgoingParser
     {
-        public static string Parse(PathError pathError) =>
-                pathError switch
+        public static string Parse(InvalidOperation error) =>
+                error switch
                 {
-                    PathError.NotEnoughRoom => "There is not enough room.",
+                    InvalidOperation.NotEnoughRoom => "There is not enough room.",
+                    InvalidOperation.Impossible => "This is impossible",
                     _ => string.Empty
                 };
 

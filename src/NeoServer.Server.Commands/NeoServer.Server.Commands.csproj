@@ -12,10 +12,6 @@
     <ProjectReference Include="..\NeoServer.Data\NeoServer.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Movement\" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>

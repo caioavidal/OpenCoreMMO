@@ -8,17 +8,19 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class OpenContainerPacket : OutgoingPacket
     {
         private readonly IContainerItem container;
-        public OpenContainerPacket(IContainerItem container)
+        private readonly byte containerId;
+        public OpenContainerPacket(IContainerItem container, byte containerId)
         {
-            
+
             this.container = container;
+            this.containerId = containerId;
         }
 
         public override void WriteToMessage(INetworkMessage message)
         {
             message.AddByte((byte)GameOutgoingPacketType.ContainerOpen);
 
-            message.AddByte(container.Id);
+            message.AddByte(containerId);
             message.AddItem(container);
             message.AddString(container.Name);
             message.AddByte(container.Capacity);

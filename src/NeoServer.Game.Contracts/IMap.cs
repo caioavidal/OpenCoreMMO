@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts
     public delegate void PlaceCreatureOnMap(ICreature creature);
     public delegate void RemoveThingFromTile(Items.IThing thing, ITile tile, byte fromStackPosition);
     public delegate void MoveThingOnFloor(IMoveableThing thing, ITile fromTile, ITile toTile, byte fromStackPosition);
-    public delegate void FailedMoveThing(Items.IThing thing, PathError error);
+    public delegate void FailedMoveThing(Items.IThing thing, InvalidOperation error);
     public interface IMap
     {
         ITile this[Location location] { get; }

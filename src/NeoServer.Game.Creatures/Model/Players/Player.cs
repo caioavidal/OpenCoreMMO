@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -44,7 +45,7 @@ namespace NeoServer.Server.Model.Players
             //Location = location;
             SetNewLocation(location);
 
-            openedContainers = new Dictionary<byte, IContainerItem>();
+            Containers = new PlayerContainerList(this);
 
             KnownCreatures = new Dictionary<uint, long>();//todo
             VipList = new Dictionary<string, bool>(); //todo
@@ -59,8 +60,6 @@ namespace NeoServer.Server.Model.Players
 
 
         public event CancelWalk OnCancelledWalk;
-        public event ClosedContainer OnClosedContainer;
-        public event OpenedContainer OnOpenedContainer;
 
         private uint IdleTime;
 
@@ -72,7 +71,7 @@ namespace NeoServer.Server.Model.Players
 
         public new uint Corpse => 4240;
 
-        private Dictionary<byte, IContainerItem> openedContainers;
+        public IPlayerContainerList Containers { get; }
 
 
 
@@ -252,62 +251,7 @@ namespace NeoServer.Server.Model.Players
             return base.TryWalkTo(directions);
         }
 
-        public void GoBackContainer(byte containerId)
-        {
-            if (openedContainers.TryGetValue(containerId, out var container))
-            {
-                var parentContainer = container.Parent;
-                openedContainers[containerId] = parentContainer;
-                OnOpenedContainer?.Invoke(this, parentContainer);
 
-            }
-
-        }
-
-        public void OpenContainerAt(Location location, byte containerLevel)
-        {
-            IContainerItem container = null;
-
-            if (location.Slot == Slot.Backpack)
-            {
-                container = Inventory.BackpackSlot;
-
-            }
-            else if (location.Type == LocationType.Container)
-            {
-                var parentContainer = openedContainers[location.ContainerId];
-                parentContainer.GetContainerAt((byte)location.ContainerPosition, out container);
-            }
-
-            if (openedContainers.ContainsValue(container))
-            {
-                CloseContainer(container.Id);
-
-                return;
-            }
-
-            container.Id = containerLevel;
-
-            if (openedContainers.ContainsKey(containerLevel))
-            {
-                openedContainers[containerLevel] = container;
-            }
-            else
-            {
-                openedContainers.TryAdd(container.Id, container);
-            }
-
-            OnOpenedContainer?.Invoke(this, container);
-            return;
-
-        }
-
-        public void CloseContainer(byte containerId)
-        {
-            openedContainers.Remove(containerId);
-            OnClosedContainer?.Invoke(this, containerId);
-
-        }
 
         public void SetFightMode(FightMode mode)
         {
@@ -335,4 +279,6 @@ namespace NeoServer.Server.Model.Players
         }
     }
 }
+
+
 

@@ -1,9 +1,10 @@
 ﻿namespace NeoServer.Game.Enums.Location
 {
-    public enum PathError
+    public enum InvalidOperation
     {
         None,
         NotEnoughRoom,
-        NotPossible
+        NotPossible,
+        Impossible
     }
 }

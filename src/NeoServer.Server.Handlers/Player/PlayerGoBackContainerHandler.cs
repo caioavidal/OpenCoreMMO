@@ -23,7 +23,7 @@ namespace NeoServer.Server.Handlers.Player
 
             if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
             {
-                game.Dispatcher.AddEvent(new Event(() => (player as IPlayer).GoBackContainer(containerId))); //todo create a const for 2000 expiration time
+                game.Dispatcher.AddEvent(new Event(() => (player as IPlayer).Containers.GoBackContainer(containerId))); //todo create a const for 2000 expiration time
             }
         }
     }
