@@ -33,7 +33,7 @@ namespace NeoServer.Server.Commands.Movement
                 return;
             }
 
-            player.Containers.MoveItemBetweenContainers(itemThrowPacket.FromLocation, itemThrowPacket.ToLocation);
+            player.Containers.MoveItemBetweenContainers(itemThrowPacket.FromLocation, itemThrowPacket.ToLocation, itemThrowPacket.Count);
 
         }
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

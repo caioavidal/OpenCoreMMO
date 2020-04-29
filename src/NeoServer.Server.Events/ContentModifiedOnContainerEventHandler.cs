@@ -29,9 +29,10 @@ namespace NeoServer.Server.Events
                     case ContainerOperation.ItemAdded:
                         connection.OutgoingPackets.Enqueue(new AddItemContainerPacket(containerId, item));
                         break;
-
+                    case ContainerOperation.ItemUpdated:
+                        connection.OutgoingPackets.Enqueue(new UpdateItemContainerPacket(containerId, slotIndex, item));
+                        break;
                 }
-
 
                 connection.Send();
             }

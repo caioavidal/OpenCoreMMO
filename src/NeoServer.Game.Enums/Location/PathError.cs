@@ -5,6 +5,7 @@
         None,
         NotEnoughRoom,
         NotPossible,
-        Impossible
+        Impossible,
+        FullCapacity
     }
 }
