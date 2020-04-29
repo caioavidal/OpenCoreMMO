@@ -5,15 +5,15 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {
-    public class ThingMovedFailedEventHandler
+    public class InvalidOperationEventHandler
     {
         private readonly Game game;
 
-        public ThingMovedFailedEventHandler(Game game)
+        public InvalidOperationEventHandler(Game game)
         {
             this.game = game;
         }
-        public void Execute(IThing thing, PathError error)
+        public void Execute(IThing thing, InvalidOperation error)
         {
             if (thing is IPlayer)
             {

@@ -62,13 +62,13 @@ namespace NeoServer.Game.World.Map
         {
             if (this[thing.Location] is IImmutableTile)
             {
-                OnThingMovedFailed(thing, PathError.NotPossible);
+                OnThingMovedFailed(thing, InvalidOperation.NotPossible);
                 return false;
             }
 
             if (this[toLocation] is IImmutableTile)//immutable tiles cannot be modified
             {
-                OnThingMovedFailed(thing, PathError.NotEnoughRoom);
+                OnThingMovedFailed(thing, InvalidOperation.NotEnoughRoom);
                 return false;
             }
 

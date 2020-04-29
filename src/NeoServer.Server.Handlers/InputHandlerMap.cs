@@ -33,6 +33,8 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.CancelAutoWalk, typeof(PlayerCancelAutoWalkHandler)},
             { GameIncomingPacketType.ItemUse, typeof(PlayerUseItemHandler)},
             { GameIncomingPacketType.ContainerClose, typeof(PlayerCloseContainerHandler)},
+            { GameIncomingPacketType.ContainerUp, typeof(PlayerGoBackContainerHandler) },
+            { GameIncomingPacketType.ItemThrow, typeof(PlayerThrowItemHandler)},
         };
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
@@ -9,7 +10,9 @@ using NeoServer.Game.Enums.Players;
 namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
-    public delegate void CloseContainer(IPlayer player, byte containerId);
+    public delegate void ClosedContainer(IPlayer player, byte containerId);
+    public delegate void OpenedContainer(IPlayer player, byte containerId, IContainerItem container);
+    
     public interface IPlayer : ICreature
     {
         ushort Level { get; }
@@ -24,6 +27,7 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         byte GetStackPosition() => Tile.GetStackPositionOfThing(this);
 
+
         bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
 
@@ -34,6 +38,7 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         bool InFight { get; }
         bool CanLogout { get; }
+        IPlayerContainerList Containers { get; }
 
         event CancelWalk OnCancelledWalk;
 
@@ -88,7 +93,5 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ResetIdleTime();
         void CancelWalk();
 
-        IContainerItem OpenContainerAt(Location location, byte containerLevel, out bool alreadyOpened);
-        void CloseContainer(byte containerId);
     }
 }

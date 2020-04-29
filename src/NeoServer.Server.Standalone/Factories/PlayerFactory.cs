@@ -9,6 +9,7 @@ using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Server.Standalone.Factories
 {
@@ -18,14 +19,18 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler;
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
+        private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
+        private readonly ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler;
 
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler)
+        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
+            this.playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
+            this.contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
         }
         private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
@@ -56,7 +61,18 @@ namespace NeoServer.Server.Standalone.Factories
 
             newPlayer.OnTurnedToDirection += playerTurnToDirectionEventHandler.Execute;
             newPlayer.OnCancelledWalk += playerWalkCancelledEventHandler.Execute;
-            newPlayer.OnClosedContainer += playerClosedContainerEventHandler.Execute;
+            newPlayer.Containers.OnClosedContainer += playerClosedContainerEventHandler.Execute;
+            newPlayer.Containers.OnOpenedContainer += playerOpenedContainerEventHandler.Execute;
+
+            newPlayer.Containers.RemoveItemAction += (player, containerId, slotIndex, item) =>
+                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId, slotIndex, item);
+
+            newPlayer.Containers.AddItemAction += (player, containerId, item) =>
+                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0, item);
+
+            newPlayer.Containers.UpdateItemAction += (player, containerId, slotIndex, item) =>
+                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId, slotIndex, item);
+
             return newPlayer;
         }
 
@@ -74,7 +90,7 @@ namespace NeoServer.Server.Standalone.Factories
                         continue;
                     }
 
-                    BuildContainer(player.Items, 0, player.Location, container);
+                    BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
                 }
 
                 inventoryDic.Add(slot.Key, new Tuple<IItem, ushort>(createdItem, slot.Value));
@@ -83,9 +99,9 @@ namespace NeoServer.Server.Standalone.Factories
             return inventoryDic;
         }
 
-        public IContainerItem BuildContainer(ItemModel[] items, int index, Location location, IContainerItem container)
+        public IContainerItem BuildContainer(IList<ItemModel> items, int index, Location location, IContainerItem container)
         {
-            if(items == null || items.Length == index)
+            if (items == null || items.Count == index)
             {
                 return container;
             }
@@ -100,12 +116,12 @@ namespace NeoServer.Server.Standalone.Factories
             if (item is IContainerItem childrenContainer)
             {
                 childrenContainer.SetParent(container);
-                container.TryAddItem(BuildContainer(itemModel.Items, 0, location, childrenContainer));
+                container.TryAddItem(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));
             }
             else
             {
                 container.TryAddItem(item);
-                
+
             }
 
             return BuildContainer(items, ++index, location, container);

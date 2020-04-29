@@ -20,7 +20,7 @@ namespace NeoServer.Server.Events
             map.OnCreatureAddedOnMap += (creature) => container.Resolve<PlayerAddedOnMapEventHandler>().Execute((IPlayer)creature);
             map.OnThingRemovedFromTile += container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
             map.OnThingMoved += container.Resolve<ThingMovedOnFloorEventHandler>().Execute;
-            map.OnThingMovedFailed += container.Resolve<ThingMovedFailedEventHandler>().Execute;
+            map.OnThingMovedFailed += container.Resolve<InvalidOperationEventHandler>().Execute;
         }
     }
 }

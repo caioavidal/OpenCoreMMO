@@ -44,7 +44,7 @@ namespace NeoServer.Game.Contracts
         uint GroundStepSpeed { get; }
         bool HasAnyFloorDestination { get; }
         bool HasCollision { get; }
-        PathError PathError { get; }
+        InvalidOperation PathError { get; }
 
         void AddThing(ref IThing thing, byte count = 1);
 

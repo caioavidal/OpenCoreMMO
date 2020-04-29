@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Player
@@ -19,7 +20,11 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
-
+            if (ContainerToContainerMovementOperation.IsApplicable(itemThrow))
+            {
+                ContainerToContainerMovementOperation.Execute(player, itemThrow);
+                return;
+            }
         }
 
 

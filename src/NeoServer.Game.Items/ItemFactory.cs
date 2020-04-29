@@ -26,14 +26,6 @@ namespace NeoServer.Game.Items
                 return null;
             }
 
-            //if (item.Flags.Contains(ItemFlag.Container) || item.Flags.Contains(ItemFlag.Chest))
-            //{
-            //    return new Container(ItemTypeData.InMemory[typeId]);
-            //}
-
-
-
-
             if (GroundItem.IsApplicable(itemType))
             {
                 return new GroundItem(itemType, location);
