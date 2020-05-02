@@ -34,9 +34,9 @@ namespace NeoServer.Game.Items
             {
                 return new WeaponItem(itemType);
             }
-            if (ContainerItem.IsApplicable(itemType))
+            if (Container.IsApplicable(itemType))
             {
-                return new ContainerItem(itemType);
+                return new Container(itemType);
             }
             if (BodyDefenseEquimentItem.IsApplicable(itemType))
             {

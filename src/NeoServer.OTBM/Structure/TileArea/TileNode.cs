@@ -51,8 +51,6 @@ namespace NeoServer.OTBM.Structure
 
             var tileNode = this;
             Items.AddRange(node.Children.Select(c => new ItemNode(tileNode, c)));
-
-
         }
 
         private void ParseAttributes(OTBParsingStream stream)

@@ -99,7 +99,7 @@ namespace NeoServer.Game.Items.Items
 
             Amount = 100;
 
-            item.Amount = (byte)remainingAmount;
+            item.Amount = (byte)(remainingAmount - Amount);
 
             return true;
 

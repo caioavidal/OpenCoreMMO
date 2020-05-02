@@ -11,7 +11,7 @@ namespace NeoServer.Game.Creatures.Model.Players
     internal class PlayerContainer
     {
         public IPlayer Player { get; }
-        public PlayerContainer(IContainerItem container, IPlayer player)
+        public PlayerContainer(IContainer container, IPlayer player)
         {
             Container = container;
             Player = player;
@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public byte Id { get; set; }
 
-        public IContainerItem Container { get; }
+        public IContainer Container { get; }
 
         public RemoveItemFromOpenedContainer RemoveItem { get; private set; }
         public AddItemOnOpenedContainer AddItem { get; private set; }

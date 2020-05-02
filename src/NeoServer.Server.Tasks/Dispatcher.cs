@@ -1,4 +1,5 @@
 ﻿using NeoServer.Server.Tasks.Contracts;
+using System;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -61,7 +62,14 @@ namespace NeoServer.Server.Tasks
                         if (!evt.HasExpired || evt.HasNoTimeout)
                         {
                             ++cycles;
-                            evt.Action.Invoke(); //execute event
+                            try
+                            {
+                                evt.Action.Invoke(); //execute event
+                            }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                         }
                     }
                 }
@@ -81,7 +89,14 @@ namespace NeoServer.Server.Tasks
                         if (!evt.HasExpired || evt.HasNoTimeout)
                         {
                             ++cycles;
-                            evt.Action.Invoke(); //execute event
+                            try
+                            {
+                                evt.Action.Invoke(); //execute event
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                         }
                     }
                 }

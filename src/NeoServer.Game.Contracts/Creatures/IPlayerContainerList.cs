@@ -14,7 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
     
     public interface IPlayerContainerList
     {
-        IContainerItem this[byte id] { get; }
+        Items.Types.IContainer this[byte id] { get; }
 
         RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
         AddItemOnOpenedContainer AddItemAction { get; set; }

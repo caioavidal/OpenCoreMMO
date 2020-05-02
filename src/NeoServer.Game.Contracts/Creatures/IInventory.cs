@@ -15,7 +15,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte TotalArmor { get; }
 
         byte AttackRange { get; }
-        IContainerItem BackpackSlot { get; }
+        Items.Types.IContainer BackpackSlot { get; }
 
         IItem this[Slot slot] { get; }
 

@@ -27,7 +27,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         }
 
-        public IContainerItem this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
+        public IContainer this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
 
         private Dictionary<byte, PlayerContainer> openedContainers = new Dictionary<byte, PlayerContainer>();
 
@@ -110,7 +110,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                     return;
                 }
 
-                fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition);
+                fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition, out var error);
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerPosition, out var error);
             }
 
-            if (item is IContainerItem container)
+            if (item is IContainer container)
             {
                 container.SetParent(toContainer.Container);
             }

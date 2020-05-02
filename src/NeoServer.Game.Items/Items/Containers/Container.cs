@@ -8,72 +8,100 @@ using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class ContainerItem : MoveableItem, IContainerItem, IItem
+    public class Container : MoveableItem, IContainer, IItem
     {
         public event RemoveItem OnItemRemoved;
         public event AddItem OnItemAdded;
         public event UpdateItem OnItemUpdated;
         public byte SlotsUsed { get; private set; }
-        public IContainerItem Parent { get; private set; }
+        public bool IsFull => SlotsUsed >= Capacity;
+        public IContainer Parent { get; private set; }
         public bool HasParent => Parent != null;
         public byte Capacity { get; }
         public List<IItem> Items { get; }
         public IItem this[int index] => Items[index];
 
-        public ContainerItem(IItemType type) : base(type)
+        public Container(IItemType type) : base(type)
         {
-            Capacity = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Capacity);
+            if (!type.Attributes.HasAttribute(Enums.ItemAttribute.Capacity))
+            {
+                throw new ArgumentException("Capacity missing");
+            }
 
+            Capacity = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Capacity);
             Items = new List<IItem>(Capacity);
         }
 
-        public void SetParent(IContainerItem container)
-        {
-            Parent = container;
-        }
+        public void SetParent(IContainer container) => Parent = container;
 
         public static bool IsApplicable(IItemType type) => type.Group == Enums.ItemGroup.GroundContainer ||
             type.Attributes.GetAttribute(Enums.ItemAttribute.Type)?.ToLower() == "container";
 
-        public bool GetContainerAt(byte index, out IContainerItem container)
+        public bool GetContainerAt(byte index, out IContainer container)
         {
             container = null;
-            if (Items[index] is IContainerItem)
+            if (Items[index] is IContainer)
             {
-                container = Items[index] as IContainerItem;
+                container = Items[index] as IContainer;
                 return true;
             }
 
             return false;
         }
 
-        private InvalidOperation AddItem(IItem item, byte slot)
+        private bool AddItem(IItem item, byte slot, out InvalidOperation error)
         {
 
             if (Capacity <= slot)
             {
                 throw new ArgumentOutOfRangeException("Slot is bigger than capacity");
             }
+           
+            if (item is ICumulativeItem == false)
+            {
+                return AddItemToFront(item, out error);
 
-            var itemToJoinSlot = Items.Select(i => i.ClientId).ToList().IndexOf(item.ClientId);
+            }
+
+            var cumulativeItem = item as ICumulativeItem;
+
+            int itemToJoinSlot = GetSlotOfFirstItemNotFully(cumulativeItem);
 
             if (itemToJoinSlot >= 0 && item is ICumulativeItem cumulative)
             {
                 //adding to a slot with a different item type
 
-                return JoinCumulativeItems(cumulative, (byte)itemToJoinSlot);
+                return TryJoinCumulativeItems(cumulative, (byte)itemToJoinSlot, out error);
             }
 
-            return AddItemToFront(item);
+            return AddItemToFront(item, out error);
         }
 
-        private InvalidOperation JoinCumulativeItems(ICumulativeItem item, byte itemToJoinSlot)
+        private int GetSlotOfFirstItemNotFully(ICumulativeItem? cumulativeItem)
         {
+            var itemToJoinSlot = -1;
+            for (int slotIndex = 0; slotIndex < SlotsUsed; slotIndex++)
+            {
+                var itemOnSlot = Items[slotIndex];
+                if (itemOnSlot.ClientId == cumulativeItem?.ClientId && (itemOnSlot as ICumulativeItem)?.Amount < 100)
+                {
+                    itemToJoinSlot = slotIndex;
+                    break;
+                }
+            }
+
+            return itemToJoinSlot;
+        }
+
+        private bool TryJoinCumulativeItems(ICumulativeItem item, byte itemToJoinSlot, out InvalidOperation error)
+        {
+            error = InvalidOperation.None;
+
             var itemToUpdate = Items[itemToJoinSlot] as ICumulativeItem;
 
             if (itemToUpdate.Amount == 100)
             {
-                return AddItemToFront(item);
+                return AddItemToFront(item, out error);
             }
 
             itemToUpdate.TryJoin(ref item);
@@ -82,52 +110,62 @@ namespace NeoServer.Game.Items.Items
 
             if (item != null) //item was joined on first item and remains with a amount
             {
-                return AddItemToFront(item);
+                return AddItemToFront(item, out error);
             }
-            return InvalidOperation.None;
+            return true;
         }
 
-        private InvalidOperation AddItemToFront(IItem item)
+        private bool AddItemToFront(IItem item, out InvalidOperation error)
         {
-            var error = InvalidOperation.None;
+            error = InvalidOperation.None;
 
             if (SlotsUsed >= Capacity)
             {
-                return InvalidOperation.FullCapacity;
+                error = InvalidOperation.FullCapacity;
+                return false;
             }
 
             Items.Insert(0, item);
             SlotsUsed++;
 
+            if (item is IContainer container)
+            {
+                container.SetParent(this);
+            }
+
             OnItemAdded?.Invoke(item);
 
-            return error;
+            return true;
         }
 
-        private void AddItemToChild(IItem item, IContainerItem child)
+        private bool AddItemToChild(IItem item, IContainer child, out InvalidOperation error)
         {
-            child.TryAddItem(item, (byte)(child.Capacity - 1), out var error);
+            if (!item.IsCumulative && child.IsFull)
+            {
+                error = InvalidOperation.FullCapacity;
+                return false;
+            }
+            var result = child.TryAddItem(item, (byte)(child.Capacity - 1), out error);
 
-            if (item is IContainerItem container)
+            if (item is IContainer container)
             {
                 container.SetParent(child);
             }
+            return result;
         }
-        public bool TryAddItem(IItem item, byte? slot = null) => TryAddItem(item, (byte)(Capacity - 1), out var error);
+        public bool TryAddItem(IItem item, byte? slot = null) => TryAddItem(item, slot ?? (byte)(Capacity - 1), out var error);
         public bool TryAddItem(IItem item, byte slot, out InvalidOperation error)
         {
             error = InvalidOperation.None;
 
             var itemOnSlot = Items.ElementAtOrDefault(slot);
 
-            if (itemOnSlot is IContainerItem container)
+            if (itemOnSlot is IContainer container)
             {
-                AddItemToChild(item, container);
-                return true;
+                return AddItemToChild(item, container, out error);
             }
 
-            error = AddItem(item, slot);
-            return error == InvalidOperation.None;
+            return AddItem(item, slot, out error);
         }
 
         public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount)
@@ -138,31 +176,39 @@ namespace NeoServer.Game.Items.Items
 
             if (itemOnSlot?.ClientId == item.ClientId)
             {
-                JoinCumulativeItems(item, toSlotIndex);
+                TryJoinCumulativeItems(item, toSlotIndex, out var error);
             }
             else
             {
-                AddItemToFront(item);
+                AddItemToFront(item, out var error);
             }
         }
-        public void MoveItem(byte fromSlotIndex, byte toSlotIndex)
+        public bool MoveItem(byte fromSlotIndex, byte toSlotIndex, out InvalidOperation error)
         {
+            error = InvalidOperation.None;
+
             if (GetContainerAt(toSlotIndex, out var container))
             {
                 var item = RemoveItem(fromSlotIndex);
-                AddItemToChild(item, container);
+                return AddItemToChild(item, container, out error);
             }
             if (fromSlotIndex > toSlotIndex)
             {
                 var item = RemoveItem(fromSlotIndex);
-                AddItemToFront(item);
+                return AddItemToFront(item, out error);
             }
+            return true;
         }
         public IItem RemoveItem(byte slotIndex)
         {
             var item = Items[slotIndex];
 
             Items.RemoveAt(slotIndex);
+
+            if(item is IContainer container)
+            {
+                container.SetParent(null);
+            }
 
             SlotsUsed--;
 

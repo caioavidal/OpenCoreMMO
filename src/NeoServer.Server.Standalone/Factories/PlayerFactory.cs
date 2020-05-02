@@ -85,7 +85,7 @@ namespace NeoServer.Server.Standalone.Factories
 
                 if (slot.Key == Slot.Backpack)
                 {
-                    if (!(createdItem is IContainerItem container))
+                    if (!(createdItem is IContainer container))
                     {
                         continue;
                     }
@@ -99,7 +99,7 @@ namespace NeoServer.Server.Standalone.Factories
             return inventoryDic;
         }
 
-        public IContainerItem BuildContainer(IList<ItemModel> items, int index, Location location, IContainerItem container)
+        public IContainer BuildContainer(IList<ItemModel> items, int index, Location location, IContainer container)
         {
             if (items == null || items.Count == index)
             {
@@ -113,7 +113,7 @@ namespace NeoServer.Server.Standalone.Factories
                             {ItemAttribute.Count, itemModel.Amount }
                         });
 
-            if (item is IContainerItem childrenContainer)
+            if (item is IContainer childrenContainer)
             {
                 childrenContainer.SetParent(container);
                 container.TryAddItem(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));

@@ -34,6 +34,8 @@ namespace NeoServer.Game.Items
             _defaultAttributes[attribute] = attributeValue;
         }
 
+        public bool HasAttribute(ItemAttribute attribute) => _defaultAttributes.ContainsKey(attribute);
+
         public T GetAttribute<T>(ItemAttribute attribute) where T : struct
         {
             IConvertible value = null;
@@ -43,8 +45,7 @@ namespace NeoServer.Game.Items
                 return (T)Convert.ChangeType(value, typeof(T));
             }
 
-
-            return default(T);
+            return default;
         }
         public string GetAttribute(ItemAttribute attribute)
         {

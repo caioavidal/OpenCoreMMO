@@ -77,7 +77,7 @@ namespace NeoServer.Server.Model.Players
 
         public IItem this[Slot slot] => !Inventory.ContainsKey(slot) ? null : Inventory[slot].Item1;
 
-        public IContainerItem BackpackSlot => this[Slot.Backpack] is IContainerItem container ? container : null;
+        public IContainer BackpackSlot => this[Slot.Backpack] is IContainer container ? container : null;
 
         public bool Add(IItem item, out IItem extraItem, byte positionByte, byte count = 1, ushort lossProbability = 300)
         {
