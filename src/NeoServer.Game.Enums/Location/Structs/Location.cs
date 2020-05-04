@@ -224,5 +224,14 @@ namespace NeoServer.Game.Enums.Location.Structs
 
             return locationDiff.Y < 0 ? Direction.North : Direction.South;
         }
+
+        public ushort GetSqmDistance(Location dest)
+        {
+
+            var offset = GetOffsetBetween(this, dest);
+
+            return (ushort)(Math.Abs(offset[0]) + Math.Abs(offset[1]));
+        }
+        
     }
 }

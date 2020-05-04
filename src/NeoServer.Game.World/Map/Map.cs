@@ -1,10 +1,3 @@
-
-// <copyright file="Map.cs" company="2Dudes">
-// Copyright (c) 2018 2Dudes. All rights reserved.
-// Licensed under the MIT license.
-// See LICENSE file in the project root for full license information.
-// </copyright>
-
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -192,13 +185,14 @@ namespace NeoServer.Game.World.Map
 
             return tile;
         }
-        public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile)//, byte count)
+        public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
         {
             var fromStackPosition = tile.GetStackPositionOfThing(thing);
-            tile.RemoveThing(ref thing);//, count);
+            tile.RemoveThing(ref thing, amount);
 
-            OnThingRemovedFromTile(thing, tile, fromStackPosition);
+            OnThingRemovedFromTile?.Invoke(thing, tile, fromStackPosition);
         }
+     
 
         public IEnumerable<uint> GetCreaturesAtPositionZone(Location location)
         {

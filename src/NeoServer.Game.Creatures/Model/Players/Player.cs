@@ -204,6 +204,7 @@ namespace NeoServer.Server.Model.Players
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
+        public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
         public void AddKnownCreature(uint creatureId)
         {
@@ -250,8 +251,6 @@ namespace NeoServer.Server.Model.Players
             ResetIdleTime();
             return base.TryWalkTo(directions);
         }
-
-
 
         public void SetFightMode(FightMode mode)
         {

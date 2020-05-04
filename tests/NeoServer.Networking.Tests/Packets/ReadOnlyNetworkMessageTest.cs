@@ -21,10 +21,10 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = new byte[] { 141, 54 };
-            Assert.Equal(BitConverter.ToUInt16(expected, 0), sup.GetUInt16());
+            Assert.Equal(BitConverter.ToUInt16(expected, 0), sut.GetUInt16());
         }
 
         [Fact]
@@ -32,17 +32,17 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = "1652365658\n\0000006987451230246545648945646";
             var dataBytes = Encoding.ASCII.GetBytes(data);
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            Assert.Equal(BitConverter.ToUInt16(new byte[] { 49, 54 }, 0), sup.GetUInt16());
+            Assert.Equal(BitConverter.ToUInt16(new byte[] { 49, 54 }, 0), sut.GetUInt16());
 
-            Assert.Equal(BitConverter.ToUInt32(new byte[] { 53, 50, 51, 54 }, 0), sup.GetUInt32());
+            Assert.Equal(BitConverter.ToUInt32(new byte[] { 53, 50, 51, 54 }, 0), sut.GetUInt32());
 
-            sup.SkipBytes(3);
+            sut.SkipBytes(3);
 
-            Assert.Equal((byte)56, sup.GetByte());
+            Assert.Equal((byte)56, sut.GetByte());
 
-            var s = sup.GetString();
+            var s = sut.GetString();
 
             Assert.Equal("0000069874", s);
         }
@@ -53,22 +53,22 @@ namespace NeoServer.Networking.Tests.Packets
             var data = "1652365658\n\0000006987451230246545648945646";
             var dataBytes = Encoding.ASCII.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            sup.GetUInt16();
-            Assert.Equal(2, sup.BytesRead);
+            sut.GetUInt16();
+            Assert.Equal(2, sut.BytesRead);
 
-            sup.GetUInt32();
-            Assert.Equal(6, sup.BytesRead);
+            sut.GetUInt32();
+            Assert.Equal(6, sut.BytesRead);
 
-            sup.GetByte();
-            Assert.Equal(7, sup.BytesRead);
+            sut.GetByte();
+            Assert.Equal(7, sut.BytesRead);
 
-            sup.SkipBytes(3);
-            Assert.Equal(10, sup.BytesRead);
+            sut.SkipBytes(3);
+            Assert.Equal(10, sut.BytesRead);
 
-            sup.GetString();
-            Assert.Equal(22, sup.BytesRead);
+            sut.GetString();
+            Assert.Equal(22, sut.BytesRead);
 
         }
 
@@ -78,8 +78,8 @@ namespace NeoServer.Networking.Tests.Packets
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
-            Assert.Equal((uint)1652365, sup.GetUInt32());
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            Assert.Equal((uint)1652365, sut.GetUInt32());
         }
 
         [Fact]
@@ -88,11 +88,11 @@ namespace NeoServer.Networking.Tests.Packets
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            sup.SkipBytes(2);
+            sut.SkipBytes(2);
 
-            Assert.Equal(2, sup.BytesRead);
+            Assert.Equal(2, sut.BytesRead);
         }
 
         [Fact]
@@ -101,9 +101,9 @@ namespace NeoServer.Networking.Tests.Packets
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => sup.SkipBytes(20));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.SkipBytes(20));
         }
 
         [Fact]
@@ -112,10 +112,10 @@ namespace NeoServer.Networking.Tests.Packets
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = (byte)141;
-            Assert.Equal(expected, sup.GetByte());
+            Assert.Equal(expected, sut.GetByte());
         }
 
         [Fact]
@@ -127,10 +127,10 @@ namespace NeoServer.Networking.Tests.Packets
             data.AddRange(BitConverter.GetBytes((ushort)900));
             data.Add(7);
 
-            var sup = new ReadOnlyNetworkMessage(data.ToArray(), data.Count);
+            var sut = new ReadOnlyNetworkMessage(data.ToArray(), data.Count);
 
             var expected = new Location { X = 1000, Y = 900, Z = 7 };
-            Assert.Equal(expected, sup.GetLocation());
+            Assert.Equal(expected, sut.GetLocation());
         }
 
         [Fact]
@@ -139,10 +139,10 @@ namespace NeoServer.Networking.Tests.Packets
             var data = 1652365;
             var dataBytes = BitConverter.GetBytes(data);
 
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = new byte[] { 141, 54, 25 };
-            Assert.Equal(expected, sup.GetBytes(3));
+            Assert.Equal(expected, sut.GetBytes(3));
         }
 
         [Fact]
@@ -150,10 +150,10 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = "\a\0hello world";
             var dataBytes = Encoding.ASCII.GetBytes(data);
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = "hello w";
-            Assert.Equal(expected, sup.GetString());
+            Assert.Equal(expected, sut.GetString());
         }
 
         [Fact]
@@ -161,22 +161,22 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = "\a\0hello world";
             var dataBytes = Encoding.ASCII.GetBytes(data);
-            var sup = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
             var expected = dataBytes;
 
-            Assert.Equal(expected, sup.GetMessageInBytes());
+            Assert.Equal(expected, sut.GetMessageInBytes());
         }
         [Fact]
         public void ReturnEntireBuffer_When_Length_Equals_0_GetMessageInBytes()
         {
             var data = "\a\0hello world";
             var dataBytes = Encoding.ASCII.GetBytes(data);
-            var sup = new ReadOnlyNetworkMessage(dataBytes, 0);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, 0);
 
             var expected = dataBytes;
 
-            Assert.Equal(expected, sup.GetMessageInBytes());
+            Assert.Equal(expected, sut.GetMessageInBytes());
         }
 
         [Fact]
@@ -185,29 +185,29 @@ namespace NeoServer.Networking.Tests.Packets
             var data = "\a\0hello world";
             var dataBytes = Encoding.ASCII.GetBytes(data);
             var length = 3;
-            var sup = new ReadOnlyNetworkMessage(dataBytes, length);
+            var sut = new ReadOnlyNetworkMessage(dataBytes, length);
 
             var expected = dataBytes.Take(length);
 
-            Assert.Equal(expected, sup.GetMessageInBytes());
+            Assert.Equal(expected, sut.GetMessageInBytes());
         }
 
         [Fact]
         public void ThrowArgumentExpecetion_When_Length_Less_Than_0_GetMessageInBytes()
         {
             var length = -1;
-            var sup = new ReadOnlyNetworkMessage(new byte[4], length);
+            var sut = new ReadOnlyNetworkMessage(new byte[4], length);
 
-            Assert.Throws<ArgumentOutOfRangeException>(sup.GetMessageInBytes);
+            Assert.Throws<ArgumentOutOfRangeException>(sut.GetMessageInBytes);
         }
 
         [Fact]
         public void Return_None_When_IncomingPacket_Is_Not_Setted()
         {
 
-            var sup = new ReadOnlyNetworkMessage(new byte[4], 4);
+            var sut = new ReadOnlyNetworkMessage(new byte[4], 4);
 
-            Assert.Equal(GameIncomingPacketType.None, sup.IncomingPacket);
+            Assert.Equal(GameIncomingPacketType.None, sut.IncomingPacket);
         }
 
         [Fact]
@@ -215,11 +215,11 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0x01 };
 
-            var sup = new ReadOnlyNetworkMessage(data, 9);
+            var sut = new ReadOnlyNetworkMessage(data, 9);
 
-            sup.GetIncomingPacketType(true);
+            sut.GetIncomingPacketType(true);
 
-            Assert.Equal(GameIncomingPacketType.PlayerLoginRequest, sup.IncomingPacket);
+            Assert.Equal(GameIncomingPacketType.PlayerLoginRequest, sut.IncomingPacket);
         }
 
         [Fact]
@@ -227,18 +227,18 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0x14 };
 
-            var sup = new ReadOnlyNetworkMessage(data, 9);
+            var sut = new ReadOnlyNetworkMessage(data, 9);
 
-            Assert.Equal(GameIncomingPacketType.PlayerLogOut, sup.GetIncomingPacketType(true));
+            Assert.Equal(GameIncomingPacketType.PlayerLogOut, sut.GetIncomingPacketType(true));
         }
         [Fact]
         public void Return_IncomingPacket_When_GetIncomingPacketType_Not_Authenticated()
         {
             var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0x14, 0, 0 };
 
-            var sup = new ReadOnlyNetworkMessage(data, 9);
+            var sut = new ReadOnlyNetworkMessage(data, 9);
 
-            Assert.Equal(GameIncomingPacketType.PlayerLogOut, sup.GetIncomingPacketType(false));
+            Assert.Equal(GameIncomingPacketType.PlayerLogOut, sut.GetIncomingPacketType(false));
         }
 
         [Fact]
@@ -246,18 +246,18 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = new byte[3] { 0, 0, 0 };
 
-            var sup = new ReadOnlyNetworkMessage(data, 3);
+            var sut = new ReadOnlyNetworkMessage(data, 3);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => sup.GetIncomingPacketType(false));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetIncomingPacketType(false));
         }
         [Fact]
         public void ThrowException_When_Buffer_Less_Than_6_Bytes_GetIncomingPacketType_Is_Not_Authenticated()
         {
             var data = new byte[3] { 0, 0, 0 };
 
-            var sup = new ReadOnlyNetworkMessage(data, 3);
+            var sut = new ReadOnlyNetworkMessage(data, 3);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => sup.GetIncomingPacketType(false));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetIncomingPacketType(false));
         }
 
         [Fact]
@@ -269,18 +269,18 @@ namespace NeoServer.Networking.Tests.Packets
         [Fact]
         public void ThrowException_When_Length_Less_Than_0_Resize()
         {
-            var sup = new ReadOnlyNetworkMessage(new byte[3], 3);
-            Assert.Throws<ArgumentOutOfRangeException>(() => sup.Resize(-1));
+            var sut = new ReadOnlyNetworkMessage(new byte[3], 3);
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Resize(-1));
         }
 
         [Fact]
         public void Return_Set_Length_And_BytesRead_Resize()
         {
-            var sup = new ReadOnlyNetworkMessage(new byte[3], 3);
+            var sut = new ReadOnlyNetworkMessage(new byte[3], 3);
 
-            sup.Resize(5);
-            Assert.Equal(5, sup.Length);
-            Assert.Equal(0, sup.BytesRead);
+            sut.Resize(5);
+            Assert.Equal(5, sut.Length);
+            Assert.Equal(0, sut.BytesRead);
         }
 
       

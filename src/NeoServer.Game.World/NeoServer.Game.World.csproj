@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Map\Description\**" />
+    <EmbeddedResource Remove="Map\Description\**" />
+    <None Remove="Map\Description\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Serilog" Version="2.9.0" />
   </ItemGroup>
 
@@ -15,10 +21,6 @@
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Map\Description\" />
   </ItemGroup>
 
 </Project>

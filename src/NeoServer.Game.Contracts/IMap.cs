@@ -27,7 +27,7 @@ namespace NeoServer.Game.Contracts
         ITile GetNextTile(Location fromLocation, Direction direction);
         IEnumerable<ITile> GetOffsetTiles(Location location);
         bool TryMoveThing(ref IMoveableThing thing, Location toLocation);
-        void RemoveThing(ref IMoveableThing thing, IWalkableTile tile);
+        void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount =1);
         IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip);
         HashSet<uint> GetCreaturesAtPositionZone(Location location, Location toLocation);
         IEnumerable<uint> GetCreaturesAtPositionZone(Location location);

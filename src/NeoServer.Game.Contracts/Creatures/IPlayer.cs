@@ -92,6 +92,6 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         void ResetIdleTime();
         void CancelWalk();
-
+        bool CanMoveThing(Location location);
     }
 }

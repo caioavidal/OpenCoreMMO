@@ -9,8 +9,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
     public interface IWalkableTile : ITile
     {
         ushort Ground { get; }
-        ConcurrentStack<IItem> Top1 { get; }
-        ConcurrentStack<IItem> Top2 { get; }
+        ConcurrentStack<IItem> TopItems { get; }
         ConcurrentStack<IItem> DownItems { get; }
         ConcurrentStack<ICreature> Creatures { get; }
         ushort StepSpeed { get; }
@@ -21,7 +20,8 @@ namespace NeoServer.Game.Contracts.World.Tiles
 
         void AddThing(ref IMoveableThing thing);
         byte[] GetRaw(IPlayer playerRequesting = null);
+        byte GetStackPositionOfItem(ushort id);
         byte GetStackPositionOfThing(Items.IThing thing);
-        void RemoveThing(ref IMoveableThing thing);
+        IThing RemoveThing(ref IMoveableThing thing, byte count = 1);
     }
 }
