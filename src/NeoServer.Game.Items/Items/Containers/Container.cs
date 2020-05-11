@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace NeoServer.Game.Items.Items
         public List<IItem> Items { get; }
         public IItem this[int index] => Items[index];
 
-        public Container(IItemType type) : base(type)
+        public Container(IItemType type, Location location) : base(type, location)
         {
             if (!type.Attributes.HasAttribute(Enums.ItemAttribute.Capacity))
             {

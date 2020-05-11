@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using System.Collections.Immutable;
 
@@ -10,8 +11,8 @@ namespace NeoServer.Game.Items.Items
 {
     public class BodyDefenseEquimentItem : MoveableItem, IDefenseEquipmentItem
     {
-        public BodyDefenseEquimentItem(IItemType itemType)
-            : base(itemType)
+        public BodyDefenseEquimentItem(IItemType itemType, Location location)
+            : base(itemType, location)
         {
 
             DefenseValue = itemType.Attributes.GetAttribute<byte>(ItemAttribute.Defense);

@@ -32,15 +32,15 @@ namespace NeoServer.Game.Items
             }
             if (WeaponItem.IsApplicable(itemType))
             {
-                return new WeaponItem(itemType);
+                return new WeaponItem(itemType, location);
             }
             if (Container.IsApplicable(itemType))
             {
-                return new Container(itemType);
+                return new Container(itemType, location);
             }
             if (BodyDefenseEquimentItem.IsApplicable(itemType))
             {
-                return new BodyDefenseEquimentItem(itemType);
+                return new BodyDefenseEquimentItem(itemType, location);
             }
             if (CumulativeItem.IsApplicable(itemType))
             {

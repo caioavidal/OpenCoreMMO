@@ -5,8 +5,9 @@ namespace NeoServer.Game.Items.Items
 {
     public abstract class MoveableItem : BaseItem, IMoveableThing
     {
-        public MoveableItem(IItemType type) : base(type)
+        public MoveableItem(IItemType type, Location location) : base(type)
         {
+            this.location = location;
         }
 
         private Location location;

@@ -75,7 +75,7 @@ namespace NeoServer.Game.World.Map
 
             toTile.AddThing(ref thing);
 
-            OnThingMoved(thing, fromTile, toTile, fromStackPosition);
+            OnThingMoved?.Invoke(thing, fromTile, toTile, fromStackPosition);
 
             var tileDestination = GetTileDestination(toTile);
 

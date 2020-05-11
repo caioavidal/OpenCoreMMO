@@ -16,7 +16,7 @@ namespace NeoServer.Game.Items.Tests
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, capacity);
 
-            return new Container(itemType);
+            return new Container(itemType, new Location(100,100,7));
         }
 
         private ICumulativeItem CreateCumulativeItem(ushort id, byte amount)
@@ -43,7 +43,7 @@ namespace NeoServer.Game.Items.Tests
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
 
-            var sut = new Container(itemType);
+            var sut = new Container(itemType, new Location(100, 100, 7));
 
             Assert.Equal(20, sut.Capacity);
             Assert.NotNull(sut.Items);
@@ -53,7 +53,7 @@ namespace NeoServer.Game.Items.Tests
         public void Constructor_Without_Capacity_Throws()
         {
             var itemType = new ItemType();
-            Assert.Throws<ArgumentException>(() => new Container(itemType));
+            Assert.Throws<ArgumentException>(() => new Container(itemType, new Location(100, 100, 7)));
         }
 
         [Fact]
@@ -62,8 +62,8 @@ namespace NeoServer.Game.Items.Tests
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
 
-            var parentContainer = new Container(itemType);
-            var sut = new Container(itemType);
+            var parentContainer = new Container(itemType, new Location(100, 100, 7));
+            var sut = new Container(itemType, new Location(100, 100, 7));
 
             sut.SetParent(parentContainer);
             Assert.Equal(parentContainer, sut.Parent);

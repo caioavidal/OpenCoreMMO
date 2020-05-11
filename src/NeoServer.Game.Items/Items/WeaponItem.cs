@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using System;
 using System.Collections.Immutable;
@@ -11,7 +12,7 @@ namespace NeoServer.Game.Items.Items
 {
     public class WeaponItem : MoveableItem, IWeaponItem
     {
-        public WeaponItem(IItemType itemType) : base(itemType)
+        public WeaponItem(IItemType itemType, Location location) : base(itemType, location)
         {
             Attack = itemType.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
             Defense = itemType.Attributes.GetAttribute<byte>(ItemAttribute.Defense);

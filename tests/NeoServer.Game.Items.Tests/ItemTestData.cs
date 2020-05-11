@@ -15,7 +15,7 @@ namespace NeoServer.Game.Items.Tests
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, capacity);
 
-            return new Container(itemType);
+            return new Container(itemType, new Location(100, 100, 7));
         }
 
         public static ICumulativeItem CreateCumulativeItem(ushort id, byte amount)
@@ -41,7 +41,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.SetName("item");
 
-            return new WeaponItem(type);
+            return new WeaponItem(type, new Location(100, 100, 7));
         }
 
         public static IItem CreateTopItem(ushort id, byte topOrder)
