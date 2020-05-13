@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Players;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace NeoServer.Game.Contracts.Items.Types
     public delegate void RemoveItem(byte slotIndex, IItem item);
     public delegate void AddItem(IItem item);
     public delegate void UpdateItem(byte slotIndex, IItem item);
-    public interface IContainer : IItem
+    public interface IContainer : IItem, IInventoryItem
     {
         IItem this[int index] { get; }
 
@@ -31,5 +32,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         void SetParent(IContainer container);
         bool TryAddItem(IItem item, byte slot, out InvalidOperation error);
         bool TryAddItem(IItem item, byte? slot = null);
+
+
     }
 }

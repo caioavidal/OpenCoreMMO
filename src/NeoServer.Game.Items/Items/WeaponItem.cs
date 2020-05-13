@@ -42,12 +42,14 @@ namespace NeoServer.Game.Items.Items
 
         public float Weight { get; }
 
+        public Slot Slot => TwoHanded ? Slot.TwoHanded : Slot.Left;
+
         public static bool IsApplicable(IItemType type) =>
-            type.Attributes.GetAttribute(ItemAttribute.WeaponType) switch
+            type.WeaponType switch
             {
-                "axe" => true,
-                "sword" => true,
-                "club" => true,
+                WeaponType.Axe => true,
+                WeaponType.Club => true,
+                WeaponType.Sword => true,
                 _ => false
             };
 

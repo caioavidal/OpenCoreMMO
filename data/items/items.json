@@ -55384,7 +55384,11 @@
           {
              "key": "showattributes",
              "value": "1"
-          }
+          },
+		  {
+			 "key":"minlevel",
+			 "value":"60"
+		  }
        ]
     },
     {

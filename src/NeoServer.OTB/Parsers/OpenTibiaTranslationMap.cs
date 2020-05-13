@@ -125,6 +125,7 @@ namespace NeoServer.OTB.Parsers
                 case "walkstack": return ItemAttribute.WalkStack;
                 case "blocking": return ItemAttribute.Blocking;
                 case "allowdistread": return ItemAttribute.AllowDistRead;
+                case "minlevel": return ItemAttribute.MinimumLevel;
                 default:
                     success = false;
                     return ItemAttribute.AbsTeleportEffect; // Just return the first

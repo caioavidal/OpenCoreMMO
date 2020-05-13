@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Items.Items
 {
-    public struct CumulativeItem : ICumulativeItem, IItem
+    public class CumulativeItem : ICumulativeItem, IItem
     {
         public CumulativeItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {

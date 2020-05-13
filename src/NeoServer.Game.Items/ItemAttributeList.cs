@@ -3,6 +3,7 @@ using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Items.Parsers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -132,7 +133,7 @@ namespace NeoServer.Game.Items
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.MagicPoints) ?? false)
                     dictionary.TryAdd(SkillType.Magic, GetAttribute<byte>(ItemAttribute.MagicPoints));
 
-                return null;
+                return dictionary;
             }
         }
 
@@ -145,11 +146,19 @@ namespace NeoServer.Game.Items
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentDeath) ?? false)
                     dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentDeath));
 
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPhysical) ?? false)
+                    dictionary.TryAdd(DamageType.AbsorbPercentPhysical, GetAttribute<byte>(ItemAttribute.AbsorbPercentPhysical));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
+                    dictionary.TryAdd(DamageType.AbsorbPercentMagic, GetAttribute<byte>(ItemAttribute.AbsorbPercentMagic));
+
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentAll) ?? false)
                     dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentAll));
 
                 return dictionary;
             }
         }
+
+
     }
 }

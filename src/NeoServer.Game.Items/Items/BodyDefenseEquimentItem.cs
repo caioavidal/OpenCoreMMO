@@ -14,32 +14,27 @@ namespace NeoServer.Game.Items.Items
         public BodyDefenseEquimentItem(IItemType itemType, Location location)
             : base(itemType, location)
         {
-
-            DefenseValue = itemType.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
-            MinimumLevelRequired = itemType.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
-            Weight = itemType.Attributes.GetAttribute<float>(ItemAttribute.Weight);
-            SkillBonus = itemType.Attributes.SkillBonus?.ToImmutableDictionary();
             //todo damage protection
         }
 
         public bool Pickupable => true;
-        public float Weight { get; }
+        public float Weight => Metadata.Attributes.GetAttribute<float>(ItemAttribute.Weight);
 
-        public ushort DefenseValue { get; }
+        public ushort DefenseValue => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
-        public ushort MinimumLevelRequired { get; }
         public ImmutableDictionary<DamageType, byte> DamageProtection { get; }
-        public ImmutableDictionary<SkillType, byte> SkillBonus { get; }
+
+        public Slot Slot => Metadata.WeaponType == WeaponType.Shield ? Slot.Right : Metadata.BodyPosition;
 
         public static bool IsApplicable(IItemType type) =>
-            type.Attributes.GetAttribute(ItemAttribute.BodyPosition) switch
+            type.BodyPosition switch
             {
-                "body" => true,
-                "legs" => true,
-                "head" => true,
-                "feet" => true,
-                "shield" => true,
+                Slot.Body => true,
+                Slot.Legs => true,
+                Slot.Head => true,
+                Slot.Feet => true,
+                Slot.Right => true,
                 _ => false
-            };
+            } || type.WeaponType == WeaponType.Shield;
     }
 }

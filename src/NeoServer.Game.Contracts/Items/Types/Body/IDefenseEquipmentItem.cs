@@ -8,6 +8,5 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
     {
         ImmutableDictionary<DamageType, byte> DamageProtection { get; }
         ushort DefenseValue { get; }
-        ImmutableDictionary<SkillType, byte> SkillBonus { get; }
     }
 }
