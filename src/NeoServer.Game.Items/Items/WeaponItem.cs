@@ -18,9 +18,6 @@ namespace NeoServer.Game.Items.Items
             Defense = itemType.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
             ElementalDamage = itemType.Attributes.GetWeaponElementDamage();
             ExtraDefense = itemType.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
-            TwoHanded = itemType.Attributes.GetAttribute(ItemAttribute.BodyPosition) == "two-handed";
-            MinimumLevelRequired = itemType.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
-            Weight = itemType.Attributes.GetAttribute<float>(ItemAttribute.Weight);
             //AllowedVocations  todo
         }
 
@@ -32,17 +29,10 @@ namespace NeoServer.Game.Items.Items
 
         public sbyte ExtraDefense { get; }
 
-        public bool TwoHanded { get; }
+        
 
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
-        public ushort MinimumLevelRequired { get; }
-
-        public ImmutableDictionary<SkillType, byte> SkillBonus { get; }
-
-        public float Weight { get; }
-
-        public Slot Slot => TwoHanded ? Slot.TwoHanded : Slot.Left;
 
         public static bool IsApplicable(IItemType type) =>
             type.WeaponType switch

@@ -82,14 +82,11 @@ namespace NeoServer.Server.Model.Players
         public bool TryAddItemToSlot(Slot slot, IItem item)
         {
 
-            if(!(item is IInventoryItem inventoryItem))
+            if (!CanAddItemToSlot(slot, item))
             {
                 return false;
             }
-            if (inventoryItem.Slot != slot) 
-            {
-                return false;
-            }
+
 
             if (Inventory.ContainsKey(slot))
             {
@@ -99,5 +96,31 @@ namespace NeoServer.Server.Model.Players
             Inventory.Add(slot, new Tuple<IItem, ushort>(item, item.ClientId));
             return true;
         }
+
+        private bool CanAddItemToSlot(Slot slot, IItem item)
+        {
+            if (!(item is IInventoryItem inventoryItem))
+            {
+                return false;
+            }
+
+            if (inventoryItem is IWeapon weapon)
+            {
+                return slot == Slot.Left;
+            }
+
+            if (inventoryItem.Slot != slot)
+            {
+                return false;
+            }
+            if(slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded) 
+            {
+                //trying to add a shield while left slot has a two handed weapon
+                return false;
+            }
+
+            return true;
+        }
+        
     }
 }

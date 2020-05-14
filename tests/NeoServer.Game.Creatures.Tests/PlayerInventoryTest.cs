@@ -22,17 +22,17 @@ namespace NeoServer.Game.Creatures.Tests
             new object[] {Slot.Feet, ItemTestData.CreateBodyEquipmentItem(100, "feet") },
             new object[] {Slot.Right, ItemTestData.CreateBodyEquipmentItem(100, "","shield") },
             new object[] {Slot.Ring, ItemTestData.CreateBodyEquipmentItem(100,"ring")},
-            new object[] {Slot.TwoHanded, ItemTestData.CreateWeaponItem(100,"sword",true)},
+            new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100,"sword",true)},
 
        };
 
         private static List<object[]> GenerateWrongSlotItemsData()
         {
             var result = new List<object[]>();
-            foreach(var slot in new List<Slot>() { Slot.Head, Slot.Ammo, Slot.Backpack, Slot.Body, Slot.Feet, Slot.Left, Slot.Right, Slot.Ring, Slot.TwoHanded, 
+            foreach (var slot in new List<Slot>() { Slot.Head, Slot.Ammo, Slot.Backpack, Slot.Body, Slot.Feet, Slot.Left, Slot.Right, Slot.Ring, Slot.TwoHanded,
                 Slot.Legs, Slot.Necklace })
             {
-                if(slot != Slot.Body) 
+                if (slot != Slot.Body)
                     result.Add(new object[] { slot, ItemTestData.CreateBodyEquipmentItem(100, "body") });
 
                 if (slot != Slot.Ammo)
@@ -63,7 +63,7 @@ namespace NeoServer.Game.Creatures.Tests
                     result.Add(new object[] { slot, ItemTestData.CreateBodyEquipmentItem(100, "head") });
             }
             return result;
-       
+
         }
 
         public static IEnumerable<object[]> WrongSlotItemsData => GenerateWrongSlotItemsData();
@@ -97,6 +97,28 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.False(success);
         }
 
-       
+        [Fact]
+        public void AddItemToSlot_AddTwoHanded_And_Shield_Returns_False()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(), new Dictionary<Slot, Tuple<IItem, ushort>>()
+            {
+
+            });
+
+            var twoHanded = ItemTestData.CreateWeaponItem(100, "axe", true);
+            var success = sut.TryAddItemToSlot(Slot.Left, twoHanded);
+
+            Assert.Same(twoHanded, sut[Slot.Left]);
+            Assert.Null(sut[Slot.Right]);
+            Assert.True(success);
+
+            var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
+            Assert.Same(twoHanded, sut[Slot.Left]);
+            Assert.False(sut.TryAddItemToSlot(Slot.Right, shield));
+            Assert.Null(sut[Slot.Right]);
+        }
+
+
+
     }
 }

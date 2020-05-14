@@ -18,7 +18,7 @@ namespace NeoServer.Game.Items.Parsers
             "backpack" => Slot.Backpack,
             "ring" => Slot.Ring,
             "necklace" => Slot.Necklace,
-            "teo-handed" => Slot.TwoHanded,
+            "two-handed" => Slot.TwoHanded,
             _ => Slot.WhereEver
         };
     }
