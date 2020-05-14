@@ -67,5 +67,23 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(100, sup.Amount);
         }
 
+        [Theory]
+        [InlineData(30,50,1500)]
+        [InlineData(30, 1, 30)]
+        [InlineData(1, 100, 100)]
+        [InlineData(10, 10, 100)]
+        [InlineData(9.6, 10, 96.0)]
+        public void Weight_Returns_Total_Item_Weight(ushort weight, byte amount, float totalWeight)
+        {
+            var type = new ItemType();
+            type.SetClientId(100);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, weight);
+
+
+            var sup = new CumulativeItem(type, new Location(100, 100, 7), amount);
+            Assert.Equal(totalWeight, sup.Weight);
+
+        }
+
     }
 }

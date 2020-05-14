@@ -19,6 +19,14 @@ namespace NeoServer.Game.Items.Tests
 
             return new Container(itemType, new Location(100, 100, 7));
         }
+        public static PickupableContainer CreatePickupableContainer(byte capacity = 6)
+        {
+            var itemType = new ItemType();
+            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, capacity);
+            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 20);
+
+            return new PickupableContainer(itemType, new Location(100, 100, 7));
+        }
         public static Container CreateBackpack()
         {
             var itemType = new ItemType();
@@ -91,6 +99,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, slot);
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, weaponType);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 40);
             type.SetName("item");
 
             return new BodyDefenseEquimentItem(type, new Location(100, 100, 7));

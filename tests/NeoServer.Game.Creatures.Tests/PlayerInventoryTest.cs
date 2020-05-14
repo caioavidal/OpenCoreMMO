@@ -118,7 +118,30 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Null(sut[Slot.Right]);
         }
 
+        [Fact]
+        public void AddItemToSlot_When_Exceeds_Capacity_Returns_False()
+        {
+            //var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(), new Dictionary<Slot, Tuple<IItem, ushort>>()
+            //{
 
+            //});
+
+            //var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
+            //var feet = ItemTestData.CreateBodyEquipmentItem(101, "feet");
+            //var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
+
+            //var success = sut.TryAddItemToSlot(Slot.Legs, legs);
+            //var success = sut.TryAddItemToSlot(Slot.Legs, legs);
+
+            //Assert.Same(twoHanded, sut[Slot.Left]);
+            //Assert.Null(sut[Slot.Right]);
+            //Assert.True(success);
+
+            //var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
+            //Assert.Same(twoHanded, sut[Slot.Left]);
+            //Assert.False(sut.TryAddItemToSlot(Slot.Right, shield));
+            //Assert.Null(sut[Slot.Right]);
+        }
 
     }
 }

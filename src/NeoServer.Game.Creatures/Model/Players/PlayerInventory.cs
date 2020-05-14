@@ -35,6 +35,17 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
+        public ushort TotalWeight;
+        //{
+        //    get
+        //    {
+        //        foreach (var item in Inventory)
+        //        {
+
+        //        }
+        //    }
+        //}
+
         public byte AttackRange
         {
             get

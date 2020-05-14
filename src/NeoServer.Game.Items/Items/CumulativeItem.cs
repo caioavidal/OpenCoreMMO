@@ -38,7 +38,16 @@ namespace NeoServer.Game.Items.Items
 
         public ushort ClientId { get; }
 
-        public float Weight { get; }
+        private float weight;
+        public float Weight { get
+            {
+                 return weight * Amount;
+            }
+            set
+            {
+                weight = value;
+            }
+        }
 
         private Location location;
         public Location Location => location;

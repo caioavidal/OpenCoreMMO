@@ -9,6 +9,11 @@ namespace NeoServer.Game.Contracts.Items.Types
     public delegate void RemoveItem(byte slotIndex, IItem item);
     public delegate void AddItem(IItem item);
     public delegate void UpdateItem(byte slotIndex, IItem item);
+
+    public interface IPickupableContainer : IContainer, IPickupableItem
+    {
+        new float Weight { get; }
+    }
     public interface IContainer : IItem, IInventoryItem
     {
         IItem this[int index] { get; }
