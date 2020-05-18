@@ -41,6 +41,7 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 1);
 
             return new CumulativeItem(type, new Location(100, 100, 7), amount);
         }

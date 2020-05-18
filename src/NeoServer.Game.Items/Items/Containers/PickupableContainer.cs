@@ -17,8 +17,11 @@ namespace NeoServer.Game.Items.Items
 
             OnItemAdded += IncreaseWeight;
             OnItemRemoved += (slot, item) => DecreaseWeight(item);
+            OnItemUpdated += (slot, item, amount) => UpdateWeight(amount);
         }
 
+        private void UpdateWeight(sbyte amount) => Weight += amount;
+     
         private void IncreaseWeight(IItem item)
         {
             Weight += item is IPickupableItem pickupableItem ? pickupableItem.Weight : 0;

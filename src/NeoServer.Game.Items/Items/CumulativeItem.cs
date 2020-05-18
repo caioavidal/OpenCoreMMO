@@ -25,7 +25,6 @@ namespace NeoServer.Game.Items.Items
         public CumulativeItem(IItemType type, Location location, byte amount)
         {
             Metadata = type;
-            Amount = 1;
 
             Amount = Math.Min((byte)100, amount);
 

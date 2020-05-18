@@ -8,7 +8,7 @@ namespace NeoServer.Game.Contracts.Items.Types
 {
     public delegate void RemoveItem(byte slotIndex, IItem item);
     public delegate void AddItem(IItem item);
-    public delegate void UpdateItem(byte slotIndex, IItem item);
+    public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
 
     public interface IPickupableContainer : IContainer, IPickupableItem
     {
@@ -31,7 +31,7 @@ namespace NeoServer.Game.Contracts.Items.Types
 
         bool GetContainerAt(byte index, out IContainer container);
         bool MoveItem(byte fromSlotIndex, byte toSlotIndex, out InvalidOperation error);
-        void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount);
+        void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount =1);
         IItem RemoveItem(byte slotIndex);
         IItem RemoveItem(byte slotIndex, byte amount);
         void SetParent(IContainer container);

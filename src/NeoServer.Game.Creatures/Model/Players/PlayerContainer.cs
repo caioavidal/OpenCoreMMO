@@ -34,9 +34,9 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             RemoveItem?.Invoke(Player, Id, slotIndex, item);
         }
-        public void ItemUpdated(byte slotIndex, IItem item)
+        public void ItemUpdated(byte slotIndex, IItem item, sbyte amount)
         {
-            UpdateItem?.Invoke(Player, Id, slotIndex, item);
+            UpdateItem?.Invoke(Player, Id, slotIndex, item, amount);
         }
 
         public void AttachActions(RemoveItemFromOpenedContainer removeItemAction, AddItemOnOpenedContainer addItemAction, UpdateItemOnOpenedContainer updateItemAction)

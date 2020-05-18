@@ -18,7 +18,7 @@ namespace NeoServer.Game.Items.Items
         public bool IsFull => SlotsUsed >= Capacity;
         public IContainer Parent { get; private set; }
         public bool HasParent => Parent != null;
-        public byte Capacity { get; }
+        public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Capacity);
         public List<IItem> Items { get; }
         public IItem this[int index] => Items[index];
 
@@ -29,7 +29,6 @@ namespace NeoServer.Game.Items.Items
                 throw new ArgumentException("Capacity missing");
             }
 
-            Capacity = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Capacity);
             Items = new List<IItem>(Capacity);
         }
 
@@ -98,6 +97,8 @@ namespace NeoServer.Game.Items.Items
         {
             error = InvalidOperation.None;
 
+            var amountToAdd = item.Amount;
+
             var itemToUpdate = Items[itemToJoinSlot] as ICumulativeItem;
 
             if (itemToUpdate.Amount == 100)
@@ -107,7 +108,7 @@ namespace NeoServer.Game.Items.Items
 
             itemToUpdate.TryJoin(ref item);
 
-            OnItemUpdated?.Invoke(itemToJoinSlot, itemToUpdate); //send update notif of the source item
+            OnItemUpdated?.Invoke(itemToJoinSlot, itemToUpdate, (sbyte)(amountToAdd - (item?.Amount ?? 0))); //send update notif of the source item
 
             if (item != null) //item was joined on first item and remains with a amount
             {
@@ -132,12 +133,17 @@ namespace NeoServer.Game.Items.Items
             if (item is IContainer container)
             {
                 container.SetParent(this);
+                container.OnItemUpdated += OnItemUpdated;
+                container.OnItemAdded += OnItemAdded;
+                container.OnItemRemoved += OnItemRemoved;
             }
 
             OnItemAdded?.Invoke(item);
 
             return true;
         }
+
+        
 
         private bool AddItemToChild(IItem item, IContainer child, out InvalidOperation error)
         {
@@ -169,7 +175,7 @@ namespace NeoServer.Game.Items.Items
             return AddItem(item, slot, out error);
         }
 
-        public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount)
+        public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1)
         {
             var item = RemoveItem(fromSlotIndex, amount) as ICumulativeItem;
 
@@ -209,6 +215,9 @@ namespace NeoServer.Game.Items.Items
             if(item is IContainer container)
             {
                 container.SetParent(null);
+                container.OnItemUpdated -= OnItemUpdated;
+                container.OnItemAdded -= OnItemAdded;
+                container.OnItemRemoved -= OnItemRemoved;
             }
 
             SlotsUsed--;
@@ -233,7 +242,7 @@ namespace NeoServer.Game.Items.Items
                 }
             }
 
-            OnItemUpdated?.Invoke(slotIndex, item);
+            OnItemUpdated?.Invoke(slotIndex, item, (sbyte)-amount);
             return newItem;
         }
     }

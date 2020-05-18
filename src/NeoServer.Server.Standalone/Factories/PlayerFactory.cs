@@ -70,7 +70,7 @@ namespace NeoServer.Server.Standalone.Factories
             newPlayer.Containers.AddItemAction += (player, containerId, item) =>
                 contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0, item);
 
-            newPlayer.Containers.UpdateItemAction += (player, containerId, slotIndex, item) =>
+            newPlayer.Containers.UpdateItemAction += (player, containerId, slotIndex, item, amount) =>
                 contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId, slotIndex, item);
 
             return newPlayer;

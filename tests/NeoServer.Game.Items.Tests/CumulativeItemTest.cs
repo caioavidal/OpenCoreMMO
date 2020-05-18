@@ -73,7 +73,7 @@ namespace NeoServer.Game.Items.Tests
         [InlineData(1, 100, 100)]
         [InlineData(10, 10, 100)]
         [InlineData(9.6, 10, 96.0)]
-        public void Weight_Returns_Total_Item_Weight(ushort weight, byte amount, float totalWeight)
+        public void Weight_Returns_Total_Item_Weight(float weight, byte amount, float totalWeight)
         {
             var type = new ItemType();
             type.SetClientId(100);

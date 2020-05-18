@@ -10,7 +10,7 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void RemoveItemFromOpenedContainer(IPlayer player, byte containerId, byte slotIndex, IItem item);
     public delegate void AddItemOnOpenedContainer(IPlayer player, byte containerId, IItem item);
-    public delegate void UpdateItemOnOpenedContainer(IPlayer player, byte containerId, byte slotIndex, IItem item);
+    public delegate void UpdateItemOnOpenedContainer(IPlayer player, byte containerId, byte slotIndex, IItem item, sbyte amount);
     
     public interface IPlayerContainerList
     {
