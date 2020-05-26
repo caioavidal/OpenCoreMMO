@@ -264,7 +264,7 @@ namespace NeoServer.Game.Creatures.Tests
 
             container.TryAddItem(ItemTestData.CreateCumulativeItem(100,60));
 
-            Assert.Equal(480, sut.TotalWeight);
+            Assert.Equal(500, sut.TotalWeight);
 
         }
 
