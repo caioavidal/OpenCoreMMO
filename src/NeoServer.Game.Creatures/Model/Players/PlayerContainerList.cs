@@ -37,9 +37,9 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 var parentContainer = playerContainer.Container.Parent;
 
-                InsertOrOverrideOpenedConainer(containerId, new PlayerContainer(parentContainer, player));
+                InsertOrOverrideOpenedConainer(containerId, new PlayerContainer(parentContainer as IContainer, player));
 
-                OnOpenedContainer?.Invoke(player, containerId, parentContainer);
+                OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
             }
         }
         public void OpenContainerAt(Location location, byte containerLevel)
@@ -110,7 +110,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                     return;
                 }
 
-                fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition, out var error);
+                fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition);
                 return;
             }
 
@@ -118,12 +118,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (item is ICumulativeItem)
             {
                 var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerPosition, amount) as ICumulativeItem;
-                toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerPosition, out var error);
+                toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerPosition);
             }
             else
             {
                 fromContainer.Container.RemoveItem((byte)fromLocation.ContainerPosition);
-                toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerPosition, out var error);
+                toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerPosition);
             }
 
             if (item is IContainer container)

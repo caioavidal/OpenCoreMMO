@@ -1,4 +1,4 @@
-using NeoServer.Game.Contracts;
+  using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -19,14 +19,14 @@ namespace NeoServer.Server.Model.Players
     {
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
-            IOutfit outfit, IDictionary<Slot, Tuple<IItem, ushort>> inventory, ushort speed,
+            IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location)
              : base(id, characterName, string.Empty, maxHealthPoints, maxMana, 4240, healthPoints, mana)
         {
             Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
-            CarryStrength = capacity * 100;
+            CarryStrength = capacity;
             HealthPoints = healthPoints;
             MaxHealthPoints = maxHealthPoints;
             Vocation = vocation;
@@ -72,8 +72,6 @@ namespace NeoServer.Server.Model.Players
         public new uint Corpse => 4240;
 
         public IPlayerContainerList Containers { get; }
-
-
 
         public Dictionary<uint, long> KnownCreatures { get; }
         public Dictionary<string, bool> VipList { get; }

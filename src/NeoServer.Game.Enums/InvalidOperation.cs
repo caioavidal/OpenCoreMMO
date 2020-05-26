@@ -2,10 +2,12 @@
 {
     public enum InvalidOperation
     {
-        None,
+        None = default,
         NotEnoughRoom,
         NotPossible,
         Impossible,
-        FullCapacity
+        TooHeavy,
+        CannotDress,
+        BothHandsNeedToBeFree
     }
 }

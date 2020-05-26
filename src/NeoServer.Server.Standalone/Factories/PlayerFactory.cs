@@ -7,6 +7,7 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Server.Events;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
+using Raven.Client.ServerWide.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,12 +77,15 @@ namespace NeoServer.Server.Standalone.Factories
             return newPlayer;
         }
 
-        private IDictionary<Slot, Tuple<IItem, ushort>> ConvertToInventory(PlayerModel player)
+        private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel player)
         {
-            var inventoryDic = new Dictionary<Slot, Tuple<IItem, ushort>>();
+            var inventoryDic = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             foreach (var slot in player.Inventory)
             {
-                var createdItem = itemFactory(slot.Value, player.Location, null);
+                if (!(itemFactory(slot.Value, player.Location, null) is IPickupable createdItem))
+                {
+                    continue;
+                }
 
                 if (slot.Key == Slot.Backpack)
                 {
@@ -93,7 +97,9 @@ namespace NeoServer.Server.Standalone.Factories
                     BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
                 }
 
-                inventoryDic.Add(slot.Key, new Tuple<IItem, ushort>(createdItem, slot.Value));
+                
+
+                inventoryDic.Add(slot.Key, new Tuple<IPickupable, ushort>(createdItem, slot.Value));
 
             }
             return inventoryDic;

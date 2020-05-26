@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Game.Contracts.Items.Types
 {
-    public interface ICumulativeItem : IPickupableItem
+    public interface ICumulativeItem : IPickupable
     {
         public byte Amount { get; set; }
         ICumulativeItem Split(byte amount);

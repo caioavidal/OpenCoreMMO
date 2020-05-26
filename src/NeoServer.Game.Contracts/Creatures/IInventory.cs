@@ -1,12 +1,13 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
     public interface IInventory
     {
-        ICreature Owner { get; }
+        IPlayer Owner { get; }
 
         byte TotalAttack { get; }
 

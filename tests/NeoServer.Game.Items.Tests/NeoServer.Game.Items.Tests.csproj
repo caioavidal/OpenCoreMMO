@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
   </ItemGroup>
 

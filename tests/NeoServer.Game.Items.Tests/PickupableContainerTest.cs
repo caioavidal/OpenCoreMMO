@@ -68,84 +68,84 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void Weight_When_Add_Item_To_Child_Container_Returns_Increased_Weight()
         {
-            var sup = ItemTestData.CreatePickupableContainer();
+            var sut = ItemTestData.CreatePickupableContainer();
             var child = ItemTestData.CreatePickupableContainer();
 
-            sup.TryAddItem(child);
+            sut.TryAddItem(child);
 
             child.TryAddItem(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
 
-            Assert.Equal(80, sup.Weight);
+            Assert.Equal(80, sut.Weight);
         }
 
         [Fact]
         public void Weight_When_Remove_Child_Container_Returns_Decreased_Weight()
         {
-            var sup = ItemTestData.CreatePickupableContainer();
+            var sut = ItemTestData.CreatePickupableContainer();
             var child = ItemTestData.CreatePickupableContainer();
 
-            sup.TryAddItem(child);
+            sut.TryAddItem(child);
 
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
             child.TryAddItem(shield);
 
-            Assert.Equal(80, sup.Weight);
+            Assert.Equal(80, sut.Weight);
 
             child.RemoveItem(0);
 
-            Assert.Equal(40, sup.Weight);
+            Assert.Equal(40, sut.Weight);
 
-            sup.RemoveItem(0);
-            Assert.Equal(20, sup.Weight);
+            sut.RemoveItem(0);
+            Assert.Equal(20, sut.Weight);
         }
 
         [Fact]
         public void Weight_When_Remove_Child_Container_And_Add_Item_Returns_Same_Weight()
         {
-            var sup = ItemTestData.CreatePickupableContainer();
+            var sut = ItemTestData.CreatePickupableContainer();
             var child = ItemTestData.CreatePickupableContainer();
 
-            sup.TryAddItem(child);
+            sut.TryAddItem(child);
 
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
             child.TryAddItem(shield);
 
-            sup.RemoveItem(0);
-            Assert.Equal(20, sup.Weight);
+            sut.RemoveItem(0);
+            Assert.Equal(20, sut.Weight);
 
             child.TryAddItem(ItemTestData.CreateBodyEquipmentItem(102, "", "shield"));
 
-            Assert.Equal(20, sup.Weight);
+            Assert.Equal(20, sut.Weight);
         }
 
         [Fact]
         public void Weight_When_Move_Child_Container_And_Add_Item_Returns_Increased_Weight()
         {
-            var sup = ItemTestData.CreatePickupableContainer();
+            var sut = ItemTestData.CreatePickupableContainer();
             var child = ItemTestData.CreatePickupableContainer();
             var child2 = ItemTestData.CreatePickupableContainer();
 
-            sup.TryAddItem(child);
-            sup.TryAddItem(child2);
+            sut.TryAddItem(child);
+            sut.TryAddItem(child2);
 
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
             child.TryAddItem(shield);
 
-            sup.MoveItem(1, 0, out var error);
+            sut.MoveItem(1, 0);
 
-            Assert.Equal(100, sup.Weight);
+            Assert.Equal(100, sut.Weight);
 
             child.TryAddItem(ItemTestData.CreateBodyEquipmentItem(102, "", "shield"));
 
-            Assert.Equal(140, sup.Weight);
+            Assert.Equal(140, sut.Weight);
 
             child2.TryAddItem(ItemTestData.CreateBodyEquipmentItem(104, "", "shield"));
 
-            Assert.Equal(180, sup.Weight);
+            Assert.Equal(180, sut.Weight);
 
-            sup.RemoveItem(0);
+            child2.RemoveItem(1);
 
-            Assert.Equal(20, sup.Weight);
+            Assert.Equal(80, sut.Weight);
         }
     }
 }

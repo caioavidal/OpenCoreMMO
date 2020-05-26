@@ -1,5 +1,6 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
@@ -26,7 +27,7 @@ namespace NeoServer.Game.Creatures.Tests
                 {
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
 
-                }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IItem, ushort>>(), speed: 300, new Location(100, 100, 7));
+                }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
 
 
             Assert.Equal(expected, sut.CanMoveThing(new Location(toX, toY, 7)));

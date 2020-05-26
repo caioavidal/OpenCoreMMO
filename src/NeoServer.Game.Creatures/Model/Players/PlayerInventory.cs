@@ -2,7 +2,10 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
+using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +13,7 @@ namespace NeoServer.Server.Model.Players
 {
     public class PlayerInventory : IInventory
     {
-        private IDictionary<Slot, Tuple<IItem, ushort>> Inventory { get; }
+        private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
 
         public byte TotalAttack => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? (Inventory[Slot.Left].Item1 as IWeaponItem).Attack : 0, Inventory.ContainsKey(Slot.Right) ? (Inventory[Slot.Right].Item1 as IWeaponItem).Attack : 0);
 
@@ -35,16 +38,7 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public ushort TotalWeight;
-        //{
-        //    get
-        //    {
-        //        foreach (var item in Inventory)
-        //        {
 
-        //        }
-        //    }
-        //}
 
         public byte AttackRange
         {
@@ -72,9 +66,9 @@ namespace NeoServer.Server.Model.Players
         }
 
 
-        public ICreature Owner { get; }
+        public IPlayer Owner { get; }
 
-        public PlayerInventory(ICreature owner, IDictionary<Slot, Tuple<IItem, ushort>> inventory)
+        public PlayerInventory(IPlayer owner, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory)
         {
             if (owner == null)
             {
@@ -83,55 +77,109 @@ namespace NeoServer.Server.Model.Players
 
             Owner = owner;
 
-            Inventory = inventory ?? new Dictionary<Slot, Tuple<IItem, ushort>>();
+            Inventory = inventory ?? new Dictionary<Slot, Tuple<IPickupable, ushort>>();
         }
 
         public IItem this[Slot slot] => !Inventory.ContainsKey(slot) ? null : Inventory[slot].Item1;
 
         public IContainer BackpackSlot => this[Slot.Backpack] is IContainer container ? container : null;
 
-        public bool TryAddItemToSlot(Slot slot, IItem item)
+        public float TotalWeight
         {
-
-            if (!CanAddItemToSlot(slot, item))
+            get
             {
-                return false;
+                var sum = 0F;
+                foreach (var item in Inventory.Values)
+                {
+                    sum += item.Item1.Weight;
+                }
+                return sum;
+            }
+        }
+
+
+        public Result TryAddItemToSlot(Slot slot, IPickupable item)
+        {
+            var canCarry = (TotalWeight + item.Weight) <= Owner.CarryStrength;
+
+            if (!canCarry)
+            {
+                return new Result(InvalidOperation.TooHeavy);
             }
 
+            var canAddItemToSlot = CanAddItemToSlot(slot, item);
+            if (!canAddItemToSlot.Value)
+            {
+                return new Result(canAddItemToSlot.Error);
+            }
+
+            if (slot == Slot.Backpack)
+            {
+                if (Inventory.ContainsKey(Slot.Backpack))
+                {
+                    return (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item);
+                }
+                else if (item is IPickupableContainer container)
+                {
+                    container.SetParent(Owner);
+                }
+            }
 
             if (Inventory.ContainsKey(slot))
             {
-                Inventory[slot] = new Tuple<IItem, ushort>(item, item.ClientId);
+                Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
             }
 
-            Inventory.Add(slot, new Tuple<IItem, ushort>(item, item.ClientId));
-            return true;
+            Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
+
+            return new Result();
         }
 
-        private bool CanAddItemToSlot(Slot slot, IItem item)
+        private Result<bool> CanAddItemToSlot(Slot slot, IItem item)
         {
+            var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
+
             if (!(item is IInventoryItem inventoryItem))
             {
-                return false;
+                return cannotDressFail;
             }
 
             if (inventoryItem is IWeapon weapon)
             {
-                return slot == Slot.Left;
+                if(slot != Slot.Left)
+                {
+                    return cannotDressFail;
+                }
+                
+                var hasShieldDressed = this[Slot.Right] != null;
+
+                if (weapon.TwoHanded && hasShieldDressed)
+                {
+                    //trying to add a two handed while right slot has a shield
+                    return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
+                }
+
+                return new Result<bool>(true);
             }
 
             if (inventoryItem.Slot != slot)
             {
-                return false;
+                if( slot == Slot.Backpack && Inventory.ContainsKey(Slot.Backpack))
+                {
+                    return new Result<bool>(true);
+
+                }
+                return cannotDressFail;
             }
-            if(slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded) 
+            if (slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded)
             {
                 //trying to add a shield while left slot has a two handed weapon
-                return false;
+                return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
             }
+           
 
-            return true;
+            return new Result<bool>(true);
         }
-        
+
     }
 }

@@ -10,7 +10,7 @@ namespace NeoServer.Game.Contracts.Items.Types
     {
         public Slot Slot => Metadata.BodyPosition;
     }
-    public interface IBodyEquipmentItem : IMoveableThing, IPickupableItem, IInventoryItem
+    public interface IBodyEquipmentItem : IMoveableThing, IPickupable, IInventoryItem
     {
         bool Pickupable => true;
         ImmutableHashSet<VocationType> AllowedVocations { get; }

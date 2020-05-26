@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Enums.Location;
+﻿using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Players;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace NeoServer.Game.Contracts.Items.Types
     public delegate void AddItem(IItem item);
     public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
 
-    public interface IPickupableContainer : IContainer, IPickupableItem
+    public interface IPickupableContainer : IContainer, IPickupable
     {
         new float Weight { get; }
     }
@@ -22,7 +23,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         byte Capacity { get; }
         bool HasParent { get; }
         byte SlotsUsed { get; }
-        IContainer Parent { get; }
+        IThing Parent { get; }
         bool IsFull { get; }
 
         event RemoveItem OnItemRemoved;
@@ -30,13 +31,13 @@ namespace NeoServer.Game.Contracts.Items.Types
         event UpdateItem OnItemUpdated;
 
         bool GetContainerAt(byte index, out IContainer container);
-        bool MoveItem(byte fromSlotIndex, byte toSlotIndex, out InvalidOperation error);
+        Result MoveItem(byte fromSlotIndex, byte toSlotIndex);
         void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount =1);
         IItem RemoveItem(byte slotIndex);
         IItem RemoveItem(byte slotIndex, byte amount);
-        void SetParent(IContainer container);
-        bool TryAddItem(IItem item, byte slot, out InvalidOperation error);
-        bool TryAddItem(IItem item, byte? slot = null);
+        void SetParent(IThing thing);
+        Result TryAddItem(IItem item, byte slot);
+        Result TryAddItem(IItem item, byte? slot = null);
 
 
     }

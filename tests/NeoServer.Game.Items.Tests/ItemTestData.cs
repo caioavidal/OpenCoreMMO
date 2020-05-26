@@ -27,13 +27,15 @@ namespace NeoServer.Game.Items.Tests
 
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
-        public static Container CreateBackpack()
+        public static PickupableContainer CreateBackpack()
         {
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 20);
+
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "backpack");
 
-            return new Container(itemType, new Location(100, 100, 7));
+            return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
 
         public static ICumulativeItem CreateCumulativeItem(ushort id, byte amount)
@@ -62,15 +64,15 @@ namespace NeoServer.Game.Items.Tests
 
             return new WeaponItem(type, new Location(100, 100, 7));
         }
-        public static IItem CreateWeaponItem(ushort id, string weaponType, bool twoHanded = false)
+        public static IPickupable CreateWeaponItem(ushort id, string weaponType, bool twoHanded = false)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, weaponType);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 40);
 
-
-            if(twoHanded)
+            if (twoHanded)
                 type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "two-handed");
             return new WeaponItem(type, new Location(100, 100, 7));
         }
@@ -94,7 +96,7 @@ namespace NeoServer.Game.Items.Tests
             return new Necklace(type, new Location(100, 100, 7));
         }
 
-        public static IItem CreateBodyEquipmentItem(ushort id, string slot,string weaponType = "")
+        public static IPickupable CreateBodyEquipmentItem(ushort id, string slot,string weaponType = "")
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -108,13 +110,14 @@ namespace NeoServer.Game.Items.Tests
 
      
 
-        public static IItem CreatAmmoItem(ushort id, byte amount)
+        public static IPickupable CreateAmmoItem(ushort id, byte amount)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, "ammunition");
             type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "ammo");
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 1);
 
             return new AmmoItem(type, new Location(100, 100, 7),amount);
         }
@@ -136,5 +139,7 @@ namespace NeoServer.Game.Items.Tests
 
             return new Item(type, new Location(100, 100, 7));
         }
+
+      
     }
 }

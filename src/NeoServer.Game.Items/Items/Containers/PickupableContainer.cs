@@ -24,9 +24,9 @@ namespace NeoServer.Game.Items.Items
      
         private void IncreaseWeight(IItem item)
         {
-            Weight += item is IPickupableItem pickupableItem ? pickupableItem.Weight : 0;
+            Weight += item is IPickupable pickupableItem ? pickupableItem.Weight : 0;
         }
-        private void DecreaseWeight(IItem item) => Weight -= item is IPickupableItem pickupableItem ? pickupableItem.Weight : 0;
+        private void DecreaseWeight(IItem item) => Weight -= item is IPickupable pickupableItem ? pickupableItem.Weight : 0;
 
         public float Weight { get; private set; }
     }

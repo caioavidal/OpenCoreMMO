@@ -39,7 +39,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         uint MaxManapoints { get; }
 
-        decimal CarryStrength { get; }
+        float CarryStrength { get; }
 
         IOutfit Outfit { get; }
 

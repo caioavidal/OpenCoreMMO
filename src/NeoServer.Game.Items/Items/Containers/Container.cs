@@ -1,7 +1,9 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace NeoServer.Game.Items.Items
         public event UpdateItem OnItemUpdated;
         public byte SlotsUsed { get; private set; }
         public bool IsFull => SlotsUsed >= Capacity;
-        public IContainer Parent { get; private set; }
+        public IThing Parent { get; private set; }
         public bool HasParent => Parent != null;
         public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Capacity);
         public List<IItem> Items { get; }
@@ -32,7 +34,28 @@ namespace NeoServer.Game.Items.Items
             Items = new List<IItem>(Capacity);
         }
 
-        public void SetParent(IContainer container) => Parent = container;
+        public bool IsEquiped
+        {
+            get
+            {
+                IThing parent = this;
+                while(true)
+                {
+                    if(parent is IContainer container)
+                    {
+                        parent = container.Parent;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                };
+
+                return parent is IPlayer;
+            }
+        }
+
+        public void SetParent(IThing thing) => Parent = thing;
 
         public static bool IsApplicable(IItemType type) => type.Group == Enums.ItemGroup.GroundContainer ||
             type.Attributes.GetAttribute(Enums.ItemAttribute.Type)?.ToLower() == "container";
@@ -49,7 +72,7 @@ namespace NeoServer.Game.Items.Items
             return false;
         }
 
-        private bool AddItem(IItem item, byte slot, out InvalidOperation error)
+        private Result AddItem(IItem item, byte slot)
         {
 
             if (Capacity <= slot)
@@ -59,7 +82,7 @@ namespace NeoServer.Game.Items.Items
            
             if (item is ICumulativeItem == false)
             {
-                return AddItemToFront(item, out error);
+                return AddItemToFront(item);
 
             }
 
@@ -71,10 +94,10 @@ namespace NeoServer.Game.Items.Items
             {
                 //adding to a slot with a different item type
 
-                return TryJoinCumulativeItems(cumulative, (byte)itemToJoinSlot, out error);
+                return TryJoinCumulativeItems(cumulative, (byte)itemToJoinSlot);
             }
 
-            return AddItemToFront(item, out error);
+            return AddItemToFront(item);
         }
 
         private int GetSlotOfFirstItemNotFully(ICumulativeItem? cumulativeItem)
@@ -93,9 +116,8 @@ namespace NeoServer.Game.Items.Items
             return itemToJoinSlot;
         }
 
-        private bool TryJoinCumulativeItems(ICumulativeItem item, byte itemToJoinSlot, out InvalidOperation error)
+        private Result TryJoinCumulativeItems(ICumulativeItem item, byte itemToJoinSlot)
         {
-            error = InvalidOperation.None;
 
             var amountToAdd = item.Amount;
 
@@ -103,7 +125,7 @@ namespace NeoServer.Game.Items.Items
 
             if (itemToUpdate.Amount == 100)
             {
-                return AddItemToFront(item, out error);
+                return AddItemToFront(item);
             }
 
             itemToUpdate.TryJoin(ref item);
@@ -112,19 +134,16 @@ namespace NeoServer.Game.Items.Items
 
             if (item != null) //item was joined on first item and remains with a amount
             {
-                return AddItemToFront(item, out error);
+                return AddItemToFront(item);
             }
-            return true;
+            return new Result();
         }
 
-        private bool AddItemToFront(IItem item, out InvalidOperation error)
+        private Result AddItemToFront(IItem item)
         {
-            error = InvalidOperation.None;
-
             if (SlotsUsed >= Capacity)
             {
-                error = InvalidOperation.FullCapacity;
-                return false;
+                return new Result(InvalidOperation.TooHeavy);
             }
 
             Items.Insert(0, item);
@@ -140,19 +159,18 @@ namespace NeoServer.Game.Items.Items
 
             OnItemAdded?.Invoke(item);
 
-            return true;
+            return new Result();
         }
 
         
 
-        private bool AddItemToChild(IItem item, IContainer child, out InvalidOperation error)
+        private Result AddItemToChild(IItem item, IContainer child)
         {
             if (!item.IsCumulative && child.IsFull)
             {
-                error = InvalidOperation.FullCapacity;
-                return false;
+                return new Result(InvalidOperation.TooHeavy);
             }
-            var result = child.TryAddItem(item, (byte)(child.Capacity - 1), out error);
+            var result = child.TryAddItem(item, (byte)(child.Capacity - 1));
 
             if (item is IContainer container)
             {
@@ -160,19 +178,17 @@ namespace NeoServer.Game.Items.Items
             }
             return result;
         }
-        public bool TryAddItem(IItem item, byte? slot = null) => TryAddItem(item, slot ?? (byte)(Capacity - 1), out var error);
-        public bool TryAddItem(IItem item, byte slot, out InvalidOperation error)
+        public Result TryAddItem(IItem item, byte? slot = null) => TryAddItem(item, slot ?? (byte)(Capacity - 1));
+        public Result TryAddItem(IItem item, byte slot)
         {
-            error = InvalidOperation.None;
-
             var itemOnSlot = Items.ElementAtOrDefault(slot);
 
             if (itemOnSlot is IContainer container)
             {
-                return AddItemToChild(item, container, out error);
+                return AddItemToChild(item, container);
             }
 
-            return AddItem(item, slot, out error);
+            return AddItem(item, slot);
         }
 
         public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1)
@@ -183,28 +199,26 @@ namespace NeoServer.Game.Items.Items
 
             if (itemOnSlot?.ClientId == item.ClientId)
             {
-                TryJoinCumulativeItems(item, toSlotIndex, out var error);
+                TryJoinCumulativeItems(item, toSlotIndex);
             }
             else
             {
-                AddItemToFront(item, out var error);
+                AddItemToFront(item);
             }
         }
-        public bool MoveItem(byte fromSlotIndex, byte toSlotIndex, out InvalidOperation error)
+        public Result MoveItem(byte fromSlotIndex, byte toSlotIndex)
         {
-            error = InvalidOperation.None;
-
             if (GetContainerAt(toSlotIndex, out var container))
             {
                 var item = RemoveItem(fromSlotIndex);
-                return AddItemToChild(item, container, out error);
+                return AddItemToChild(item, container);
             }
             if (fromSlotIndex > toSlotIndex)
             {
                 var item = RemoveItem(fromSlotIndex);
-                return AddItemToFront(item, out error);
+                return AddItemToFront(item);
             }
-            return true;
+            return new Result();
         }
         public IItem RemoveItem(byte slotIndex)
         {
