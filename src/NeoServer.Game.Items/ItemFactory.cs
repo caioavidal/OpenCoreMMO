@@ -34,6 +34,10 @@ namespace NeoServer.Game.Items
             {
                 return new WeaponItem(itemType, location);
             }
+            if (PickupableContainer.IsApplicable(itemType))
+            {
+                return new PickupableContainer(itemType, location);
+            }
             if (Container.IsApplicable(itemType))
             {
                 return new Container(itemType, location);

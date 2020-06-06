@@ -29,5 +29,8 @@ namespace NeoServer.Game.Items.Items
         private void DecreaseWeight(IItem item) => Weight -= item is IPickupable pickupableItem ? pickupableItem.Weight : 0;
 
         public float Weight { get; private set; }
+
+        public static new bool IsApplicable(IItemType type) => (type.Group == Enums.ItemGroup.GroundContainer ||
+            type.Attributes.GetAttribute(Enums.ItemAttribute.Type)?.ToLower() == "container") && type.HasFlag(Enums.ItemFlag.Pickupable);
     }
 }
