@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Model.Players.Contracts;
@@ -98,41 +99,53 @@ namespace NeoServer.Server.Model.Players
         }
 
 
-        public Result TryAddItemToSlot(Slot slot, IPickupable item)
+        public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
             var canCarry = (TotalWeight + item.Weight) <= Owner.CarryStrength;
 
             if (!canCarry)
             {
-                return new Result(InvalidOperation.TooHeavy);
+                return new Result<IPickupable>(InvalidOperation.TooHeavy);
             }
 
             var canAddItemToSlot = CanAddItemToSlot(slot, item);
             if (!canAddItemToSlot.Value)
             {
-                return new Result(canAddItemToSlot.Error);
+                return new Result<IPickupable>(canAddItemToSlot.Error);
             }
 
             if (slot == Slot.Backpack)
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                 {
-                    return (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item);
+                    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item).Error);
                 }
                 else if (item is IPickupableContainer container)
                 {
                     container.SetParent(Owner);
                 }
             }
+            var slotHasItem = Inventory.ContainsKey(slot);
 
-            if (Inventory.ContainsKey(slot))
+            if (slotHasItem)
             {
+                if (slot == Slot.Ammo)
+                {
+                    var ammoItem = item as ICumulativeItem;
+                    if ((Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref ammoItem))
+                    {
+                        return new Result<IPickupable>(ammoItem);
+                    }
+                }
+
+                var itemToSwap = Inventory[slot];
                 Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+                return new Result<IPickupable>(itemToSwap.Item1);
             }
 
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
 
-            return new Result();
+            return new Result<IPickupable>();
         }
 
         private Result<bool> CanAddItemToSlot(Slot slot, IItem item)
@@ -146,11 +159,11 @@ namespace NeoServer.Server.Model.Players
 
             if (inventoryItem is IWeapon weapon)
             {
-                if(slot != Slot.Left)
+                if (slot != Slot.Left)
                 {
                     return cannotDressFail;
                 }
-                
+
                 var hasShieldDressed = this[Slot.Right] != null;
 
                 if (weapon.TwoHanded && hasShieldDressed)
@@ -164,7 +177,7 @@ namespace NeoServer.Server.Model.Players
 
             if (inventoryItem.Slot != slot)
             {
-                if( slot == Slot.Backpack && Inventory.ContainsKey(Slot.Backpack))
+                if (slot == Slot.Backpack && Inventory.ContainsKey(Slot.Backpack))
                 {
                     return new Result<bool>(true);
 
@@ -176,7 +189,7 @@ namespace NeoServer.Server.Model.Players
                 //trying to add a shield while left slot has a two handed weapon
                 return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
             }
-           
+
 
             return new Result<bool>(true);
         }

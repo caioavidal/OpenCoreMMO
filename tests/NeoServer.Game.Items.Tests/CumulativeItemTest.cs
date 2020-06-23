@@ -11,18 +11,36 @@ namespace NeoServer.Game.Items.Tests
     public class CumulativeItemTest
     {
         [Fact]
+        public void TryJoin_When_Ids_Are_Not_Same_Returns_False()
+        {
+            var type = new ItemType();
+            type.SetClientId(100);
+
+            var sut = new CumulativeItem(type, new Location(100, 100, 7), 50);
+
+            var type2 = new ItemType();
+            type.SetClientId(102);
+            ICumulativeItem itemToJoin = new CumulativeItem(type2, new Location(100, 100, 7), 40);
+
+            var result = sut.TryJoin(ref itemToJoin);
+
+            Assert.False(result);
+            Assert.Equal(40, itemToJoin.Amount);
+            Assert.Equal(50, sut.Amount);
+        }
+        [Fact]
         public void TryJoin_When_Sum_Of_Amount_Less_Than_100_Outs_Null()
         {
             var type = new ItemType();
             type.SetClientId(100);
 
-            var sup = new CumulativeItem(type, new Location(100, 100, 7), 50);
+            var sut = new CumulativeItem(type, new Location(100, 100, 7), 50);
 
             ICumulativeItem itemToJoin = new CumulativeItem(type, new Location(100, 100, 7), 40);
-            sup.TryJoin(ref itemToJoin);
+            sut.TryJoin(ref itemToJoin);
 
             Assert.Null(itemToJoin);
-            Assert.Equal(90, sup.Amount);
+            Assert.Equal(90, sut.Amount);
         }
         [Fact]
         public void TryJoin_When_Sum_Of_Amount_Bigger_Than_100_Outs_Item_With_Exceeding_Amount()

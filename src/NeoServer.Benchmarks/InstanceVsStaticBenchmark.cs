@@ -1,60 +1,72 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
+using BenchmarkDotNet.Reports;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Benchmarks
 {
     [MemoryDiagnoser]
-    [SimpleJob(RunStrategy.ColdStart, launchCount: 50)]
+    [SimpleJob(RunStrategy.ColdStart, launchCount: 1)]
 
     public class InstanceVsStaticBenchmark
     {
+
         [Benchmark]
-        public Dictionary<int, int> StaticMethod()
+        public long NoMethod()
+        {
+            var sum = 0;
+            for(int i = 0; i < 1_000; i++)
+            {
+                sum++;
+            }
+            return sum;
+
+        }
+        [Benchmark]
+        public long StaticMethod()
         {
 
-            return Static.Sum(Enumerable.Range(0, 1000_000).ToArray());
-
+            var sum = 0;
+            for (int i = 0; i < 1_000; i++)
+            {
+                Static.Sum(sum);
+            }
+            return sum;
 
 
         }
         [Benchmark]
-        public Dictionary<int, int> InstanceMethod()
+        public long InstanceMethod()
         {
+            var instance = new Instance();
+            var sum = 0;
+            for (int i = 0; i < 1_000; i++)
+            {
+                instance.Sum(sum);
+            }
 
-            return new Instance(Enumerable.Range(0, 1000_000).ToArray()).dicNumbers;
-
+            return sum;
         }
 
     }
 
+
+
+
     public class Instance
     {
-        public Dictionary<int, int> dicNumbers = new Dictionary<int, int>();
 
-        public Instance(int[] numbers)
+        public void Sum(int sum)
         {
-            foreach (var n in numbers)
-            {
-                dicNumbers.Add(n, n);
-            }
+            sum++;
         }
 
     }
 
     public class Static
     {
-        public static Dictionary<int, int> Sum(int[] numbers)
-        {
-            var dicNumbers = new Dictionary<int, int>();
-
-            foreach (var n in numbers)
-            {
-                dicNumbers.Add(n, n);
-            }
-            return dicNumbers;
-        }
+        public static void Sum( int n) => n++;
 
     }
 

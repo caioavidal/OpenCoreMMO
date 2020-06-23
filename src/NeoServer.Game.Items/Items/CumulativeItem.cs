@@ -91,7 +91,7 @@ namespace NeoServer.Game.Items.Items
                 return false;
             }
 
-            if (item.Metadata.ClientId != item.Metadata.ClientId)
+            if (item.Metadata.ClientId != Metadata.ClientId)
             {
                 return false;
             }
