@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;

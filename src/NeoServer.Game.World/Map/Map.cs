@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;

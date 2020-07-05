@@ -14,6 +14,9 @@ namespace NeoServer.Server.Model.Players
 {
     public class PlayerInventory : IInventory
     {
+
+        public event AddItemToSlot OnItemAddedToSlot;
+        public event FailAddItemToSlot OnFailedToAddToSlot;
         private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
 
         public byte TotalAttack => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? (Inventory[Slot.Left].Item1 as IWeaponItem).Attack : 0, Inventory.ContainsKey(Slot.Right) ? (Inventory[Slot.Right].Item1 as IWeaponItem).Attack : 0);
@@ -105,12 +108,14 @@ namespace NeoServer.Server.Model.Players
 
             if (!canCarry)
             {
+                OnFailedToAddToSlot?.Invoke(InvalidOperation.TooHeavy);
                 return new Result<IPickupable>(InvalidOperation.TooHeavy);
             }
 
             var canAddItemToSlot = CanAddItemToSlot(slot, item);
             if (!canAddItemToSlot.Value)
             {
+                OnFailedToAddToSlot?.Invoke(canAddItemToSlot.Error);
                 return new Result<IPickupable>(canAddItemToSlot.Error);
             }
 
@@ -134,17 +139,21 @@ namespace NeoServer.Server.Model.Players
                     var ammoItem = item as ICumulativeItem;
                     if ((Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref ammoItem))
                     {
+                        OnItemAddedToSlot?.Invoke(this, item, slot, ammoItem.Amount);
                         return new Result<IPickupable>(ammoItem);
                     }
                 }
 
                 var itemToSwap = Inventory[slot];
                 Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+
+                OnItemAddedToSlot?.Invoke(this, item, slot);
                 return new Result<IPickupable>(itemToSwap.Item1);
             }
 
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
 
+            OnItemAddedToSlot?.Invoke(this, item, slot);
             return new Result<IPickupable>();
         }
 

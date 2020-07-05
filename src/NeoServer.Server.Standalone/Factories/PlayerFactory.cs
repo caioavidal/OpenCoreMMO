@@ -5,6 +5,7 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items.Items;
 using NeoServer.Server.Events;
+using NeoServer.Server.Events.Player;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using Raven.Client.ServerWide.Operations;
@@ -22,9 +23,11 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
         private readonly ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler;
+        private readonly ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler;
+        private readonly InvalidOperationEventHandler invalidOperationEventHandler;
 
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler)
+        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
@@ -32,6 +35,8 @@ namespace NeoServer.Server.Standalone.Factories
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
             this.playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
             this.contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
+            this.itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
+            this.invalidOperationEventHandler = invalidOperationEventHandler;
         }
         private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
@@ -73,6 +78,10 @@ namespace NeoServer.Server.Standalone.Factories
 
             newPlayer.Containers.UpdateItemAction += (player, containerId, slotIndex, item, amount) =>
                 contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId, slotIndex, item);
+
+            newPlayer.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+
+            newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
 
             return newPlayer;
         }

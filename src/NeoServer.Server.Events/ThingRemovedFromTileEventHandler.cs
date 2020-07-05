@@ -19,8 +19,6 @@ namespace NeoServer.Server.Events
         }
         public void Execute(NeoServer.Game.Contracts.Items.IThing thing, ITile tile, byte fromStackPosition)
         {
-            var player = thing as IPlayer;
-
             foreach (var spectatorId in map.GetCreaturesAtPositionZone(tile.Location))
             {
                 IConnection connection = null;
@@ -29,7 +27,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (!player.IsDead)
+                if (thing is IPlayer player && !player.IsDead)
                 {
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
                 }

@@ -17,7 +17,7 @@ namespace NeoServer.Server.Model.Players
 {
     public class Player : Creature, IPlayer
     {
-        public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
+        public Player(uint id, string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location)

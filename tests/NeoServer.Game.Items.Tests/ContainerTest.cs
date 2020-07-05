@@ -2,7 +2,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items.Items;
