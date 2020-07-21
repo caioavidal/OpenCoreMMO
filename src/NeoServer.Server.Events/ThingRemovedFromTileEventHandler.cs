@@ -1,5 +1,6 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
@@ -32,7 +33,14 @@ namespace NeoServer.Server.Events
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
                 }
 
-                connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, fromStackPosition));
+                if (thing is ICumulativeItem cumulative && cumulative.Amount > 0)
+                {
+                    connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(tile.Location, fromStackPosition, cumulative));
+                }
+                else
+                {
+                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, fromStackPosition));
+                }
 
                 connection.Send();
             }
