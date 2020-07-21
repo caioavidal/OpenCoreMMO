@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
@@ -17,5 +18,7 @@ namespace NeoServer.Game.Items.Items
         {
             this.location = location;
         }
+
+        public float Weight => Metadata.Weight;
     }
 }

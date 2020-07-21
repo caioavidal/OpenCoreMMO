@@ -9,6 +9,7 @@ using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -102,9 +103,9 @@ namespace NeoServer.Server.Model.Players
         }
 
 
-        public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
+        public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item, byte amount = 1)
         {
-            var canCarry = (TotalWeight + item.Weight) <= Owner.CarryStrength;
+            bool canCarry = CanCarryItem(item, amount, slot);
 
             if (!canCarry)
             {
@@ -132,29 +133,93 @@ namespace NeoServer.Server.Model.Players
             }
             var slotHasItem = Inventory.ContainsKey(slot);
 
+            //todo: refact
             if (slotHasItem)
             {
+                Tuple<IPickupable, ushort> itemToSwap = null;
+
                 if (slot == Slot.Ammo)
                 {
-                    var ammoItem = item as ICumulativeItem;
-                    if ((Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref ammoItem))
+
+                    var ammoItem = (item as ICumulativeItem).Clone(amount);
+
+
+                    if (NeedToSwap(ammoItem, slot))
                     {
-                        OnItemAddedToSlot?.Invoke(this, item, slot, ammoItem.Amount);
-                        return new Result<IPickupable>(ammoItem);
+                        itemToSwap = SwapItem(slot, ammoItem);
+                    }
+                    else 
+                    {
+                        (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref ammoItem);
                     }
                 }
-
-                var itemToSwap = Inventory[slot];
-                Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+                else
+                {
+                    itemToSwap = SwapItem(slot, item);
+                }
 
                 OnItemAddedToSlot?.Invoke(this, item, slot);
-                return new Result<IPickupable>(itemToSwap.Item1);
+                return itemToSwap == null ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
             }
 
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
 
             OnItemAddedToSlot?.Invoke(this, item, slot);
             return new Result<IPickupable>();
+        }
+
+        private Tuple<IPickupable, ushort> SwapItem(Slot slot, IPickupable item)
+        {
+            var itemToSwap = Inventory[slot];
+            Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+            return itemToSwap;
+        }
+
+        private bool NeedToSwap(IPickupable itemToAdd, Slot slotDestination)
+        {
+            if (!Inventory.ContainsKey(slotDestination))
+            {
+                return false;
+            }
+
+            var itemOnSlot = Inventory[slotDestination].Item1;
+
+            if (itemToAdd is ICumulativeItem cumulative && itemOnSlot.ClientId == cumulative.ClientId)
+            {
+                //will join
+                return false;
+            }
+
+            if (slotDestination == Slot.Backpack)
+            {
+                // will add item to container
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CanCarryItem(IPickupable item, byte amount, Slot slot)
+        {
+            var itemOnSlot = Inventory[slot].Item1;
+
+            if (NeedToSwap(item, slot))
+            {
+                return (TotalWeight - itemOnSlot.Weight + item.Weight) <= Owner.CarryStrength;
+            }
+
+            byte amountToAdd = 0;
+
+            float weight = 0;
+
+            if (item is ICumulativeItem cumulative && slot == Slot.Ammo)
+            {
+                amountToAdd = amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : amount;
+                weight = cumulative.CalculateWeight(amountToAdd);
+            }
+
+            var canCarry = (TotalWeight + weight) <= Owner.CarryStrength;
+            return canCarry;
         }
 
         private Result<bool> CanAddItemToSlot(Slot slot, IItem item)

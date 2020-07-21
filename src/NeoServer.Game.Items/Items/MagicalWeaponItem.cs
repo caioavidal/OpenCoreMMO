@@ -22,7 +22,7 @@ namespace NeoServer.Game.Items.Items
             //Weight = itemType.GetAttribute<float>(ItemAttribute.Weight);
         }
 
-        public float Weight { get; }
+        
 
         public DamageType DamageType { get; }
 

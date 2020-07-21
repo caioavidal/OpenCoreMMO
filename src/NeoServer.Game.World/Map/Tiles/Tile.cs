@@ -203,13 +203,13 @@ namespace NeoServer.Game.World.Map.Tiles
                     if (thing is ICumulativeItem cumulative &&
                    topStackItem is ICumulativeItem topCumulative)
                     {
-                        var splitedItem = topCumulative.Split(amount);
+                        topCumulative.Reduce(amount);
 
                         if (topCumulative.Amount == 0)
                         {
                             DownItems.TryPop(out var item);
                         }
-                        removedThing = splitedItem;
+                        removedThing = topCumulative.Clone(amount);
 
                     }
                     else

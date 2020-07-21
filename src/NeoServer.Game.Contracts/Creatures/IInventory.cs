@@ -26,6 +26,6 @@ namespace NeoServer.Game.Contracts.Creatures
         event AddItemToSlot OnItemAddedToSlot;
         event FailAddItemToSlot OnFailedToAddToSlot;
 
-        Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
+        Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item, byte amount = 1);
     }
 }

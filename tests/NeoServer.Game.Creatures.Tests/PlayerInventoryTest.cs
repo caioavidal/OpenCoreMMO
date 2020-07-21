@@ -177,6 +177,7 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Null(sut[Slot.Left]);
         }
 
+      
         [Fact]
         public void AddItemToSlot_When_Exceeds_Capacity_Returns_False()
         {
@@ -321,7 +322,7 @@ namespace NeoServer.Game.Creatures.Tests
         [Theory]
         [MemberData(nameof(SlotJoinItemsData))]
 
-        public void AddItemToSlot_AddItem_When_Slot_Has_Cumulative_Item_Join_Item(Slot slot, ICumulativeItem item, ICumulativeItem newItem, ICumulativeItem resultItem)
+        public void AddItemToSlot_When_Slot_Has_Cumulative_Item_Join_Item(Slot slot, ICumulativeItem item, ICumulativeItem newItem, ICumulativeItem resultItem)
         {
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 

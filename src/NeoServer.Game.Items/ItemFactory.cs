@@ -46,8 +46,20 @@ namespace NeoServer.Game.Items
             {
                 return new BodyDefenseEquimentItem(itemType, location);
             }
+            if (Ring.IsApplicable(itemType))
+            {
+                return new Ring(itemType, location);
+            }
+            if (Necklace.IsApplicable(itemType))
+            {
+                return new Necklace(itemType, location);
+            }
             if (CumulativeItem.IsApplicable(itemType))
             {
+                if (AmmoItem.IsApplicable(itemType))
+                {
+                    return new AmmoItem(itemType, location, attributes);
+                }
                 return new CumulativeItem(itemType, location, attributes);
             }
             if (LiquidPoolItem.IsApplicable(itemType))

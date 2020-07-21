@@ -33,7 +33,7 @@ namespace NeoServer.Server.Commands.Movement
 
             var thing = item as IMoveableThing;
 
-            var result = player.Inventory.TryAddItemToSlot(itemThrow.ToLocation.Slot, item as IPickupable);
+            var result = player.Inventory.TryAddItemToSlot(itemThrow.ToLocation.Slot, item as IPickupable, amount);
 
             if (!result.Success)
             {

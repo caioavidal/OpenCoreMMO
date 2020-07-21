@@ -18,7 +18,6 @@ namespace NeoServer.Game.Items.Items
         }
 
         public bool Pickupable => true;
-        public float Weight => Metadata.Attributes.GetAttribute<float>(ItemAttribute.Weight);
 
         public ushort DefenseValue => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
         public ImmutableHashSet<VocationType> AllowedVocations { get; }

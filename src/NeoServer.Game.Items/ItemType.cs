@@ -35,6 +35,8 @@ namespace NeoServer.Game.Items
         public string Article { get; private set; }
         public string Plural { get; private set; }
 
+        public float Weight => Attributes.GetAttribute<float>(Enums.ItemAttribute.Weight) / 100;
+
         void ThrowIfLocked()
         {
             if (Locked)

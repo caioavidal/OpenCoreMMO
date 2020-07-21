@@ -247,7 +247,9 @@ namespace NeoServer.Game.Items.Items
 
             if (item is ICumulativeItem cumulative)
             {
-                newItem = cumulative.Split(Math.Min(cumulative.Amount, amount));
+                var amountToReduce = Math.Min(cumulative.Amount, amount);
+                cumulative.Reduce(Math.Min(cumulative.Amount, amount));
+                newItem = cumulative.Clone(amountToReduce);
 
                 if (cumulative.Amount == 0)
                 {
