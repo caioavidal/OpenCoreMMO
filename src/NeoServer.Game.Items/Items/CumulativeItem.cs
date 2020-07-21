@@ -75,18 +75,18 @@ namespace NeoServer.Game.Items.Items
                 return false;
             }
 
-            var remainingAmount = Amount + item.Amount;
+            var totalAmount = Amount + item.Amount;
 
-            if (remainingAmount <= 100)
+            if (totalAmount <= 100)
             {
-                Amount = (byte)remainingAmount;
+                Amount = (byte)totalAmount;
                 item = null; //item to join does not exist anymore
                 return true;
             }
 
             Amount = 100;
 
-            item.Amount = (byte)(remainingAmount - Amount);
+            item.Amount = (byte)(totalAmount - Amount);
 
             return true;
 

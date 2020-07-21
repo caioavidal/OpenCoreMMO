@@ -17,6 +17,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
         bool ProtectionZone { get; }
         FloorChangeDirection FloorDirection { get; }
         byte MovementPenalty { get; }
+        byte NextStackPosition { get; }
 
         void AddThing(ref IMoveableThing thing);
         byte[] GetRaw(IPlayer playerRequesting = null);

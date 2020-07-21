@@ -25,6 +25,7 @@ namespace NeoServer.Game.World.Map
 
         public event PlaceCreatureOnMap OnCreatureAddedOnMap;
         public event RemoveThingFromTile OnThingRemovedFromTile;
+        public event AddThingToTile OnThingAddedToTile;
         public event MoveThingOnFloor OnThingMoved;
         public event FailedMoveThing OnThingMovedFailed;
 
@@ -193,7 +194,15 @@ namespace NeoServer.Game.World.Map
 
             OnThingRemovedFromTile?.Invoke(thing, tile, fromStackPosition);
         }
-     
+        public void AddItem(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
+        {
+            var stackPosition = tile.NextStackPosition;
+            tile.AddThing(ref thing);
+
+            OnThingAddedToTile?.Invoke(thing, tile, stackPosition);
+        }
+
+
 
         public IEnumerable<uint> GetCreaturesAtPositionZone(Location location)
         {

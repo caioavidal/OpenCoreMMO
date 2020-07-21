@@ -41,6 +41,12 @@ namespace NeoServer.Server.Commands.Movement
             }
 
             map.RemoveThing(ref thing, tile, amount);
+            
+            if(result.Value != null)
+            {
+                var returnedThing = result.Value as IMoveableThing;
+                map.AddItem(ref returnedThing, tile, 1);
+            }
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

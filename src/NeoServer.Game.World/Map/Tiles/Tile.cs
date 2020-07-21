@@ -38,6 +38,19 @@ namespace NeoServer.Game.World.Map.Tiles
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
 
+        public byte NextStackPosition
+        {
+            get
+            {
+                var n = 0;
+
+                foreach (var item in TopItems)
+                {
+                    n++; 
+                }
+                return (byte)++n;
+            }
+        }
         public byte GetStackPositionOfItem(ushort id)
         {
             if (id == default)
@@ -110,7 +123,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private void AddThingToTile(Contracts.Items.IThing thing)
         {
-            
+
             if (thing is ICreature creature)
             {
                 Creatures.Push(creature);
@@ -177,7 +190,7 @@ namespace NeoServer.Game.World.Map.Tiles
             }
         }
 
-      
+
         public IThing RemoveThing(ref IMoveableThing thing, byte amount = 1)
         {
 
@@ -299,5 +312,5 @@ namespace NeoServer.Game.World.Map.Tiles
 
     }
 
-   
+
 }
