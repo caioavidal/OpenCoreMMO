@@ -75,7 +75,8 @@ namespace NeoServer.Server.Standalone
             sw.Stop();
             logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");
             logger.Information($"Memory usage: {Math.Round((GC.GetTotalMemory(false) / 1024f) / 1024f, 2)} MB");
-       
+
+            Console.WriteLine($"GC 0: {GC.CollectionCount(0)}");
 
             listeningTask.Wait(cancellationToken);
 

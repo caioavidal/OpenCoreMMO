@@ -34,6 +34,11 @@ namespace NeoServer.Game.Items
             {
                 return new WeaponItem(itemType, location);
             }
+            if (DistanceWeaponItem.IsApplicable(itemType))
+            {
+                return new DistanceWeaponItem(itemType, location);
+            }
+           
             if (PickupableContainer.IsApplicable(itemType))
             {
                 return new PickupableContainer(itemType, location);
@@ -56,6 +61,10 @@ namespace NeoServer.Game.Items
             }
             if (CumulativeItem.IsApplicable(itemType))
             {
+                if (ThrowableDistanceWeaponItem.IsApplicable(itemType))
+                {
+                    return new ThrowableDistanceWeaponItem(itemType, location, attributes);
+                }
                 if (AmmoItem.IsApplicable(itemType))
                 {
                     return new AmmoItem(itemType, location, attributes);

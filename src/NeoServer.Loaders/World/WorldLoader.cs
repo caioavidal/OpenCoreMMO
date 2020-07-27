@@ -11,6 +11,7 @@ using NeoServer.OTBM;
 using NeoServer.OTBM.Structure;
 using Serilog.Core;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace NeoServer.Loaders.World
 
             var tiles = GetTiles(otbm);
 
+
+            // tiles.AsParallel().ForAll(x => world.AddTile(x));
             foreach (var tile in tiles)
             {
                 world.AddTile(tile);
@@ -83,8 +86,10 @@ namespace NeoServer.Loaders.World
                 });
         }
 
-        private IEnumerable<IItem> GetItemsOnTile(TileNode tileNode)
+        private Span<IItem> GetItemsOnTile(TileNode tileNode)
         {
+            Span<IItem> items = new IItem[tileNode.Items.Count];
+            var i = 0;
             foreach (var itemNode in tileNode.Items)
             {
 
@@ -109,16 +114,19 @@ namespace NeoServer.Loaders.World
 
                 if (item.CanBeMoved && tileNode.NodeType == NodeType.HouseTile)
                 {
-                    yield return item;
+                    //yield return item;
                     //logger.Warning($"Moveable item with ID: {itemNode.ItemId} in house at position {tileNode.Coordinate}.");
                 }
                 else
                 {
                     //item.StartDecaying();
-                    yield return item;
+                    //yield return item;
                 }
+                items[i++] = item;
+                
             }
 
+            return items;
         }
     }
 }
