@@ -12,37 +12,40 @@ using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class Ring : MoveableItem, IRing
+    public class Ring : Decayable, IRing
     {
         public Ring(IItemType type, Location location) : base(type, location)
         {
-            Charges = Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Charges);
-            Duration = Metadata.Attributes.GetAttribute<ushort>(Enums.ItemAttribute.Duration);
         }
-
-        public byte Charges { get; private set; }
 
         public Dictionary<DamageType, byte> DamageProtection => Metadata.Attributes.DamageProtection;
 
-
-        public bool Expired => Duration <= 0 && Charges <= 0; //todo: duplicated from necklace
-        public ushort Duration { get; private set; }
+        private bool inUse;
         public byte Defense => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Armor);
+        public Span<byte> GetRaw()
+        {
+            Span<byte> cache = stackalloc byte[2];
+
+            var clientId = 0;
+
+            if (inUse)
+            {
+                clientId = Metadata.ClientId;
+            }
+            var idBytes = BitConverter.GetBytes(inUse ? Metadata.TransformTo : Metadata.ClientId);
+
+            cache[0] = idBytes[0];
+            cache[1] = idBytes[1];
+
+            return cache.ToArray();
+        }
 
         public ImmutableHashSet<VocationType> AllowedVocations => new HashSet<VocationType>().ToImmutableHashSet();
 
-        public void DecreaseCharges()
-        {
-            if (!Expired) Charges--;
-        }
-
-        public void StartDecaying()
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public static bool IsApplicable(IItemType type) => type.BodyPosition == Enums.Players.Slot.Ring;
 
-      
+
     }
 }

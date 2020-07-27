@@ -11,6 +11,8 @@ namespace NeoServer.Game.Contracts.Items
         string IThing.InspectionText => $"{Metadata.Article} {Metadata.Name}";
         string IThing.CloseInspectionText => "";
         ushort ClientId => Metadata.ClientId;
+        ushort TransformTo => Metadata.Attributes.GetTransformationItem();
+
         Span<byte> GetRaw() => BitConverter.GetBytes(ClientId);
 
 

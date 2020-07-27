@@ -24,10 +24,11 @@ namespace NeoServer.Loaders.Items
         /// </summary>
         public void Load()
         {
+            
             var basePath = "./data/items/";
             var itemTypes = LoadOTB(basePath);
-            LoadItemsJson(basePath, itemTypes);
 
+            LoadItemsJson(basePath, itemTypes);
             ItemTypeData.Load(itemTypes);
 
             logger.Information($"{itemTypes.Count} items loaded");

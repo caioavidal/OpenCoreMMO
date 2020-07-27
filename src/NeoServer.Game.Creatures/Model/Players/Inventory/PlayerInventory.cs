@@ -201,20 +201,19 @@ namespace NeoServer.Server.Model.Players
 
         private bool CanCarryItem(IPickupable item, byte amount, Slot slot)
         {
-            var itemOnSlot = Inventory[slot].Item1;
 
             if (NeedToSwap(item, slot))
             {
+                var itemOnSlot = Inventory[slot].Item1;
+
                 return (TotalWeight - itemOnSlot.Weight + item.Weight) <= Owner.CarryStrength;
             }
-
-            byte amountToAdd = 0;
 
             float weight = 0;
 
             if (item is ICumulativeItem cumulative && slot == Slot.Ammo)
             {
-                amountToAdd = amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : amount;
+                byte amountToAdd = amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : amount;
                 weight = cumulative.CalculateWeight(amountToAdd);
             }
 

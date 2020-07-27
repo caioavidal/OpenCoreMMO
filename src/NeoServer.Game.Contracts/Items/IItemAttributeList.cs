@@ -15,6 +15,7 @@ namespace NeoServer.Game.Contracts.Items
         string GetAttribute(ItemAttribute attribute);
         T GetAttribute<T>(ItemAttribute attribute) where T : struct;
         FloorChangeDirection GetFloorChangeDirection();
+        ushort GetTransformationItem();
         Tuple<DamageType, byte> GetWeaponElementDamage();
         bool HasAttribute(ItemAttribute attribute);
         void SetAttribute(ItemAttribute attribute, IConvertible attributeValue);

@@ -17,6 +17,7 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
 using NeoServer.Server.Tasks.Contracts;
+using Raven.Client.Documents.Linq;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
@@ -42,11 +43,19 @@ namespace NeoServer.Server.Standalone
 
             var logger = container.Resolve<Logger>();
 
+        
+
             RSA.LoadPem();
+
+        
 
             container.Resolve<ItemTypeLoader>().Load();
 
+            
+
             container.Resolve<WorldLoader>().Load();
+
+        
 
             var listeningTask = StartListening(container, cancellationToken);
 
@@ -66,7 +75,7 @@ namespace NeoServer.Server.Standalone
             sw.Stop();
             logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");
             logger.Information($"Memory usage: {Math.Round((GC.GetTotalMemory(false) / 1024f) / 1024f, 2)} MB");
-
+       
 
             listeningTask.Wait(cancellationToken);
 

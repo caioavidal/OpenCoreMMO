@@ -40,6 +40,7 @@ namespace NeoServer.Game.Contracts.Items
         WeaponType WeaponType { get; }
         Slot BodyPosition { get; }
         float Weight { get; }
+        ushort TransformTo { get; }
 
         void SetName(string value);
         void SetDescription(string value);

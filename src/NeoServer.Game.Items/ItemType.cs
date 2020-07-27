@@ -24,6 +24,7 @@ namespace NeoServer.Game.Items
         public bool Locked { get; private set; }
 
         public ushort ClientId { get; private set; }
+        public ushort TransformTo => Attributes.GetTransformationItem();
 
         public ItemTypeAttribute TypeAttribute { get; private set; }
 

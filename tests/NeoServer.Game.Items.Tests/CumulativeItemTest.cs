@@ -104,21 +104,5 @@ namespace NeoServer.Game.Items.Tests
         }
 
 
-        [Theory]
-        [InlineData(100, 30, 70, 30)]
-        [InlineData(100, 100, 0, 100)]
-        [InlineData(100, 0, 100, 0)]
-        public void Split_Returns_New_Item(byte itemAmount, byte amountToSplit, byte itemRemainingAmount, byte secondItemAmount  )
-        {
-            var type = new ItemType();
-            type.SetClientId(100);
-
-            var sup = new CumulativeItem(type, new Location(100, 100, 7), itemAmount);
-
-            var secondItem = sup.Split(amountToSplit);
-
-            Assert.Equal(itemRemainingAmount, sup.Amount);
-            Assert.Equal(secondItemAmount, secondItem.Amount);
-        }
     }
 }

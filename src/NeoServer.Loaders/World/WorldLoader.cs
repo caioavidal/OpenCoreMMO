@@ -33,9 +33,11 @@ namespace NeoServer.Loaders.World
         }
         public void Load()
         {
+            
             var fileStream = File.ReadAllBytes("./data/world/neoserver.otbm");
+            
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
-
+            
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
             var tiles = GetTiles(otbm);
@@ -78,7 +80,7 @@ namespace NeoServer.Loaders.World
                     var tile = TileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
 
                     return tile;
-                }).ToList();
+                });
         }
 
         private IEnumerable<IItem> GetItemsOnTile(TileNode tileNode)

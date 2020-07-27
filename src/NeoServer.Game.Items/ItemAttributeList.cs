@@ -84,6 +84,17 @@ namespace NeoServer.Game.Items
             return FloorChangeDirection.None;
         }
 
+        public ushort GetTransformationItem()
+        {
+            if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformEquipTo) ?? false)
+                return GetAttribute<ushort>(ItemAttribute.TransformEquipTo);
+
+            if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformDequipTo) ?? false)
+                return GetAttribute<ushort>(ItemAttribute.TransformDequipTo);
+
+            return 0;
+        }
+
         public Tuple<DamageType, byte> GetWeaponElementDamage()
         {
             if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementEarth) ?? false)
