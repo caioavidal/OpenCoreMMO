@@ -22,6 +22,7 @@ namespace NeoServer.Server.Events
             map.OnThingMoved += container.Resolve<ThingMovedOnFloorEventHandler>().Execute;
             map.OnThingMovedFailed += container.Resolve<InvalidOperationEventHandler>().Execute;
             map.OnThingAddedToTile += container.Resolve<ThingAddedToTileEventHandler>().Execute;
+            map.OnThingUpdatedOnTile += container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
         }
     }
 }

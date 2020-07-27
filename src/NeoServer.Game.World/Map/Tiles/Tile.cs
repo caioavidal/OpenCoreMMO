@@ -2,11 +2,13 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
@@ -121,8 +123,9 @@ namespace NeoServer.Game.World.Map.Tiles
             throw new Exception("Thing not found in tile.");
         }
 
-        private void AddThingToTile(Contracts.Items.IThing thing)
+        private TileOperationResult AddThingToTile(Contracts.Items.IThing thing)
         {
+            var operations = new TileOperationResult();
 
             if (thing is ICreature creature)
             {
@@ -148,31 +151,45 @@ namespace NeoServer.Game.World.Map.Tiles
                     if (!DownItems.TryPeek(out topStackItem))
                     {
                         DownItems.Push(item);
+                        operations.Add(Operation.Added);
+
                     }
                     else if (item is ICumulativeItem cumulative &&
                         topStackItem is ICumulativeItem topCumulative &&
                         topStackItem.ClientId == cumulative.ClientId &&
                         topCumulative.TryJoin(ref cumulative))
                     {
+                        operations.Add(Operation.Updated);
 
                         if (cumulative != null)
                         {
                             DownItems.Push(cumulative);
+                            operations.Add(Operation.Added);
+
                         }
                     }
                     else
                     {
                         DownItems.Push(item);
+                        operations.Add(Operation.Added);
+
                     }
                 }
             }
             SetCacheAsExpired();
+            return operations;
         }
-        public void AddThing(ref IMoveableThing thing)
+        public Result<TileOperationResult> AddThing(ref IMoveableThing thing)
         {
-            AddThingToTile(thing);
+            var operations = AddThingToTile(thing);
             thing.SetNewLocation(Location);
+            return new Result<TileOperationResult>(operations);
         }
+
+        /// <summary>
+        /// Get the top item on DownItems's stack
+        /// </summary>
+        public IItem TopItemOnStack => DownItems.TryPeek(out IItem item) ? item : null;
 
         private byte flags;
 

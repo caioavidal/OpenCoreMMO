@@ -49,7 +49,8 @@ namespace NeoServer.Game.Creatures.Tests
      {
                 new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10),ItemTestData.CreateAmmoItem(100, 10), ItemTestData.CreateAmmoItem(100, 20) },
                 new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10),ItemTestData.CreateAmmoItem(100, 90), ItemTestData.CreateAmmoItem(100, 100) },
-                new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 50),ItemTestData.CreateAmmoItem(100, 90), ItemTestData.CreateAmmoItem(100, 100) }
+                new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 50),ItemTestData.CreateAmmoItem(100, 90), ItemTestData.CreateAmmoItem(100, 100) },
+                new object[] {Slot.Left, ItemTestData.CreateThrowableDistanceItem(100, 1),ItemTestData.CreateThrowableDistanceItem(100, 5), ItemTestData.CreateThrowableDistanceItem(100, 6) }
      };
 
 
@@ -326,11 +327,11 @@ namespace NeoServer.Game.Creatures.Tests
         {
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
-            var result = sut.TryAddItemToSlot(slot, item);
+            var result = sut.TryAddItemToSlot(slot, item, item.Amount);
 
             Assert.Null(result.Value);
 
-            sut.TryAddItemToSlot(slot, newItem);
+            sut.TryAddItemToSlot(slot, newItem, newItem.Amount);
 
             Assert.Equal(sut[slot], item);
             Assert.Equal((sut[slot] as CumulativeItem).Amount, resultItem.Amount);

@@ -9,7 +9,7 @@ using System;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {
-    public struct Location
+    public struct Location:IEquatable<Location>
     {
 
 
@@ -102,9 +102,9 @@ namespace NeoServer.Game.Enums.Location.Structs
             return $"[{X}, {Y}, {Z}]";
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Location obj)
         {
-            return obj is Location && this == (Location)obj;
+            return this == obj;
         }
 
         public override int GetHashCode()

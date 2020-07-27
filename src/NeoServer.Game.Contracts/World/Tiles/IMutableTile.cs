@@ -1,6 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Concurrent;
 
@@ -18,8 +20,9 @@ namespace NeoServer.Game.Contracts.World.Tiles
         FloorChangeDirection FloorDirection { get; }
         byte MovementPenalty { get; }
         byte NextStackPosition { get; }
+        IItem TopItemOnStack { get; }
 
-        void AddThing(ref IMoveableThing thing);
+        Result<TileOperationResult> AddThing(ref IMoveableThing thing);
         byte[] GetRaw(IPlayer playerRequesting = null);
         byte GetStackPositionOfItem(ushort id);
         byte GetStackPositionOfThing(Items.IThing thing);

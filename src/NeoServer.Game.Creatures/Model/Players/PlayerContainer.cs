@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
-    internal class PlayerContainer
+    internal class PlayerContainer:IEquatable<PlayerContainer>
     {
         public IPlayer Player { get; }
         public PlayerContainer(IContainer container, IPlayer player)
@@ -75,9 +75,9 @@ namespace NeoServer.Game.Creatures.Model.Players
             Container.OnItemUpdated -= ItemUpdated;
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(PlayerContainer obj)
         {
-            return Container == (obj as PlayerContainer).Container;
+            return Container == obj.Container;
         }
     }
 }

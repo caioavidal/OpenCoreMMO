@@ -138,19 +138,19 @@ namespace NeoServer.Server.Model.Players
             {
                 Tuple<IPickupable, ushort> itemToSwap = null;
 
-                if (slot == Slot.Ammo)
+                if (item is ICumulativeItem)
                 {
 
-                    var ammoItem = (item as ICumulativeItem).Clone(amount);
+                    var cumulative = (item as ICumulativeItem).Clone(amount);
 
 
-                    if (NeedToSwap(ammoItem, slot))
+                    if (NeedToSwap(cumulative, slot))
                     {
-                        itemToSwap = SwapItem(slot, ammoItem);
+                        itemToSwap = SwapItem(slot, cumulative);
                     }
                     else 
                     {
-                        (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref ammoItem);
+                        (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref cumulative);
                     }
                 }
                 else

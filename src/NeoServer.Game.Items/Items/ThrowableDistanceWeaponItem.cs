@@ -14,11 +14,8 @@ namespace NeoServer.Game.Items.Items
 {
     public class ThrowableDistanceWeaponItem : CumulativeItem, IDistanceWeaponItem
     {
-        public ThrowableDistanceWeaponItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
-        {
-
-        }
-
+        public ThrowableDistanceWeaponItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes) { }
+        public ThrowableDistanceWeaponItem(IItemType type, Location location, byte amount) : base(type, location, amount) { }
         public byte MaxAttackDistance { get; }
 
         public ImmutableHashSet<VocationType> AllowedVocations { get; }

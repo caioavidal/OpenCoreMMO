@@ -82,15 +82,15 @@ namespace NeoServer.Game.World.Tests
 
             Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item.ClientId));
 
-         
 
-            Assert.Collection(tile.DownItems, item => { Assert.Equal(downItemsExpected[5].ClientId, item.ClientId); Assert.Equal((downItemsExpected[5] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount);  },
+
+            Assert.Collection(tile.DownItems, item => { Assert.Equal(downItemsExpected[5].ClientId, item.ClientId); Assert.Equal((downItemsExpected[5] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
                                               item => { Assert.Equal(downItemsExpected[4].ClientId, item.ClientId); Assert.Equal((downItemsExpected[4] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
-                                              item => { Assert.Equal(downItemsExpected[3].ClientId, item.ClientId); Assert.Equal((downItemsExpected[3] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount);  },
+                                              item => { Assert.Equal(downItemsExpected[3].ClientId, item.ClientId); Assert.Equal((downItemsExpected[3] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
                                               item => Assert.Equal(downItemsExpected[2].ClientId, item.ClientId),
                                               item => Assert.Equal(downItemsExpected[1].ClientId, item.ClientId),
                                               item => Assert.Equal(downItemsExpected[0].ClientId, item.ClientId));
-                                         
+
         }
 
         [Fact]
@@ -119,6 +119,22 @@ namespace NeoServer.Game.World.Tests
 
             Assert.Equal(topItemId, sut.DownItems.First().ClientId);
             Assert.Equal(remainingAmount, (sut.DownItems.First() as ICumulativeItem).Amount);
+        }
+
+        [Fact]
+        public void AddThing_When_Cumulative_On_Top_Join_If_Same_Type()
+        {
+            var item = ItemTestData.CreateThrowableDistanceItem(500, 5);
+            var sut = CreateTile(item);
+
+            var item2 = ItemTestData.CreateThrowableDistanceItem(500, 3) as IMoveableThing;
+            sut.AddThing(ref item2);
+
+            Assert.Equal(3, sut.DownItems.Count);
+            Assert.Single(sut.TopItems);
+
+            Assert.Equal(500, sut.DownItems.First().ClientId);
+            Assert.Equal(8, (sut.DownItems.First() as ICumulativeItem).Amount);
         }
     }
 

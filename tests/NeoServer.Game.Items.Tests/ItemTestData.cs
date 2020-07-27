@@ -76,6 +76,17 @@ namespace NeoServer.Game.Items.Tests
                 type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "two-handed");
             return new WeaponItem(type, new Location(100, 100, 7));
         }
+        public static IPickupable CreateThrowableDistanceItem(ushort id, byte amount, bool twoHanded = false)
+        {
+            var type = new ItemType();
+            type.SetClientId(id);
+            type.SetName("item");
+
+            type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, "distance");
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 40);
+
+            return new ThrowableDistanceWeaponItem(type, new Location(100, 100, 7), amount);
+        }
 
         public static object CreateRing(ushort id )
         {

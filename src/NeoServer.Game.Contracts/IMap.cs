@@ -13,6 +13,8 @@ namespace NeoServer.Game.Contracts
     public delegate void RemoveThingFromTile(Items.IThing thing, ITile tile, byte fromStackPosition);
     public delegate void MoveThingOnFloor(IMoveableThing thing, ITile fromTile, ITile toTile, byte fromStackPosition);
     public delegate void AddThingToTile(Items.IThing thing, ITile tile, byte toStackPosition);
+    public delegate void UpdateThingOnTile(Items.IThing thing, ITile tile, byte toStackPosition);
+    
 
     public delegate void FailedMoveThing(Items.IThing thing, InvalidOperation error);
     public interface IMap
@@ -25,6 +27,7 @@ namespace NeoServer.Game.Contracts
         event MoveThingOnFloor OnThingMoved;
         event FailedMoveThing OnThingMovedFailed;
         event AddThingToTile OnThingAddedToTile;
+        event UpdateThingOnTile OnThingUpdatedOnTile;
 
         IList<byte> GetDescription(Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
         void AddCreature(ICreature creature);
