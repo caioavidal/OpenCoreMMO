@@ -22,5 +22,10 @@ namespace NeoServer.Game.Model
         {
             this.location = location;
         }
+        public IMoveableThing Clone()
+        {
+            var clone = (IMoveableThing)MemberwiseClone();
+            return clone;
+        }
     }
 }

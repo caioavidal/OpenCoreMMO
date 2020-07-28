@@ -20,5 +20,11 @@ namespace NeoServer.Game.Items.Items
         }
 
         public float Weight => Metadata.Weight;
+
+        public IMoveableThing Clone()
+        {
+            var clone = (IMoveableThing)MemberwiseClone();
+            return clone;
+        }
     }
 }

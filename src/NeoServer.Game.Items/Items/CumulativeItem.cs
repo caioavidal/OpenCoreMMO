@@ -38,7 +38,6 @@ namespace NeoServer.Game.Items.Items
         }
         public static bool IsApplicable(IItemType type) => type.Flags.Contains(Enums.ItemFlag.Stackable);
 
-
         public ICumulativeItem Clone(byte amount)
         {
             var clone = (ICumulativeItem)MemberwiseClone();

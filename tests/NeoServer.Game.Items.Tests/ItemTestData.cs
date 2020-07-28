@@ -31,7 +31,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 20);
+            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 2000);
 
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "backpack");
 
@@ -43,7 +43,7 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 1);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 100);
 
             return new CumulativeItem(type, new Location(100, 100, 7), amount);
         }
@@ -70,7 +70,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, weaponType);
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 40);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 4000);
 
             if (twoHanded)
                 type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "two-handed");
@@ -113,7 +113,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, slot);
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, weaponType);
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 40);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 4000);
             type.SetName("item");
 
             return new BodyDefenseEquimentItem(type, new Location(100, 100, 7));
@@ -128,7 +128,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetName("item");
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, "ammunition");
             type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "ammo");
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 1);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 100);
 
             return new AmmoItem(type, new Location(100, 100, 7),amount);
         }

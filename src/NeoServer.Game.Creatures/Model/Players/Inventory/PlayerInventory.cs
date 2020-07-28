@@ -103,9 +103,9 @@ namespace NeoServer.Server.Model.Players
         }
 
 
-        public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item, byte amount = 1)
+        public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
-            bool canCarry = CanCarryItem(item, amount, slot);
+            bool canCarry = CanCarryItem(item, slot);
 
             if (!canCarry)
             {
@@ -124,6 +124,14 @@ namespace NeoServer.Server.Model.Players
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                 {
+                    //if (item is ICumulativeItem )
+                    //{
+                    //    var cumulative = (item as ICumulativeItem).Clone(amount);
+                    //    var result = (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(cumulative);
+                    //    if(result.)
+                    //    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(cumulative).Error);
+
+                    //}
                     return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item).Error);
                 }
                 else if (item is IPickupableContainer container)
@@ -138,12 +146,8 @@ namespace NeoServer.Server.Model.Players
             {
                 Tuple<IPickupable, ushort> itemToSwap = null;
 
-                if (item is ICumulativeItem)
+                if (item is ICumulativeItem cumulative)
                 {
-
-                    var cumulative = (item as ICumulativeItem).Clone(amount);
-
-
                     if (NeedToSwap(cumulative, slot))
                     {
                         itemToSwap = SwapItem(slot, cumulative);
@@ -199,7 +203,7 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-        private bool CanCarryItem(IPickupable item, byte amount, Slot slot)
+        private bool CanCarryItem(IPickupable item, Slot slot)
         {
 
             if (NeedToSwap(item, slot))
@@ -209,11 +213,11 @@ namespace NeoServer.Server.Model.Players
                 return (TotalWeight - itemOnSlot.Weight + item.Weight) <= Owner.CarryStrength;
             }
 
-            float weight = 0;
+            float weight = item.Weight;
 
             if (item is ICumulativeItem cumulative && slot == Slot.Ammo)
             {
-                byte amountToAdd = amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : amount;
+                byte amountToAdd = cumulative.Amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : cumulative.Amount;
                 weight = cumulative.CalculateWeight(amountToAdd);
             }
 
@@ -224,6 +228,16 @@ namespace NeoServer.Server.Model.Players
         private Result<bool> CanAddItemToSlot(Slot slot, IItem item)
         {
             var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
+
+
+            if (slot == Slot.Backpack)
+            {
+                if(item is IPickupableContainer && !Inventory.ContainsKey(Slot.Backpack))
+                {
+                    return new Result<bool>(true);
+                }
+                return Inventory.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
+            }
 
             if (!(item is IInventoryItem inventoryItem))
             {
@@ -248,19 +262,16 @@ namespace NeoServer.Server.Model.Players
                 return new Result<bool>(true);
             }
 
-            if (inventoryItem.Slot != slot)
-            {
-                if (slot == Slot.Backpack && Inventory.ContainsKey(Slot.Backpack))
-                {
-                    return new Result<bool>(true);
-
-                }
-                return cannotDressFail;
-            }
+         
             if (slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded)
             {
                 //trying to add a shield while left slot has a two handed weapon
                 return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
+            }
+
+            if(inventoryItem.Slot != slot)
+            {
+                return cannotDressFail;
             }
 
 

@@ -33,7 +33,9 @@ namespace NeoServer.Server.Commands.Movement
 
             var thing = item as IMoveableThing;
 
-            var result = player.Inventory.TryAddItemToSlot(itemThrow.ToLocation.Slot, item as IPickupable, amount);
+            var clonedItem = thing is ICumulativeItem cumulative ? cumulative.Clone(amount) : thing;
+
+            var result = player.Inventory.TryAddItemToSlot(itemThrow.ToLocation.Slot, clonedItem as IPickupable);
 
             if (!result.Success)
             {
