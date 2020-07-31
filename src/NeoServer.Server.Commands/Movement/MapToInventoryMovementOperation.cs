@@ -44,9 +44,12 @@ namespace NeoServer.Server.Commands.Movement
 
             var amountToRemove = amount;
 
-            if (result.Value.ClientId == item.ClientId && thing is ICumulativeItem)
+            if (result.Value?.ClientId == item.ClientId && thing is ICumulativeItem)
             {
-                //amountToRemove = amount - result.Value
+                amountToRemove = (byte)(amount - (result.Value as ICumulativeItem).Amount);
+                map.RemoveThing(ref thing, tile, amountToRemove);
+
+                return;
             }
 
             map.RemoveThing(ref thing, tile, amountToRemove);

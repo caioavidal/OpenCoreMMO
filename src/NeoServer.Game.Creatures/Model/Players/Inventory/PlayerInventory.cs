@@ -148,7 +148,7 @@ namespace NeoServer.Server.Model.Players
                     else 
                     {
                         (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref cumulative);
-                        if(cumulative.Amount > 0)
+                        if(cumulative?.Amount > 0)
                         {
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
                         }

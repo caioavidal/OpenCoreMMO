@@ -86,11 +86,11 @@ namespace NeoServer.Game.Items.Tests
         }
 
         [Theory]
-        [InlineData(30, 50, 1500)]
-        [InlineData(30, 1, 30)]
-        [InlineData(1, 100, 100)]
-        [InlineData(10, 10, 100)]
-        [InlineData(9.6, 10, 96.0)]
+        [InlineData(3000, 50, 1500)]
+        [InlineData(3000, 1, 30)]
+        [InlineData(100, 100, 100)]
+        [InlineData(1000, 10, 100)]
+        [InlineData(0960, 10, 96.0)]
         public void Weight_Returns_Total_Item_Weight(float weight, byte amount, float totalWeight)
         {
             var type = new ItemType();

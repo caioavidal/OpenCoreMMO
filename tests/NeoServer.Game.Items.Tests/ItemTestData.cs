@@ -23,7 +23,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, capacity);
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 20);
+            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 2000);
 
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
@@ -83,7 +83,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetName("item");
 
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, "distance");
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 40);
+            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 4000);
 
             return new ThrowableDistanceWeaponItem(type, new Location(100, 100, 7), amount);
         }
