@@ -124,14 +124,7 @@ namespace NeoServer.Server.Model.Players
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                 {
-                    //if (item is ICumulativeItem )
-                    //{
-                    //    var cumulative = (item as ICumulativeItem).Clone(amount);
-                    //    var result = (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(cumulative);
-                    //    if(result.)
-                    //    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(cumulative).Error);
-
-                    //}
+                   
                     return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item).Error);
                 }
                 else if (item is IPickupableContainer container)
@@ -155,6 +148,10 @@ namespace NeoServer.Server.Model.Players
                     else 
                     {
                         (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref cumulative);
+                        if(cumulative.Amount > 0)
+                        {
+                            itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
+                        }
                     }
                 }
                 else

@@ -42,9 +42,17 @@ namespace NeoServer.Server.Commands.Movement
                 return;
             }
 
-            map.RemoveThing(ref thing, tile, amount);
-            
-            if(result.Value != null)
+            var amountToRemove = amount;
+
+            if (result.Value.ClientId == item.ClientId && thing is ICumulativeItem)
+            {
+                //amountToRemove = amount - result.Value
+            }
+
+            map.RemoveThing(ref thing, tile, amountToRemove);
+
+
+            if (result.Value != null)
             {
                 var returnedThing = result.Value as IMoveableThing;
                 map.AddItem(ref returnedThing, tile, amount);
