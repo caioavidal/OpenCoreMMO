@@ -3,7 +3,7 @@ using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
 {
-    public struct Item : IItem
+    public class Item : IItem
     {
         public Item(IItemType metadata, Location location)
         {
