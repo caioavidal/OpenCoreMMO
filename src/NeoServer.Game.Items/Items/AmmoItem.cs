@@ -15,9 +15,7 @@ namespace NeoServer.Game.Items.Items
     {
         public AmmoItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
         {
-            Range = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Range);
-            Attack = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Attack);
-            ExtraHitChance = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.HitChance);
+   
             //AllowedVocations = allowedVocations;
             //MinimumLevelRequired = minimumLevelRequired;
             //SkillBonus = skillBonus;
@@ -25,19 +23,17 @@ namespace NeoServer.Game.Items.Items
         //todo duplicated code
         public AmmoItem(IItemType type, Location location, byte amount) : base(type, location, amount)
         {
-            Range = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Range);
-            Attack = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Attack);
-            ExtraHitChance = type.Attributes.GetAttribute<byte>(Enums.ItemAttribute.HitChance);
+   
             //AllowedVocations = allowedVocations;
             //MinimumLevelRequired = minimumLevelRequired;
             //SkillBonus = skillBonus;
         }
 
-        public byte Range { get; }
+        public byte Range => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Range);
 
-        public byte Attack { get; }
+        public byte Attack => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Attack);
 
-        public byte ExtraHitChance { get; }
+        public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.HitChance);
         public AmmoType AmmoType => Metadata.AmmoType;
         public ShootType ShootType => Metadata.ShootType;
 

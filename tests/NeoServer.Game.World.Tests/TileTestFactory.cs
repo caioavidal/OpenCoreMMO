@@ -14,15 +14,20 @@ namespace NeoServer.Game.World.Tests
     {
         private static ITile CreateTile(Coordinate coord, params IItem[] item)
         {
-            var items = new List<IItem> {
+            var topItems = new List<IItem>()
+            {
                 ItemTestData.CreateTopItem(id: 1, topOrder: 1),
-                ItemTestData.CreateTopItem(id: 2, topOrder: 2),
+                ItemTestData.CreateTopItem(id: 2, topOrder: 2)
+            };
+
+            var items = new List<IItem> {
+           
                 ItemTestData.CreateRegularItem(100),
                 ItemTestData.CreateRegularItem(200)
             };
             items.AddRange(item);
 
-            var tile = new Tile(coord, TileFlag.None, items.ToArray());
+            var tile = new Tile(coord, TileFlag.None, null, topItems.ToArray(), items.ToArray());
             return tile;
         }
     }

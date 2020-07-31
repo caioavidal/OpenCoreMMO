@@ -109,12 +109,6 @@ namespace NeoServer.Game.Enums.Location.Structs
         }
 
         /// <summary>
-        /// Returns true if <paramref name="obj"/> is a Poisition and it's coordinates are
-        /// equal to this one's.
-        /// </summary>
-        public override bool Equals(object obj) => (obj is Coordinate) && Equals((Coordinate)obj);
-
-        /// <summary>
         /// Returns the hash code of this instance.
         /// </summary>
         public override int GetHashCode()

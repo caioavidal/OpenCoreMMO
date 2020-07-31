@@ -32,6 +32,7 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
+
             var sw = new Stopwatch();
             sw.Start();
 

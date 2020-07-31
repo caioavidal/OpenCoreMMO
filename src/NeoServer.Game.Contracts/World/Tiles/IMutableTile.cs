@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
     public interface IWalkableTile : ITile
     {
         ushort Ground { get; }
-        ConcurrentStack<IItem> TopItems { get; }
+        ushort[] TopItems { get; }
         ConcurrentStack<IItem> DownItems { get; }
         ConcurrentStack<ICreature> Creatures { get; }
         ushort StepSpeed { get; }

@@ -14,22 +14,16 @@ namespace NeoServer.Game.Items.Items
     {
         public WeaponItem(IItemType itemType, Location location) : base(itemType, location)
         {
-            Attack = itemType.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
-            Defense = itemType.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
-            ElementalDamage = itemType.Attributes.GetWeaponElementDamage();
-            ExtraDefense = itemType.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
             //AllowedVocations  todo
         }
 
-        public ushort Attack { get; }
+        public ushort Attack => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
 
-        public byte Defense { get; }
+        public byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
 
-        public Tuple<DamageType, byte> ElementalDamage { get; }
+        public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
 
-        public sbyte ExtraDefense { get; }
-
-        
+        public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 

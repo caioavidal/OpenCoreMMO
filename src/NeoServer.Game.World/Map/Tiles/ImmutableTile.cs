@@ -30,7 +30,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in items)
             {
-                if (item is IGroundItem)
+                if (item is IGround)
                 {
 
                     ground.AddRange(BitConverter.GetBytes(item.ClientId));

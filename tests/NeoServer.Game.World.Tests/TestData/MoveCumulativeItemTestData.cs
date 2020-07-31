@@ -55,7 +55,7 @@ namespace NeoServer.Game.World.Tests.TestData
                             items.Add(item);
                         }
 
-                        world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None, items.ToArray()));
+                        world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None,null,new IItem[0], items.ToArray()));
                     }
                 }
 

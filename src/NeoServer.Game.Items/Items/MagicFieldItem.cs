@@ -10,14 +10,11 @@ namespace NeoServer.Game.Items.Items
         {
             Metadata = type;
             Location = location;
-            Type = 0;
-
-            Type = ParseFieldType(type.Attributes.GetAttribute(ItemAttribute.Field));
         }
 
         public Location Location { get; }
 
-        public MagicFieldType Type { get; }
+        public MagicFieldType Type => ParseFieldType(Metadata.Attributes.GetAttribute(ItemAttribute.Field));
 
         public IItemType Metadata { get; }
 

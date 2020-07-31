@@ -15,11 +15,11 @@ namespace NeoServer.Game.World.Map.Tiles
 {
     public class Tile : IWalkableTile
     {
-        public Tile(Coordinate coordinate, TileFlag tileFlag, IItem[] items)
+        public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
             Location = new Location(coordinate.X, coordinate.Y, coordinate.Z);
             flags |= (byte)tileFlag;
-            AddContent(items);
+            AddContent(ground, topItems, items);
         }
 
         private byte[] cache;
@@ -32,7 +32,9 @@ namespace NeoServer.Game.World.Map.Tiles
         public byte MovementPenalty { get; private set; }
 
         public ushort Ground { get; private set; }
-        public ConcurrentStack<IItem> TopItems { get; private set; } = new ConcurrentStack<IItem>();
+        //public ConcurrentStack<IItem> TopItems { get; private set; } = new ConcurrentStack<IItem>();
+        public ushort[] TopItems { get; private set; }
+
         public ConcurrentStack<IItem> DownItems { get; private set; } = new ConcurrentStack<IItem>();
         public ConcurrentStack<ICreature> Creatures { get; private set; } = new ConcurrentStack<ICreature>();
 
@@ -48,7 +50,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
                 foreach (var item in TopItems)
                 {
-                    n++; 
+                    n++;
                 }
                 return (byte)++n;
             }
@@ -67,7 +69,16 @@ namespace NeoServer.Game.World.Map.Tiles
 
             var n = 0;
 
-            foreach (var item in TopItems.Concat(DownItems))
+            foreach (var clientId in TopItems)
+            {
+                ++n;
+                if (id == clientId)
+                {
+                    return (byte)n;
+                }
+            }
+
+            foreach (var item in DownItems)
             {
                 ++n;
                 if (id == item.ClientId)
@@ -84,17 +95,17 @@ namespace NeoServer.Game.World.Map.Tiles
                 throw new ArgumentNullException(nameof(thing));
             }
 
-            if (Ground != default && thing is IGroundItem)
+            if (Ground != default && thing is IGround)
             {
                 return 0;
             }
 
             var n = 0;
 
-            foreach (var item in TopItems)
+            foreach (var clientId in TopItems)
             {
                 ++n;
-                if (thing == item)
+                if (thing is IItem item && item.ClientId == clientId)
                 {
                     return (byte)n;
                 }
@@ -134,47 +145,35 @@ namespace NeoServer.Game.World.Map.Tiles
             }
             else if (thing is IItem item)
             {
-                if (thing is IGroundItem)
+
+                IItem topStackItem;
+                if (!DownItems.TryPeek(out topStackItem))
                 {
-                    var ground = item as IGroundItem;
-                    StepSpeed = ground.StepSpeed;
-                    MovementPenalty = ground.MovementPenalty;
-                    Ground = item.ClientId;
+                    DownItems.Push(item);
+                    operations.Add(Operation.Added);
+
                 }
-                else if (item.IsAlwaysOnTop)
+                else if (item is ICumulativeItem cumulative &&
+                    topStackItem is ICumulativeItem topCumulative &&
+                    topStackItem.ClientId == cumulative.ClientId &&
+                    topCumulative.TryJoin(ref cumulative))
                 {
-                    TopItems.Push(item);
+                    operations.Add(Operation.Updated);
+
+                    if (cumulative != null)
+                    {
+                        DownItems.Push(cumulative);
+                        operations.Add(Operation.Added);
+
+                    }
                 }
                 else
                 {
-                    IItem topStackItem;
-                    if (!DownItems.TryPeek(out topStackItem))
-                    {
-                        DownItems.Push(item);
-                        operations.Add(Operation.Added);
+                    DownItems.Push(item);
+                    operations.Add(Operation.Added);
 
-                    }
-                    else if (item is ICumulativeItem cumulative &&
-                        topStackItem is ICumulativeItem topCumulative &&
-                        topStackItem.ClientId == cumulative.ClientId &&
-                        topCumulative.TryJoin(ref cumulative))
-                    {
-                        operations.Add(Operation.Updated);
-
-                        if (cumulative != null)
-                        {
-                            DownItems.Push(cumulative);
-                            operations.Add(Operation.Added);
-
-                        }
-                    }
-                    else
-                    {
-                        DownItems.Push(item);
-                        operations.Add(Operation.Added);
-
-                    }
                 }
+
             }
             SetCacheAsExpired();
             return operations;
@@ -195,14 +194,30 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
 
-        private void AddContent(IItem[] items)
+        private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
         {
+            TopItems = new ushort[topItems.Length];
+
+            if (ground != null)
+            {
+                StepSpeed = ground.StepSpeed;
+                MovementPenalty = ground.MovementPenalty;
+                Ground = ground.ClientId;
+            }
+
+            for (int i = 0; i < topItems.Length; i++)
+            {
+                if (topItems[i].FloorDirection != default)
+                {
+                    FloorDirection = topItems[i].FloorDirection;
+                }
+
+                FloorDirection = topItems[i].FloorDirection;
+                TopItems[i] = topItems[i].ClientId;
+            }
+
             foreach (var item in items)
             {
-                if (item.FloorDirection != default)
-                {
-                    FloorDirection = item.FloorDirection;
-                }
                 AddThingToTile(item);
             }
         }
@@ -219,12 +234,12 @@ namespace NeoServer.Game.World.Map.Tiles
                 Creatures.TryPop(out var creature);
                 removedThing = creature;
             }
-            else if (itemToRemove.IsAlwaysOnTop)
-            {
-                TopItems.TryPop(out var item);
-                removedThing = item;
+            //else if (itemToRemove.IsAlwaysOnTop)
+            //{
+            //    TopItems.TryPop(out var item);
+            //    removedThing = item;
 
-            }
+            //}
             else
             {
                 IItem topStackItem;
@@ -280,13 +295,13 @@ namespace NeoServer.Game.World.Map.Tiles
                 countBytes += 2;
             }
 
-            foreach (var item in TopItems.Reverse())
+            foreach (var clientId in TopItems)
             {
                 if (countThings == 9)
                 {
                     break;
                 }
-                var raw = item.GetRaw();
+                var raw = BitConverter.GetBytes(clientId);
                 raw.CopyTo(stream.Slice(countBytes, raw.Length));
 
                 countThings++;

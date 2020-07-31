@@ -12,9 +12,6 @@ namespace NeoServer.Game.Items.Items
     {
         public DistanceWeaponItem(IItemType type, Location location) : base(type, location)
         {
-            //AllowedVocations = allowedVocations;
-            //MinimumLevelRequired = minimumLevelRequired;
-            //SkillBonus = skillBonus;
         }
 
         public ImmutableHashSet<VocationType> AllowedVocations { get; }

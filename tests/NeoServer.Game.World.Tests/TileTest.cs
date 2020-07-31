@@ -33,14 +33,16 @@ namespace NeoServer.Game.World.Tests
     {
         private Tile CreateTile(params IItem[] item)
         {
+            var topItems = new List<IItem> {
+                ItemTestData.CreateTopItem(id: 1, topOrder: 1)
+            };
             var items = new List<IItem> {
-                ItemTestData.CreateTopItem(id: 1, topOrder: 1),
                 ItemTestData.CreateRegularItem(100),
                 ItemTestData.CreateRegularItem(200)
             };
             items.AddRange(item);
 
-            var tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, items.ToArray());
+            var tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, topItems.ToArray(), items.ToArray());
             return tile;
         }
 
@@ -48,16 +50,17 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void Constructor_Given_Items_Creates_Tile()
         {
-            var tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, new List<IItem>()
+            var tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new List<IItem>()
+            {
+                ItemTestData.CreateTopItem(id: 2, topOrder: 1)
+            }.ToArray(), new List<IItem>()
             {
                 ItemTestData.CreateRegularItem(id: 5),
                 ItemTestData.CreateRegularItem(id: 6),
                 ItemTestData.CreateRegularItem(id: 6),
                 ItemTestData.CreateCumulativeItem(id: 7, amount: 35),
                 ItemTestData.CreateCumulativeItem(id: 7, amount: 80),
-                ItemTestData.CreateCumulativeItem(id:8, amount: 3),
-                ItemTestData.CreateTopItem(id: 2, topOrder: 1),
-
+                ItemTestData.CreateCumulativeItem(id:8, amount: 3)
             }.ToArray());
 
             var downItemsExpected = new List<IItem>
@@ -80,7 +83,7 @@ namespace NeoServer.Game.World.Tests
                 ItemTestData.CreateTopItem(id: 4, topOrder: 2),
             };
 
-            Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item.ClientId));
+            Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item));
 
 
 
