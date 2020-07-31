@@ -1960,7 +1960,13 @@
        "fromid": "1415",
        "toid": "1416",
        "article": "a",
-       "name": "buried coffin"
+       "name": "buried coffin",
+	    "attributes": [
+      {
+        "key": "containerSize",
+        "value": "8"
+      }
+    ]
     },
     {
        "id": "1417",
@@ -55378,7 +55384,11 @@
           {
              "key": "showattributes",
              "value": "1"
-          }
+          },
+		  {
+			 "key":"minlevel",
+			 "value":"60"
+		  }
        ]
     },
     {

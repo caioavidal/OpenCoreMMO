@@ -1,4 +1,5 @@
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.Server.Items;
 using Newtonsoft.Json;
@@ -23,13 +24,15 @@ namespace NeoServer.Loaders.Items
         /// </summary>
         public void Load()
         {
+            
             var basePath = "./data/items/";
             var itemTypes = LoadOTB(basePath);
-            LoadItemsJson(basePath, itemTypes);
 
+            LoadItemsJson(basePath, itemTypes);
             ItemTypeData.Load(itemTypes);
 
             logger.Information($"{itemTypes.Count} items loaded");
+            var a = itemTypes[1415];
         }
 
         private Dictionary<ushort, IItemType> LoadOTB(string basePath)

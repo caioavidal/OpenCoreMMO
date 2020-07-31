@@ -9,6 +9,8 @@
         Holy,
         Death,
         Earth,
-        All
+        All,
+        AbsorbPercentPhysical,
+        AbsorbPercentMagic
     }
 }

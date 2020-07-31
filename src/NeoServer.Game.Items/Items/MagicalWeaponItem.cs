@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using System.Collections.Immutable;
 
@@ -10,7 +11,7 @@ namespace NeoServer.Game.Items.Items
 {
     public class MagicalWeaponItem : MoveableItem, IMagicalWeaponItem
     {
-        public MagicalWeaponItem(IItemType itemType) : base(itemType)
+        public MagicalWeaponItem(IItemType itemType, Location location) : base(itemType, location)
         {
             //DamageType = itemType.GetAttribute<ushort>(ItemAttribute.Attack);
             //Defense = itemType.GetAttribute<byte>(ItemAttribute.Defense);
@@ -21,7 +22,7 @@ namespace NeoServer.Game.Items.Items
             //Weight = itemType.GetAttribute<float>(ItemAttribute.Weight);
         }
 
-        public float Weight { get; }
+        
 
         public DamageType DamageType { get; }
 

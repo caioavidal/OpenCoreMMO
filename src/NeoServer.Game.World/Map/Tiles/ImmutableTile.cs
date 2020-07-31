@@ -26,7 +26,6 @@ namespace NeoServer.Game.World.Map.Tiles
 
             var ground = new List<byte>();
             var top1 = new List<byte>();
-            var top2 = new List<byte>();
             var downItems = new List<byte>();
 
             foreach (var item in items)
@@ -43,10 +42,6 @@ namespace NeoServer.Game.World.Map.Tiles
                     top1.AddRange(BitConverter.GetBytes(item.ClientId));
 
                 }
-                else if (item.IsBottom)
-                {
-                    top2.AddRange(BitConverter.GetBytes(item.ClientId));
-                }
                 else
                 {
                     downItems.AddRange(BitConverter.GetBytes(item.ClientId));
@@ -54,7 +49,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
             }
 
-            return ground.Concat(top1).Concat(top2).Concat(downItems).ToArray();
+            return ground.Concat(top1).Concat(downItems).ToArray();
 
         }
 

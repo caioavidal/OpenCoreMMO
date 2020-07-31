@@ -19,7 +19,7 @@ namespace NeoServer.OTB.Tests
         {
             var instance = new OTBParsingItemAttribute(new OTBParsingStream(new ReadOnlyMemory<byte>()));
 
-            Assert.Equal(0, instance.Attributes.Count);
+            Assert.Empty(instance.Attributes);
         }
 
         [Fact]

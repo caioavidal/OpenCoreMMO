@@ -5,8 +5,10 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items.Items;
 using NeoServer.Server.Events;
+using NeoServer.Server.Events.Player;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
+using Raven.Client.ServerWide.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,11 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
         private readonly ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler;
+        private readonly ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler;
+        private readonly InvalidOperationEventHandler invalidOperationEventHandler;
 
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler)
+        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
@@ -31,6 +35,8 @@ namespace NeoServer.Server.Standalone.Factories
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
             this.playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
             this.contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
+            this.itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
+            this.invalidOperationEventHandler = invalidOperationEventHandler;
         }
         private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
@@ -70,22 +76,29 @@ namespace NeoServer.Server.Standalone.Factories
             newPlayer.Containers.AddItemAction += (player, containerId, item) =>
                 contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0, item);
 
-            newPlayer.Containers.UpdateItemAction += (player, containerId, slotIndex, item) =>
+            newPlayer.Containers.UpdateItemAction += (player, containerId, slotIndex, item, amount) =>
                 contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId, slotIndex, item);
+
+            newPlayer.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+
+            newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
 
             return newPlayer;
         }
 
-        private IDictionary<Slot, Tuple<IItem, ushort>> ConvertToInventory(PlayerModel player)
+        private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel player)
         {
-            var inventoryDic = new Dictionary<Slot, Tuple<IItem, ushort>>();
+            var inventoryDic = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             foreach (var slot in player.Inventory)
             {
-                var createdItem = itemFactory(slot.Value, player.Location, null);
+                if (!(itemFactory(slot.Value, player.Location, null) is IPickupable createdItem))
+                {
+                    continue;
+                }
 
                 if (slot.Key == Slot.Backpack)
                 {
-                    if (!(createdItem is IContainerItem container))
+                    if (!(createdItem is IContainer container))
                     {
                         continue;
                     }
@@ -93,13 +106,15 @@ namespace NeoServer.Server.Standalone.Factories
                     BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
                 }
 
-                inventoryDic.Add(slot.Key, new Tuple<IItem, ushort>(createdItem, slot.Value));
+                
+
+                inventoryDic.Add(slot.Key, new Tuple<IPickupable, ushort>(createdItem, slot.Value));
 
             }
             return inventoryDic;
         }
 
-        public IContainerItem BuildContainer(IList<ItemModel> items, int index, Location location, IContainerItem container)
+        public IContainer BuildContainer(IList<ItemModel> items, int index, Location location, IContainer container)
         {
             if (items == null || items.Count == index)
             {
@@ -113,7 +128,7 @@ namespace NeoServer.Server.Standalone.Factories
                             {ItemAttribute.Count, itemModel.Amount }
                         });
 
-            if (item is IContainerItem childrenContainer)
+            if (item is IContainer childrenContainer)
             {
                 childrenContainer.SetParent(container);
                 container.TryAddItem(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));

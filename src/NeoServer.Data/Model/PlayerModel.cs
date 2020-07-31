@@ -14,7 +14,7 @@ namespace NeoServer.Server.Model.Players
 
         public AccountModel Account { get; set; }
         public ChaseMode ChaseMode { get; set; }
-        public ushort Capacity { get; set; }
+        public float Capacity { get; set; }
         public ushort Level { get; set; }
         public ushort HealthPoints { get; set; }
         public ushort MaxHealthPoints { get; set; }

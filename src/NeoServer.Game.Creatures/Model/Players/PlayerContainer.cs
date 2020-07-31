@@ -8,10 +8,10 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
-    internal class PlayerContainer
+    internal class PlayerContainer:IEquatable<PlayerContainer>
     {
         public IPlayer Player { get; }
-        public PlayerContainer(IContainerItem container, IPlayer player)
+        public PlayerContainer(IContainer container, IPlayer player)
         {
             Container = container;
             Player = player;
@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public byte Id { get; set; }
 
-        public IContainerItem Container { get; }
+        public IContainer Container { get; }
 
         public RemoveItemFromOpenedContainer RemoveItem { get; private set; }
         public AddItemOnOpenedContainer AddItem { get; private set; }
@@ -34,9 +34,9 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             RemoveItem?.Invoke(Player, Id, slotIndex, item);
         }
-        public void ItemUpdated(byte slotIndex, IItem item)
+        public void ItemUpdated(byte slotIndex, IItem item, sbyte amount)
         {
-            UpdateItem?.Invoke(Player, Id, slotIndex, item);
+            UpdateItem?.Invoke(Player, Id, slotIndex, item, amount);
         }
 
         public void AttachActions(RemoveItemFromOpenedContainer removeItemAction, AddItemOnOpenedContainer addItemAction, UpdateItemOnOpenedContainer updateItemAction)
@@ -75,9 +75,9 @@ namespace NeoServer.Game.Creatures.Model.Players
             Container.OnItemUpdated -= ItemUpdated;
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(PlayerContainer obj)
         {
-            return Container == (obj as PlayerContainer).Container;
+            return Container == obj.Container;
         }
     }
 }

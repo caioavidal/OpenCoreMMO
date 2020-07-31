@@ -5,7 +5,7 @@ public static class Validation
 {
     public static void ThrowIfNull(this object value, string exception = null)
     {
-        if (value == null)
+        if (value is null)
         {
             throw new NullReferenceException(exception ?? nameof(value));
         }

@@ -1,12 +1,16 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
+    public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
+    public delegate void FailAddItemToSlot(InvalidOperation invalidOperation);
     public interface IInventory
     {
-        ICreature Owner { get; }
+        IPlayer Owner { get; }
 
         byte TotalAttack { get; }
 
@@ -15,14 +19,13 @@ namespace NeoServer.Game.Contracts.Creatures
         byte TotalArmor { get; }
 
         byte AttackRange { get; }
-        IContainerItem BackpackSlot { get; }
+        Items.Types.IContainer BackpackSlot { get; }
 
         IItem this[Slot slot] { get; }
 
-        bool Add(IItem item, out IItem extraItem, byte positionByte = 0xFF, byte count = 1, ushort lossProbability = 300);
+        event AddItemToSlot OnItemAddedToSlot;
+        event FailAddItemToSlot OnFailedToAddToSlot;
 
-        IItem Remove(byte positionByte, byte count, out bool wasPartial);
-
-        IItem Remove(ushort itemId, byte count, out bool wasPartial);
+        Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
     }
 }

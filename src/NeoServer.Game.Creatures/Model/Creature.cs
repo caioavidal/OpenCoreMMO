@@ -120,7 +120,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public uint MaxManapoints { get; }
 
-        public decimal CarryStrength { get; protected set; }
+        public float CarryStrength { get; protected set; }
 
         public abstract IOutfit Outfit { get; protected set; }
 

@@ -13,7 +13,7 @@ namespace NeoServer.Benchmarks
             //var summary = BenchmarkRunner.Run<JobQueueBenchmark>();
             //var summary = BenchmarkRunner.Run<SchedulerQueueBenchmark>();
             //var summary = BenchmarkRunner.Run<ArrayPoolVsDynamicArrayBenchmark>();
-            var summary = BenchmarkRunner.Run<StackallocVsList>();
+            var summary = BenchmarkRunner.Run<InstanceVsStaticBenchmark>();
 
             Console.ReadKey();
         }

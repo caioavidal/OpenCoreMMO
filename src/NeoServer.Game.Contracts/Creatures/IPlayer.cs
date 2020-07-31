@@ -11,7 +11,7 @@ namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
     public delegate void ClosedContainer(IPlayer player, byte containerId);
-    public delegate void OpenedContainer(IPlayer player, byte containerId, IContainerItem container);
+    public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
     
     public interface IPlayer : ICreature
     {
@@ -92,6 +92,6 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         void ResetIdleTime();
         void CancelWalk();
-
+        bool CanMoveThing(Location location);
     }
 }

@@ -7,9 +7,9 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class OpenContainerPacket : OutgoingPacket
     {
-        private readonly IContainerItem container;
+        private readonly IContainer container;
         private readonly byte containerId;
-        public OpenContainerPacket(IContainerItem container, byte containerId)
+        public OpenContainerPacket(IContainer container, byte containerId)
         {
 
             this.container = container;

@@ -17,7 +17,7 @@ namespace NeoServer.Server.Events
 
             this.game = game;
         }
-        public void Execute(IPlayer player, byte containerId, IContainerItem container)
+        public void Execute(IPlayer player, byte containerId, NeoServer.Game.Contracts.Items.Types.IContainer container)
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {

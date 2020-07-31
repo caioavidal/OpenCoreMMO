@@ -32,18 +32,43 @@ namespace NeoServer.Game.Items
             }
             if (WeaponItem.IsApplicable(itemType))
             {
-                return new WeaponItem(itemType);
+                return new WeaponItem(itemType, location);
             }
-            if (ContainerItem.IsApplicable(itemType))
+            if (DistanceWeaponItem.IsApplicable(itemType))
             {
-                return new ContainerItem(itemType);
+                return new DistanceWeaponItem(itemType, location);
+            }
+           
+            if (PickupableContainer.IsApplicable(itemType))
+            {
+                return new PickupableContainer(itemType, location);
+            }
+            if (Container.IsApplicable(itemType))
+            {
+                return new Container(itemType, location);
             }
             if (BodyDefenseEquimentItem.IsApplicable(itemType))
             {
-                return new BodyDefenseEquimentItem(itemType);
+                return new BodyDefenseEquimentItem(itemType, location);
+            }
+            if (Ring.IsApplicable(itemType))
+            {
+                return new Ring(itemType, location);
+            }
+            if (Necklace.IsApplicable(itemType))
+            {
+                return new Necklace(itemType, location);
             }
             if (CumulativeItem.IsApplicable(itemType))
             {
+                if (ThrowableDistanceWeaponItem.IsApplicable(itemType))
+                {
+                    return new ThrowableDistanceWeaponItem(itemType, location, attributes);
+                }
+                if (AmmoItem.IsApplicable(itemType))
+                {
+                    return new AmmoItem(itemType, location, attributes);
+                }
                 return new CumulativeItem(itemType, location, attributes);
             }
             if (LiquidPoolItem.IsApplicable(itemType))

@@ -3,6 +3,7 @@ using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Items.Parsers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,8 @@ namespace NeoServer.Game.Items
             _defaultAttributes[attribute] = attributeValue;
         }
 
+        public bool HasAttribute(ItemAttribute attribute) => _defaultAttributes.ContainsKey(attribute);
+
         public T GetAttribute<T>(ItemAttribute attribute) where T : struct
         {
             IConvertible value = null;
@@ -43,8 +46,7 @@ namespace NeoServer.Game.Items
                 return (T)Convert.ChangeType(value, typeof(T));
             }
 
-
-            return default(T);
+            return default;
         }
         public string GetAttribute(ItemAttribute attribute)
         {
@@ -80,6 +82,17 @@ namespace NeoServer.Game.Items
             }
 
             return FloorChangeDirection.None;
+        }
+
+        public ushort GetTransformationItem()
+        {
+            if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformEquipTo) ?? false)
+                return GetAttribute<ushort>(ItemAttribute.TransformEquipTo);
+
+            if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformDequipTo) ?? false)
+                return GetAttribute<ushort>(ItemAttribute.TransformDequipTo);
+
+            return 0;
         }
 
         public Tuple<DamageType, byte> GetWeaponElementDamage()
@@ -131,7 +144,7 @@ namespace NeoServer.Game.Items
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.MagicPoints) ?? false)
                     dictionary.TryAdd(SkillType.Magic, GetAttribute<byte>(ItemAttribute.MagicPoints));
 
-                return null;
+                return dictionary;
             }
         }
 
@@ -144,11 +157,19 @@ namespace NeoServer.Game.Items
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentDeath) ?? false)
                     dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentDeath));
 
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPhysical) ?? false)
+                    dictionary.TryAdd(DamageType.AbsorbPercentPhysical, GetAttribute<byte>(ItemAttribute.AbsorbPercentPhysical));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
+                    dictionary.TryAdd(DamageType.AbsorbPercentMagic, GetAttribute<byte>(ItemAttribute.AbsorbPercentMagic));
+
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentAll) ?? false)
                     dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentAll));
 
                 return dictionary;
             }
         }
+
+
     }
 }

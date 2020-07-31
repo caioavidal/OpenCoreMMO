@@ -1,12 +1,14 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
 {
     public abstract class MoveableItem : BaseItem, IMoveableThing
     {
-        public MoveableItem(IItemType type) : base(type)
+        public MoveableItem(IItemType type, Location location) : base(type)
         {
+            this.location = location;
         }
 
         private Location location;
@@ -15,6 +17,14 @@ namespace NeoServer.Game.Items.Items
         public void SetNewLocation(Location location)
         {
             this.location = location;
+        }
+
+        public float Weight => Metadata.Weight;
+
+        public IMoveableThing Clone()
+        {
+            var clone = (IMoveableThing)MemberwiseClone();
+            return clone;
         }
     }
 }

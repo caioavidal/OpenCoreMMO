@@ -9,7 +9,7 @@ using System;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {
-    public struct Location
+    public struct Location:IEquatable<Location>
     {
 
 
@@ -102,9 +102,9 @@ namespace NeoServer.Game.Enums.Location.Structs
             return $"[{X}, {Y}, {Z}]";
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Location obj)
         {
-            return obj is Location && this == (Location)obj;
+            return this == obj;
         }
 
         public override int GetHashCode()
@@ -224,5 +224,14 @@ namespace NeoServer.Game.Enums.Location.Structs
 
             return locationDiff.Y < 0 ? Direction.North : Direction.South;
         }
+
+        public ushort GetSqmDistance(Location dest)
+        {
+
+            var offset = GetOffsetBetween(this, dest);
+
+            return (ushort)(Math.Abs(offset[0]) + Math.Abs(offset[1]));
+        }
+        
     }
 }

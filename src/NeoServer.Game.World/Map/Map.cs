@@ -1,16 +1,10 @@
-
-// <copyright file="Map.cs" company="2Dudes">
-// Copyright (c) 2018 2Dudes. All rights reserved.
-// Licensed under the MIT license.
-// See LICENSE file in the project root for full license information.
-// </copyright>
-
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
@@ -31,6 +25,8 @@ namespace NeoServer.Game.World.Map
 
         public event PlaceCreatureOnMap OnCreatureAddedOnMap;
         public event RemoveThingFromTile OnThingRemovedFromTile;
+        public event AddThingToTile OnThingAddedToTile;
+        public event UpdateThingOnTile OnThingUpdatedOnTile;
         public event MoveThingOnFloor OnThingMoved;
         public event FailedMoveThing OnThingMovedFailed;
 
@@ -82,7 +78,7 @@ namespace NeoServer.Game.World.Map
 
             toTile.AddThing(ref thing);
 
-            OnThingMoved(thing, fromTile, toTile, fromStackPosition);
+            OnThingMoved?.Invoke(thing, fromTile, toTile, fromStackPosition);
 
             var tileDestination = GetTileDestination(toTile);
 
@@ -192,13 +188,31 @@ namespace NeoServer.Game.World.Map
 
             return tile;
         }
-        public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile)//, byte count)
+        public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
         {
             var fromStackPosition = tile.GetStackPositionOfThing(thing);
-            tile.RemoveThing(ref thing);//, count);
+            tile.RemoveThing(ref thing, amount);
 
-            OnThingRemovedFromTile(thing, tile, fromStackPosition);
+            OnThingRemovedFromTile?.Invoke(thing, tile, fromStackPosition);
         }
+        public void AddItem(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
+        {
+            var stackPosition = tile.NextStackPosition;
+            var result = tile.AddThing(ref thing);
+
+            foreach (var operation in result.Value.Operations)
+            {
+                switch (operation)
+                {
+                    case Operation.Added: OnThingAddedToTile?.Invoke(thing, tile, stackPosition); break;
+                    case Operation.Updated: OnThingUpdatedOnTile?.Invoke(tile.TopItemOnStack, tile, stackPosition); break;
+                    default: break;
+                };
+            }
+        }
+
+
+
 
         public IEnumerable<uint> GetCreaturesAtPositionZone(Location location)
         {

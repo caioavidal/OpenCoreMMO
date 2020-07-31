@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RavenDB.Client" Version="4.2.101" />
+    <PackageReference Include="RavenDB.Client" Version="4.2.102" />
     <PackageReference Include="Serilog" Version="2.9.0" />
   </ItemGroup>
 

@@ -1,5 +1,9 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Items.Parsers;
 using System;
 using System.Collections.Generic;
 
@@ -20,6 +24,7 @@ namespace NeoServer.Game.Items
         public bool Locked { get; private set; }
 
         public ushort ClientId { get; private set; }
+        public ushort TransformTo => Attributes.GetTransformationItem();
 
         public ItemTypeAttribute TypeAttribute { get; private set; }
 
@@ -30,6 +35,8 @@ namespace NeoServer.Game.Items
         public ushort Speed { get; private set; }
         public string Article { get; private set; }
         public string Plural { get; private set; }
+
+        public float Weight => Attributes.GetAttribute<float>(Enums.ItemAttribute.Weight) / 100;
 
         void ThrowIfLocked()
         {
@@ -232,5 +239,15 @@ namespace NeoServer.Game.Items
 
         public bool HasFlag(ItemFlag flag) => Flags.Contains(flag);
 
+        public AmmoType AmmoType => Attributes?.GetAttribute(ItemAttribute.AmmoType) switch
+        {
+            "bolt" => AmmoType.Bolt,
+            "arrow" => AmmoType.Arrow,
+            _ => AmmoType.None
+        };
+
+        public Slot BodyPosition => SlotTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.BodyPosition));
+        public ShootType ShootType => ShootTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.ShootType));
+        public WeaponType WeaponType => WeaponTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.WeaponType));
     }
 }

@@ -7,48 +7,28 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Items.Items
 {
-    public struct CumulativeItem : ICumulativeItem, IItem
+    public class CumulativeItem : MoveableItem, ICumulativeItem, IItem
     {
-        public CumulativeItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+        public CumulativeItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
         {
-            Metadata = type;
             Amount = 1;
             if (attributes != null && attributes.TryGetValue(Enums.ItemAttribute.Count, out var amount))
             {
                 Amount = Math.Min((byte)100, (byte)amount);
             }
-
-            ClientId = type.ClientId;
-            Weight = type.Attributes.GetAttribute<float>(Enums.ItemAttribute.Weight);
-            this.location = location;
         }
-        public CumulativeItem(IItemType type, Location location, byte amount)
-        {
-            Metadata = type;
-            Amount = 1;
-
-            Amount = Math.Min((byte)100, amount);
-
-            ClientId = type.ClientId;
-            Weight = type.Attributes.GetAttribute<float>(Enums.ItemAttribute.Weight);
-            this.location = location;
-        }
+        public CumulativeItem(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
 
         public byte Amount { get; set; }
 
-        public ushort ClientId { get; }
+        public new float Weight => CalculateWeight(Amount);
 
-        public float Weight { get; }
-
-        private Location location;
-        public Location Location => location;
-
-        public IItemType Metadata { get; }
+        public float CalculateWeight(byte amount) => Metadata.Weight * amount;
 
         public Span<byte> GetRaw()
         {
             Span<byte> cache = stackalloc byte[3];
-            var idBytes = BitConverter.GetBytes(ClientId);
+            var idBytes = BitConverter.GetBytes(Metadata.ClientId);
 
             cache[0] = idBytes[0];
             cache[1] = idBytes[1];
@@ -58,21 +38,27 @@ namespace NeoServer.Game.Items.Items
         }
         public static bool IsApplicable(IItemType type) => type.Flags.Contains(Enums.ItemFlag.Stackable);
 
-        public void SetNewLocation(Location location)
+        public ICumulativeItem Clone(byte amount)
         {
-            this.location = location;
+            var clone = (ICumulativeItem)MemberwiseClone();
+            clone.Amount = amount;
+            return clone;
         }
 
-
-        public ICumulativeItem Split(byte amount)
+        /// <summary>
+        /// Reduce amount from item
+        /// </summary>
+        /// <param name="amount">Amount to be reduced</param>
+        public void Reduce(byte amount)
         {
+            amount = (byte)(amount > 100 ? 100 : amount);
             Amount -= amount;
-
-            var splitedItem = (ICumulativeItem)MemberwiseClone();
-            splitedItem.Amount = amount;
-
-            return splitedItem;
         }
+
+    
+
+        public byte AmountToComplete => (byte)(100 - Amount);
+        
 
         public bool TryJoin(ref ICumulativeItem item)
         {
@@ -83,23 +69,23 @@ namespace NeoServer.Game.Items.Items
                 return false;
             }
 
-            if (item.Metadata.ClientId != item.Metadata.ClientId)
+            if (item.Metadata.ClientId != Metadata.ClientId)
             {
                 return false;
             }
 
-            var remainingAmount = Amount + item.Amount;
+            var totalAmount = Amount + item.Amount;
 
-            if (remainingAmount <= 100)
+            if (totalAmount <= 100)
             {
-                Amount = (byte)remainingAmount;
+                Amount = (byte)totalAmount;
                 item = null; //item to join does not exist anymore
                 return true;
             }
 
             Amount = 100;
 
-            item.Amount = (byte)remainingAmount;
+            item.Amount = (byte)(totalAmount - Amount);
 
             return true;
 
