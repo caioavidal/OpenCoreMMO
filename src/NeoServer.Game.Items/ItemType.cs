@@ -11,10 +11,19 @@ namespace NeoServer.Game.Items
 {
     public class ItemType : IItemType
     {
+        /// <summary>
+        /// Server Id
+        /// </summary>
         public ushort TypeId { get; private set; }
 
+        /// <summary>
+        /// Item's name
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Item's description
+        /// </summary>
         public string Description { get; private set; }
 
         public ISet<ItemFlag> Flags { get; }
@@ -31,8 +40,7 @@ namespace NeoServer.Game.Items
         public ItemGroup Group { get; private set; }
         public ushort WareId { get; private set; }
         public LightBlock LightBlock { get; private set; }
-        public byte AlwaysOnTopOrder { get; private set; }
-        public ushort Speed { get; private set; }
+        public ushort Speed => Attributes.GetAttribute<ushort>(ItemAttribute.Speed);
         public string Article { get; private set; }
         public string Plural { get; private set; }
 
@@ -86,8 +94,8 @@ namespace NeoServer.Game.Items
 
         public void SetSpeed(ushort speed)
         {
+            Attributes.SetAttribute(ItemAttribute.Speed, speed);
             ThrowIfLocked();
-            Speed = speed;
         }
 
         public ItemType()
@@ -98,12 +106,6 @@ namespace NeoServer.Game.Items
             Flags = new HashSet<ItemFlag>();
             Attributes = new ItemAttributeList();
             Locked = false;
-        }
-
-        public void SetAlwaysOnTopOrder(byte alwaysOnTopOrder)
-        {
-            ThrowIfLocked();
-            AlwaysOnTopOrder = alwaysOnTopOrder;
         }
 
         public void SetLight(LightBlock lightBlock)

@@ -23,7 +23,6 @@ namespace NeoServer.Loaders.Items
             itemType.SetSpeed(itemNode.Speed);
             itemType.SetLight(new LightBlock(itemNode.LightLevel, itemNode.LightColor));
             itemType.SetWareId(itemNode.WareId);
-            itemType.SetAlwaysOnTopOrder(itemNode.AlwaysOnTop);
 
             itemType.SetGroup((byte)itemNode.Type);
             itemType.SetType((byte)itemNode.Type);

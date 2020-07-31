@@ -31,7 +31,6 @@ namespace NeoServer.Game.Contracts.Items
 
         ushort WareId { get; }
         LightBlock LightBlock { get; }
-        byte AlwaysOnTopOrder { get; }
         ushort Speed { get; }
         string Article { get; }
         IItemAttributeList Attributes { get; }
@@ -46,7 +45,6 @@ namespace NeoServer.Game.Contracts.Items
         void SetDescription(string value);
         void LockChanges();
         void SetSpeed(ushort speed);
-        void SetAlwaysOnTopOrder(byte alwaysOnTopOrder);
         void SetLight(LightBlock lightBlock);
         void SetWareId(ushort wareId);
         bool HasFlag(ItemFlag flag);
