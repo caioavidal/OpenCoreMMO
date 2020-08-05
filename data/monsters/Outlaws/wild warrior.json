@@ -1,0 +1,173 @@
+{
+  "monster": {
+    "name": "Wild Warrior",
+    "nameDescription": "a wild warrior",
+    "race": "blood",
+    "experience": "55",
+    "speed": "215",
+    "manacost": "420",
+    "health": {
+      "now": "120",
+      "max": "120"
+    },
+    "look": {
+      "type": "131",
+      "head": "57",
+      "body": "57",
+      "legs": "57",
+      "feet": "57",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "60",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "9",
+      "defense": "18",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "6",
+        "speedchange": "200",
+        "duration": "2000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "10"
+        },
+        {
+          "physicalPercent": "-12"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "An enemy!"
+        },
+        {
+          "sentence": "Gimme your money!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "16750"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "20000"
+        },
+        {
+          "id": "2649",
+          "chance": "27500"
+        },
+        {
+          "id": "2110",
+          "chance": "2650"
+        },
+        {
+          "id": "2465",
+          "chance": "4000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2509",
+              "chance": "2650"
+            },
+            {
+              "id": "2386",
+              "chance": "23750"
+            },
+            {
+              "id": "2458",
+              "chance": "2650"
+            },
+            {
+              "id": "2511",
+              "chance": "17000"
+            },
+            {
+              "id": "2459",
+              "chance": "250"
+            },
+            {
+              "id": "2391",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

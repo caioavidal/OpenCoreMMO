@@ -1,0 +1,216 @@
+{
+  "monster": {
+    "name": "Giant Spider",
+    "nameDescription": "a giant spider",
+    "race": "venom",
+    "experience": "900",
+    "speed": "280",
+    "manacost": "0",
+    "health": {
+      "now": "1300",
+      "max": "1300"
+    },
+    "look": {
+      "type": "38",
+      "corpse": "5977"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "100"
+        },
+        {
+          "name": "poisonfield",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "6",
+        "speedchange": "310",
+        "duration": "20000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Poison Spider",
+        "interval": "1000",
+        "chance": "30",
+        "max": "2"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2478",
+          "chance": "9000"
+        },
+        {
+          "id": "2148",
+          "countmax": "57",
+          "chance": "23000"
+        },
+        {
+          "id": "2148",
+          "countmax": "28",
+          "chance": "23000"
+        },
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "23000"
+        },
+        {
+          "id": "2477",
+          "chance": "600"
+        },
+        {
+          "id": "2463",
+          "chance": "8600"
+        },
+        {
+          "id": "2545",
+          "countmax": "12",
+          "chance": "7500"
+        },
+        {
+          "id": "5879",
+          "chance": "2000"
+        },
+        {
+          "id": "2457",
+          "chance": "5300"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7588",
+              "chance": "1000"
+            },
+            {
+              "id": "2169",
+              "chance": "1375"
+            },
+            {
+              "id": "2476",
+              "chance": "500"
+            },
+            {
+              "id": "7901",
+              "chance": "250"
+            },
+            {
+              "id": "2171",
+              "chance": "400"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "monster": {
+    "name": "Azerus",
+    "nameDescription": "Azerus",
+    "race": "blood",
+    "experience": "6000",
+    "speed": "320",
+    "health": {
+      "now": "26000",
+      "max": "26000"
+    },
+    "look": {
+      "type": "309",
+      "head": "19",
+      "body": "96",
+      "legs": "21",
+      "feet": "81",
+      "corpse": "9738"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-900"
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "0",
+          "max": "-2000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poff"
+            }
+          ]
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "7",
+          "target": "1",
+          "min": "0",
+          "max": "-800",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "bigclouds"
+            }
+          ]
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "0",
+          "max": "-524",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "10",
+          "length": "8",
+          "spread": "0",
+          "min": "-100",
+          "max": "-500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "sleep"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "65",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "11",
+        "min": "400",
+        "max": "900",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "greenshimmer"
+        }
+      }
+    },
+    "summons": {
+      "maxSummons": "10",
+      "summon": {
+        "name": "Rift Worm",
+        "speed": "3000",
+        "chance": "30"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "12",
+      "voice": [
+        {
+          "sentence": "The ultimate will finally consume this unworthy existence!"
+        },
+        {
+          "sentence": "My masters and I will tear down barriers and join the ultimate in its realm!"
+        },
+        {
+          "sentence": "The power of the Yalahari will all be mine!"
+        },
+        {
+          "sentence": "He who has returned from beyond has taught me secrets you can't even grasp!"
+        },
+        {
+          "sentence": "You can't hope to penetrate my shields!"
+        },
+        {
+          "sentence": "Do you really think you could beat me?"
+        }
+      ]
+    }
+  }
+}

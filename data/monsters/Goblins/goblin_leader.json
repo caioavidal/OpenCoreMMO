@@ -1,0 +1,158 @@
+{
+  "monster": {
+    "name": "Goblin Leader",
+    "nameDescription": "a goblin leader",
+    "race": "blood",
+    "experience": "75",
+    "speed": "160",
+    "manacost": "290",
+    "health": {
+      "now": "50",
+      "max": "50"
+    },
+    "look": {
+      "type": "61",
+      "corpse": "6002"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-50"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "0",
+          "max": "-45",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallstone"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Go go, Gobo attack !!"
+        },
+        {
+          "sentence": "Me the greenest and the meanest!"
+        },
+        {
+          "sentence": "Me have power to crush you!"
+        },
+        {
+          "sentence": "Goblinkiller! Catch him !!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "10",
+          "chance": "40000"
+        },
+        {
+          "id": "2230",
+          "chance": "11500"
+        },
+        {
+          "name": "mouldy cheese",
+          "chance": "9000"
+        },
+        {
+          "name": "dagger",
+          "chance": "10300"
+        },
+        {
+          "name": "short sword",
+          "chance": "15400"
+        },
+        {
+          "name": "bone club",
+          "chance": "1300"
+        },
+        {
+          "name": "leather helmet",
+          "chance": "16670"
+        },
+        {
+          "name": "leather armor",
+          "chance": "5000"
+        },
+        {
+          "name": "small axe",
+          "chance": "12800"
+        },
+        {
+          "id": "2667",
+          "chance": "15000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

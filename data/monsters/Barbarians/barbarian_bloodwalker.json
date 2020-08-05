@@ -1,0 +1,191 @@
+{
+  "monster": {
+    "name": "Barbarian Bloodwalker",
+    "nameDescription": "a barbarian bloodwalker",
+    "race": "blood",
+    "experience": "195",
+    "speed": "230",
+    "manacost": "590",
+    "health": {
+      "now": "305",
+      "max": "305"
+    },
+    "look": {
+      "type": "255",
+      "head": "114",
+      "body": "132",
+      "legs": "132",
+      "feet": "132",
+      "corpse": "20335"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-240"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "15",
+        "speedchange": "240",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "50"
+        },
+        {
+          "deathPercent": "-5"
+        },
+        {
+          "earthPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "YAAAHEEE!"
+        },
+        {
+          "sentence": "SLAUGHTER!"
+        },
+        {
+          "sentence": "CARNAGE!"
+        },
+        {
+          "sentence": "You can run but you can't hide"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2044",
+          "chance": "8280"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "12",
+          "chance": "50000"
+        },
+        {
+          "name": "battle axe",
+          "chance": "6000"
+        },
+        {
+          "name": "halberd",
+          "chance": "6730"
+        },
+        {
+          "name": "chain helmet",
+          "chance": "10440"
+        },
+        {
+          "name": "chain armor",
+          "chance": "10290"
+        },
+        {
+          "name": "ham",
+          "chance": "4970"
+        },
+        {
+          "name": "beastslayer axe",
+          "chance": "390"
+        },
+        {
+          "name": "red piece of cloth",
+          "chance": "530"
+        },
+        {
+          "name": "shard",
+          "chance": "290"
+        },
+        {
+          "name": "fur boots",
+          "chance": "100"
+        },
+        {
+          "name": "health potion",
+          "chance": "950"
+        }
+      ]/* lamp */
+    }
+  }
+}

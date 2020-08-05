@@ -1,0 +1,176 @@
+{
+  "monster": {
+    "name": "Mad Technomancer",
+    "nameDescription": "mad technomancer",
+    "race": "blood",
+    "experience": "55",
+    "speed": "200",
+    "manacost": "0",
+    "health": {
+      "now": "1000",
+      "max": "1000"
+    },
+    "look": {
+      "type": "66",
+      "corpse": "6015"
+    },
+    "targetchange": {
+      "interval": "500",
+      "chance": "25"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "150"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "40"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-50",
+          "max": "-120",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "min": "-55",
+          "max": "-105",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "min": "-50",
+          "max": "-80"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "50",
+        "min": "75",
+        "max": "325",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "80"
+        },
+        {
+          "firePercent": "60"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I'm going to make them an offer they can't refuse."
+        },
+        {
+          "sentence": "My masterplan cannot fail!"
+        },
+        {
+          "sentence": "Gentlemen, you can't fight here! This is the War Room!"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "id": "7699",
+        "chance": "1000000"
+      }/* beard */
+    }
+  }
+}

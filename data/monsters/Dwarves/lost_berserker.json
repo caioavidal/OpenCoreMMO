@@ -1,0 +1,317 @@
+{
+  "monster": {
+    "name": "Lost Berserker",
+    "nameDescription": "a lost berserker",
+    "race": "blood",
+    "experience": "4400",
+    "speed": "250",
+    "health": {
+      "now": "5900",
+      "max": "5900"
+    },
+    "look": {
+      "type": "496",
+      "corpse": "17416"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "15"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-501"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "0",
+          "max": "-300",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "whirlwindaxe"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "radius": "3",
+          "min": "0",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "explosion"
+            },
+            {
+              "key": "areaEffect",
+              "value": "explosionarea"
+            }
+          ]
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "5",
+          "target": "0",
+          "spread": "0",
+          "min": "-150",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "2",
+          "target": "0",
+          "spread": "0",
+          "speedchange": "-800",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "radius": "4",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "stun"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "40",
+      "defense": {
+        "name": "invisible",
+        "interval": "2000",
+        "chance": "5",
+        "duration": "3000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "teleport"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "10"
+        },
+        {
+          "physicalPercent": "40"
+        },
+        {
+          "deathPercent": "10"
+        },
+        {
+          "icePercent": "40"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Kill! Kill! Kill!"
+        },
+        {
+          "sentence": "Death! Death! Death!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "piggy bank",
+          "chance": "3920"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "9",
+          "chance": "100000"
+        },
+        {
+          "name": "dwarven ring",
+          "chance": "2280"
+        },
+        {
+          "name": "knight axe",
+          "chance": "2070"
+        },
+        {
+          "name": "fire axe",
+          "chance": "380"
+        },
+        {
+          "name": "royal helmet",
+          "chance": "150"
+        },
+        {
+          "name": "guardian shield",
+          "chance": "1400"
+        },
+        {
+          "name": "tower shield",
+          "chance": "1002"
+        },
+        {
+          "name": "black shield",
+          "chance": "640"
+        },
+        {
+          "name": "brown mushroom",
+          "countmax": "2",
+          "chance": "15190"
+        },
+        {
+          "name": "iron ore",
+          "chance": "8490"
+        },
+        {
+          "name": "magic sulphur",
+          "chance": "720"
+        },
+        {
+          "name": "chaos mace",
+          "chance": "550"
+        },
+        {
+          "name": "spiked squelcher",
+          "chance": "810"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "13650"
+        },
+        {
+          "name": "great health potion",
+          "chance": "13650"
+        },
+        {
+          "name": "terra boots",
+          "chance": "640"
+        },
+        {
+          "name": "small topaz",
+          "countmax": "2",
+          "chance": "7970"
+        },
+        {
+          "name": "clay lump",
+          "chance": "930"
+        },
+        {
+          "id": "13757",
+          "chance": "2050"
+        },
+        {
+          "name": "violet crystal shard",
+          "chance": "3500"
+        },
+        {
+          "name": "brown crystal splinter",
+          "countmax": "2",
+          "chance": "7540"
+        },
+        {
+          "name": "blue crystal splinter",
+          "chance": "4610"
+        },
+        {
+          "name": "green crystal fragment",
+          "chance": "6870"
+        },
+        {
+          "name": "drill bolt",
+          "countmax": "10",
+          "chance": "8210"
+        }
+      ]/* coal */
+    }
+  }
+}

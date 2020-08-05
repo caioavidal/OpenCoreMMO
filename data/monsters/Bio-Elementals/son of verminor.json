@@ -1,0 +1,109 @@
+{
+  "monster": {
+    "name": "Son of Verminor",
+    "nameDescription": "a son of verminor",
+    "race": "venom",
+    "experience": "5900",
+    "speed": "120",
+    "manacost": "0",
+    "health": {
+      "now": "8500",
+      "max": "8500"
+    },
+    "look": {
+      "type": "19",
+      "corpse": "1496"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "105",
+          "attack": "80",
+          "poison": "150"
+        },
+        {
+          "name": "poisonfield",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "3000",
+          "chance": "15",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-80",
+          "max": "-155",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "20"
+    },
+    "immunities": {
+      "immunity": {
+        "poison": "1"
+      }
+    }
+  }
+}

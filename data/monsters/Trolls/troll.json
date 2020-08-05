@@ -1,0 +1,165 @@
+{
+  "monster": {
+    "name": "Troll",
+    "nameDescription": "a troll",
+    "race": "blood",
+    "experience": "20",
+    "speed": "126",
+    "manacost": "290",
+    "health": {
+      "now": "50",
+      "max": "50"
+    },
+    "look": {
+      "type": "15",
+      "corpse": "5960"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "1500",
+        "skill": "20",
+        "attack": "16"
+      }
+    },
+    "defenses": {
+      "armor": "6",
+      "defense": "8"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-4"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Grrrr"
+        },
+        {
+          "sentence": "Groar"
+        },
+        {
+          "sentence": "Gruntz!"
+        },
+        {
+          "sentence": "Hmmm, bugs."
+        },
+        {
+          "sentence": "Hmmm, dogs."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "12",
+          "chance": "26750"
+        },
+        {
+          "id": "2380",
+          "chance": "18750"
+        },
+        {
+          "id": "2643",
+          "chance": "8750"
+        },
+        {
+          "id": "2461",
+          "chance": "9750"
+        },
+        {
+          "id": "2666",
+          "chance": "11750"
+        },
+        {
+          "id": "2120",
+          "chance": "8750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2389",
+              "chance": "12000"
+            },
+            {
+              "id": "2512",
+              "chance": "15000"
+            },
+            {
+              "id": "2448",
+              "chance": "4500"
+            },
+            {
+              "id": "2170",
+              "chance": "50"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

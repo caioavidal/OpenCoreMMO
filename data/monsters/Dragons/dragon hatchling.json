@@ -1,0 +1,173 @@
+{
+  "monster": {
+    "name": "Dragon Hatchling",
+    "nameDescription": "a dragon hatchling",
+    "race": "blood",
+    "experience": "185",
+    "speed": "170",
+    "manacost": "0",
+    "health": {
+      "now": "380",
+      "max": "380"
+    },
+    "look": {
+      "type": "271",
+      "corpse": "7621"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "70",
+      "defense": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "80"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "45",
+          "attack": "20"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "12",
+          "length": "8",
+          "spread": "3",
+          "min": "-10",
+          "max": "-60",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "14",
+          "length": "8",
+          "spread": "3",
+          "min": "-20",
+          "max": "-40",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "38",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "13",
+        "min": "8",
+        "max": "33",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "earthPercent": "60"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "energyPercent": "-6"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "50",
+      "voice": [
+        {
+          "sentence": "Fchu?",
+          "yell": "0"
+        },
+        {
+          "sentence": "Rooawwrr"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "55",
+          "chance": "37500"
+        },
+        {
+          "id": "2672",
+          "chance": "25000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": {
+            "id": "7618",
+            "chance": "5000"
+          }
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

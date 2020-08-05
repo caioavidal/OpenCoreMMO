@@ -32,15 +32,24 @@ namespace NeoServer.Game.Creatures.Model
 
         public event StopWalk OnStoppedWalking;
 
+        public Creature(uint id, ICreatureType type)
+        {
+            CreatureId = id;
+            Name = type.Name;
+            MaxHitpoints = type.MaxHealth;
+            Speed = type.Speed;
+            Hitpoints = MaxHitpoints;
+            Outfit =  new Outfit()
+            {
+                LookType = type.Look[Game.Enums.Creatures.LookType.Type]
+            };
+        }
         protected Creature(
             uint id,
             string name,
-            string article,
             uint maxHitpoints,
-            uint maxManapoints,
             ushort corpse = 0,
-            ushort hitpoints = 0,
-            ushort manapoints = 0)
+            ushort hitpoints = 0)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -56,11 +65,11 @@ namespace NeoServer.Game.Creatures.Model
 
             CreatureId = id;
             Name = name;
-            Article = article;
+            
             MaxHitpoints = maxHitpoints;
             Hitpoints = Math.Min(MaxHitpoints, hitpoints == 0 ? MaxHitpoints : hitpoints);
-            MaxManapoints = maxManapoints;
-            Manapoints = Math.Min(MaxManapoints, manapoints);
+            //MaxManapoints = maxManapoints;
+            //Manapoints = Math.Min(MaxManapoints, manapoints);
             Corpse = corpse;
 
             Cooldowns = new Dictionary<CooldownType, Tuple<DateTime, TimeSpan>>
@@ -100,15 +109,13 @@ namespace NeoServer.Game.Creatures.Model
 
         //public override byte Count => 0x01;
 
-        public override string InspectionText => $"{Article} {Name}";
+        public override string InspectionText => $"{Name}";
 
         public override string CloseInspectionText => InspectionText;
 
         public uint ActorId => CreatureId;
 
         public uint CreatureId { get; }
-
-        public string Article { get; }
 
         public ushort Corpse { get; }
 

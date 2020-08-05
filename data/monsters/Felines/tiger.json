@@ -1,0 +1,111 @@
+{
+  "monster": {
+    "name": "Tiger",
+    "nameDescription": "a tiger",
+    "race": "blood",
+    "experience": "40",
+    "speed": "240",
+    "manacost": "420",
+    "health": {
+      "now": "75",
+      "max": "75"
+    },
+    "look": {
+      "type": "125",
+      "corpse": "6051"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "1500",
+        "skill": "30",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "12",
+        "speedchange": "567",
+        "duration": "3000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "-10"
+        },
+        {
+          "icePercent": "-8"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2671",
+          "countmax": "4",
+          "chance": "8500"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "16750"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

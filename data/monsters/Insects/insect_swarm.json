@@ -1,0 +1,101 @@
+{
+  "monster": {
+    "name": "Insect Swarm",
+    "nameDescription": "an insect swarm",
+    "race": "undead",
+    "experience": "40",
+    "speed": "150",
+    "health": {
+      "now": "50",
+      "max": "50"
+    },
+    "look": {
+      "type": "349",
+      "corpse": "0"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "275"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-10",
+          "poison": "16"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "1",
+          "min": "0",
+          "max": "-15",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "elements": {
+      "element": {
+        "firePercent": "-10"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "earth": "1"
+      }
+    }
+  }
+}

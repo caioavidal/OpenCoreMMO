@@ -1,0 +1,184 @@
+{
+  "monster": {
+    "name": "Chakoya Toolshaper",
+    "nameDescription": "a chakoya toolshaper",
+    "race": "blood",
+    "experience": "40",
+    "speed": "200",
+    "health": {
+      "now": "80",
+      "max": "80"
+    },
+    "look": {
+      "type": "259",
+      "corpse": "7320"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-35"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "3",
+          "target": "1",
+          "min": "0",
+          "max": "-45",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallstone"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "40"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "-15"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "ice": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Chikuva!!"
+        },
+        {
+          "sentence": "Jinuma jamjam!"
+        },
+        {
+          "sentence": "Suvituka siq chuqua!"
+        },
+        {
+          "sentence": "Kiyosa sipaju!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "20",
+          "chance": "60000"
+        },
+        {
+          "name": "mace",
+          "chance": "4000"
+        },
+        {
+          "name": "bone shield",
+          "chance": "870"
+        },
+        {
+          "name": "pick",
+          "chance": "940"
+        },
+        {
+          "id": "2667",
+          "countmax": "2",
+          "chance": "25000"
+        },
+        {
+          "name": "northern pike",
+          "chance": "120"
+        },
+        {
+          "name": "rainbow trout",
+          "chance": "170"
+        },
+        {
+          "name": "green perch",
+          "chance": "100"
+        },
+        {
+          "name": "mammoth whopper",
+          "chance": "150"
+        },
+        {
+          "id": "7441",
+          "chance": "470"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

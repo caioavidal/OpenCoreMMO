@@ -1,0 +1,212 @@
+{
+  "monster": {
+    "name": "Pirate Buccaneer",
+    "nameDescription": "a pirate buccaneer",
+    "race": "blood",
+    "experience": "250",
+    "speed": "230",
+    "manacost": "595",
+    "health": {
+      "now": "425",
+      "max": "425"
+    },
+    "look": {
+      "type": "97",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "50"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "80"
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "17",
+          "range": "4",
+          "min": "-0",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "23"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "25"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "deathPercent": "-7"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "physicalPercent": "-11"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Give up!"
+        },
+        {
+          "sentence": "Hiyaa"
+        },
+        {
+          "sentence": "Plundeeeeer!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "59",
+          "chance": "26500"
+        },
+        {
+          "id": "2410",
+          "countmax": "6",
+          "chance": "4000"
+        },
+        {
+          "id": "2385",
+          "chance": "10750"
+        },
+        {
+          "id": "2238",
+          "chance": "9750"
+        },
+        {
+          "id": "2050",
+          "chance": "8800"
+        },
+        {
+          "id": "2376",
+          "chance": "5000"
+        },
+        {
+          "id": "2513",
+          "chance": "3500"
+        },
+        {
+          "id": "5091",
+          "chance": "1100"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "6095",
+              "chance": "1000"
+            },
+            {
+              "id": "2463",
+              "chance": "950"
+            },
+            {
+              "id": "6126",
+              "chance": "600"
+            },
+            {
+              "id": "6098",
+              "chance": "600"
+            },
+            {
+              "id": "7588",
+              "chance": "500"
+            },
+            {
+              "id": "6097",
+              "chance": "600"
+            },
+            {
+              "id": "5926",
+              "chance": "500"
+            },
+            {
+              "id": "5792",
+              "chance": "50"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

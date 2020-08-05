@@ -1,0 +1,274 @@
+{
+  "monster": {
+    "name": "Elder Bonelord",
+    "nameDescription": "an elder bonelord",
+    "race": "blood",
+    "experience": "280",
+    "speed": "180",
+    "health": {
+      "now": "500",
+      "max": "500"
+    },
+    "look": {
+      "type": "108",
+      "corpse": "6037"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-55"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "min": "-45",
+          "max": "-60",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "min": "-40",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-45",
+          "max": "-90",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-20",
+          "max": "-40",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "min": "-45",
+          "max": "-85",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "min": "0",
+          "max": "-40"
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "speedchange": "-600",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "30"
+        },
+        {
+          "deathPercent": "30"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "6",
+      "summon": [
+        {
+          "name": "Gazer",
+          "interval": "2000",
+          "chance": "10"
+        },
+        {
+          "name": "Crypt Shambler",
+          "interval": "2000",
+          "chance": "15"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Let me take a look at you!"
+        },
+        {
+          "sentence": "Inferior creatures, bow before my power!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "86",
+          "chance": "30000"
+        },
+        {
+          "id": "2175",
+          "chance": "7500"
+        },
+        {
+          "name": "two handed sword",
+          "chance": "6000"
+        },
+        {
+          "name": "steel shield",
+          "chance": "6000"
+        },
+        {
+          "name": "bonelord shield",
+          "chance": "150"
+        },
+        {
+          "name": "bonelord helmet",
+          "chance": "150"
+        },
+        {
+          "name": "sniper arrow",
+          "countmax": "5",
+          "chance": "10000"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "1000"
+        },
+        {
+          "name": "elder bonelord tentacle",
+          "chance": "21725"
+        },
+        {
+          "name": "giant eye",
+          "chance": "850"
+        },
+        {
+          "name": "small flask of eyedrops",
+          "chance": "10025"
+        }
+      ]/* spellbook */
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "monster": {
+    "name": "Thornback Tortoise",
+    "nameDescription": "a thornback tortoise",
+    "race": "blood",
+    "experience": "150",
+    "speed": "200",
+    "manacost": "490",
+    "health": {
+      "now": "300",
+      "max": "300"
+    },
+    "look": {
+      "type": "198",
+      "corpse": "6073"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "45",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "18",
+      "defense": "18"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "13"
+        },
+        {
+          "earthPercent": "12"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "firePercent": "-9"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "28500"
+        },
+        {
+          "id": "5678",
+          "countmax": "3",
+          "chance": "1000"
+        },
+        {
+          "id": "2667",
+          "chance": "9000"
+        },
+        {
+          "id": "2671",
+          "countmax": "2",
+          "chance": "4500"
+        },
+        {
+          "id": "1987",
+          "change": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7618",
+              "chance": "2500"
+            },
+            {
+              "id": "2789",
+              "chance": "1000"
+            },
+            {
+              "id": "2787",
+              "chance": "1000"
+            },
+            {
+              "id": "2391",
+              "chance": "800"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

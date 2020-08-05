@@ -1,0 +1,313 @@
+{
+  "monster": {
+    "name": "Hideous Fungus",
+    "nameDescription": "a hideous fungus",
+    "race": "venom",
+    "experience": "2900",
+    "speed": "260",
+    "health": {
+      "now": "4600",
+      "max": "4600"
+    },
+    "look": {
+      "type": "499",
+      "corpse": "17428"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "275"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-450"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-250",
+          "max": "-430",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallearth"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallplants"
+            }
+          ]
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "15",
+          "length": "8",
+          "spread": "3",
+          "min": "-250",
+          "max": "-550",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "snowball"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "1",
+          "target": "1",
+          "speedchange": "-600",
+          "duration": "60000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "radius": "5",
+          "duration": "4000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallstone"
+            },
+            {
+              "key": "areaEffect",
+              "value": "stun"
+            }
+          ]
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "radius": "3",
+          "range": "7",
+          "min": "-400",
+          "max": "-640",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "35",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "15",
+          "min": "275",
+          "max": "350",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "10",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "5"
+        },
+        {
+          "deathPercent": "1"
+        },
+        {
+          "firePercent": "5"
+        },
+        {
+          "energyPercent": "15"
+        },
+        {
+          "icePercent": "15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "humorless fungus",
+        "interval": "2000",
+        "chance": "10",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Munch munch munch!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "70000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "97",
+          "chance": "70000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "7",
+          "chance": "100000"
+        },
+        {
+          "name": "war hammer",
+          "chance": "4010"
+        },
+        {
+          "name": "white piece of cloth",
+          "chance": "6430"
+        },
+        {
+          "name": "green piece of cloth",
+          "chance": "3003"
+        },
+        {
+          "name": "red piece of cloth",
+          "chance": "1820"
+        },
+        {
+          "name": "blue piece of cloth",
+          "chance": "3700"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "7692"
+        },
+        {
+          "name": "great health potion",
+          "chance": "7220"
+        },
+        {
+          "name": "mana potion",
+          "chance": "9090"
+        },
+        {
+          "name": "terra mantle",
+          "chance": "800"
+        },
+        {
+          "name": "terra legs",
+          "chance": "920"
+        },
+        {
+          "name": "terra boots",
+          "chance": "2000"
+        },
+        {
+          "name": "terra amulet",
+          "chance": "2000"
+        },
+        {
+          "name": "mushroom backpack",
+          "chance": "20"
+        },
+        {
+          "name": "mushroom pie",
+          "countmax": "3",
+          "chance": "14500"
+        },
+        {
+          "name": "muck rod",
+          "chance": "590"
+        },
+        {
+          "name": "hideous chunk",
+          "chance": "14285"
+        },
+        {
+          "name": "envenomed arrow",
+          "countmax": "15",
+          "chance": "14500"
+        },
+        {
+          "name": "mycological bow",
+          "chance": "60"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "monster": {
+    "name": "Hairman The Huge",
+    "nameDescription": "Hairman the Huge",
+    "race": "blood",
+    "experience": "335",
+    "speed": "230",
+    "health": {
+      "now": "600",
+      "max": "600"
+    },
+    "look": {
+      "type": "116",
+      "head": "20",
+      "body": "30",
+      "legs": "40",
+      "feet": "50",
+      "corpse": "6043"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "14"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-110"
+      }
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "25",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "7",
+        "speedchange": "260",
+        "duration": "3000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "10"
+        },
+        {
+          "firePercent": "20"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "energyPercent": "5"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hugah!"
+        },
+        {
+          "sentence": "Ungh! Ungh!"
+        },
+        {
+          "sentence": "Huaauaauaauaa!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "chance": "50000",
+          "countmax": "60"
+        },
+        {
+          "name": "power ring",
+          "chance": "7500"
+        },
+        {
+          "name": "protection amulet",
+          "chance": "3000"
+        },
+        {
+          "name": "plate armor",
+          "chance": "5000"
+        },
+        {
+          "name": "banana",
+          "chance": "7500",
+          "countmax": "2"
+        },
+        {
+          "name": "ape fur",
+          "chance": "2500"
+        }
+      ]
+    }
+  }
+}

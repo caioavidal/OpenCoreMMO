@@ -1,0 +1,93 @@
+{
+  "monster": {
+    "name": "Pig",
+    "nameDescription": "a pig",
+    "race": "blood",
+    "experience": "0",
+    "speed": "130",
+    "manacost": "255",
+    "health": {
+      "now": "25",
+      "max": "25"
+    },
+    "look": {
+      "type": "60",
+      "corpse": "6000"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "25"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Oink oink"
+        },
+        {
+          "sentence": "Oink"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "meat",
+          "countmax": "4",
+          "chance": "64000"
+        },
+        {
+          "name": "pig foot",
+          "chance": "950"
+        }
+      ]
+    }
+  }
+}

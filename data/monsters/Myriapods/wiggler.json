@@ -1,0 +1,234 @@
+{
+  "monster": {
+    "name": "Wiggler",
+    "namedescription": "a wiggler",
+    "race": "venom",
+    "experience": "900",
+    "speed": "220",
+    "health": {
+      "now": "1200",
+      "max": "1200"
+    },
+    "look": {
+      "type": "510",
+      "corpse": "18483"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "359"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-200",
+          "poison": "500"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "length": "4",
+          "spread": "3",
+          "min": "-180",
+          "max": "-270"
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-160",
+          "max": "-200",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poisonarrow"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallplants"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "target": "0",
+          "length": "3",
+          "spread": "2",
+          "speedchange": "-700",
+          "duration": "30000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "15",
+        "speedchange": "510",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "10"
+        },
+        {
+          "energyPercent": "5"
+        },
+        {
+          "firePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Zzzrp!"
+        },
+        {
+          "sentence": "Crick! Crick!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "chance": "14790"
+        },
+        {
+          "name": "terra rod",
+          "chance": "850"
+        },
+        {
+          "name": "serpent sword",
+          "chance": "1360"
+        },
+        {
+          "name": "black shield",
+          "chance": "1320"
+        },
+        {
+          "name": "white mushroom",
+          "countmax": "5",
+          "chance": "7142"
+        },
+        {
+          "name": "blue piece of cloth",
+          "chance": "2080"
+        },
+        {
+          "name": "yellow piece of cloth",
+          "chance": "2160"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "4930"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "5250"
+        },
+        {
+          "name": "crystalline arrow",
+          "countmax": "5",
+          "chance": "15540"
+        },
+        {
+          "name": "green crystal splinter",
+          "chance": "3600"
+        },
+        {
+          "name": "green crystal fragment",
+          "chance": "2070"
+        },
+        {
+          "name": "drill bolt",
+          "countmax": "5",
+          "chance": "15260"
+        }
+      ]
+    }
+  }
+}

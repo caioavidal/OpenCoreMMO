@@ -1,0 +1,317 @@
+{
+  "monster": {
+    "name": "Marid",
+    "nameDescription": "a marid",
+    "race": "blood",
+    "experience": "410",
+    "speed": "170",
+    "manacost": "0",
+    "health": {
+      "now": "550",
+      "max": "550"
+    },
+    "look": {
+      "type": "104",
+      "corpse": "6033"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "30"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "50",
+          "range": "7",
+          "min": "-40",
+          "max": "-110",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "min": "-65",
+          "max": "-115",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "3000",
+          "chance": "20",
+          "range": "7",
+          "min": "-60",
+          "max": "-120",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "suddendeath"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "13",
+          "range": "7",
+          "speedchange": "-650",
+          "duration": "15000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energyarea"
+            }
+          ]
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "monster": "rabbit",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "energycondition",
+          "interval": "2000",
+          "chance": "17",
+          "radius": "3",
+          "target": "0",
+          "min": "-60",
+          "max": "-100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "22",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "15",
+        "min": "50",
+        "max": "80",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "90"
+        },
+        {
+          "earthPercent": "70"
+        },
+        {
+          "energyPercent": "60"
+        },
+        {
+          "holyPercent": "30"
+        },
+        {
+          "icePercent": "-20"
+        },
+        {
+          "deathPercent": "-15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "blue djinn",
+        "interval": "1000",
+        "chance": "15",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Simsalabim"
+        },
+        {
+          "sentence": "Feel the power of my magic, tiny mortal!"
+        },
+        {
+          "sentence": "Wishes can come true."
+        },
+        {
+          "sentence": "Djinns will soon again be the greatest!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "40000"
+        },
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "40000"
+        },
+        {
+          "id": "2677",
+          "countmax": "25",
+          "chance": "5000"
+        },
+        {
+          "id": "7378",
+          "countmax": "3",
+          "chance": "3500"
+        },
+        {
+          "id": "2442",
+          "chance": "5000"
+        },
+        {
+          "id": "2063",
+          "chance": "20000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "1872",
+              "chance": "1000"
+            },
+            {
+              "id": "2146",
+              "countmax": "4",
+              "chance": "1000"
+            },
+            {
+              "id": "7589",
+              "chance": "3500"
+            },
+            {
+              "id": "5912",
+              "chance": "5000"
+            },
+            {
+              "id": "2374",
+              "chance": "5000"
+            },
+            {
+              "id": "7732",
+              "chance": "100"
+            },
+            {
+              "id": "2183",
+              "chance": "900"
+            },
+            {
+              "id": "2663",
+              "chance": "750"
+            },
+            {
+              "id": "7900",
+              "chance": "100"
+            },
+            {
+              "id": "2158",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

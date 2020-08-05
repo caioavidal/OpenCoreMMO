@@ -1,0 +1,160 @@
+{
+  "monster": {
+    "name": "Smuggler",
+    "nameDescription": "a smuggler",
+    "race": "blood",
+    "experience": "48",
+    "speed": "210",
+    "manacost": "390",
+    "health": {
+      "now": "130",
+      "max": "130"
+    },
+    "look": {
+      "type": "134",
+      "head": "95",
+      "body": "0",
+      "legs": "113",
+      "feet": "115",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "18"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "20",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "13"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "-12"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I will silence you forever!"
+        },
+        {
+          "sentence": "You saw something you shouldn't!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "10",
+          "chance": "43000"
+        },
+        {
+          "id": "2050",
+          "chance": "50000"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "22500"
+        },
+        {
+          "id": "2649",
+          "chance": "17650"
+        },
+        {
+          "id": "2403",
+          "chance": "10000"
+        },
+        {
+          "id": "2671",
+          "countmax": "2",
+          "chance": "6000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2406",
+              "chance": "8000"
+            },
+            {
+              "id": "2461",
+              "chance": "7850"
+            },
+            {
+              "id": "2404",
+              "chance": "4400"
+            },
+            {
+              "id": "2376",
+              "chance": "5650"
+            },
+            {
+              "id": "7397",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "monster": {
+    "name": "Hydra",
+    "nameDescription": "a hydra",
+    "race": "blood",
+    "experience": "2100",
+    "speed": "260",
+    "manacost": "0",
+    "health": {
+      "now": "2350",
+      "max": "2350"
+    },
+    "look": {
+      "type": "121",
+      "corpse": "6048"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "300"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "80",
+          "attack": "60"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "speedchange": "-600",
+          "duration": "15000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "greenbubble"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "17",
+          "length": "8",
+          "spread": "3",
+          "min": "-150",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-60",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "35",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "25",
+        "min": "200",
+        "max": "400",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "icePercent": "40"
+        },
+        {
+          "holyPercent": "25"
+        },
+        {
+          "physicalPercent": "-15"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "FCHHHHH"
+        },
+        {
+          "sentence": "HISSSS"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "24000"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "24000"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "24000"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "37500"
+        },
+        {
+          "id": "2671",
+          "countmax": "4",
+          "chance": "25000"
+        },
+        {
+          "id": "7589",
+          "chance": "200"
+        },
+        {
+          "id": "2177",
+          "chance": "500"
+        },
+        {
+          "id": "2197",
+          "chance": "900"
+        },
+        {
+          "id": "2146",
+          "chance": "5000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "4850",
+              "chance": "600"
+            },
+            {
+              "id": "2214",
+              "chance": "1050"
+            },
+            {
+              "id": "2475",
+              "chance": "1000"
+            },
+            {
+              "id": "2476",
+              "chance": "1200"
+            },
+            {
+              "id": "2536",
+              "chance": "200"
+            },
+            {
+              "id": "2498",
+              "chance": "200"
+            },
+            {
+              "id": "2195",
+              "chance": "120"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

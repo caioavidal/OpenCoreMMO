@@ -1,0 +1,196 @@
+{
+  "monster": {
+    "name": "Quara Pincher",
+    "nameDescription": "a quara pincher",
+    "race": "blood",
+    "experience": "1200",
+    "speed": "540",
+    "manacost": "0",
+    "health": {
+      "now": "1800",
+      "max": "1800"
+    },
+    "look": {
+      "type": "77",
+      "corpse": "6063"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1000",
+          "skill": "75",
+          "attack": "80"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "12",
+          "range": "7",
+          "speedchange": "-850",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "18",
+      "defense": "25"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "icePercent": "100"
+        },
+        {
+          "earthPercent": "-12"
+        },
+        {
+          "energyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Clank clank!"
+        },
+        {
+          "sentence": "Clap!"
+        },
+        {
+          "sentence": "Crrrk! Crrrk!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "65",
+          "chance": "100000"
+        },
+        {
+          "id": "2148",
+          "countmax": "55",
+          "chance": "100000"
+        },
+        {
+          "id": "2398",
+          "chance": "5000"
+        },
+        {
+          "id": "2394",
+          "chance": "5000"
+        },
+        {
+          "id": "2381",
+          "chance": "2222"
+        },
+        {
+          "id": "2670",
+          "countmax": "5",
+          "chance": "20000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2147",
+              "chance": "1538"
+            },
+            {
+              "id": "5895",
+              "chance": "2000"
+            },
+            {
+              "id": "2475",
+              "chance": "1333"
+            },
+            {
+              "id": "7897",
+              "chance": "1333"
+            },
+            {
+              "id": "7591",
+              "chance": "1333"
+            },
+            {
+              "id": "2487",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "monster": {
+    "name": "Lost Basher",
+    "nameDescription": "a lost basher",
+    "race": "blood",
+    "experience": "1800",
+    "speed": "250",
+    "health": {
+      "now": "2600",
+      "max": "2600"
+    },
+    "look": {
+      "type": "538",
+      "corpse": "19963"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-351"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "radius": "3",
+          "min": "0",
+          "max": "-220",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "whirlwindaxe"
+            },
+            {
+              "key": "areaEffect",
+              "value": "explosionarea"
+            }
+          ]
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "radius": "4",
+          "duration": "6000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "whirlwindclub"
+            },
+            {
+              "key": "areaEffect",
+              "value": "rednote"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "target": "0",
+          "radius": "2",
+          "speedchange": "-650",
+          "duration": "15000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "10",
+        "min": "250",
+        "max": "500",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "1"
+        },
+        {
+          "icePercent": "1"
+        },
+        {
+          "energyPercent": "15"
+        },
+        {
+          "firePercent": "40"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Yhouuuu!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "piggy bank",
+          "chance": "4450"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "60000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "2",
+          "chance": "70000"
+        },
+        {
+          "name": "dwarven ring (hard drinking)",
+          "chance": "2560"
+        },
+        {
+          "name": "fire axe",
+          "chance": "310"
+        },
+        {
+          "name": "war axe",
+          "chance": "120"
+        },
+        {
+          "name": "knight legs",
+          "chance": "310"
+        },
+        {
+          "name": "black shield",
+          "chance": "3710"
+        },
+        {
+          "name": "brown mushroom",
+          "countmax": "2",
+          "chance": "15170"
+        },
+        {
+          "name": "iron ore",
+          "chance": "5280"
+        },
+        {
+          "name": "chaos mace",
+          "chance": "160"
+        },
+        {
+          "name": "spiked squelcher",
+          "chance": "420"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "11240"
+        },
+        {
+          "name": "fiery knight axe",
+          "chance": "1200"
+        },
+        {
+          "name": "terra boots",
+          "chance": "780"
+        },
+        {
+          "name": "ultimate health potion",
+          "chance": "10250"
+        },
+        {
+          "name": "small topaz",
+          "chance": "10200"
+        },
+        {
+          "id": "13757",
+          "chance": "21130"
+        },
+        {
+          "name": "blue crystal shard",
+          "chance": "840"
+        },
+        {
+          "name": "lost basher's spike",
+          "chance": "17260"
+        },
+        {
+          "name": "lost basher's spike",
+          "chance": "14380"
+        },
+        {
+          "name": "bloody dwarven beard",
+          "chance": "1730"
+        },
+        {
+          "name": "pair of iron fists",
+          "chance": "1410"
+        },
+        {
+          "name": "buckle",
+          "chance": "10930"
+        },
+        {
+          "name": "bonecarving knife",
+          "chance": "7320"
+        },
+        {
+          "name": "leather harness",
+          "chance": "12500"
+        },
+        {
+          "name": "mad froth",
+          "chance": "11870"
+        },
+        {
+          "name": "basalt fetish",
+          "chance": "8800"
+        },
+        {
+          "name": "basalt figurine",
+          "chance": "9470"
+        }
+      ]/* Coal */
+    }
+  }
+}

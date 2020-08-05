@@ -1,0 +1,194 @@
+{
+  "monster": {
+    "name": "Barbarian Bloodwalker",
+    "nameDescription": "a barbarian bloodwalker",
+    "race": "blood",
+    "experience": "195",
+    "speed": "205",
+    "manacost": "590",
+    "health": {
+      "now": "305",
+      "max": "305"
+    },
+    "look": {
+      "type": "255",
+      "head": "114",
+      "body": "132",
+      "legs": "132",
+      "feet": "132",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "40",
+        "attack": "80"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "12",
+        "speedchange": "260",
+        "duration": "40000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "50"
+        },
+        {
+          "deathPercent": "-7"
+        },
+        {
+          "earthPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "20",
+      "voice": [
+        {
+          "sentence": "YAAAHEEE!"
+        },
+        {
+          "sentence": "SLAUGHTER!"
+        },
+        {
+          "sentence": "CARNAGE!"
+        },
+        {
+          "sentence": "You can run but you can't hide"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "15",
+          "chance": "20000"
+        },
+        {
+          "id": "2671",
+          "chance": "14250"
+        },
+        {
+          "id": "2044",
+          "chance": "12500"
+        },
+        {
+          "id": "2381",
+          "chance": "10750"
+        },
+        {
+          "id": "2458",
+          "chance": "9000"
+        },
+        {
+          "id": "2378",
+          "chance": "9000"
+        },
+        {
+          "id": "2464",
+          "chance": "5400"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "5911",
+              "chance": "250"
+            },
+            {
+              "id": "7618",
+              "chance": "2000"
+            },
+            {
+              "id": "3962",
+              "chance": "500"
+            },
+            {
+              "id": "7457",
+              "chance": "500"
+            },
+            {
+              "id": "7290",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

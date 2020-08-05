@@ -1,0 +1,127 @@
+{
+  "monster": {
+    "name": "Pirate Skeleton",
+    "nameDescription": "a pirate skeleton",
+    "race": "undead",
+    "experience": "85",
+    "speed": "230",
+    "manacost": "0",
+    "health": {
+      "now": "190",
+      "max": "190"
+    },
+    "look": {
+      "type": "195",
+      "corpse": "6070"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "20"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "40",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "18",
+      "defense": "19"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "100"
+        },
+        {
+          "holyPercent": "-20"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "35",
+          "chance": "23000"
+        },
+        {
+          "id": "2231",
+          "chance": "11500"
+        },
+        {
+          "id": "2230",
+          "chance": "6000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2406",
+              "chance": "7000"
+            },
+            {
+              "id": "2376",
+              "chance": "7000"
+            },
+            {
+              "id": "2449",
+              "chance": "7000"
+            },
+            {
+              "id": "2229",
+              "countmax": "2",
+              "chance": "2000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

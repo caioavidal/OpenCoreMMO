@@ -1,0 +1,291 @@
+{
+  "monster": {
+    "name": "Braindeath",
+    "nameDescription": "a braindeath",
+    "race": "undead",
+    "experience": "895",
+    "speed": "270",
+    "manacost": "0",
+    "health": {
+      "now": "1225",
+      "max": "1225"
+    },
+    "look": {
+      "type": "256",
+      "corpse": "7256"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "5"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "50"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "min": "-45",
+          "max": "-250",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-60",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-70",
+          "max": "-290",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "min": "-30",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-75",
+          "max": "-85",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "30",
+          "range": "7",
+          "min": "-20",
+          "max": "-340",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "speedchange": "-600",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "13",
+      "defense": "26",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "30",
+        "min": "0",
+        "max": "1",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "energy"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "13"
+        },
+        {
+          "physicalPercent": "9"
+        },
+        {
+          "holyPercent": "-10"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "3",
+      "summon": {
+        "name": "Vampire",
+        "interval": "2000",
+        "chance": "10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "You have disturbed my thoughts!"
+        },
+        {
+          "sentence": "Let me turn you into something more useful!"
+        },
+        {
+          "sentence": "Let me taste your brain!"
+        },
+        {
+          "sentence": "You will be punished!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "35000"
+        },
+        {
+          "id": "7364",
+          "countmax": "4",
+          "chance": "10000"
+        },
+        {
+          "id": "2175",
+          "chance": "7500"
+        },
+        {
+          "id": "2450",
+          "chance": "8000"
+        },
+        {
+          "id": "2423",
+          "chance": "7000"
+        },
+        {
+          "id": "2509",
+          "chance": "5000"
+        },
+        {
+          "id": "1987",
+          "chance": "80000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "5898",
+              "chance": "1500"
+            },
+            {
+              "id": "7407",
+              "chance": "1000"
+            },
+            {
+              "id": "2518",
+              "chance": "750"
+            },
+            {
+              "id": "7452",
+              "chance": "950"
+            },
+            {
+              "id": "3972",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

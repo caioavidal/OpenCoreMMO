@@ -1,0 +1,298 @@
+{
+  "monster": {
+    "name": "Betrayed Wraith",
+    "nameDescription": "a betrayed wraith",
+    "race": "blood",
+    "experience": "3500",
+    "speed": "310",
+    "manacost": "0",
+    "health": {
+      "now": "4200",
+      "max": "4200"
+    },
+    "look": {
+      "type": "233",
+      "corpse": "6316"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "250"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "80",
+          "attack": "100"
+        },
+        {
+          "name": "poison",
+          "interval": "3000",
+          "chance": "17",
+          "length": "6",
+          "spread": "3",
+          "min": "-100",
+          "max": "-350",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellowbubble"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "25",
+          "range": "1",
+          "target": "1",
+          "speedchange": "-600",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "50",
+          "min": "150",
+          "max": "200",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "4000",
+          "chance": "50",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "12",
+          "speedchange": "360",
+          "duration": "30000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "100"
+        },
+        {
+          "firePercent": "100"
+        },
+        {
+          "energyPercent": "100"
+        },
+        {
+          "earthPercent": "100"
+        },
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Rrrah!"
+        },
+        {
+          "sentence": "Gnarr!"
+        },
+        {
+          "sentence": "Tcharrr!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "41000"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "41000"
+        },
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "41000"
+        },
+        {
+          "id": "2148",
+          "countmax": "62",
+          "chance": "41000"
+        },
+        {
+          "id": "6558",
+          "chance": "36250"
+        },
+        {
+          "id": "2226",
+          "chance": "12500"
+        },
+        {
+          "id": "7364",
+          "countmax": "5",
+          "chance": "5000"
+        },
+        {
+          "id": "5944",
+          "chance": "10000"
+        },
+        {
+          "id": "2383",
+          "chance": "8750"
+        },
+        {
+          "id": "2178",
+          "chance": "7000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7590",
+              "chance": "1000"
+            },
+            {
+              "id": "6300",
+              "chance": "900"
+            },
+            {
+              "id": "7416",
+              "chance": "750"
+            },
+            {
+              "id": "2173",
+              "chance": "100"
+            },
+            {
+              "id": "5799",
+              "chance": "50"
+            },
+            {
+              "id": "5741",
+              "chance": "1250"
+            },
+            {
+              "id": "6500",
+              "chance": "7500"
+            },
+            {
+              "id": "2145",
+              "chance": "7500"
+            },
+            {
+              "id": "5022",
+              "countmax": "2",
+              "chance": "9000"
+            },
+            {
+              "id": "2394",
+              "chance": "16250"
+            },
+            {
+              "id": "2387",
+              "chance": "27500"
+            },
+            {
+              "id": "2417",
+              "chance": "3750"
+            },
+            {
+              "id": "2152",
+              "countmax": "4",
+              "chance": "4100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "monster": {
+    "name": "Chizzoron The Distorter",
+    "nameDescription": "Chizzoron the Distorter",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "260",
+    "health": {
+      "now": "16000",
+      "max": "16000"
+    },
+    "look": {
+      "type": "340",
+      "corpse": "11316"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-455"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "max": "-430",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "3",
+          "max": "-874",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "3",
+          "min": "-300",
+          "max": "-646",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "-148",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "70",
+      "defense": "85"
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "deathPercent": "30"
+        },
+        {
+          "icePercent": "20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Lizard Dragon Priest",
+        "interval": "2000",
+        "chance": "10",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Humanzzz! Leave Zzaion at onzzzze!"
+        },
+        {
+          "sentence": "I pray to my mazzterzz, the mighty dragonzzz!"
+        },
+        {
+          "sentence": "You are not worzzy to touch zzizz zzacred ground!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "69825"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "10",
+          "chance": "69825"
+        },
+        {
+          "name": "small emerald",
+          "chance": "5750"
+        },
+        {
+          "name": "green gem",
+          "chance": "16300"
+        },
+        {
+          "id": "2169",
+          "chance": "11025"
+        },
+        {
+          "name": "dragon scale mail",
+          "chance": "5750"
+        },
+        {
+          "name": "lizard scale",
+          "chance": "100000"
+        },
+        {
+          "name": "great health potion",
+          "chance": "5750"
+        },
+        {
+          "name": "gold ingot",
+          "countmax": "2",
+          "chance": "71550"
+        }
+      ]/* time ring */
+    }
+  }
+}

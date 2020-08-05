@@ -1,0 +1,201 @@
+{
+  "monster": {
+    "name": "Sir Valorcrest",
+    "nameDescription": "Sir Valorcrest",
+    "race": "undead",
+    "experience": "1800",
+    "speed": "270",
+    "health": {
+      "now": "1600",
+      "max": "1600"
+    },
+    "look": {
+      "type": "287",
+      "corpse": "8937"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-380"
+        },
+        {
+          "name": "death",
+          "interval": "1000",
+          "chance": "12",
+          "target": "1",
+          "radius": "4",
+          "min": "0",
+          "max": "-190",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "38",
+      "defense": "35",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "12",
+          "min": "100",
+          "max": "235",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "3000",
+          "chance": "25",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "holyPercent": "-15"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": {
+        "name": "Vampire",
+        "interval": "2000",
+        "chance": "30"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "I challenge you!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "chance": "100000",
+          "countmax": "93"
+        },
+        {
+          "name": "platinum coin",
+          "chance": "50000",
+          "countmax": "5"
+        },
+        {
+          "name": "sword ring",
+          "chance": "1400"
+        },
+        {
+          "name": "ring of healing (faster regeneration)",
+          "chance": "17111"
+        },
+        {
+          "id": "2229",
+          "chance": "15000"
+        },
+        {
+          "name": "vampire shield",
+          "chance": "6300"
+        },
+        {
+          "name": "chaos mace",
+          "chance": "250"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "1500"
+        },
+        {
+          "name": "vampire lord token",
+          "chance": "100000"
+        },
+        {
+          "name": "vampire lord token",
+          "chance": "100000"
+        }
+      ]
+    }
+  }
+}

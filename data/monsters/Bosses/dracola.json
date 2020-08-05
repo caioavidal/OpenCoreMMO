@@ -1,0 +1,242 @@
+{
+  "monster": {
+    "name": "Dracola",
+    "nameDescription": "a dracola",
+    "race": "undead",
+    "experience": "7750",
+    "speed": "410",
+    "manacost": "0",
+    "health": {
+      "now": "15850",
+      "max": "15850"
+    },
+    "look": {
+      "type": "231",
+      "corpse": "6307"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "85",
+          "attack": "85"
+        },
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-300",
+          "max": "-395",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "redspark"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "10",
+          "range": "7",
+          "min": "-0",
+          "max": "-800",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-120",
+          "max": "-390",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "23",
+          "range": "7",
+          "min": "-50",
+          "max": "-180",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "4000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-500",
+          "max": "-600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-200",
+          "max": "-685",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "3000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-300",
+          "max": "-600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenshimmer"
+          }
+        },
+        {
+          "name": "drowncondition",
+          "interval": "1000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "39"
+    },
+    "elements": {
+      "element": {
+        "earthPercent": "100"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": {
+        "sentence": "DEATH CAN'T STOP MY HUNGER!",
+        "yell": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2152",
+          "countmax": "8",
+          "chance": "20000"
+        },
+        {
+          "id": "6500",
+          "countmax": "4",
+          "chance": "1000"
+        },
+        {
+          "id": "6546",
+          "chance": "100000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "monster": {
+    "name": "Insectoid Scout",
+    "nameDescription": "an insectoid scout",
+    "race": "venom",
+    "experience": "150",
+    "speed": "190",
+    "health": {
+      "now": "230",
+      "max": "230"
+    },
+    "look": {
+      "type": "403",
+      "corpse": "13514"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-74",
+        "poison": "60"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "firePercent": "-5"
+        },
+        {
+          "earthPercent": "50"
+        },
+        {
+          "icePercent": "-5"
+        },
+        {
+          "energyPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Chrrr! Chrr!"
+        },
+        {
+          "sentence": "Klk! Klk!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "80",
+          "chance": "80000"
+        },
+        {
+          "name": "club ring",
+          "chance": "100"
+        },
+        {
+          "name": "ripper lance",
+          "chance": "850"
+        },
+        {
+          "name": "health potion",
+          "chance": "280"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "monster": {
+    "name": "Barbarian Brutetamer",
+    "nameDescription": "a barbarian brutetamer",
+    "race": "blood",
+    "experience": "90",
+    "speed": "190",
+    "health": {
+      "now": "145",
+      "max": "145"
+    },
+    "look": {
+      "type": "264",
+      "head": "78",
+      "body": "116",
+      "legs": "95",
+      "feet": "121",
+      "corpse": "20339"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-20"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "0",
+          "max": "-34",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "snowball"
+          }
+        },
+        {
+          "name": "barbarian brutetamer skill reducer",
+          "range": "5",
+          "interval": "2000",
+          "chance": "15"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "40",
+        "min": "50",
+        "max": "80",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "physicalPercent": "-20"
+        },
+        {
+          "deathPercent": "-1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drunk": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "War Wolf",
+        "interval": "2000",
+        "chance": "10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "To me, creatures of the wild!"
+        },
+        {
+          "sentence": "My instincts tell me about your cowardice."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1958",
+          "chance": "5000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "15",
+          "chance": "58000"
+        },
+        {
+          "id": "2401",
+          "chance": "6500"
+        },
+        {
+          "name": "chain armor",
+          "chance": "8900"
+        },
+        {
+          "name": "corncob",
+          "countmax": "2",
+          "chance": "11000"
+        },
+        {
+          "name": "hunting spear",
+          "chance": "5250"
+        },
+        {
+          "name": "fur bag",
+          "chance": "7540"
+        },
+        {
+          "name": "brutetamer's staff",
+          "chance": "380"
+        },
+        {
+          "name": "fur boots",
+          "chance": "160"
+        },
+        {
+          "name": "mammoth fur cape",
+          "chance": "160"
+        },
+        {
+          "name": "mammoth fur shorts",
+          "chance": "90"
+        },
+        {
+          "name": "mana potion",
+          "chance": "630"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "monster": {
+    "name": "Green Djinn",
+    "nameDescription": "a green djinn",
+    "race": "blood",
+    "experience": "215",
+    "speed": "180",
+    "health": {
+      "now": "330",
+      "max": "330"
+    },
+    "look": {
+      "type": "51",
+      "corpse": "6016"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-110"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-45",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "radius": "1",
+          "min": "-50",
+          "max": "-105",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "duration": "5000",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "1",
+          "range": "7",
+          "monster": "rat",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "djinn electrify",
+          "interval": "2000",
+          "range": "5",
+          "chance": "15"
+        },
+        {
+          "name": "djinn cancel invisibility",
+          "interval": "2000",
+          "chance": "10"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "80"
+        },
+        {
+          "energyPercent": "50"
+        },
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "-13"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I grant you a deathwish!"
+        },
+        {
+          "sentence": "Muhahahaha!"
+        },
+        {
+          "sentence": "I wish you a merry trip to hell!"
+        },
+        {
+          "sentence": "Good wishes are for fairytales"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1965",
+          "chance": "2280"
+        },
+        {
+          "name": "oil lamp",
+          "chance": "830"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "70",
+          "chance": "41000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "45",
+          "chance": "51000"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "4",
+          "chance": "2960"
+        },
+        {
+          "name": "mystic turban",
+          "chance": "140"
+        },
+        {
+          "id": "2696",
+          "chance": "23500"
+        },
+        {
+          "name": "grave flower",
+          "chance": "1000"
+        },
+        {
+          "name": "green piece of cloth",
+          "chance": "2000"
+        },
+        {
+          "name": "royal spear",
+          "countmax": "2",
+          "chance": "4870"
+        },
+        {
+          "name": "mana potion",
+          "chance": "490"
+        },
+        {
+          "name": "dirty turban",
+          "chance": "2210"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

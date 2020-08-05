@@ -1,0 +1,244 @@
+{
+  "monster": {
+    "name": "Black Knight",
+    "nameDescription": "a black knight",
+    "race": "blood",
+    "experience": "1600",
+    "speed": "250",
+    "health": {
+      "now": "1800",
+      "max": "1800"
+    },
+    "look": {
+      "type": "131",
+      "head": "95",
+      "body": "95",
+      "legs": "95",
+      "feet": "95",
+      "addons": "3",
+      "corpse": "20355"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-300"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "0",
+          "max": "-200",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "spear"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "40"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "95"
+        },
+        {
+          "energyPercent": "80"
+        },
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "ice": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "MINE!",
+          "yell": "1"
+        },
+        {
+          "sentence": "No prisoners!",
+          "yell": "1"
+        },
+        {
+          "sentence": "NO MERCY!",
+          "yell": "1"
+        },
+        {
+          "sentence": "By Bolg's Blood!"
+        },
+        {
+          "sentence": "You're no match for me!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "piggy bank",
+          "chance": "210"
+        },
+        {
+          "id": "2120",
+          "chance": "16020"
+        },
+        {
+          "name": "ruby necklace",
+          "chance": "740"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "80",
+          "chance": "23000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "56",
+          "chance": "23000"
+        },
+        {
+          "name": "boots of haste",
+          "chance": "320"
+        },
+        {
+          "name": "two handed sword",
+          "chance": "8470"
+        },
+        {
+          "name": "halberd",
+          "chance": "11850"
+        },
+        {
+          "name": "spear",
+          "countmax": "3",
+          "chance": "30800"
+        },
+        {
+          "name": "dragon lance",
+          "chance": "110"
+        },
+        {
+          "name": "battle hammer",
+          "chance": "6980"
+        },
+        {
+          "name": "knight axe",
+          "chance": "3280"
+        },
+        {
+          "name": "steel helmet",
+          "chance": "11220"
+        },
+        {
+          "name": "plate armor",
+          "chance": "10370"
+        },
+        {
+          "name": "warrior helmet",
+          "chance": "5610"
+        },
+        {
+          "name": "knight armor",
+          "chance": "320"
+        },
+        {
+          "name": "knight legs",
+          "chance": "1050"
+        },
+        {
+          "name": "brass legs",
+          "chance": "12200"
+        },
+        {
+          "name": "dark armor",
+          "chance": "1900"
+        },
+        {
+          "name": "dark helmet",
+          "chance": "2330"
+        },
+        {
+          "name": "brown bread",
+          "countmax": "2",
+          "chance": "21600"
+        },
+        {
+          "name": "lightning legs",
+          "chance": "950"
+        }
+      ]/* rope */
+    }
+  }
+}

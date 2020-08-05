@@ -1,0 +1,189 @@
+{
+  "monster": {
+    "name": "Crystal Wolf",
+    "nameDescription": "a crystal wolf",
+    "race": "undead",
+    "experience": "275",
+    "speed": "200",
+    "health": {
+      "now": "750",
+      "max": "750"
+    },
+    "look": {
+      "type": "391",
+      "corpse": "13584"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "20"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-80"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "length": "3",
+          "spread": "2",
+          "min": "-60",
+          "max": "-130",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "stones"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "15",
+          "range": "6",
+          "radius": "3",
+          "target": "1",
+          "min": "-80",
+          "max": "-150",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallice"
+            },
+            {
+              "key": "areaEffect",
+              "value": "giantice"
+            }
+          ]
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-25",
+          "max": "-80"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "5",
+        "min": "15",
+        "max": "55",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Raaarrr!"
+        },
+        {
+          "sentence": "Aaaauuuuuooooooo!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "52",
+          "chance": "56000"
+        },
+        {
+          "name": "hailstorm rod",
+          "chance": "7400"
+        },
+        {
+          "name": "meat",
+          "countmax": "4",
+          "chance": "52000"
+        },
+        {
+          "name": "wolf paw",
+          "chance": "3700"
+        },
+        {
+          "name": "shiver arrow",
+          "countmax": "10",
+          "chance": "11000"
+        },
+        {
+          "name": "crystalline armor",
+          "chance": "3700"
+        }
+      ]
+    }
+  }
+}

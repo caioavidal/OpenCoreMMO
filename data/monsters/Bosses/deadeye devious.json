@@ -1,0 +1,162 @@
+{
+  "monster": {
+    "name": "Deadeye Devious",
+    "nameDescription": "deadeye devious",
+    "race": "blood",
+    "experience": "500",
+    "speed": "300",
+    "manacost": "0",
+    "health": {
+      "now": "2000",
+      "max": "2000"
+    },
+    "look": {
+      "type": "151",
+      "head": "115",
+      "body": "76",
+      "legs": "35",
+      "feet": "117",
+      "addons": "2",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "-250",
+          "max": "-550"
+        },
+        {
+          "name": "physical",
+          "interval": "4000",
+          "chance": "60",
+          "min": "-200",
+          "max": "-250",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "50",
+      "defense": {
+        "name": "healing",
+        "interval": "6000",
+        "chance": "65",
+        "min": "200",
+        "max": "250",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Let's kill 'em"
+        },
+        {
+          "sentence": "Arrrgh!"
+        },
+        {
+          "sentence": "You'll never take me alive!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "6102",
+          "chance": "100000"
+        },
+        {
+          "id": "2148",
+          "countmax": "65",
+          "chance": "100000"
+        },
+        {
+          "id": "2476",
+          "chance": "1200"
+        },
+        {
+          "id": "2463",
+          "chance": "4000"
+        },
+        {
+          "id": "2320",
+          "countmax": "2",
+          "chance": "100000"
+        },
+        {
+          "id": "5926",
+          "chance": "4000"
+        },
+        {
+          "id": "2666",
+          "chance": "100000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "monster": {
+    "name": "Crazed Beggar",
+    "nameDescription": "a crazed beggar",
+    "race": "blood",
+    "experience": "35",
+    "speed": "200",
+    "manacost": "300",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "153",
+      "body": "38",
+      "feet": "97",
+      "head": "59",
+      "legs": "38",
+      "addons": "3",
+      "corpse": "20351"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-25"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hehehe!"
+        },
+        {
+          "sentence": "Raahhh!"
+        },
+        {
+          "sentence": "You are one of THEM! Die!"
+        },
+        {
+          "sentence": "Wanna buy roses??"
+        },
+        {
+          "sentence": "They're coming!"
+        },
+        {
+          "sentence": "Make it stop!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small blue pillow",
+          "chance": "420"
+        },
+        {
+          "id": "2072",
+          "chance": "360"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "9",
+          "chance": "99000"
+        },
+        {
+          "name": "dwarven ring",
+          "chance": "120"
+        },
+        {
+          "name": "dirty cape",
+          "chance": "55000"
+        },
+        {
+          "name": "wooden hammer",
+          "chance": "6500"
+        },
+        {
+          "name": "wooden spoon",
+          "chance": "9750"
+        },
+        {
+          "name": "rolling pin",
+          "chance": "5650"
+        },
+        {
+          "name": "meat",
+          "chance": "9500"
+        },
+        {
+          "name": "roll",
+          "chance": "22500"
+        },
+        {
+          "name": "red rose",
+          "chance": "4700"
+        },
+        {
+          "name": "sling herb",
+          "chance": "420"
+        },
+        {
+          "name": "rum flask",
+          "chance": "420"
+        },
+        {
+          "id": "6092",
+          "chance": "300"
+        },
+        {
+          "id": "9808",
+          "chance": "80"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

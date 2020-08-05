@@ -1,0 +1,161 @@
+{
+  "monster": {
+    "name": "Muddy Earth Elemental",
+    "nameDescription": "a muddy earth elemental",
+    "race": "undead",
+    "experience": "450",
+    "speed": "260",
+    "health": {
+      "now": "650",
+      "max": "650"
+    },
+    "look": {
+      "type": "301",
+      "corpse": "8933"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "50"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-160"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "radius": "2",
+          "min": "-25",
+          "max": "-155",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "stones"
+          }
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "1000",
+          "chance": "10",
+          "length": "6",
+          "spread": "0",
+          "min": "0",
+          "max": "-26",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "groundshaker"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "firePercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small stone",
+          "countmax": "3",
+          "chance": "40000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "80",
+          "chance": "24500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "47",
+          "chance": "24500"
+        },
+        {
+          "id": "2244",
+          "chance": "22000"
+        },
+        {
+          "name": "natural soil",
+          "chance": "3750"
+        }
+      ]/* some leaves */
+    }
+  }
+}

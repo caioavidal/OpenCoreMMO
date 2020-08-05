@@ -1,0 +1,96 @@
+{
+  "monster": {
+    "name": "Badger",
+    "namedescription": "a badger",
+    "race": "blood",
+    "experience": "5",
+    "speed": "180",
+    "manacost": "200",
+    "health": {
+      "now": "23",
+      "max": "23"
+    },
+    "look": {
+      "type": "105",
+      "corpse": "6034"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-12"
+      }
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "7965",
+          "chance": "10230"
+        },
+        {
+          "name": "beetroot",
+          "chance": "40710"
+        },
+        {
+          "name": "acorn",
+          "chance": "5130"
+        }
+      ]/* badger fur */
+    }
+  }
+}

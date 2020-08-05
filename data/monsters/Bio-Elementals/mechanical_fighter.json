@@ -1,0 +1,94 @@
+{
+  "monster": {
+    "name": "Mechanical Fighter",
+    "nameDescription": "a mechanical fighter",
+    "race": "undead",
+    "experience": "255",
+    "speed": "200",
+    "health": {
+      "now": "420",
+      "max": "420"
+    },
+    "look": {
+      "type": "102",
+      "corpse": "2253"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-500"
+      }
+    },
+    "defenses": {
+      "armor": "199",
+      "defense": "199"
+    },
+    "elements": {
+      "element": {
+        "energyPercent": "50"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "holy": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    }
+  }
+}

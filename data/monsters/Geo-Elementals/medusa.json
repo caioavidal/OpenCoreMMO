@@ -1,0 +1,273 @@
+{
+  "monster": {
+    "name": "Medusa",
+    "nameDescription": "a medusa",
+    "race": "blood",
+    "experience": "4050",
+    "speed": "240",
+    "manacost": "0",
+    "health": {
+      "now": "4500",
+      "max": "4500"
+    },
+    "look": {
+      "type": "330",
+      "corpse": "10524"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "275"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "100",
+          "poison": "920"
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "10",
+          "length": "8",
+          "spread": "3",
+          "min": "-250",
+          "max": "-350",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "carniphila"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-20",
+          "max": "-200",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "earth"
+            },
+            {
+              "key": "areaeffect",
+              "value": "carniphila"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "10",
+          "radius": "5",
+          "target": "0",
+          "duration": "12000",
+          "speedchange": "-700",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "30",
+          "range": "7",
+          "duration": "12000",
+          "speedchange": "-700",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          },
+          "outfit": {
+            "type": "333"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "18",
+        "min": "200",
+        "max": "400",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "-5"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "You will ssuch a fine ssstatue!"
+        },
+        {
+          "sentence": "There isss no chhhanccce of esscape"
+        },
+        {
+          "sentence": "Are you tired or why are you moving thhat sslow"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "46000"
+        },
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "46000"
+        },
+        {
+          "id": "8473",
+          "chance": "6250"
+        },
+        {
+          "id": "7590",
+          "chance": "6750"
+        },
+        {
+          "id": "2476",
+          "chance": "2600"
+        },
+        {
+          "id": "2152",
+          "countmax": "2",
+          "chance": "565000"
+        },
+        {
+          "id": "2149",
+          "countmax": "3",
+          "chance": "4000"
+        },
+        {
+          "id": "2143",
+          "chance": "7750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2536",
+              "chance": "2600"
+            },
+            {
+              "id": "7590",
+              "chance": "6750"
+            },
+            {
+              "id": "8473",
+              "chance": "6250"
+            },
+            {
+              "id": "7887",
+              "chance": "3550"
+            },
+            {
+              "id": "7884",
+              "chance": "550"
+            },
+            {
+              "id": "7413",
+              "chance": "1300"
+            },
+            {
+              "id": "10219",
+              "chance": "1500"
+            },
+            {
+              "id": "9810",
+              "chance": "650"
+            },
+            {
+              "id": "7885",
+              "chance": "250"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

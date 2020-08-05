@@ -1,0 +1,251 @@
+{
+  "monster": {
+    "name": "Blightwalker",
+    "nameDescription": "a blightwalker",
+    "race": "undead",
+    "experience": "3350",
+    "speed": "240",
+    "manacost": "0",
+    "health": {
+      "now": "8900",
+      "max": "8900"
+    },
+    "look": {
+      "type": "246",
+      "corpse": "6354"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "88",
+          "attack": "100"
+        },
+        {
+          "name": "physical",
+          "interval": "1500",
+          "chance": "34",
+          "range": "7",
+          "min": "-105",
+          "max": "-155",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallstone"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "min": "-140",
+          "max": "-220",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "50",
+        "min": "75",
+        "max": "125",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "deathPercent": "100"
+        },
+        {
+          "firePercent": "60"
+        },
+        {
+          "energyPercent": "40"
+        },
+        {
+          "icePercent": "33"
+        },
+        {
+          "physicalPercent": "-5"
+        },
+        {
+          "holyPercent": "-30"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "paralyze": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I can see you decaying!"
+        },
+        {
+          "sentence": "Let me taste your mortality!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "627500"
+        },
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "627500"
+        },
+        {
+          "id": "2260",
+          "chance": "29750"
+        },
+        {
+          "id": "2694",
+          "countmax": "3",
+          "chance": "33000"
+        },
+        {
+          "id": "6500",
+          "chance": "22000"
+        },
+        {
+          "id": "2179",
+          "chance": "7800"
+        },
+        {
+          "id": "2152",
+          "countmax": "3",
+          "chance": "7500"
+        },
+        {
+          "id": "2545",
+          "countmax": "9",
+          "chance": "627500"
+        },
+        {
+          "id": "7732",
+          "chance": "1550"
+        },
+        {
+          "id": "5944",
+          "chance": "15500"
+        },
+        {
+          "id": "2550",
+          "chance": "5000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "9810",
+              "chance": "7800"
+            },
+            {
+              "id": "2183",
+              "chance": "700"
+            },
+            {
+              "id": "7885",
+              "chance": "1550"
+            },
+            {
+              "id": "7884",
+              "chance": "1750"
+            },
+            {
+              "id": "2199",
+              "chance": "750"
+            },
+            {
+              "id": "2173",
+              "chance": "50"
+            },
+            {
+              "id": "6300",
+              "chance": "100"
+            },
+            {
+              "id": "9971",
+              "chance": "150"
+            },
+            {
+              "id": "2436",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

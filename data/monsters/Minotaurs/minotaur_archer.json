@@ -1,0 +1,174 @@
+{
+  "monster": {
+    "name": "Minotaur Archer",
+    "nameDescription": "a minotaur archer",
+    "race": "blood",
+    "experience": "65",
+    "speed": "170",
+    "manacost": "390",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "24",
+      "corpse": "5982"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-25"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "40",
+          "range": "7",
+          "min": "0",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "bolt"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ruan Wihmpy!"
+        },
+        {
+          "sentence": "Kaplar!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "75410"
+        },
+        {
+          "name": "crossbow",
+          "chance": "830"
+        },
+        {
+          "name": "brass armor",
+          "chance": "530"
+        },
+        {
+          "name": "scale armor",
+          "chance": "530"
+        },
+        {
+          "name": "bolt",
+          "countmax": "20",
+          "chance": "90450"
+        },
+        {
+          "name": "meat",
+          "chance": "5000"
+        },
+        {
+          "name": "minotaur leather",
+          "chance": "1900"
+        },
+        {
+          "name": "piercing bolt",
+          "countmax": "4",
+          "chance": "12340"
+        },
+        {
+          "name": "broken crossbow",
+          "chance": "15400"
+        },
+        {
+          "name": "minotaur horn",
+          "countmax": "2",
+          "chance": "1990"
+        },
+        {
+          "name": "piece of archer armor",
+          "chance": "8260"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,302 @@
+{
+  "monster": {
+    "name": "Lich",
+    "nameDescription": "a lich",
+    "race": "undead",
+    "experience": "900",
+    "speed": "220",
+    "health": {
+      "now": "880",
+      "max": "880"
+    },
+    "look": {
+      "type": "99",
+      "head": "95",
+      "body": "116",
+      "legs": "119",
+      "feet": "115",
+      "corpse": "6028"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-75"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "length": "7",
+          "spread": "0",
+          "min": "-140",
+          "max": "-190",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "10",
+          "length": "7",
+          "spread": "0",
+          "min": "-300",
+          "max": "-400",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenspark"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "range": "1",
+          "min": "-200",
+          "max": "-245",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "speedchange": "-300",
+          "duration": "30000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "3",
+          "target": "0",
+          "min": "-130",
+          "max": "-195",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "80",
+        "max": "100",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "80"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": {
+        "name": "Bonebeast",
+        "interval": "2000",
+        "chance": "10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Doomed be the living!"
+        },
+        {
+          "sentence": "Death awaits all!"
+        },
+        {
+          "sentence": "Thy living flesh offends me!"
+        },
+        {
+          "sentence": "Death and Decay!"
+        },
+        {
+          "sentence": "You will endure agony beyond thy death!"
+        },
+        {
+          "sentence": "Pain sweet pain!"
+        },
+        {
+          "sentence": "Come to me my children!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "white pearl",
+          "chance": "5000"
+        },
+        {
+          "name": "black pearl",
+          "countmax": "3",
+          "chance": "5960"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "139",
+          "chance": "100000"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "3",
+          "chance": "2230"
+        },
+        {
+          "name": "platinum coin",
+          "chance": "19720"
+        },
+        {
+          "name": "yellow gem",
+          "chance": "690"
+        },
+        {
+          "name": "platinum amulet",
+          "chance": "450"
+        },
+        {
+          "id": "2175",
+          "chance": "10000"
+        },
+        {
+          "name": "mind stone",
+          "chance": "350"
+        },
+        {
+          "name": "ring of healing",
+          "chance": "1540"
+        },
+        {
+          "name": "skull staff",
+          "chance": "550"
+        },
+        {
+          "name": "strange helmet",
+          "chance": "740"
+        },
+        {
+          "name": "ancient shield",
+          "chance": "2422"
+        },
+        {
+          "name": "castle shield",
+          "chance": "350"
+        },
+        {
+          "name": "blue robe",
+          "chance": "150"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "7500"
+        },
+        {
+          "name": "lightning boots",
+          "chance": "200"
+        },
+        {
+          "name": "small topaz",
+          "countmax": "3",
+          "chance": "2430"
+        },
+        {
+          "name": "maxilla maximus",
+          "chance": "100"
+        }
+      ]/* spellbook */
+    }
+  }
+}

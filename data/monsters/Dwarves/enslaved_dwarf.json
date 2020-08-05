@@ -1,0 +1,301 @@
+{
+  "monster": {
+    "name": "Enslaved Dwarf",
+    "nameDescription": "an enslaved dwarf",
+    "race": "blood",
+    "experience": "2700",
+    "speed": "280",
+    "health": {
+      "now": "3800",
+      "max": "3800"
+    },
+    "look": {
+      "type": "494",
+      "corpse": "17408"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-501"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "0",
+          "max": "-340",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "radius": "3",
+          "min": "0",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "explosion"
+            },
+            {
+              "key": "areaEffect",
+              "value": "explosion"
+            }
+          ]
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "20",
+          "target": "0",
+          "radius": "5",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellowspark"
+          }
+        },
+        {
+          "name": "enslaved dwarf skill reducer 1",
+          "interval": "2000",
+          "chance": "5"
+        },
+        {
+          "name": "enslaved dwarf skill reducer 2",
+          "interval": "2000",
+          "chance": "5"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "10",
+        "min": "396",
+        "max": "478",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "greenshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "1"
+        },
+        {
+          "deathPercent": "1"
+        },
+        {
+          "earthPercent": "20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Bark!"
+        },
+        {
+          "sentence": "Blood!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "99",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "50",
+          "chance": "50000"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "2",
+          "chance": "10290"
+        },
+        {
+          "name": "small amethyst",
+          "countmax": "2",
+          "chance": "10680"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "6",
+          "chance": "100000"
+        },
+        {
+          "name": "axe ring",
+          "chance": "1550"
+        },
+        {
+          "name": "war hammer",
+          "chance": "5050"
+        },
+        {
+          "name": "warrior helmet",
+          "chance": "580"
+        },
+        {
+          "name": "guardian shield",
+          "chance": "2300"
+        },
+        {
+          "name": "tower shield",
+          "chance": "190"
+        },
+        {
+          "name": "ancient shield",
+          "chance": "3690"
+        },
+        {
+          "name": "brown mushroom",
+          "countmax": "2",
+          "chance": "15150"
+        },
+        {
+          "name": "iron ore",
+          "chance": "11070"
+        },
+        {
+          "name": "titan axe",
+          "chance": "1170"
+        },
+        {
+          "name": "sapphire hammer",
+          "chance": "80"
+        },
+        {
+          "name": "spiked squelcher",
+          "chance": "80"
+        },
+        {
+          "name": "glorious axe",
+          "chance": "1940"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "2",
+          "chance": "6660"
+        },
+        {
+          "name": "great health potion",
+          "chance": "7960"
+        },
+        {
+          "name": "shiny stone",
+          "chance": "4660"
+        },
+        {
+          "id": "13757",
+          "chance": "780"
+        },
+        {
+          "name": "green crystal shard",
+          "chance": "1750"
+        },
+        {
+          "name": "green crystal splinter",
+          "chance": "3110"
+        },
+        {
+          "name": "brown crystal splinter",
+          "countmax": "2",
+          "chance": "5630"
+        },
+        {
+          "name": "red crystal fragment",
+          "chance": "3690"
+        },
+        {
+          "name": "drill bolt",
+          "countmax": "5",
+          "chance": "3690"
+        }
+      ]/* Coal */
+    }
+  }
+}

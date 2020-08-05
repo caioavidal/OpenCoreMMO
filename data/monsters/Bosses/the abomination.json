@@ -1,0 +1,207 @@
+{
+  "monster": {
+    "name": "The Abomination",
+    "nameDescription": "the abomination",
+    "race": "venom",
+    "experience": "25000",
+    "speed": "340",
+    "manacost": "0",
+    "health": {
+      "now": "38050",
+      "max": "38050"
+    },
+    "look": {
+      "type": "238",
+      "corpse": "6532"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "90",
+          "attack": "120"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "6",
+          "target": "0",
+          "speedchange": "-800",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "9",
+          "target": "0",
+          "radius": "4",
+          "min": "-200",
+          "max": "-650",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "11",
+          "target": "1",
+          "radius": "4",
+          "min": "-400",
+          "max": "-900",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "greennote"
+            },
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "19",
+          "length": "7",
+          "min": "-350",
+          "max": "-850",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "75",
+        "min": "505",
+        "max": "605",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "0"
+        },
+        {
+          "fire": "0"
+        },
+        {
+          "poison": "1"
+        },
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Blubb"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "id": "2152",
+          "countmax": "3",
+          "chance": "10000"
+        },
+        {
+          "id": "6500",
+          "countmax": "1",
+          "chance": "2857"
+        },
+        {
+          "id": "5944",
+          "chance": "2500"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

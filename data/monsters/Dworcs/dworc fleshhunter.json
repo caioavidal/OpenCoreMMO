@@ -1,0 +1,179 @@
+{
+  "monster": {
+    "name": "Dworc Fleshhunter",
+    "nameDescription": "a dworc fleshhunter",
+    "race": "blood",
+    "experience": "35",
+    "speed": "240",
+    "manacost": "0",
+    "health": {
+      "now": "85",
+      "max": "85"
+    },
+    "look": {
+      "type": "215",
+      "corpse": "6058"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "8"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "15",
+          "attack": "20",
+          "poison": "20"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "9",
+          "range": "7",
+          "min": "-5",
+          "max": "-15",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "3",
+      "defense": "8"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "deathPercent": "-15"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "icePercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Grak brrretz!"
+        },
+        {
+          "sentence": "Grow truk grrrrr."
+        },
+        {
+          "sentence": "Prek tars, dekklep zurk."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "15",
+          "chance": "39000"
+        },
+        {
+          "id": "2229",
+          "countmax": "3",
+          "chance": "3300"
+        },
+        {
+          "id": "2568",
+          "chance": "9750"
+        },
+        {
+          "id": "2050",
+          "chance": "4750"
+        },
+        {
+          "id": "2567",
+          "chance": "10000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "3967",
+              "chance": "500"
+            },
+            {
+              "id": "3965",
+              "chance": "2000"
+            },
+            {
+              "id": "2172",
+              "chance": "200"
+            },
+            {
+              "id": "2411",
+              "chance": "1250"
+            },
+            {
+              "id": "2541",
+              "chance": "1400"
+            },
+            {
+              "id": "3964",
+              "chance": "250"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

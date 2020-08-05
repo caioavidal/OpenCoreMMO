@@ -1,0 +1,70 @@
+{
+  "monster": {
+    "name": "Poodle",
+    "nameDescription": "a poodle",
+    "race": "blood",
+    "experience": "0",
+    "speed": "200",
+    "manacost": "220",
+    "health": {
+      "now": "20",
+      "max": "20"
+    },
+    "look": {
+      "type": "473",
+      "corpse": "5971"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "8"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": "2"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Wuff wuff"
+      }
+    }
+  }
+}

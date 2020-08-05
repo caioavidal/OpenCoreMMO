@@ -1,0 +1,537 @@
+{
+  "monster": {
+    "name": "Orshabaal",
+    "nameDescription": "Orshabaal",
+    "race": "fire",
+    "experience": "9999",
+    "speed": "380",
+    "manacost": "0",
+    "health": {
+      "now": "22500",
+      "max": "22500"
+    },
+    "look": {
+      "type": "201",
+      "corpse": "2916"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "10"
+    },
+    "strategy": {
+      "attack": "70",
+      "defense": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "2500"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "190",
+          "attack": "199"
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "13",
+          "range": "7",
+          "min": "-300",
+          "max": "-600"
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "6",
+          "radius": "5",
+          "target": "0",
+          "min": "-150",
+          "max": "-350",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "effect",
+          "interval": "1000",
+          "chance": "6",
+          "radius": "5",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "radius": "7",
+          "target": "1",
+          "min": "-310",
+          "max": "-600",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "15",
+          "length": "8",
+          "spread": "0",
+          "min": "-500",
+          "max": "-850",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "90",
+      "defense": "111",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "9",
+          "min": "1500",
+          "max": "2500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "17",
+          "min": "600",
+          "max": "1000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "5",
+          "speedchange": "1901",
+          "duration": "7000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "earthPercent": "100"
+        },
+        {
+          "deathPercent": "50"
+        },
+        {
+          "icePercent": "-20"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": {
+        "name": "demon",
+        "interval": "1000",
+        "chance": "10",
+        "max": "4"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "PRAISED BE MY MASTERS, THE RUTHLESS SEVEN!",
+          "yell": "1"
+        },
+        {
+          "sentence": "YOU ARE DOOMED!",
+          "yell": "1"
+        },
+        {
+          "sentence": "ORSHABAAL IS BACK!",
+          "yell": "1"
+        },
+        {
+          "sentence": "Be prepared for the day my masters will come for you!"
+        },
+        {
+          "sentence": "SOULS FOR ORSHABAAL!",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2142",
+          "countmax": "1",
+          "chance": "3500"
+        },
+        {
+          "id": "2144",
+          "countmax": "15",
+          "chance": "15000"
+        },
+        {
+          "id": "2158",
+          "countmax": "1",
+          "chance": "1500"
+        },
+        {
+          "id": "2195",
+          "countmax": "1",
+          "chance": "4000"
+        },
+        {
+          "id": "2186",
+          "countmax": "1",
+          "chance": "3500"
+        },
+        {
+          "id": "2192",
+          "countmax": "1",
+          "chance": "2500"
+        },
+        {
+          "id": "2125",
+          "countmax": "1",
+          "chance": "1500"
+        },
+        {
+          "id": "2124",
+          "countmax": "1",
+          "chance": "5500"
+        },
+        {
+          "id": "2520",
+          "countmax": "1",
+          "chance": "15500"
+        },
+        {
+          "id": "2462",
+          "countmax": "1",
+          "chance": "11000"
+        },
+        {
+          "id": "2387",
+          "countmax": "1",
+          "chance": "20000"
+        },
+        {
+          "id": "2434",
+          "countmax": "1",
+          "chance": "4500"
+        },
+        {
+          "id": "2167",
+          "countmax": "1",
+          "chance": "13500"
+        },
+        {
+          "id": "2432",
+          "countmax": "1",
+          "chance": "17000"
+        },
+        {
+          "id": "2393",
+          "countmax": "1",
+          "chance": "12500"
+        },
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "99900"
+        },
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "88800"
+        },
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "77700"
+        },
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "66600"
+        },
+        {
+          "id": "2179",
+          "countmax": "1",
+          "chance": "8000"
+        },
+        {
+          "id": "2470",
+          "countmax": "1",
+          "chance": "5000"
+        },
+        {
+          "id": "2033",
+          "countmax": "1",
+          "chance": "7500"
+        },
+        {
+          "id": "2418",
+          "countmax": "1",
+          "chance": "4500"
+        },
+        {
+          "id": "2182",
+          "countmax": "1",
+          "chance": "3500"
+        },
+        {
+          "id": "2155",
+          "countmax": "1",
+          "chance": "1500"
+        },
+        {
+          "id": "2188",
+          "countmax": "1",
+          "chance": "2500"
+        },
+        {
+          "id": "2396",
+          "countmax": "1",
+          "chance": "7500"
+        },
+        {
+          "id": "2177",
+          "countmax": "1",
+          "chance": "1000"
+        },
+        {
+          "id": "2162",
+          "countmax": "1",
+          "chance": "11500"
+        },
+        {
+          "id": "2472",
+          "countmax": "1",
+          "chance": "3000"
+        },
+        {
+          "id": "2514",
+          "countmax": "1",
+          "chance": "7500"
+        },
+        {
+          "id": "2164",
+          "countmax": "1",
+          "chance": "5000"
+        },
+        {
+          "id": "2178",
+          "countmax": "1",
+          "chance": "4000"
+        },
+        {
+          "id": "2176",
+          "countmax": "1",
+          "chance": "12000"
+        },
+        {
+          "id": "2171",
+          "countmax": "1",
+          "chance": "4500"
+        },
+        {
+          "id": "2200",
+          "countmax": "1",
+          "chance": "4500"
+        },
+        {
+          "id": "1982",
+          "countmax": "1",
+          "chance": "2600"
+        },
+        {
+          "id": "2214",
+          "countmax": "1",
+          "chance": "13000"
+        },
+        {
+          "id": "2123",
+          "countmax": "1",
+          "chance": "3500"
+        },
+        {
+          "id": "2170",
+          "countmax": "1",
+          "chance": "13000"
+        },
+        {
+          "id": "2402",
+          "countmax": "1",
+          "chance": "15500"
+        },
+        {
+          "id": "2436",
+          "countmax": "1",
+          "chance": "5000"
+        },
+        {
+          "id": "2150",
+          "countmax": "20",
+          "chance": "13500"
+        },
+        {
+          "id": "2145",
+          "countmax": "5",
+          "chance": "9500"
+        },
+        {
+          "id": "2149",
+          "countmax": "10",
+          "chance": "15500"
+        },
+        {
+          "id": "2146",
+          "countmax": "10",
+          "chance": "13500"
+        },
+        {
+          "id": "2165",
+          "countmax": "1",
+          "chance": "9500"
+        },
+        {
+          "id": "2197",
+          "countmax": "1",
+          "chance": "4000"
+        },
+        {
+          "id": "2174",
+          "countmax": "1",
+          "chance": "2500"
+        },
+        {
+          "id": "2151",
+          "countmax": "7",
+          "chance": "14000"
+        },
+        {
+          "id": "2112",
+          "countmax": "1",
+          "chance": "14500"
+        },
+        {
+          "id": "2421",
+          "countmax": "1",
+          "chance": "13500"
+        },
+        {
+          "id": "2377",
+          "countmax": "1",
+          "chance": "20000"
+        },
+        {
+          "id": "3955",
+          "countmax": "1",
+          "chance": "100"
+        },
+        {
+          "id": "2185",
+          "countmax": "1",
+          "chance": "3500"
+        },
+        {
+          "id": "2143",
+          "countmax": "15",
+          "chance": "12500"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,311 @@
+{
+  "monster": {
+    "name": "Ironblight",
+    "nameDescription": "Ironblight",
+    "race": "undead",
+    "experience": "4400",
+    "speed": "220",
+    "health": {
+      "now": "6600",
+      "max": "6600"
+    },
+    "look": {
+      "type": "498",
+      "corpse": "17424"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "260"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-300"
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "radius": "6",
+          "min": "-460",
+          "max": "-480",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "15",
+          "target": "0",
+          "length": "7",
+          "spread": "0",
+          "min": "-260",
+          "max": "-350",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "ice"
+            },
+            {
+              "key": "areaEffect",
+              "value": "iceattack"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "20",
+          "target": "1",
+          "radius": "2",
+          "min": "-180",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "greenstar"
+            },
+            {
+              "key": "areaEffect",
+              "value": "bigplants"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "length": "5",
+          "spread": "3",
+          "speedchange": "-800",
+          "duration": "30000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellowspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "35",
+      "defense": {
+        "name": "invisible",
+        "interval": "2000",
+        "chance": "20",
+        "duration": "7000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "50"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "60"
+        },
+        {
+          "energyPercent": "25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Clonk!"
+        },
+        {
+          "sentence": "Yowl!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "199",
+          "chance": "100000"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "3",
+          "chance": "10890"
+        },
+        {
+          "name": "small amethyst",
+          "countmax": "3",
+          "chance": "15020"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "8",
+          "chance": "100000"
+        },
+        {
+          "name": "red gem",
+          "chance": "3510"
+        },
+        {
+          "name": "blue gem",
+          "chance": "480"
+        },
+        {
+          "name": "twigs",
+          "chance": "620"
+        },
+        {
+          "name": "epee",
+          "chance": "480"
+        },
+        {
+          "name": "magic sulphur",
+          "chance": "830"
+        },
+        {
+          "name": "sapphire hammer",
+          "chance": "480"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "17640"
+        },
+        {
+          "name": "terra legs",
+          "chance": "1110"
+        },
+        {
+          "name": "ultimate health potion",
+          "chance": "18330"
+        },
+        {
+          "name": "composite hornbow",
+          "chance": "210"
+        },
+        {
+          "name": "springsprout rod",
+          "chance": "1720"
+        },
+        {
+          "name": "crystal of balance",
+          "chance": "4480"
+        },
+        {
+          "name": "crystal of power",
+          "chance": "2480"
+        },
+        {
+          "name": "war crystal",
+          "chance": "21230"
+        },
+        {
+          "name": "shiny stone",
+          "chance": "15230"
+        },
+        {
+          "name": "jade hat",
+          "chance": "210"
+        },
+        {
+          "name": "glacial rod",
+          "chance": "960"
+        },
+        {
+          "name": "green crystal shard",
+          "chance": "5720"
+        },
+        {
+          "name": "brown crystal splinter",
+          "countmax": "2",
+          "chance": "12610"
+        },
+        {
+          "name": "red crystal fragment",
+          "chance": "10540"
+        },
+        {
+          "name": "green crystal fragment",
+          "chance": "10540"
+        },
+        {
+          "name": "crystalline spikes",
+          "chance": "18400"
+        }
+      ]
+    }
+  }
+}

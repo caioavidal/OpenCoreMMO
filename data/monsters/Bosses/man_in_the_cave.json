@@ -1,0 +1,198 @@
+{
+  "monster": {
+    "name": "Man in the Cave",
+    "nameDescription": "man in the cave",
+    "race": "blood",
+    "experience": "777",
+    "speed": "210",
+    "health": {
+      "now": "485",
+      "max": "485"
+    },
+    "look": {
+      "type": "128",
+      "head": "95",
+      "body": "116",
+      "legs": "95",
+      "feet": "114",
+      "addons": "2",
+      "corpse": "20446"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-105"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-10",
+          "max": "-95",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallstone"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "100",
+          "range": "1",
+          "min": "-20",
+          "max": "-30",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "14",
+      "defense": "10"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Monk",
+        "interval": "2000",
+        "chance": "20",
+        "max": "1"
+      }
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "THE MONKS ARE MINE",
+          "yell": "1"
+        },
+        {
+          "sentence": "I will rope you up! All of you!"
+        },
+        {
+          "sentence": "You have been roped up!"
+        },
+        {
+          "sentence": "A MIC to rule them all!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2120",
+          "chance": "20000"
+        },
+        {
+          "id": "2120",
+          "chance": "6666"
+        },
+        {
+          "id": "2120",
+          "chance": "3333"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "27",
+          "chance": "100000"
+        },
+        {
+          "name": "amulet of loss",
+          "chance": "500"
+        },
+        {
+          "name": "brown bread",
+          "chance": "4000"
+        },
+        {
+          "name": "brown piece of cloth",
+          "chance": "2000"
+        },
+        {
+          "name": "shard",
+          "chance": "4000"
+        },
+        {
+          "name": "mercenary sword",
+          "chance": "6666"
+        },
+        {
+          "name": "fur cap",
+          "chance": "1000"
+        },
+        {
+          "name": "mammoth fur cape",
+          "chance": "6666"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

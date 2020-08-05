@@ -1,0 +1,181 @@
+{
+  "monster": {
+    "name": "Elf Scout",
+    "nameDescription": "an elf scout",
+    "race": "blood",
+    "experience": "75",
+    "speed": "170",
+    "manacost": "360",
+    "health": {
+      "now": "160",
+      "max": "160"
+    },
+    "look": {
+      "type": "64",
+      "corpse": "6012"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-30"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "0",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "arrow"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "20"
+        },
+        {
+          "deathPercent": "-1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Tha'shi Ab'Dendriel!"
+        },
+        {
+          "sentence": "Feel the sting of my arrows!"
+        },
+        {
+          "sentence": "Thy blood will quench the soil's thirst!"
+        },
+        {
+          "sentence": "Evicor guide my arrow."
+        },
+        {
+          "sentence": "Your existence will end here!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "waterskin",
+          "chance": "1350"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "25",
+          "chance": "75000"
+        },
+        {
+          "name": "bow",
+          "chance": "4000"
+        },
+        {
+          "name": "arrow",
+          "countmax": "12",
+          "chance": "30710"
+        },
+        {
+          "name": "poison arrow",
+          "countmax": "4",
+          "chance": "15400"
+        },
+        {
+          "name": "sandals",
+          "chance": "1180"
+        },
+        {
+          "name": "grapes",
+          "chance": "17750"
+        },
+        {
+          "id": "5921",
+          "chance": "1130"
+        },
+        {
+          "name": "elvish bow",
+          "chance": "140"
+        },
+        {
+          "name": "elvish talisman",
+          "chance": "5200"
+        },
+        {
+          "name": "elven scouting glass",
+          "chance": "9750"
+        }
+      ]/* heaven blossom */
+    }
+  }
+}

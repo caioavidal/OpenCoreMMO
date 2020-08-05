@@ -1,0 +1,159 @@
+{
+  "monster": {
+    "name": "Chakoya Tribewarden",
+    "nameDescription": "a chakoya tribewarden",
+    "race": "blood",
+    "experience": "40",
+    "speed": "200",
+    "manacost": "305",
+    "health": {
+      "now": "68",
+      "max": "68"
+    },
+    "look": {
+      "type": "259",
+      "corpse": "7320"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-30"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "25"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "-15"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "ice": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Quisavu tukavi!"
+        },
+        {
+          "sentence": "Si siyoqua jamjam!"
+        },
+        {
+          "sentence": "Achuq! jinuma!"
+        },
+        {
+          "sentence": "Si ji jusipa!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "60000"
+        },
+        {
+          "name": "short sword",
+          "chance": "4680"
+        },
+        {
+          "name": "bone shield",
+          "chance": "1000"
+        },
+        {
+          "id": "2667",
+          "chance": "20000"
+        },
+        {
+          "name": "northern pike",
+          "chance": "90"
+        },
+        {
+          "name": "rainbow trout",
+          "chance": "130"
+        },
+        {
+          "name": "green perch",
+          "chance": "190"
+        },
+        {
+          "name": "mammoth whopper",
+          "chance": "300"
+        }
+      ]/* fish */
+    }
+  }
+}

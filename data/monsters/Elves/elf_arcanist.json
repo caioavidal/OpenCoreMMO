@@ -1,0 +1,276 @@
+{
+  "monster": {
+    "name": "Elf Arcanist",
+    "nameDescription": "an elf arcanist",
+    "race": "blood",
+    "experience": "175",
+    "speed": "170",
+    "health": {
+      "now": "220",
+      "max": "220"
+    },
+    "look": {
+      "type": "63",
+      "corpse": "6011"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-35"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "0",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "arrow"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-30",
+          "max": "-50",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-70",
+          "max": "-85",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "40",
+        "max": "60",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "50"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Feel my wrath!"
+        },
+        {
+          "sentence": "For the Daughter of the Stars!"
+        },
+        {
+          "sentence": "I'll bring balance upon you!"
+        },
+        {
+          "sentence": "Tha'shi Cenath!"
+        },
+        {
+          "sentence": "Vihil Ealuel!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1949",
+          "chance": "31000"
+        },
+        {
+          "name": "candlestick",
+          "chance": "2100"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "47",
+          "chance": "37000"
+        },
+        {
+          "name": "yellow gem",
+          "chance": "50"
+        },
+        {
+          "name": "life crystal",
+          "chance": "970"
+        },
+        {
+          "name": "wand of cosmic energy",
+          "chance": "1160"
+        },
+        {
+          "name": "elven amulet",
+          "chance": "1999"
+        },
+        {
+          "name": "blank rune",
+          "chance": "18000"
+        },
+        {
+          "name": "arrow",
+          "countmax": "3",
+          "chance": "6000"
+        },
+        {
+          "name": "inkwell",
+          "chance": "1000"
+        },
+        {
+          "name": "sandals",
+          "chance": "950"
+        },
+        {
+          "name": "green tunic",
+          "chance": "7000"
+        },
+        {
+          "name": "melon",
+          "chance": "22000"
+        },
+        {
+          "name": "bread",
+          "chance": "14000"
+        },
+        {
+          "name": "grave flower",
+          "chance": "880"
+        },
+        {
+          "name": "sling herb",
+          "chance": "5000"
+        },
+        {
+          "name": "holy orchid",
+          "chance": "2100"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "3000"
+        },
+        {
+          "name": "health potion",
+          "chance": "4000"
+        },
+        {
+          "name": "elvish talisman",
+          "chance": "10000"
+        },
+        {
+          "name": "elven astral observer",
+          "chance": "7710"
+        }
+      ]/* scroll */
+    }
+  }
+}

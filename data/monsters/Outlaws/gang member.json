@@ -1,0 +1,151 @@
+{
+  "monster": {
+    "name": "Gang Member",
+    "nameDescription": "a gang member",
+    "race": "blood",
+    "experience": "70",
+    "speed": "220",
+    "manacost": "420",
+    "health": {
+      "now": "295",
+      "max": "295"
+    },
+    "look": {
+      "type": "151",
+      "head": "114",
+      "body": "19",
+      "legs": "42",
+      "feet": "20",
+      "corpse": "3058"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "45"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "60",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "14",
+      "defense": "16"
+    },
+    "elements": {
+      "element": {
+        "deathPercent": "-10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "This is our territory!"
+        },
+        {
+          "sentence": "Help me guys!"
+        },
+        {
+          "sentence": "I don't like the way you look!"
+        },
+        {
+          "sentence": "You're wearing the wrong colours!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "23",
+          "chance": "22500"
+        },
+        {
+          "id": "2666",
+          "chance": "20450"
+        },
+        {
+          "id": "2389",
+          "chance": "20500"
+        },
+        {
+          "id": "2050",
+          "chance": "3500"
+        },
+        {
+          "id": "2649",
+          "chance": "2270"
+        },
+        {
+          "id": "2468",
+          "chance": "9000"
+        },
+        {
+          "id": "1980",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2689",
+              "chance": "7500"
+            },
+            {
+              "id": "2050",
+              "chance": "3500"
+            },
+            {
+              "id": "2209",
+              "chance": "1000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "monster": {
+    "name": "Fire Devil",
+    "nameDescription": "a fire devil",
+    "race": "blood",
+    "experience": "145",
+    "speed": "190",
+    "manacost": "530",
+    "health": {
+      "now": "200",
+      "max": "200"
+    },
+    "look": {
+      "type": "40",
+      "corpse": "5985"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "35"
+        },
+        {
+          "name": "fire",
+          "interval": "4000",
+          "chance": "12",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-60",
+          "max": "-90",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-20",
+          "max": "-50",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "13",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "energyPercent": "30"
+        },
+        {
+          "earthPercent": "25"
+        },
+        {
+          "deathPercent": "15"
+        },
+        {
+          "physicalPercent": "10"
+        },
+        {
+          "icePercent": "-20"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hot, eh?"
+        },
+        {
+          "sentence": "Hell, oh hell!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2548",
+          "chance": "50000"
+        },
+        {
+          "id": "2050",
+          "chance": "10000"
+        },
+        {
+          "id": "2260",
+          "chance": "12750"
+        },
+        {
+          "id": "2568",
+          "chance": "9000"
+        },
+        {
+          "id": "2419",
+          "chance": "5300"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2050",
+              "chance": "10000"
+            },
+            {
+              "id": "2387",
+              "chance": "1500"
+            },
+            {
+              "id": "2150",
+              "chance": "100"
+            },
+            {
+              "id": "2515",
+              "chance": "700"
+            },
+            {
+              "id": "2191",
+              "chance": "450"
+            },
+            {
+              "id": "2185",
+              "chance": "400"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

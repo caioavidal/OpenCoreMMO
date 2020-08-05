@@ -1,0 +1,242 @@
+{
+  "monster": {
+    "name": "Werewolf",
+    "nameDescription": "a werewolf",
+    "experience": "1450",
+    "speed": "320",
+    "race": "blood",
+    "manacost": "0",
+    "health": {
+      "now": "1955",
+      "max": "1955"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "targetchange": {
+      "speed": "0",
+      "chance": "8"
+    },
+    "look": {
+      "type": "308",
+      "corpse": "6080"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "100"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "100",
+          "skill": "90",
+          "attack": "70"
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "9",
+          "range": "7",
+          "monster": "werewolf",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "55"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "energyPercent": "15"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "6",
+      "summon": {
+        "name": "war wolf",
+        "interval": "2500",
+        "chance": "25"
+      }
+    },
+    "voices": {
+      "speed": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "BLOOD!",
+          "yell": "1"
+        },
+        {
+          "sentence": "HRAAAAAAAAAARRRRRR!",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "35000"
+        },
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "35000"
+        },
+        {
+          "id": "2148",
+          "countmax": "45",
+          "chance": "35000"
+        },
+        {
+          "id": "2381",
+          "chance": "2700"
+        },
+        {
+          "id": "2398",
+          "chance": "19000"
+        },
+        {
+          "id": "2647",
+          "chance": "6500"
+        },
+        {
+          "id": "2510",
+          "chance": "10000"
+        },
+        {
+          "id": "2171",
+          "chance": "600"
+        },
+        {
+          "id": "7439",
+          "chance": "1000"
+        },
+        {
+          "id": "7428",
+          "chance": "300"
+        },
+        {
+          "id": "2438",
+          "chance": "600"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7383",
+              "chance": "420"
+            },
+            {
+              "id": "9809",
+              "chance": "7800"
+            },
+            {
+              "id": "2197",
+              "chance": "800"
+            },
+            {
+              "id": "7588",
+              "chance": "5500"
+            },
+            {
+              "id": "2169",
+              "chance": "700"
+            },
+            {
+              "id": "2805",
+              "chance": "5000"
+            },
+            {
+              "id": "5897",
+              "chance": "5200"
+            },
+            {
+              "id": "8473",
+              "chance": "2400"
+            },
+            {
+              "id": "7419",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

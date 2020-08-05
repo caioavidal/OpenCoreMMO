@@ -1,0 +1,144 @@
+{
+  "monster": {
+    "name": "Lizard Magistratus",
+    "nameDescription": "a lizard magistratus",
+    "race": "blood",
+    "experience": "2000",
+    "speed": "200",
+    "health": {
+      "now": "8000",
+      "max": "8000"
+    },
+    "look": {
+      "type": "115",
+      "corpse": "6041"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-60"
+        },
+        {
+          "name": "lizard magistratus curse",
+          "interval": "2000",
+          "chance": "10",
+          "range": "5"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "50",
+        "min": "200",
+        "max": "250",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "firePercent": "80"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Shhhhhhhh"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small ruby",
+          "countmax": "5",
+          "chance": "8970"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "50",
+          "chance": "77230"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "19",
+          "chance": "13400"
+        },
+        {
+          "name": "lizard leather",
+          "chance": "220"
+        },
+        {
+          "name": "lizard scale",
+          "chance": "450"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "6280"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "4480"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "monster": {
+    "name": "Barbarian Headsplitter",
+    "nameDescription": "a barbarian headsplitter",
+    "race": "blood",
+    "experience": "85",
+    "speed": "200",
+    "manacost": "450",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "253",
+      "head": "115",
+      "body": "105",
+      "legs": "119",
+      "feet": "132",
+      "corpse": "20343"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-50"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "0",
+          "max": "-60",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "whirlwindaxe"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "drunk": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I will regain my honor with your blood!"
+        },
+        {
+          "sentence": "Surrender is not option!"
+        },
+        {
+          "sentence": "Its you or me!"
+        },
+        {
+          "sentence": "Die! Die! Die!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2050",
+          "chance": "61500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "60000"
+        },
+        {
+          "name": "life ring",
+          "chance": "230"
+        },
+        {
+          "name": "skull of Ratha",
+          "chance": "3270"
+        },
+        {
+          "name": "knife",
+          "chance": "15500"
+        },
+        {
+          "name": "brass helmet",
+          "chance": "20360"
+        },
+        {
+          "name": "viking helmet",
+          "chance": "5080"
+        },
+        {
+          "name": "scale armor",
+          "chance": "4090"
+        },
+        {
+          "name": "brown piece of cloth",
+          "chance": "950"
+        },
+        {
+          "name": "fur boots",
+          "chance": "100"
+        },
+        {
+          "name": "krimhorn helmet",
+          "chance": "110"
+        },
+        {
+          "name": "health potion",
+          "chance": "560"
+        }
+      ]/* torch */
+    }
+  }
+}

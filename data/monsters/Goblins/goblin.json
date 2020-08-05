@@ -1,0 +1,184 @@
+{
+  "monster": {
+    "name": "Goblin",
+    "nameDescription": "a goblin",
+    "race": "blood",
+    "experience": "25",
+    "speed": "200",
+    "manacost": "290",
+    "health": {
+      "now": "50",
+      "max": "50"
+    },
+    "look": {
+      "type": "61",
+      "corpse": "6002"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "10"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "9",
+          "range": "7",
+          "min": "-15",
+          "max": "-25",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallstone"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "6",
+      "defense": "8"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Me have him!"
+        },
+        {
+          "sentence": "Zig Zag! Gobo attack!"
+        },
+        {
+          "sentence": "Help! Goblinkiller!"
+        },
+        {
+          "sentence": "Bugga! Bugga!"
+        },
+        {
+          "sentence": "Me green, me mean!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "9",
+          "chance": "28750"
+        },
+        {
+          "id": "2230",
+          "chance": "13750"
+        },
+        {
+          "id": "2449",
+          "chance": "4000"
+        },
+        {
+          "id": "2379",
+          "chance": "16000"
+        },
+        {
+          "id": "2667",
+          "chance": "13750"
+        },
+        {
+          "id": "2467",
+          "chance": "6750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2461",
+              "chance": "12570"
+            },
+            {
+              "id": "2235",
+              "chance": "7000"
+            },
+            {
+              "id": "2406",
+              "chance": "10000"
+            },
+            {
+              "id": "2559",
+              "chance": "7750"
+            },
+            {
+              "id": "1294",
+              "countmax": "3",
+              "chance": "7000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

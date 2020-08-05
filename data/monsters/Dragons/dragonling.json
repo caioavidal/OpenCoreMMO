@@ -1,0 +1,216 @@
+{
+  "monster": {
+    "name": "Dragonling",
+    "nameDescription": "a dragonling",
+    "race": "blood",
+    "experience": "2200",
+    "speed": "330",
+    "health": {
+      "now": "2600",
+      "max": "2600"
+    },
+    "look": {
+      "type": "505",
+      "corpse": "18438"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "900"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-210"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "length": "5",
+          "spread": "2",
+          "target": "0",
+          "min": "-120",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "fire"
+            }
+          ]
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "20",
+          "radius": "3",
+          "target": "0",
+          "min": "-115",
+          "max": "-180",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "purpleenergy"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "20",
+          "radius": "3",
+          "target": "0",
+          "min": "-95",
+          "max": "-150",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosion"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "radius": "1",
+          "speedchange": "-700",
+          "duration": "16000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "explosion"
+            },
+            {
+              "key": "areaEffect",
+              "value": "stun"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "100",
+        "max": "200",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "-5"
+        },
+        {
+          "icePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "FCHHHHHHHHHHHHHHHH"
+        },
+        {
+          "sentence": "FI?"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "37500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "37500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "27",
+          "chance": "37500"
+        },
+        {
+          "name": "strong health potion",
+          "countmax": "2",
+          "chance": "24480"
+        },
+        {
+          "name": "strong mana potion",
+          "countmax": "2",
+          "chance": "16900"
+        },
+        {
+          "name": "blazing bone",
+          "chance": "12410"
+        }
+      ]
+    }
+  }
+}

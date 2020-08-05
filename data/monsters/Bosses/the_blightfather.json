@@ -1,0 +1,170 @@
+{
+  "monster": {
+    "name": "The Blightfather",
+    "nameDescription": "The Blightfather",
+    "race": "venom",
+    "experience": "600",
+    "speed": "290",
+    "health": {
+      "now": "400",
+      "max": "400"
+    },
+    "look": {
+      "type": "348",
+      "corpse": "11375"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "12"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "80"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-200"
+        },
+        {
+          "name": "effect",
+          "interval": "2000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "invisible",
+        "interval": "1000",
+        "chance": "10",
+        "duration": "3000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "50"
+        },
+        {
+          "icePercent": "-5"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Crump!",
+        "yell": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "61",
+          "chance": "2000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "60",
+          "chance": "2000"
+        },
+        {
+          "name": "small amethyst",
+          "chance": "800"
+        },
+        {
+          "name": "poisonous slime",
+          "chance": "12500"
+        },
+        {
+          "name": "lump of dirt",
+          "chance": "17500"
+        },
+        {
+          "name": "lancer beetle shell",
+          "chance": "7000"
+        },
+        {
+          "name": "beetle necklace",
+          "chance": "400"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "monster": {
+    "name": "Apprentice Sheng",
+    "nameDescription": "Apprentice Sheng",
+    "race": "blood",
+    "experience": "150",
+    "speed": "170",
+    "health": {
+      "now": "95",
+      "max": "95"
+    },
+    "look": {
+      "type": "23",
+      "corpse": "5981"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-13"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "14",
+          "range": "7",
+          "min": "-15",
+          "max": "-25",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energyball"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energyarea"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-15",
+          "max": "-45",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "energyfield",
+          "interval": "1000",
+          "chance": "8",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "effect",
+          "interval": "10500",
+          "chance": "100",
+          "radius": "3",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "12",
+      "defense": "13"
+    },
+    "immunities": {
+      "immunity": {
+        "energy": "1"
+      }
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Hyena",
+        "interval": "10500",
+        "chance": "100"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I will protect the secrets of my master!"
+        },
+        {
+          "sentence": "This isle will become ours alone!"
+        },
+        {
+          "sentence": "Kaplar!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2050",
+          "chance": "10000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "20",
+          "chance": "100000"
+        },
+        {
+          "name": "heavy magic missile rune",
+          "chance": "2857"
+        },
+        {
+          "name": "the carrot of doom",
+          "countmax": "5",
+          "chance": "20000"
+        },
+        {
+          "name": "combat knife",
+          "chance": "10000"
+        },
+        {
+          "name": "leather helmet",
+          "chance": "8000"
+        },
+        {
+          "name": "leather legs",
+          "chance": "8000"
+        },
+        {
+          "id": "2817",
+          "chance": "10000"
+        },
+        {
+          "name": "worm",
+          "countmax": "10",
+          "chance": "50000"
+        },
+        {
+          "name": "minotaur leather",
+          "chance": "100000"
+        },
+        {
+          "name": "taurus mace",
+          "chance": "1000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

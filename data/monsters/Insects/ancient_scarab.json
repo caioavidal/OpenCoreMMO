@@ -1,0 +1,242 @@
+{
+  "monster": {
+    "name": "Ancient Scarab",
+    "nameDescription": "an ancient scarab",
+    "race": "venom",
+    "experience": "720",
+    "speed": "230",
+    "health": {
+      "now": "1000",
+      "max": "1000"
+    },
+    "look": {
+      "type": "79",
+      "corpse": "6021"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-130",
+          "poison": "56"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-15",
+          "max": "-145",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "speedchange": "-700",
+          "duration": "25000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "30",
+          "radius": "5",
+          "target": "0",
+          "min": "-440",
+          "max": "-520",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "15",
+        "speedchange": "380",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "physicalPercent": "10"
+        },
+        {
+          "firePercent": "-20"
+        },
+        {
+          "icePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "3",
+      "summon": {
+        "name": "Larva",
+        "interval": "2000",
+        "chance": "10",
+        "max": "3"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "scarab amulet",
+          "chance": "3410"
+        },
+        {
+          "name": "ancient amulet",
+          "chance": "2570"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "90",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "97",
+          "chance": "50000"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "3",
+          "chance": "4810"
+        },
+        {
+          "name": "small amethyst",
+          "countmax": "4",
+          "chance": "5000"
+        },
+        {
+          "name": "scarab coin",
+          "countmax": "2",
+          "chance": "7692"
+        },
+        {
+          "id": "2162",
+          "chance": "11480"
+        },
+        {
+          "name": "daramian waraxe",
+          "chance": "420"
+        },
+        {
+          "name": "plate armor",
+          "chance": "10300"
+        },
+        {
+          "name": "scarab shield",
+          "chance": "480"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "660"
+        },
+        {
+          "name": "terra hood",
+          "chance": "490"
+        },
+        {
+          "name": "scarab pincers",
+          "chance": "3571"
+        }
+      ]/* magic lightwand */
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "monster": {
+    "name": "Elf",
+    "nameDescription": "a elf",
+    "race": "blood",
+    "experience": "42",
+    "speed": "220",
+    "manacost": "320",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "62",
+      "corpse": "6003"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "15"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "5",
+          "range": "7",
+          "min": "-15",
+          "max": "-35",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "arrow"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "6",
+      "defense": "12"
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "28"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ulathil beia Thratha!"
+        },
+        {
+          "sentence": "Bahaha aka!"
+        },
+        {
+          "sentence": "You are not welcome here."
+        },
+        {
+          "sentence": "Flee as long as you can."
+        },
+        {
+          "sentence": "Death to the defilers!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "25000"
+        },
+        {
+          "id": "2544",
+          "countmax": "6",
+          "chance": "2250"
+        },
+        {
+          "id": "2674",
+          "countmax": "2",
+          "chance": "15000"
+        },
+        {
+          "id": "2397",
+          "chance": "12000"
+        },
+        {
+          "id": "2643",
+          "chance": "12500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2510",
+              "chance": "9000"
+            },
+            {
+              "id": "2484",
+              "chance": "9000"
+            },
+            {
+              "id": "2482",
+              "chance": "13500"
+            },
+            {
+              "id": "5921",
+              "chance": "1000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

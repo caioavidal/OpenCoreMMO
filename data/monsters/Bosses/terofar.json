@@ -1,0 +1,85 @@
+{
+  "monster": {
+    "name": "Terofar",
+    "nameDescription": "Terofar",
+    "race": "blood",
+    "experience": "0",
+    "speed": "380",
+    "manacost": "220",
+    "health": {
+      "now": "15",
+      "max": "15"
+    },
+    "look": {
+      "type": "74",
+      "corpse": "6017"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "20"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "0"
+      }
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": "2"
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "meat",
+          "countmax": "2",
+          "chance": "20000"
+        },
+        {
+          "id": "2684",
+          "countmax": "2",
+          "chance": "9000"
+        }
+      ]/* carrot */
+    }
+  }
+}

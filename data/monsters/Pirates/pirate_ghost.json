@@ -1,0 +1,189 @@
+{
+  "monster": {
+    "name": "Pirate Ghost",
+    "nameDescription": "a pirate ghost",
+    "race": "undead",
+    "experience": "250",
+    "speed": "170",
+    "health": {
+      "now": "275",
+      "max": "275"
+    },
+    "look": {
+      "type": "196",
+      "corpse": "5566"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-100",
+          "poison": "40"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "1",
+          "target": "0",
+          "min": "-40",
+          "max": "-80",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "3",
+          "target": "1",
+          "min": "-50",
+          "max": "-65",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "rednote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "5",
+        "min": "40",
+        "max": "70",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "holyPercent": "-25"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "physical": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Yooh Ho Hooh Ho!"
+        },
+        {
+          "sentence": "Hell is waiting for You!"
+        },
+        {
+          "sentence": "It's alive!"
+        },
+        {
+          "sentence": "The curse! Aww the curse!"
+        },
+        {
+          "sentence": "You will not get my treasure!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1951",
+          "chance": "910"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "67",
+          "chance": "48000"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "650"
+        },
+        {
+          "name": "spike sword",
+          "chance": "130"
+        },
+        {
+          "name": "red robe",
+          "chance": "130"
+        },
+        {
+          "name": "tattered piece of robe",
+          "chance": "4300"
+        }
+      ]/* parchment */
+    }
+  }
+}

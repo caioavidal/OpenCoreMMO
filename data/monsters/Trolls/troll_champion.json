@@ -1,0 +1,160 @@
+{
+  "monster": {
+    "name": "Troll Champion",
+    "nameDescription": "a troll champion",
+    "race": "blood",
+    "experience": "40",
+    "speed": "190",
+    "manacost": "340",
+    "health": {
+      "now": "75",
+      "max": "75"
+    },
+    "look": {
+      "type": "281",
+      "corpse": "7926"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "15"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-35"
+      }
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "15"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Meee maity!"
+        },
+        {
+          "sentence": "Grrrr"
+        },
+        {
+          "sentence": "Whaaaz up!?"
+        },
+        {
+          "sentence": "Gruntz!"
+        },
+        {
+          "sentence": "Groar"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "12",
+          "chance": "64000"
+        },
+        {
+          "name": "silver amulet",
+          "chance": "230"
+        },
+        {
+          "name": "spear",
+          "chance": "25000"
+        },
+        {
+          "name": "studded club",
+          "chance": "5450"
+        },
+        {
+          "id": "2512",
+          "chance": "6000"
+        },
+        {
+          "name": "arrow",
+          "countmax": "5",
+          "chance": "5450"
+        },
+        {
+          "name": "leather boots",
+          "chance": "9000"
+        },
+        {
+          "name": "meat",
+          "chance": "9650"
+        },
+        {
+          "name": "bunch of troll hair",
+          "chance": "3000"
+        },
+        {
+          "name": "trollroot",
+          "chance": "750"
+        }
+      ]/* wooden shield */
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "monster": {
+    "name": "Toad",
+    "nameDescription": "a toad",
+    "race": "blood",
+    "experience": "60",
+    "speed": "240",
+    "manacost": "400",
+    "health": {
+      "now": "135",
+      "max": "135"
+    },
+    "look": {
+      "type": "222",
+      "corpse": "6077"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "20"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "15"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-5",
+          "max": "-20",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "12",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "40"
+        },
+        {
+          "icePercent": "25"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "30",
+      "voice": [
+        {
+          "sentence": "Ribbit, ribbit!"
+        },
+        {
+          "sentence": "Ribbit!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "12",
+          "chance": "41000"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "10500"
+        },
+        {
+          "id": "2667",
+          "chance": "25000"
+        },
+        {
+          "id": "2398",
+          "chance": "4500"
+        },
+        {
+          "id": "2382",
+          "chance": "7000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": {
+            "id": "2391",
+            "chance": "250"
+          }
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

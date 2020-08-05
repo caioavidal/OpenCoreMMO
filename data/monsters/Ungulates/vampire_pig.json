@@ -1,0 +1,151 @@
+{
+  "monster": {
+    "name": "Vampire Pig",
+    "nameDescription": "a vampire pig",
+    "race": "blood",
+    "experience": "165",
+    "speed": "300",
+    "health": {
+      "now": "305",
+      "max": "305"
+    },
+    "look": {
+      "type": "60",
+      "corpse": "6000"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-100"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "30",
+          "target": "1",
+          "radius": "4",
+          "min": "-15",
+          "max": "-25",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bats"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "range": "3",
+          "min": "-35",
+          "max": "-55"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "35",
+      "defense": {
+        "name": "outfit",
+        "interval": "2000",
+        "chance": "20",
+        "monster": "mutated bat",
+        "duration": "1500",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "physicalPercent": "10"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Oink"
+        },
+        {
+          "sentence": "Oink oink"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "name": "gold coin",
+        "countmax": "40",
+        "chance": "90000"
+      }
+    }
+  }
+}

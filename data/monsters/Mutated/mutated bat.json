@@ -1,0 +1,219 @@
+{
+  "monster": {
+    "name": "Mutated Bat",
+    "nameDescription": "a mutated bat",
+    "race": "blood",
+    "experience": "615",
+    "speed": "245",
+    "manacost": "0",
+    "health": {
+      "now": "900",
+      "max": "900"
+    },
+    "look": {
+      "type": "307",
+      "corpse": "9829"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "60",
+          "attack": "50",
+          "poison": "300"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "18",
+          "range": "7",
+          "min": "90",
+          "max": "-180",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "drown",
+          "interval": "1000",
+          "chance": "8",
+          "target": "0",
+          "radius": "6",
+          "min": "-40",
+          "max": "-100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "whitenote"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "8",
+          "target": "0",
+          "radius": "6",
+          "duration": "15000",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "yellownote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drunk": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2500",
+      "chance": "10"
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "43500"
+        },
+        {
+          "id": "2148",
+          "countmax": "51",
+          "chance": "43500"
+        },
+        {
+          "id": "5894",
+          "countmax": "2",
+          "chance": "4000"
+        },
+        {
+          "id": "2513",
+          "chance": "7300"
+        },
+        {
+          "id": "2144",
+          "countmax": "3",
+          "chance": "1000"
+        },
+        {
+          "id": "2529",
+          "chance": "7300"
+        },
+        {
+          "id": "2167",
+          "chance": "900"
+        },
+        {
+          "id": "2800",
+          "chance": "10000"
+        },
+        {
+          "id": "2800",
+          "chance": "7400"
+        },
+        {
+          "id": "2800",
+          "chance": "7950"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2800",
+              "chance": "9900"
+            },
+            {
+              "id": "2800",
+              "chance": "5000"
+            },
+            {
+              "id": "2150",
+              "countmax": "2",
+              "chance": "500"
+            },
+            {
+              "id": "2800",
+              "chance": "5200"
+            },
+            {
+              "id": "7386",
+              "chance": "100"
+            },
+            {
+              "id": "10016",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

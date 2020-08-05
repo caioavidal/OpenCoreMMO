@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\NeoServer.OTBM\NeoServer.OTBM.csproj" />
     <ProjectReference Include="..\NeoServer.OTB\NeoServer.OTB.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />

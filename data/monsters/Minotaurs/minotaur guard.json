@@ -1,0 +1,176 @@
+{
+  "monster": {
+    "name": "Minotaur Guard",
+    "nameDescription": "a minotaur guard",
+    "race": "blood",
+    "experience": "160",
+    "speed": "190",
+    "manacost": "550",
+    "health": {
+      "now": "185",
+      "max": "185"
+    },
+    "look": {
+      "type": "29",
+      "corpse": "5983"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "30",
+        "attack": "50"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "25"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Kirll Karrrl!"
+        },
+        {
+          "sentence": "Kaplar!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "32500"
+        },
+        {
+          "id": "2649",
+          "chance": "14000"
+        },
+        {
+          "id": "2388",
+          "chance": "11750"
+        },
+        {
+          "id": "2666",
+          "chance": "11500"
+        },
+        {
+          "id": "2580",
+          "chance": "5750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2465",
+              "chance": "3500"
+            },
+            {
+              "id": "2464",
+              "chance": "3000"
+            },
+            {
+              "id": "2513",
+              "chance": "2150"
+            },
+            {
+              "id": "5878",
+              "chance": "1000"
+            },
+            {
+              "id": "2648",
+              "chance": "600"
+            },
+            {
+              "id": "2387",
+              "chance": "500"
+            },
+            {
+              "id": "7618",
+              "chance": "500"
+            },
+            {
+              "id": "2458",
+              "chance": "7000"
+            },
+            {
+              "id": "7588",
+              "chance": "150"
+            },
+            {
+              "id": "7401",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

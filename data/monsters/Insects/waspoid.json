@@ -1,0 +1,191 @@
+{
+  "monster": {
+    "name": "Waspoid",
+    "nameDescription": "Waspoid",
+    "race": "venom",
+    "experience": "830",
+    "speed": "210",
+    "health": {
+      "now": "1100",
+      "max": "1100"
+    },
+    "look": {
+      "type": "462",
+      "corpse": "15396"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-248",
+          "poison": "400"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "radius": "3",
+          "min": "-110",
+          "max": "-180",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-80",
+          "max": "-100",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "5"
+        },
+        {
+          "energyPercent": "25"
+        },
+        {
+          "physicalPercent": "-5"
+        },
+        {
+          "holyPercent": "-5"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Peeex!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "emerald bangle",
+          "chance": "2040"
+        },
+        {
+          "name": "black pearl",
+          "chance": "4230"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "40000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "35",
+          "chance": "50000"
+        },
+        {
+          "name": "platinum coin",
+          "chance": "40430"
+        },
+        {
+          "name": "yellow gem",
+          "chance": "1040"
+        },
+        {
+          "name": "waspoid claw",
+          "chance": "9096"
+        },
+        {
+          "name": "waspoid wing",
+          "chance": "13890"
+        },
+        {
+          "name": "compound eye",
+          "chance": "6060"
+        },
+        {
+          "name": "grasshopper legs",
+          "chance": "230"
+        },
+        {
+          "name": "carapace shield",
+          "chance": "120"
+        },
+        {
+          "name": "hive scythe",
+          "chance": "330"
+        }
+      ]
+    }
+  }
+}

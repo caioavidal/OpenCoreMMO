@@ -1,0 +1,163 @@
+{
+  "monster": {
+    "name": "Minotaur",
+    "nameDescription": "a minotaur",
+    "race": "blood",
+    "experience": "50",
+    "speed": "170",
+    "manacost": "330",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "25",
+      "corpse": "5969"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "20",
+        "attack": "30"
+      }
+    },
+    "defenses": {
+      "armor": "11",
+      "defense": "11"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Kaplar!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "28",
+          "chance": "17500"
+        },
+        {
+          "id": "2510",
+          "chance": "17750"
+        },
+        {
+          "id": "2649",
+          "chance": "15000"
+        },
+        {
+          "id": "2398",
+          "chance": "8500"
+        },
+        {
+          "id": "2376",
+          "chance": "9500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2464",
+              "chance": "9200"
+            },
+            {
+              "id": "2666",
+              "chance": "9000"
+            },
+            {
+              "id": "2460",
+              "chance": "7250"
+            },
+            {
+              "id": "2458",
+              "chance": "4500"
+            },
+            {
+              "id": "2386",
+              "chance": "3950"
+            },
+            {
+              "id": "2554",
+              "chance": "2400"
+            },
+            {
+              "id": "5878",
+              "chance": "850"
+            },
+            {
+              "id": "2172",
+              "chance": "250"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

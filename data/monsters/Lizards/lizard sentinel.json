@@ -1,0 +1,179 @@
+{
+  "monster": {
+    "name": "Lizard Sentinel",
+    "nameDescription": "a lizard sentinel",
+    "race": "blood",
+    "experience": "110",
+    "speed": "240",
+    "manacost": "0",
+    "health": {
+      "now": "265",
+      "max": "265"
+    },
+    "look": {
+      "type": "114",
+      "corpse": "6040"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "20",
+          "attack": "30"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "7",
+          "range": "7",
+          "min": "-40",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "spear"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "17",
+      "defense": "14"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "5"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Tssss!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "25000"
+        },
+        {
+          "id": "2389",
+          "countmax": "3",
+          "chance": "12000"
+        },
+        {
+          "id": "2464",
+          "chance": "10000"
+        },
+        {
+          "id": "2483",
+          "chance": "8800"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "3965",
+              "chance": "6000"
+            },
+            {
+              "id": "5881",
+              "chance": "650"
+            },
+            {
+              "id": "2425",
+              "chance": "3000"
+            },
+            {
+              "id": "3974",
+              "chance": "1000"
+            },
+            {
+              "id": "5876",
+              "chance": "2500"
+            },
+            {
+              "id": "7618",
+              "chance": "500"
+            },
+            {
+              "id": "2381",
+              "chance": "2000"
+            },
+            {
+              "id": "2145",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

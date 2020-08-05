@@ -1,0 +1,139 @@
+{
+  "monster": {
+    "name": "Gang Member",
+    "nameDescription": "a gang member",
+    "race": "blood",
+    "experience": "70",
+    "speed": "200",
+    "manacost": "420",
+    "health": {
+      "now": "295",
+      "max": "295"
+    },
+    "look": {
+      "type": "151",
+      "head": "114",
+      "body": "19",
+      "legs": "42",
+      "feet": "20",
+      "corpse": "20403"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "35"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-70"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": {
+        "deathPercent": "-5"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "This is our territory!"
+        },
+        {
+          "sentence": "Help me guys!"
+        },
+        {
+          "sentence": "I don't like the way you look!"
+        },
+        {
+          "sentence": "You're wearing the wrong colours!"
+        },
+        {
+          "sentence": "Don't mess with us!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "50110"
+        },
+        {
+          "name": "club ring",
+          "chance": "740"
+        },
+        {
+          "name": "spear",
+          "chance": "8700"
+        },
+        {
+          "name": "studded legs",
+          "chance": "5220"
+        },
+        {
+          "name": "leather legs",
+          "chance": "15330"
+        },
+        {
+          "name": "bread",
+          "chance": "4760"
+        }
+      ]
+    }
+  }
+}

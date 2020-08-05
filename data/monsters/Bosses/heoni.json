@@ -1,0 +1,155 @@
+{
+  "monster": {
+    "name": "Heoni",
+    "nameDescription": "Heoni",
+    "race": "blood",
+    "experience": "515",
+    "speed": "300",
+    "health": {
+      "now": "900",
+      "max": "900"
+    },
+    "look": {
+      "type": "239",
+      "corpse": "6302"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "300"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-120",
+          "poison": "480"
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "15",
+          "length": "8",
+          "spread": "3",
+          "min": "-20",
+          "max": "-240",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "13",
+          "length": "8",
+          "spread": "3",
+          "duration": "25000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "whitenote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "18",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "11",
+          "min": "76",
+          "max": "84",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "10",
+          "speedchange": "290",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Shriiiek"
+      }
+    }
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "monster": {
+    "name": "Betrayed Wraith",
+    "nameDescription": "a betrayed wraith",
+    "race": "undead",
+    "experience": "3500",
+    "speed": "230",
+    "health": {
+      "now": "4200",
+      "max": "4200"
+    },
+    "look": {
+      "type": "233",
+      "corpse": "6316"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "15"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "300"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-450"
+        },
+        {
+          "name": "betrayed wraith skill reducer",
+          "chance": "10"
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "target": "1",
+          "speedchange": "-600",
+          "duration": "3000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "55",
+      "defense": "55",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "30",
+          "min": "350",
+          "max": "600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "10",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "speedchange": "460",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Rrrah!"
+        },
+        {
+          "sentence": "Gnarr!"
+        },
+        {
+          "sentence": "Tcharrr!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small diamond",
+          "countmax": "4",
+          "chance": "11800"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "40000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "40000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "20",
+          "chance": "20000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "8",
+          "chance": "100000"
+        },
+        {
+          "name": "amulet of loss",
+          "chance": "130"
+        },
+        {
+          "name": "power bolt",
+          "countmax": "5",
+          "chance": "50000"
+        },
+        {
+          "name": "orichalcum pearl",
+          "countmax": "2",
+          "chance": "8000"
+        },
+        {
+          "name": "skull helmet",
+          "chance": "390"
+        },
+        {
+          "name": "golden figurine",
+          "chance": "160"
+        },
+        {
+          "name": "soul orb",
+          "chance": "10000"
+        },
+        {
+          "id": "6300",
+          "chance": "390"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "19430"
+        },
+        {
+          "name": "concentrated demonic blood",
+          "chance": "65250"
+        },
+        {
+          "name": "assassin star",
+          "countmax": "5",
+          "chance": "10780"
+        },
+        {
+          "name": "mercenary sword",
+          "chance": "1890"
+        },
+        {
+          "name": "bloody edge",
+          "chance": "80"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "3",
+          "chance": "15000"
+        },
+        {
+          "name": "ultimate health potion",
+          "chance": "15410"
+        },
+        {
+          "name": "unholy bone",
+          "chance": "18410"
+        }
+      ]/* death ring */
+    }
+  }
+}

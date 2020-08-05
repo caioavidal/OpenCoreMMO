@@ -1,0 +1,112 @@
+{
+  "monster": {
+    "name": "Grimgor Guteater",
+    "nameDescription": "Grimgor Guteater",
+    "race": "blood",
+    "experience": "670",
+    "speed": "240",
+    "health": {
+      "now": "1115",
+      "max": "1115"
+    },
+    "look": {
+      "type": "2",
+      "corpse": "7349"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-230"
+        },
+        {
+          "name": "physical",
+          "interval": "4000",
+          "chance": "60",
+          "min": "-55",
+          "max": "-130",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingstar"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "45",
+      "defense": "45"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "deathPercent": "-10"
+        },
+        {
+          "earthPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": {
+        "sentence": "Dont run, You're burning off precious fat."
+      }
+    }
+  }
+}

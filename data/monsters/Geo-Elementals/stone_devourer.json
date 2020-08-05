@@ -1,0 +1,262 @@
+{
+  "monster": {
+    "name": "Stone Devourer",
+    "nameDescription": "a stone devourer",
+    "race": "undead",
+    "experience": "2900",
+    "speed": "250",
+    "health": {
+      "now": "4200",
+      "max": "4200"
+    },
+    "look": {
+      "type": "486",
+      "corpse": "18375"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-990"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "-230",
+          "max": "-460",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallearth"
+            },
+            {
+              "key": "areaEffect",
+              "value": "stones"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "0",
+          "max": "-650",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "target": "0",
+          "length": "5",
+          "spread": "0",
+          "min": "-150",
+          "max": "-260",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "stones"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "35"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "1"
+        },
+        {
+          "icePercent": "30"
+        },
+        {
+          "physicalPercent": "1"
+        },
+        {
+          "energyPercent": "30"
+        },
+        {
+          "holyPercent": "30"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Rumble!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "7",
+          "chance": "92000"
+        },
+        {
+          "name": "stone skin amulet",
+          "chance": "2270"
+        },
+        {
+          "name": "dwarven ring",
+          "chance": "2840"
+        },
+        {
+          "name": "giant sword",
+          "chance": "570"
+        },
+        {
+          "name": "crystal mace",
+          "chance": "850"
+        },
+        {
+          "name": "war axe",
+          "chance": "920"
+        },
+        {
+          "name": "sapphire hammer",
+          "chance": "1490"
+        },
+        {
+          "name": "spiked squelcher",
+          "chance": "1490"
+        },
+        {
+          "name": "glorious axe",
+          "chance": "3340"
+        },
+        {
+          "name": "strong health potion",
+          "countmax": "2",
+          "chance": "13840"
+        },
+        {
+          "name": "strong mana potion",
+          "countmax": "2",
+          "chance": "14900"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "2",
+          "chance": "15610"
+        },
+        {
+          "name": "mana potion",
+          "countmax": "2",
+          "chance": "15050"
+        },
+        {
+          "name": "ultimate health potion",
+          "chance": "14410"
+        },
+        {
+          "id": "8748",
+          "chance": "11360"
+        },
+        {
+          "name": "ancient stone",
+          "chance": "12850"
+        },
+        {
+          "name": "crystalline arrow",
+          "countmax": "10",
+          "chance": "9940"
+        },
+        {
+          "name": "green crystal splinter",
+          "chance": "6960"
+        },
+        {
+          "name": "cyan crystal fragment",
+          "chance": "6810"
+        },
+        {
+          "name": "stone nose",
+          "chance": "18679"
+        },
+        {
+          "name": "crystalline spikes",
+          "chance": "16320"
+        }
+      ]/* coal */
+    }
+  }
+}

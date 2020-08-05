@@ -1,0 +1,196 @@
+{
+  "monster": {
+    "name": "Ghoul",
+    "nameDescription": "a ghoul",
+    "race": "blood",
+    "experience": "85",
+    "speed": "144",
+    "manacost": "450",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "18",
+      "corpse": "5976"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-70"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "1",
+          "target": "1",
+          "range": "1",
+          "min": "-15",
+          "max": "-27",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallclouds"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "8",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "5",
+        "min": "9",
+        "max": "15",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "30"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "70000"
+        },
+        {
+          "name": "rotten piece of cloth",
+          "chance": "14470"
+        },
+        {
+          "name": "worm",
+          "countmax": "2",
+          "chance": "10000"
+        },
+        {
+          "id": "2050",
+          "chance": "5000"
+        },
+        {
+          "name": "ghoul snack",
+          "chance": "5130"
+        },
+        {
+          "name": "viking helmet",
+          "chance": "1000"
+        },
+        {
+          "name": "brown piece of cloth",
+          "chance": "1000"
+        },
+        {
+          "name": "pile of grave earth",
+          "chance": "950"
+        },
+        {
+          "name": "scale armor",
+          "chance": "940"
+        },
+        {
+          "id": "2229",
+          "chance": "280"
+        },
+        {
+          "name": "life ring",
+          "chance": "190"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

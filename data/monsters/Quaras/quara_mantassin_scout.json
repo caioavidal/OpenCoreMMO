@@ -1,0 +1,147 @@
+{
+  "monster": {
+    "name": "Quara Mantassin Scout",
+    "nameDescription": "a quara mantassin scout",
+    "race": "blood",
+    "experience": "100",
+    "speed": "220",
+    "manacost": "480",
+    "health": {
+      "now": "220",
+      "max": "220"
+    },
+    "look": {
+      "type": "72",
+      "corpse": "6064"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-110"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": {
+        "energyPercent": "-10"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "lifedrain": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Zuerk Pachak!"
+        },
+        {
+          "sentence": "Shrrrr"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small sapphire",
+          "chance": "920"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "94000"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "520"
+        },
+        {
+          "id": "2229",
+          "chance": "920"
+        },
+        {
+          "name": "two handed sword",
+          "chance": "580"
+        },
+        {
+          "name": "chain armor",
+          "chance": "4761"
+        },
+        {
+          "name": "fish fin",
+          "chance": "520"
+        },
+        {
+          "name": "mantassin tail",
+          "chance": "7780"
+        }
+      ]/* skull */
+    }
+  }
+}

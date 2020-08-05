@@ -1,0 +1,131 @@
+{
+  "monster": {
+    "name": "Rift Brood",
+    "nameDescription": "a rift brood",
+    "race": "energy",
+    "experience": "1600",
+    "speed": "300",
+    "manacost": "0",
+    "health": {
+      "now": "3000",
+      "max": "3000"
+    },
+    "look": {
+      "type": "290",
+      "corpse": "1495"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "15"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "75",
+          "attack": "60"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "90",
+          "range": "3",
+          "target": "1",
+          "radius": "2",
+          "min": "-200",
+          "max": "-400",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "purpleenergy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "90",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "30"
+        },
+        {
+          "holyPercent": "15"
+        },
+        {
+          "deathPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    }
+  }
+}

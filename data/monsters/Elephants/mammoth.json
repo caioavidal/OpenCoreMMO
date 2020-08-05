@@ -1,0 +1,146 @@
+{
+  "monster": {
+    "name": "Mammoth",
+    "nameDescription": "a mammoth",
+    "race": "blood",
+    "experience": "110",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "190",
+      "max": "190"
+    },
+    "look": {
+      "type": "199",
+      "corpse": "6074"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "45",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "57"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "physicalPercent": "17"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Troooooot!"
+        },
+        {
+          "sentence": "Hooooot-Toooooot!"
+        },
+        {
+          "sentence": "Tooooot."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "16000"
+        },
+        {
+          "id": "2671",
+          "countmax": "3",
+          "chance": "30000"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "15000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "3956",
+              "countmax": "2",
+              "chance": "750"
+            },
+            {
+              "id": "7432",
+              "chance": "550"
+            },
+            {
+              "id": "3973",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

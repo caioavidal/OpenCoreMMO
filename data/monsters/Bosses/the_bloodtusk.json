@@ -1,0 +1,141 @@
+{
+  "monster": {
+    "name": "The Bloodtusk",
+    "nameDescription": "The Bloodtusk",
+    "race": "blood",
+    "experience": "300",
+    "speed": "190",
+    "health": {
+      "now": "600",
+      "max": "600"
+    },
+    "look": {
+      "type": "199",
+      "corpse": "6074"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-120"
+      }
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "57"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "physicalPercent": "15"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "65",
+          "chance": "66900"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "3",
+          "chance": "83825"
+        },
+        {
+          "name": "tusk shield",
+          "chance": "83825"
+        },
+        {
+          "name": "furry club",
+          "chance": "50500"
+        },
+        {
+          "name": "mammoth fur cape",
+          "chance": "42175"
+        },
+        {
+          "name": "orc tusk",
+          "countmax": "2",
+          "chance": "58825"
+        },
+        {
+          "name": "mammoth tusk",
+          "countmax": "2",
+          "chance": "38000"
+        }
+      ]
+    }
+  }
+}

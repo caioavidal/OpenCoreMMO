@@ -1,0 +1,173 @@
+{
+  "monster": {
+    "name": "Water Elemental",
+    "nameDescription": "a water elemental",
+    "race": "undead",
+    "experience": "450",
+    "speed": "450",
+    "manacost": "0",
+    "health": {
+      "now": "550",
+      "max": "550"
+    },
+    "look": {
+      "type": "11",
+      "corpse": "10499",
+      "corpseAid": "101"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "80"
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "50",
+          "range": "7",
+          "radius": "6",
+          "target": "0",
+          "min": "-55",
+          "max": "-240",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "30",
+          "range": "7",
+          "min": "-50",
+          "max": "-140",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "6",
+          "target": "0",
+          "min": "-55",
+          "max": "-150",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "22",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "17",
+        "min": "30",
+        "max": "50",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "earthPercent": "100"
+        },
+        {
+          "icePercent": "100"
+        },
+        {
+          "physicalPercent": "70"
+        },
+        {
+          "holyPercent": "30"
+        },
+        {
+          "deathPercent": "30"
+        },
+        {
+          "energyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "monster": {
+    "name": "Mephiles",
+    "nameDescription": "Mephiles",
+    "race": "blood",
+    "experience": "415",
+    "speed": "300",
+    "health": {
+      "now": "415",
+      "max": "415"
+    },
+    "look": {
+      "type": "237",
+      "corpse": "10323"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "3"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1200",
+          "min": "0",
+          "max": "-35"
+        },
+        {
+          "name": "fire",
+          "interval": "1500",
+          "chance": "70",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-15",
+          "max": "-45",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "35",
+      "defense": [
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "40",
+          "speedchange": "400",
+          "duration": "40000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "4000",
+          "chance": "50",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "50"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "-5"
+        },
+        {
+          "physicalPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I have a contract here which you should sign!"
+        },
+        {
+          "sentence": "I sence so much potential in you. It's almost a shame I have to kill you."
+        },
+        {
+          "sentence": "Yes, slay me for the loot I might have. Give in to your greed."
+        },
+        {
+          "sentence": "Wealth, Power, it is all at your fingertips. All you have to do is a bit blackmailing and bullying."
+        },
+        {
+          "sentence": "Come on. being a bit evil won't hurt you."
+        }
+      ]
+    }
+  }
+}

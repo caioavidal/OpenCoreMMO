@@ -1,0 +1,201 @@
+{
+  "monster": {
+    "name": "Orc Shaman",
+    "nameDescription": "an orc shaman",
+    "race": "blood",
+    "experience": "110",
+    "speed": "180",
+    "health": {
+      "now": "115",
+      "max": "115"
+    },
+    "look": {
+      "type": "6",
+      "corpse": "5978"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-15"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-20",
+          "max": "-31",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energyball"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-5",
+          "max": "-43",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "60",
+        "min": "27",
+        "max": "43",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "50"
+        },
+        {
+          "holyPercent": "25"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": {
+        "name": "Snake",
+        "interval": "2000",
+        "chance": "20",
+        "max": "4"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Huumans stinkk!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1958",
+          "chance": "520"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "5",
+          "chance": "90000"
+        },
+        {
+          "name": "wand of decay",
+          "chance": "1000"
+        },
+        {
+          "name": "spear",
+          "chance": "4850"
+        },
+        {
+          "name": "chain armor",
+          "chance": "8750"
+        },
+        {
+          "name": "corncob",
+          "countmax": "2",
+          "chance": "10600"
+        },
+        {
+          "name": "orc tooth",
+          "chance": "2100"
+        },
+        {
+          "name": "broken shamanic staff",
+          "chance": "10300"
+        },
+        {
+          "name": "shamanic hood",
+          "chance": "6860"
+        },
+        {
+          "name": "orc leather",
+          "chance": "4300"
+        }
+      ]/* book */
+    }
+  }
+}

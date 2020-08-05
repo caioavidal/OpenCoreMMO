@@ -1,0 +1,108 @@
+{
+  "monster": {
+    "name": "Jellyfish",
+    "nameDescription": "a jellyfish",
+    "race": "undead",
+    "experience": "0",
+    "speed": "170",
+    "health": {
+      "now": "55",
+      "max": "55"
+    },
+    "look": {
+      "type": "452",
+      "corpse": "15284"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-10"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10",
+      "defense": {
+        "name": "invisible",
+        "interval": "2000",
+        "chance": "15",
+        "duration": "3000"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Luuurrrp"
+      }
+    },
+    "loot": {
+      "item": {
+        "name": "shrimp",
+        "chance": "8333"
+      }
+    }
+  }
+}

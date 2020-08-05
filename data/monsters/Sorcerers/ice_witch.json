@@ -1,0 +1,264 @@
+{
+  "monster": {
+    "name": "Ice Witch",
+    "nameDescription": "an ice witch",
+    "race": "blood",
+    "experience": "580",
+    "speed": "200",
+    "health": {
+      "now": "650",
+      "max": "650"
+    },
+    "look": {
+      "type": "149",
+      "head": "0",
+      "body": "47",
+      "legs": "105",
+      "feet": "105",
+      "addons": "0",
+      "corpse": "20423"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-60"
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "1",
+          "range": "7",
+          "item": "7172",
+          "duration": "4000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "snowball"
+            },
+            {
+              "key": "areaEffect",
+              "value": "blueshimmer"
+            }
+          ]
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "10",
+          "length": "5",
+          "spread": "2",
+          "min": "-60",
+          "max": "-130",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "icetornado"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "target": "1",
+          "min": "-55",
+          "max": "-115",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallice"
+            },
+            {
+              "key": "areaEffect",
+              "value": "iceattack"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "speedchange": "-600",
+          "duration": "20000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallice"
+            },
+            {
+              "key": "areaEffect",
+              "value": "icetornado"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "25",
+        "min": "90",
+        "max": "120",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "50"
+        },
+        {
+          "earthPercent": "40"
+        },
+        {
+          "holyPercent": "30"
+        },
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "So you think you are cool?"
+        },
+        {
+          "sentence": "I hope it is not too cold for you! HeHeHe."
+        },
+        {
+          "sentence": "Freeze!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "90",
+          "chance": "29630"
+        },
+        {
+          "name": "clerical mace",
+          "chance": "920"
+        },
+        {
+          "name": "mystic turban",
+          "chance": "430"
+        },
+        {
+          "name": "green mushroom",
+          "chance": "1310"
+        },
+        {
+          "name": "shard",
+          "chance": "530"
+        },
+        {
+          "name": "diamond sceptre",
+          "chance": "330"
+        },
+        {
+          "id": "7441",
+          "chance": "10000"
+        },
+        {
+          "name": "crystal sword",
+          "chance": "400"
+        },
+        {
+          "name": "pair of earmuffs",
+          "chance": "90"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "820"
+        },
+        {
+          "name": "glacier shoes",
+          "chance": "280"
+        }
+      ]/* ice cube */
+    }
+  }
+}

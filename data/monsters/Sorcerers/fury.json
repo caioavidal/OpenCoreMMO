@@ -1,0 +1,349 @@
+{
+  "monster": {
+    "name": "Fury",
+    "nameDescription": "a fury",
+    "race": "blood",
+    "experience": "4500",
+    "speed": "250",
+    "health": {
+      "now": "4100",
+      "max": "4100"
+    },
+    "look": {
+      "type": "149",
+      "head": "94",
+      "body": "77",
+      "legs": "96",
+      "feet": "0",
+      "addons": "3",
+      "corpse": "20399"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-510"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "3",
+          "min": "-200",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosionarea"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "5",
+          "length": "8",
+          "spread": "0",
+          "min": "-120",
+          "max": "-700",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "4",
+          "target": "0",
+          "min": "-120",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "fury skill reducer",
+          "interval": "2000",
+          "chance": "5"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "3",
+          "target": "0",
+          "min": "-120",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-125",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "speedchange": "-800",
+          "duration": "30000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "15",
+        "speedchange": "800",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "30"
+        },
+        {
+          "holyPercent": "30"
+        },
+        {
+          "deathPercent": "-10"
+        },
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "physicalPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "fire": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ahhhhrrrr!"
+        },
+        {
+          "sentence": "Waaaaah!"
+        },
+        {
+          "sentence": "Carnage!"
+        },
+        {
+          "sentence": "Dieee!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2120",
+          "countmax": "3",
+          "chance": "8000"
+        },
+        {
+          "id": "2124",
+          "chance": "410"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "30000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "30000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "69",
+          "chance": "38000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "4",
+          "chance": "2800"
+        },
+        {
+          "name": "terra rod",
+          "chance": "20000"
+        },
+        {
+          "name": "golden legs",
+          "chance": "130"
+        },
+        {
+          "name": "steel boots",
+          "chance": "790"
+        },
+        {
+          "name": "meat",
+          "chance": "25000"
+        },
+        {
+          "name": "orichalcum pearl",
+          "countmax": "4",
+          "chance": "1500"
+        },
+        {
+          "name": "red piece of cloth",
+          "chance": "4000"
+        },
+        {
+          "name": "soul orb",
+          "chance": "21500"
+        },
+        {
+          "name": "soul orb",
+          "chance": "50"
+        },
+        {
+          "id": "6301",
+          "chance": "60"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "22500"
+        },
+        {
+          "name": "concentrated demonic blood",
+          "countmax": "3",
+          "chance": "35000"
+        },
+        {
+          "name": "assassin dagger",
+          "chance": "660"
+        },
+        {
+          "name": "noble axe",
+          "chance": "2000"
+        },
+        {
+          "name": "great health potion",
+          "chance": "10500"
+        },
+        {
+          "name": "jalapeno pepper",
+          "countmax": "4",
+          "chance": "29280"
+        },
+        {
+          "id": "9813",
+          "chance": "1920"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

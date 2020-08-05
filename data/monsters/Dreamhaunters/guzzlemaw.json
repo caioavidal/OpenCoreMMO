@@ -1,0 +1,329 @@
+{
+  "monster": {
+    "name": "Guzzlemaw",
+    "nameDescription": "a guzzlemaw",
+    "race": "blood",
+    "experience": "5500",
+    "speed": "270",
+    "health": {
+      "now": "6400",
+      "max": "6400"
+    },
+    "look": {
+      "type": "584",
+      "corpse": "22485"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-499"
+        },
+        {
+          "name": "bleedcondition",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "3",
+          "target": "0",
+          "min": "-500",
+          "max": "-1000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "3",
+          "target": "1",
+          "min": "0",
+          "max": "-900",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosionarea"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "radius": "2",
+          "target": "1",
+          "min": "0",
+          "max": "-500",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "largerock"
+            },
+            {
+              "key": "areaEffect",
+              "value": "stones"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "6",
+          "target": "0",
+          "speedchange": "-800",
+          "duration": "15000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "4",
+          "target": "0",
+          "min": "-120",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "50",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "20",
+        "min": "250",
+        "max": "425",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "greenspark"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "10"
+        },
+        {
+          "deathPercent": "5"
+        },
+        {
+          "firePercent": "5"
+        },
+        {
+          "energyPercent": "5"
+        },
+        {
+          "icePercent": "5"
+        },
+        {
+          "earthPercent": "15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "Gmmmooooh! *chomp*"
+        },
+        {
+          "sentence": "MWAAAH! *gurgle*"
+        },
+        {
+          "sentence": "*chomp* Mmmoh! *chomp*"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "7",
+          "chance": "100000"
+        },
+        {
+          "name": "banana skin",
+          "chance": "10700"
+        },
+        {
+          "name": "piece of iron",
+          "chance": "10500"
+        },
+        {
+          "name": "fishbone",
+          "chance": "9500"
+        },
+        {
+          "id": "2229",
+          "chance": "10400"
+        },
+        {
+          "id": "2230",
+          "chance": "9200"
+        },
+        {
+          "id": "2231",
+          "chance": "4500"
+        },
+        {
+          "name": "fish remains",
+          "chance": "10110"
+        },
+        {
+          "name": "two handed sword",
+          "chance": "2700"
+        },
+        {
+          "id": "2667",
+          "countmax": "3",
+          "chance": "7000"
+        },
+        {
+          "name": "ham",
+          "chance": "10000"
+        },
+        {
+          "name": "iron ore",
+          "chance": "3000"
+        },
+        {
+          "name": "fish fin",
+          "chance": "5000"
+        },
+        {
+          "name": "hardened bone",
+          "chance": "5700"
+        },
+        {
+          "name": "fish tail",
+          "chance": "9400"
+        },
+        {
+          "name": "assassin dagger",
+          "chance": "1000"
+        },
+        {
+          "name": "haunted blade",
+          "chance": "2000"
+        },
+        {
+          "name": "nightmare blade",
+          "chance": "380"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "3",
+          "chance": "17000"
+        },
+        {
+          "name": "great health potion",
+          "countmax": "2",
+          "chance": "18500"
+        },
+        {
+          "name": "sai",
+          "chance": "1200"
+        },
+        {
+          "name": "violet crystal shard",
+          "chance": "3000"
+        },
+        {
+          "name": "brown crystal splinter",
+          "countmax": "2",
+          "chance": "12000"
+        },
+        {
+          "name": "red crystal fragment",
+          "chance": "7600"
+        },
+        {
+          "name": "crystal rubbish",
+          "chance": "12000"
+        },
+        {
+          "name": "cluster of solace",
+          "chance": "920"
+        },
+        {
+          "name": "frazzle tongue",
+          "chance": "15000"
+        },
+        {
+          "name": "frazzle skin",
+          "chance": "14000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

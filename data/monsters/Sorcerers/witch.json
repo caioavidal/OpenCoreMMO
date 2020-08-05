@@ -1,0 +1,204 @@
+{
+  "monster": {
+    "name": "Witch",
+    "nameDescription": "a witch",
+    "race": "blood",
+    "experience": "120",
+    "speed": "180",
+    "manacost": "0",
+    "health": {
+      "now": "300",
+      "max": "300"
+    },
+    "look": {
+      "type": "54",
+      "corpse": "6081"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "20"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "min": "-30",
+          "max": "-75",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "13",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "12"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "100"
+        },
+        {
+          "earthPercent": "30"
+        },
+        {
+          "deathPercent": "-5"
+        },
+        {
+          "physicalPercent": "-14"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Horax pokti! Hihihihi!"
+        },
+        {
+          "sentence": "Herba budinia ex!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "10",
+          "chance": "13000"
+        },
+        {
+          "id": "2687",
+          "countmax": "8",
+          "chance": "15750"
+        },
+        {
+          "id": "2643",
+          "chance": "67000"
+        },
+        {
+          "id": "2696",
+          "chance": "58750"
+        },
+        {
+          "id": "2405",
+          "chance": "52500"
+        },
+        {
+          "id": "2654",
+          "chance": "48500"
+        },
+        {
+          "id": "2324",
+          "chance": "29000"
+        },
+        {
+          "id": "2651",
+          "chance": "19500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2129",
+              "chance": "15500"
+            },
+            {
+              "id": "2800",
+              "chance": "10500"
+            },
+            {
+              "id": "2199",
+              "chance": "1000"
+            },
+            {
+              "id": "2402",
+              "chance": "2000"
+            },
+            {
+              "id": "2185",
+              "chance": "1000"
+            },
+            {
+              "id": "2801",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

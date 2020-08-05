@@ -1,0 +1,210 @@
+{
+  "monster": {
+    "name": "General Murius",
+    "nameDescription": "General Murius",
+    "race": "blood",
+    "experience": "450",
+    "speed": "240",
+    "health": {
+      "now": "550",
+      "max": "550"
+    },
+    "look": {
+      "type": "611",
+      "corpse": "23462"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-220"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "12",
+          "range": "7",
+          "min": "-50",
+          "max": "-120",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "bolt"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "10",
+          "radius": "3",
+          "target": "0",
+          "min": "-50",
+          "max": "-80",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "16",
+      "defense": "22",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "15",
+        "min": "50",
+        "max": "100",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": [
+        {
+          "name": "Minotaur Archer",
+          "interval": "1000",
+          "chance": "15",
+          "max": "2"
+        },
+        {
+          "name": "Minotaur Guard",
+          "interval": "1000",
+          "chance": "12",
+          "max": "2"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Feel the power of the Mooh'Tah!"
+        },
+        {
+          "sentence": "You will get what you deserve!"
+        },
+        {
+          "sentence": "For the king!"
+        },
+        {
+          "sentence": "Guards!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "minotaur horn",
+          "countmax": "2",
+          "chance": "100000"
+        },
+        {
+          "name": "minotaur leather",
+          "chance": "100000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "97",
+          "chance": "92000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "3",
+          "chance": "92000"
+        },
+        {
+          "name": "brass armor",
+          "chance": "76000"
+        },
+        {
+          "name": "double axe",
+          "chance": "76000"
+        },
+        {
+          "name": "piercing bolt",
+          "countmax": "7",
+          "chance": "40000"
+        },
+        {
+          "name": "meat",
+          "countmax": "2",
+          "chance": "30000"
+        },
+        {
+          "name": "battle shield",
+          "chance": "23000"
+        },
+        {
+          "name": "chain legs",
+          "chance": "23000"
+        },
+        {
+          "id": "7401",
+          "chance": "23000"
+        },
+        {
+          "name": "power bolt",
+          "countmax": "7",
+          "chance": "23000"
+        },
+        {
+          "name": "dwarven helmet",
+          "chance": "100"
+        }
+      ]/* minotaur trophy */
+    }
+  }
+}

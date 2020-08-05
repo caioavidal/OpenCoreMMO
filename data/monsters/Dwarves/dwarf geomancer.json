@@ -1,0 +1,236 @@
+{
+  "monster": {
+    "name": "Dwarf Geomancer",
+    "nameDescription": "a dwarf geomancer",
+    "race": "blood",
+    "experience": "245",
+    "speed": "200",
+    "manacost": "0",
+    "health": {
+      "now": "380",
+      "max": "380"
+    },
+    "look": {
+      "type": "66",
+      "corpse": "6015"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "150"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "50"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-50",
+          "max": "-120",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "min": "-55",
+          "max": "-105",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "min": "-50",
+          "max": "-80"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "50",
+        "min": "75",
+        "max": "325",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "80"
+        },
+        {
+          "firePercent": "60"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hail Durin!"
+        },
+        {
+          "sentence": "Earth is the strongest element."
+        },
+        {
+          "sentence": "Dust to dust."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "35",
+          "chance": "50000"
+        },
+        {
+          "id": "2260",
+          "chance": "40000"
+        },
+        {
+          "id": "2787",
+          "chance": "60000"
+        },
+        {
+          "id": "2643",
+          "chance": "47500"
+        },
+        {
+          "id": "2673",
+          "countmax": "7",
+          "chance": "2000"
+        },
+        {
+          "id": "2162",
+          "chance": "13000"
+        },
+        {
+          "id": "2468",
+          "chance": "26000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2175",
+              "chance": "2500"
+            },
+            {
+              "id": "2423",
+              "chance": "750"
+            },
+            {
+              "id": "2213",
+              "chance": "600"
+            },
+            {
+              "id": "2146",
+              "chance": "500"
+            },
+            {
+              "id": "5880",
+              "chance": "400"
+            },
+            {
+              "id": "7886",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

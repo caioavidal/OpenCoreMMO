@@ -1,0 +1,168 @@
+{
+  "monster": {
+    "name": "Thornfire Wolf",
+    "nameDescription": "a thornfire wolf",
+    "race": "energy",
+    "experience": "200",
+    "speed": "250",
+    "health": {
+      "now": "600",
+      "max": "600"
+    },
+    "look": {
+      "type": "414",
+      "corpse": "13859"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-68"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "1",
+          "target": "1",
+          "min": "-35",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "whirlwindsword"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-30",
+          "max": "-70",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "explosion"
+            }
+          ]
+        },
+        {
+          "name": "firefield",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "2",
+          "target": "1"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "20",
+        "min": "100",
+        "max": "220",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "icePercent": "1"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "53",
+          "chance": "64000"
+        },
+        {
+          "name": "meat",
+          "chance": "34000"
+        },
+        {
+          "name": "wolf paw",
+          "chance": "7900"
+        },
+        {
+          "name": "flaming arrow",
+          "countmax": "8",
+          "chance": "15000"
+        },
+        {
+          "name": "fiery heart",
+          "chance": "7900"
+        }
+      ]
+    }
+  }
+}

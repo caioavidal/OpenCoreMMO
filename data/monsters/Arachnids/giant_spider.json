@@ -1,0 +1,209 @@
+{
+  "monster": {
+    "name": "Giant Spider",
+    "nameDescription": "a giant spider",
+    "race": "venom",
+    "experience": "900",
+    "speed": "230",
+    "health": {
+      "now": "1300",
+      "max": "1300"
+    },
+    "look": {
+      "type": "38",
+      "corpse": "5977"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-300",
+          "poison": "160"
+        },
+        {
+          "name": "poisonfield",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-40",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "15",
+        "speedchange": "390",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Poison Spider",
+        "interval": "2000",
+        "chance": "10",
+        "max": "2"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "195",
+          "chance": "100000"
+        },
+        {
+          "name": "poison arrow",
+          "countmax": "12",
+          "chance": "12500"
+        },
+        {
+          "name": "plate armor",
+          "chance": "10000"
+        },
+        {
+          "name": "plate legs",
+          "chance": "8000"
+        },
+        {
+          "name": "two handed sword",
+          "chance": "5000"
+        },
+        {
+          "name": "steel helmet",
+          "chance": "5000"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "3571"
+        },
+        {
+          "name": "spider silk",
+          "chance": "2000"
+        },
+        {
+          "name": "knight legs",
+          "chance": "870"
+        },
+        {
+          "id": "2169",
+          "chance": "710"
+        },
+        {
+          "name": "knight armor",
+          "chance": "500"
+        },
+        {
+          "name": "platinum amulet",
+          "chance": "280"
+        },
+        {
+          "name": "lightning headband",
+          "chance": "270"
+        }
+      ]/* time ring */
+    }
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "monster": {
+    "name": "Rahemos",
+    "nameDescription": "a rahemos",
+    "race": "undead",
+    "experience": "3100",
+    "speed": "320",
+    "manacost": "0",
+    "health": {
+      "now": "3700",
+      "max": "3700"
+    },
+    "look": {
+      "type": "87",
+      "corpse": "6031"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "90",
+          "attack": "150",
+          "poison": "65"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "3000",
+          "chance": "7",
+          "range": "1",
+          "min": "-75",
+          "max": "-750"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-60",
+          "max": "-600",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "20",
+          "range": "7",
+          "min": "-60",
+          "max": "-600",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "6",
+          "target": "0",
+          "speedchange": "-650",
+          "duration": "60000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "8",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energyarea"
+            }
+          ]
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "monster": "pig",
+          "duration": "12000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "35",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "20",
+          "min": "200",
+          "max": "500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "5",
+          "monster": "demon",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "100"
+        },
+        {
+          "earthPercent": "100"
+        },
+        {
+          "deathPercent": "100"
+        },
+        {
+          "firePercent": "94"
+        },
+        {
+          "energyPercent": "92"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "1",
+      "summon": {
+        "name": "Demon",
+        "interval": "1000",
+        "chance": "12",
+        "max": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "It's a kind of magic."
+        },
+        {
+          "sentence": "Abrah Kadabrah!"
+        },
+        {
+          "sentence": "Nothing hidden in my wrappings."
+        },
+        {
+          "sentence": "It's not a trick, it's Rahemos."
+        },
+        {
+          "sentence": "Meet my friend from hell."
+        },
+        {
+          "sentence": "I will make you believe in magic."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "50000"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "50000"
+        },
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "50000"
+        },
+        {
+          "id": "2150",
+          "countmax": "3",
+          "chance": "7000"
+        },
+        {
+          "id": "2214",
+          "chance": "7000"
+        },
+        {
+          "id": "7590",
+          "chance": "7000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2662",
+              "chance": "300"
+            },
+            {
+              "id": "2176",
+              "chance": "500"
+            },
+            {
+              "id": "2185",
+              "chance": "500"
+            },
+            {
+              "id": "2153",
+              "chance": "500"
+            },
+            {
+              "id": "2184",
+              "chance": "500"
+            },
+            {
+              "id": "2447",
+              "chance": "200"
+            },
+            {
+              "id": "2348",
+              "chance": "100000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

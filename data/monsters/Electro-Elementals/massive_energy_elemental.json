@@ -1,0 +1,232 @@
+{
+  "monster": {
+    "name": "Massive Energy Elemental",
+    "nameDescription": "a massive energy elemental",
+    "race": "energy",
+    "experience": "950",
+    "speed": "210",
+    "health": {
+      "now": "1100",
+      "max": "1100"
+    },
+    "look": {
+      "type": "290",
+      "corpse": "8966"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "15"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-175"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-270",
+          "max": "-615",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "-175",
+          "max": "-205",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energyball"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "massive energy elemental electrify",
+          "interval": "2000",
+          "chance": "20",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellowspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "5",
+        "min": "190",
+        "max": "250",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "70"
+        },
+        {
+          "holyPercent": "25"
+        },
+        {
+          "deathPercent": "1"
+        },
+        {
+          "earthPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "91",
+          "chance": "50000"
+        },
+        {
+          "name": "small amethyst",
+          "countmax": "3",
+          "chance": "3270"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "17450"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "5450"
+        },
+        {
+          "name": "flash arrow",
+          "countmax": "15",
+          "chance": "6550"
+        },
+        {
+          "name": "energy spike sword",
+          "chance": "500"
+        },
+        {
+          "name": "lightning pendant",
+          "chance": "730"
+        },
+        {
+          "name": "lightning legs",
+          "chance": "150"
+        },
+        {
+          "name": "spellbook of warding",
+          "chance": "360"
+        },
+        {
+          "name": "wand of starstorm",
+          "chance": "730"
+        },
+        {
+          "id": "9809",
+          "chance": "730"
+        },
+        {
+          "name": "shockwave amulet",
+          "chance": "500"
+        }
+      ]/* rusty armor */
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "monster": {
+    "name": "Thul",
+    "nameDescription": "thul",
+    "race": "undead",
+    "experience": "1800",
+    "speed": "300",
+    "manacost": "0",
+    "health": {
+      "now": "3000",
+      "max": "3000"
+    },
+    "look": {
+      "type": "46",
+      "corpse": "6065"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "-0",
+          "max": "-285"
+        },
+        {
+          "name": "melee",
+          "interval": "3000",
+          "chance": "15",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-0",
+          "max": "-170",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "40"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "100"
+        },
+        {
+          "energyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "lifedrain": "0"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Gaaahhh!"
+      }
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "massive water elemental",
+        "interval": "1000",
+        "chance": "13"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "100000"
+        },
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "100000"
+        },
+        {
+          "id": "5895",
+          "countmax": "1",
+          "chance": "100000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

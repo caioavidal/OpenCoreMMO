@@ -3,12 +3,16 @@ using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature;
+using NeoServer.Game.Creatures;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
+using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
+using NeoServer.Loaders.Monsters;
+using NeoServer.Loaders.Spawns;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
@@ -53,6 +57,8 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<Game>().SingleInstance();
             builder.RegisterType<GameCreatureManager>().SingleInstance();
+            builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
+            builder.RegisterType<SpawnManager>().SingleInstance();
 
             RegisterPacketHandlers(builder);
 
@@ -76,12 +82,15 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<ItemTypeLoader>().SingleInstance();
             builder.RegisterType<Loaders.World.WorldLoader>().SingleInstance();
+            builder.RegisterType<SpawnLoader>().SingleInstance();
+            builder.RegisterType<MonsterLoader>().SingleInstance();
 
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
 
             //factories
             builder.RegisterType<PlayerFactory>().SingleInstance();
+            builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
 
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();

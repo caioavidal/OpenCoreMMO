@@ -21,7 +21,7 @@ namespace NeoServer.Server.Model.Players
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location)
-             : base(id, characterName, string.Empty, maxHealthPoints, maxMana, 4240, healthPoints, mana)
+             : base(id, characterName, maxHealthPoints, 4240, healthPoints)
         {
             Id = id;
             CharacterName = characterName;

@@ -1,0 +1,122 @@
+{
+  "monster": {
+    "name": "Doomhowl",
+    "nameDescription": "Doomhowl",
+    "experience": "3750",
+    "speed": "320",
+    "race": "blood",
+    "health": {
+      "now": "8500",
+      "max": "8500"
+    },
+    "targetchange": {
+      "speed": "0",
+      "chance": "8"
+    },
+    "look": {
+      "type": "308",
+      "corpse": "6080"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "100"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "100",
+          "min": "0",
+          "max": "-400"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "50",
+          "radius": "3",
+          "target": "0",
+          "min": "0",
+          "max": "-645",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "4000",
+          "chance": "20",
+          "radius": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "rednote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "55",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "10",
+        "speedchange": "390",
+        "duration": "6000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "physicalPercent": "15"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    }
+  }
+}

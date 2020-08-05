@@ -1,0 +1,123 @@
+{
+  "monster": {
+    "name": "Svoren the Mad",
+    "nameDescription": "Svoren the Mad",
+    "race": "blood",
+    "experience": "3000",
+    "speed": "180",
+    "health": {
+      "now": "6310",
+      "max": "6310"
+    },
+    "look": {
+      "type": "254",
+      "head": "80",
+      "body": "99",
+      "legs": "118",
+      "feet": "38",
+      "corpse": "7349"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-525"
+        },
+        {
+          "name": "speed",
+          "interval": "3500",
+          "chance": "35",
+          "radius": "1",
+          "target": "1",
+          "range": "1",
+          "duration": "40",
+          "speedchange": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "27"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "NO mommy NO. Leave me alone!"
+        },
+        {
+          "sentence": "Not that tower again!"
+        },
+        {
+          "sentence": "The cat has grown some horns!!"
+        },
+        {
+          "sentence": "What was I doing here again?"
+        },
+        {
+          "sentence": "Are we there soon mommy?"
+        }
+      ]
+    }
+  }
+}

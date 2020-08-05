@@ -1,0 +1,182 @@
+{
+  "monster": {
+    "name": "Dwarf Soldier",
+    "nameDescription": "a dwarf soldier",
+    "race": "blood",
+    "experience": "70",
+    "speed": "170",
+    "manacost": "360",
+    "health": {
+      "now": "135",
+      "max": "135"
+    },
+    "look": {
+      "type": "71",
+      "corpse": "6014"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "60",
+          "attack": "20"
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "13",
+          "range": "7",
+          "min": "-20",
+          "max": "-40",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "bolt"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "9",
+      "defense": "20"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "75"
+        },
+        {
+          "firePercent": "-5"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Hail Durin!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "8",
+          "chance": "12000"
+        },
+        {
+          "id": "2148",
+          "countmax": "7",
+          "chance": "12000"
+        },
+        {
+          "id": "2543",
+          "countmax": "7",
+          "chance": "20000"
+        },
+        {
+          "id": "2787",
+          "countmax": "3",
+          "chance": "20000"
+        },
+        {
+          "id": "2554",
+          "chance": "11250"
+        },
+        {
+          "id": "2481",
+          "chance": "10000"
+        },
+        {
+          "id": "2464",
+          "chance": "8500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7363",
+              "countmax": "3",
+              "chance": "1500"
+            },
+            {
+              "id": "2378",
+              "chance": "3500"
+            },
+            {
+              "id": "2455",
+              "chance": "3400"
+            },
+            {
+              "id": "2525",
+              "chance": "2500"
+            },
+            {
+              "id": "2208",
+              "chance": "360"
+            },
+            {
+              "id": "5880",
+              "chance": "300"
+            },
+            {
+              "id": "2213",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

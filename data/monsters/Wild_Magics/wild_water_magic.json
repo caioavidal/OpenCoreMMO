@@ -1,0 +1,67 @@
+{
+  "monster": {
+    "name": "Wild Water Magic",
+    "nameDescription": "a wild water magic",
+    "race": "undead",
+    "experience": "0",
+    "speed": "210",
+    "health": {
+      "now": "1",
+      "max": "1"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "0"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "defenses": {
+      "defense": {
+        "name": "effect",
+        "interval": "100",
+        "chance": "100",
+        "radius": "1",
+        "target": "0",
+        "attribute": {
+          "key": "areaeffect",
+          "value": "blueshimmer"
+        }
+      }
+    }
+  }
+}

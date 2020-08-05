@@ -1,0 +1,219 @@
+{
+  "monster": {
+    "name": "Gnomevil",
+    "nameDescription": "Gnomevil",
+    "race": "blood",
+    "experience": "45000",
+    "speed": "470",
+    "health": {
+      "now": "250000",
+      "max": "250000"
+    },
+    "look": {
+      "type": "504",
+      "corpse": "18443"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "runonhealth": "10000"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1300",
+          "min": "0",
+          "max": "-630"
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "speedchange": "-400",
+          "duration": "2500",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "whirlwindaxe"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "100",
+          "range": "7",
+          "min": "-820",
+          "max": "-950",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energyarea"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "9",
+          "length": "8",
+          "spread": "0",
+          "min": "-230",
+          "max": "-500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "12",
+          "range": "3",
+          "target": "1",
+          "min": "-350",
+          "max": "-800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "purpleenergy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "35",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "25",
+        "min": "1000",
+        "max": "4000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "10"
+        },
+        {
+          "deathPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "No more Mr. Nicegnome!"
+        },
+        {
+          "sentence": "Taste the power of the dark side!"
+        },
+        {
+          "sentence": "I've seen the light! And it was all engulfing fire!"
+        },
+        {
+          "sentence": "Tatatata!!!"
+        },
+        {
+          "sentence": "Muhahaha!"
+        },
+        {
+          "sentence": "I'm feeling grrrreat!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "decorative ribbon",
+          "chance": "1710"
+        },
+        {
+          "name": "crystalline sword",
+          "chance": "14100"
+        },
+        {
+          "name": "crystalline axe",
+          "chance": "9830"
+        },
+        {
+          "name": "mycological mace",
+          "chance": "8120"
+        },
+        {
+          "name": "crystal crossbow",
+          "chance": "8120"
+        },
+        {
+          "name": "mycological bow",
+          "chance": "9400"
+        },
+        {
+          "name": "shiny blade",
+          "chance": "7690"
+        },
+        {
+          "name": "Gnomevil's hat",
+          "chance": "99150"
+        }
+      ]
+    }
+  }
+}

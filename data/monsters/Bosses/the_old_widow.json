@@ -1,0 +1,245 @@
+{
+  "monster": {
+    "name": "The Old Widow",
+    "nameDescription": "The Old Widow",
+    "race": "blood",
+    "experience": "4200",
+    "speed": "240",
+    "health": {
+      "now": "3200",
+      "max": "3200"
+    },
+    "look": {
+      "type": "208",
+      "corpse": "5977"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-500"
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-250",
+          "max": "-300",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "speedchange": "-850",
+          "duration": "25000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "poisonfield",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "17",
+      "defense": "21",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "17",
+          "min": "225",
+          "max": "275",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "8",
+          "speedchange": "345",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "giant spider",
+        "interval": "1000",
+        "chance": "13",
+        "max": "2"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "99",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "10",
+          "chance": "100000"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "33333"
+        },
+        {
+          "name": "energy ring",
+          "chance": "33333"
+        },
+        {
+          "id": "2169",
+          "chance": "33333"
+        },
+        {
+          "name": "platinum amulet",
+          "chance": "25000"
+        },
+        {
+          "name": "steel helmet",
+          "chance": "100000"
+        },
+        {
+          "name": "knight armor",
+          "chance": "50000"
+        },
+        {
+          "name": "knight legs",
+          "chance": "25000"
+        },
+        {
+          "name": "spider silk",
+          "chance": "100000"
+        },
+        {
+          "name": "spool of yarn",
+          "chance": "25000"
+        },
+        {
+          "name": "bloody edge",
+          "chance": "3225"
+        },
+        {
+          "name": "dreaded cleaver",
+          "chance": "1639"
+        },
+        {
+          "name": "great health potion",
+          "countmax": "4",
+          "chance": "100000"
+        },
+        {
+          "name": "sweet smelling bait",
+          "chance": "33333"
+        }
+      ]/* time ring */
+    }
+  }
+}

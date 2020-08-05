@@ -1,0 +1,169 @@
+{
+  "monster": {
+    "name": "Amazon",
+    "nameDescription": "a amazon",
+    "race": "blood",
+    "experience": "60",
+    "speed": "210",
+    "manacost": "390",
+    "health": {
+      "now": "110",
+      "max": "110"
+    },
+    "look": {
+      "type": "137",
+      "head": "113",
+      "body": "120",
+      "legs": "114",
+      "feet": "132",
+      "corpse": "6081"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "20",
+          "attack": "30"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "min": "-5",
+          "max": "-40",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "11",
+      "defense": "11"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "-8"
+        },
+        {
+          "deathPercent": "-7"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Yeeee ha!"
+        },
+        {
+          "sentence": "Your head shall be mine!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "10",
+          "chance": "23000"
+        },
+        {
+          "id": "2229",
+          "countmax": "2",
+          "chance": "55500"
+        },
+        {
+          "id": "2379",
+          "chance": "81000"
+        },
+        {
+          "id": "2467",
+          "chance": "43000"
+        },
+        {
+          "id": "2691",
+          "chance": "26000"
+        },
+        {
+          "id": "2385",
+          "chance": "22000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2526",
+              "chance": "7000"
+            },
+            {
+              "id": "2050",
+              "chance": "5000"
+            },
+            {
+              "id": "2125",
+              "chance": "500"
+            },
+            {
+              "id": "2147",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

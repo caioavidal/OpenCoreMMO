@@ -1,0 +1,81 @@
+{
+  "monster": {
+    "name": "Cockroach",
+    "nameDescription": "a cockroach",
+    "race": "venom",
+    "experience": "0",
+    "speed": "100",
+    "manacost": "0",
+    "health": {
+      "now": "1",
+      "max": "1"
+    },
+    "look": {
+      "type": "284",
+      "corpse": "8593"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "0",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "5"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "0",
+      "defense": "0"
+    },
+    "immunities": {
+      "immunity": {
+        "poison": "1"
+      }
+    },
+    "loot": {
+      "item": {
+        "id": "8710",
+        "chance": "100000"
+      }/* cockroach leg */
+    }
+  }
+}

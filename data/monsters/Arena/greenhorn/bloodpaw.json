@@ -1,0 +1,85 @@
+{
+  "monster": {
+    "name": "Bloodpaw",
+    "nameDescription": "bloodpaw",
+    "race": "blood",
+    "experience": "50",
+    "speed": "156",
+    "manacost": "0",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "42",
+      "corpse": "7349"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "10",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "3",
+      "defense": "8"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    }
+  }
+}

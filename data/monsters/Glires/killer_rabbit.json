@@ -1,0 +1,136 @@
+{
+  "monster": {
+    "name": "Killer Rabbit",
+    "nameDescription": "a killer rabbit",
+    "race": "blood",
+    "experience": "160",
+    "speed": "300",
+    "manacost": "220",
+    "health": {
+      "now": "205",
+      "max": "205"
+    },
+    "look": {
+      "type": "74",
+      "corpse": "6017"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "20"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1200",
+          "min": "0",
+          "max": "-100"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "30",
+          "range": "1",
+          "min": "0",
+          "max": "-50"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "35",
+      "defense": [
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "40",
+          "speedchange": "380",
+          "duration": "8000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "30",
+          "duration": "2000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "killer rabbit",
+        "interval": "2000",
+        "chance": "30",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Who is lunch NOW?"
+      }
+    },
+    "loot": {
+      "item": {
+        "name": "gold coin",
+        "countmax": "90",
+        "chance": "50000"
+      }
+    }
+  }
+}

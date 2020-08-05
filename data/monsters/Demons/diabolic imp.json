@@ -1,0 +1,288 @@
+{
+  "monster": {
+    "name": "Diabolic Imp",
+    "nameDescription": "a diabolic imp",
+    "race": "blood",
+    "experience": "1950",
+    "speed": "360",
+    "manacost": "0",
+    "health": {
+      "now": "1950",
+      "max": "1950"
+    },
+    "look": {
+      "type": "237",
+      "corpse": "6364"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "3"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "400"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "70",
+          "attack": "60"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-50",
+          "max": "-350",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "3000",
+          "chance": "34",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-90",
+          "max": "-500",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "50",
+          "min": "75",
+          "max": "125",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "40",
+          "speedchange": "450",
+          "duration": "40000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "4000",
+          "chance": "50",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "earthPercent": "30"
+        },
+        {
+          "deathPercent": "25"
+        },
+        {
+          "icePercent": "-25"
+        },
+        {
+          "holyPercent": "-12"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Muahaha!"
+        },
+        {
+          "sentence": "He he he!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "99",
+          "chance": "50000"
+        },
+        {
+          "id": "2148",
+          "countmax": "98",
+          "chance": "50000"
+        },
+        {
+          "id": "2548",
+          "chance": "50000"
+        },
+        {
+          "id": "6558",
+          "chance": "25000"
+        },
+        {
+          "id": "6558",
+          "chance": "25000"
+        },
+        {
+          "id": "6500",
+          "chance": "5000"
+        },
+        {
+          "id": "2260",
+          "chance": "10000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7900",
+              "chance": "1200"
+            },
+            {
+              "id": "6300",
+              "chance": "500"
+            },
+            {
+              "id": "7899",
+              "chance": "900"
+            },
+            {
+              "id": "2165",
+              "chance": "2500"
+            },
+            {
+              "id": "2515",
+              "chance": "10000"
+            },
+            {
+              "id": "2150",
+              "countmax": "3",
+              "chance": "2000"
+            },
+            {
+              "id": "2260",
+              "chance": "10000"
+            },
+            {
+              "id": "2387",
+              "chance": "1500"
+            },
+            {
+              "id": "2568",
+              "chance": "3000"
+            },
+            {
+              "id": "2419",
+              "chance": "8000"
+            },
+            {
+              "id": "5944",
+              "chance": "10000"
+            },
+            {
+              "id": "2148",
+              "countmax": "7",
+              "chance": "600"
+            },
+            {
+              "id": "2185",
+              "chance": "750"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

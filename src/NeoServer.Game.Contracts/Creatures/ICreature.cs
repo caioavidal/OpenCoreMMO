@@ -21,8 +21,6 @@ namespace NeoServer.Game.Contracts.Creatures
         // event OnCreatureStateChange OnInventoryChanged;
         uint CreatureId { get; }
 
-        string Article { get; }
-
         string Name { get; }
 
         ushort Corpse { get; }

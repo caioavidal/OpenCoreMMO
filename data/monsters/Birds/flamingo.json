@@ -1,0 +1,65 @@
+{
+  "monster": {
+    "name": "Flamingo",
+    "nameDescription": "a flamingo",
+    "race": "blood",
+    "experience": "0",
+    "speed": "180",
+    "manacost": "250",
+    "health": {
+      "now": "25",
+      "max": "25"
+    },
+    "look": {
+      "type": "212",
+      "corpse": "6054"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "20"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "25"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": "6"
+    },
+    "loot": ""
+  }
+}

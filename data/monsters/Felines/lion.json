@@ -1,0 +1,113 @@
+{
+  "monster": {
+    "name": "Lion",
+    "nameDescription": "a lion",
+    "race": "blood",
+    "experience": "30",
+    "speed": "180",
+    "manacost": "320",
+    "health": {
+      "now": "80",
+      "max": "80"
+    },
+    "look": {
+      "type": "41",
+      "corpse": "5986"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "30",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "6",
+      "defense": "13"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "22"
+        },
+        {
+          "holyPercent": "17"
+        },
+        {
+          "icePercent": "-8"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Groarrr!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2671",
+          "countmax": "2",
+          "chance": "18000"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "17000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

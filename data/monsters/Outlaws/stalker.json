@@ -1,0 +1,167 @@
+{
+  "monster": {
+    "name": "Stalker",
+    "nameDescription": "a stalker",
+    "race": "blood",
+    "experience": "90",
+    "speed": "210",
+    "manacost": "0",
+    "health": {
+      "now": "150",
+      "max": "150"
+    },
+    "look": {
+      "type": "128",
+      "head": "95",
+      "body": "116",
+      "legs": "95",
+      "feet": "114",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "60",
+          "attack": "20"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "100",
+          "range": "1",
+          "min": "-20",
+          "max": "-30",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "14",
+      "defense": "10",
+      "defense": {
+        "name": "invisible",
+        "interval": "1000",
+        "chance": "25",
+        "duration": "9000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "10"
+        },
+        {
+          "physicalPercent": "-12"
+        },
+        {
+          "holyPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "8",
+          "chance": "5000"
+        },
+        {
+          "id": "2410",
+          "countmax": "2",
+          "chance": "3000"
+        },
+        {
+          "id": "2649",
+          "chance": "9500"
+        },
+        {
+          "id": "2478",
+          "chance": "7000"
+        },
+        {
+          "id": "2260",
+          "chance": "6000"
+        },
+        {
+          "id": "1988",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2412",
+              "chance": "5500"
+            },
+            {
+              "id": "2425",
+              "chance": "1000"
+            },
+            {
+              "id": "2165",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "monster": {
+    "name": "Fluffy",
+    "nameDescription": "fluffy",
+    "race": "blood",
+    "experience": "3550",
+    "speed": "310",
+    "manacost": "0",
+    "health": {
+      "now": "4500",
+      "max": "4500"
+    },
+    "look": {
+      "type": "240",
+      "corpse": "6332"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1000",
+          "skill": "98",
+          "attack": "120"
+        },
+        {
+          "name": "energy",
+          "interval": "1500",
+          "chance": "300",
+          "length": "8",
+          "spread": "3",
+          "min": "-100",
+          "max": "-200",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "150",
+          "length": "8",
+          "spread": "3",
+          "min": "-120",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "min": "-105",
+          "max": "-235",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "suddendeath"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "radius": "6",
+          "target": "0",
+          "min": "-135",
+          "max": "-255",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "35"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "0"
+        },
+        {
+          "fire": "0"
+        },
+        {
+          "poison": "0"
+        },
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "0"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Wooof!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "100000"
+        },
+        {
+          "id": "5944",
+          "chance": "5555"
+        },
+        {
+          "id": "6570",
+          "chance": "5538",
+          "countmax": "4"
+        },
+        {
+          "id": "6571",
+          "chance": "1538"
+        },
+        {
+          "id": "2671",
+          "countmax": "8",
+          "chance": "50000"
+        },
+        {
+          "id": "2230",
+          "chance": "25000"
+        },
+        {
+          "id": "6500",
+          "chance": "7200"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2430",
+              "chance": "2857"
+            },
+            {
+              "id": "2383",
+              "chance": "2500"
+            },
+            {
+              "id": "6558",
+              "chance": "8888"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "monster": {
+    "name": "Vampire Bride",
+    "nameDescription": "a vampire bride",
+    "race": "blood",
+    "experience": "1050",
+    "speed": "230",
+    "health": {
+      "now": "1200",
+      "max": "1200"
+    },
+    "look": {
+      "type": "312",
+      "corpse": "9658"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-190"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "3000",
+          "chance": "15",
+          "target": "1",
+          "range": "1",
+          "min": "-60",
+          "max": "-130",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "range": "7",
+          "min": "-60",
+          "max": "-150",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "death",
+          "interval": "4000",
+          "chance": "5",
+          "target": "1",
+          "range": "7",
+          "min": "-60",
+          "max": "-150",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "hearts"
+            }
+          ]
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "range": "7",
+          "min": "-60",
+          "max": "-150",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "40",
+        "max": "80",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "10"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "drownPercent": "10"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Kneel before your Mistress!"
+        },
+        {
+          "sentence": "Dead is the new alive."
+        },
+        {
+          "sentence": "Come, let me kiss you, darling. Oh wait, I meant kill."
+        },
+        {
+          "sentence": "Enjoy the pain - I know you love it."
+        },
+        {
+          "sentence": "Are you suffering nicely enough?"
+        },
+        {
+          "sentence": "You won't regret you came to me, sweetheart."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "emerald bangle",
+          "chance": "1100"
+        },
+        {
+          "name": "small diamond",
+          "countmax": "2",
+          "chance": "1020"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "149",
+          "chance": "90000"
+        },
+        {
+          "name": "platinum coin",
+          "chance": "9910"
+        },
+        {
+          "name": "moonlight rod",
+          "chance": "5500"
+        },
+        {
+          "name": "boots of haste",
+          "chance": "220"
+        },
+        {
+          "name": "enigmatic voodoo skull",
+          "chance": "170"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "5000"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "10210"
+        },
+        {
+          "id": "7733",
+          "chance": "200"
+        },
+        {
+          "name": "hibiscus dress",
+          "chance": "1030"
+        },
+        {
+          "name": "blood goblet",
+          "chance": "60"
+        },
+        {
+          "id": "9809",
+          "chance": "1010"
+        },
+        {
+          "id": "9837",
+          "chance": "970"
+        },
+        {
+          "name": "vampire teeth",
+          "chance": "10000"
+        },
+        {
+          "name": "blood preservation",
+          "chance": "4950"
+        },
+        {
+          "name": "leather whip",
+          "chance": "20"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

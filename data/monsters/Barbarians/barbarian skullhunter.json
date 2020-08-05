@@ -1,0 +1,190 @@
+{
+  "monster": {
+    "name": "Barbarian Skullhunter",
+    "nameDescription": "a barbarian skullhunter",
+    "race": "blood",
+    "experience": "85",
+    "speed": "270",
+    "manacost": "450",
+    "health": {
+      "now": "135",
+      "max": "135"
+    },
+    "look": {
+      "type": "254",
+      "head": "0",
+      "body": "77",
+      "legs": "77",
+      "feet": "114",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "20",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-7"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "drunk": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "You will become my trophy."
+        },
+        {
+          "sentence": "Fight harder, coward."
+        },
+        {
+          "sentence": "Show that you are a worthy opponent."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "40000"
+        },
+        {
+          "id": "2050",
+          "chance": "47500"
+        },
+        {
+          "id": "2460",
+          "chance": "17000"
+        },
+        {
+          "id": "2403",
+          "chance": "19250"
+        },
+        {
+          "id": "2473",
+          "chance": "9000"
+        },
+        {
+          "id": "2483",
+          "chance": "3850"
+        },
+        {
+          "id": "2229",
+          "chance": "1300"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7449",
+              "chance": "450"
+            },
+            {
+              "id": "5913",
+              "chance": "2500"
+            },
+            {
+              "id": "2168",
+              "chance": "750"
+            },
+            {
+              "id": "7462",
+              "chance": "400"
+            },
+            {
+              "id": "7457",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

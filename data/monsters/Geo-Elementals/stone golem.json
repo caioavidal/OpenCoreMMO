@@ -1,0 +1,156 @@
+{
+  "monster": {
+    "name": "Stone Golem",
+    "nameDescription": "a stone golem",
+    "race": "blood",
+    "experience": "280",
+    "speed": "180",
+    "manacost": "590",
+    "health": {
+      "now": "270",
+      "max": "270"
+    },
+    "look": {
+      "type": "67",
+      "corpse": "6005"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "45",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "18"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "physicalPercent": "22"
+        },
+        {
+          "firePercent": "20"
+        },
+        {
+          "energyPercent": "13"
+        },
+        {
+          "deathPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "paralyze": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "15",
+          "chance": "9000"
+        },
+        {
+          "id": "1294",
+          "countmax": "4",
+          "chance": "8250"
+        },
+        {
+          "id": "2509",
+          "chance": "9750"
+        },
+        {
+          "id": "2050",
+          "chance": "7250"
+        },
+        {
+          "id": "2166",
+          "chance": "5000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2483",
+              "chance": "3250"
+            },
+            {
+              "id": "2395",
+              "chance": "1100"
+            },
+            {
+              "id": "5880",
+              "chance": "2500"
+            },
+            {
+              "id": "2124",
+              "chance": "200"
+            },
+            {
+              "id": "2156",
+              "chance": "150"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

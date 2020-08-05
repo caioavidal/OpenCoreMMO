@@ -1,0 +1,136 @@
+{
+  "monster": {
+    "name": "Madareth",
+    "nameDescription": "madareth",
+    "race": "fire",
+    "experience": "10000",
+    "speed": "380",
+    "manacost": "0",
+    "health": {
+      "now": "55000",
+      "max": "55000"
+    },
+    "look": {
+      "type": "12",
+      "head": "77",
+      "body": "116",
+      "legs": "82",
+      "feet": "79",
+      "corpse": "6068"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": null,
+    "defenses": {
+      "armor": "48",
+      "defense": "46"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "15"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "3000",
+      "chance": "5",
+      "voice": {
+        "sentence": "I am going to play with yourself!",
+        "yell": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "id": "2514",
+          "chance": "12650"
+        },
+        {
+          "id": "2214",
+          "chance": "8000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2520",
+              "chance": "7650"
+            },
+            {
+              "id": "2145",
+              "chance": "5800"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

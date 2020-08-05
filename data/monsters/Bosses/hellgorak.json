@@ -1,0 +1,260 @@
+{
+  "monster": {
+    "name": "Hellgorak",
+    "nameDescription": "a hellgorak",
+    "race": "blood",
+    "experience": "10000",
+    "speed": "360",
+    "manacost": "0",
+    "health": {
+      "now": "40000",
+      "max": "40000"
+    },
+    "look": {
+      "type": "12",
+      "head": "19",
+      "body": "96",
+      "legs": "21",
+      "feet": "81",
+      "corpse": "6068"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "130",
+          "attack": "130"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "11",
+          "length": "8",
+          "spread": "0",
+          "min": "-250",
+          "max": "-819",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "purpleenergy"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "14",
+          "radius": "5",
+          "target": "0",
+          "min": "-90",
+          "max": "-500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "stun"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "11",
+          "radius": "5",
+          "target": "1",
+          "min": "-50",
+          "max": "-520",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "5",
+          "radius": "7",
+          "target": "0",
+          "min": "0",
+          "max": "-150",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "70",
+      "defense": "65",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "11",
+        "min": "400",
+        "max": "900",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "greenshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "99"
+        },
+        {
+          "energyPercent": "99"
+        },
+        {
+          "earthPercent": "99"
+        },
+        {
+          "holyPercent": "99"
+        },
+        {
+          "deathPercent": "99"
+        },
+        {
+          "firePercent": "99"
+        },
+        {
+          "drownPercent": "-50"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "0",
+      "voice": [
+        {
+          "sentence": "I'll sacrifice yours souls to seven!"
+        },
+        {
+          "sentence": "I'm bad news for you mortals!"
+        },
+        {
+          "sentence": "No man can defeat me!"
+        },
+        {
+          "sentence": "Your puny skills are no match for me."
+        },
+        {
+          "sentence": "I smell your fear."
+        },
+        {
+          "sentence": "Delicious!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "80000"
+        },
+        {
+          "id": "2148",
+          "countmax": "100",
+          "chance": "70000"
+        },
+        {
+          "id": "2160",
+          "countmax": "3",
+          "chance": "100000"
+        },
+        {
+          "id": "2143",
+          "countmax": "7",
+          "chance": "3000"
+        },
+        {
+          "id": "2514",
+          "chance": "1650"
+        },
+        {
+          "id": "7590",
+          "chance": "7000"
+        },
+        {
+          "id": "7591",
+          "chance": "7000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2148",
+              "countmax": "83",
+              "chance": "60000"
+            },
+            {
+              "id": "7368",
+              "countmax": "25",
+              "chance": "100000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "monster": {
+    "name": "Novice of the Cult",
+    "nameDescription": "a novice of the cult",
+    "race": "blood",
+    "experience": "100",
+    "speed": "200",
+    "health": {
+      "now": "285",
+      "max": "285"
+    },
+    "look": {
+      "type": "133",
+      "head": "114",
+      "body": "95",
+      "legs": "114",
+      "feet": "114",
+      "corpse": "20467"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "40"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-65",
+          "poison": "1"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-20",
+          "max": "-80",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "redshimmer"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "20",
+        "max": "40",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "10"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "physicalPercent": "-10"
+        },
+        {
+          "energyPercent": "-8"
+        },
+        {
+          "firePercent": "-5"
+        },
+        {
+          "deathPercent": "-8"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "1",
+      "summon": {
+        "name": "Chicken",
+        "interval": "2000",
+        "chance": "10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Fear us!"
+        },
+        {
+          "sentence": "You will not tell anyone what you have seen!"
+        },
+        {
+          "sentence": "Your curiosity will be punished!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1962",
+          "chance": "700"
+        },
+        {
+          "name": "small diamond",
+          "chance": "210"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "40",
+          "chance": "43380"
+        },
+        {
+          "name": "wand of vortex",
+          "chance": "450"
+        },
+        {
+          "name": "garlic necklace",
+          "chance": "420"
+        },
+        {
+          "name": "dwarven ring",
+          "chance": "500"
+        },
+        {
+          "name": "scarf",
+          "chance": "2900"
+        },
+        {
+          "name": "pirate voodoo doll",
+          "chance": "520"
+        },
+        {
+          "id": "6087",
+          "chance": "970"
+        },
+        {
+          "name": "cultish robe",
+          "chance": "1030"
+        },
+        {
+          "name": "rope belt",
+          "chance": "5910"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

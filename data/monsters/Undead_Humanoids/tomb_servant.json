@@ -1,0 +1,158 @@
+{
+  "monster": {
+    "name": "Tomb Servant",
+    "nameDescription": "a tomb servant",
+    "race": "undead",
+    "experience": "215",
+    "speed": "190",
+    "health": {
+      "now": "475",
+      "max": "475"
+    },
+    "look": {
+      "type": "100",
+      "corpse": "6029"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-130"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "20",
+          "target": "1",
+          "range": "7",
+          "min": "-40",
+          "max": "-55",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Chaarr!!"
+        },
+        {
+          "sentence": "Ngl..Nglll...Gll"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "108",
+          "chance": "82350"
+        },
+        {
+          "name": "scarab coin",
+          "chance": "8210"
+        },
+        {
+          "name": "rotten meat",
+          "chance": "2000"
+        },
+        {
+          "id": "2230",
+          "chance": "49000"
+        },
+        {
+          "name": "longsword",
+          "chance": "6560"
+        },
+        {
+          "name": "bone shield",
+          "chance": "5300"
+        },
+        {
+          "name": "worm",
+          "countmax": "12",
+          "chance": "25325"
+        },
+        {
+          "name": "half-digested piece of meat",
+          "chance": "1000"
+        },
+        {
+          "name": "fist on a stick",
+          "chance": "230"
+        }
+      ]/* bone */
+    }
+  }
+}

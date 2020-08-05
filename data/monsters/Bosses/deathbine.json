@@ -1,0 +1,201 @@
+{
+  "monster": {
+    "name": "Deathbine",
+    "nameDescription": "Deathbine",
+    "race": "venom",
+    "experience": "340",
+    "speed": "240",
+    "health": {
+      "now": "525",
+      "max": "525"
+    },
+    "look": {
+      "type": "120",
+      "corpse": "6047"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-200",
+          "poison": "5"
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "min": "-60",
+          "max": "-90",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "greenspark"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "speedchange": "-850",
+          "duration": "30000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "greenspark"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "3",
+          "target": "0",
+          "min": "-40",
+          "max": "-130",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "26",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "35"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "firePercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small emerald",
+          "countmax": "4",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "100000"
+        },
+        {
+          "name": "dark mushroom",
+          "chance": "50000"
+        },
+        {
+          "name": "shadow herb",
+          "chance": "100000"
+        },
+        {
+          "name": "mandrake",
+          "chance": "5555"
+        },
+        {
+          "name": "seeds",
+          "chance": "50000"
+        },
+        {
+          "name": "terra boots",
+          "chance": "50000"
+        },
+        {
+          "name": "terra amulet",
+          "chance": "50000"
+        },
+        {
+          "name": "springsprout rod",
+          "chance": "50000"
+        },
+        {
+          "name": "carniphila seeds",
+          "chance": "100000"
+        },
+        {
+          "name": "sweet smelling bait",
+          "chance": "2854"
+        }
+      ]
+    }
+  }
+}

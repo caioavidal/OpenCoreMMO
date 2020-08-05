@@ -1,0 +1,96 @@
+{
+  "monster": {
+    "name": "Green Frog",
+    "nameDescription": "a green frog",
+    "race": "venom",
+    "experience": "0",
+    "speed": "200",
+    "manacost": "250",
+    "health": {
+      "now": "25",
+      "max": "25"
+    },
+    "look": {
+      "type": "224",
+      "head": "69",
+      "body": "66",
+      "legs": "69",
+      "feet": "66",
+      "corpse": "6079"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "6"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-25"
+      }
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ribbit!"
+        },
+        {
+          "sentence": "Ribbit! Ribbit!"
+        }
+      ]
+    }
+  }
+}

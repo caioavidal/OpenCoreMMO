@@ -1,0 +1,144 @@
+{
+  "monster": {
+    "name": "Deepling Worker",
+    "nameDescription": "a deepling worker",
+    "race": "blood",
+    "experience": "130",
+    "speed": "210",
+    "health": {
+      "now": "190",
+      "max": "190"
+    },
+    "look": {
+      "type": "470",
+      "corpse": "15497"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "20"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-80"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "-20"
+        },
+        {
+          "earthPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Qjell afar gou jey!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "25",
+          "chance": "70000"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "3",
+          "chance": "110"
+        },
+        {
+          "id": "2667",
+          "countmax": "3",
+          "chance": "12020"
+        },
+        {
+          "name": "fish fin",
+          "chance": "350"
+        },
+        {
+          "name": "heavy trident",
+          "chance": "510"
+        },
+        {
+          "name": "eye of a deepling",
+          "chance": "283"
+        },
+        {
+          "name": "deepling scales",
+          "chance": "6950"
+        }
+      ]/* fish */
+    }
+  }
+}

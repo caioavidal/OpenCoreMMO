@@ -1,0 +1,208 @@
+{
+  "monster": {
+    "name": "Deepling Tyrant",
+    "nameDescription": "a deepling tyrant",
+    "race": "blood",
+    "experience": "4200",
+    "speed": "260",
+    "health": {
+      "now": "4900",
+      "max": "4900"
+    },
+    "look": {
+      "type": "442",
+      "corpse": "15188"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "20"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-501"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "target": "1",
+          "min": "0",
+          "max": "-375",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "whirlwindsword"
+          }
+        },
+        {
+          "name": "drown",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "-180",
+          "max": "-215",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "spear"
+            },
+            {
+              "key": "areaEffect",
+              "value": "bluebubble"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "45",
+      "defense": "45",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "200",
+        "max": "400",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "fire": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "QJELL NETA NA!!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "97",
+          "chance": "100000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "97",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "4",
+          "chance": "70000"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "3",
+          "chance": "32640"
+        },
+        {
+          "name": "great health potion",
+          "countmax": "3",
+          "chance": "33430"
+        },
+        {
+          "name": "eye of a deepling",
+          "chance": "28850"
+        },
+        {
+          "name": "deepling guard belt buckle",
+          "chance": "23100"
+        },
+        {
+          "name": "deepling breaktime snack",
+          "chance": "34770"
+        },
+        {
+          "name": "guardian axe",
+          "chance": "1420"
+        },
+        {
+          "name": "deepling claw",
+          "chance": "29960"
+        },
+        {
+          "name": "foxtail",
+          "chance": "80"
+        },
+        {
+          "name": "deepling backpack",
+          "chance": "510"
+        },
+        {
+          "name": "deepling squelcher",
+          "chance": "1540"
+        }
+      ]
+    }
+  }
+}

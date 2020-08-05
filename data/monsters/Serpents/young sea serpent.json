@@ -1,0 +1,252 @@
+{
+  "monster": {
+    "name": "Young Sea Serpent",
+    "nameDescription": "a young sea serpent",
+    "race": "blood",
+    "experience": "1000",
+    "speed": "350",
+    "manacost": "390",
+    "health": {
+      "now": "1050",
+      "max": "1050"
+    },
+    "look": {
+      "type": "317",
+      "head": "0",
+      "body": "0",
+      "legs": "0",
+      "feet": "0",
+      "corpse": "8307"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "50"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "300"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "25",
+          "attack": "80"
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "5",
+          "length": "9",
+          "spread": "3",
+          "min": "-50",
+          "max": "-150",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bigplants"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "1000",
+          "chance": "7",
+          "length": "9",
+          "spread": "3",
+          "min": "-70",
+          "max": "-180",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "icearea"
+          }
+        },
+        {
+          "name": "drowncondition",
+          "interval": "1000",
+          "chance": "8",
+          "radius": "4",
+          "target": "1",
+          "max": "-100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "16",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "25",
+        "min": "20",
+        "max": "60",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "3000",
+      "chance": "20",
+      "voice": [
+        {
+          "sentence": "CHHHRRRR"
+        },
+        {
+          "sentence": "HISSSS"
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "30"
+        },
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "physicalPercent": "-15"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "65",
+          "chance": "31000"
+        },
+        {
+          "id": "2148",
+          "countmax": "55",
+          "chance": "31000"
+        },
+        {
+          "id": "2148",
+          "countmax": "45",
+          "chance": "31000"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "20000"
+        },
+        {
+          "id": "2146",
+          "chance": "1500",
+          "countmax": "2"
+        },
+        {
+          "id": "2165",
+          "chance": "750"
+        },
+        {
+          "id": "7589",
+          "chance": "1000"
+        },
+        {
+          "id": "2489",
+          "chance": "2500"
+        },
+        {
+          "id": "9808",
+          "chance": "1000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2672",
+              "countmax": "2",
+              "chance": "16000"
+            },
+            {
+              "id": "9808",
+              "chance": "1000"
+            },
+            {
+              "id": "2394",
+              "chance": "8000"
+            },
+            {
+              "id": "2177",
+              "chance": "800"
+            },
+            {
+              "id": "2417",
+              "chance": "5000"
+            },
+            {
+              "id": "2378",
+              "chance": "3000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

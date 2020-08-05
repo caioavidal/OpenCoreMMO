@@ -1,0 +1,125 @@
+{
+  "monster": {
+    "name": "Bane Bringer",
+    "nameDescription": "a bane bringer",
+    "experience": "400",
+    "speed": "260",
+    "race": "undead",
+    "health": {
+      "now": "2500",
+      "max": "2500"
+    },
+    "look": {
+      "type": "310",
+      "corpse": "9867"
+    },
+    "targetchange": {
+      "speed": "0",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-150"
+      }
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "55"
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "-50"
+        },
+        {
+          "deathPercent": "-90"
+        },
+        {
+          "firePercent": "-80"
+        },
+        {
+          "energyPercent": "-80"
+        },
+        {
+          "icePercent": "-80"
+        },
+        {
+          "earthPercent": "-80"
+        },
+        {
+          "physicalPercent": "10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "30",
+      "voice": [
+        {
+          "sentence": "You shall not succeed!"
+        },
+        {
+          "sentence": "This time we will prevail!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2250",
+          "countmax": "96",
+          "chance": "14285"
+        },
+        {
+          "name": "dry piece of wood",
+          "chance": "100000"
+        }
+      ]/* wooden trash */
+    }
+  }
+}

@@ -1,0 +1,308 @@
+{
+  "monster": {
+    "name": "Elder Beholder",
+    "nameDescription": "a elder beholder",
+    "race": "blood",
+    "experience": "280",
+    "speed": "270",
+    "manacost": "0",
+    "health": {
+      "now": "1100",
+      "max": "1100"
+    },
+    "look": {
+      "type": "108",
+      "corpse": "6037"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "55"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "8",
+          "range": "7",
+          "min": "-45",
+          "max": "-75",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "7",
+          "range": "7",
+          "min": "-60",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "9",
+          "range": "7",
+          "min": "-70",
+          "max": "-90",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "8",
+          "range": "7",
+          "min": "-30",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "6",
+          "range": "7",
+          "min": "-75",
+          "max": "-85",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "6",
+          "range": "7",
+          "min": "-75",
+          "max": "-85",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "6",
+          "range": "7",
+          "min": "-20",
+          "max": "-40",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "speedchange": "-600",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "13",
+      "defense": "26"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "14"
+        },
+        {
+          "deathPercent": "12"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "6",
+      "summon": [
+        {
+          "name": "Gazer",
+          "interval": "1000",
+          "chance": "13",
+          "max": "4"
+        },
+        {
+          "name": "Crypt Shambler",
+          "interval": "1000",
+          "chance": "12",
+          "max": "2"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Let me take a look at you!"
+        },
+        {
+          "sentence": "Inferior creatures, bow before my power!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "30000"
+        },
+        {
+          "id": "2148",
+          "countmax": "45",
+          "chance": "30000"
+        },
+        {
+          "id": "2397",
+          "chance": "12500"
+        },
+        {
+          "id": "2394",
+          "chance": "9000"
+        },
+        {
+          "id": "2175",
+          "chance": "7500"
+        },
+        {
+          "id": "2509",
+          "chance": "6000"
+        },
+        {
+          "id": "2377",
+          "chance": "6000"
+        },
+        {
+          "id": "1987",
+          "chance": "80000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7364",
+              "countmax": "5",
+              "chance": "10000"
+            },
+            {
+              "id": "7589",
+              "chance": "1000"
+            },
+            {
+              "id": "5898",
+              "chance": "1250"
+            },
+            {
+              "id": "2181",
+              "chance": "1250"
+            },
+            {
+              "id": "2518",
+              "chance": "400"
+            },
+            {
+              "id": "2149",
+              "chance": "750"
+            },
+            {
+              "id": "3972",
+              "chance": "400"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

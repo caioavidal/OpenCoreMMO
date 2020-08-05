@@ -1,0 +1,144 @@
+{
+  "monster": {
+    "name": "Dreadbeast",
+    "species": "undead",
+    "nameDescription": "a dreadbeast",
+    "race": "undead",
+    "experience": "580",
+    "speed": "200",
+    "manacost": "800",
+    "health": {
+      "now": "515",
+      "max": "515"
+    },
+    "look": {
+      "type": "101",
+      "head": "20",
+      "body": "30",
+      "legs": "40",
+      "feet": "50",
+      "corpse": "3031"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "10"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "-0",
+          "max": "-100"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "20",
+          "radius": "1",
+          "target": "1",
+          "min": "-150",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "yellowenergy"
+            },
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            }
+          ]
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "20",
+          "radius": "1",
+          "target": "1",
+          "min": "-150",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "purpleenergy"
+            },
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "34",
+      "defense": "36"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "70"
+        },
+        {
+          "physicalPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "poison": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "loot": {/* TODO: loot */}
+  }
+}

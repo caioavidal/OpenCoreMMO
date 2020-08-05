@@ -1,0 +1,178 @@
+{
+  "monster": {
+    "name": "Iron Servant",
+    "nameDescription": "an iron servant",
+    "race": "energy",
+    "experience": "210",
+    "speed": "190",
+    "health": {
+      "now": "350",
+      "max": "350"
+    },
+    "look": {
+      "type": "395",
+      "corpse": "13486"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "50"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-45"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "0",
+          "max": "-60",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallstone"
+            },
+            {
+              "key": "areaEffect",
+              "value": "explosionarea"
+            }
+          ]
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "duration": "2000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "explosion"
+            },
+            {
+              "key": "areaEffect",
+              "value": "stun"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "10"
+        },
+        {
+          "icePercent": "-5"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Error. LOAD 'PROGRAM"
+        },
+        {
+          "sentence": "8,1"
+        },
+        {
+          "sentence": "Remain. Obedient."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "55",
+          "chance": "82000"
+        },
+        {
+          "name": "halberd",
+          "chance": "1000"
+        },
+        {
+          "name": "small health potion",
+          "chance": "1980"
+        },
+        {
+          "name": "gear wheel",
+          "chance": "4840"
+        },
+        {
+          "id": "9808",
+          "chance": "200"
+        },
+        {
+          "name": "slime mould",
+          "chance": "310"
+        }
+      ]/* rusty armor */
+    }
+  }
+}

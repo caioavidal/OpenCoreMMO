@@ -1,0 +1,302 @@
+{
+  "monster": {
+    "name": "Magma Crawler",
+    "nameDescription": "a magma crawler",
+    "race": "fire",
+    "experience": "2700",
+    "speed": "220",
+    "health": {
+      "now": "4800",
+      "max": "4800"
+    },
+    "look": {
+      "type": "492",
+      "corpse": "17336"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "300"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-203"
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "0",
+          "min": "-300",
+          "max": "-1100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "mortarea"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "length": "3",
+          "spread": "2",
+          "min": "-290",
+          "max": "-800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "fireattack"
+          }
+        },
+        {
+          "name": "magma crawler soulfire",
+          "interval": "2000",
+          "chance": "20"
+        },
+        {
+          "name": "monster soulfire",
+          "interval": "2000",
+          "chance": "10"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "target": "0",
+          "radius": "3",
+          "min": "-140",
+          "max": "-180",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "2",
+          "target": "0",
+          "spread": "0",
+          "speedchange": "-800",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "45",
+      "defense": "45",
+      "defense": {
+        "name": "invisible",
+        "interval": "2000",
+        "chance": "10",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "10"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "deathPercent": "5"
+        },
+        {
+          "physicalPercent": "5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Crrroak!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small diamond",
+          "countmax": "3",
+          "chance": "8800"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "200",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "95000"
+        },
+        {
+          "name": "yellow gem",
+          "chance": "1030"
+        },
+        {
+          "name": "energy ring",
+          "chance": "1650"
+        },
+        {
+          "name": "fire sword",
+          "chance": "1680"
+        },
+        {
+          "name": "black shield",
+          "chance": "1550"
+        },
+        {
+          "name": "iron ore",
+          "chance": "4280"
+        },
+        {
+          "name": "white piece of cloth",
+          "chance": "2310"
+        },
+        {
+          "name": "red piece of cloth",
+          "chance": "930"
+        },
+        {
+          "name": "yellow piece of cloth",
+          "chance": "2980"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "6500"
+        },
+        {
+          "name": "great health potion",
+          "chance": "7270"
+        },
+        {
+          "name": "magma amulet",
+          "chance": "3120"
+        },
+        {
+          "name": "magma boots",
+          "chance": "1820"
+        },
+        {
+          "name": "wand of draconia",
+          "chance": "4280"
+        },
+        {
+          "name": "fiery heart",
+          "chance": "7810"
+        },
+        {
+          "id": "13757",
+          "chance": "1675"
+        },
+        {
+          "name": "crystalline arrow",
+          "countmax": "10",
+          "chance": "5950"
+        },
+        {
+          "name": "wand of everblazing",
+          "chance": "690"
+        },
+        {
+          "name": "blue crystal shard",
+          "countmax": "2",
+          "chance": "3930"
+        },
+        {
+          "name": "brown crystal splinter",
+          "countmax": "2",
+          "chance": "8500"
+        },
+        {
+          "name": "blue crystal splinter",
+          "countmax": "2",
+          "chance": "8500"
+        },
+        {
+          "name": "green crystal fragment",
+          "chance": "7000"
+        },
+        {
+          "name": "magma clump",
+          "chance": "11600"
+        },
+        {
+          "name": "blazing bone",
+          "chance": "11500"
+        }
+      ]/* coal */
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "monster": {
+    "name": "Dwarf Guard",
+    "nameDescription": "a dwarf guard",
+    "race": "blood",
+    "experience": "165",
+    "speed": "200",
+    "manacost": "650",
+    "health": {
+      "now": "245",
+      "max": "245"
+    },
+    "look": {
+      "type": "70",
+      "corpse": "6013"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "30",
+        "attack": "70"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "22"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "90"
+        },
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "firePercent": "-5"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Hail Durin!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "20000"
+        },
+        {
+          "id": "7618",
+          "chance": "350"
+        },
+        {
+          "id": "5880",
+          "chance": "350"
+        },
+        {
+          "id": "2643",
+          "chance": "40000"
+        },
+        {
+          "id": "2150",
+          "chance": "100"
+        },
+        {
+          "id": "2457",
+          "chance": "1333"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2513",
+              "chance": "5000"
+            },
+            {
+              "id": "2417",
+              "chance": "4000"
+            },
+            {
+              "id": "2787",
+              "countmax": "3",
+              "chance": "28500"
+            },
+            {
+              "id": "2483",
+              "chance": "7500"
+            },
+            {
+              "id": "2387",
+              "chance": "450"
+            },
+            {
+              "id": "2459",
+              "chance": "250"
+            },
+            {
+              "id": "2208",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

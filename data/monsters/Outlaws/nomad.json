@@ -1,0 +1,167 @@
+{
+  "monster": {
+    "name": "Nomad",
+    "nameDescription": "a nomad",
+    "race": "blood",
+    "experience": "60",
+    "speed": "215",
+    "manacost": "420",
+    "health": {
+      "now": "160",
+      "max": "160"
+    },
+    "look": {
+      "type": "146",
+      "head": "114",
+      "body": "20",
+      "legs": "22",
+      "feet": "2",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "18"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "30",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "13"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "physicalPercent": "-12"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "We are the true sons of the desert!"
+        },
+        {
+          "sentence": "I will leave your remains to the vultures!"
+        },
+        {
+          "sentence": "We are swift as the wind of the desert!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "51",
+          "chance": "16250"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "22500"
+        },
+        {
+          "id": "2386",
+          "chance": "28000"
+        },
+        {
+          "id": "2511",
+          "chance": "20000"
+        },
+        {
+          "id": "2649",
+          "chance": "13750"
+        },
+        {
+          "id": "2398",
+          "chance": "12500"
+        },
+        {
+          "id": "2458",
+          "chance": "4500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2465",
+              "chance": "1500"
+            },
+            {
+              "id": "2509",
+              "chance": "750"
+            },
+            {
+              "id": "2459",
+              "chance": "450"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

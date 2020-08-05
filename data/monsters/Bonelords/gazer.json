@@ -1,0 +1,149 @@
+{
+  "monster": {
+    "name": "Gazer",
+    "nameDescription": "a gazer",
+    "race": "venom",
+    "experience": "90",
+    "speed": "180",
+    "health": {
+      "now": "120",
+      "max": "120"
+    },
+    "look": {
+      "type": "109",
+      "corpse": "6036"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-15"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-25",
+          "max": "-35",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-10",
+          "max": "-35"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "20"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Mommy!?"
+        },
+        {
+          "sentence": "Buuuuhaaaahhaaaaa!"
+        },
+        {
+          "sentence": "Me need mana!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "16",
+          "chance": "65000"
+        },
+        {
+          "name": "small flask of eyedrops",
+          "chance": "3330"
+        }
+      ]
+    }
+  }
+}

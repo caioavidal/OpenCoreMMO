@@ -1,0 +1,189 @@
+{
+  "monster": {
+    "name": "Corym Skirmisher",
+    "nameDescription": "a corym skirmisher",
+    "race": "blood",
+    "experience": "260",
+    "speed": "200",
+    "health": {
+      "now": "450",
+      "max": "450"
+    },
+    "look": {
+      "type": "533",
+      "legs": "101",
+      "corpse": "19726"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-110"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "0",
+          "max": "-90",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "whirlwindclub"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Squeak! Squeak!"
+        },
+        {
+          "sentence": "<sniff><sniff><sniff>"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "45",
+          "chance": "50000"
+        },
+        {
+          "id": "2696",
+          "chance": "20000"
+        },
+        {
+          "name": "bola",
+          "chance": "7692"
+        },
+        {
+          "name": "spike shield",
+          "chance": "645"
+        },
+        {
+          "name": "ratana",
+          "chance": "2702"
+        },
+        {
+          "name": "life preserver",
+          "chance": "2941"
+        },
+        {
+          "name": "cheese cutter",
+          "chance": "8333"
+        },
+        {
+          "name": "cheesy figurine",
+          "chance": "854"
+        },
+        {
+          "name": "earflap",
+          "chance": "9090"
+        },
+        {
+          "name": "soft cheese",
+          "chance": "14285"
+        },
+        {
+          "name": "rat cheese",
+          "chance": "16666"
+        },
+        {
+          "name": "rat god doll",
+          "chance": "12"
+        },
+        {
+          "name": "leather harness",
+          "chance": "561"
+        }
+      ]/* cheese */
+    }
+  }
+}

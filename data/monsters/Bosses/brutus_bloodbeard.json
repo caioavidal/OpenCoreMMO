@@ -1,0 +1,103 @@
+{
+  "monster": {
+    "name": "Brutus Bloodbeard",
+    "nameDescription": "Brutus Bloodbeard",
+    "race": "blood",
+    "experience": "795",
+    "speed": "240",
+    "health": {
+      "now": "1555",
+      "max": "1555"
+    },
+    "look": {
+      "type": "98",
+      "corpse": "20478"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-500"
+      }/*<attack name="drunk explosion" interval="2000" />*/
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "50"
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "40",
+          "chance": "100000"
+        },
+        {
+          "name": "skull of Ratha",
+          "chance": "100000"
+        },
+        {
+          "name": "plate armor",
+          "chance": "4000"
+        },
+        {
+          "name": "knight armor",
+          "chance": "1200"
+        },
+        {
+          "name": "Brutus Bloodbeard's hat",
+          "chance": "100000"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "monster": {
+    "name": "Golgordan",
+    "nameDescription": "golgordan",
+    "race": "fire",
+    "experience": "10000",
+    "speed": "350",
+    "manacost": "0",
+    "health": {
+      "now": "40000",
+      "max": "40000"
+    },
+    "look": {
+      "type": "12",
+      "head": "108",
+      "body": "100",
+      "legs": "105",
+      "feet": "114",
+      "corpse": "6068"
+    },
+    "targetchange": {
+      "interval": "7000",
+      "chance": "10"
+    },
+    "strategy": {
+      "attack": "90",
+      "defense": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "105",
+          "attack": "100"
+        },
+        {
+          "name": "death",
+          "interval": "3000",
+          "chance": "15",
+          "length": "8",
+          "spread": "0",
+          "min": "-250",
+          "max": "-850",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "mortarea"
+          }
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "1000",
+          "chance": "11",
+          "length": "5",
+          "spread": "2",
+          "min": "-300",
+          "max": "-350",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "8",
+          "radius": "6",
+          "target": "0",
+          "min": "-50",
+          "max": "-955",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "groundshaker"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "7",
+          "target": "1",
+          "min": "-50",
+          "max": "-200",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "48",
+      "defense": "54"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "15"
+        },
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "firePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "death": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Latrivan your fool",
+        "yell": "1"
+      }
+    }
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "monster": {
+    "name": "Morguthis",
+    "nameDescription": "a morguthis",
+    "race": "undead",
+    "experience": "3000",
+    "speed": "320",
+    "manacost": "0",
+    "health": {
+      "now": "4800",
+      "max": "4800"
+    },
+    "look": {
+      "type": "90",
+      "corpse": "6025"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "90",
+          "attack": "200",
+          "poison": "65"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "3000",
+          "chance": "7",
+          "range": "1",
+          "min": "-55",
+          "max": "-550"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "speedchange": "-650",
+          "duration": "50000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "20",
+          "radius": "3",
+          "target": "0",
+          "min": "-40",
+          "max": "-400",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-50",
+          "max": "-500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "mortarea"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "25",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "13",
+          "min": "200",
+          "max": "300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "7",
+          "speedchange": "1201",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "10",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "100"
+        },
+        {
+          "icePercent": "62"
+        },
+        {
+          "firePercent": "60"
+        },
+        {
+          "energyPercent": "52"
+        },
+        {
+          "earthPercent": "-15"
+        },
+        {
+          "holyPercent": "-22"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "3",
+      "summon": {
+        "name": "Hero",
+        "interval": "2000",
+        "chance": "1000",
+        "max": "3"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Vengeance!"
+        },
+        {
+          "sentence": "You will make a fine trophy."
+        },
+        {
+          "sentence": "Come and fight me, cowards!"
+        },
+        {
+          "sentence": "I am the supreme warrior!"
+        },
+        {
+          "sentence": "Let me hear the music of battle."
+        },
+        {
+          "sentence": "Anotherone to bite the dust!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "50000"
+        },
+        {
+          "id": "2148",
+          "countmax": "73",
+          "chance": "50000"
+        },
+        {
+          "id": "2197",
+          "chance": "7000"
+        },
+        {
+          "id": "2430",
+          "chance": "7000"
+        },
+        {
+          "id": "2144",
+          "chance": "7000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7591",
+              "chance": "1500"
+            },
+            {
+              "id": "2136",
+              "chance": "500"
+            },
+            {
+              "id": "2443",
+              "chance": "300"
+            },
+            {
+              "id": "7368",
+              "countmax": "3",
+              "chance": "500"
+            },
+            {
+              "id": "2645",
+              "chance": "500"
+            },
+            {
+              "id": "2350",
+              "chance": "100000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

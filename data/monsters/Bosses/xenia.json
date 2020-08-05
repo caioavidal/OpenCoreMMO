@@ -1,0 +1,216 @@
+{
+  "monster": {
+    "name": "Xenia",
+    "nameDescription": "xenia",
+    "race": "blood",
+    "experience": "255",
+    "speed": "176",
+    "manacost": "450",
+    "health": {
+      "now": "290",
+      "max": "290"
+    },
+    "look": {
+      "type": "139",
+      "head": "113",
+      "body": "57",
+      "legs": "95",
+      "feet": "113",
+      "corpse": "6081"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "28"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-28",
+          "max": "-42",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "spear"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "12",
+      "defense": "14"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "10"
+        },
+        {
+          "firePercent": "10"
+        },
+        {
+          "holyPercent": "7"
+        },
+        {
+          "deathPercent": "-7"
+        },
+        {
+          "physicalPercent": "-6"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "0"
+        },
+        {
+          "drunk": "0"
+        },
+        {
+          "invisible": "0"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Stand still!"
+        },
+        {
+          "sentence": "One more head for me!"
+        },
+        {
+          "sentence": "Head off!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "3976",
+          "countmax": "10",
+          "chance": "50000"
+        },
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "100000"
+        },
+        {
+          "id": "2464",
+          "chance": "6666"
+        },
+        {
+          "id": "2125",
+          "chance": "2500"
+        },
+        {
+          "id": "2387",
+          "chance": "3333"
+        },
+        {
+          "id": "2458",
+          "chance": "5000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2674",
+              "countmax": "4",
+              "chance": "10000"
+            },
+            {
+              "id": "2420",
+              "chance": "10000"
+            },
+            {
+              "id": "2666",
+              "countmax": "3",
+              "chance": "20000"
+            },
+            {
+              "id": "2147",
+              "countmax": "2",
+              "chance": "2500"
+            },
+            {
+              "id": "2145",
+              "countmax": "2",
+              "chance": "2500"
+            },
+            {
+              "id": "2200",
+              "chance": "1000"
+            },
+            {
+              "id": "2463",
+              "chance": "1333"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

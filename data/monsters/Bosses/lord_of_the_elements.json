@@ -1,0 +1,241 @@
+{
+  "monster": {
+    "name": "Lord of the Elements",
+    "nameDescription": "Lord of the Elements",
+    "race": "undead",
+    "experience": "8000",
+    "speed": "370",
+    "health": {
+      "now": "8000",
+      "max": "8000"
+    },
+    "look": {
+      "type": "290",
+      "corpse": "9009"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-690"
+      }
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "100",
+          "max": "195",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Energy Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Fire Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Earth Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Ice Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "1"
+        },
+        {
+          "firePercent": "30"
+        },
+        {
+          "energyPercent": "30"
+        },
+        {
+          "icePercent": "30"
+        },
+        {
+          "earthPercent": "45"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "holy": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": [
+        {
+          "name": "Blistering Fire Elemental",
+          "interval": "4000",
+          "chance": "50"
+        },
+        {
+          "name": "Jagged Earth Elemental",
+          "interval": "4000",
+          "chance": "50"
+        },
+        {
+          "name": "Roaring Water Elemental",
+          "interval": "4000",
+          "chance": "50"
+        },
+        {
+          "name": "Overcharged Energy Elemental",
+          "interval": "4000",
+          "chance": "50"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "30",
+      "voice": [
+        {
+          "sentence": "WHO DARES CALLING ME?",
+          "yell": "1"
+        },
+        {
+          "sentence": "I'LL FREEZE YOU THEN I CRUSH YOU!",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small sapphire",
+          "countmax": "4",
+          "chance": "7142"
+        },
+        {
+          "name": "small ruby",
+          "countmax": "4",
+          "chance": "11111"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "4",
+          "chance": "11111"
+        },
+        {
+          "name": "small amethyst",
+          "countmax": "3",
+          "chance": "11111"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "9",
+          "chance": "50000"
+        },
+        {
+          "name": "earthborn titan armor",
+          "chance": "2063"
+        },
+        {
+          "name": "gold ingot",
+          "chance": "25000"
+        }
+      ]
+    }
+  }
+}

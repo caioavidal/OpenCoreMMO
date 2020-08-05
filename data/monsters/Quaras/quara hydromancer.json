@@ -1,0 +1,227 @@
+{
+  "monster": {
+    "name": "Quara Hydromancer",
+    "nameDescription": "a quara hydromancer",
+    "race": "blood",
+    "experience": "800",
+    "speed": "520",
+    "manacost": "0",
+    "health": {
+      "now": "1100",
+      "max": "1100"
+    },
+    "look": {
+      "type": "47",
+      "corpse": "6066"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "30"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1000",
+          "skill": "30",
+          "attack": "40"
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "12",
+          "length": "8",
+          "spread": "10",
+          "min": "-100",
+          "max": "-160",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bubbles"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-55",
+          "max": "-105",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bubbles"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "18"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "icePercent": "100"
+        },
+        {
+          "earthPercent": "-12"
+        },
+        {
+          "energyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Qua hah tsh!"
+        },
+        {
+          "sentence": "Teech tsha tshul!"
+        },
+        {
+          "sentence": "Quara tsha Fach!"
+        },
+        {
+          "sentence": "Tssssha Quara!"
+        },
+        {
+          "sentence": "Blubber."
+        },
+        {
+          "sentence": "Blup."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "50",
+          "chance": "100000"
+        },
+        {
+          "id": "2148",
+          "countmax": "40",
+          "chance": "100000"
+        },
+        {
+          "id": "2401",
+          "chance": "2857"
+        },
+        {
+          "id": "2240",
+          "chance": "10000"
+        },
+        {
+          "id": "2670",
+          "countmax": "5",
+          "chance": "20000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2143",
+              "chance": "1333"
+            },
+            {
+              "id": "2144",
+              "chance": "1429"
+            },
+            {
+              "id": "2149",
+              "chance": "1000"
+            },
+            {
+              "id": "2189",
+              "chance": "1333"
+            },
+            {
+              "id": "2214",
+              "chance": "1538"
+            },
+            {
+              "id": "5895",
+              "chance": "3333"
+            },
+            {
+              "id": "7590",
+              "chance": "1333"
+            },
+            {
+              "id": "2476",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "monster": {
+    "name": "Earth Elemental",
+    "nameDescription": "an earth elemental",
+    "race": "undead",
+    "experience": "450",
+    "speed": "330",
+    "manacost": "0",
+    "health": {
+      "now": "650",
+      "max": "650"
+    },
+    "look": {
+      "type": "301",
+      "corpse": "8933"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "50"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "45",
+          "attack": "40"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-25",
+          "max": "-195",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "1000",
+          "chance": "10",
+          "length": "6",
+          "spread": "0",
+          "min": "0",
+          "max": "-260",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "groundshaker"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "speedchange": "-450",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "firePercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "energy": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "37000"
+        },
+        {
+          "id": "2148",
+          "countmax": "49",
+          "chance": "37000"
+        },
+        {
+          "id": "2260",
+          "chance": "7850"
+        },
+        {
+          "id": "7850",
+          "countmax": "30",
+          "chance": "9200"
+        },
+        {
+          "id": "2398",
+          "chance": "8500"
+        },
+        {
+          "id": "2394",
+          "chance": "4250"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "9808",
+              "chance": "5600"
+            },
+            {
+              "id": "1294",
+              "countmax": "10",
+              "chance": "4250"
+            },
+            {
+              "id": "9970",
+              "chance": "1300"
+            },
+            {
+              "id": "2509",
+              "chance": "8000"
+            },
+            {
+              "id": "7589",
+              "chance": "2600"
+            },
+            {
+              "id": "2150",
+              "countmax": "2",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

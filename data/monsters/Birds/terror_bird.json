@@ -1,0 +1,153 @@
+{
+  "monster": {
+    "name": "Terror Bird",
+    "nameDescription": "a terror bird",
+    "race": "blood",
+    "experience": "150",
+    "speed": "220",
+    "manacost": "490",
+    "health": {
+      "now": "300",
+      "max": "300"
+    },
+    "look": {
+      "type": "218",
+      "corpse": "6057"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-90"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "CRAAAHHH!"
+        },
+        {
+          "sentence": "Gruuuh Gruuuh."
+        },
+        {
+          "sentence": "Carrah Carrah!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "81500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "3",
+          "chance": "48000"
+        },
+        {
+          "name": "feather headdress",
+          "chance": "630"
+        },
+        {
+          "name": "feather headdress",
+          "chance": "150"
+        },
+        {
+          "name": "feather headdress",
+          "chance": "260"
+        },
+        {
+          "name": "worm",
+          "countmax": "3",
+          "chance": "10000"
+        },
+        {
+          "name": "terrorbird beak",
+          "chance": "11000"
+        },
+        {
+          "name": "colourful feather",
+          "chance": "3000"
+        }
+      ]
+    }
+  }
+}

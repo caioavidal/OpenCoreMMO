@@ -1,0 +1,189 @@
+{
+  "monster": {
+    "name": "Goblin Assassin",
+    "nameDescription": "a goblin assassin",
+    "race": "blood",
+    "experience": "52",
+    "speed": "220",
+    "manacost": "360",
+    "health": {
+      "now": "75",
+      "max": "75"
+    },
+    "look": {
+      "type": "296",
+      "corpse": "6002"
+    },
+    "targetchange": {
+      "interval": "10000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "15"
+        },
+        {
+          "name": "drunk",
+          "interval": "5000",
+          "chance": "15",
+          "duration": "10000",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          },
+          "attriubte": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "9",
+          "range": "6",
+          "min": "-15",
+          "max": "-25",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": {
+        "name": "invisible",
+        "interval": "7500",
+        "chance": "10",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "holyPercent": "5"
+        },
+        {
+          "deathPercent": "-15"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Goblin Powahhh!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "9",
+          "chance": "30000"
+        },
+        {
+          "id": "2667",
+          "chance": "13750"
+        },
+        {
+          "id": "2449",
+          "chance": "5000"
+        },
+        {
+          "id": "2406",
+          "chance": "10000"
+        },
+        {
+          "id": "2230",
+          "chance": "15000"
+        },
+        {
+          "id": "2379",
+          "chance": "20000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2467",
+              "chance": "10000"
+            },
+            {
+              "id": "2559",
+              "chance": "8750"
+            },
+            {
+              "id": "1294",
+              "countmax": "4",
+              "chance": "9000"
+            },
+            {
+              "id": "2235",
+              "chance": "9000"
+            },
+            {
+              "id": "2461",
+              "chance": "13000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

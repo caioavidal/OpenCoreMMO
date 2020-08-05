@@ -1,0 +1,174 @@
+{
+  "monster": {
+    "name": "Ghost",
+    "nameDescription": "a ghost",
+    "race": "undead",
+    "experience": "120",
+    "speed": "160",
+    "manacost": "100",
+    "health": {
+      "now": "150",
+      "max": "150"
+    },
+    "look": {
+      "type": "48",
+      "corpse": "5993"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "40"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "15",
+          "range": "1",
+          "min": "-25",
+          "max": "-45"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "100"
+        },
+        {
+          "earthPercent": "100"
+        },
+        {
+          "deathPercent": "100"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Huh!"
+        },
+        {
+          "sentence": "Shhhhhh"
+        },
+        {
+          "sentence": "Buuuuuh"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2642",
+          "chance": "23750"
+        },
+        {
+          "id": "2394",
+          "chance": "17000"
+        },
+        {
+          "id": "2404",
+          "chance": "7000"
+        },
+        {
+          "id": "2804",
+          "chance": "5000"
+        },
+        {
+          "id": "2654",
+          "chance": "5000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "1962",
+              "chance": "3600"
+            },
+            {
+              "id": "5909",
+              "chance": "1800"
+            },
+            {
+              "id": "2532",
+              "chance": "1700"
+            },
+            {
+              "id": "2165",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

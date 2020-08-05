@@ -1,0 +1,147 @@
+{
+  "monster": {
+    "name": "Troll Legionnaire",
+    "nameDescription": "a troll legionnaire",
+    "race": "blood",
+    "experience": "140",
+    "speed": "190",
+    "health": {
+      "now": "210",
+      "max": "210"
+    },
+    "look": {
+      "type": "53",
+      "corpse": "5998"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-35"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "18",
+          "target": "1",
+          "range": "6",
+          "min": "0",
+          "max": "-130",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingstar"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "7",
+      "defense": "9",
+      "defense": [
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "18",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "28",
+          "min": "17",
+          "max": "25",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "9",
+      "voice": [
+        {
+          "sentence": "Attack!"
+        },
+        {
+          "sentence": "Graaaaar!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "155",
+          "chance": "92000"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "560"
+        },
+        {
+          "name": "throwing star",
+          "countmax": "10",
+          "chance": "28000"
+        },
+        {
+          "name": "frosty ear of a troll",
+          "chance": "5120"
+        }
+      ]
+    }
+  }
+}

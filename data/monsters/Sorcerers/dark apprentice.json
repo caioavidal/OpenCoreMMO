@@ -1,0 +1,211 @@
+{
+  "monster": {
+    "name": "Dark Apprentice",
+    "nameDescription": "a dark apprentice",
+    "race": "blood",
+    "experience": "100",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "225",
+      "max": "225"
+    },
+    "look": {
+      "type": "134",
+      "head": "78",
+      "body": "88",
+      "legs": "0",
+      "feet": "88",
+      "addons": "1",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "30"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "800"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "30"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "35",
+          "range": "7",
+          "min": "-15",
+          "max": "-26",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "25",
+          "length": "8",
+          "spread": "0",
+          "min": "-1",
+          "max": "-20",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "20",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "60",
+          "max": "100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "5000",
+          "chance": "50",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": {
+        "deathPercent": "-10"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Outch!"
+        },
+        {
+          "sentence": "Oops, I did it again."
+        },
+        {
+          "sentence": "From the spirits that I called Sir, deliver me!"
+        },
+        {
+          "sentence": "I must dispose of my masters enemies!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "50",
+          "chance": "33500"
+        },
+        {
+          "id": "2260",
+          "chance": "4125"
+        },
+        {
+          "id": "7620",
+          "chance": "1500"
+        },
+        {
+          "id": "2260",
+          "chance": "4125"
+        },
+        {
+          "id": "6079",
+          "chance": "10500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2260",
+              "chance": "4125"
+            },
+            {
+              "id": "2191",
+              "chance": "2200"
+            },
+            {
+              "id": "7620",
+              "chance": "1500"
+            },
+            {
+              "id": "7618",
+              "chance": "3400"
+            },
+            {
+              "id": "2188",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

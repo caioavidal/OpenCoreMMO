@@ -1,0 +1,101 @@
+{
+  "monster": {
+    "name": "The Hairy One",
+    "nameDescription": "The Hairy One",
+    "race": "blood",
+    "experience": "115",
+    "speed": "240",
+    "health": {
+      "now": "325",
+      "max": "325"
+    },
+    "look": {
+      "type": "116",
+      "corpse": "7349"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-70"
+      }
+    },
+    "defenses": {
+      "armor": "3",
+      "defense": "5"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "5"
+        },
+        {
+          "firePercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "Hugah!"
+        },
+        {
+          "sentence": "Ungh! Ungh!"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "monster": {
+    "name": "Eye of the Seven",
+    "nameDescription": "an eye of the seven",
+    "race": "venom",
+    "experience": "0",
+    "speed": "0",
+    "health": {
+      "now": "1",
+      "max": "1"
+    },
+    "look": {
+      "typeex": "1560"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "20"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "0"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-500"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "9",
+          "range": "6",
+          "min": "0",
+          "max": "-500"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": "1"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "1"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "holy": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "manadrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "outfit": "1"
+        }
+      ]
+    }
+  }
+}

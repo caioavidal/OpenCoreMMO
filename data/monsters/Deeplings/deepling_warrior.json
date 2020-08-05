@@ -1,0 +1,206 @@
+{
+  "monster": {
+    "name": "Deepling Warrior",
+    "nameDescription": "a deepling warrior",
+    "race": "blood",
+    "experience": "1500",
+    "speed": "210",
+    "health": {
+      "now": "1600",
+      "max": "1600"
+    },
+    "look": {
+      "type": "441",
+      "corpse": "15175"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "30"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-300"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "target": "1",
+          "min": "0",
+          "max": "-290",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "whirlwindaxe"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "50",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "-20"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Jou wjil all djie!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "60000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "80",
+          "chance": "60000"
+        },
+        {
+          "name": "small emerald",
+          "chance": "2854"
+        },
+        {
+          "name": "life ring",
+          "chance": "2941"
+        },
+        {
+          "name": "fish fin",
+          "chance": "961"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "9090"
+        },
+        {
+          "name": "great health potion",
+          "chance": "11111"
+        },
+        {
+          "name": "heavy trident",
+          "chance": "1030"
+        },
+        {
+          "name": "eye of a deepling",
+          "chance": "574"
+        },
+        {
+          "name": "deepling warts",
+          "chance": "10000"
+        },
+        {
+          "name": "deeptags",
+          "chance": "14285"
+        },
+        {
+          "name": "warrior's axe",
+          "chance": "534"
+        },
+        {
+          "name": "deepling ridge",
+          "chance": "11111"
+        },
+        {
+          "name": "warrior's shield",
+          "chance": "684"
+        },
+        {
+          "name": "deepling filet",
+          "chance": "14285"
+        },
+        {
+          "name": "vortex bolt",
+          "countmax": "5",
+          "chance": "3571"
+        }
+      ]
+    }
+  }
+}

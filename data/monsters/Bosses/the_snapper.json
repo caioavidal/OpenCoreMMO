@@ -1,0 +1,138 @@
+{
+  "monster": {
+    "name": "The Snapper",
+    "nameDescription": "The Snapper",
+    "race": "blood",
+    "experience": "150",
+    "speed": "240",
+    "health": {
+      "now": "300",
+      "max": "300"
+    },
+    "look": {
+      "type": "119",
+      "corpse": "6046"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-60"
+      }
+    },
+    "defenses": {
+      "armor": "13",
+      "defense": "5"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "15"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "energyPercent": "-5"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "physicalPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50675"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "94",
+          "chance": "50675"
+        },
+        {
+          "name": "life ring (faster regeneration)",
+          "chance": "100000"
+        },
+        {
+          "name": "plate armor",
+          "chance": "35800"
+        },
+        {
+          "name": "knight armor",
+          "chance": "4025"
+        },
+        {
+          "name": "plate legs",
+          "chance": "44025"
+        },
+        {
+          "name": "crocodile boots",
+          "chance": "9900"
+        },
+        {
+          "name": "health potion",
+          "countmax": "5",
+          "chance": "51100"
+        }
+      ]
+    }
+  }
+}

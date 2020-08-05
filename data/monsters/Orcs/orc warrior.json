@@ -1,0 +1,155 @@
+{
+  "monster": {
+    "name": "Orc Warrior",
+    "nameDescription": "a orc warrior",
+    "race": "blood",
+    "experience": "50",
+    "speed": "190",
+    "manacost": "360",
+    "health": {
+      "now": "125",
+      "max": "125"
+    },
+    "look": {
+      "type": "7",
+      "corpse": "5979"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "30",
+        "attack": "30"
+      }
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "14"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "30"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Grow truk grrrr."
+        },
+        {
+          "sentence": "Trak grrrr brik."
+        },
+        {
+          "sentence": "Alk!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "15",
+          "chance": "30000"
+        },
+        {
+          "id": "2385",
+          "chance": "51850"
+        },
+        {
+          "id": "2512",
+          "chance": "23333"
+        },
+        {
+          "id": "2666",
+          "chance": "16000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2464",
+              "chance": "10750"
+            },
+            {
+              "id": "2007",
+              "chance": "9750"
+            },
+            {
+              "id": "2530",
+              "chance": "400"
+            },
+            {
+              "id": "2448",
+              "chance": "400"
+            },
+            {
+              "id": "2411",
+              "chance": "400"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

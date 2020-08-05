@@ -1,0 +1,273 @@
+{
+  "monster": {
+    "name": "Banshee",
+    "nameDescription": "a banshee",
+    "race": "blood",
+    "experience": "900",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "1000",
+      "max": "1000"
+    },
+    "look": {
+      "type": "78",
+      "corpse": "6019"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "500"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "50",
+          "poison": "150"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "speedchange": "-600",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "40",
+          "radius": "4",
+          "target": "0",
+          "min": "-120",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "rednote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "25",
+        "min": "113",
+        "max": "187",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "deathPercent": "100"
+        },
+        {
+          "earthPercent": "100"
+        },
+        {
+          "holyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Are you ready to rock?"
+        },
+        {
+          "sentence": "That's what I call easy listening!"
+        },
+        {
+          "sentence": "Let the music play!"
+        },
+        {
+          "sentence": "I will mourn your death!"
+        },
+        {
+          "sentence": "IIIIEEEeeeeeehhhHHHHH!",
+          "yell": "1"
+        },
+        {
+          "sentence": "Dance for me your dance of death!"
+        },
+        {
+          "sentence": "Feel my gentle kiss of death."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "11250"
+        },
+        {
+          "id": "2148",
+          "countmax": "40",
+          "chance": "11250"
+        },
+        {
+          "id": "2144",
+          "chance": "2000"
+        },
+        {
+          "id": "2656",
+          "chance": "650"
+        },
+        {
+          "id": "2047",
+          "chance": "70000"
+        },
+        {
+          "id": "2237",
+          "chance": "19000"
+        },
+        {
+          "id": "2177",
+          "chance": "50"
+        },
+        {
+          "id": "2071",
+          "chance": "1333"
+        },
+        {
+          "id": "2560",
+          "chance": "7250"
+        },
+        {
+          "id": "2411",
+          "chance": "1600"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2655",
+              "chance": "800"
+            },
+            {
+              "id": "2214",
+              "chance": "860"
+            },
+            {
+              "id": "2170",
+              "chance": "8300"
+            },
+            {
+              "id": "2134",
+              "chance": "1750"
+            },
+            {
+              "id": "2657",
+              "chance": "60000"
+            },
+            {
+              "id": "2197",
+              "chance": "1100"
+            },
+            {
+              "id": "7589",
+              "chance": "650"
+            },
+            {
+              "id": "2175",
+              "chance": "900"
+            },
+            {
+              "id": "2143",
+              "chance": "410"
+            },
+            {
+              "id": "7884",
+              "chance": "240"
+            },
+            {
+              "id": "2121",
+              "chance": "410"
+            },
+            {
+              "id": "2124",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "monster": {
+    "name": "Pirate Marauder",
+    "nameDescription": "a pirate marauder",
+    "race": "blood",
+    "experience": "125",
+    "speed": "200",
+    "manacost": "490",
+    "health": {
+      "now": "210",
+      "max": "210"
+    },
+    "look": {
+      "type": "93",
+      "corpse": "20483"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "15"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "20"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-140"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "0",
+          "max": "-40",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "spear"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "10"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "deathPercent": "-5"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "energyPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Plundeeeeer!"
+        },
+        {
+          "sentence": "Give up!"
+        },
+        {
+          "sentence": "Hiyaa!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2050",
+          "chance": "9880"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "40",
+          "chance": "77670"
+        },
+        {
+          "name": "spear",
+          "countmax": "2",
+          "chance": "5140"
+        },
+        {
+          "name": "chain armor",
+          "chance": "3000"
+        },
+        {
+          "name": "plate shield",
+          "chance": "5000"
+        },
+        {
+          "id": "5091",
+          "chance": "910"
+        },
+        {
+          "name": "rum flask",
+          "chance": "110"
+        },
+        {
+          "id": "5792",
+          "chance": "90"
+        },
+        {
+          "name": "bandana",
+          "chance": "880"
+        },
+        {
+          "name": "pirate bag",
+          "chance": "430"
+        },
+        {
+          "name": "empty goldfish bowl",
+          "chance": "80"
+        },
+        {
+          "name": "hook",
+          "chance": "520"
+        },
+        {
+          "name": "eye patch",
+          "chance": "530"
+        },
+        {
+          "name": "peg leg",
+          "chance": "520"
+        },
+        {
+          "name": "compass",
+          "chance": "9720"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

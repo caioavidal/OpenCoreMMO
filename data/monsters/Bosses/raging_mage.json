@@ -1,0 +1,266 @@
+{
+  "monster": {
+    "name": "raging mage",
+    "nameDescription": "a raging mage",
+    "race": "blood",
+    "experience": "3250",
+    "speed": "200",
+    "health": {
+      "now": "3500",
+      "max": "3500"
+    },
+    "look": {
+      "type": "416",
+      "corpse": "13834"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "300"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-78"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "35",
+          "range": "7",
+          "target": "1",
+          "radius": "5",
+          "min": "-100",
+          "max": "-200",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energyball"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-100",
+          "max": "-200"
+        },
+        {
+          "name": "energyfield",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "20",
+          "length": "8",
+          "spread": "0",
+          "min": "-101",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bigclouds"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "-25"
+        },
+        {
+          "deathPercent": "15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "1",
+      "summon": {
+        "name": "golden servant",
+        "interval": "2000",
+        "chance": "50"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Behold the all permeating powers I draw from this gate!!"
+        },
+        {
+          "sentence": "ENERGY!!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "ring of the sky",
+          "chance": "1830"
+        },
+        {
+          "name": "small sapphire",
+          "countmax": "5",
+          "chance": "1830"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "69",
+          "chance": "47000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "8",
+          "chance": "77400"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "4880"
+        },
+        {
+          "name": "mind stone",
+          "chance": "9760"
+        },
+        {
+          "name": "boots of haste",
+          "chance": "610"
+        },
+        {
+          "name": "dark mushroom",
+          "countmax": "3",
+          "chance": "3600"
+        },
+        {
+          "name": "skull helmet",
+          "chance": "610"
+        },
+        {
+          "name": "red piece of cloth",
+          "chance": "31100"
+        },
+        {
+          "name": "assassin star",
+          "countmax": "7",
+          "chance": "1830"
+        },
+        {
+          "name": "bullseye potion",
+          "chance": "6710"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "5",
+          "chance": "23170"
+        },
+        {
+          "name": "great health potion",
+          "countmax": "5",
+          "chance": "26830"
+        },
+        {
+          "name": "focus cape",
+          "chance": "4880"
+        },
+        {
+          "name": "spellbook of mind control",
+          "chance": "610"
+        },
+        {
+          "name": "royal tapestry",
+          "chance": "1220"
+        },
+        {
+          "name": "luminous orb",
+          "chance": "4270"
+        },
+        {
+          "id": "133940",
+          "chance": "1220"
+        }
+      ]/* elemental spikes */
+    }
+  }
+}

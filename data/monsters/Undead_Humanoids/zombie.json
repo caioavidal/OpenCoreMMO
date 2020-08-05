@@ -1,0 +1,210 @@
+{
+  "monster": {
+    "name": "Zombie",
+    "nameDescription": "a zombie",
+    "race": "undead",
+    "experience": "280",
+    "speed": "180",
+    "health": {
+      "now": "500",
+      "max": "500"
+    },
+    "look": {
+      "type": "311",
+      "corpse": "9875"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-130"
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "range": "1",
+          "min": "-14",
+          "max": "-23"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "range": "7",
+          "min": "-15",
+          "max": "-24",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "range": "1",
+          "min": "-30",
+          "max": "-49",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallclouds"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": {
+        "firePercent": "50"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Mst.... klll...."
+        },
+        {
+          "sentence": "Whrrrr... ssss.... mmm.... grrrrl"
+        },
+        {
+          "sentence": "Dnnnt... cmmm... clsrrr...."
+        },
+        {
+          "sentence": "Httt.... hmnnsss..."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "65",
+          "chance": "82000"
+        },
+        {
+          "name": "life ring (faster regeneration)",
+          "chance": "1000"
+        },
+        {
+          "name": "halberd",
+          "chance": "3750"
+        },
+        {
+          "name": "mace",
+          "chance": "7250"
+        },
+        {
+          "name": "battle hammer",
+          "chance": "7000"
+        },
+        {
+          "name": "steel helmet",
+          "chance": "4600"
+        },
+        {
+          "name": "brass helmet",
+          "chance": "9400"
+        },
+        {
+          "name": "simple dress",
+          "chance": "560"
+        },
+        {
+          "name": "mana potion",
+          "chance": "740"
+        },
+        {
+          "id": "9808",
+          "chance": "5680"
+        },
+        {
+          "name": "half-eaten brain",
+          "chance": "10000"
+        }
+      ]/* rusty armor (common) */
+    }
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "monster": {
+    "name": "Minotaur Mage",
+    "nameDescription": "a minotaur mage",
+    "race": "blood",
+    "experience": "150",
+    "speed": "170",
+    "health": {
+      "now": "155",
+      "max": "155"
+    },
+    "look": {
+      "type": "23",
+      "corpse": "5981"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-20"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-20",
+          "max": "-59",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-50",
+          "max": "-105",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "energyfield",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energyball"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Learrn tha secrret uf deathhh!"
+        },
+        {
+          "sentence": "Kaplar!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2050",
+          "chance": "4950"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "35",
+          "chance": "85780"
+        },
+        {
+          "name": "wand of cosmic energy",
+          "chance": "600"
+        },
+        {
+          "name": "leather helmet",
+          "chance": "3000"
+        },
+        {
+          "name": "leather legs",
+          "chance": "5190"
+        },
+        {
+          "id": "2684",
+          "countmax": "8",
+          "chance": "15003"
+        },
+        {
+          "name": "minotaur leather",
+          "chance": "2290"
+        },
+        {
+          "name": "taurus mace",
+          "chance": "1000"
+        },
+        {
+          "name": "mana potion",
+          "chance": "490"
+        },
+        {
+          "name": "minotaur horn",
+          "countmax": "2",
+          "chance": "3020"
+        },
+        {
+          "name": "purple robe",
+          "countmax": "2",
+          "chance": "6430"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "monster": {
+    "name": "Yeti",
+    "nameDescription": "Yeti",
+    "race": "blood",
+    "experience": "460",
+    "speed": "270",
+    "health": {
+      "now": "950",
+      "max": "950"
+    },
+    "look": {
+      "type": "110",
+      "corpse": "6038"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-200"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "0",
+          "max": "-180",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "snowball"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poff"
+            }
+          ]
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "12",
+          "length": "3",
+          "spread": "3",
+          "min": "0",
+          "max": "-175",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "28",
+      "defense": "33"
+    },
+    "elements": {
+      "element": {
+        "icePercent": "-1"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Yooodelaaahooohooo!"
+        },
+        {
+          "sentence": "Yooodelaaaheeeheee!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "snowball",
+          "countmax": "22",
+          "chance": "10000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "60",
+          "chance": "100000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "40",
+          "chance": "100000"
+        },
+        {
+          "name": "bunnyslippers",
+          "chance": "1333"
+        },
+        {
+          "name": "meat",
+          "countmax": "4",
+          "chance": "33333"
+        },
+        {
+          "name": "ham",
+          "countmax": "5",
+          "chance": "10000"
+        }
+      ]
+    }
+  }
+}

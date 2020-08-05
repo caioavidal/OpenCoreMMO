@@ -1,0 +1,214 @@
+{
+  "monster": {
+    "name": "Dwarf Geomancer",
+    "nameDescription": "a dwarf geomancer",
+    "race": "blood",
+    "experience": "265",
+    "speed": "190",
+    "health": {
+      "now": "380",
+      "max": "380"
+    },
+    "look": {
+      "type": "66",
+      "corpse": "6015"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "110"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-50",
+          "max": "-110",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallearth"
+            },
+            {
+              "key": "areaEffect",
+              "value": "greenbubble"
+            }
+          ]
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-50",
+          "max": "-80"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "40",
+        "min": "75",
+        "max": "125",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "firePercent": "60"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-5"
+        },
+        {
+          "deathPercent": "-1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hail Durin!"
+        },
+        {
+          "sentence": "Earth is the strongest element."
+        },
+        {
+          "sentence": "Dust to dust."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small sapphire",
+          "chance": "710"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "35",
+          "chance": "50000"
+        },
+        {
+          "id": "2162",
+          "chance": "14000"
+        },
+        {
+          "id": "2175",
+          "chance": "360"
+        },
+        {
+          "name": "dwarven ring",
+          "chance": "530"
+        },
+        {
+          "name": "blank rune",
+          "chance": "33000"
+        },
+        {
+          "name": "clerical mace",
+          "chance": "1120"
+        },
+        {
+          "name": "leather boots",
+          "chance": "47500"
+        },
+        {
+          "name": "pear",
+          "chance": "25000"
+        },
+        {
+          "name": "white mushroom",
+          "countmax": "2",
+          "chance": "60000"
+        },
+        {
+          "name": "iron ore",
+          "chance": "120"
+        },
+        {
+          "name": "terra boots",
+          "chance": "470"
+        },
+        {
+          "name": "geomancer's robe",
+          "chance": "8000"
+        },
+        {
+          "name": "geomancer's staff",
+          "chance": "7000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

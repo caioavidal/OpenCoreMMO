@@ -1,0 +1,87 @@
+{
+  "monster": {
+    "name": "Little Corym Charlatan",
+    "nameDescription": "a little corym charlatan",
+    "race": "blood",
+    "experience": "40",
+    "speed": "170",
+    "health": {
+      "now": "90",
+      "max": "90"
+    },
+    "look": {
+      "type": "532",
+      "body": "97",
+      "legs": "116",
+      "corpse": "19729"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-10"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Squeeeeeeak!"
+        },
+        {
+          "sentence": "Must have it! Must have it!"
+        },
+        {
+          "sentence": "Gimme! Gimme!"
+        }
+      ]
+    }
+  }
+}

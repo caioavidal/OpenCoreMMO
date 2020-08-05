@@ -1,0 +1,172 @@
+{
+  "monster": {
+    "name": "Scarab",
+    "nameDescription": "a scarab",
+    "race": "venom",
+    "experience": "120",
+    "speed": "170",
+    "manacost": "395",
+    "health": {
+      "now": "320",
+      "max": "320"
+    },
+    "look": {
+      "type": "83",
+      "corpse": "6024"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "80"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "65",
+          "attack": "20"
+        },
+        {
+          "name": "poisonfield",
+          "interval": "800",
+          "chance": "40",
+          "radius": "1",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "12",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "5",
+        "speedchange": "250",
+        "duration": "4000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "physicalPercent": "7"
+        },
+        {
+          "firePercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "paralyze": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "55",
+          "chance": "26000"
+        },
+        {
+          "id": "2544",
+          "countmax": "3",
+          "chance": "4000"
+        },
+        {
+          "id": "2439",
+          "chance": "500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2442",
+              "chance": "375"
+            },
+            {
+              "id": "2666",
+              "countmax": "2",
+              "chance": "27500"
+            },
+            {
+              "id": "2159",
+              "countmax": "2",
+              "chance": "900"
+            },
+            {
+              "id": "2149",
+              "chance": "650"
+            },
+            {
+              "id": "2150",
+              "countmax": "2",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

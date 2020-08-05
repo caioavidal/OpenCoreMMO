@@ -1,0 +1,187 @@
+{
+  "monster": {
+    "name": "Barbarian Skullhunter",
+    "nameDescription": "a barbarian skullhunter",
+    "race": "blood",
+    "experience": "85",
+    "speed": "220",
+    "manacost": "450",
+    "health": {
+      "now": "135",
+      "max": "135"
+    },
+    "look": {
+      "type": "254",
+      "head": "0",
+      "body": "77",
+      "legs": "77",
+      "feet": "114",
+      "corpse": "20347"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-60"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "paralyze": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "You will become my trophy."
+        },
+        {
+          "sentence": "Fight harder, coward."
+        },
+        {
+          "sentence": "Show that you are a worthy opponent."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2050",
+          "chance": "60500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "60000"
+        },
+        {
+          "name": "life ring",
+          "chance": "250"
+        },
+        {
+          "id": "2229",
+          "chance": "3000"
+        },
+        {
+          "name": "knife",
+          "chance": "15250"
+        },
+        {
+          "name": "brass helmet",
+          "chance": "19000"
+        },
+        {
+          "name": "viking helmet",
+          "chance": "8000"
+        },
+        {
+          "name": "scale armor",
+          "chance": "3850"
+        },
+        {
+          "name": "brown piece of cloth",
+          "chance": "500"
+        },
+        {
+          "name": "crystal sword",
+          "chance": "90"
+        },
+        {
+          "name": "fur boots",
+          "chance": "120"
+        },
+        {
+          "name": "ragnir helmet",
+          "chance": "100"
+        },
+        {
+          "name": "health potion",
+          "chance": "930"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "monster": {
+    "name": "Skeleton",
+    "nameDescription": "a skeleton",
+    "race": "undead",
+    "experience": "35",
+    "speed": "154",
+    "manacost": "300",
+    "health": {
+      "now": "50",
+      "max": "50"
+    },
+    "look": {
+      "type": "33",
+      "corpse": "5972"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "15",
+          "attack": "16"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "9",
+          "range": "1",
+          "min": "-7",
+          "max": "-13"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "2",
+      "defense": "9"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "100"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "10",
+          "chance": "24500"
+        },
+        {
+          "id": "2050",
+          "chance": "25000"
+        },
+        {
+          "id": "2230",
+          "chance": "49750"
+        },
+        {
+          "id": "2388",
+          "chance": "23750"
+        },
+        {
+          "id": "2398",
+          "chance": "19500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2511",
+              "chance": "13250"
+            },
+            {
+              "id": "2050",
+              "chance": "25000"
+            },
+            {
+              "id": "2473",
+              "chance": "8250"
+            },
+            {
+              "id": "2376",
+              "chance": "1500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

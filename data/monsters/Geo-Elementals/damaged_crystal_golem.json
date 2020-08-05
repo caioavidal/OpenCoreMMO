@@ -1,0 +1,58 @@
+{
+  "monster": {
+    "name": "Damaged Crystal Golem",
+    "nameDescription": "a damaged crystal golem",
+    "race": "energy",
+    "experience": "0",
+    "speed": "180",
+    "health": {
+      "now": "500",
+      "max": "500"
+    },
+    "look": {
+      "type": "508",
+      "corpse": "18466"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "500"
+        }
+      ]
+    }
+  }
+}

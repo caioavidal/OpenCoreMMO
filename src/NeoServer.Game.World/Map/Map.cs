@@ -493,7 +493,7 @@ namespace NeoServer.Game.World.Map
             if (this[creature.Location] is IWalkableTile tile)
             {
                 tile.AddThing(ref thing);
-                OnCreatureAddedOnMap(creature);
+                OnCreatureAddedOnMap?.Invoke(creature);
             }
 
 
