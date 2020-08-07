@@ -7,11 +7,11 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public interface ICreatureType
     {
-        string Name { get; set; }
-        string Description { get; set; }
-        uint MaxHealth { get; set; }
-        ushort Speed { get; set; }
-        IDictionary<LookType, ushort> Look { get; set; }
+        string Name { get;  }
+        string Description { get; }
+        uint MaxHealth { get; }
+        ushort Speed { get; }
+        IDictionary<LookType, ushort> Look { get; }
 
     }
 }

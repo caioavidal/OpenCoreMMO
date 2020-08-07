@@ -25,8 +25,9 @@ namespace NeoServer.Server.Events
 
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
-            foreach (var spectatorId in map.GetCreaturesAtPositionZone(player.Location))
+            foreach (var spectatorId in map.GetPlayersAtPositionZone(player.Location))
             {
+                
                 var isSpectator = !(player.CreatureId == spectatorId);
                 if (!isSpectator)
                 {
@@ -36,6 +37,10 @@ namespace NeoServer.Server.Events
                 {
                     ICreature spectator;
                     if (!game.CreatureManager.TryGetCreature(spectatorId, out spectator))
+                    {
+                        continue;
+                    }
+                    else if(spectator is IMonster)
                     {
                         continue;
                     }

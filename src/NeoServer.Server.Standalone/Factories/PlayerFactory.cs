@@ -38,12 +38,9 @@ namespace NeoServer.Server.Standalone.Factories
             this.itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
             this.invalidOperationEventHandler = invalidOperationEventHandler;
         }
-        private readonly static Random random = new Random();
         public IPlayer Create(PlayerModel player)
         {
-            var id = (uint)random.Next();
-
-            var newPlayer = new Player(id,
+            var newPlayer = new Player(
                 player.CharacterName,
                 player.ChaseMode,
                 player.Capacity,
@@ -82,6 +79,8 @@ namespace NeoServer.Server.Standalone.Factories
             newPlayer.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
 
             newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
+
+            
 
             return newPlayer;
         }

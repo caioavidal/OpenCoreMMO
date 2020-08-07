@@ -214,7 +214,7 @@ namespace NeoServer.Game.World.Map
 
 
 
-        public IEnumerable<uint> GetCreaturesAtPositionZone(Location location)
+        public IEnumerable<uint> GetPlayersAtPositionZone(Location location)
         {
             var viewPortX = (ushort)MapViewPort.ViewPortX;
             var viewPortY = (ushort)MapViewPort.ViewPortY;
@@ -257,7 +257,10 @@ namespace NeoServer.Game.World.Map
                         {
                             foreach (var creature in tile.Creatures)
                             {
-                                yield return creature.CreatureId;
+                                if (creature is IPlayer)
+                                {
+                                    yield return creature.CreatureId; //todo: slow
+                                }
                             }
                         }
                     }

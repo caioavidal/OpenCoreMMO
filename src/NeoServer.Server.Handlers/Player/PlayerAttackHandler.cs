@@ -1,28 +1,28 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Player;
+using NeoServer.Server.Commands.Combat;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace NeoServer.Server.Handlers.Players
+namespace NeoServer.Server.Handlers.Player
 {
-    public class PlayerAutoWalkHandler : PacketHandler
+    public class PlayerAttackHandler : PacketHandler
     {
         private readonly Game game;
-
-        public PlayerAutoWalkHandler(Game game)
+        public PlayerAttackHandler(Game game)
         {
             this.game = game;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            var autoWalk = new AutoWalkPacket(message);
-
+            var creatureId = message.GetUInt32();
             if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
             {
-                game.Dispatcher.AddEvent(new Event(() => PlayerWalkCommand.Execute((IPlayer)player, game, autoWalk.Steps.ToArray())));
+                game.Dispatcher.AddEvent(new Event(() => CreatureAttackCommand.Execute(player as IPlayer, creatureId, game, connection)));
             }
         }
     }

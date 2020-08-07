@@ -8,6 +8,7 @@
     <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Enums.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

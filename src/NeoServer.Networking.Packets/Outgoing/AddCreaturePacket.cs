@@ -36,7 +36,7 @@ namespace NeoServer.Networking.Packets.Outgoing
                 message.AddString(creatureToAdd.Name);
             }
 
-            message.AddByte((byte)Math.Min(100, creatureToAdd.Hitpoints * 100 / creatureToAdd.MaxHitpoints));
+            message.AddByte((byte)Math.Min(100, creatureToAdd.HealthPoints * 100 / creatureToAdd.MaxHealthpoints));
             message.AddByte((byte)creatureToAdd.ClientSafeDirection);
 
             if (player.CanSee(creatureToAdd))

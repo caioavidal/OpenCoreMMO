@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace NeoServer.Game.World.Spawns
@@ -14,12 +15,14 @@ namespace NeoServer.Game.World.Spawns
         private readonly World _world;
         private readonly IMap _map;
         private readonly IMonsterFactory _monsterFactory;
-        public SpawnManager(World world, IMonsterFactory monsterFactory, IMap map)
+        private readonly ICreatureGameInstance _creatureGameInstance;
+        public SpawnManager(World world, IMonsterFactory monsterFactory, IMap map, ICreatureGameInstance creatureGameInstance)
         {
             _world = world;
 
             _monsterFactory = monsterFactory;
             _map = map;
+            _creatureGameInstance = creatureGameInstance;
         }
 
         public void StartSpawn()
@@ -31,7 +34,8 @@ namespace NeoServer.Game.World.Spawns
                 var monster = _monsterFactory.Create(monsterToSpawn.Name);
                 monster.SetNewLocation(monsterToSpawn.Location);
                 _map.AddCreature(monster);
-                //spawn.Monsters
+
+                _creatureGameInstance.Add(monster);
             }
         }
     }

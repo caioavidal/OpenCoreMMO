@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
-    public class MonsterType: IMonsterType
+    public sealed class MonsterType: IMonsterType
     {
         public string Name { get; set; }
         public string Description { get; set; }

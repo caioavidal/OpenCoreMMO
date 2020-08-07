@@ -31,6 +31,7 @@
         AnimatedText = 0x84,
         PlayerWalkCancel = 0xB5,
         CreatureLight = 0x8D,
+        CreatureHealth = 0x8C,
         CreatureOutfit = 0x8E,
         PlayerStatus = 0xA0,
         PlayerSkills = 0xA1,

@@ -1,5 +1,6 @@
 using NeoServer.Game.Enums.Location.Structs.Helpers;
 using System;
+using System.IO.Enumeration;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {
@@ -111,14 +112,9 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// <summary>
         /// Returns the hash code of this instance.
         /// </summary>
-        public override int GetHashCode()
-        {
-            return HashHelper.Start
-                .CombineHashCode(X)
-                .CombineHashCode(Y)
-                .CombineHashCode(Z);
-        }
+        public override int GetHashCode() => System.HashCode.Combine(X, Y, Z);
 
+        public override bool Equals(object obj) => obj is Coordinate c && Equals(c);
         /// <summary>
         /// Returns a string representation of this instance.
         /// </summary>

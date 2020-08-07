@@ -138,7 +138,7 @@ namespace NeoServer.Networking
                     }
 
                     InMessage.Resize(size);
-                    Console.WriteLine($"{size} bytes read on connection {PlayerId}");
+                    //Console.WriteLine($"{size} bytes read on connection {PlayerId}");
                 }
 
 

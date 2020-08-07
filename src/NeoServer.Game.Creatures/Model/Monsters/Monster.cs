@@ -11,7 +11,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
     public class Monster : Creature, IMonster
     {
 
-        public Monster(uint id, IMonsterType type) : base(id, type)
+        public Monster(IMonsterType type) : base(type)
         {
             Metadata = type;
         }
@@ -38,9 +38,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override byte AutoAttackRange => throw new NotImplementedException();
 
-        public override IInventory Inventory { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
 
         public IMonsterType Metadata { get; }
         public override IOutfit Outfit { get; protected set ; }
+
+        public override ushort MinimumAttackPower => 0;
     }
 }

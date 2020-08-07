@@ -18,9 +18,6 @@ namespace NeoServer.Game.Creature
 
         public bool TryGetCreature(uint id, out ICreature creature) => GameInstances.TryGetValue(id, out creature);
 
-
-
-
         public IEnumerable<ICreature> All() => GameInstances.Values;
 
         public void Add(ICreature creature)

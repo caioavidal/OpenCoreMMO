@@ -20,7 +20,7 @@ namespace NeoServer.Server.Events
         }
         public void Execute(NeoServer.Game.Contracts.Items.IThing thing, ITile tile, byte fromStackPosition)
         {
-            foreach (var spectatorId in map.GetCreaturesAtPositionZone(tile.Location))
+            foreach (var spectatorId in map.GetPlayersAtPositionZone(tile.Location))
             {
                 IConnection connection = null;
                 if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))

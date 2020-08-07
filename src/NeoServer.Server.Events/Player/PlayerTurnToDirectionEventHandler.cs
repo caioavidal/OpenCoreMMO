@@ -24,7 +24,7 @@ namespace NeoServer.Server.Events
 
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
-            foreach (var spectatorId in map.GetCreaturesAtPositionZone(player.Location))
+            foreach (var spectatorId in map.GetPlayersAtPositionZone(player.Location))
             {
                 var isSpectator = !(player.CreatureId == spectatorId);
 
