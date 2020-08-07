@@ -52,6 +52,8 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 - [x] All player movements
 - [x] Multiplayer connection
 - [x] Load Monsters
+- [ ] PvM Combat
+- [ ] PvP Combat
 - [ ] Load NPC
 - [ ] Lua Scripting
 - [ ] C# Scripting
