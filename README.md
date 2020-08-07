@@ -46,14 +46,15 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 
 - [x] Reading OTB and OTBM File structure
 - [x] Loading OTBM Tile Area, Towns and Waypoints
-- [ ] Loading OTBM Spawn Areas
+- [x] Loading Spawn Areas
 - [ ] Loading OTBM House Tiles
 - [x] LogIn and LogOut Player on Game
 - [x] All player movements
 - [x] Multiplayer connection
-- [ ] Load Monsters
+- [x] Load Monsters
 - [ ] Load NPC
 - [ ] Lua Scripting
+- [ ] C# Scripting
 
 ## Technologies
 
