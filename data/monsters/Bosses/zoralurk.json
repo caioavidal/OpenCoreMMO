@@ -1,0 +1,310 @@
+{
+  "monster": {
+    "name": "Zoralurk",
+    "nameDescription": "Zoralurk",
+    "race": "undead",
+    "experience": "30000",
+    "speed": "400",
+    "health": {
+      "now": "55000",
+      "max": "55000"
+    },
+    "look": {
+      "type": "12",
+      "head": "0",
+      "body": "98",
+      "legs": "86",
+      "feet": "94",
+      "corpse": "6068"
+    },
+    "targetchange": {
+      "interval": "10000",
+      "chance": "20"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "98"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-1013"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "7",
+          "target": "0",
+          "min": "-600",
+          "max": "-900",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "7",
+          "target": "0",
+          "min": "-400",
+          "max": "-800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallplants"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "min": "-500",
+          "max": "-800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "3000",
+          "chance": "35",
+          "range": "7",
+          "radius": "7",
+          "target": "1",
+          "min": "-200",
+          "max": "-600",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "55",
+      "defense": "65",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "35",
+          "min": "300",
+          "max": "800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "4000",
+          "chance": "80",
+          "speedchange": "440",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "10",
+          "monster": "behemoth",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "dice"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "10",
+          "monster": "fire devil",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "dice"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "10",
+          "monster": "giant spider",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "dice"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "10",
+          "monster": "undead dragon",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "dice"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "10",
+          "monster": "lost soul",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "dice"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "demon",
+        "interval": "4000",
+        "chance": "50"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "30",
+      "voice": [
+        {
+          "sentence": "I AM ZORALURK, THE DEMON WITH A THOUSAND FACES!",
+          "yell": "1"
+        },
+        {
+          "sentence": "BRING IT, COCKROACHES!",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "white pearl",
+          "chance": "10000",
+          "countmax": "5"
+        },
+        {
+          "name": "gold coin",
+          "chance": "100000",
+          "countmax": "100"
+        },
+        {
+          "name": "gold coin",
+          "chance": "50000",
+          "countmax": "90"
+        },
+        {
+          "name": "boots of haste",
+          "chance": "16033"
+        },
+        {
+          "name": "giant sword",
+          "chance": "60000"
+        },
+        {
+          "name": "bright sword",
+          "chance": "20000"
+        },
+        {
+          "name": "bright sword",
+          "chance": "20000"
+        },
+        {
+          "name": "warlord sword",
+          "chance": "6000"
+        },
+        {
+          "name": "patched boots",
+          "chance": "7000"
+        },
+        {
+          "id": "6530",
+          "chance": "16000"
+        }
+      ]/* Worn Soft Boots */
+    }
+  }
+}

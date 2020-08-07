@@ -1,0 +1,227 @@
+{
+  "monster": {
+    "name": "Novice of the Cult",
+    "nameDescription": "a novice of the cult",
+    "race": "blood",
+    "experience": "100",
+    "speed": "210",
+    "manacost": "0",
+    "health": {
+      "now": "285",
+      "max": "285"
+    },
+    "look": {
+      "type": "133",
+      "head": "114",
+      "body": "95",
+      "legs": "114",
+      "feet": "114",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "40"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "55",
+          "attack": "20"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "17",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-30",
+          "max": "-40",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-30",
+          "max": "-75",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "10",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "12",
+        "min": "25",
+        "max": "49",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "10"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "physicalPercent": "-15"
+        },
+        {
+          "energyPercent": "-6"
+        },
+        {
+          "firePercent": "-5"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "3",
+      "summon": {
+        "name": "Chicken",
+        "interval": "2000",
+        "chance": "10000"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Fear us!"
+        },
+        {
+          "sentence": "You will not tell anyone what you have seen."
+        },
+        {
+          "sentence": "Your curiosity will be punished!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "16500"
+        },
+        {
+          "id": "2398",
+          "chance": "6000"
+        },
+        {
+          "id": "2661",
+          "chance": "3250"
+        },
+        {
+          "id": "2190",
+          "chance": "600"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "1962",
+              "chance": "500"
+            },
+            {
+              "id": "5810",
+              "chance": "555"
+            },
+            {
+              "id": "2213",
+              "chance": "450"
+            },
+            {
+              "id": "6087",
+              "chance": "500"
+            },
+            {
+              "id": "2145",
+              "chance": "350"
+            },
+            {
+              "id": "2199",
+              "chance": "250"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

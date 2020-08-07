@@ -1,0 +1,162 @@
+{
+  "monster": {
+    "name": "Quara Predator Scout",
+    "nameDescription": "a quara predator scout",
+    "race": "blood",
+    "experience": "400",
+    "speed": "290",
+    "manacost": "0",
+    "health": {
+      "now": "890",
+      "max": "890"
+    },
+    "look": {
+      "type": "20",
+      "corpse": "6067"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "30",
+        "attack": "95"
+      }
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "29",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "15",
+        "min": "113",
+        "max": "180",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "energyPercent": "-25"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Gnarrr!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "37",
+          "chance": "100000"
+        },
+        {
+          "id": "2226",
+          "chance": "2000"
+        },
+        {
+          "id": "2473",
+          "chance": "3333"
+        },
+        {
+          "id": "2387",
+          "chance": "2000"
+        },
+        {
+          "id": "2483",
+          "chance": "2000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2177",
+              "chance": "1429"
+            },
+            {
+              "id": "2145",
+              "chance": "1429"
+            },
+            {
+              "id": "5895",
+              "chance": "2000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

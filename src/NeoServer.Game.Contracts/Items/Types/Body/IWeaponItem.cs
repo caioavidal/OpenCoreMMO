@@ -9,6 +9,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         bool TwoHanded => Metadata.BodyPosition == Slot.TwoHanded;
 
         Slot Slot => Slot.Left;
+        public WeaponType Type => Metadata.WeaponType;
 
 
     }
@@ -19,6 +20,5 @@ namespace NeoServer.Game.Contracts.Items.Types
 
         Tuple<DamageType, byte> ElementalDamage { get; }
         sbyte ExtraDefense { get; }
-
     }
 }

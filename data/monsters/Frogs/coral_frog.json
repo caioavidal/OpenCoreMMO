@@ -1,0 +1,119 @@
+{
+  "monster": {
+    "name": "Coral Frog",
+    "namedescription": "a coral frog",
+    "race": "blood",
+    "experience": "20",
+    "speed": "200",
+    "manacost": "305",
+    "health": {
+      "now": "60",
+      "max": "60"
+    },
+    "look": {
+      "type": "226",
+      "head": "114",
+      "body": "98",
+      "legs": "97",
+      "feet": "114",
+      "corpse": "6079"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-24"
+      }
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "10"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ribbit!"
+        },
+        {
+          "sentence": "Ribbit! Ribbit!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "10",
+          "chance": "76780"
+        },
+        {
+          "name": "worm",
+          "chance": "13510"
+        }
+      ]
+    }
+  }
+}

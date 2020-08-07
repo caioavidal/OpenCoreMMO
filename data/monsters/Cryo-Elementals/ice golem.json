@@ -1,0 +1,219 @@
+{
+  "monster": {
+    "name": "Ice Golem",
+    "nameDescription": "an ice golem",
+    "race": "undead",
+    "experience": "295",
+    "speed": "195",
+    "manacost": "0",
+    "health": {
+      "now": "385",
+      "max": "385"
+    },
+    "look": {
+      "type": "261",
+      "corpse": "7282"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "100",
+          "attack": "40"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "13",
+          "length": "8",
+          "spread": "0",
+          "speedchange": "-800",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-0",
+          "max": "-85",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-10",
+          "max": "-80",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "26"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "100"
+        },
+        {
+          "firePercent": "100"
+        },
+        {
+          "deathPercent": "100"
+        },
+        {
+          "holyPercent": "100"
+        },
+        {
+          "physicalPercent": "40"
+        },
+        {
+          "energyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": {
+        "sentence": "Chrr."
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "53",
+          "chance": "10000"
+        },
+        {
+          "id": "7441",
+          "chance": "7000"
+        },
+        {
+          "id": "2144",
+          "chance": "2700"
+        },
+        {
+          "id": "7588",
+          "chance": "1500"
+        },
+        {
+          "id": "2145",
+          "chance": "500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2396",
+              "chance": "550"
+            },
+            {
+              "id": "2146",
+              "chance": "750"
+            },
+            {
+              "id": "7449",
+              "chance": "500"
+            },
+            {
+              "id": "2479",
+              "chance": "600"
+            },
+            {
+              "id": "7290",
+              "chance": "350"
+            },
+            {
+              "id": "2383",
+              "chance": "300"
+            },
+            {
+              "id": "7902",
+              "chance": "250"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

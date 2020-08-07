@@ -1,0 +1,117 @@
+{
+  "monster": {
+    "name": "Svoren the Mad",
+    "nameDescription": "svoren the mad",
+    "race": "blood",
+    "experience": "3000",
+    "speed": "180",
+    "manacost": "0",
+    "health": {
+      "now": "6300",
+      "max": "6300"
+    },
+    "look": {
+      "type": "254",
+      "head": "80",
+      "body": "99",
+      "legs": "118",
+      "feet": "38",
+      "corpse": "7349"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "60",
+          "attack": "150"
+        },
+        {
+          "name": "speed",
+          "interval": "3500",
+          "chance": "35",
+          "radius": "1",
+          "target": "1",
+          "range": "1",
+          "duration": "40",
+          "speedchange": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]/*<attack name="dark music" interval="4300" chance="40" min="-20" max="-100"/> */
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "27"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "energyPercent": "100"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "NO mommy NO. Leave me alone!"
+        },
+        {
+          "sentence": "Not that tower again!"
+        }
+      ]
+    }
+  }
+}

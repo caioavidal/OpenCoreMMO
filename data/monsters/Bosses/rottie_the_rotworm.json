@@ -1,0 +1,118 @@
+{
+  "monster": {
+    "name": "Rottie the Rotworm",
+    "nameDescription": "Rottie the Rotworm",
+    "race": "blood",
+    "experience": "40",
+    "speed": "180",
+    "health": {
+      "now": "65",
+      "max": "65"
+    },
+    "look": {
+      "type": "26",
+      "head": "20",
+      "body": "30",
+      "legs": "40",
+      "feet": "50",
+      "corpse": "5967"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-60"
+      }
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "11"
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "6230"
+        },
+        {
+          "id": "2376",
+          "chance": "3335"
+        },
+        {
+          "name": "mace",
+          "chance": "3335"
+        },
+        {
+          "name": "katana",
+          "chance": "900"
+        },
+        {
+          "name": "legion helmet",
+          "chance": "1250"
+        },
+        {
+          "name": "copper shield",
+          "chance": "2850"
+        },
+        {
+          "name": "meat",
+          "countmax": "2",
+          "chance": "3260"
+        },
+        {
+          "name": "ham",
+          "countmax": "2",
+          "chance": "3160"
+        },
+        {
+          "name": "worm",
+          "countmax": "5",
+          "chance": "32500"
+        }
+      ]
+    }
+  }
+}

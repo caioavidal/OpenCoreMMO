@@ -1,0 +1,230 @@
+{
+  "monster": {
+    "name": "Dragon Lord Hatchling",
+    "nameDescription": "a dragon lord hatchling",
+    "race": "blood",
+    "experience": "645",
+    "speed": "200",
+    "manacost": "0",
+    "health": {
+      "now": "750",
+      "max": "750"
+    },
+    "look": {
+      "type": "272",
+      "corpse": "7622"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "70",
+      "defense": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "80"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "45"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "12",
+          "length": "8",
+          "spread": "3",
+          "min": "-40",
+          "max": "-110",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "14",
+          "length": "8",
+          "spread": "3",
+          "min": "-60",
+          "max": "-90",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-40",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-80",
+          "max": "-140",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "38",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "13",
+        "min": "26",
+        "max": "48",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "earthPercent": "70"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "energyPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "50",
+      "voice": [
+        {
+          "sentence": "Fchu?",
+          "yell": "0"
+        },
+        {
+          "sentence": "Rooawwrr"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "33750"
+        },
+        {
+          "id": "2148",
+          "countmax": "75",
+          "chance": "33750"
+        },
+        {
+          "id": "2672",
+          "chance": "25000"
+        },
+        {
+          "id": "7620",
+          "chance": "5000"
+        },
+        {
+          "id": "2796",
+          "chance": "1500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": {
+            "id": "7891",
+            "chance": "200"
+          }
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

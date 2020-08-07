@@ -1,0 +1,144 @@
+{
+  "monster": {
+    "name": "Gnorre Chyllson",
+    "nameDescription": "Gnorre Chyllson",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "370",
+    "health": {
+      "now": "7150",
+      "max": "7150"
+    },
+    "look": {
+      "type": "251",
+      "head": "11",
+      "body": "9",
+      "legs": "11",
+      "feet": "85",
+      "addons": "1",
+      "corpse": "7349"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-455"
+        },
+        {
+          "name": "melee",
+          "interval": "3000",
+          "chance": "50",
+          "target": "0",
+          "min": "-500",
+          "max": "-800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-170",
+          "max": "-200",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "snowball"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "51",
+      "defense": "52"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "-10"
+        },
+        {
+          "physicalPercent": "-15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "I am like the merciless northwind."
+        },
+        {
+          "sentence": "Snow will be your death shroud."
+        },
+        {
+          "sentence": "Feel the wrath of father chyll!"
+        }
+      ]
+    }
+  }
+}

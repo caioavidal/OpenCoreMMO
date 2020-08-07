@@ -1,0 +1,140 @@
+{
+  "monster": {
+    "name": "Enraged Crystal Golem",
+    "nameDescription": "enraged crystal golem",
+    "race": "energy",
+    "experience": "550",
+    "speed": "200",
+    "health": {
+      "now": "700",
+      "max": "700"
+    },
+    "look": {
+      "type": "508",
+      "corpse": "18466"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-150"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": {
+        "physicalPercent": "15"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Crrrrk! Chhhhr!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "name": "crystal sword",
+          "chance": "4710"
+        },
+        {
+          "name": "glorious axe",
+          "chance": "360"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "7140"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "8270"
+        },
+        {
+          "name": "blue crystal splinter",
+          "chance": "4120"
+        },
+        {
+          "name": "cyan crystal fragment",
+          "chance": "1050"
+        },
+        {
+          "name": "crystalline spikes",
+          "chance": "7980"
+        },
+        {
+          "name": "crystalline axe",
+          "countmax": "5",
+          "chance": "5008"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "monster": {
+    "name": "Esmeralda",
+    "nameDescription": "Esmeralda",
+    "race": "blood",
+    "experience": "600",
+    "speed": "245",
+    "health": {
+      "now": "800",
+      "max": "800"
+    },
+    "look": {
+      "type": "305",
+      "corpse": "9871"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-175",
+          "poison": "100"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "30",
+          "range": "7",
+          "min": "0",
+          "max": "-110",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "22",
+          "length": "8",
+          "spread": "0",
+          "min": "-100",
+          "max": "-100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallplants"
+          }
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "3",
+          "min": "-80",
+          "max": "-80",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenspark"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "0",
+          "max": "-110",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "elements": {
+      "element": {
+        "firePercent": "-10"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Fcccccchhhhhh"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "58775"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "19",
+          "chance": "58775"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "4",
+          "chance": "68125"
+        },
+        {
+          "name": "ring of healing",
+          "chance": "100000"
+        },
+        {
+          "name": "halberd",
+          "chance": "30050"
+        },
+        {
+          "name": "epee",
+          "chance": "14150"
+        },
+        {
+          "name": "knight armor",
+          "chance": "45950"
+        },
+        {
+          "name": "tower shield",
+          "chance": "41400"
+        },
+        {
+          "name": "stone herb",
+          "chance": "9600"
+        },
+        {
+          "name": "terra mantle",
+          "chance": "2775"
+        },
+        {
+          "name": "mutated rat tail",
+          "chance": "100000"
+        }
+      ]
+    }
+  }
+}

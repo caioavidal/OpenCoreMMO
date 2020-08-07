@@ -1,0 +1,207 @@
+{
+  "monster": {
+    "name": "Chakoya Windcaller",
+    "nameDescription": "a chakoya windcaller",
+    "race": "blood",
+    "experience": "48",
+    "speed": "200",
+    "manacost": "305",
+    "health": {
+      "now": "84",
+      "max": "84"
+    },
+    "look": {
+      "type": "260",
+      "corpse": "7320"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-22"
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-16",
+          "max": "-32",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "ice"
+          }
+        },
+        {
+          "name": "freezecondition",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "radius": "3",
+          "min": "-130",
+          "max": "-160",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "icearea"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "length": "5",
+          "spread": "2",
+          "min": "-9",
+          "max": "-30",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "icearea"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10",
+      "defense": {
+        "name": "invisible",
+        "interval": "2000",
+        "chance": "15",
+        "duration": "3000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "50"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "energyPercent": "-15"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "ice": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Mupi! Si siyoqua jinuma!"
+        },
+        {
+          "sentence": "Siqsiq ji jusipa!"
+        },
+        {
+          "sentence": "Jagura taluka taqua!"
+        },
+        {
+          "sentence": "Quatu nguraka!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "26",
+          "chance": "50000"
+        },
+        {
+          "name": "brass helmet",
+          "chance": "3250"
+        },
+        {
+          "name": "bone shield",
+          "chance": "950"
+        },
+        {
+          "id": "2667",
+          "countmax": "3",
+          "chance": "29000"
+        },
+        {
+          "name": "northern pike",
+          "chance": "60"
+        },
+        {
+          "name": "rainbow trout",
+          "chance": "60"
+        },
+        {
+          "name": "green perch",
+          "chance": "60"
+        }
+      ]/* fish */
+    }
+  }
+}

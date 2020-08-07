@@ -34,8 +34,7 @@ namespace NeoServer.Loaders.World
         }
         public void Load()
         {
-            
-            var fileStream = File.ReadAllBytes("./data/world/neoserver.otbm");
+            var fileStream = File.ReadAllBytes("./data/world/small.otbm");
             
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
             

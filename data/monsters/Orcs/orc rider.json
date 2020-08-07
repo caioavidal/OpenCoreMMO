@@ -1,0 +1,164 @@
+{
+  "monster": {
+    "name": "Orc Rider",
+    "nameDescription": "a orc rider",
+    "race": "blood",
+    "experience": "110",
+    "speed": "340",
+    "manacost": "0",
+    "health": {
+      "now": "180",
+      "max": "180"
+    },
+    "look": {
+      "type": "4",
+      "corpse": "6010"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "50",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "9",
+      "defense": "20",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "7",
+        "speedchange": "900",
+        "duration": "6000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Grrrrrrr"
+        },
+        {
+          "sentence": "Orc arga Huummmak!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "10",
+          "chance": "16000"
+        },
+        {
+          "id": "2666",
+          "countmax": "3",
+          "chance": "18000"
+        },
+        {
+          "id": "2428",
+          "chance": "26250"
+        },
+        {
+          "id": "1988",
+          "chance": "20000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2129",
+              "chance": "10500"
+            },
+            {
+              "id": "2482",
+              "chance": "11000"
+            },
+            {
+              "id": "2050",
+              "chance": "9000"
+            },
+            {
+              "id": "2513",
+              "chance": "3000"
+            },
+            {
+              "id": "2483",
+              "chance": "2500"
+            },
+            {
+              "id": "2425",
+              "chance": "1000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

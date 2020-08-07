@@ -1,0 +1,131 @@
+{
+  "monster": {
+    "name": "Elephant",
+    "nameDescription": "an elephant",
+    "race": "blood",
+    "experience": "160",
+    "speed": "200",
+    "manacost": "500",
+    "health": {
+      "now": "320",
+      "max": "320"
+    },
+    "look": {
+      "type": "211",
+      "corpse": "6052"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-100"
+      }
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "25"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hooooot-Toooooot!"
+        },
+        {
+          "sentence": "Tooooot!"
+        },
+        {
+          "sentence": "Trooooot!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "meat",
+          "countmax": "4",
+          "chance": "39000"
+        },
+        {
+          "name": "ham",
+          "countmax": "3",
+          "chance": "30000"
+        },
+        {
+          "name": "tusk",
+          "countmax": "2",
+          "chance": "1000"
+        },
+        {
+          "name": "tusk shield",
+          "chance": "140"
+        }
+      ]
+    }
+  }
+}

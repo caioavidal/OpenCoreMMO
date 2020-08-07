@@ -1,0 +1,249 @@
+{
+  "monster": {
+    "name": "Herald of Gloom",
+    "nameDescription": "a herald of gloom",
+    "experience": "450",
+    "speed": "260",
+    "race": "undead",
+    "health": {
+      "now": "350",
+      "max": "350"
+    },
+    "targetchange": {
+      "speed": "0",
+      "chance": "8"
+    },
+    "look": {
+      "type": "320",
+      "corpse": "9915"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "100",
+          "min": "0",
+          "max": "-90"
+        },
+        {
+          "name": "speed",
+          "interval": "3000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "duration": "30000",
+          "speedchange": "-600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "holy",
+          "interval": "2000",
+          "chance": "24",
+          "range": "4",
+          "min": "-90",
+          "max": "-170",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallholy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "55",
+      "defense": [
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "15",
+          "speedchange": "200",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "5000",
+          "chance": "20",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "20",
+          "monster": "nightstalker",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "10",
+          "monster": "werewolf",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "10",
+          "monster": "the count",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "10",
+          "monster": "grim reaper",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "10",
+          "monster": "tarantula",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "10",
+          "monster": "ferumbras",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "-5"
+        },
+        {
+          "energyPercent": "-5"
+        },
+        {
+          "deathPercent": "-5"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "holyPercent": "20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "The powers of light are waning.",
+          "yell": "1"
+        },
+        {
+          "sentence": "You will join us in eternal night!",
+          "yell": "1"
+        },
+        {
+          "sentence": "The shadows will engulf the world.",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "name": "midnight shard",
+        "chance": "1886"
+      }
+    }
+  }
+}

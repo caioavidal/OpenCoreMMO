@@ -1,0 +1,181 @@
+{
+  "monster": {
+    "name": "The Handmaiden",
+    "nameDescription": "the handmaiden",
+    "race": "blood",
+    "experience": "3850",
+    "speed": "450",
+    "manacost": "0",
+    "health": {
+      "now": "14500",
+      "max": "14500"
+    },
+    "look": {
+      "type": "230",
+      "corpse": "6312"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "3100"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "-0",
+          "max": "-800"
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "min": "-150",
+          "max": "-800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "12",
+          "range": "1",
+          "target": "1"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "35",
+      "defense": [
+        {
+          "name": "speed",
+          "interval": "3000",
+          "chance": "12",
+          "speedchange": "380",
+          "duration": "8000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "4000",
+          "chance": "50",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "50",
+          "min": "100",
+          "max": "250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "35",
+          "speedchange": "370",
+          "duration": "30000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "poison": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "id": "6539",
+        "chance": "35000"
+      }/* handmaiden's protector */
+    }
+  }
+}

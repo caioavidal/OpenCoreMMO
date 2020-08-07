@@ -1,0 +1,186 @@
+{
+  "monster": {
+    "name": "Orc Leader",
+    "nameDescription": "a orc leader",
+    "race": "blood",
+    "experience": "270",
+    "speed": "230",
+    "manacost": "640",
+    "health": {
+      "now": "450",
+      "max": "450"
+    },
+    "look": {
+      "type": "59",
+      "corpse": "6001"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "74"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "min": "-50",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "30"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Ulderek futgyr human!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "35",
+          "chance": "17000"
+        },
+        {
+          "id": "2667",
+          "chance": "29000"
+        },
+        {
+          "id": "2379",
+          "chance": "26500"
+        },
+        {
+          "id": "2410",
+          "countmax": "4",
+          "chance": "6250"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "12500"
+        },
+        {
+          "id": "2419",
+          "chance": "6700"
+        },
+        {
+          "id": "1988",
+          "chance": "20000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2478",
+              "chance": "2500"
+            },
+            {
+              "id": "2463",
+              "chance": "1250"
+            },
+            {
+              "id": "7378",
+              "chance": "1000"
+            },
+            {
+              "id": "2207",
+              "chance": "750"
+            },
+            {
+              "id": "2647",
+              "chance": "800"
+            },
+            {
+              "id": "2413",
+              "chance": "750"
+            },
+            {
+              "id": "7618",
+              "chance": "400"
+            },
+            {
+              "id": "2475",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

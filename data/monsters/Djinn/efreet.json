@@ -1,0 +1,306 @@
+{
+  "monster": {
+    "name": "Efreet",
+    "nameDescription": "an efreet",
+    "race": "blood",
+    "experience": "410",
+    "speed": "180",
+    "health": {
+      "now": "550",
+      "max": "550"
+    },
+    "look": {
+      "type": "103",
+      "corpse": "6032"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-110"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-40",
+          "max": "-110",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "radius": "3",
+          "min": "-30",
+          "max": "-90",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-65",
+          "max": "-120",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "speedchange": "-650",
+          "duration": "15000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "duration": "6000",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "1",
+          "range": "7",
+          "monster": "rat",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "djinn electrify",
+          "interval": "2000",
+          "range": "5",
+          "chance": "15"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "50",
+        "max": "80",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "90"
+        },
+        {
+          "energyPercent": "60"
+        },
+        {
+          "earthPercent": "10"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "icePercent": "-5"
+        },
+        {
+          "holyPercent": "-8"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "green djinn",
+        "interval": "2000",
+        "chance": "10",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I grant you a deathwish!"
+        },
+        {
+          "sentence": "Good wishes are for fairytales"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1860",
+          "chance": "2200"
+        },
+        {
+          "name": "small oil lamp",
+          "chance": "160"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "75",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "50",
+          "chance": "60000"
+        },
+        {
+          "name": "small emerald",
+          "chance": "7000"
+        },
+        {
+          "name": "green gem",
+          "chance": "200"
+        },
+        {
+          "name": "wand of inferno",
+          "chance": "390"
+        },
+        {
+          "name": "heavy machete",
+          "chance": "5000"
+        },
+        {
+          "name": "mystic turban",
+          "chance": "160"
+        },
+        {
+          "name": "pear",
+          "countmax": "5",
+          "chance": "9390"
+        },
+        {
+          "name": "green piece of cloth",
+          "chance": "3000"
+        },
+        {
+          "name": "royal spear",
+          "countmax": "3",
+          "chance": "15570"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "3500"
+        },
+        {
+          "name": "seeds",
+          "countmax": "2",
+          "chance": "2000"
+        },
+        {
+          "name": "magma monocle",
+          "chance": "360"
+        },
+        {
+          "name": "jewelled belt",
+          "chance": "8540"
+        },
+        {
+          "name": "noble turban",
+          "chance": "1130"
+        }
+      ]/* green tapestry */
+    }
+  }
+}

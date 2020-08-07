@@ -1,0 +1,126 @@
+{
+  "monster": {
+    "name": "starving wolf",
+    "nameDescription": "a starving wolf",
+    "race": "blood",
+    "experience": "65",
+    "speed": "170",
+    "health": {
+      "now": "85",
+      "max": "85"
+    },
+    "look": {
+      "type": "27",
+      "head": "20",
+      "body": "30",
+      "legs": "40",
+      "feet": "50",
+      "corpse": "5968"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "8"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-25"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10",
+      "defense": {
+        "name": "effect",
+        "interval": "2000",
+        "chance": "10",
+        "radius": "1",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "yellowbubble"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "physicalPercent": "-30"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Gaarrrrrr"
+        },
+        {
+          "sentence": "Gnoorrr"
+        },
+        {
+          "sentence": "Yoooohhuuuu!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "220",
+          "chance": "64730"
+        },
+        {
+          "name": "meat",
+          "countmax": "2",
+          "chance": "5300"
+        },
+        {
+          "name": "wolf paw",
+          "chance": "1430"
+        }
+      ]/* dirty fur */
+    }
+  }
+}

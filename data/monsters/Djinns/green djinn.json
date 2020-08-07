@@ -1,0 +1,252 @@
+{
+  "monster": {
+    "name": "Green Djinn",
+    "nameDescription": "a green djinn",
+    "race": "blood",
+    "experience": "215",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "330",
+      "max": "330"
+    },
+    "look": {
+      "type": "51",
+      "corpse": "6016"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "45",
+          "attack": "40"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "50",
+          "range": "7",
+          "min": "-45",
+          "max": "-75",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "energycondition",
+          "interval": "2000",
+          "chance": "34",
+          "range": "7",
+          "min": "-50",
+          "max": "-90",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "3000",
+          "chance": "25",
+          "range": "7",
+          "min": "-55",
+          "max": "-105",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "suddendeath"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energyarea"
+            }
+          ]
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "monster": "rat",
+          "duration": "30000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "18",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "80"
+        },
+        {
+          "energyPercent": "50"
+        },
+        {
+          "physicalPercent": "30"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "#text": ">\r\n\t",
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I grant you a deathwish!"
+        },
+        {
+          "sentence": "Muhahahaha!"
+        },
+        {
+          "sentence": "I wish you a merry trip to hell!"
+        },
+        {
+          "sentence": "Good wishes are for fairytales"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "31000"
+        },
+        {
+          "id": "2148",
+          "countmax": "45",
+          "chance": "31000"
+        },
+        {
+          "id": "2696",
+          "chance": "27500"
+        },
+        {
+          "id": "2747",
+          "chance": "10000"
+        },
+        {
+          "id": "7378",
+          "countmax": "2",
+          "chance": "2750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2062",
+              "chance": "6750"
+            },
+            {
+              "id": "1965",
+              "chance": "4250"
+            },
+            {
+              "id": "2149",
+              "countmax": "4",
+              "chance": "750"
+            },
+            {
+              "id": "7620",
+              "chance": "1200"
+            },
+            {
+              "id": "5910",
+              "chance": "2000"
+            },
+            {
+              "id": "2663",
+              "chance": "350"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "monster": {
+    "name": "Draken Warmaster",
+    "nameDescription": "a draken warmaster",
+    "race": "blood",
+    "experience": "2400",
+    "speed": "220",
+    "health": {
+      "now": "4150",
+      "max": "4150"
+    },
+    "look": {
+      "type": "334",
+      "corpse": "11107"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-300"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "length": "4",
+          "spread": "3",
+          "min": "-240",
+          "max": "-520",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosion"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "40",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "10",
+        "min": "510",
+        "max": "600",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "holyPercent": "5"
+        },
+        {
+          "deathPercent": "50"
+        },
+        {
+          "energyPercent": "5"
+        },
+        {
+          "icePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Attack aggrezzively! Dezztroy zze intruderzz!"
+        },
+        {
+          "sentence": "Hizzzzz!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "ring of the sky",
+          "chance": "180"
+        },
+        {
+          "name": "small ruby",
+          "countmax": "5",
+          "chance": "1525"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "47000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "50625"
+        },
+        {
+          "name": "tower shield",
+          "chance": "2035"
+        },
+        {
+          "name": "meat",
+          "chance": "30300"
+        },
+        {
+          "name": "great health potion",
+          "countmax": "3",
+          "chance": "4850"
+        },
+        {
+          "name": "ultimate health potion",
+          "chance": "4020"
+        },
+        {
+          "name": "Zaoan armor",
+          "chance": "790"
+        },
+        {
+          "name": "Zaoan shoes",
+          "chance": "1900"
+        },
+        {
+          "name": "Zaoan legs",
+          "chance": "960"
+        },
+        {
+          "name": "drakinata",
+          "chance": "860"
+        },
+        {
+          "name": "bone shoulderplate",
+          "chance": "12010"
+        },
+        {
+          "name": "warmaster's wristguards",
+          "chance": "7000"
+        },
+        {
+          "name": "Zaoan halberd",
+          "chance": "7925"
+        }
+      ]
+    }
+  }
+}

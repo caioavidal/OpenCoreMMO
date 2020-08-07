@@ -1,0 +1,317 @@
+{
+  "monster": {
+    "name": "Infernalist",
+    "nameDescription": "an infernalist",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "260",
+    "manacost": "0",
+    "health": {
+      "now": "3650",
+      "max": "3650"
+    },
+    "look": {
+      "type": "130",
+      "head": "78",
+      "body": "76",
+      "legs": "94",
+      "feet": "115",
+      "addons": "2",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "30"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "95"
+        },
+        {
+          "runonhealth": "1150"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "50"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "target": "1",
+          "min": "-60",
+          "max": "-150",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "fireattack"
+            },
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            }
+          ]
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "20",
+          "target": "1",
+          "range": "7",
+          "radius": "3",
+          "min": "-50",
+          "max": "-125",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "teleport"
+            },
+            {
+              "key": "shootEffect",
+              "value": "energyball"
+            }
+          ]
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "radius": "3",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "length": "8",
+          "spread": "0",
+          "min": "-150",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "fireattack"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "15",
+          "min": "60",
+          "max": "230",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "10",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "90"
+        },
+        {
+          "physicalPercent": "-10"
+        },
+        {
+          "icePercent": "-15"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "deathPercent": "10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "1",
+      "summon": {
+        "name": "fire elemental",
+        "interval": "1000",
+        "chance": "13"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Nothing will remain but your scorched bones!"
+        },
+        {
+          "sentence": "Some like it hot!"
+        },
+        {
+          "sentence": "It's cooking time!"
+        },
+        {
+          "sentence": "Feel the heat of battle!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "36500"
+        },
+        {
+          "id": "2148",
+          "countmax": "45",
+          "chance": "36500"
+        },
+        {
+          "id": "7590",
+          "chance": "21000"
+        },
+        {
+          "id": "7591",
+          "chance": "21500"
+        },
+        {
+          "id": "8840",
+          "countmax": "5",
+          "chance": "5500"
+        },
+        {
+          "id": "2436",
+          "chance": "6100"
+        },
+        {
+          "id": "7760",
+          "chance": "5050"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "5911",
+              "chance": "2300"
+            },
+            {
+              "id": "2167",
+              "chance": "2000"
+            },
+            {
+              "id": "8902",
+              "chance": "500"
+            },
+            {
+              "id": "5904",
+              "chance": "350"
+            },
+            {
+              "id": "1986",
+              "chance": "50"
+            },
+            {
+              "id": "9971",
+              "chance": "250"
+            },
+            {
+              "id": "9969",
+              "chance": "250"
+            },
+            {
+              "id": "7410",
+              "chance": "150"
+            },
+            {
+              "id": "7891",
+              "chance": "100"
+            },
+            {
+              "id": "9980",
+              "chance": "100"
+            },
+            {
+              "id": "2114",
+              "chance": "150"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

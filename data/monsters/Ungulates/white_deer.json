@@ -1,0 +1,85 @@
+{
+  "monster": {
+    "name": "White Deer",
+    "nameDescription": "a white deer",
+    "race": "blood",
+    "experience": "0",
+    "speed": "190",
+    "health": {
+      "now": "195",
+      "max": "195"
+    },
+    "look": {
+      "type": "400",
+      "corpse": "13513"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "195"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "*wheeze*"
+        },
+        {
+          "sentence": "ROOOAAARR!!"
+        },
+        {
+          "sentence": "*sniff*"
+        },
+        {
+          "sentence": "*bell*"
+        }
+      ]
+    }
+  }
+}

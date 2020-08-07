@@ -1,0 +1,218 @@
+{
+  "monster": {
+    "name": "Mummy",
+    "nameDescription": "a mummy",
+    "race": "undead",
+    "experience": "150",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "240",
+      "max": "240"
+    },
+    "look": {
+      "type": "65",
+      "corpse": "6004"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "28",
+          "poison": "65"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "15",
+          "range": "1",
+          "min": "-30",
+          "max": "-40"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "8",
+          "range": "7",
+          "speedchange": "-600",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "14",
+      "defense": "20"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "deathPercent": "100"
+        },
+        {
+          "icePercent": "22"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I will ssswallow your sssoul!"
+        },
+        {
+          "sentence": "Mort ulhegh dakh visss."
+        },
+        {
+          "sentence": "Flesssh to dussst!"
+        },
+        {
+          "sentence": "I will tassste life again!"
+        },
+        {
+          "sentence": "Ahkahra exura belil mort!"
+        },
+        {
+          "sentence": "Yohag Sssetham!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "46",
+          "chance": "15000"
+        },
+        {
+          "id": "2148",
+          "countmax": "45",
+          "chance": "15000"
+        },
+        {
+          "id": "3976",
+          "countmax": "3",
+          "chance": "50000"
+        },
+        {
+          "id": "2162",
+          "chance": "15750"
+        },
+        {
+          "id": "2406",
+          "chance": "8350"
+        },
+        {
+          "id": "2134",
+          "chance": "5000"
+        },
+        {
+          "id": "2161",
+          "chance": "4650"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2124",
+              "chance": "2222"
+            },
+            {
+              "id": "2411",
+              "chance": "1900"
+            },
+            {
+              "id": "2144",
+              "chance": "1270"
+            },
+            {
+              "id": "2170",
+              "chance": "110"
+            },
+            {
+              "id": "5914",
+              "chance": "250"
+            },
+            {
+              "id": "2529",
+              "chance": "110"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

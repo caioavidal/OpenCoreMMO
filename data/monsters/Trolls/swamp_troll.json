@@ -1,0 +1,156 @@
+{
+  "monster": {
+    "name": "Swamp Troll",
+    "nameDescription": "a swamp troll",
+    "race": "venom",
+    "experience": "25",
+    "speed": "170",
+    "manacost": "320",
+    "health": {
+      "now": "55",
+      "max": "55"
+    },
+    "look": {
+      "type": "76",
+      "corpse": "6018"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-13",
+        "poison": "1"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "5"
+        },
+        {
+          "firePercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Grrrr"
+        },
+        {
+          "sentence": "Groar!"
+        },
+        {
+          "sentence": "Me strong! Me ate spinach!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2050",
+          "chance": "15000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "5",
+          "chance": "50300"
+        },
+        {
+          "name": "mouldy cheese",
+          "chance": "10000"
+        },
+        {
+          "name": "spear",
+          "chance": "13000"
+        },
+        {
+          "name": "fishing rod",
+          "chance": "60"
+        },
+        {
+          "name": "leather boots",
+          "chance": "9500"
+        },
+        {
+          "id": "2667",
+          "chance": "60000"
+        },
+        {
+          "name": "troll green",
+          "chance": "1200"
+        },
+        {
+          "id": "5901",
+          "chance": "2140"
+        },
+        {
+          "name": "swamp grass",
+          "chance": "3100"
+        },
+        {
+          "name": "medicine pouch",
+          "chance": "2160"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

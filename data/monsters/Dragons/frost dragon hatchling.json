@@ -1,0 +1,166 @@
+{
+  "monster": {
+    "name": "Frost Dragon Hatchling",
+    "nameDescription": "a frost dragon hatchling",
+    "race": "blood",
+    "experience": "745",
+    "speed": "170",
+    "manacost": "0",
+    "health": {
+      "now": "800",
+      "max": "800"
+    },
+    "look": {
+      "type": "283",
+      "corpse": "7969"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "70",
+      "defense": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "80"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "70",
+          "attack": "40"
+        },
+        {
+          "name": "ice",
+          "interval": "1000",
+          "chance": "12",
+          "length": "8",
+          "spread": "3",
+          "min": "-50",
+          "max": "-160",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-60",
+          "max": "-120",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "ice"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "38"
+    },
+    "elements": {
+      "element": {
+        "energyPercent": "-5"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "50",
+      "voice": [
+        {
+          "sentence": "Rooawwrr",
+          "yell": "0"
+        },
+        {
+          "sentence": "Fchu?",
+          "yell": "0"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "55",
+          "chance": "33750"
+        },
+        {
+          "id": "2672",
+          "chance": "25000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "8900",
+              "chance": "200"
+            },
+            {
+              "id": "7618",
+              "chance": "5000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

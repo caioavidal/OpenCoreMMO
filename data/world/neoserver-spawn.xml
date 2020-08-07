@@ -367,36 +367,9 @@
 	<spawn centerx="97" centery="130" centerz="7" radius="5">
 		<monster name="Rabbit" x="0" y="2" z="7" spawntime="180" />
 	</spawn>
-	<spawn centerx="377" centery="265" centerz="7" radius="15">
-		<monster name="spider" x="-3" y="-10" z="7" spawntime="60" />
-		<monster name="Snake" x="-6" y="-9" z="7" spawntime="60" />
-		<monster name="Snake" x="-9" y="-7" z="7" spawntime="60" />
-		<monster name="Deer" x="-2" y="-7" z="7" spawntime="60" />
-		<monster name="spider" x="0" y="-5" z="7" spawntime="60" />
-		<monster name="Snake" x="0" y="-4" z="7" spawntime="60" />
-		<monster name="Deer" x="1" y="0" z="7" spawntime="60" />
-		<monster name="Snake" x="-3" y="5" z="7" spawntime="60" />
-		<monster name="Snake" x="-12" y="8" z="7" spawntime="60" />
-	</spawn>
-	<spawn centerx="318" centery="269" centerz="7" radius="25">
-		<monster name="Deer" x="-14" y="-10" z="7" spawntime="60" />
-		<monster name="Snake" x="-5" y="-7" z="7" spawntime="60" />
-		<monster name="Deer" x="-17" y="-5" z="7" spawntime="60" />
-		<monster name="spider" x="5" y="-5" z="7" spawntime="60" />
-		<monster name="spider" x="11" y="-5" z="7" spawntime="60" />
-		<monster name="Snake" x="-2" y="2" z="7" spawntime="60" />
-		<monster name="Snake" x="1" y="2" z="7" spawntime="60" />
-		<monster name="Deer" x="-16" y="3" z="7" spawntime="60" />
-		<monster name="Snake" x="4" y="4" z="7" spawntime="60" />
-		<monster name="Snake" x="-1" y="7" z="7" spawntime="60" />
-		<monster name="spider" x="17" y="8" z="7" spawntime="60" />
-		<monster name="spider" x="18" y="9" z="7" spawntime="60" />
-	</spawn>
-	<spawn centerx="354" centery="281" centerz="7" radius="10">
-		<monster name="spider" x="-5" y="-8" z="7" spawntime="60" />
-		<monster name="Snake" x="-2" y="-6" z="7" spawntime="60" />
-		<monster name="Snake" x="1" y="-3" z="7" spawntime="60" />
-	</spawn>
+	<spawn centerx="377" centery="265" centerz="7" radius="15" />
+	<spawn centerx="318" centery="269" centerz="7" radius="25" />
+	<spawn centerx="354" centery="281" centerz="7" radius="10" />
 	<spawn centerx="278" centery="336" centerz="7" radius="5">
 		<monster name="Orc" x="-1" y="-2" z="7" spawntime="60" />
 		<monster name="Orc Spearman" x="5" y="0" z="7" spawntime="60" />
@@ -615,6 +588,9 @@
 	<spawn centerx="389" centery="455" centerz="7" radius="5">
 		<monster name="Crab" x="1" y="-1" z="7" spawntime="60" />
 		<monster name="Blood Crab" x="-2" y="2" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="164" centery="457" centerz="7" radius="1">
+		<monster name="The Old Widow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="287" centery="457" centerz="7" radius="5">
 		<monster name="Rabbit" x="2" y="-1" z="7" spawntime="60" />

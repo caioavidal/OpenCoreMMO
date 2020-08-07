@@ -1,0 +1,151 @@
+{
+  "monster": {
+    "name": "Dirtbeard",
+    "nameDescription": "Dirtbeard",
+    "race": "blood",
+    "experience": "375",
+    "speed": "300",
+    "manacost": "775",
+    "health": {
+      "now": "630",
+      "max": "630"
+    },
+    "look": {
+      "type": "98",
+      "corpse": "10320"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "50"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1200",
+          "min": "0",
+          "max": "-125"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "30",
+          "range": "7",
+          "min": "0",
+          "max": "-100",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingstar"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "1200",
+          "chance": "30",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "rednote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "35"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-5"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "pirate marauder",
+        "interval": "4000",
+        "chance": "30",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "You are no match for the scourge of the seas!"
+        },
+        {
+          "sentence": "You move like a seasick whale!"
+        },
+        {
+          "sentence": "Yarr, death to all landlubbers!"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "monster": {
+    "name": "Minotaur Archer",
+    "nameDescription": "a minotaur archer",
+    "race": "blood",
+    "experience": "65",
+    "speed": "170",
+    "manacost": "390",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "24",
+      "corpse": "5982"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "25"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "min": "-45",
+          "max": "-85",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "bolt"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "7",
+      "defense": "8"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ruan Wihmpy!"
+        },
+        {
+          "sentence": "Kaplar!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "28",
+          "chance": "18000"
+        },
+        {
+          "id": "2543",
+          "countmax": "23",
+          "chance": "26500"
+        },
+        {
+          "id": "7363",
+          "countmax": "4",
+          "chance": "10000"
+        },
+        {
+          "id": "2458",
+          "chance": "5000"
+        },
+        {
+          "id": "2455",
+          "chance": "9500"
+        },
+        {
+          "id": "2666",
+          "chance": "9500"
+        },
+        {
+          "id": "2649",
+          "chance": "5500"
+        },
+        {
+          "id": "2461",
+          "chance": "4700"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2465",
+              "chance": "2750"
+            },
+            {
+              "id": "5878",
+              "chance": "2000"
+            },
+            {
+              "id": "2481",
+              "chance": "700"
+            },
+            {
+              "id": "2483",
+              "chance": "500"
+            },
+            {
+              "id": "2464",
+              "chance": "7000"
+            },
+            {
+              "id": "2648",
+              "chance": "7500"
+            },
+            {
+              "id": "2513",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

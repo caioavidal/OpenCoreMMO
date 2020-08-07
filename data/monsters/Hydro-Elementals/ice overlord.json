@@ -1,0 +1,189 @@
+{
+  "monster": {
+    "name": "Ice Overlord",
+    "nameDescription": "an ice overlord",
+    "race": "undead",
+    "experience": "1950",
+    "speed": "390",
+    "manacost": "0",
+    "health": {
+      "now": "4000",
+      "max": "2800"
+    },
+    "look": {
+      "type": "11",
+      "corpse": "8965"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "15"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "70",
+          "attack": "100"
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "18",
+          "radius": "6",
+          "target": "0",
+          "speedchange": "-800",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "icetornado"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "1000",
+          "chance": "9",
+          "range": "7",
+          "target": "1",
+          "min": "-50",
+          "max": "-400",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallice"
+            },
+            {
+              "key": "areaEffect",
+              "value": "iceattack"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "90",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "25"
+        },
+        {
+          "energyPercent": "-15"
+        },
+        {
+          "holyPercent": "25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "0"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "27500"
+        },
+        {
+          "id": "2148",
+          "countmax": "50",
+          "chance": "27500"
+        },
+        {
+          "id": "2152",
+          "countmax": "3",
+          "chance": "45750"
+        },
+        {
+          "id": "8878",
+          "chance": "1500"
+        },
+        {
+          "id": "8300",
+          "chance": "100000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

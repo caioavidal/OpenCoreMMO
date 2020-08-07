@@ -1,0 +1,157 @@
+{
+  "monster": {
+    "name": "Carrion Worm",
+    "nameDescription": "a carrion worm",
+    "race": "blood",
+    "experience": "70",
+    "speed": "200",
+    "manacost": "380",
+    "health": {
+      "now": "145",
+      "max": "145"
+    },
+    "look": {
+      "type": "192",
+      "corpse": "6069"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "20",
+        "attack": "30"
+      }
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "11"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "5"
+        },
+        {
+          "energyPercent": "5"
+        },
+        {
+          "firePercent": "-5"
+        },
+        {
+          "icePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "0"
+        },
+        {
+          "drunk": "0"
+        },
+        {
+          "invisible": "0"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "49",
+          "chance": "20750"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "20000"
+        },
+        {
+          "id": "2671",
+          "chance": "18000"
+        },
+        {
+          "id": "3976",
+          "countmax": "5",
+          "chance": "50000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2398",
+              "chance": "9000"
+            },
+            {
+              "id": "2376",
+              "chance": "5000"
+            },
+            {
+              "id": "2412",
+              "chance": "1000"
+            },
+            {
+              "id": "2530",
+              "chance": "1000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "monster": {
+    "name": "Adventurer",
+    "nameDescription": "an adventurer",
+    "race": "blood",
+    "experience": "0",
+    "speed": "170",
+    "health": {
+      "now": "65",
+      "max": "65"
+    },
+    "look": {
+      "type": "129",
+      "head": "92",
+      "body": "15",
+      "legs": "92",
+      "feet": "82",
+      "corpse": "20315"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "65"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "monster": {
+    "name": "Countess Sorrow",
+    "nameDescription": "Countess Sorrow",
+    "race": "undead",
+    "experience": "13000",
+    "speed": "250",
+    "health": {
+      "now": "6500",
+      "max": "6500"
+    },
+    "look": {
+      "type": "241",
+      "head": "20",
+      "corpse": "6344"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-360",
+          "poison": "50"
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-150",
+          "max": "-350",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "poisonfield",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "radius": "3",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "min": "-100",
+          "max": "-400",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "50",
+        "min": "409",
+        "max": "812",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "name": "Countess Sorrow's frozen tear",
+        "chance": "100000"
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ using NeoServer.Server.Tasks;
 namespace NeoServer.Server.Commands.Player
 {
 
-    public class PlayerWalkCommand : Command
+    public class PlayerWalkCommand //: Command
     {
         private readonly Game game;
         private IPlayer player;
@@ -20,7 +20,7 @@ namespace NeoServer.Server.Commands.Player
             this.directions = directions;
         }
 
-        public override void Execute()
+        public static void Execute(IPlayer player, Game game, params Direction[] directions)
         {
             if (player.NextStepId != 0)
             {
@@ -33,10 +33,10 @@ namespace NeoServer.Server.Commands.Player
 
             player.TryWalkTo(directions);
 
-            AddEventWalk(directions.Length == 1);
+            AddEventWalk(player, game, directions.Length == 1);
         }
 
-        private void AddEventWalk(bool firstStep)
+        private static void AddEventWalk(IPlayer player, Game game, bool firstStep)
         {
             var creature = player as ICreature;
             creature.CancelNextWalk = false;
@@ -48,15 +48,15 @@ namespace NeoServer.Server.Commands.Player
 
             if (firstStep)
             {
-                MovePlayer(player);
+                MovePlayer(player, game);
             }
 
-            creature.EventWalk = game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () => MovePlayer(player)));
+            creature.EventWalk = game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () => MovePlayer(player, game)));
         }
 
-        private void MovePlayer(ICreature creature)
+        private static void MovePlayer(IPlayer player, Game game)
         {
-
+            var creature = player as ICreature;
             var thing = creature as IMoveableThing;
 
             if (creature.TryGetNextStep(out var direction))
@@ -79,7 +79,7 @@ namespace NeoServer.Server.Commands.Player
             if (player.EventWalk != 0)
             {
                 player.EventWalk = 0;
-                AddEventWalk(false);
+                AddEventWalk(player, game, false);
             }
 
             if (creature.IsRemoved)

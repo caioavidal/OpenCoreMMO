@@ -1,0 +1,94 @@
+{
+  "monster": {
+    "name": "Sheep",
+    "nameDescription": "a sheep",
+    "race": "blood",
+    "experience": "0",
+    "speed": "110",
+    "manacost": "250",
+    "health": {
+      "now": "20",
+      "max": "20"
+    },
+    "look": {
+      "type": "14",
+      "corpse": "5991"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "20"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "20"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "0",
+        "attack": "0"
+      }
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": "2"
+    },
+    "elements": {
+      "element": {
+        "firePercent": "-10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Maeh"
+      }
+    },
+    "loot": {
+      "item": {
+        "id": "2666",
+        "countmax": "4",
+        "chance": "22500"
+      }/* meat */
+    }
+  }
+}

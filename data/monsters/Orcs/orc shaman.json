@@ -1,0 +1,209 @@
+{
+  "monster": {
+    "name": "Orc Shaman",
+    "nameDescription": "a orc shaman",
+    "race": "blood",
+    "experience": "110",
+    "speed": "180",
+    "manacost": "0",
+    "health": {
+      "now": "115",
+      "max": "115"
+    },
+    "look": {
+      "type": "6",
+      "corpse": "5978"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "15"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "13",
+          "range": "7",
+          "min": "-20",
+          "max": "-30",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "8",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-5",
+          "max": "-45",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "10",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "25",
+        "min": "27",
+        "max": "43",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "50"
+        },
+        {
+          "holyPercent": "25"
+        },
+        {
+          "earthPercent": "-5"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Huumans stinkk!"
+      }
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": {
+        "name": "Snake",
+        "interval": "1000",
+        "chance": "25",
+        "max": "4"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "5",
+          "chance": "61000"
+        },
+        {
+          "id": "2686",
+          "countmax": "2",
+          "chance": "10000"
+        },
+        {
+          "id": "2458",
+          "chance": "9500"
+        },
+        {
+          "id": "2464",
+          "chance": "8000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2389",
+              "chance": "6350"
+            },
+            {
+              "id": "1958",
+              "chance": "3500"
+            },
+            {
+              "id": "2188",
+              "chance": "1500"
+            },
+            {
+              "id": "2401",
+              "chance": "3000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "monster": {
+    "name": "Orc Berserker",
+    "nameDescription": "an orc berserker",
+    "race": "blood",
+    "experience": "195",
+    "speed": "195",
+    "manacost": "590",
+    "health": {
+      "now": "210",
+      "max": "210"
+    },
+    "look": {
+      "type": "8",
+      "corpse": "5980"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-200"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "15",
+        "speedchange": "290",
+        "duration": "6000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "15"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "KRAK ORRRRRRK!",
+        "yell": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2044",
+          "chance": "830"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "12",
+          "chance": "54000"
+        },
+        {
+          "name": "battle axe",
+          "chance": "6110"
+        },
+        {
+          "name": "halberd",
+          "chance": "7280"
+        },
+        {
+          "name": "chain armor",
+          "chance": "890"
+        },
+        {
+          "name": "ham",
+          "chance": "10400"
+        },
+        {
+          "name": "hunting spear",
+          "chance": "5000"
+        },
+        {
+          "name": "orc tooth",
+          "chance": "3000"
+        },
+        {
+          "name": "orcish gear",
+          "chance": "9400"
+        },
+        {
+          "name": "orc leather",
+          "chance": "4000"
+        }
+      ]/* lamp */
+    }
+  }
+}

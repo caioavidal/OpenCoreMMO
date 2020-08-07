@@ -20,9 +20,33 @@ namespace NeoServer.Server.Model.Players
         public event FailAddItemToSlot OnFailedToAddToSlot;
         private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
 
-        public byte TotalAttack => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? (Inventory[Slot.Left].Item1 as IWeaponItem).Attack : 0, Inventory.ContainsKey(Slot.Right) ? (Inventory[Slot.Right].Item1 as IWeaponItem).Attack : 0);
+        public ushort TotalAttack
+        {
+            get
+            {
+                ushort attack = 0;
+
+                if (Weapon is IWeaponItem weapon) return weapon.Attack;
+
+                if (Weapon is IDistanceWeaponItem distance)
+                {
+                    attack += distance.Attack;
+                    if(Ammo != null)
+                    {
+                        attack += distance.Attack;
+                    }
+                    
+                }
+
+                return attack;
+            }
+        }
+
+        public IAmmoItem Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoItem ammo ? Inventory[Slot.Ammo].Item1 as IAmmoItem : null;
 
         public byte TotalDefense => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? (Inventory[Slot.Left].Item1 as IWeaponItem).Defense : 0, Inventory.ContainsKey(Slot.Right) ? (Inventory[Slot.Right].Item1 as IWeaponItem).Defense : 0);
+
+        public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
 
         public byte TotalArmor
         {
@@ -124,7 +148,7 @@ namespace NeoServer.Server.Model.Players
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                 {
-                   
+
                     return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item).Error);
                 }
                 else if (item is IPickupableContainer container)
@@ -145,10 +169,10 @@ namespace NeoServer.Server.Model.Players
                     {
                         itemToSwap = SwapItem(slot, cumulative);
                     }
-                    else 
+                    else
                     {
                         (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref cumulative);
-                        if(cumulative?.Amount > 0)
+                        if (cumulative?.Amount > 0)
                         {
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
                         }
@@ -229,7 +253,7 @@ namespace NeoServer.Server.Model.Players
 
             if (slot == Slot.Backpack)
             {
-                if(item is IPickupableContainer && !Inventory.ContainsKey(Slot.Backpack))
+                if (item is IPickupableContainer && !Inventory.ContainsKey(Slot.Backpack))
                 {
                     return new Result<bool>(true);
                 }
@@ -259,14 +283,14 @@ namespace NeoServer.Server.Model.Players
                 return new Result<bool>(true);
             }
 
-         
+
             if (slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded)
             {
                 //trying to add a shield while left slot has a two handed weapon
                 return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
             }
 
-            if(inventoryItem.Slot != slot)
+            if (inventoryItem.Slot != slot)
             {
                 return cannotDressFail;
             }

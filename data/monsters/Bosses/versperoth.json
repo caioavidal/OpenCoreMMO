@@ -1,0 +1,160 @@
+{
+  "monster": {
+    "name": "Versperoth",
+    "nameDescription": "Versperoth",
+    "race": "blood",
+    "experience": "20000",
+    "speed": "0",
+    "health": {
+      "now": "100000",
+      "max": "100000"
+    },
+    "look": {
+      "type": "295",
+      "corpse": "0"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1200",
+          "min": "0",
+          "max": "-650"
+        },
+        {
+          "name": "firefield",
+          "interval": "1200",
+          "chance": "30",
+          "range": "7",
+          "radius": "4",
+          "target": "0",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "40",
+          "range": "5",
+          "length": "8",
+          "spread": "3",
+          "min": "-700",
+          "max": "-1615",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-750",
+          "max": "-950",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosionarea"
+          }
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "7",
+      "summon": {
+        "name": "Minion of Vesperoth",
+        "interval": "2000",
+        "chance": "16",
+        "max": "4"
+      }
+    },
+    "defenses": {
+      "armor": "55",
+      "defense": "55"
+    },
+    "elements": {
+      "element": {
+        "firePercent": "90"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2500",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "GrrroaR!"
+        },
+        {
+          "sentence": "GROWL!"
+        },
+        {
+          "sentence": "Waaaah!"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "monster": {
+    "name": "Hyaena",
+    "nameDescription": "a hyaena",
+    "race": "blood",
+    "experience": "20",
+    "speed": "200",
+    "manacost": "275",
+    "health": {
+      "now": "60",
+      "max": "60"
+    },
+    "look": {
+      "type": "94",
+      "corpse": "6026"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-20"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "meat",
+          "countmax": "2",
+          "chance": "30860"
+        },
+        {
+          "name": "worm",
+          "countmax": "3",
+          "chance": "50130"
+        }
+      ]
+    }
+  }
+}

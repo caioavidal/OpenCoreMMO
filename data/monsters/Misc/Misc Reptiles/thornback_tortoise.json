@@ -1,0 +1,148 @@
+{
+  "monster": {
+    "name": "Thornback Tortoise",
+    "nameDescription": "a thornback tortoise",
+    "race": "blood",
+    "experience": "150",
+    "speed": "200",
+    "manacost": "490",
+    "health": {
+      "now": "300",
+      "max": "300"
+    },
+    "look": {
+      "type": "198",
+      "corpse": "6073"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-110",
+        "poison": "40"
+      }
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "40"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "45"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "white pearl",
+          "chance": "1600"
+        },
+        {
+          "name": "black pearl",
+          "chance": "800"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "48",
+          "chance": "89500"
+        },
+        {
+          "name": "war hammer",
+          "chance": "260"
+        },
+        {
+          "id": "2667",
+          "countmax": "2",
+          "chance": "10800"
+        },
+        {
+          "name": "white mushroom",
+          "chance": "1200"
+        },
+        {
+          "name": "brown mushroom",
+          "chance": "700"
+        },
+        {
+          "name": "tortoise egg",
+          "countmax": "3",
+          "chance": "790"
+        },
+        {
+          "name": "turtle shell",
+          "chance": "800"
+        },
+        {
+          "name": "health potion",
+          "chance": "1600"
+        },
+        {
+          "name": "thorn",
+          "chance": "15980"
+        }
+      ]/* fish */
+    }
+  }
+}

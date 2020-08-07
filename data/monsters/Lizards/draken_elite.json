@@ -1,0 +1,286 @@
+{
+  "monster": {
+    "name": "Draken Elite",
+    "nameDescription": "a draken elite",
+    "race": "blood",
+    "experience": "4200",
+    "speed": "250",
+    "health": {
+      "now": "5550",
+      "max": "5550"
+    },
+    "look": {
+      "type": "362",
+      "corpse": "12609"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-354"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "length": "4",
+          "spread": "3",
+          "min": "-240",
+          "max": "-550",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosion"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "-200",
+          "max": "-300",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "radius": "4",
+          "min": "-280",
+          "max": "-410",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        },
+        {
+          "name": "monster soulfire",
+          "interval": "2000",
+          "chance": "10"
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "min": "-250",
+          "max": "-320",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "45",
+      "defense": "45",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "510",
+        "max": "600",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "30"
+        },
+        {
+          "deathPercent": "30"
+        },
+        {
+          "energyPercent": "40"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "For ze emperor!"
+        },
+        {
+          "sentence": "You will die zhouzandz deazhz!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small diamond",
+          "countmax": "4",
+          "chance": "2440"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "47000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "8",
+          "chance": "50360"
+        },
+        {
+          "name": "meat",
+          "chance": "30175"
+        },
+        {
+          "name": "magic sulphur",
+          "chance": "2100"
+        },
+        {
+          "name": "assassin dagger",
+          "chance": "980"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "3",
+          "chance": "9340"
+        },
+        {
+          "name": "ultimate health potion",
+          "countmax": "3",
+          "chance": "9250"
+        },
+        {
+          "name": "Zaoan armor",
+          "chance": "490"
+        },
+        {
+          "name": "Zaoan helmet",
+          "chance": "150"
+        },
+        {
+          "name": "Zaoan legs",
+          "chance": "770"
+        },
+        {
+          "name": "Zaoan sword",
+          "chance": "490"
+        },
+        {
+          "name": "elite draken mail",
+          "chance": "110"
+        },
+        {
+          "name": "twiceslicer",
+          "chance": "910"
+        },
+        {
+          "name": "draken sulphur",
+          "chance": "7600"
+        },
+        {
+          "name": "draken wristbands",
+          "chance": "14030"
+        },
+        {
+          "name": "broken draken mail",
+          "chance": "16930"
+        },
+        {
+          "name": "broken slicer",
+          "chance": "24670"
+        },
+        {
+          "name": "cobra crown",
+          "chance": "10"
+        },
+        {
+          "name": "draken boots",
+          "chance": "600"
+        },
+        {
+          "name": "snake god's wristguard",
+          "chance": "80"
+        },
+        {
+          "name": "blade of corruption",
+          "chance": "20"
+        }
+      ]
+    }
+  }
+}

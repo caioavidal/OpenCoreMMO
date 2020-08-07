@@ -1,0 +1,156 @@
+{
+  "monster": {
+    "name": "Poacher",
+    "nameDescription": "a poacher",
+    "race": "blood",
+    "experience": "70",
+    "speed": "205",
+    "manacost": "530",
+    "health": {
+      "now": "90",
+      "max": "90"
+    },
+    "look": {
+      "type": "129",
+      "head": "115",
+      "body": "119",
+      "legs": "119",
+      "feet": "115",
+      "addons": "1",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "5"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "25",
+          "attack": "20"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "50",
+          "range": "7",
+          "min": "-10",
+          "max": "-35",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "arrow"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "10"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "You will not live to tell anyone!"
+        },
+        {
+          "sentence": "You are my game today!"
+        },
+        {
+          "sentence": "Look what has stepped into my trap!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2649",
+          "chance": "40000"
+        },
+        {
+          "id": "2461",
+          "chance": "20000"
+        },
+        {
+          "id": "2690",
+          "countmax": "2",
+          "chance": "20000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2456",
+              "chance": "6000"
+            },
+            {
+              "id": "2544",
+              "countmax": "17",
+              "chance": "23500"
+            },
+            {
+              "id": "2545",
+              "countmax": "3",
+              "chance": "10000"
+            },
+            {
+              "id": "2050",
+              "chance": "15000"
+            },
+            {
+              "id": "2578",
+              "chance": "3000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

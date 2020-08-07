@@ -1,0 +1,95 @@
+{
+  "monster": {
+    "name": "Mr. Punish",
+    "nameDescription": "Mr. Punish",
+    "race": "undead",
+    "experience": "9000",
+    "speed": "470",
+    "health": {
+      "now": "22000",
+      "max": "22000"
+    },
+    "look": {
+      "type": "234",
+      "corpse": "6331"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "2000"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-1280"
+      }
+    },
+    "defenses": {
+      "armor": "64",
+      "defense": "72"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "name": "Mr. Punish's handcuffs",
+        "chance": "100000"
+      }
+    }
+  }
+}

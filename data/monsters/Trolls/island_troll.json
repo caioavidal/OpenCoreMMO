@@ -1,0 +1,155 @@
+{
+  "monster": {
+    "name": "Island Troll",
+    "nameDescription": "an island troll",
+    "race": "blood",
+    "experience": "20",
+    "speed": "190",
+    "manacost": "290",
+    "health": {
+      "now": "50",
+      "max": "50"
+    },
+    "look": {
+      "type": "282",
+      "corpse": "7930"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "15"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-10"
+      }
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hmmm, turtles"
+        },
+        {
+          "sentence": "Hmmm, dogs"
+        },
+        {
+          "sentence": "Hmmm, worms"
+        },
+        {
+          "sentence": "Groar"
+        },
+        {
+          "sentence": "Gruntz!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2120",
+          "chance": "8000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "10",
+          "chance": "60000"
+        },
+        {
+          "name": "silver amulet",
+          "chance": "70"
+        },
+        {
+          "name": "hand axe",
+          "chance": "18000"
+        },
+        {
+          "name": "spear",
+          "chance": "20000"
+        },
+        {
+          "name": "studded club",
+          "chance": "5000"
+        },
+        {
+          "name": "leather helmet",
+          "chance": "10000"
+        },
+        {
+          "id": "2512",
+          "chance": "16000"
+        },
+        {
+          "name": "leather boots",
+          "chance": "10500"
+        },
+        {
+          "name": "mango",
+          "chance": "5000"
+        },
+        {
+          "id": "5901",
+          "chance": "30000"
+        },
+        {
+          "name": "marlin",
+          "chance": "40"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

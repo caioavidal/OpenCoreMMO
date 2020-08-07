@@ -1,0 +1,104 @@
+{
+  "monster": {
+    "name": "Spider Queen",
+    "nameDescription": "a spider queen",
+    "race": "venom",
+    "experience": "240",
+    "speed": "280",
+    "health": {
+      "now": "500",
+      "max": "500"
+    },
+    "look": {
+      "type": "219",
+      "corpse": "6060"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "0"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-140",
+        "poison": "80"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "physical": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "holy": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    }
+  }
+}

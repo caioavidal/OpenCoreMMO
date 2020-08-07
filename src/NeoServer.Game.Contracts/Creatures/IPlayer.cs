@@ -6,6 +6,7 @@ using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
+using System.Collections.Generic;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
@@ -26,11 +27,15 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
 
         byte GetStackPosition() => Tile.GetStackPositionOfThing(this);
+   
+        float CarryStrength { get; }
 
+        IDictionary<SkillType, ISkill> Skills { get; }
 
         bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
 
+     
         Location LocationInFront { get; }
         FightMode FightMode { get; }
         ChaseMode ChaseMode { get; }
@@ -41,6 +46,10 @@ namespace NeoServer.Server.Model.Players.Contracts
         IPlayerContainerList Containers { get; }
 
         event CancelWalk OnCancelledWalk;
+        IInventory Inventory { get; }
+        ushort Mana { get; }
+        ushort MaxMana { get; }
+        SkillType SkillInUse { get; }
 
         //  IAction PendingAction { get; }
 

@@ -1,0 +1,135 @@
+{
+  "monster": {
+    "name": "War Wolf",
+    "nameDescription": "a war wolf",
+    "race": "blood",
+    "experience": "55",
+    "speed": "200",
+    "manacost": "420",
+    "health": {
+      "now": "140",
+      "max": "140"
+    },
+    "look": {
+      "type": "3",
+      "corpse": "6009"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-50"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "outfit": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Grrrrrrr"
+        },
+        {
+          "sentence": "Yoooohhuuuu!",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "ham",
+          "countmax": "2",
+          "chance": "35000"
+        },
+        {
+          "name": "worm",
+          "chance": "40"
+        },
+        {
+          "name": "wolf paw",
+          "chance": "710"
+        },
+        {
+          "name": "warwolf fur",
+          "chance": "5230"
+        }
+      ]
+    }
+  }
+}

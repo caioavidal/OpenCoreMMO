@@ -1,0 +1,186 @@
+{
+  "monster": {
+    "name": "Crazed Beggar",
+    "nameDescription": "a crazed beggar",
+    "race": "blood",
+    "experience": "35",
+    "speed": "220",
+    "manacost": "300",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "153",
+      "body": "38",
+      "feet": "97",
+      "head": "59",
+      "legs": "38",
+      "addons": "3",
+      "corpse": "3058"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "15",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "11",
+      "defense": "16"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-15"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "4000",
+      "chance": "16",
+      "voice": [
+        {
+          "sentence": "Hehehe!"
+        },
+        {
+          "sentence": "Raahhh!"
+        },
+        {
+          "sentence": "You are one of THEM! Die!"
+        },
+        {
+          "sentence": "Wanna buy roses??"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "9",
+          "chance": "50000"
+        },
+        {
+          "id": "2237",
+          "chance": "55000"
+        },
+        {
+          "id": "2690",
+          "chance": "22500"
+        },
+        {
+          "id": "2666",
+          "chance": "12000"
+        },
+        {
+          "id": "2567",
+          "chance": "9750"
+        },
+        {
+          "id": "2556",
+          "chance": "6500"
+        },
+        {
+          "id": "2570",
+          "chance": "4850"
+        },
+        {
+          "id": "2744",
+          "chance": "4800"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "1681",
+              "chance": "2500"
+            },
+            {
+              "id": "5553",
+              "chance": "850"
+            },
+            {
+              "id": "2802",
+              "chance": "800"
+            },
+            {
+              "id": "9808",
+              "chance": "750"
+            },
+            {
+              "id": "2213",
+              "chance": "200"
+            },
+            {
+              "id": "2072",
+              "chance": "7500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

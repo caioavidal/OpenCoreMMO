@@ -1,0 +1,155 @@
+{
+  "monster": {
+    "name": "Blazing Fire Elemental",
+    "nameDescription": "a blazing fire elemental",
+    "race": "fire",
+    "experience": "450",
+    "speed": "220",
+    "health": {
+      "now": "650",
+      "max": "650"
+    },
+    "look": {
+      "type": "49",
+      "corpse": "8964"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-100"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "13",
+          "radius": "5",
+          "target": "0",
+          "min": "-65",
+          "max": "-205",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "12",
+          "range": "7",
+          "radius": "5",
+          "target": "1",
+          "min": "-110",
+          "max": "-150",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20"
+    },
+    "elements": {
+      "element": {
+        "icePercent": "-15"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "fire": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "40",
+          "chance": "10000"
+        },
+        {
+          "name": "flaming arrow",
+          "countmax": "4",
+          "chance": "5000"
+        },
+        {
+          "name": "glimmering soil",
+          "chance": "2500"
+        },
+        {
+          "name": "fiery heart",
+          "chance": "5475"
+        }
+      ]
+    }
+  }
+}

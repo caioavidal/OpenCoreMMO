@@ -1,0 +1,156 @@
+{
+  "monster": {
+    "name": "The Count",
+    "nameDescription": "The Count",
+    "race": "undead",
+    "experience": "450",
+    "speed": "370",
+    "health": {
+      "now": "1250",
+      "max": "1250"
+    },
+    "look": {
+      "type": "287",
+      "corpse": "8937"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-945"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "9",
+          "target": "0",
+          "radius": "4",
+          "min": "0",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallclouds"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "100",
+          "max": "195",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "3000",
+          "chance": "30",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "holyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "1",
+      "summon": {
+        "name": "Banshee",
+        "interval": "4000",
+        "chance": "50"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "98",
+          "chance": "40000"
+        },
+        {
+          "name": "war hammer",
+          "chance": "2300"
+        },
+        {
+          "name": "the ring of the count",
+          "chance": "100000"
+        }
+      ]
+    }
+  }
+}

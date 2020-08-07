@@ -35,6 +35,7 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.ContainerClose, typeof(PlayerCloseContainerHandler)},
             { GameIncomingPacketType.ContainerUp, typeof(PlayerGoBackContainerHandler) },
             { GameIncomingPacketType.ItemThrow, typeof(PlayerThrowItemHandler)},
+            { GameIncomingPacketType.Attack, typeof(PlayerAttackHandler)},
         };
     }
 }

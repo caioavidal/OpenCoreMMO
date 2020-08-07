@@ -1,0 +1,364 @@
+{
+  "monster": {
+    "name": "Undead Dragon",
+    "nameDescription": "an undead dragon",
+    "race": "undead",
+    "experience": "7200",
+    "speed": "250",
+    "health": {
+      "now": "8350",
+      "max": "8350"
+    },
+    "look": {
+      "type": "231",
+      "corpse": "6306"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-480"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-300",
+          "max": "-400",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-125",
+          "max": "-600",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-100",
+          "max": "-390",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "range": "7",
+          "min": "0",
+          "max": "-180",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "3",
+          "min": "-150",
+          "max": "-690",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "3",
+          "min": "-300",
+          "max": "-700",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "3",
+          "min": "-100",
+          "max": "-200",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "undead dragon curse",
+          "interval": "2000",
+          "chance": "10"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "40",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "200",
+        "max": "250",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "5"
+        },
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "FEEEED MY ETERNAL HUNGER!",
+          "yell": "1"
+        },
+        {
+          "sentence": "I SENSE LIFE",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "golden mug",
+          "chance": "6002"
+        },
+        {
+          "name": "black pearl",
+          "countmax": "2",
+          "chance": "22780"
+        },
+        {
+          "name": "small sapphire",
+          "countmax": "2",
+          "chance": "28370"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "35500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "98",
+          "chance": "55500"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "52000"
+        },
+        {
+          "name": "life crystal",
+          "chance": "2500"
+        },
+        {
+          "name": "war axe",
+          "chance": "1290"
+        },
+        {
+          "name": "golden armor",
+          "chance": "860"
+        },
+        {
+          "name": "knight armor",
+          "chance": "5500"
+        },
+        {
+          "name": "royal helmet",
+          "chance": "1720"
+        },
+        {
+          "name": "power bolt",
+          "countmax": "15",
+          "chance": "15190"
+        },
+        {
+          "name": "hardened bone",
+          "chance": "14180"
+        },
+        {
+          "id": "6300",
+          "chance": "1150"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "12460"
+        },
+        {
+          "name": "assassin star",
+          "countmax": "5",
+          "chance": "26650"
+        },
+        {
+          "name": "dragon slayer",
+          "chance": "860"
+        },
+        {
+          "name": "dragonbone staff",
+          "chance": "4000"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "21490"
+        },
+        {
+          "name": "great health potion",
+          "chance": "21200"
+        },
+        {
+          "name": "divine plate",
+          "chance": "430"
+        },
+        {
+          "name": "skullcracker armor",
+          "chance": "290"
+        },
+        {
+          "name": "gold ingot",
+          "chance": "570"
+        },
+        {
+          "name": "unholy bone",
+          "chance": "33380"
+        },
+        {
+          "name": "spellweaver's robe",
+          "chance": "860"
+        }
+      ]/* death ring */
+    }
+  }
+}

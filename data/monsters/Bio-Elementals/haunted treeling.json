@@ -1,0 +1,202 @@
+{
+  "monster": {
+    "name": "Haunted Treeling",
+    "nameDescription": "a haunted treeling",
+    "experience": "310",
+    "speed": "260",
+    "race": "undead",
+    "manacost": "0",
+    "health": {
+      "now": "450",
+      "max": "450"
+    },
+    "look": {
+      "type": "310",
+      "corpse": "9867"
+    },
+    "targetchange": {
+      "speed": "0",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "60",
+          "range": "1"
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "13",
+          "min": "-30",
+          "max": "-90",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "death"
+            },
+            {
+              "key": "areaEffect",
+              "value": "redshimmer"
+            }
+          ]
+        },
+        {
+          "name": "speed",
+          "interval": "3000",
+          "chance": "20",
+          "length": "8",
+          "spread": "0",
+          "duration": "30000",
+          "speedchange": "-600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallplants"
+          }
+        },
+        {
+          "name": "terra strike",
+          "interval": "2000",
+          "chance": "12",
+          "min": "-0",
+          "max": "-0"
+        },
+        {
+          "name": "stone shower",
+          "interval": "1000",
+          "chance": "14",
+          "min": "-0",
+          "max": "-90"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "55"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "-15"
+        },
+        {
+          "deathPercent": "10"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "holyPercent": "20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "earth": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2213",
+          "chance": "1000"
+        },
+        {
+          "id": "2148",
+          "countmax": "96",
+          "chance": "35000"
+        },
+        {
+          "id": "7618",
+          "chance": "7200"
+        },
+        {
+          "id": "2790",
+          "chance": "1000"
+        },
+        {
+          "id": "2788",
+          "chance": "8000"
+        },
+        {
+          "id": "4860",
+          "chance": "50000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2146",
+              "chance": "1500"
+            },
+            {
+              "id": "7588",
+              "chance": "1000"
+            },
+            {
+              "id": "3821",
+              "chance": "500"
+            },
+            {
+              "id": "2787",
+              "countmax": "2",
+              "chance": "2200"
+            },
+            {
+              "id": "7443",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,318 @@
+{
+  "monster": {
+    "name": "Ghastly Dragon",
+    "nameDescription": "a ghastly dragon",
+    "race": "undead",
+    "experience": "4600",
+    "speed": "320",
+    "health": {
+      "now": "7800",
+      "max": "7800"
+    },
+    "look": {
+      "type": "351",
+      "corpse": "11362"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "5"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "366"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-603"
+        },
+        {
+          "name": "ghastly dragon curse",
+          "interval": "2000",
+          "chance": "5",
+          "range": "5"
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "range": "5",
+          "min": "-920",
+          "max": "-1280",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "bats"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "-80",
+          "max": "-230",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "3",
+          "min": "-120",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "4",
+          "target": "0",
+          "min": "-110",
+          "max": "-180",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "mortarea"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "target": "1",
+          "speedchange": "-800",
+          "duration": "30000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallclouds"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "35"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "10"
+        },
+        {
+          "icePercent": "50"
+        },
+        {
+          "physicalPercent": "-10"
+        },
+        {
+          "holyPercent": "-15"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "EMBRACE MY GIFTS!",
+          "yell": "1"
+        },
+        {
+          "sentence": "I WILL FEAST ON YOUR SOUL!",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "33725"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "33725"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "66",
+          "chance": "33725"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "2",
+          "chance": "29840"
+        },
+        {
+          "name": "soul orb",
+          "chance": "12170"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "8920"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "2",
+          "chance": "30560"
+        },
+        {
+          "name": "terra legs",
+          "chance": "3130"
+        },
+        {
+          "name": "terra boots",
+          "chance": "9510"
+        },
+        {
+          "name": "great spirit potion",
+          "countmax": "2",
+          "chance": "29460"
+        },
+        {
+          "name": "ultimate health potion",
+          "chance": "24700"
+        },
+        {
+          "id": "9810",
+          "chance": "180"
+        },
+        {
+          "name": "shiny stone",
+          "chance": "860"
+        },
+        {
+          "name": "guardian boots",
+          "chance": "200"
+        },
+        {
+          "name": "Zaoan armor",
+          "chance": "870"
+        },
+        {
+          "name": "Zaoan helmet",
+          "chance": "150"
+        },
+        {
+          "name": "Zaoan shoes",
+          "chance": "870"
+        },
+        {
+          "name": "Zaoan legs",
+          "chance": "1400"
+        },
+        {
+          "name": "drakinata",
+          "chance": "1470"
+        },
+        {
+          "name": "Zaoan sword",
+          "chance": "100"
+        },
+        {
+          "name": "twin hooks",
+          "chance": "15100"
+        },
+        {
+          "name": "Zaoan halberd",
+          "chance": "15020"
+        },
+        {
+          "name": "spellweaver's robe",
+          "chance": "690"
+        },
+        {
+          "name": "ghastly dragon head",
+          "chance": "6650"
+        },
+        {
+          "name": "undead heart",
+          "chance": "19830"
+        },
+        {
+          "name": "jade hat",
+          "chance": "810"
+        }
+      ]/* rusty armor */
+    }
+  }
+}

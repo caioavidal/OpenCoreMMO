@@ -1,0 +1,158 @@
+{
+  "monster": {
+    "name": "Charged Energy Elemental",
+    "nameDescription": "a charged energy elemental",
+    "race": "undead",
+    "experience": "450",
+    "speed": "270",
+    "health": {
+      "now": "500",
+      "max": "500"
+    },
+    "look": {
+      "type": "293",
+      "corpse": "8966"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "15"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-100"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "20",
+          "range": "6",
+          "radius": "4",
+          "target": "1",
+          "min": "-168",
+          "max": "-100",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "purpleenergy"
+            }
+          ]
+        },
+        {
+          "name": "energycondition",
+          "interval": "1000",
+          "chance": "15",
+          "radius": "3",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellowenergy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "90",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "physicalPercent": "-5"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "ice": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "22",
+          "chance": "50000"
+        },
+        {
+          "name": "flash arrow",
+          "countmax": "3",
+          "chance": "6250"
+        },
+        {
+          "name": "energy soil",
+          "chance": "2063"
+        }
+      ]
+    }
+  }
+}

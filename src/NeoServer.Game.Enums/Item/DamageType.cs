@@ -11,6 +11,7 @@
         Earth,
         All,
         AbsorbPercentPhysical,
-        AbsorbPercentMagic
+        AbsorbPercentMagic,
+        FireField
     }
 }

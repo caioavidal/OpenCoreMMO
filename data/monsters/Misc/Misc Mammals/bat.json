@@ -1,0 +1,98 @@
+{
+  "monster": {
+    "name": "Bat",
+    "namedescription": "a bat",
+    "race": "blood",
+    "experience": "10",
+    "speed": "230",
+    "manacost": "250",
+    "health": {
+      "now": "30",
+      "max": "30"
+    },
+    "look": {
+      "type": "122",
+      "corpse": "6053"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "3"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-8"
+      }
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "elements": {
+      "element": {
+        "earthPercent": "-20"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Flap!Flap!"
+      }
+    },
+    "loot": {
+      "item": {
+        "name": "bat wing",
+        "chance": "1220"
+      }
+    }
+  }
+}

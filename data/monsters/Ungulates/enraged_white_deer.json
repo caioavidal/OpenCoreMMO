@@ -1,0 +1,125 @@
+{
+  "monster": {
+    "name": "Enraged White Deer",
+    "nameDescription": "an enraged white deer",
+    "race": "blood",
+    "experience": "165",
+    "speed": "210",
+    "health": {
+      "now": "255",
+      "max": "255"
+    },
+    "look": {
+      "type": "400",
+      "corpse": "13513"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-45"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "4000",
+        "chance": "15",
+        "min": "10",
+        "max": "40",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "*wheeze*"
+        },
+        {
+          "sentence": "ROOOAAARR!!"
+        },
+        {
+          "sentence": "*sniff*"
+        },
+        {
+          "sentence": "*bell*"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "ham",
+          "countmax": "3",
+          "chance": "19850"
+        },
+        {
+          "name": "white deer antlers",
+          "chance": "19520"
+        },
+        {
+          "name": "white deer skin",
+          "chance": "20280"
+        }
+      ]
+    }
+  }
+}

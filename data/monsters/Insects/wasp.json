@@ -1,0 +1,99 @@
+{
+  "monster": {
+    "name": "Wasp",
+    "nameDescription": "a wasp",
+    "race": "venom",
+    "experience": "25",
+    "speed": "460",
+    "manacost": "280",
+    "health": {
+      "now": "35",
+      "max": "35"
+    },
+    "look": {
+      "type": "44",
+      "corpse": "5989"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "1500",
+        "skill": "30",
+        "attack": "10",
+        "poison": "2"
+      }
+    },
+    "defenses": {
+      "armor": "4",
+      "defense": "8"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "100",
+      "voice": {
+        "sentence": "Bssssss"
+      }
+    },
+    "loot": {
+      "item": {
+        "id": "5902",
+        "chance": "3000"
+      }/* honeycomb */
+    }
+  }
+}

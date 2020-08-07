@@ -59,7 +59,7 @@ namespace NeoServer.Server.Tasks
                         }
 
 
-                        await DispatchEvent(evt);
+                        DispatchEvent(evt);
                     }
                 }
             });
@@ -87,7 +87,7 @@ namespace NeoServer.Server.Tasks
             return activeEventIds.TryRemove(eventId, out _);
         }
 
-        private bool EventIsCancelled(uint eventId) => !activeEventIds.ContainsKey(eventId);
+        public bool EventIsCancelled(uint eventId) => !activeEventIds.ContainsKey(eventId);
 
 
     }

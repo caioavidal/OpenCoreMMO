@@ -14,16 +14,13 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void OnTurnedToDirection(ICreature creature, Direction direction);
     public delegate void RemoveCreature(ICreature creature);
     public delegate void StopWalk(ICreature creature);
+    public delegate void Die(ICreature creature);
 
-    public interface ICreature : INeedsCooldowns, IMoveableThing
+    public interface ICreature : INeedsCooldowns, IMoveableThing, ICombatActor
     {
         // event OnCreatureStateChange OnZeroHealth;
         // event OnCreatureStateChange OnInventoryChanged;
         uint CreatureId { get; }
-
-        string Article { get; }
-
-        string Name { get; }
 
         ushort Corpse { get; }
 
@@ -31,15 +28,9 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Health points
         /// </summary>
         /// <value></value>
-        uint Hitpoints { get; }
+        uint HealthPoints { get; }
 
-        uint MaxHitpoints { get; }
-
-        uint Manapoints { get; }
-
-        uint MaxManapoints { get; }
-
-        float CarryStrength { get; }
+        uint MaxHealthpoints { get; }
 
         IOutfit Outfit { get; }
 
@@ -47,7 +38,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         Direction ClientSafeDirection { get; }
 
-        byte LightBrightness { get; }
+        byte LightBrightness { get; } 
 
         byte LightColor { get; }
 
@@ -60,18 +51,11 @@ namespace NeoServer.Game.Contracts.Creatures
 
         byte NextStepId { get; set; }
 
-        IDictionary<SkillType, ISkill> Skills { get; }
 
         bool IsInvisible { get; } // TODO: implement.
 
         bool CanSeeInvisible { get; } // TODO: implement.
 
-        byte Skull { get; } // TODO: implement.
-
-        byte Shield { get; } // TODO: implement.
-
-
-        IInventory Inventory { get; }
         bool IsDead { get; }
         bool IsRemoved { get; }
         int StepDelayMilliseconds { get; }
@@ -83,10 +67,14 @@ namespace NeoServer.Game.Contracts.Creatures
         List<uint> NextSteps { get; set; }
         bool CancelNextWalk { get; set; }
         uint EventWalk { get; set; }
+        byte Skull { get; }
+        byte Shield { get; }
+        bool IsHealthHidden => false;
 
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
         event StopWalk OnStoppedWalking;
+        event Die OnKilled;
 
         /// <summary>
         /// Checks whether creature can see another creature or not
@@ -112,10 +100,11 @@ namespace NeoServer.Game.Contracts.Creatures
 
         bool TryWalkTo(params Direction[] directions);
 
-        TimeSpan CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
+        double CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime);
 
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
         byte[] GetRaw(IPlayer playerRequesting);
         void SetAsRemoved();
+        void ReceiveAttack(ICreature enemy, ushort attackPower);
     }
 }

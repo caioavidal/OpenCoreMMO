@@ -1,0 +1,208 @@
+{
+  "monster": {
+    "name": "Mutated Tiger",
+    "nameDescription": "a mutated tiger",
+    "race": "blood",
+    "experience": "750",
+    "speed": "245",
+    "manacost": "0",
+    "health": {
+      "now": "1100",
+      "max": "1100"
+    },
+    "look": {
+      "type": "318",
+      "corpse": "9913"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "100"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "60"
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-30",
+          "max": "-130",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": [
+        {
+          "name": "invisible",
+          "interval": "1000",
+          "chance": "25",
+          "duration": "9000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "150",
+          "max": "300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "deathPercent": "-15"
+        },
+        {
+          "earthPercent": "80"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2500",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "GRAAARRRRRR"
+        },
+        {
+          "sentence": "CHHHHHHHHHHH"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "96",
+          "chance": "20000"
+        },
+        {
+          "id": "2671",
+          "countmax": "2",
+          "chance": "22500"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "15000"
+        },
+        {
+          "id": "2509",
+          "chance": "7000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2168",
+              "chance": "2000"
+            },
+            {
+              "id": "7588",
+              "chance": "900"
+            },
+            {
+              "id": "2515",
+              "chance": "500"
+            },
+            {
+              "id": "7454",
+              "chance": "300"
+            },
+            {
+              "id": "7436",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "monster": {
+    "name": "Pigeon",
+    "nameDescription": "a pigeon",
+    "race": "blood",
+    "experience": "0",
+    "speed": "260",
+    "health": {
+      "now": "30",
+      "max": "30"
+    },
+    "look": {
+      "type": "531",
+      "corpse": "19709"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Coooo! Cooo!"
+        },
+        {
+          "sentence": "Coo! Coooo! Coo! Cooo!"
+        },
+        {
+          "sentence": "Coo! Coo! Coooo!"
+        }
+      ]
+    }
+  }
+}

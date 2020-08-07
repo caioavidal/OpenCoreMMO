@@ -1,0 +1,203 @@
+{
+  "monster": {
+    "name": "Feverish Citizen",
+    "nameDescription": "a feverish citizen",
+    "race": "blood",
+    "experience": "30",
+    "speed": "185",
+    "health": {
+      "now": "125",
+      "max": "125"
+    },
+    "look": {
+      "type": "425",
+      "corpse": "20395"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-18"
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "15",
+          "target": "0",
+          "length": "3",
+          "spread": "2",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "outfit",
+        "interval": "2000",
+        "chance": "1",
+        "target": "0",
+        "radius": "3",
+        "monster": "bog raider",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaeffect",
+          "value": "greenbubble"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "80"
+        },
+        {
+          "firePercent": "20"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Aaaaargh!"
+        },
+        {
+          "sentence": "I am the king of the world!"
+        },
+        {
+          "sentence": "Die Ferumbras!"
+        },
+        {
+          "sentence": "Tigerblood is running through my veins!"
+        },
+        {
+          "sentence": "You! It's you again!"
+        },
+        {
+          "sentence": "Stand still you tasty morsel!"
+        },
+        {
+          "sentence": "<giggle>"
+        },
+        {
+          "sentence": "Burn heretic! Burn!"
+        },
+        {
+          "sentence": "Harrr!"
+        },
+        {
+          "sentence": "This is Venore!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "35",
+          "chance": "30300"
+        },
+        {
+          "id": "2230",
+          "chance": "4920"
+        },
+        {
+          "name": "worm",
+          "countmax": "3",
+          "chance": "25730"
+        },
+        {
+          "name": "ominous piece of cloth",
+          "chance": "1660"
+        },
+        {
+          "name": "dubious piece of cloth",
+          "chance": "1720"
+        },
+        {
+          "name": "voluminous piece of cloth",
+          "chance": "2290"
+        },
+        {
+          "name": "obvious piece of cloth",
+          "chance": "2006"
+        },
+        {
+          "name": "ludicrous piece of cloth",
+          "chance": "2060"
+        },
+        {
+          "name": "luminous piece of cloth",
+          "chance": "2290"
+        },
+        {
+          "name": "plague mask",
+          "chance": "100"
+        },
+        {
+          "name": "plague bell",
+          "chance": "100"
+        }
+      ]/* bone */
+    }
+  }
+}

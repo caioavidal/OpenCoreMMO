@@ -1,0 +1,221 @@
+{
+  "monster": {
+    "name": "Primitive",
+    "nameDescription": "Primitive",
+    "race": "blood",
+    "experience": "45",
+    "speed": "300",
+    "health": {
+      "now": "200",
+      "max": "200"
+    },
+    "look": {
+      "type": "143",
+      "head": "1",
+      "body": "1",
+      "legs": "1",
+      "feet": "1",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "5"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-32"
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "radius": "3",
+          "target": "1",
+          "min": "-20",
+          "max": "-20",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "2",
+          "radius": "4",
+          "target": "0",
+          "monster": "primitive",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "25"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "We don't need a future!"
+        },
+        {
+          "sentence": "I'll rook you all!"
+        },
+        {
+          "sentence": "They thought they'd beaten us!"
+        },
+        {
+          "sentence": "You are history!"
+        },
+        {
+          "sentence": "There can only be one world!"
+        },
+        {
+          "sentence": "Valor who?"
+        },
+        {
+          "sentence": "Die noob!"
+        },
+        {
+          "sentence": "There are no dragons!"
+        },
+        {
+          "sentence": "I'll quit forever! Again ..."
+        },
+        {
+          "sentence": "You all are noobs!"
+        },
+        {
+          "sentence": "Beware of the cyclops!"
+        },
+        {
+          "sentence": "Just had a disconnect."
+        },
+        {
+          "sentence": "Magic is only good for girls!"
+        },
+        {
+          "sentence": "We'll be back!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "10",
+          "chance": "12500"
+        },
+        {
+          "name": "sabre",
+          "chance": "10250"
+        },
+        {
+          "name": "axe",
+          "chance": "12250"
+        },
+        {
+          "name": "studded helmet",
+          "chance": "9500"
+        },
+        {
+          "name": "studded armor",
+          "chance": "7000"
+        },
+        {
+          "name": "studded shield",
+          "chance": "1200"
+        },
+        {
+          "id": "6570",
+          "chance": "500"
+        },
+        {
+          "id": "6571",
+          "chance": "500"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

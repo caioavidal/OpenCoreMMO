@@ -1,0 +1,142 @@
+{
+  "monster": {
+    "name": "Swamp Troll",
+    "nameDescription": "a swamp troll",
+    "race": "venom",
+    "experience": "65",
+    "speed": "128",
+    "manacost": "320",
+    "health": {
+      "now": "55",
+      "max": "55"
+    },
+    "look": {
+      "type": "76",
+      "corpse": "6018"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "10",
+        "attack": "13",
+        "poison": "30"
+      }
+    },
+    "defenses": {
+      "armor": "6",
+      "defense": "10"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Grrrr"
+        },
+        {
+          "sentence": "Groar!"
+        },
+        {
+          "sentence": "Me strong! Me ate spinach!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "5",
+          "chance": "31500"
+        },
+        {
+          "id": "2667",
+          "chance": "63500"
+        },
+        {
+          "id": "2379",
+          "chance": "27500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2050",
+              "chance": "15750"
+            },
+            {
+              "id": "2389",
+              "chance": "14700"
+            },
+            {
+              "id": "2643",
+              "chance": "9500"
+            },
+            {
+              "id": "2580",
+              "chance": "150"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

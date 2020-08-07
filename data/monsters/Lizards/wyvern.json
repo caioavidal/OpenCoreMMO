@@ -1,0 +1,210 @@
+{
+  "monster": {
+    "name": "Wyvern",
+    "nameDescription": "a wyvern",
+    "race": "blood",
+    "experience": "515",
+    "speed": "200",
+    "manacost": "0",
+    "health": {
+      "now": "795",
+      "max": "795"
+    },
+    "look": {
+      "type": "239",
+      "corpse": "6302"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "300"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "40",
+          "poison": "22"
+        },
+        {
+          "name": "poison",
+          "interval": "3000",
+          "chance": "12",
+          "length": "8",
+          "spread": "3",
+          "min": "-30",
+          "max": "-120",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "12",
+          "length": "8",
+          "spread": "3",
+          "min": "-30",
+          "max": "-120",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "rednote"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "4000",
+          "chance": "2",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "rednote"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "18",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "13",
+        "min": "34",
+        "max": "56",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Shriiiek",
+        "yell": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "75",
+          "chance": "21500"
+        },
+        {
+          "id": "2672",
+          "countmax": "3",
+          "chance": "22500"
+        },
+        {
+          "id": "2547",
+          "countmax": "2",
+          "chance": "3000"
+        },
+        {
+          "id": "2146",
+          "chance": "1000"
+        },
+        {
+          "id": "7588",
+          "chance": "3000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2187",
+              "chance": "1000"
+            },
+            {
+              "id": "7408",
+              "chance": "750"
+            },
+            {
+              "id": "1976",
+              "chance": "5000"
+            },
+            {
+              "id": "2127",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

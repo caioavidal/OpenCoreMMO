@@ -1,0 +1,189 @@
+{
+  "monster": {
+    "name": "Monk",
+    "nameDescription": "a monk",
+    "race": "blood",
+    "experience": "200",
+    "speed": "220",
+    "manacost": "600",
+    "health": {
+      "now": "240",
+      "max": "240"
+    },
+    "look": {
+      "type": "57",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "30",
+        "attack": "70"
+      }
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "22",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "17",
+          "min": "30",
+          "max": "50",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "10",
+          "speedchange": "300",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "50"
+        },
+        {
+          "deathPercent": "50"
+        },
+        {
+          "physicalPercent": "-15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Repent Heretic!"
+        },
+        {
+          "sentence": "A prayer to the almighty one!"
+        },
+        {
+          "sentence": "I will punish the sinners!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "24000"
+        },
+        {
+          "id": "2689",
+          "chance": "20000"
+        },
+        {
+          "id": "1949",
+          "chance": "18000"
+        },
+        {
+          "id": "2044",
+          "chance": "12000"
+        },
+        {
+          "id": "2015",
+          "chance": "6666"
+        },
+        {
+          "id": "2642",
+          "chance": "6666"
+        },
+        {
+          "id": "2467",
+          "chance": "4000"
+        },
+        {
+          "id": "2401",
+          "chance": "20000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2177",
+              "chance": "3000"
+            },
+            {
+              "id": "2193",
+              "chance": "1500"
+            },
+            {
+              "id": "2166",
+              "chance": "700"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

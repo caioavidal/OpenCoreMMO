@@ -1,0 +1,110 @@
+{
+  "monster": {
+    "name": "Floor Blob",
+    "nameDescription": "a floor blob",
+    "race": "venom",
+    "experience": "0",
+    "speed": "0",
+    "health": {
+      "now": "1",
+      "max": "1"
+    },
+    "look": {
+      "type": "459",
+      "corpse": "0"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "0"
+      }
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "11"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "1"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "ice": "1"
+        },
+        {
+          "holy": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    }
+  }
+}

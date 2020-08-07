@@ -1,0 +1,113 @@
+{
+  "monster": {
+    "name": "Necromancer Servant",
+    "nameDescription": "a necromancer servant",
+    "race": "blood",
+    "experience": "590",
+    "speed": "210",
+    "manacost": "390",
+    "health": {
+      "now": "600",
+      "max": "600"
+    },
+    "look": {
+      "type": "9",
+      "corpse": "20455"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-45"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "min": "-5",
+          "max": "-40",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "11",
+      "defense": "11"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "-8"
+        },
+        {
+          "deathPercent": "-7"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Blib!"
+        },
+        {
+          "sentence": "Blub!"
+        }
+      ]
+    }
+  }
+}

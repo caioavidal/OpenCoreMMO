@@ -1,0 +1,367 @@
+{
+  "monster": {
+    "name": "Warlock",
+    "nameDescription": "a warlock",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "3500",
+      "max": "3500"
+    },
+    "look": {
+      "type": "130",
+      "head": "19",
+      "body": "71",
+      "legs": "128",
+      "feet": "128",
+      "addons": "1",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "30"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "800"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "42",
+          "attack": "50"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "35",
+          "range": "7",
+          "min": "-85",
+          "max": "-185",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "min": "-75",
+          "max": "-160"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "12",
+          "range": "7",
+          "speedchange": "-600",
+          "duration": "40000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "45",
+          "range": "7",
+          "radius": "3",
+          "target": "1",
+          "min": "-150",
+          "max": "-220",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "burstarrow"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "25",
+          "length": "8",
+          "spread": "0",
+          "min": "-165",
+          "max": "-245",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "6000",
+          "chance": "10",
+          "range": "5",
+          "speedchange": "-600",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "30",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "60",
+          "max": "100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "5000",
+          "chance": "50",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "energyPercent": "100"
+        },
+        {
+          "icePercent": "100"
+        },
+        {
+          "earthPercent": "90"
+        },
+        {
+          "holyPercent": "-25"
+        },
+        {
+          "physicalPercent": "-33"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "1",
+      "summon": {
+        "name": "stone golem",
+        "interval": "2000",
+        "chance": "10",
+        "max": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Learn the secret of our magic! YOUR death!"
+        },
+        {
+          "sentence": "Even a rat is a better mage than you."
+        },
+        {
+          "sentence": "We don't like intruders!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "36500"
+        },
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "3t6500"
+        },
+        {
+          "id": "2679",
+          "countmax": "5",
+          "chance": "55000"
+        },
+        {
+          "id": "2689",
+          "chance": "22500"
+        },
+        {
+          "id": "2047",
+          "chance": "15000"
+        },
+        {
+          "id": "2124",
+          "chance": "7000"
+        },
+        {
+          "id": "2792",
+          "countmax": "5",
+          "chance": "5000"
+        },
+        {
+          "id": "2167",
+          "chance": "3000"
+        },
+        {
+          "id": "2600",
+          "chance": "10000"
+        },
+        {
+          "id": "2178",
+          "chance": "2500"
+        },
+        {
+          "id": "2411",
+          "chance": "3000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2436",
+              "chance": "3000"
+            },
+            {
+              "id": "2151",
+              "chance": "5500"
+            },
+            {
+              "id": "7591",
+              "chance": "12500"
+            },
+            {
+              "id": "7590",
+              "chance": "10000"
+            },
+            {
+              "id": "2656",
+              "chance": "2000"
+            },
+            {
+              "id": "7368",
+              "countmax": "4",
+              "chance": "1200"
+            },
+            {
+              "id": "2146",
+              "chance": "1400"
+            },
+            {
+              "id": "1986",
+              "chance": "800"
+            },
+            {
+              "id": "2123",
+              "chance": "850"
+            },
+            {
+              "id": "2197",
+              "chance": "750"
+            },
+            {
+              "id": "7898",
+              "chance": "450"
+            },
+            {
+              "id": "7895",
+              "chance": "450"
+            },
+            {
+              "id": "2466",
+              "chance": "375"
+            },
+            {
+              "id": "2114",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

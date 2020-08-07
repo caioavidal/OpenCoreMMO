@@ -1,0 +1,291 @@
+{
+  "monster": {
+    "name": "Draken Abomination",
+    "nameDescription": "a draken abomination",
+    "race": "venom",
+    "experience": "3800",
+    "speed": "230",
+    "health": {
+      "now": "6250",
+      "max": "6250"
+    },
+    "look": {
+      "type": "357",
+      "corpse": "12623"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-420"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "length": "4",
+          "spread": "3",
+          "min": "-310",
+          "max": "-630",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosion"
+          }
+        },
+        {
+          "name": "draken abomination curse",
+          "interval": "2000",
+          "range": "5",
+          "chance": "10"
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "15",
+          "length": "4",
+          "spread": "0",
+          "min": "-170",
+          "max": "-370",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "mortarea"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "4",
+          "target": "0",
+          "duration": "9000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "650",
+        "max": "700",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "-5"
+        },
+        {
+          "energyPercent": "-5"
+        },
+        {
+          "icePercent": "5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Death Blob",
+        "interval": "2000",
+        "chance": "10",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ugggh!"
+        },
+        {
+          "sentence": "Gll"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "98",
+          "chance": "47000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "8",
+          "chance": "50590"
+        },
+        {
+          "name": "meat",
+          "countmax": "4",
+          "chance": "50450"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "3",
+          "chance": "9950"
+        },
+        {
+          "name": "terra hood",
+          "chance": "8730"
+        },
+        {
+          "name": "great spirit potion",
+          "countmax": "3",
+          "chance": "4905"
+        },
+        {
+          "name": "ultimate health potion",
+          "countmax": "3",
+          "chance": "9400"
+        },
+        {
+          "name": "wand of voodoo",
+          "chance": "1020"
+        },
+        {
+          "name": "small topaz",
+          "countmax": "4",
+          "chance": "2900"
+        },
+        {
+          "name": "Zaoan armor",
+          "chance": "470"
+        },
+        {
+          "name": "Zaoan helmet",
+          "chance": "560"
+        },
+        {
+          "name": "Zaoan legs",
+          "chance": "780"
+        },
+        {
+          "name": "eye of corruption",
+          "chance": "12110"
+        },
+        {
+          "name": "tail of corruption",
+          "chance": "6240"
+        },
+        {
+          "name": "scale of corruption",
+          "chance": "10940"
+        },
+        {
+          "name": "shield of corruption",
+          "chance": "10"
+        },
+        {
+          "name": "draken boots",
+          "chance": "540"
+        },
+        {
+          "name": "snake god's wristguard",
+          "chance": "10"
+        },
+        {
+          "name": "bamboo leaves",
+          "chance": "360"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "monster": {
+    "name": "Dwarf Miner",
+    "nameDescription": "a dwarf miner",
+    "race": "blood",
+    "experience": "60",
+    "speed": "210",
+    "manacost": "420",
+    "health": {
+      "now": "120",
+      "max": "120"
+    },
+    "look": {
+      "type": "160",
+      "head": "77",
+      "body": "101",
+      "legs": "97",
+      "feet": "115",
+      "corpse": "6007"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-26"
+      }
+    },
+    "defenses": {
+      "armor": "7",
+      "defense": "10"
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Work, work!"
+        },
+        {
+          "sentence": "Intruders in the mines!"
+        },
+        {
+          "sentence": "Mine, all mine!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "10",
+          "chance": "33333"
+        },
+        {
+          "name": "dwarven ring",
+          "chance": "793"
+        },
+        {
+          "name": "axe",
+          "chance": "14285"
+        },
+        {
+          "name": "studded armor",
+          "chance": "6666"
+        },
+        {
+          "name": "pick",
+          "chance": "11111"
+        },
+        {
+          "name": "leather legs",
+          "chance": "9090"
+        },
+        {
+          "name": "meat",
+          "chance": "3846"
+        },
+        {
+          "name": "iron ore",
+          "chance": "793"
+        }
+      ]
+    }
+  }
+}

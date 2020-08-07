@@ -1,0 +1,270 @@
+{
+  "monster": {
+    "name": "Retching Horror",
+    "nameDescription": "a retching horror",
+    "race": "fire",
+    "experience": "3900",
+    "speed": "250",
+    "health": {
+      "now": "5300",
+      "max": "5300"
+    },
+    "look": {
+      "type": "588",
+      "corpse": "22508"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-400"
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "length": "4",
+          "spread": "3",
+          "target": "1",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "4",
+          "target": "1",
+          "speedchange": "-700",
+          "duration": "15000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "whirlwindclub"
+            },
+            {
+              "key": "areaEffect",
+              "value": "stun"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "4",
+          "target": "0",
+          "min": "0",
+          "max": "-110",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "1",
+          "target": "1",
+          "min": "0",
+          "max": "-200",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "sniperarrow"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "1",
+          "target": "1",
+          "min": "-200",
+          "max": "-350",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "fireattack"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "10"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Wait for us, little maggot..."
+        },
+        {
+          "sentence": "We will devour you..."
+        },
+        {
+          "sentence": "My little beetles, go forth, eat, feast!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "9",
+          "chance": "100000"
+        },
+        {
+          "name": "fire sword",
+          "chance": "1240"
+        },
+        {
+          "name": "crown shield",
+          "chance": "1700"
+        },
+        {
+          "name": "tower shield",
+          "chance": "550"
+        },
+        {
+          "name": "brown mushroom",
+          "countmax": "2",
+          "chance": "14000"
+        },
+        {
+          "name": "beastslayer axe",
+          "chance": "4260"
+        },
+        {
+          "name": "mercenary sword",
+          "chance": "2500"
+        },
+        {
+          "name": "spiked squelcher",
+          "chance": "410"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "12500"
+        },
+        {
+          "name": "great health potion",
+          "chance": "15000"
+        },
+        {
+          "name": "underworld rod",
+          "chance": "1800"
+        },
+        {
+          "name": "wand of starstorm",
+          "chance": "960"
+        },
+        {
+          "id": "22363",
+          "chance": "3700"
+        },
+        {
+          "name": "goosebump leather",
+          "chance": "16400"
+        },
+        {
+          "name": "pool of chitinous glue",
+          "chance": "14000"
+        }
+      ]/* broken dream */
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "monster": {
+    "name": "Warlord Ruzad",
+    "nameDescription": "Warlord Ruzad",
+    "race": "blood",
+    "experience": "1700",
+    "speed": "270",
+    "health": {
+      "now": "2500",
+      "max": "2500"
+    },
+    "look": {
+      "type": "2",
+      "head": "20",
+      "body": "30",
+      "legs": "40",
+      "feet": "50",
+      "corpse": "6008"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-300"
+      }
+    },
+    "defenses": {
+      "armor": "32",
+      "defense": "35"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "80"
+        },
+        {
+          "energyPercent": "30"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "3",
+      "summon": {
+        "name": "Orc Berserker",
+        "interval": "2000",
+        "chance": "30",
+        "max": "3"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "chance": "50000",
+          "countmax": "59"
+        },
+        {
+          "name": "gold ring",
+          "chance": "5506"
+        },
+        {
+          "name": "protection amulet",
+          "chance": "9000"
+        },
+        {
+          "name": "two handed sword",
+          "chance": "18180"
+        },
+        {
+          "name": "fire sword",
+          "chance": "8970"
+        },
+        {
+          "name": "throwing star",
+          "chance": "6666",
+          "countmax": "18"
+        },
+        {
+          "name": "orcish axe",
+          "chance": "13000"
+        },
+        {
+          "name": "plate armor",
+          "chance": "7333"
+        },
+        {
+          "name": "brass legs",
+          "chance": "3333"
+        },
+        {
+          "name": "crusader helmet",
+          "chance": "6670"
+        },
+        {
+          "name": "meat",
+          "chance": "20000",
+          "countmax": "3"
+        },
+        {
+          "id": "2667",
+          "chance": "6667"
+        }
+      ]/* fish */
+    }
+  }
+}

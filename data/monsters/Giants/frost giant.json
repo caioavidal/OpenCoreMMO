@@ -1,0 +1,177 @@
+{
+  "monster": {
+    "name": "Frost Giant",
+    "nameDescription": "a frost giant",
+    "race": "blood",
+    "experience": "150",
+    "speed": "195",
+    "manacost": "490",
+    "health": {
+      "now": "270",
+      "max": "270"
+    },
+    "look": {
+      "type": "257",
+      "corpse": "7330"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "45",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "22",
+      "defense": "23"
+    },
+    "elements": {
+      "element": {
+        "icePercent": "100"
+      }
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "Hmm Humansoup"
+        },
+        {
+          "sentence": "Stand still ya tasy snack!"
+        },
+        {
+          "sentence": "Joh Thun!"
+        },
+        {
+          "sentence": "Brore Smode!"
+        },
+        {
+          "sentence": "Horre Sjan Flan!"
+        },
+        {
+          "sentence": "Forle Bramma!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "100000"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "33333"
+        },
+        {
+          "id": "2671",
+          "chance": "33333"
+        },
+        {
+          "id": "2406",
+          "chance": "25000"
+        },
+        {
+          "id": "7441",
+          "chance": "3444"
+        },
+        {
+          "id": "2510",
+          "chance": "5333"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2513",
+              "chance": "2500"
+            },
+            {
+              "id": "2381",
+              "chance": "1955"
+            },
+            {
+              "id": "7460",
+              "chance": "2500"
+            },
+            {
+              "id": "2490",
+              "chance": "2777"
+            },
+            {
+              "id": "2129",
+              "chance": "1666"
+            },
+            {
+              "id": "7618",
+              "chance": "1666"
+            },
+            {
+              "id": "7290",
+              "chance": "1666"
+            },
+            {
+              "id": "2209",
+              "chance": "2055"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

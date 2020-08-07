@@ -1,0 +1,88 @@
+{
+  "monster": {
+    "name": "Lesser Swarmer",
+    "nameDescription": "a lesser swarmer",
+    "race": "venom",
+    "experience": "0",
+    "speed": "180",
+    "health": {
+      "now": "230",
+      "max": "230"
+    },
+    "look": {
+      "type": "460",
+      "corpse": "15388"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-77",
+          "poison": "60"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "5",
+          "target": "1",
+          "min": "-15",
+          "max": "-70",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5"
+    },
+    "immunities": {
+      "immunity": {
+        "earth": "1"
+      }
+    }
+  }
+}

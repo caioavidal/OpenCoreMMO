@@ -28,6 +28,7 @@ namespace NeoServer.Game.Items.Items
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
 
+
         public static bool IsApplicable(IItemType type) =>
             type.WeaponType switch
             {

@@ -1,0 +1,188 @@
+{
+  "monster": {
+    "name": "Hacker",
+    "nameDescription": "a hacker",
+    "race": "blood",
+    "experience": "45",
+    "speed": "250",
+    "health": {
+      "now": "430",
+      "max": "430"
+    },
+    "look": {
+      "type": "8",
+      "corpse": "5980"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "429"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "1000",
+        "min": "0",
+        "max": "-83"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "12",
+      "defense": [
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "15",
+          "speedchange": "290",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "10000",
+          "chance": "15",
+          "monster": "pig",
+          "duration": "500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "drunk": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Feel the wrath of me dos attack!"
+        },
+        {
+          "sentence": "You're next!"
+        },
+        {
+          "sentence": "Gimme free gold!"
+        },
+        {
+          "sentence": "Me sooo smart!"
+        },
+        {
+          "sentence": "Me have a cheating link for you!"
+        },
+        {
+          "sentence": "Me is GM!"
+        },
+        {
+          "sentence": "Gimme your password!"
+        },
+        {
+          "sentence": "Me just need the code!"
+        },
+        {
+          "sentence": "Me not stink!"
+        },
+        {
+          "sentence": "Me other char is highlevel!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2044",
+          "chance": "6666"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "12",
+          "chance": "100000"
+        },
+        {
+          "name": "battle axe",
+          "chance": "5000"
+        },
+        {
+          "name": "halberd",
+          "chance": "10000"
+        },
+        {
+          "name": "axe",
+          "chance": "10000"
+        },
+        {
+          "name": "war hammer",
+          "chance": "5000"
+        },
+        {
+          "name": "ham",
+          "chance": "50000"
+        },
+        {
+          "id": "6570",
+          "chance": "5538"
+        },
+        {
+          "id": "6571",
+          "chance": "1538"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

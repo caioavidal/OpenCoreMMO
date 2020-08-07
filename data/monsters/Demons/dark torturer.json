@@ -1,0 +1,247 @@
+{
+  "monster": {
+    "name": "Dark Torturer",
+    "nameDescription": "a dark torturer",
+    "race": "blood",
+    "experience": "3500",
+    "speed": "250",
+    "manacost": "0",
+    "health": {
+      "now": "7350",
+      "max": "7350"
+    },
+    "look": {
+      "type": "234",
+      "corpse": "6328"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "90",
+          "attack": "100"
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "17",
+          "range": "7",
+          "min": "-60",
+          "max": "-600",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "17",
+          "length": "4",
+          "spread": "3",
+          "min": "-0",
+          "max": "-0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "purplenote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "35",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "50",
+        "min": "75",
+        "max": "125",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "earthPercent": "50"
+        },
+        {
+          "energyPercent": "40"
+        },
+        {
+          "deathPercent": "35"
+        },
+        {
+          "icePercent": "-20"
+        },
+        {
+          "holyPercent": "-17"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "3000",
+      "chance": "30",
+      "voice": [
+        {
+          "sentence": "You like it, don't you?"
+        },
+        {
+          "sentence": "IahaEhheAie!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "50000"
+        },
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "50000"
+        },
+        {
+          "id": "7368",
+          "countmax": "2",
+          "chance": "1500"
+        },
+        {
+          "id": "7412",
+          "chance": "200"
+        },
+        {
+          "id": "5480",
+          "chance": "1200"
+        },
+        {
+          "id": "23500",
+          "countmax": "3",
+          "chance": "4555"
+        },
+        {
+          "id": "6300",
+          "chance": "1650"
+        },
+        {
+          "id": "6500",
+          "chance": "6500"
+        },
+        {
+          "id": "7591",
+          "chance": "10000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2671",
+              "countmax": "8",
+              "chance": "10500"
+            },
+            {
+              "id": "5801",
+              "chance": "650"
+            },
+            {
+              "id": "5022",
+              "countmax": "2",
+              "chance": "600"
+            },
+            {
+              "id": "2152",
+              "countmax": "3",
+              "chance": "12500"
+            },
+            {
+              "id": "2558",
+              "chance": "1700"
+            },
+            {
+              "id": "5944",
+              "chance": "13000"
+            },
+            {
+              "id": "2645",
+              "chance": "5000"
+            },
+            {
+              "id": "7388",
+              "chance": "600"
+            },
+            {
+              "id": "2470",
+              "chance": "100"
+            },
+            {
+              "id": "9971",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

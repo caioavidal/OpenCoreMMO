@@ -1,0 +1,173 @@
+{
+  "monster": {
+    "name": "Midnight Panther",
+    "nameDescription": "a midnight panther",
+    "race": "blood",
+    "experience": "900",
+    "speed": "250",
+    "health": {
+      "now": "1200",
+      "max": "1200"
+    },
+    "look": {
+      "type": "385",
+      "corpse": "13327"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-90"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-75",
+          "max": "-215",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energyarea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": [
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "speedchange": "370",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "15",
+          "min": "50",
+          "max": "125",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "15",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "-1"
+        },
+        {
+          "firePercent": "1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "energy": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "57",
+          "chance": "100000"
+        },
+        {
+          "name": "life ring",
+          "chance": "12500"
+        },
+        {
+          "name": "meat",
+          "countmax": "4",
+          "chance": "25000"
+        },
+        {
+          "name": "panther head",
+          "chance": "12500"
+        },
+        {
+          "name": "panther paw",
+          "chance": "100000"
+        }
+      ]
+    }
+  }
+}

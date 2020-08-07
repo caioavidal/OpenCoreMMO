@@ -1,0 +1,199 @@
+{
+  "monster": {
+    "name": "Sibang",
+    "nameDescription": "a sibang",
+    "race": "blood",
+    "experience": "105",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "225",
+      "max": "225"
+    },
+    "look": {
+      "type": "118",
+      "corpse": "6045"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "40"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "min": "-20",
+          "max": "-55",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallstone"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "12",
+      "defense": {
+        "name": "speed",
+        "interval": "1000",
+        "chance": "12",
+        "speedchange": "240",
+        "duration": "3000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "25"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "icePercent": "-15"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Eeeeek! Eeeeek"
+        },
+        {
+          "sentence": "Huh! Huh! Huh!"
+        },
+        {
+          "sentence": "Ahhuuaaa!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "560000"
+        },
+        {
+          "id": "2676",
+          "countmax": "12",
+          "chance": "6000"
+        },
+        {
+          "id": "2678",
+          "countmax": "5",
+          "chance": "11500"
+        },
+        {
+          "id": "2675",
+          "countmax": "5",
+          "chance": "11500"
+        },
+        {
+          "id": "1294",
+          "countmax": "3",
+          "chance": "28750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2682",
+              "chance": "10750"
+            },
+            {
+              "id": "2458",
+              "chance": "4600"
+            },
+            {
+              "id": "5883",
+              "chance": "1650"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

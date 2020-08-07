@@ -1,0 +1,241 @@
+{
+  "monster": {
+    "name": "The Many",
+    "nameDescription": "The Many",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "260",
+    "health": {
+      "now": "5000",
+      "max": "5000"
+    },
+    "look": {
+      "type": "121",
+      "corpse": "6048"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "300"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-270"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "7",
+          "length": "8",
+          "spread": "3",
+          "min": "-65",
+          "max": "-320",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallplants"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "8",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "speedchange": "-360",
+          "duration": "15000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "greenbubble"
+            }
+          ]
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "9",
+          "length": "8",
+          "spread": "3",
+          "min": "-100",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "min": "-70",
+          "max": "-155",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "ice"
+            },
+            {
+              "key": "areaEffect",
+              "value": "iceattack"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "35",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "30",
+        "min": "420",
+        "max": "500",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "50"
+        },
+        {
+          "holyPercent": "30"
+        },
+        {
+          "physicalPercent": "-5"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "FCHHHHH"
+        },
+        {
+          "sentence": "HISSSS"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small sapphire",
+          "countmax": "5",
+          "chance": "56325"
+        },
+        {
+          "name": "stone skin amulet",
+          "chance": "100000"
+        },
+        {
+          "name": "warrior helmet",
+          "chance": "75500"
+        },
+        {
+          "name": "royal helmet",
+          "chance": "25500"
+        },
+        {
+          "name": "medusa shield",
+          "chance": "75500"
+        },
+        {
+          "name": "strong mana potion",
+          "countmax": "2",
+          "chance": "100000"
+        },
+        {
+          "name": "gold ingot",
+          "countmax": "3",
+          "chance": "47725"
+        },
+        {
+          "name": "sacred tree amulet",
+          "chance": "75500"
+        },
+        {
+          "name": "egg of The Many",
+          "chance": "100000"
+        }
+      ]
+    }
+  }
+}

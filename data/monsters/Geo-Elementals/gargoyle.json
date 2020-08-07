@@ -1,0 +1,205 @@
+{
+  "monster": {
+    "name": "Gargoyle",
+    "nameDescription": "a gargoyle",
+    "race": "blood",
+    "experience": "150",
+    "speed": "250",
+    "manacost": "0",
+    "health": {
+      "now": "450",
+      "max": "450"
+    },
+    "look": {
+      "type": "95",
+      "corpse": "6027"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "55",
+          "attack": "20"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "24",
+          "range": "7",
+          "min": "-50",
+          "max": "-110",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "26",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "10",
+        "min": "5",
+        "max": "15",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "physicalPercent": "22"
+        },
+        {
+          "deathPercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "lifedrain": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Harrrr Harrrr!"
+        },
+        {
+          "sentence": "Stone sweet stone."
+        },
+        {
+          "sentence": "Feel my claws, softskin."
+        },
+        {
+          "sentence": "Chhhhhrrrrk!"
+        },
+        {
+          "sentence": "There is a stone in your shoe!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "24000"
+        },
+        {
+          "id": "2513",
+          "chance": "1200"
+        },
+        {
+          "id": "2671",
+          "chance": "17500"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "27500"
+        },
+        {
+          "id": "2394",
+          "chance": "1750"
+        },
+        {
+          "id": "2449",
+          "chance": "10000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2194",
+              "countmax": "10",
+              "chance": "8000"
+            },
+            {
+              "id": "2457",
+              "chance": "6000"
+            },
+            {
+              "id": "2448",
+              "chance": "5300"
+            },
+            {
+              "id": "2489",
+              "chance": "750"
+            },
+            {
+              "id": "2129",
+              "chance": "500"
+            },
+            {
+              "id": "2209",
+              "chance": "300"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

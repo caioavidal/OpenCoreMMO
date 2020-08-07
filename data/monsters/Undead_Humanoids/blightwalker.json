@@ -1,0 +1,289 @@
+{
+  "monster": {
+    "name": "Blightwalker",
+    "nameDescription": "a blightwalker",
+    "race": "undead",
+    "experience": "5850",
+    "speed": "250",
+    "health": {
+      "now": "8900",
+      "max": "8900"
+    },
+    "look": {
+      "type": "246",
+      "corpse": "6354"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "800"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-490"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "target": "1",
+          "radius": "1",
+          "min": "-220",
+          "max": "-405",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "target": "0",
+          "radius": "4",
+          "min": "-65",
+          "max": "-135",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "target": "0",
+          "radius": "3",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenspark"
+          }
+        },
+        {
+          "name": "blightwalker curse",
+          "interval": "2000",
+          "chance": "15"
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "range": "7",
+          "speedchange": "-300",
+          "duration": "30000",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "50"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "50"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "50"
+        },
+        {
+          "physicalPercent": "-10"
+        },
+        {
+          "holyPercent": "-30"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I can see you decaying!"
+        },
+        {
+          "sentence": "Let me taste your mortality!"
+        },
+        {
+          "sentence": "Your lifeforce is waning!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "197",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "100000"
+        },
+        {
+          "name": "amulet of loss",
+          "chance": "120"
+        },
+        {
+          "name": "gold ring",
+          "chance": "1870"
+        },
+        {
+          "name": "hailstorm rod",
+          "chance": "10000"
+        },
+        {
+          "name": "garlic necklace",
+          "chance": "2050"
+        },
+        {
+          "name": "blank rune",
+          "countmax": "2",
+          "chance": "26250"
+        },
+        {
+          "name": "golden sickle",
+          "chance": "350"
+        },
+        {
+          "name": "skull staff",
+          "chance": "1520"
+        },
+        {
+          "name": "scythe",
+          "chance": "3000"
+        },
+        {
+          "name": "bunch of wheat",
+          "chance": "50000"
+        },
+        {
+          "name": "soul orb",
+          "chance": "23720"
+        },
+        {
+          "id": "6300",
+          "chance": "1410"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "28000"
+        },
+        {
+          "name": "assassin star",
+          "countmax": "10",
+          "chance": "5900"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "3",
+          "chance": "31360"
+        },
+        {
+          "id": "7632",
+          "chance": "4450"
+        },
+        {
+          "id": "7633",
+          "chance": "4450"
+        },
+        {
+          "name": "seeds",
+          "chance": "4300"
+        },
+        {
+          "name": "terra mantle",
+          "chance": "1050"
+        },
+        {
+          "name": "terra legs",
+          "chance": "2500"
+        },
+        {
+          "name": "ultimate health potion",
+          "countmax": "2",
+          "chance": "14720"
+        },
+        {
+          "name": "gold ingot",
+          "chance": "5270"
+        },
+        {
+          "name": "bundle of cursed straw",
+          "chance": "15000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

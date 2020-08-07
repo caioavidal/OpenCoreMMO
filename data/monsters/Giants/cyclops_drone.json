@@ -1,0 +1,178 @@
+{
+  "monster": {
+    "name": "Cyclops Drone",
+    "nameDescription": "a cyclops drone",
+    "race": "blood",
+    "experience": "200",
+    "speed": "205",
+    "manacost": "525",
+    "health": {
+      "now": "325",
+      "max": "325"
+    },
+    "look": {
+      "type": "280",
+      "corpse": "7847"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-105"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "35",
+          "range": "7",
+          "min": "0",
+          "max": "-80",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "holyPercent": "1"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Fee! Fie! Foe! Fum!"
+        },
+        {
+          "sentence": "Luttl pest!"
+        },
+        {
+          "sentence": "Me makking you pulp!"
+        },
+        {
+          "sentence": "Humy tasy! Hum hum!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "82000"
+        },
+        {
+          "name": "club ring",
+          "chance": "90"
+        },
+        {
+          "name": "halberd",
+          "chance": "680"
+        },
+        {
+          "name": "short sword",
+          "chance": "8000"
+        },
+        {
+          "name": "dark helmet",
+          "chance": "190"
+        },
+        {
+          "name": "plate shield",
+          "chance": "2000"
+        },
+        {
+          "name": "battle shield",
+          "chance": "1600"
+        },
+        {
+          "name": "meat",
+          "countmax": "2",
+          "chance": "50430"
+        },
+        {
+          "id": "7398",
+          "chance": "120"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "520"
+        },
+        {
+          "name": "cyclops toe",
+          "chance": "6750"
+        }
+      ]/* cyclops trophy */
+    }
+  }
+}

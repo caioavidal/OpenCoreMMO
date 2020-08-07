@@ -1,0 +1,285 @@
+{
+  "monster": {
+    "name": "Grim Reaper",
+    "nameDescription": "a grim reaper",
+    "race": "undead",
+    "experience": "5500",
+    "speed": "260",
+    "health": {
+      "now": "3900",
+      "max": "3900"
+    },
+    "look": {
+      "type": "300",
+      "corpse": "8955"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "20"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-320"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "0",
+          "max": "-165",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "length": "8",
+          "spread": "0",
+          "min": "-350",
+          "max": "-720",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "length": "7",
+          "spread": "3",
+          "min": "0",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosionarea"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "4",
+          "target": "0",
+          "min": "-225",
+          "max": "-275",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "35",
+      "defense": "35",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "15",
+          "min": "130",
+          "max": "205",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "speedchange": "450",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "earthPercent": "40"
+        },
+        {
+          "icePercent": "65"
+        },
+        {
+          "holyPercent": "-10"
+        },
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "deathPercent": "80"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Death!"
+        },
+        {
+          "sentence": "Come a little closer!"
+        },
+        {
+          "sentence": "The end is near!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "263",
+          "chance": "99000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "4",
+          "chance": "5200"
+        },
+        {
+          "id": "2162",
+          "chance": "4850"
+        },
+        {
+          "name": "dark shield",
+          "chance": "3000"
+        },
+        {
+          "name": "scythe",
+          "chance": "9000"
+        },
+        {
+          "name": "orichalcum pearl",
+          "countmax": "4",
+          "chance": "1400"
+        },
+        {
+          "id": "6300",
+          "chance": "330"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "10600"
+        },
+        {
+          "name": "concentrated demonic blood",
+          "chance": "35000"
+        },
+        {
+          "name": "nightmare blade",
+          "chance": "880"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "10000"
+        },
+        {
+          "name": "glacier kilt",
+          "chance": "330"
+        },
+        {
+          "name": "ultimate health potion",
+          "chance": "9600"
+        },
+        {
+          "name": "skullcracker armor",
+          "chance": "270"
+        },
+        {
+          "name": "underworld rod",
+          "chance": "910"
+        },
+        {
+          "id": "9810",
+          "chance": "2500"
+        },
+        {
+          "name": "mystical hourglass",
+          "chance": "5300"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

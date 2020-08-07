@@ -1,0 +1,599 @@
+{
+  "monster": {
+    "name": "Bazir",
+    "nameDescription": "Bazir",
+    "race": "fire",
+    "experience": "30000",
+    "speed": "530",
+    "health": {
+      "now": "110000",
+      "max": "110000"
+    },
+    "look": {
+      "type": "35",
+      "head": "0",
+      "body": "0",
+      "legs": "0",
+      "feet": "0",
+      "corpse": "2916"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "3000"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-2625"
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "7",
+          "range": "7",
+          "min": "-100",
+          "max": "-1000",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poff"
+            }
+          ]
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "7",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energyarea"
+            }
+          ]
+        },
+        {
+          "name": "effect",
+          "interval": "1000",
+          "chance": "9",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "largerock"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energyarea"
+            }
+          ]
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "13",
+          "radius": "8",
+          "target": "0",
+          "min": "-400",
+          "max": "-700",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "manadrain",
+          "interval": "1000",
+          "chance": "10",
+          "radius": "8",
+          "target": "0",
+          "min": "-400",
+          "max": "-700",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "6",
+          "target": "0",
+          "speedchange": "-1900",
+          "duration": "60000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "effect",
+          "interval": "1000",
+          "chance": "8",
+          "radius": "5",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "2",
+          "radius": "8",
+          "target": "0",
+          "monster": "demon",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "2",
+          "radius": "8",
+          "target": "0",
+          "item": "3058",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "radius": "7",
+          "target": "1",
+          "min": "-100",
+          "max": "-900",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "15",
+          "length": "8",
+          "spread": "0",
+          "min": "-500",
+          "max": "-850",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "160",
+      "defense": "160",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "15",
+          "min": "5000",
+          "max": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "2000",
+          "max": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "8",
+          "speedchange": "1901",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "1000",
+          "chance": "4",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "1000",
+          "chance": "17",
+          "duration": "2000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "2",
+          "item": "2916",
+          "duration": "7000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "1",
+      "summon": {
+        "name": "bazir",
+        "interval": "1000",
+        "chance": "15",
+        "max": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "COME HERE! FREE ITEMS FOR EVERYONE!",
+          "yell": "1"
+        },
+        {
+          "sentence": "BOW TO THE POWER OF THE RUTHLESS SEVEN!"
+        },
+        {
+          "sentence": "Slay your friends and I will spare you!",
+          "yell": "1"
+        },
+        {
+          "sentence": "DON'T BE AFRAID! I AM COMING IN PEACE!",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "purple tome",
+          "chance": "2600"
+        },
+        {
+          "name": "golden mug",
+          "chance": "7500"
+        },
+        {
+          "name": "teddy bear",
+          "chance": "14500"
+        },
+        {
+          "name": "ring of the sky",
+          "chance": "3500"
+        },
+        {
+          "id": "2124",
+          "chance": "5500"
+        },
+        {
+          "name": "crystal necklace",
+          "chance": "1500"
+        },
+        {
+          "name": "ancient amulet",
+          "chance": "3500"
+        },
+        {
+          "name": "white pearl",
+          "countmax": "15",
+          "chance": "12500"
+        },
+        {
+          "name": "black pearl",
+          "countmax": "15",
+          "chance": "15000"
+        },
+        {
+          "name": "small diamond",
+          "countmax": "5",
+          "chance": "9500"
+        },
+        {
+          "name": "small sapphire",
+          "countmax": "10",
+          "chance": "13500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "99900"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "88800"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "77700"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "66600"
+        },
+        {
+          "name": "small emerald",
+          "countmax": "10",
+          "chance": "15500"
+        },
+        {
+          "name": "small amethyst",
+          "countmax": "20",
+          "chance": "13500"
+        },
+        {
+          "name": "talon",
+          "countmax": "7",
+          "chance": "14000"
+        },
+        {
+          "name": "green gem",
+          "chance": "1500"
+        },
+        {
+          "name": "blue gem",
+          "chance": "1500"
+        },
+        {
+          "id": "2162",
+          "chance": "11500"
+        },
+        {
+          "name": "might ring",
+          "chance": "5000"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "9500"
+        },
+        {
+          "name": "energy ring",
+          "chance": "13500"
+        },
+        {
+          "name": "silver amulet",
+          "chance": "13000"
+        },
+        {
+          "name": "platinum amulet",
+          "chance": "4500"
+        },
+        {
+          "name": "strange symbol",
+          "chance": "2500"
+        },
+        {
+          "name": "orb",
+          "chance": "12000"
+        },
+        {
+          "name": "life crystal",
+          "chance": "1000"
+        },
+        {
+          "name": "mind stone",
+          "chance": "4000"
+        },
+        {
+          "name": "gold ring",
+          "chance": "8000"
+        },
+        {
+          "name": "snakebite rod",
+          "chance": "3500"
+        },
+        {
+          "name": "necrotic rod",
+          "chance": "3500"
+        },
+        {
+          "name": "moonlight rod",
+          "chance": "3500"
+        },
+        {
+          "name": "wand of decay",
+          "chance": "2500"
+        },
+        {
+          "id": "2192",
+          "chance": "2500"
+        },
+        {
+          "name": "boots of haste",
+          "chance": "4000"
+        },
+        {
+          "name": "stone skin amulet",
+          "chance": "4000"
+        },
+        {
+          "name": "protection amulet",
+          "chance": "4500"
+        },
+        {
+          "name": "ring of healing",
+          "chance": "13000"
+        },
+        {
+          "id": "2231",
+          "chance": "9000"
+        },
+        {
+          "name": "two handed sword",
+          "chance": "20000"
+        },
+        {
+          "name": "double axe",
+          "chance": "20000"
+        },
+        {
+          "name": "giant sword",
+          "chance": "12500"
+        },
+        {
+          "name": "ice rapier",
+          "chance": "7500"
+        },
+        {
+          "name": "silver dagger",
+          "chance": "15500"
+        },
+        {
+          "name": "golden sickle",
+          "chance": "4500"
+        },
+        {
+          "name": "thunder hammer",
+          "chance": "13500"
+        },
+        {
+          "name": "fire axe",
+          "chance": "17000"
+        },
+        {
+          "name": "dragon hammer",
+          "chance": "4500"
+        },
+        {
+          "name": "skull staff",
+          "chance": "5000"
+        },
+        {
+          "name": "devil helmet",
+          "chance": "11000"
+        },
+        {
+          "name": "golden legs",
+          "chance": "5000"
+        },
+        {
+          "name": "magic plate armor",
+          "chance": "3000"
+        },
+        {
+          "name": "mastermind shield",
+          "chance": "7500"
+        },
+        {
+          "name": "demon shield",
+          "chance": "15500"
+        },
+        {
+          "id": "3955",
+          "chance": "100"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "monster": {
+    "name": "Arachir The Ancient One",
+    "nameDescription": "Arachir The Ancient One",
+    "race": "undead",
+    "experience": "1800",
+    "speed": "300",
+    "health": {
+      "now": "1600",
+      "max": "1600"
+    },
+    "look": {
+      "type": "287",
+      "corpse": "8937"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-380"
+        },
+        {
+          "name": "death",
+          "interval": "9000",
+          "chance": "100",
+          "target": "0",
+          "radius": "3",
+          "min": "-120",
+          "max": "-300",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "mortarea"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "1000",
+          "chance": "12",
+          "target": "1",
+          "min": "0",
+          "max": "-120",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "12",
+          "min": "100",
+          "max": "235",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "3000",
+          "chance": "25",
+          "duration": "6000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "4500",
+          "chance": "30",
+          "monster": "bat",
+          "duration": "4000"
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "20"
+        },
+        {
+          "holyPercent": "-15"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": [
+        {
+          "name": "Lich",
+          "interval": "9000",
+          "chance": "100"
+        },
+        {
+          "name": "Lich",
+          "interval": "9000",
+          "chance": "100"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I was the shadow that haunted the cradle of humanity!"
+        },
+        {
+          "sentence": "I exist since eons and you want to defy me?"
+        },
+        {
+          "sentence": "Can you feel the passage of time, mortal?"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "black pearl",
+          "chance": "8980"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "98",
+          "chance": "100000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "50000"
+        },
+        {
+          "name": "ring of healing (faster regeneration)",
+          "chance": "11111"
+        },
+        {
+          "id": "2229",
+          "chance": "10000"
+        },
+        {
+          "name": "vampire shield",
+          "chance": "6300"
+        },
+        {
+          "name": "bloody edge",
+          "chance": "1200"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "10000"
+        },
+        {
+          "name": "vampire lord token",
+          "chance": "100000"
+        }
+      ]
+    }
+  }
+}

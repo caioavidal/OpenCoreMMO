@@ -1,0 +1,139 @@
+{
+  "monster": {
+    "name": "Skeleton Warrior",
+    "nameDescription": "a skeleton warrior",
+    "race": "undead",
+    "experience": "45",
+    "speed": "150",
+    "manacost": "350",
+    "health": {
+      "now": "65",
+      "max": "65"
+    },
+    "look": {
+      "type": "298",
+      "corpse": "5972"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-30"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "1",
+          "min": "-7",
+          "max": "-13",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": {
+        "holyPercent": "-5"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "death": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "10",
+          "chance": "43500"
+        },
+        {
+          "id": "2230",
+          "chance": "50000"
+        },
+        {
+          "id": "2376",
+          "chance": "1500"
+        },
+        {
+          "name": "mace",
+          "chance": "2000"
+        },
+        {
+          "name": "white mushroom",
+          "countmax": "3",
+          "chance": "24000"
+        },
+        {
+          "name": "brown mushroom",
+          "chance": "1700"
+        },
+        {
+          "name": "pelvis bone",
+          "chance": "10630"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

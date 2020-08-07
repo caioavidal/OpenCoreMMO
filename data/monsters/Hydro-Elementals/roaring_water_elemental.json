@@ -1,0 +1,169 @@
+{
+  "monster": {
+    "name": "Roaring Water Elemental",
+    "nameDescription": "a roaring water elemental",
+    "race": "undead",
+    "experience": "1300",
+    "speed": "390",
+    "health": {
+      "now": "1750",
+      "max": "1750"
+    },
+    "look": {
+      "type": "11",
+      "corpse": "8965"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "15"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-225"
+        },
+        {
+          "name": "ice",
+          "interval": "1000",
+          "chance": "15",
+          "radius": "2",
+          "target": "1",
+          "min": "-240",
+          "max": "-320",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "bluebubble"
+            },
+            {
+              "key": "shootEffect",
+              "value": "ice"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "90",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "50"
+        },
+        {
+          "holyPercent": "30"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small sapphire",
+          "countmax": "2",
+          "chance": "4125"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "90",
+          "chance": "27000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "87",
+          "chance": "27000"
+        },
+        {
+          "name": "shiver arrow",
+          "countmax": "2",
+          "chance": "1000"
+        },
+        {
+          "name": "iced soil",
+          "chance": "9000"
+        },
+        {
+          "name": "northwind rod",
+          "chance": "750"
+        }
+      ]
+    }
+  }
+}

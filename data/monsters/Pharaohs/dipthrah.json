@@ -1,0 +1,243 @@
+{
+  "monster": {
+    "name": "Dipthrah",
+    "nameDescription": "a dipthrah",
+    "race": "undead",
+    "experience": "2900",
+    "speed": "320",
+    "manacost": "0",
+    "health": {
+      "now": "4200",
+      "max": "4200"
+    },
+    "look": {
+      "type": "87",
+      "corpse": "6031"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "80",
+          "poison": "65"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "4000",
+          "chance": "20",
+          "range": "1",
+          "min": "-100",
+          "max": "-800"
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-100",
+          "max": "-500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "speedchange": "-650",
+          "duration": "50000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "7",
+          "target": "0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "3000",
+          "chance": "34",
+          "radius": "3",
+          "target": "0",
+          "min": "-50",
+          "max": "-600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "bluebubble"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "25",
+        "min": "100",
+        "max": "200",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "100"
+        },
+        {
+          "deathPercent": "100"
+        },
+        {
+          "icePercent": "30"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": {
+        "name": "Priestess",
+        "interval": "2000",
+        "chance": "15",
+        "max": "3"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Come closer to learn the final lesson."
+        },
+        {
+          "sentence": "You can't escape death forever."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "50000"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "50000"
+        },
+        {
+          "id": "2146",
+          "countmax": "3",
+          "chance": "7000"
+        },
+        {
+          "id": "7590",
+          "chance": "7000"
+        },
+        {
+          "id": "2167",
+          "chance": "7000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2178",
+              "chance": "1500"
+            },
+            {
+              "id": "2158",
+              "chance": "1500"
+            },
+            {
+              "id": "2193",
+              "chance": "500"
+            },
+            {
+              "id": "2436",
+              "chance": "500"
+            },
+            {
+              "id": "2446",
+              "chance": "300"
+            },
+            {
+              "id": "2354",
+              "chance": "100000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

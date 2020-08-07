@@ -1,0 +1,110 @@
+{
+  "monster": {
+    "name": "The Dreadorian",
+    "nameDescription": "The Dreadorian",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "250",
+    "health": {
+      "now": "9000",
+      "max": "9000"
+    },
+    "look": {
+      "type": "234",
+      "corpse": "6328"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-370"
+      }
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "35",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "50",
+        "min": "100",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "90"
+        },
+        {
+          "energyPercent": "30"
+        },
+        {
+          "deathPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "fire": "1"
+        }
+      ]
+    }
+  }
+}

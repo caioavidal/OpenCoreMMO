@@ -1,0 +1,155 @@
+{
+  "monster": {
+    "name": "Tarnished Spirit",
+    "nameDescription": "a tarnished spirit",
+    "race": "undead",
+    "experience": "120",
+    "speed": "180",
+    "health": {
+      "now": "150",
+      "max": "150"
+    },
+    "look": {
+      "type": "566",
+      "corpse": "21366"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-80"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "1",
+          "min": "-20",
+          "max": "-45",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Huh!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1962",
+          "chance": "1310"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "180"
+        },
+        {
+          "name": "morning star",
+          "chance": "10610"
+        },
+        {
+          "name": "combat knife",
+          "chance": "7002"
+        },
+        {
+          "name": "ancient shield",
+          "chance": "860"
+        },
+        {
+          "name": "cape",
+          "chance": "8800"
+        },
+        {
+          "name": "shadow herb",
+          "chance": "14400"
+        },
+        {
+          "name": "white piece of cloth",
+          "chance": "1940"
+        },
+        {
+          "name": "ghostly tissue",
+          "chance": "1870"
+        }
+      ]/* orange book */
+    }
+  }
+}

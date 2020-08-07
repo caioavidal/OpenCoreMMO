@@ -1,0 +1,302 @@
+{
+  "monster": {
+    "name": "Minishabaal",
+    "nameDescription": "minishabaal",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "700",
+    "manacost": "0",
+    "health": {
+      "now": "3500",
+      "max": "3500"
+    },
+    "look": {
+      "type": "237",
+      "corpse": "6364"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "350"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "70",
+          "attack": "95"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-80",
+          "max": "-350",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "3000",
+          "chance": "34",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-120",
+          "max": "-500",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "50",
+          "min": "155",
+          "max": "255",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "12",
+          "speedchange": "320",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "4000",
+          "chance": "50",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "0"
+        },
+        {
+          "fire": "0"
+        },
+        {
+          "poison": "0"
+        },
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "0"
+        },
+        {
+          "drunk": "0"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "3",
+      "summon": {
+        "name": "Diabolic Imp",
+        "interval": "2000",
+        "chance": "40",
+        "max": "3"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I had Princess Lumelia as breakfast!"
+        },
+        {
+          "sentence": "Naaa-Nana-Naaa-Naaa!"
+        },
+        {
+          "sentence": "My brother will come and get you for this!"
+        },
+        {
+          "sentence": "Get them Fluffy!"
+        },
+        {
+          "sentence": "He He He!"
+        },
+        {
+          "sentence": "Pftt, Ferumbras such an upstart!"
+        },
+        {
+          "sentence": "My dragon is not that old, it's just second hand!"
+        },
+        {
+          "sentence": "My other dragon is a red one!"
+        },
+        {
+          "sentence": "When I am big I want to become the ruthless eighth!"
+        },
+        {
+          "sentence": "WHERE'S FLUFFY?"
+        },
+        {
+          "sentence": "Muahaha!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "100000"
+        },
+        {
+          "id": "2150",
+          "countmax": "2",
+          "chance": "1428"
+        },
+        {
+          "id": "2548",
+          "chance": "2857"
+        },
+        {
+          "id": "2432",
+          "chance": "666"
+        },
+        {
+          "id": "5944",
+          "chance": "909"
+        },
+        {
+          "id": "2520",
+          "chance": "200"
+        },
+        {
+          "id": "6500",
+          "countmax": "2",
+          "chance": "1000"
+        },
+        {
+          "id": "2470",
+          "chance": "180"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2148",
+              "countmax": "20",
+              "chance": "100000"
+            },
+            {
+              "id": "5944",
+              "chance": "909"
+            },
+            {
+              "id": "2488",
+              "chance": "800"
+            },
+            {
+              "id": "2515",
+              "chance": "1333"
+            },
+            {
+              "id": "2136",
+              "chance": "909"
+            },
+            {
+              "id": "2542",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

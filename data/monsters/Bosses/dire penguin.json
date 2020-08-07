@@ -1,0 +1,141 @@
+{
+  "monster": {
+    "name": "Dire Penguin",
+    "nameDescription": "dire penguin",
+    "race": "blood",
+    "experience": "120",
+    "speed": "156",
+    "manacost": "0",
+    "health": {
+      "now": "173",
+      "max": "173"
+    },
+    "look": {
+      "type": "250",
+      "corpse": "7334"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "40"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-0",
+          "max": "-60",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "0"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "10",
+          "chance": "18000"
+        },
+        {
+          "id": "2667",
+          "countmax": "4",
+          "chance": "8000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7159",
+              "chance": "7000"
+            },
+            {
+              "id": "7158",
+              "chance": "8000"
+            },
+            {
+              "id": "2434",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

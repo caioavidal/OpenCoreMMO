@@ -1,0 +1,93 @@
+{
+  "monster": {
+    "name": "Fatality",
+    "nameDescription": "Fatality",
+    "race": "blood",
+    "experience": "3250",
+    "speed": "220",
+    "health": {
+      "now": "6000",
+      "max": "6000"
+    },
+    "look": {
+      "type": "113",
+      "corpse": "4251"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-205"
+      }
+    },
+    "defenses": {
+      "armor": "16",
+      "defense": "19"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "-10"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "energyPercent": "20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    }
+  }
+}

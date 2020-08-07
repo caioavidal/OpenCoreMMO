@@ -1,0 +1,307 @@
+{
+  "monster": {
+    "name": "Fury",
+    "nameDescription": "a fury",
+    "race": "blood",
+    "experience": "4000",
+    "speed": "460",
+    "manacost": "0",
+    "health": {
+      "now": "4100",
+      "max": "4100"
+    },
+    "look": {
+      "type": "149",
+      "head": "94",
+      "body": "77",
+      "legs": "96",
+      "feet": "0",
+      "addons": "3",
+      "corpse": "6081"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "60"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "170"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "17",
+          "range": "7",
+          "min": "-140",
+          "max": "-200",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingstar"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-115",
+          "max": "-155",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blackspark"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "3000",
+          "chance": "30",
+          "length": "8",
+          "spread": "0",
+          "min": "-300",
+          "max": "-420",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redspark"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "25",
+          "range": "7",
+          "min": "-170",
+          "max": "-200",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "snowball"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poff"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "25",
+        "min": "180",
+        "max": "290",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "icePercent": "40"
+        },
+        {
+          "holyPercent": "40"
+        },
+        {
+          "deathPercent": "-20"
+        },
+        {
+          "energyPercent": "-20"
+        },
+        {
+          "earthPercent": "-15"
+        },
+        {
+          "physicalPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "3000",
+      "chance": "30",
+      "voice": [
+        {
+          "sentence": "Ahhhhrrrr!"
+        },
+        {
+          "sentence": "Waaaaah!"
+        },
+        {
+          "sentence": "Carnage!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "43000"
+        },
+        {
+          "id": "2148",
+          "countmax": "75",
+          "chance": "43000"
+        },
+        {
+          "id": "2148",
+          "countmax": "65",
+          "chance": "43000"
+        },
+        {
+          "id": "6558",
+          "countmax": "3",
+          "chance": "25000"
+        },
+        {
+          "id": "6500",
+          "chance": "22500"
+        },
+        {
+          "id": "2470",
+          "chance": "450"
+        },
+        {
+          "id": "7591",
+          "chance": "10000"
+        },
+        {
+          "id": "2666",
+          "chance": "25000"
+        },
+        {
+          "id": "7456",
+          "chance": "1800"
+        },
+        {
+          "id": "5022",
+          "countmax": "3",
+          "chance": "1300"
+        },
+        {
+          "id": "2152",
+          "countmax": "3",
+          "chance": "2000"
+        },
+        {
+          "id": "5911",
+          "chance": "3650"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "9813",
+              "chance": "11000"
+            },
+            {
+              "id": "2120",
+              "countmax": "3",
+              "chance": "6000"
+            },
+            {
+              "id": "5944",
+              "chance": "21500"
+            },
+            {
+              "id": "2645",
+              "chance": "1000"
+            },
+            {
+              "id": "2181",
+              "chance": "20000"
+            },
+            {
+              "id": "7404",
+              "chance": "100"
+            },
+            {
+              "id": "2487",
+              "chance": "500"
+            },
+            {
+              "id": "5944",
+              "chance": "7368"
+            },
+            {
+              "id": "2124",
+              "chance": "750"
+            },
+            {
+              "id": "2156",
+              "chance": "900"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

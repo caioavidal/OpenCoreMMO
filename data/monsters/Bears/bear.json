@@ -1,0 +1,131 @@
+{
+  "monster": {
+    "name": "Bear",
+    "namedescription": "a bear",
+    "race": "blood",
+    "experience": "23",
+    "speed": "176",
+    "manacost": "300",
+    "health": {
+      "now": "80",
+      "max": "80"
+    },
+    "look": {
+      "type": "16",
+      "corpse": "5975"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "40",
+        "attack": "10"
+      }
+    },
+    "defenses": {
+      "armor": "6",
+      "defense": "6"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "20"
+        },
+        {
+          "holyPercent": "7"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "deathPercent": "-4"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "grrrr"
+        },
+        {
+          "sentence": "groar"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "5896",
+          "chance": "2000"
+        },
+        {
+          "id": "2671",
+          "countmax": "3",
+          "chance": "25000"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "46750"
+        },
+        {
+          "id": "3976",
+          "countmax": "3",
+          "chance": "3000"
+        },
+        {
+          "id": "5902",
+          "chance": "1700"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

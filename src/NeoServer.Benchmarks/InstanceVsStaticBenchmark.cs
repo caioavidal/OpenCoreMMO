@@ -7,7 +7,7 @@ using System.Linq;
 namespace NeoServer.Benchmarks
 {
     [MemoryDiagnoser]
-    [SimpleJob(RunStrategy.ColdStart, launchCount: 1)]
+    [SimpleJob(RunStrategy.ColdStart, launchCount: 100)]
 
     public class InstanceVsStaticBenchmark
     {
@@ -16,9 +16,9 @@ namespace NeoServer.Benchmarks
         public long NoMethod()
         {
             var sum = 0;
-            for(int i = 0; i < 1_000; i++)
+            for(int i = 0; i < 1_00000; i++)
             {
-                sum++;
+                sum = i + i;
             }
             return sum;
 
@@ -28,9 +28,9 @@ namespace NeoServer.Benchmarks
         {
 
             var sum = 0;
-            for (int i = 0; i < 1_000; i++)
+            for (int i = 0; i < 1_00000; i++)
             {
-                Static.Sum(sum);
+                sum = Static.Sum(i,i);
             }
             return sum;
 
@@ -39,11 +39,12 @@ namespace NeoServer.Benchmarks
         [Benchmark]
         public long InstanceMethod()
         {
-            var instance = new Instance();
+            
             var sum = 0;
-            for (int i = 0; i < 1_000; i++)
+            for (int i = 0; i < 1_00000; i++)
             {
-                instance.Sum(sum);
+                var instance = new Instance(1,1);
+                sum = instance.Sum();
             }
 
             return sum;
@@ -56,17 +57,24 @@ namespace NeoServer.Benchmarks
 
     public class Instance
     {
-
-        public void Sum(int sum)
+        private int a;
+        private int b;
+        public Instance(int a, int b)
         {
-            sum++;
+            this.a = a;
+            this.b = b;
+        }
+
+        public int Sum()
+        {
+            return a + b;
         }
 
     }
 
     public class Static
     {
-        public static void Sum( int n) => n++;
+        public static int Sum( int a, int b) => a + b;
 
     }
 

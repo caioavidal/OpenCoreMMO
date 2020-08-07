@@ -8,5 +8,6 @@ namespace NeoServer.Server.Tasks.Contracts
 
         uint AddEvent(ISchedulerEvent evt);
         bool CancelEvent(uint eventId);
+        bool EventIsCancelled(uint eventId);
     }
 }

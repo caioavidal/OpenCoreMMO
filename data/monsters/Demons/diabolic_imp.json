@@ -1,0 +1,283 @@
+{
+  "monster": {
+    "name": "Diabolic Imp",
+    "nameDescription": "a diabolic imp",
+    "race": "fire",
+    "experience": "2900",
+    "speed": "220",
+    "health": {
+      "now": "1950",
+      "max": "1950"
+    },
+    "look": {
+      "type": "237",
+      "corpse": "6364"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "400"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-240",
+          "poison": "160"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-100",
+          "max": "-240",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-300",
+          "max": "-430",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "fireattack"
+            }
+          ]
+        },
+        {
+          "name": "diabolic imp skill reducer",
+          "range": "5",
+          "interval": "2000",
+          "chance": "5"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "10",
+          "min": "650",
+          "max": "800",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "speedchange": "800",
+          "duration": "2000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "10",
+          "duration": "1000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "teleport"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "10"
+        },
+        {
+          "earthPercent": "50"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Muahaha!"
+        },
+        {
+          "sentence": "He he he."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "97",
+          "chance": "40000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "7",
+          "chance": "3390"
+        },
+        {
+          "name": "small amethyst",
+          "countmax": "3",
+          "chance": "2250"
+        },
+        {
+          "name": "stealth ring",
+          "chance": "2702"
+        },
+        {
+          "name": "necrotic rod",
+          "chance": "830"
+        },
+        {
+          "name": "blank rune",
+          "countmax": "2",
+          "chance": "16666"
+        },
+        {
+          "name": "double axe",
+          "chance": "1994"
+        },
+        {
+          "id": "2419",
+          "chance": "5660"
+        },
+        {
+          "name": "guardian shield",
+          "chance": "8130"
+        },
+        {
+          "name": "pitchfork",
+          "chance": "50000"
+        },
+        {
+          "name": "cleaver",
+          "chance": "8830"
+        },
+        {
+          "name": "soul orb",
+          "chance": "7230"
+        },
+        {
+          "id": "6300",
+          "chance": "120"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "8000"
+        },
+        {
+          "name": "concentrated demonic blood",
+          "countmax": "2",
+          "chance": "25000"
+        },
+        {
+          "name": "magma coat",
+          "chance": "250"
+        },
+        {
+          "name": "magma monocle",
+          "chance": "430"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

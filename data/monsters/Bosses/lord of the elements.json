@@ -1,0 +1,196 @@
+{
+  "monster": {
+    "name": "Lord of the Elements",
+    "nameDescription": "lord of the elements",
+    "race": "undead",
+    "experience": "8000",
+    "speed": "370",
+    "manacost": "0",
+    "health": {
+      "now": "10000",
+      "max": "10000"
+    },
+    "look": {
+      "type": "290",
+      "corpse": "9009"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "10"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "110",
+        "attack": "115"
+      }
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "100",
+          "max": "195",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Energy Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Fire Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Earth Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "1500",
+          "chance": "40",
+          "monster": "Ice Overlord",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "30"
+        },
+        {
+          "energyPercent": "30"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "holy": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "physical": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": [
+        {
+          "name": "Blistering Fire fire elemental",
+          "interval": "4000",
+          "chance": "50"
+        },
+        {
+          "name": "Jagged Earth Elemental",
+          "interval": "4000",
+          "chance": "50"
+        },
+        {
+          "name": "Roaring Water Elemental",
+          "interval": "4000",
+          "chance": "50"
+        },
+        {
+          "name": "Overcharged Energy Elemental",
+          "interval": "4000",
+          "chance": "50"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "id": "2152",
+        "countmax": "7",
+        "chance": "40000"
+      }/* platinum coin */
+    }
+  }
+}

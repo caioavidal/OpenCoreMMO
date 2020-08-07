@@ -1,0 +1,147 @@
+{
+  "monster": {
+    "name": "Salamander",
+    "nameDescription": "a salamander",
+    "race": "blood",
+    "experience": "25",
+    "speed": "220",
+    "health": {
+      "now": "70",
+      "max": "70"
+    },
+    "look": {
+      "type": "529",
+      "corpse": "19707"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-60",
+        "poison": "10"
+      }
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "5",
+      "defense": {
+        "name": "healing",
+        "interval": "6000",
+        "chance": "20",
+        "min": "0",
+        "max": "4",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Chrrch!"
+        },
+        {
+          "sentence": "Chhh!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2120",
+          "chance": "4700"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "15",
+          "chance": "60000"
+        },
+        {
+          "name": "mace",
+          "chance": "3780"
+        },
+        {
+          "id": "2419",
+          "chance": "420"
+        },
+        {
+          "name": "bow",
+          "chance": "1090"
+        },
+        {
+          "name": "brass helmet",
+          "chance": "2180"
+        },
+        {
+          "name": "arrow",
+          "countmax": "3",
+          "chance": "7890"
+        },
+        {
+          "name": "health potion",
+          "chance": "840"
+        },
+        {
+          "name": "insectoid eggs",
+          "countmax": "5",
+          "chance": "32830"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

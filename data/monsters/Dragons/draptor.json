@@ -1,0 +1,189 @@
+{
+  "monster": {
+    "name": "Draptor",
+    "nameDescription": "a draptor",
+    "race": "blood",
+    "experience": "2400",
+    "speed": "282",
+    "health": {
+      "now": "3000",
+      "max": "3000"
+    },
+    "look": {
+      "type": "382",
+      "corpse": "13316"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "350"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-150"
+        },
+        {
+          "name": "energy",
+          "interval": "3000",
+          "chance": "30",
+          "radius": "3",
+          "min": "-130",
+          "max": "-310",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellowenergy"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "3000",
+          "chance": "35",
+          "range": "7",
+          "min": "-200",
+          "max": "-300",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2500",
+          "chance": "17",
+          "length": "8",
+          "spread": "3",
+          "min": "-70",
+          "max": "-250",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "23",
+      "defense": "37",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "25",
+          "min": "57",
+          "max": "93",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "12",
+          "speedchange": "457",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "-10"
+        },
+        {
+          "earthPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "90",
+          "chance": "33750"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "60",
+          "chance": "33750"
+        },
+        {
+          "name": "strong health potion",
+          "chance": "3150"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "4150"
+        },
+        {
+          "name": "dragon robe",
+          "chance": "950"
+        },
+        {
+          "name": "draptor scales",
+          "chance": "6650"
+        }
+      ]
+    }
+  }
+}

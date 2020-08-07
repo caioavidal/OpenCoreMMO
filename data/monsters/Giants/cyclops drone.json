@@ -1,0 +1,178 @@
+{
+  "monster": {
+    "name": "Cyclops Drone",
+    "nameDescription": "a cyclops drone",
+    "race": "blood",
+    "experience": "200",
+    "speed": "220",
+    "manacost": "525",
+    "health": {
+      "now": "325",
+      "max": "325"
+    },
+    "look": {
+      "type": "280",
+      "corpse": "7847"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "70",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "75"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "60",
+          "attack": "30"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "min": "-46",
+          "max": "-74",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "17",
+      "defense": "24"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "10"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Fee! Fie! Foe! Fum!"
+        },
+        {
+          "sentence": "Luttl pest!"
+        },
+        {
+          "sentence": "Me makking you pulp!"
+        },
+        {
+          "sentence": "Humy tasy! Hum hum!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "24",
+          "chance": "32000"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "26750"
+        },
+        {
+          "id": "2671",
+          "countmax": "2",
+          "chance": "11000"
+        },
+        {
+          "id": "2406",
+          "chance": "8000"
+        },
+        {
+          "id": "2510",
+          "chance": "1600"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2513",
+              "chance": "1300"
+            },
+            {
+              "id": "2381",
+              "chance": "850"
+            },
+            {
+              "id": "7398",
+              "chance": "150"
+            },
+            {
+              "id": "2490",
+              "chance": "250"
+            },
+            {
+              "id": "7588",
+              "chance": "600"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

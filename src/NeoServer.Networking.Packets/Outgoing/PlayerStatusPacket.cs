@@ -16,16 +16,16 @@ namespace NeoServer.Networking.Packets.Outgoing
         public override void WriteToMessage(INetworkMessage message)
         {
             message.AddByte((byte)GameOutgoingPacketType.PlayerStatus);
-            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Hitpoints));
-            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxHitpoints));
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.HealthPoints));
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxHealthpoints));
             message.AddUInt32((uint)player.CarryStrength);
 
             message.AddUInt32(Math.Min(0x7FFFFFFF, player.Experience)); // Experience: Client debugs after 2,147,483,647 exp
 
             message.AddUInt16(player.Level);
             message.AddByte(player.LevelPercent);
-            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Manapoints));
-            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxManapoints));
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.Mana));
+            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxMana));
             message.AddByte(player.GetSkillInfo(SkillType.Magic));
             message.AddByte(player.GetSkillPercent(SkillType.Magic));
 

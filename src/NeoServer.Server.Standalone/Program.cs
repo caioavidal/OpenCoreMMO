@@ -5,7 +5,10 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
+using NeoServer.Loaders.Monsters;
+using NeoServer.Loaders.Spawns;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server.Contracts.Repositories;
@@ -49,6 +52,13 @@ namespace NeoServer.Server.Standalone
             container.Resolve<ItemTypeLoader>().Load();
 
             container.Resolve<WorldLoader>().Load();
+
+            container.Resolve<SpawnLoader>().Load();
+
+            container.Resolve<MonsterLoader>().Load();
+
+            container.Resolve<SpawnManager>().StartSpawn();
+
 
             var listeningTask = StartListening(container, cancellationToken);
 

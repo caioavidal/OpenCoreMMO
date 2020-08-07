@@ -1,0 +1,143 @@
+{
+  "monster": {
+    "name": "Hide",
+    "nameDescription": "Hide",
+    "race": "venom",
+    "experience": "240",
+    "speed": "280",
+    "health": {
+      "now": "500",
+      "max": "500"
+    },
+    "look": {
+      "type": "219",
+      "corpse": "6060"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-140",
+        "poison": "80"
+      }
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "40",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "10",
+        "speedchange": "340",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "10"
+        },
+        {
+          "firePercent": "-15"
+        },
+        {
+          "icePercent": "-15"
+        },
+        {
+          "physicalPercent": "40"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "earth": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "100000"
+        },
+        {
+          "id": "2169",
+          "chance": "33333"
+        },
+        {
+          "name": "steel helmet",
+          "chance": "50000"
+        },
+        {
+          "name": "knight legs",
+          "chance": "50000"
+        },
+        {
+          "name": "spider silk",
+          "chance": "50000"
+        },
+        {
+          "name": "terra hood",
+          "chance": "50000"
+        }
+      ]/* time ring */
+    }
+  }
+}

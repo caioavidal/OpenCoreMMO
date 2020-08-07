@@ -1,0 +1,218 @@
+{
+  "monster": {
+    "name": "Assassin",
+    "nameDescription": "an assassin",
+    "race": "blood",
+    "experience": "105",
+    "speed": "224",
+    "manacost": "450",
+    "health": {
+      "now": "175",
+      "max": "175"
+    },
+    "look": {
+      "type": "129",
+      "head": "95",
+      "body": "95",
+      "legs": "95",
+      "feet": "95",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "strategy": {
+      "attack": "70",
+      "defense": "20"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "60"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "13",
+          "range": "7",
+          "min": "-28",
+          "max": "-38",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingstar"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "10",
+          "range": "6",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "17",
+      "defense": "40",
+      "defense": {
+        "name": "invisible",
+        "interval": "1000",
+        "chance": "9",
+        "duration": "2000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "-12"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Die!"
+        },
+        {
+          "sentence": "Feel the hand of death!"
+        },
+        {
+          "sentence": "You are on my deathlist!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "35000"
+        },
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "5000"
+        },
+        {
+          "id": "2050",
+          "chance": "22500"
+        },
+        {
+          "id": "2148",
+          "countmax": "14",
+          "chance": "2750"
+        },
+        {
+          "id": "7366",
+          "chance": "15500"
+        },
+        {
+          "id": "2403",
+          "chance": "7500"
+        },
+        {
+          "id": "2404",
+          "chance": "4750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2050",
+              "chance": "22500"
+            },
+            {
+              "id": "2457",
+              "chance": "4350"
+            },
+            {
+              "id": "2510",
+              "chance": "1600"
+            },
+            {
+              "id": "3968",
+              "chance": "400"
+            },
+            {
+              "id": "2513",
+              "chance": "400"
+            },
+            {
+              "id": "2145",
+              "countmax": "2",
+              "chance": "200"
+            },
+            {
+              "id": "3969",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

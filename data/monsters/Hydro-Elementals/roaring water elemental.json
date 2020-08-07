@@ -1,0 +1,172 @@
+{
+  "monster": {
+    "name": "Roaring Water Elemental",
+    "nameDescription": "a roaring water elemental",
+    "race": "undead",
+    "experience": "1300",
+    "speed": "390",
+    "manacost": "0",
+    "health": {
+      "now": "1750",
+      "max": "1750"
+    },
+    "look": {
+      "type": "11",
+      "corpse": "8965"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "15"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "90"
+        },
+        {
+          "name": "ice",
+          "interval": "1000",
+          "chance": "15",
+          "radius": "2",
+          "target": "1",
+          "min": "-240",
+          "max": "-320",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "bluebubble"
+            },
+            {
+              "key": "shootEffect",
+              "value": "ice"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "90",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "50"
+        },
+        {
+          "holyPercent": "30"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "27000"
+        },
+        {
+          "id": "2148",
+          "countmax": "87",
+          "chance": "27000"
+        },
+        {
+          "id": "8302",
+          "chance": "9000"
+        },
+        {
+          "id": "2146",
+          "countmax": "2",
+          "chance": "4125"
+        },
+        {
+          "id": "7839",
+          "countmax": "2",
+          "chance": "1000"
+        },
+        {
+          "id": "8911",
+          "chance": "750"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

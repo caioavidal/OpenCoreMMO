@@ -1,0 +1,149 @@
+{
+  "monster": {
+    "name": "Blistering Fire Elemental",
+    "nameDescription": "a blistering fire elemental",
+    "race": "fire",
+    "experience": "1300",
+    "speed": "230",
+    "health": {
+      "now": "1500",
+      "max": "1500"
+    },
+    "look": {
+      "type": "242",
+      "corpse": "8964"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-350"
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "11",
+          "length": "7",
+          "spread": "3",
+          "min": "-65",
+          "max": "-510"
+        },
+        {
+          "name": "firecondition",
+          "interval": "1000",
+          "chance": "12",
+          "radius": "6",
+          "target": "0",
+          "min": "-50",
+          "max": "-200",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "radius": "3",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20"
+    },
+    "elements": {
+      "element": {
+        "icePercent": "-25"
+      }
+    },
+    "immunities": {
+      "immunity": {
+        "fire": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small ruby",
+          "countmax": "3",
+          "chance": "3200"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "65",
+          "chance": "12500"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "60",
+          "chance": "12500"
+        },
+        {
+          "name": "glimmering soil",
+          "chance": "2500"
+        },
+        {
+          "name": "wand of draconia",
+          "chance": "1250"
+        }
+      ]
+    }
+  }
+}

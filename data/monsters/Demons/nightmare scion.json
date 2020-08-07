@@ -1,0 +1,245 @@
+{
+  "monster": {
+    "name": "Nightmare Scion",
+    "nameDescription": "a nightmare scion",
+    "race": "blood",
+    "experience": "1350",
+    "speed": "340",
+    "manacost": "0",
+    "health": {
+      "now": "1400",
+      "max": "1400"
+    },
+    "look": {
+      "type": "321",
+      "corpse": "9919"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "10"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "300"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "70"
+        },
+        {
+          "name": "earth",
+          "interval": "1000",
+          "chance": "12",
+          "range": "7",
+          "target": "1",
+          "radius": "4",
+          "min": "-0",
+          "max": "-180",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "20",
+          "range": "2",
+          "target": "1",
+          "min": "-0",
+          "max": "-125",
+          "attribute": [
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": [
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "19",
+          "speedchange": "460",
+          "duration": "8000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "14",
+          "min": "150",
+          "max": "230",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "-25"
+        },
+        {
+          "firePercent": "45"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "7500",
+      "chance": "20",
+      "voice": {
+        "sentence": "Weeeheeheee!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "74",
+          "chance": "43000"
+        },
+        {
+          "id": "2148",
+          "countmax": "73",
+          "chance": "43000"
+        },
+        {
+          "id": "2491",
+          "chance": "800"
+        },
+        {
+          "id": "9941",
+          "chance": "250"
+        },
+        {
+          "id": "6300",
+          "chance": "250"
+        },
+        {
+          "id": "7387",
+          "chance": "400"
+        },
+        {
+          "id": "2387",
+          "chance": "1000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "8871",
+              "chance": "230"
+            },
+            {
+              "id": "2152",
+              "countmax": "3",
+              "chance": "800"
+            },
+            {
+              "id": "2671",
+              "countmax": "2",
+              "chance": "20000"
+            },
+            {
+              "id": "2666",
+              "countmax": "4",
+              "chance": "27500"
+            },
+            {
+              "id": "6574",
+              "chance": "150"
+            },
+            {
+              "id": "7451",
+              "chance": "170"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

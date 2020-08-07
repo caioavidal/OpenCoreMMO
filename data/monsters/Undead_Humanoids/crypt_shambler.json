@@ -1,0 +1,181 @@
+{
+  "monster": {
+    "name": "Crypt Shambler",
+    "nameDescription": "a crypt shambler",
+    "race": "undead",
+    "experience": "195",
+    "speed": "170",
+    "manacost": "580",
+    "health": {
+      "now": "330",
+      "max": "330"
+    },
+    "look": {
+      "type": "100",
+      "corpse": "6029"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-140"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "range": "1",
+          "min": "-28",
+          "max": "-55"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25"
+    },
+    "elements": {
+      "element": {
+        "holyPercent": "-25"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Aaaaahhhh!"
+        },
+        {
+          "sentence": "Hoooohhh!"
+        },
+        {
+          "sentence": "Uhhhhhhh!"
+        },
+        {
+          "sentence": "Chhhhhhh!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small diamond",
+          "chance": "510"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "55",
+          "chance": "57000"
+        },
+        {
+          "name": "rotten meat",
+          "chance": "1850"
+        },
+        {
+          "id": "2230",
+          "chance": "5000"
+        },
+        {
+          "name": "throwing star",
+          "countmax": "3",
+          "chance": "910"
+        },
+        {
+          "name": "bone sword",
+          "chance": "1000"
+        },
+        {
+          "name": "iron helmet",
+          "chance": "2130"
+        },
+        {
+          "name": "iron helmet",
+          "chance": "2000"
+        },
+        {
+          "name": "bone shield",
+          "chance": "1000"
+        },
+        {
+          "name": "worm",
+          "countmax": "10",
+          "chance": "9000"
+        },
+        {
+          "name": "half-digested piece of meat",
+          "chance": "5000"
+        }
+      ]/* bone */
+    }
+  }
+}

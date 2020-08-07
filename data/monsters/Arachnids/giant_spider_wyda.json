@@ -1,0 +1,97 @@
+{
+  "monster": {
+    "name": "Giant Spider",
+    "nameDescription": "a giant spider",
+    "race": "venom",
+    "experience": "12",
+    "speed": "152",
+    "health": {
+      "now": "20",
+      "max": "20"
+    },
+    "look": {
+      "type": "38",
+      "corpse": "5977"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "6"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-9"
+      }
+    },
+    "defenses": {
+      "armor": "2",
+      "defense": "2"
+    },
+    "elements": {
+      "element": {
+        "firePercent": "-20"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "5",
+          "chance": "65000"
+        },
+        {
+          "name": "spider fangs",
+          "chance": "950"
+        }
+      ]
+    }
+  }
+}

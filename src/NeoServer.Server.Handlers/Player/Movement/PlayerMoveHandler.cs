@@ -24,7 +24,7 @@ namespace NeoServer.Server.Handlers.Players
             if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature creature))
             {
                 //todo: create command pool
-                game.Dispatcher.AddEvent(new Event(new PlayerWalkCommand((IPlayer)creature, game, direction).Execute));
+                game.Dispatcher.AddEvent(new Event(()=> PlayerWalkCommand.Execute((IPlayer)creature, game, direction)));
             }
 
         }

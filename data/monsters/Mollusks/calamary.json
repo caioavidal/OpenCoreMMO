@@ -1,0 +1,103 @@
+{
+  "monster": {
+    "name": "Calamary",
+    "nameDescription": "a calamary",
+    "race": "undead",
+    "experience": "0",
+    "speed": "160",
+    "health": {
+      "now": "75",
+      "max": "75"
+    },
+    "look": {
+      "type": "451",
+      "corpse": "15280"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "75"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "-5"
+        },
+        {
+          "physicalPercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "fire": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Bubble!"
+        },
+        {
+          "sentence": "Bobble!"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "name": "shrimp",
+        "countmax": "2",
+        "chance": "12270"
+      }
+    }
+  }
+}

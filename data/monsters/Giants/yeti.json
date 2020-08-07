@@ -1,0 +1,169 @@
+{
+  "monster": {
+    "name": "Yeti",
+    "nameDescription": "a yeti",
+    "race": "blood",
+    "experience": "460",
+    "speed": "270",
+    "manacost": "0",
+    "health": {
+      "now": "950",
+      "max": "950"
+    },
+    "look": {
+      "type": "110",
+      "corpse": "6038"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "70",
+          "attack": "50"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "min": "-190",
+          "max": "-140",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "snowball"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poff"
+            }
+          ]
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "12",
+          "length": "3",
+          "spread": "3",
+          "min": "-120",
+          "max": "-175",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "28",
+      "defense": "33"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "100"
+        },
+        {
+          "earthPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Yooodelaaahooohooo!"
+        },
+        {
+          "sentence": "Yooodelaaaheeeheee!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "100000"
+        },
+        {
+          "id": "2148",
+          "countmax": "40",
+          "chance": "100000"
+        },
+        {
+          "id": "2666",
+          "countmax": "4",
+          "chance": "33333"
+        },
+        {
+          "id": "2671",
+          "countmax": "5",
+          "chance": "10000"
+        },
+        {
+          "id": "2111",
+          "countmax": "22",
+          "chance": "10000"
+        },
+        {
+          "id": "2644",
+          "chance": "1333"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

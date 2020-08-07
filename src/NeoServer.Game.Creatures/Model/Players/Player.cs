@@ -1,10 +1,11 @@
-  using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
@@ -17,18 +18,15 @@ namespace NeoServer.Server.Model.Players
 {
     public class Player : Creature, IPlayer
     {
-        public Player(uint id, string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
+        public Player(string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location)
-             : base(id, characterName, string.Empty, maxHealthPoints, maxMana, 4240, healthPoints, mana)
+             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 4240 } }), outfit, healthPoints)
         {
-            Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
             CarryStrength = capacity;
-            HealthPoints = healthPoints;
-            MaxHealthPoints = maxHealthPoints;
             Vocation = vocation;
             Gender = gender;
             Online = online;
@@ -40,7 +38,6 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
-            Speed = speed;
 
             //Location = location;
             SetNewLocation(location);
@@ -51,10 +48,6 @@ namespace NeoServer.Server.Model.Players
             VipList = new Dictionary<string, bool>(); //todo
 
             //OnThingChanged += CheckInventoryContainerProximity;
-
-
-
-
             Inventory = new PlayerInventory(this, inventory);
         }
 
@@ -63,23 +56,24 @@ namespace NeoServer.Server.Model.Players
 
         private uint IdleTime;
 
-        public uint Id { get; private set; }
         public string CharacterName { get; private set; }
 
         public Account Account { get; private set; }
         public override IOutfit Outfit { get; protected set; }
 
         public new uint Corpse => 4240;
+        public IDictionary<SkillType, ISkill> Skills { get; private set; }
 
         public IPlayerContainerList Containers { get; }
 
         public Dictionary<uint, long> KnownCreatures { get; }
         public Dictionary<string, bool> VipList { get; }
 
+
+
         public ChaseMode ChaseMode { get; private set; }
         public uint Capacity { get; private set; }
         public ushort Level => Skills[SkillType.Level].Level;
-        public ushort HealthPoints { get; private set; }
         public ushort MaxHealthPoints { get; private set; }
         public VocationType Vocation { get; private set; }
         public Gender Gender { get; private set; }
@@ -89,9 +83,8 @@ namespace NeoServer.Server.Model.Players
         public FightMode FightMode { get; private set; }
         public byte SoulPoints { get; private set; }
         public uint MaxSoulPoints { get; private set; }
-        public new IDictionary<SkillType, ISkill> Skills { get; private set; }
 
-        public sealed override IInventory Inventory { get; protected set; }
+        public IInventory Inventory { get; set; }
 
         public ushort StaminaMinutes { get; private set; }
 
@@ -101,6 +94,17 @@ namespace NeoServer.Server.Model.Players
         public bool IsMounted()
         {
             return false;
+        }
+
+        public void IncreaseSkillCounter(SkillType skill, ushort value)
+        {
+            if (!Skills.ContainsKey(skill))
+            {
+                // TODO: proper logging.
+                Console.WriteLine($"CreatureId {Name} does not have the skill {skill} in it's skill set.");
+            }
+
+            Skills[skill].IncreaseCounter(value);
         }
 
         public string GetDescription(bool isYourself)
@@ -187,7 +191,47 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public override ushort AttackPower => Inventory.TotalAttack;
+        public ushort DamageFactor => FightMode switch
+        {
+            FightMode.Attack => 1,
+            FightMode.Balanced => (ushort)0.75,
+            FightMode.Defense => (ushort)0.5,
+            _ => (ushort)0.75
+        };
+
+        public SkillType SkillInUse
+        {
+            get
+            {
+                if (Inventory.Weapon is IWeapon weapon)
+                {
+                    return weapon.Type switch
+                    {
+                        WeaponType.Club => SkillType.Club,
+                        WeaponType.Sword => SkillType.Sword,
+                        WeaponType.Axe => SkillType.Axe,
+                        WeaponType.Ammunition => SkillType.Distance,
+                        WeaponType.Distance => SkillType.Distance,
+                        _ => SkillType.Fist
+                    };
+                }
+                return SkillType.Fist;
+            }
+        }
+
+
+
+
+        public override ushort AttackPower
+        {
+            get
+            {
+
+                return (ushort)(0.085 * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
+            }
+        }
+
+        public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
         public override ushort ArmorRating => Inventory.TotalArmor;
 
@@ -196,8 +240,7 @@ namespace NeoServer.Server.Model.Players
         public override byte AutoAttackRange => Math.Max((byte)1, Inventory.AttackRange);
 
         public byte SecureMode { get; private set; }
-
-
+        public float CarryStrength { get; }
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
@@ -274,6 +317,8 @@ namespace NeoServer.Server.Model.Players
             StopWalking();
             OnCancelledWalk(this);
         }
+
+
     }
 }
 

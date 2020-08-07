@@ -1,0 +1,155 @@
+{
+  "monster": {
+    "name": "Shadow Hound",
+    "nameDescription": "a shadow hound",
+    "experience": "600",
+    "speed": "360",
+    "race": "blood",
+    "health": {
+      "now": "555",
+      "max": "555"
+    },
+    "targetchange": {
+      "speed": "0",
+      "chance": "8"
+    },
+    "look": {
+      "type": "322",
+      "corpse": "9923"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "100",
+          "min": "0",
+          "max": "-350"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "24",
+          "min": "-60",
+          "max": "-160",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "fireattack"
+            }
+          ]
+        },
+        {
+          "name": "monster soulfire",
+          "interval": "2000",
+          "chance": "14"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "55",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "15",
+        "min": "60",
+        "max": "230",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "30"
+        },
+        {
+          "energyPercent": "10"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "physicalPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Grrrr!",
+        "yell": "1"
+      }
+    },
+    "loot": {
+      "item": {
+        "name": "midnight shard",
+        "chance": "8333"
+      }
+    }
+  }
+}

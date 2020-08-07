@@ -1,0 +1,183 @@
+{
+  "monster": {
+    "name": "Demon Skeleton",
+    "nameDescription": "a demon skeleton",
+    "race": "undead",
+    "experience": "240",
+    "speed": "180",
+    "manacost": "620",
+    "health": {
+      "now": "400",
+      "max": "400"
+    },
+    "look": {
+      "type": "37",
+      "corpse": "5963"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-185"
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "1",
+          "target": "1",
+          "range": "1",
+          "min": "-30",
+          "max": "-50",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallclouds"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25"
+    },
+    "elements": {
+      "element": {
+        "holyPercent": "-25"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "drunk": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "75",
+          "chance": "97000"
+        },
+        {
+          "name": "demonic skeletal hand",
+          "chance": "12600"
+        },
+        {
+          "name": "throwing star",
+          "countmax": "3",
+          "chance": "10000"
+        },
+        {
+          "name": "health potion",
+          "countmax": "2",
+          "chance": "9700"
+        },
+        {
+          "name": "mana potion",
+          "chance": "5000"
+        },
+        {
+          "name": "battle shield",
+          "chance": "5000"
+        },
+        {
+          "id": "2050",
+          "chance": "4800"
+        },
+        {
+          "name": "battle hammer",
+          "chance": "4000"
+        },
+        {
+          "name": "iron helmet",
+          "chance": "3450"
+        },
+        {
+          "name": "black pearl",
+          "chance": "2900"
+        },
+        {
+          "name": "small ruby",
+          "chance": "1500"
+        },
+        {
+          "name": "mysterious fetish",
+          "chance": "530"
+        },
+        {
+          "name": "mind stone",
+          "chance": "470"
+        },
+        {
+          "name": "guardian shield",
+          "chance": "110"
+        }
+      ]/* torch */
+    }
+  }
+}

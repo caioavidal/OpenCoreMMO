@@ -1,0 +1,240 @@
+{
+  "monster": {
+    "name": "Energy Elemental",
+    "nameDescription": "an energy elemental",
+    "race": "undead",
+    "experience": "450",
+    "speed": "250",
+    "manacost": "0",
+    "health": {
+      "now": "500",
+      "max": "500"
+    },
+    "look": {
+      "type": "293",
+      "corpse": "1495"
+    },
+    "targetchange": {
+      "interval": "20000",
+      "chance": "15"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "85"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "70"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "20",
+          "range": "6",
+          "radius": "2",
+          "target": "1",
+          "min": "-168",
+          "max": "-220",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "purpleenergy"
+            }
+          ]
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "11",
+          "range": "3",
+          "target": "1",
+          "min": "0",
+          "max": "-130",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "energycondition",
+          "interval": "1000",
+          "chance": "15",
+          "radius": "3",
+          "target": "0",
+          "atttribute": {
+            "key": "areaEffect",
+            "value": "yellowenergy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "50",
+      "defense": "50",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "90",
+        "max": "150",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "25"
+        },
+        {
+          "holyPercent": "15"
+        },
+        {
+          "deathPercent": "17"
+        },
+        {
+          "earthPercent": "-15"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "ice": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "42000"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "42000"
+        },
+        {
+          "id": "7638",
+          "countmax": "10",
+          "chance": "5500"
+        },
+        {
+          "id": "2399",
+          "countmax": "5",
+          "chance": "5500"
+        },
+        {
+          "id": "7620",
+          "chance": "12000"
+        },
+        {
+          "id": "7589",
+          "chance": "9250"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2150",
+              "countmax": "3",
+              "chance": "2750"
+            },
+            {
+              "id": "7449",
+              "chance": "6375"
+            },
+            {
+              "id": "2425",
+              "chance": "4200"
+            },
+            {
+              "id": "2124",
+              "chance": "2000"
+            },
+            {
+              "id": "2167",
+              "chance": "1150"
+            },
+            {
+              "id": "2170",
+              "chance": "1200"
+            },
+            {
+              "id": "2515",
+              "chance": "500"
+            },
+            {
+              "id": "2189",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

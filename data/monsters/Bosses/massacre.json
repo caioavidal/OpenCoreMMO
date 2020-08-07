@@ -1,0 +1,137 @@
+{
+  "monster": {
+    "name": "Massacre",
+    "nameDescription": "the massacre",
+    "race": "blood",
+    "experience": "9800",
+    "speed": "390",
+    "manacost": "0",
+    "health": {
+      "now": "30000",
+      "max": "30000"
+    },
+    "look": {
+      "type": "244",
+      "corpse": "6336"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "150",
+          "attack": "150"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "24",
+          "range": "7",
+          "min": "-280",
+          "max": "-500",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "12",
+        "speedchange": "380",
+        "duration": "4000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "poison": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": {
+        "id": "6540",
+        "chance": "100000"
+      }/* massacre's shell piece */
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "monster": {
+    "name": "Swampling",
+    "nameDescription": "a swampling",
+    "race": "venom",
+    "experience": "45",
+    "speed": "190",
+    "health": {
+      "now": "80",
+      "max": "80"
+    },
+    "look": {
+      "type": "535",
+      "corpse": "19902"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-80"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-2",
+          "max": "-15",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "length": "3",
+          "spread": "2",
+          "speedchange": "-300",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "watersplash"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "10"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Gnark!"
+        },
+        {
+          "sentence": "Crrrck!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2120",
+          "chance": "4540"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "12",
+          "chance": "60000"
+        },
+        {
+          "name": "white mushroom",
+          "countmax": "5",
+          "chance": "8980"
+        },
+        {
+          "name": "rat cheese",
+          "chance": "18670"
+        },
+        {
+          "name": "swampling moss",
+          "chance": "12610"
+        },
+        {
+          "name": "piece of swampling wood",
+          "chance": "8270"
+        }
+      ]/* rope */
+    }
+  }
+}

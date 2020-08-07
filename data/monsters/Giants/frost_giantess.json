@@ -1,0 +1,205 @@
+{
+  "monster": {
+    "name": "Frost Giantess",
+    "nameDescription": "a frost giantess",
+    "race": "blood",
+    "experience": "150",
+    "speed": "210",
+    "manacost": "490",
+    "health": {
+      "now": "275",
+      "max": "275"
+    },
+    "look": {
+      "type": "265",
+      "corpse": "7330"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "60"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-60"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "30",
+          "range": "7",
+          "min": "0",
+          "max": "-90",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "speed",
+        "interval": "2000",
+        "chance": "15",
+        "speedchange": "300",
+        "duration": "5000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "20"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "deathPercent": "-3"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "ice": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Ymirs Mjalle!"
+        },
+        {
+          "sentence": "No run so much, must stay fat!"
+        },
+        {
+          "sentence": "Horre, Sjan Flan!"
+        },
+        {
+          "sentence": "Damned fast food."
+        },
+        {
+          "sentence": "Come kiss the cook!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small stone",
+          "countmax": "3",
+          "chance": "10360"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "40",
+          "chance": "80000"
+        },
+        {
+          "name": "club ring",
+          "chance": "70"
+        },
+        {
+          "name": "short sword",
+          "chance": "7960"
+        },
+        {
+          "name": "dark helmet",
+          "chance": "170"
+        },
+        {
+          "name": "battle shield",
+          "chance": "1490"
+        },
+        {
+          "name": "ham",
+          "countmax": "2",
+          "chance": "20990"
+        },
+        {
+          "name": "shard",
+          "chance": "100"
+        },
+        {
+          "id": "7441",
+          "chance": "2008"
+        },
+        {
+          "name": "norse shield",
+          "chance": "320"
+        },
+        {
+          "name": "mana potion",
+          "chance": "950"
+        },
+        {
+          "name": "frost giant pelt",
+          "chance": "4800"
+        }
+      ]/* ice cube */
+    }
+  }
+}

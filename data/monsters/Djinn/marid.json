@@ -1,0 +1,310 @@
+{
+  "monster": {
+    "name": "Marid",
+    "nameDescription": "a marid",
+    "race": "blood",
+    "experience": "410",
+    "speed": "180",
+    "health": {
+      "now": "550",
+      "max": "550"
+    },
+    "look": {
+      "type": "104",
+      "corpse": "6033"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-90"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "-100",
+          "max": "-250",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energyball"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-30",
+          "max": "-90",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "speedchange": "-650",
+          "duration": "1500",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "duration": "6000",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "outfit",
+          "interval": "2000",
+          "chance": "1",
+          "range": "7",
+          "monster": "rabbit",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "djinn electrify",
+          "interval": "2000",
+          "range": "5",
+          "chance": "15"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "3",
+          "target": "0",
+          "min": "-30",
+          "max": "-90",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "50",
+        "max": "80",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "90"
+        },
+        {
+          "earthPercent": "1"
+        },
+        {
+          "energyPercent": "60"
+        },
+        {
+          "holyPercent": "1"
+        },
+        {
+          "icePercent": "-1"
+        },
+        {
+          "deathPercent": "-1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "blue djinn",
+        "interval": "2000",
+        "chance": "10",
+        "max": "2"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Simsalabim"
+        },
+        {
+          "sentence": "Feel the power of my magic, tiny mortal!"
+        },
+        {
+          "sentence": "Wishes can come true."
+        },
+        {
+          "sentence": "Djinns will soon again be the greatest!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "1872",
+          "chance": "2560"
+        },
+        {
+          "name": "small oil lamp",
+          "chance": "110"
+        },
+        {
+          "name": "small sapphire",
+          "chance": "6200"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "70",
+          "chance": "60000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "30",
+          "chance": "60000"
+        },
+        {
+          "name": "blue gem",
+          "chance": "110"
+        },
+        {
+          "name": "hailstorm rod",
+          "chance": "770"
+        },
+        {
+          "id": "2374",
+          "chance": "5000"
+        },
+        {
+          "name": "heavy machete",
+          "chance": "4530"
+        },
+        {
+          "name": "mystic turban",
+          "chance": "290"
+        },
+        {
+          "name": "blueberry",
+          "countmax": "29",
+          "chance": "65000"
+        },
+        {
+          "name": "blue piece of cloth",
+          "chance": "3750"
+        },
+        {
+          "name": "royal spear",
+          "countmax": "3",
+          "chance": "15500"
+        },
+        {
+          "name": "strong mana potion",
+          "chance": "9800"
+        },
+        {
+          "name": "seeds",
+          "chance": "2400"
+        },
+        {
+          "name": "magma monocle",
+          "chance": "320"
+        },
+        {
+          "name": "jewelled belt",
+          "chance": "7880"
+        },
+        {
+          "name": "noble turban",
+          "chance": "530"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

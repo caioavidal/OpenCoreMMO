@@ -1,0 +1,90 @@
+{
+  "monster": {
+    "name": "Hyaena",
+    "nameDescription": "a hyaena",
+    "race": "blood",
+    "experience": "20",
+    "speed": "206",
+    "manacost": "275",
+    "health": {
+      "now": "60",
+      "max": "60"
+    },
+    "look": {
+      "type": "94",
+      "corpse": "6026"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "30"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "10",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": "3"
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "3976",
+          "countmax": "4",
+          "chance": "24375"
+        },
+        {
+          "id": "2666",
+          "countmax": "2",
+          "chance": "21000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

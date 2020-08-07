@@ -1,0 +1,310 @@
+{
+  "monster": {
+    "name": "Draken Spellweaver",
+    "nameDescription": "a draken spellweaver",
+    "race": "blood",
+    "experience": "3100",
+    "speed": "210",
+    "health": {
+      "now": "5000",
+      "max": "5000"
+    },
+    "look": {
+      "type": "340",
+      "corpse": "11316"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-252"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "length": "4",
+          "spread": "3",
+          "min": "-240",
+          "max": "-480",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "explosion"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "min": "-100",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "target": "1",
+          "min": "-150",
+          "max": "-300",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "radius": "4",
+          "min": "-200",
+          "max": "-380",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        },
+        {
+          "name": "monster soulfire",
+          "interval": "2000",
+          "chance": "10"
+        },
+        {
+          "name": "poisoncondition",
+          "interval": "2000",
+          "chance": "10",
+          "target": "1",
+          "min": "-280",
+          "max": "-360",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": [
+        {
+          "name": "invisible",
+          "interval": "2000",
+          "chance": "10",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "15",
+          "min": "270",
+          "max": "530",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "75"
+        },
+        {
+          "holyPercent": "-5"
+        },
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "physicalPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Kazzzzuuuum!!"
+        },
+        {
+          "sentence": "Fissziss!"
+        },
+        {
+          "sentence": "Zzzzzooom!!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "ring of the sky",
+          "chance": "370"
+        },
+        {
+          "name": "small ruby",
+          "countmax": "5",
+          "chance": "6910"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "41000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "58000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "5",
+          "chance": "25510"
+        },
+        {
+          "name": "green gem",
+          "chance": "970"
+        },
+        {
+          "name": "wand of inferno",
+          "chance": "1660"
+        },
+        {
+          "name": "meat",
+          "chance": "30400"
+        },
+        {
+          "name": "great mana potion",
+          "chance": "4970"
+        },
+        {
+          "name": "focus cape",
+          "chance": "1450"
+        },
+        {
+          "name": "Zaoan shoes",
+          "chance": "1980"
+        },
+        {
+          "name": "weaver's wandtip",
+          "chance": "19790"
+        },
+        {
+          "name": "draken trophy",
+          "chance": "10"
+        },
+        {
+          "name": "spellweaver's robe",
+          "chance": "620"
+        },
+        {
+          "name": "Zaoan robe",
+          "chance": "770"
+        },
+        {
+          "name": "luminous orb",
+          "chance": "1980"
+        },
+        {
+          "name": "draken sulphur",
+          "chance": "3930"
+        },
+        {
+          "name": "harness",
+          "chance": "30"
+        },
+        {
+          "name": "bamboo leaves",
+          "chance": "180"
+        }
+      ]
+    }
+  }
+}

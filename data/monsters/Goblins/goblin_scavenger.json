@@ -1,0 +1,224 @@
+{
+  "monster": {
+    "name": "Goblin Scavenger",
+    "nameDescription": "a goblin scavenger",
+    "race": "blood",
+    "experience": "37",
+    "speed": "180",
+    "manacost": "310",
+    "health": {
+      "now": "60",
+      "max": "60"
+    },
+    "look": {
+      "type": "297",
+      "corpse": "6002"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-15"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "0",
+          "max": "-30",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "spear"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "min": "-22",
+          "max": "-30",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "5",
+          "range": "7",
+          "min": "-1",
+          "max": "-30",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            },
+            {
+              "key": "areaEffect",
+              "value": "smallclouds"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "10",
+        "max": "16",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "energy"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "holyPercent": "1"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Shiny, Shiny!"
+        },
+        {
+          "sentence": "You mean!"
+        },
+        {
+          "sentence": "All mine!"
+        },
+        {
+          "sentence": "Uhh!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small stone",
+          "countmax": "2",
+          "chance": "25560"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "9",
+          "chance": "50810"
+        },
+        {
+          "id": "2230",
+          "chance": "12450"
+        },
+        {
+          "name": "mouldy cheese",
+          "chance": "7000"
+        },
+        {
+          "name": "dagger",
+          "chance": "18280"
+        },
+        {
+          "name": "short sword",
+          "chance": "8900"
+        },
+        {
+          "name": "bone club",
+          "chance": "5000"
+        },
+        {
+          "name": "leather helmet",
+          "chance": "10180"
+        },
+        {
+          "name": "leather armor",
+          "chance": "7700"
+        },
+        {
+          "name": "small axe",
+          "chance": "9790"
+        },
+        {
+          "id": "2667",
+          "chance": "13640"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

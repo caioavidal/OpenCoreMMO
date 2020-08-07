@@ -1,0 +1,276 @@
+{
+  "monster": {
+    "name": "Dworc Voodoomaster",
+    "namedescription": "a dworc voodoomaster",
+    "race": "blood",
+    "experience": "50",
+    "speed": "240",
+    "manacost": "0",
+    "health": {
+      "now": "80",
+      "max": "80"
+    },
+    "look": {
+      "type": "214",
+      "corpse": "6055"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "15"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "10",
+          "attack": "20"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "6",
+          "range": "1",
+          "min": "-1",
+          "max": "-39"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "8",
+          "range": "7",
+          "speedchange": "-800",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "drunk",
+          "interval": "1000",
+          "chance": "10",
+          "range": "7",
+          "attribute": [
+            {
+              "key": "shooteffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaeffect",
+              "value": "energyarea"
+            }
+          ]
+        },
+        {
+          "name": "outfit",
+          "interval": "1000",
+          "chance": "9",
+          "range": "7",
+          "monster": "chicken",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "20",
+          "radius": "6",
+          "target": "0",
+          "min": "-6",
+          "max": "-18",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "poisonfield",
+          "interval": "1000",
+          "chance": "13",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "attribute": {
+            "key": "shooteffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "3",
+      "defense": "8",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "10",
+          "min": "3",
+          "max": "9",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "8",
+          "speedchange": "200",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "invisible",
+          "interval": "1000",
+          "chance": "5",
+          "duration": "3000",
+          "attribute": {
+            "key": "areaeffect",
+            "value": "blueshimmer"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "100"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "firePercent": "-15"
+        },
+        {
+          "deathPercent": "-10"
+        },
+        {
+          "icePercent": "-8"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "grak brrretz!"
+        },
+        {
+          "sentence": "grow truk grrrrr."
+        },
+        {
+          "sentence": "prek tars, dekklep zurk."
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "20",
+          "chance": "35000"
+        },
+        {
+          "id": "2229",
+          "countmax": "3",
+          "chance": "1000"
+        },
+        {
+          "id": "2050",
+          "chance": "7000"
+        },
+        {
+          "id": "2230",
+          "chance": "12500"
+        },
+        {
+          "id": "2467",
+          "chance": "13000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2172",
+              "chance": "200"
+            },
+            {
+              "id": "2411",
+              "chance": "1000"
+            },
+            {
+              "id": "3967",
+              "chance": "550"
+            },
+            {
+              "id": "2174",
+              "chance": "350"
+            },
+            {
+              "id": "7618",
+              "chance": "700"
+            },
+            {
+              "id": "3955",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "monster": {
+    "name": "Chakoya Tribewarden",
+    "nameDescription": "a chakoya tribewarden",
+    "race": "blood",
+    "experience": "40",
+    "speed": "270",
+    "manacost": "305",
+    "health": {
+      "now": "68",
+      "max": "68"
+    },
+    "look": {
+      "type": "259",
+      "corpse": "7320"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "20",
+        "attack": "20"
+      }
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "100"
+        },
+        {
+          "firePercent": "25"
+        },
+        {
+          "holyPercent": "10"
+        },
+        {
+          "energyPercent": "-15"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "Quisavu tukavi!"
+        },
+        {
+          "sentence": "Si siyoqua jamjam!"
+        },
+        {
+          "sentence": "Achuq! jinuma!"
+        },
+        {
+          "sentence": "Si ji jusipa!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "20000"
+        },
+        {
+          "id": "2666",
+          "chance": "20000"
+        },
+        {
+          "id": "2671",
+          "chance": "20000"
+        },
+        {
+          "id": "2667",
+          "countmax": "3",
+          "chance": "10000"
+        },
+        {
+          "id": "2398",
+          "chance": "9000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2541",
+              "chance": "2500"
+            },
+            {
+              "id": "7381",
+              "chance": "1750"
+            },
+            {
+              "id": "7441",
+              "chance": "1000"
+            },
+            {
+              "id": "7158",
+              "chance": "900"
+            },
+            {
+              "id": "7159",
+              "chance": "700"
+            },
+            {
+              "id": "2669",
+              "chance": "750"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

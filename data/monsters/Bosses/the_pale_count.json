@@ -1,0 +1,181 @@
+{
+  "monster": {
+    "name": "The Pale Count",
+    "nameDescription": "The Pale Count",
+    "race": "blood",
+    "experience": "28000",
+    "speed": "300",
+    "health": {
+      "now": "50000",
+      "max": "50000"
+    },
+    "look": {
+      "type": "558",
+      "corpse": "21279"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-540"
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "17",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "speedchange": "-600",
+          "duration": "1500"
+        },
+        {
+          "name": "ice",
+          "interval": "2000",
+          "chance": "21",
+          "range": "6",
+          "radius": "2",
+          "target": "1",
+          "min": "-130",
+          "max": "-350",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallice"
+            },
+            {
+              "key": "areaEffect",
+              "value": "giantice"
+            }
+          ]
+        },
+        {
+          "name": "manadrain",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-60",
+          "max": "-120",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "earth"
+            },
+            {
+              "key": "areaeffect",
+              "value": "carniphila"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "75",
+      "defense": "75"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "deathPercent": "-40"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "4",
+      "summon": {
+        "name": "Nightfiend",
+        "interval": "2000",
+        "chance": "10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Feel the hungry kiss of death!"
+        },
+        {
+          "sentence": "The monsters in the mirror will come eat your dreams."
+        },
+        {
+          "sentence": "Your pitiful life has come to an end!"
+        },
+        {
+          "sentence": "I will squish you like a maggot and suck you dry!"
+        },
+        {
+          "sentence": "Yield to the inevitable!"
+        },
+        {
+          "sentence": "Some day I shall see my beautiful face in a mirror again."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "monster": {
+    "name": "Avalanche",
+    "nameDescription": "avalanche",
+    "race": "undead",
+    "experience": "305",
+    "speed": "195",
+    "manacost": "0",
+    "health": {
+      "now": "550",
+      "max": "550"
+    },
+    "look": {
+      "type": "261",
+      "corpse": "7349"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "60"
+        },
+        {
+          "name": "drown",
+          "interval": "1000",
+          "chance": "100",
+          "length": "5",
+          "spread": "6",
+          "min": "-10",
+          "max": "-50",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energyarea"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "4000",
+          "chance": "100",
+          "radius": "3",
+          "duration": "10000",
+          "speedchange": "-400",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        },
+        {
+          "name": "physical",
+          "interval": "6000",
+          "chance": "100",
+          "radius": "1",
+          "target": "1",
+          "range": "5",
+          "min": "0",
+          "max": "-40",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "largerock"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "26",
+      "defense": "27"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "30"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "5",
+      "voice": {
+        "sentence": "You will pay for imprisoning me here."
+      }
+    }
+  }
+}

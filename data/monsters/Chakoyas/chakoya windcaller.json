@@ -1,0 +1,194 @@
+{
+  "monster": {
+    "name": "Chakoya Windcaller",
+    "nameDescription": "a chakoya windcaller",
+    "race": "blood",
+    "experience": "48",
+    "speed": "270",
+    "manacost": "305",
+    "health": {
+      "now": "84",
+      "max": "84"
+    },
+    "look": {
+      "type": "260",
+      "corpse": "7320"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "12",
+          "attack": "20"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "min": "-5",
+          "max": "-35",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "18",
+          "length": "3",
+          "spread": "2",
+          "min": "-5",
+          "max": "-20",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "30"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "100"
+        },
+        {
+          "firePercent": "50"
+        },
+        {
+          "holyPercent": "20"
+        },
+        {
+          "energyPercent": "-15"
+        },
+        {
+          "deathPercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "Mupi! Si siyoqua jinuma!"
+        },
+        {
+          "sentence": "Siqsiq ji jusipa!"
+        },
+        {
+          "sentence": "Jagura taluka taqua!"
+        },
+        {
+          "sentence": "Quatu nguraka!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "36",
+          "chance": "20000"
+        },
+        {
+          "id": "2667",
+          "countmax": "4",
+          "chance": "9000"
+        },
+        {
+          "id": "2666",
+          "chance": "20000"
+        },
+        {
+          "id": "2398",
+          "chance": "7500"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2541",
+              "chance": "2000"
+            },
+            {
+              "id": "7441",
+              "chance": "1000"
+            },
+            {
+              "id": "7158",
+              "chance": "750"
+            },
+            {
+              "id": "2669",
+              "chance": "700"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

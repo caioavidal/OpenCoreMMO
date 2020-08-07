@@ -1,0 +1,173 @@
+{
+  "monster": {
+    "name": "Tibia Bug",
+    "namedescription": "a Tibia Bug",
+    "race": "venom",
+    "experience": "50",
+    "speed": "240",
+    "manacost": "250",
+    "health": {
+      "now": "270",
+      "max": "270"
+    },
+    "look": {
+      "type": "45",
+      "corpse": "5990"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "1000",
+          "skill": "43",
+          "attack": "20"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "13",
+          "length": "4",
+          "spread": "0",
+          "min": "-5",
+          "max": "-35",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energy"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "10",
+      "defense": "15",
+      "defense": {
+        "name": "invisible",
+        "interval": "1000",
+        "chance": "17",
+        "duration": "2000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "1"
+        },
+        {
+          "fire": "1"
+        },
+        {
+          "poison": "0"
+        },
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "0"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "0"
+        }
+      ]
+    },
+    "summons": {
+      "maxSummons": "10",
+      "summon": {
+        "name": "tibia bug",
+        "interval": "1000",
+        "chance": "15",
+        "max": "10"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "My father was a year 2k bug."
+        },
+        {
+          "sentence": "Psst, I'll make you rich."
+        },
+        {
+          "sentence": "You are bugged ... by me!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "11",
+          "chance": "100000"
+        },
+        {
+          "id": "6570",
+          "chance": "5538"
+        },
+        {
+          "id": "6571",
+          "chance": "1538"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

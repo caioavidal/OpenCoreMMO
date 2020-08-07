@@ -1,0 +1,380 @@
+{
+  "monster": {
+    "name": "Undead Dragon",
+    "nameDescription": "a undead dragon",
+    "race": "undead",
+    "experience": "7200",
+    "speed": "300",
+    "manacost": "0",
+    "health": {
+      "now": "8350",
+      "max": "8350"
+    },
+    "look": {
+      "type": "231",
+      "corpse": "6306"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "150",
+          "attack": "60"
+        },
+        {
+          "name": "melee",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-300",
+          "max": "-395",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "redspark"
+            }
+          ]
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "10",
+          "range": "7",
+          "min": "-0",
+          "max": "-500",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "suddendeath"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-120",
+          "max": "-390",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "poison",
+          "interval": "1000",
+          "chance": "23",
+          "range": "7",
+          "min": "-50",
+          "max": "-180",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "poison"
+            },
+            {
+              "key": "areaEffect",
+              "value": "poison"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "4000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-500",
+          "max": "-600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "poison",
+          "interval": "2000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-200",
+          "max": "-685",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poison"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "3000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "min": "-300",
+          "max": "-600",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "greenshimmer"
+          }
+        },
+        {
+          "name": "drowncondition",
+          "interval": "1000",
+          "chance": "20",
+          "length": "8",
+          "spread": "3",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "5",
+      "defense": "35"
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "100"
+        },
+        {
+          "earthPercent": "100"
+        },
+        {
+          "firePercent": "100"
+        },
+        {
+          "physicalPercent": "10"
+        },
+        {
+          "icePercent": "8"
+        },
+        {
+          "holyPercent": "-20"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "FEEEED MY ETERNAL HUNGER!",
+          "yell": "1"
+        },
+        {
+          "sentence": "I SENSE LIFE",
+          "yell": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "35500"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "35500"
+        },
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "35500"
+        },
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "35500"
+        },
+        {
+          "id": "2236",
+          "chance": "15000"
+        },
+        {
+          "id": "2413",
+          "chance": "26750"
+        },
+        {
+          "id": "6500",
+          "chance": "16750"
+        },
+        {
+          "id": "2152",
+          "countmax": "5",
+          "chance": "31000"
+        },
+        {
+          "id": "6300",
+          "chance": "6750"
+        },
+        {
+          "id": "7591",
+          "chance": "10000"
+        },
+        {
+          "id": "2033",
+          "chance": "3333"
+        },
+        {
+          "id": "7365",
+          "countmax": "10",
+          "chance": "22000"
+        },
+        {
+          "id": "2547",
+          "countmax": "6",
+          "chance": "3000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2260",
+              "chance": "45500"
+            },
+            {
+              "id": "5944",
+              "chance": "7000"
+            },
+            {
+              "id": "9810",
+              "chance": "2000"
+            },
+            {
+              "id": "7430",
+              "chance": "4000"
+            },
+            {
+              "id": "2476",
+              "chance": "3500"
+            },
+            {
+              "id": "2177",
+              "chance": "2500"
+            },
+            {
+              "id": "5925",
+              "chance": "1250"
+            },
+            {
+              "id": "8910",
+              "chance": "1000"
+            },
+            {
+              "id": "9971",
+              "chance": "900"
+            },
+            {
+              "id": "2498",
+              "chance": "750"
+            },
+            {
+              "id": "2454",
+              "chance": "700"
+            },
+            {
+              "id": "2492",
+              "chance": "500"
+            },
+            {
+              "id": "2466",
+              "chance": "650"
+            },
+            {
+              "id": "5741",
+              "chance": "300"
+            },
+            {
+              "id": "8885",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

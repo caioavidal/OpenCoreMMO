@@ -1,0 +1,159 @@
+{
+  "monster": {
+    "name": "Munster",
+    "nameDescription": "a munster",
+    "race": "blood",
+    "experience": "23",
+    "speed": "200",
+    "manacost": "250",
+    "health": {
+      "now": "58",
+      "max": "58"
+    },
+    "look": {
+      "type": "56",
+      "corpse": "2813"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "-1",
+        "max": "-15"
+      }
+    },
+    "defenses": {
+      "armor": "2",
+      "defense": "4"
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "physical": "0"
+        },
+        {
+          "energy": "0"
+        },
+        {
+          "fire": "0"
+        },
+        {
+          "poison": "0"
+        },
+        {
+          "lifedrain": "0"
+        },
+        {
+          "paralyze": "0"
+        },
+        {
+          "outfit": "0"
+        },
+        {
+          "drunk": "0"
+        },
+        {
+          "invisible": "0"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": {
+        "sentence": "Meeeeep!"
+      }
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Rat",
+        "interval": "2000",
+        "chance": "20",
+        "max": "2"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "16",
+          "chance": "100000"
+        },
+        {
+          "id": "2696",
+          "chance": "50000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2687",
+              "countmax": "1",
+              "chance": "5000"
+            },
+            {
+              "id": "2650",
+              "chance": "50000"
+            },
+            {
+              "id": "2449",
+              "chance": "5000"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

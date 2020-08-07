@@ -1,0 +1,110 @@
+{
+  "monster": {
+    "name": "Azure Frog",
+    "namedescription": "a azure frog",
+    "race": "blood",
+    "experience": "20",
+    "speed": "230",
+    "manacost": "305",
+    "health": {
+      "now": "60",
+      "max": "60"
+    },
+    "look": {
+      "type": "226",
+      "head": "69",
+      "body": "66",
+      "legs": "69",
+      "feet": "66",
+      "corpse": "6079"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "10",
+        "attack": "25"
+      }
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "8"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "22"
+        },
+        {
+          "firePercent": "-10"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "Ribbit, ribbit!"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "11",
+          "chance": "23500"
+        },
+        {
+          "id": "3976",
+          "chance": "10000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

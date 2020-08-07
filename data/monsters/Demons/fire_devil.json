@@ -1,0 +1,200 @@
+{
+  "monster": {
+    "name": "Fire Devil",
+    "nameDescription": "a fire devil",
+    "race": "blood",
+    "experience": "145",
+    "speed": "180",
+    "manacost": "530",
+    "health": {
+      "now": "200",
+      "max": "200"
+    },
+    "look": {
+      "type": "40",
+      "corpse": "5985"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "4"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-35"
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "min": "-60",
+          "max": "-90",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+        {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "radius": "2",
+          "target": "1",
+          "min": "-20",
+          "max": "-50",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "13",
+      "defense": "13"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "30"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "deathPercent": "5"
+        },
+        {
+          "physicalPercent": "-5"
+        },
+        {
+          "icePercent": "-20"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "fire": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Hot, eh?"
+        },
+        {
+          "sentence": "Hell, oh, hell!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small pitchfork",
+          "chance": "19770"
+        },
+        {
+          "name": "blank rune",
+          "chance": "11000"
+        },
+        {
+          "id": "2419",
+          "chance": "3000"
+        },
+        {
+          "id": "2050",
+          "countmax": "2",
+          "chance": "1370"
+        },
+        {
+          "name": "double axe",
+          "chance": "1200"
+        },
+        {
+          "name": "cleaver",
+          "chance": "920"
+        },
+        {
+          "name": "necrotic rod",
+          "chance": "460"
+        },
+        {
+          "name": "small amethyst",
+          "chance": "280"
+        },
+        {
+          "name": "guardian shield",
+          "chance": "210"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

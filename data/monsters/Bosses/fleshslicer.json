@@ -1,0 +1,80 @@
+{
+  "monster": {
+    "name": "Fleshslicer",
+    "nameDescription": "Fleshslicer",
+    "race": "blood",
+    "experience": "5500",
+    "speed": "560",
+    "health": {
+      "now": "5700",
+      "max": "5700"
+    },
+    "look": {
+      "type": "457",
+      "corpse": "15296"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "50"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-99"
+      }
+    },
+    "defenses": {
+      "armor": "12",
+      "defense": "20"
+    },
+    "elements": "",
+    "immunities": "",
+    "voices": {
+      "interval": "3000",
+      "chance": "200"
+    },
+    "loot": ""
+  }
+}

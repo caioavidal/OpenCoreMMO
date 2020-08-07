@@ -1,0 +1,171 @@
+{
+  "monster": {
+    "name": "Death Priest",
+    "nameDescription": "a death priest",
+    "race": "undead",
+    "experience": "750",
+    "speed": "220",
+    "health": {
+      "now": "800",
+      "max": "800"
+    },
+    "look": {
+      "type": "99",
+      "head": "95",
+      "body": "116",
+      "legs": "119",
+      "feet": "115",
+      "corpse": "13975"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "70"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-80"
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "20",
+          "target": "1",
+          "range": "7",
+          "min": "-120",
+          "max": "-250",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "death"
+            },
+            {
+              "key": "areaEffect",
+              "value": "mortarea"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "20",
+        "min": "80",
+        "max": "200",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": {
+        "energyPercent": "75"
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "white pearl",
+          "chance": "3000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "144",
+          "chance": "70000"
+        },
+        {
+          "name": "scarab coin",
+          "countmax": "3",
+          "chance": "10000"
+        },
+        {
+          "id": "2175",
+          "chance": "6800"
+        },
+        {
+          "name": "ring of healing",
+          "chance": "1000"
+        },
+        {
+          "name": "orichalcum pearl",
+          "countmax": "4",
+          "chance": "6000"
+        },
+        {
+          "name": "health potion",
+          "chance": "15000"
+        },
+        {
+          "name": "mana potion",
+          "chance": "15000"
+        },
+        {
+          "id": "13739",
+          "chance": "27000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

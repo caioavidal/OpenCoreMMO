@@ -1,0 +1,216 @@
+{
+  "monster": {
+    "name": "Pirate Corsair",
+    "nameDescription": "a pirate corsair",
+    "race": "blood",
+    "experience": "350",
+    "speed": "230",
+    "manacost": "775",
+    "health": {
+      "now": "675",
+      "max": "675"
+    },
+    "look": {
+      "type": "98",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "75",
+          "attack": "40"
+        },
+        {
+          "name": "physical",
+          "interval": "3000",
+          "chance": "17",
+          "range": "7",
+          "min": "-50",
+          "max": "-70",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingstar"
+          }
+        },
+        {
+          "name": "melee",
+          "interval": "1000",
+          "chance": "30",
+          "range": "7",
+          "radius": "3",
+          "target": "0",
+          "min": "-0",
+          "max": "-0",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "rednote"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "20"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "32"
+        },
+        {
+          "holyPercent": "30"
+        },
+        {
+          "deathPercent": "-8"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "firePercent": "-17"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Give up!"
+        },
+        {
+          "sentence": "Hiyaa!"
+        },
+        {
+          "sentence": "Plundeeeeer!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "74",
+          "chance": "40000"
+        },
+        {
+          "id": "2489",
+          "chance": "3650"
+        },
+        {
+          "id": "2385",
+          "chance": "14500"
+        },
+        {
+          "id": "2376",
+          "chance": "3000"
+        },
+        {
+          "id": "2521",
+          "chance": "2500"
+        },
+        {
+          "id": "2399",
+          "countmax": "12",
+          "chance": "6000"
+        },
+        {
+          "id": "5091",
+          "chance": "1000"
+        },
+        {
+          "id": "5926",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "6097",
+              "chance": "600"
+            },
+            {
+              "id": "6126",
+              "chance": "600"
+            },
+            {
+              "id": "6098",
+              "chance": "600"
+            },
+            {
+              "id": "7588",
+              "chance": "500"
+            },
+            {
+              "id": "5813",
+              "chance": "800"
+            },
+            {
+              "id": "6096",
+              "chance": "750"
+            },
+            {
+              "id": "5462",
+              "chance": "250"
+            },
+            {
+              "id": "2114",
+              "chance": "100"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

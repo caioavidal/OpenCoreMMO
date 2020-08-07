@@ -1,0 +1,150 @@
+{
+  "monster": {
+    "name": "Deepling Brawler",
+    "nameDescription": "a deepling brawler",
+    "race": "blood",
+    "experience": "260",
+    "speed": "190",
+    "health": {
+      "now": "380",
+      "max": "380"
+    },
+    "look": {
+      "type": "470",
+      "corpse": "13840"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "0"
+        },
+        {
+          "runonhealth": "40"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-100"
+        },
+        {
+          "name": "drown",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "min": "-60",
+          "max": "-120",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "spear"
+            },
+            {
+              "key": "areaEffect",
+              "value": "bluebubble"
+            }
+          ]
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "-10"
+        },
+        {
+          "earthPercent": "-1"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "invisible": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "fire": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "44",
+          "chance": "61000"
+        },
+        {
+          "id": "2667",
+          "countmax": "3",
+          "chance": "19120"
+        },
+        {
+          "name": "fish fin",
+          "chance": "740"
+        },
+        {
+          "name": "heavy trident",
+          "chance": "2940"
+        },
+        {
+          "name": "eye of a deepling",
+          "chance": "6600"
+        },
+        {
+          "name": "deepling scales",
+          "chance": "14500"
+        }
+      ]/* fish*/
+    }
+  }
+}

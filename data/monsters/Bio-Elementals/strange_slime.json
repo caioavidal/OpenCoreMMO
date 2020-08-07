@@ -1,0 +1,71 @@
+{
+  "monster": {
+    "name": "Strange Slime",
+    "nameDescription": "a strange slime",
+    "race": "venom",
+    "experience": "0",
+    "speed": "120",
+    "health": {
+      "now": "15",
+      "max": "15"
+    },
+    "look": {
+      "type": "19",
+      "corpse": "1496"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "0"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "3",
+      "defense": "10"
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "monster": {
+    "name": "Ghoul",
+    "nameDescription": "a ghoul",
+    "race": "blood",
+    "experience": "85",
+    "speed": "144",
+    "manacost": "450",
+    "health": {
+      "now": "100",
+      "max": "100"
+    },
+    "look": {
+      "type": "18",
+      "corpse": "5976"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "40",
+          "attack": "28"
+        },
+        {
+          "name": "lifedrain",
+          "interval": "1000",
+          "chance": "12",
+          "range": "1",
+          "min": "-15",
+          "max": "-25"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "8",
+      "defense": "17",
+      "defense": {
+        "name": "healing",
+        "interval": "1000",
+        "chance": "13",
+        "min": "9",
+        "max": "15",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "deathPercent": "100"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "earthPercent": "20"
+        },
+        {
+          "icePercent": "10"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "34750"
+        },
+        {
+          "id": "2460",
+          "chance": "19250"
+        },
+        {
+          "id": "5913",
+          "chance": "1000"
+        },
+        {
+          "id": "2403",
+          "chance": "15250"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2168",
+              "chance": "200"
+            },
+            {
+              "id": "2483",
+              "chance": "2900"
+            },
+            {
+              "id": "2229",
+              "countmax": "2",
+              "chance": "1500"
+            },
+            {
+              "id": "2050",
+              "chance": "57850"
+            },
+            {
+              "id": "2473",
+              "chance": "5800"
+            },
+            {
+              "id": "3976",
+              "countmax": "6",
+              "chance": "47500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

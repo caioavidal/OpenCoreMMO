@@ -12,7 +12,7 @@ namespace NeoServer.Game.Contracts.Creatures
     {
         IPlayer Owner { get; }
 
-        byte TotalAttack { get; }
+        ushort TotalAttack { get; }
 
         byte TotalDefense { get; }
 
@@ -20,6 +20,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         byte AttackRange { get; }
         Items.Types.IContainer BackpackSlot { get; }
+        IWeapon Weapon { get; }
 
         IItem this[Slot slot] { get; }
 

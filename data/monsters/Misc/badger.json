@@ -1,0 +1,88 @@
+{
+  "monster": {
+    "name": "Badger",
+    "namedescription": "a badger",
+    "race": "blood",
+    "experience": "5",
+    "speed": "180",
+    "manacost": "200",
+    "health": {
+      "now": "20",
+      "max": "20"
+    },
+    "look": {
+      "type": "105",
+      "corpse": "6034"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "20"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "10"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "10",
+        "attack": "12"
+      }
+    },
+    "defenses": {
+      "armor": "1",
+      "defense": "3"
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "3976",
+          "chance": "20000"
+        },
+        {
+          "id": "2671",
+          "chance": "20000"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

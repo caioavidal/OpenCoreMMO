@@ -1,0 +1,247 @@
+{
+  "monster": {
+    "name": "Dark Torturer",
+    "nameDescription": "a dark torturer",
+    "race": "undead",
+    "experience": "4650",
+    "speed": "240",
+    "health": {
+      "now": "7350",
+      "max": "7350"
+    },
+    "look": {
+      "type": "234",
+      "corpse": "6328"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "80"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-500"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "10",
+          "range": "7",
+          "min": "0",
+          "max": "-781",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "throwingknife"
+          }
+        },
+        {
+          "name": "dark torturer skill reducer",
+          "interval": "2000",
+          "chance": "5"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "40",
+      "defense": "40",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "10",
+        "min": "200",
+        "max": "250",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "90"
+        },
+        {
+          "energyPercent": "30"
+        },
+        {
+          "deathPercent": "10"
+        },
+        {
+          "icePercent": "-10"
+        },
+        {
+          "holyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "fire": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "You like it, don't you?"
+        },
+        {
+          "sentence": "IahaEhheAie!"
+        },
+        {
+          "sentence": "It's party time!"
+        },
+        {
+          "sentence": "Harrr, Harrr!"
+        },
+        {
+          "sentence": "The torturer is in!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "99",
+          "chance": "40000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "8",
+          "chance": "55000"
+        },
+        {
+          "name": "golden legs",
+          "chance": "30"
+        },
+        {
+          "id": "2558",
+          "chance": "5250"
+        },
+        {
+          "name": "steel boots",
+          "chance": "5050"
+        },
+        {
+          "name": "ham",
+          "countmax": "2",
+          "chance": "60000"
+        },
+        {
+          "name": "orichalcum pearl",
+          "countmax": "2",
+          "chance": "2760"
+        },
+        {
+          "name": "cat's paw",
+          "chance": "2222"
+        },
+        {
+          "name": "jewelled backpack",
+          "chance": "1192"
+        },
+        {
+          "name": "soul orb",
+          "chance": "23000"
+        },
+        {
+          "id": "6300",
+          "chance": "2008"
+        },
+        {
+          "name": "demonic essence",
+          "chance": "8520"
+        },
+        {
+          "name": "concentrated demonic blood",
+          "countmax": "3",
+          "chance": "33333"
+        },
+        {
+          "name": "assassin star",
+          "countmax": "5",
+          "chance": "2222"
+        },
+        {
+          "name": "vile axe",
+          "chance": "480"
+        },
+        {
+          "name": "butcher's axe",
+          "chance": "850"
+        },
+        {
+          "name": "great mana potion",
+          "countmax": "2",
+          "chance": "14830"
+        },
+        {
+          "name": "great health potion",
+          "countmax": "2",
+          "chance": "10000"
+        },
+        {
+          "name": "gold ingot",
+          "chance": "3140"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

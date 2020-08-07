@@ -1,0 +1,190 @@
+{
+  "monster": {
+    "name": "Quara Mantassin",
+    "nameDescription": "a quara mantassin",
+    "race": "blood",
+    "experience": "400",
+    "speed": "520",
+    "manacost": "480",
+    "health": {
+      "now": "800",
+      "max": "800"
+    },
+    "look": {
+      "type": "72",
+      "corpse": "6064"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "40"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "60",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15",
+      "defense": {
+        "name": "invisible",
+        "interval": "1000",
+        "chance": "30",
+        "duration": "2000",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "redshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "icePercent": "100"
+        },
+        {
+          "earthPercent": "-12"
+        },
+        {
+          "energyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "lifedrain": "1"
+        },
+        {
+          "drown": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Zuerk Pachak!"
+        },
+        {
+          "sentence": "Shrrrr"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "70",
+          "chance": "27000"
+        },
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "27000"
+        },
+        {
+          "id": "2377",
+          "chance": "12950"
+        },
+        {
+          "id": "2229",
+          "chance": "11800"
+        },
+        {
+          "id": "2654",
+          "chance": "8750"
+        },
+        {
+          "id": "2670",
+          "countmax": "5",
+          "chance": "1300"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "2381",
+              "chance": "4800"
+            },
+            {
+              "id": "5895",
+              "chance": "1200"
+            },
+            {
+              "id": "2165",
+              "chance": "2000"
+            },
+            {
+              "id": "2146",
+              "chance": "750"
+            },
+            {
+              "id": "2479",
+              "chance": "300"
+            },
+            {
+              "id": "2656",
+              "chance": "500"
+            },
+            {
+              "id": "7892",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "monster": {
+    "name": "Clay Guardian",
+    "nameDescription": "a clay guardian",
+    "race": "undead",
+    "experience": "400",
+    "speed": "210",
+    "health": {
+      "now": "625",
+      "max": "625"
+    },
+    "look": {
+      "type": "333",
+      "corpse": "13972"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "60"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-125"
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-30",
+          "max": "-150",
+          "attribute": [
+            {
+              "key": "shootEffect",
+              "value": "smallearth"
+            },
+            {
+              "key": "areaEffect",
+              "value": "greenbubble"
+            }
+          ]
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "50",
+          "target": "0",
+          "radius": "3",
+          "min": "-20",
+          "max": "-30",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25",
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "10",
+        "min": "40",
+        "max": "130",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "physicalPercent": "40"
+        },
+        {
+          "deathPercent": "50"
+        },
+        {
+          "icePercent": "50"
+        },
+        {
+          "firePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "earth": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "small stone",
+          "countmax": "10",
+          "chance": "10000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "63",
+          "chance": "50000"
+        },
+        {
+          "name": "blank rune",
+          "chance": "25000"
+        },
+        {
+          "name": "earth arrow",
+          "countmax": "8",
+          "chance": "5555"
+        },
+        {
+          "name": "small topaz",
+          "chance": "320"
+        },
+        {
+          "name": "lump of earth",
+          "chance": "25000"
+        },
+        {
+          "name": "clay lump",
+          "chance": "1100"
+        }
+      ]
+    }
+  }
+}

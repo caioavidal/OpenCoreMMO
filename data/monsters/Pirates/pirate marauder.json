@@ -1,0 +1,205 @@
+{
+  "monster": {
+    "name": "Pirate Marauder",
+    "nameDescription": "a pirate marauder",
+    "race": "blood",
+    "experience": "125",
+    "speed": "230",
+    "manacost": "490",
+    "health": {
+      "now": "210",
+      "max": "210"
+    },
+    "look": {
+      "type": "93",
+      "corpse": "6080"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "25"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "60",
+          "attack": "40"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "min": "-0",
+          "max": "-65",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "spear"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "20"
+    },
+    "elements": {
+      "element": [
+        {
+          "earthPercent": "16"
+        },
+        {
+          "holyPercent": "15"
+        },
+        {
+          "deathPercent": "-7"
+        },
+        {
+          "firePercent": "-8"
+        },
+        {
+          "energyPercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Plundeeeeer!"
+        },
+        {
+          "sentence": "Give up!"
+        },
+        {
+          "sentence": "Hiyaa!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "20000"
+        },
+        {
+          "id": "2376",
+          "chance": "9750"
+        },
+        {
+          "id": "2050",
+          "chance": "9250"
+        },
+        {
+          "id": "2389",
+          "countmax": "2",
+          "chance": "4000"
+        },
+        {
+          "id": "2510",
+          "chance": "4800"
+        },
+        {
+          "id": "2464",
+          "chance": "2750"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "5091",
+              "chance": "1125"
+            },
+            {
+              "id": "5917",
+              "chance": "1100"
+            },
+            {
+              "id": "6126",
+              "chance": "600"
+            },
+            {
+              "id": "6097",
+              "chance": "600"
+            },
+            {
+              "id": "6098",
+              "chance": "600"
+            },
+            {
+              "id": "5553",
+              "chance": "100"
+            },
+            {
+              "id": "5928",
+              "chance": "200"
+            },
+            {
+              "id": "5792",
+              "chance": "50"
+            },
+            {
+              "id": "5927",
+              "chance": "500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

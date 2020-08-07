@@ -1,0 +1,219 @@
+{
+  "monster": {
+    "name": "Wailing Widow",
+    "nameDescription": "a wailing widow",
+    "race": "venom",
+    "experience": "450",
+    "speed": "220",
+    "health": {
+      "now": "850",
+      "max": "850"
+    },
+    "look": {
+      "type": "347",
+      "corpse": "11310"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-120",
+          "poison": "160"
+        },
+        {
+          "name": "drunk",
+          "interval": "2000",
+          "chance": "20",
+          "range": "7",
+          "radius": "4",
+          "target": "0",
+          "duration": "4000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "rednote"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "10",
+          "radius": "3",
+          "target": "0",
+          "min": "-40",
+          "max": "-70",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        },
+        {
+          "name": "earth",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "min": "-60",
+          "max": "-110",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "poison"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "20",
+      "defense": "20",
+      "defense": [
+        {
+          "name": "healing",
+          "interval": "2000",
+          "chance": "5",
+          "min": "70",
+          "max": "100",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "whitenote"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "speedchange": "820",
+          "duration": "5000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellownote"
+          }
+        }
+      ]
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "-5"
+        },
+        {
+          "holyPercent": "5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "drunk": "1"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "100",
+          "chance": "50000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "37",
+          "chance": "50000"
+        },
+        {
+          "name": "halberd",
+          "chance": "4460"
+        },
+        {
+          "name": "plate shield",
+          "chance": "2854"
+        },
+        {
+          "name": "green mushroom",
+          "chance": "3208"
+        },
+        {
+          "name": "health potion",
+          "chance": "4761"
+        },
+        {
+          "name": "mana potion",
+          "chance": "4785"
+        },
+        {
+          "name": "Zaoan halberd",
+          "chance": "2210"
+        },
+        {
+          "name": "widow's mandibles",
+          "chance": "20950"
+        },
+        {
+          "name": "wailing widow's necklace",
+          "chance": "900"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "monster": {
+    "name": "Mimic",
+    "nameDescription": "a mimic",
+    "race": "blood",
+    "experience": "0",
+    "speed": "170",
+    "manacost": "0",
+    "health": {
+      "now": "30",
+      "max": "30"
+    },
+    "look": {
+      "type": "92",
+      "corpse": "1740"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "0",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "1"
+        },
+        {
+          "canpushitems": "0"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "5"
+        },
+        {
+          "staticattack": "0"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "2",
+      "defense": "3"
+    }
+  }
+}

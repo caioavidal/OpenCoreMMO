@@ -1,0 +1,93 @@
+{
+  "monster": {
+    "name": "Spirit of Earth",
+    "nameDescription": "a spirit of earth",
+    "race": "undead",
+    "experience": "800",
+    "speed": "180",
+    "health": {
+      "now": "1200",
+      "max": "1200"
+    },
+    "look": {
+      "type": "67",
+      "corpse": "7349"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-180"
+      }
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "32"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "50"
+        },
+        {
+          "firePercent": "-5"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "5",
+      "voice": {
+        "sentence": "Show your strengh ... or perish."
+      }
+    }
+  }
+}

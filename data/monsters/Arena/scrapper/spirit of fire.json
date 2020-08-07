@@ -1,0 +1,121 @@
+{
+  "monster": {
+    "name": "Spirit of Fire",
+    "nameDescription": "the spirit of fire",
+    "race": "blood",
+    "experience": "950",
+    "speed": "220",
+    "manacost": "0",
+    "health": {
+      "now": "2140",
+      "max": "2140"
+    },
+    "look": {
+      "type": "242",
+      "corpse": "7349"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "50",
+          "attack": "100"
+        },
+        {
+          "name": "firefield",
+          "interval": "1000",
+          "chance": "15",
+          "range": "7",
+          "radius": "4",
+          "target": "1",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "20",
+          "range": "7",
+          "min": "-650",
+          "max": "-315",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "fire"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "25",
+      "defense": "25"
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "-13"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "6",
+      "voice": {
+        "sentence": "Feel the heat."
+      }
+    }
+  }
+}

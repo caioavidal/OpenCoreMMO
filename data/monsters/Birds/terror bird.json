@@ -1,0 +1,148 @@
+{
+  "monster": {
+    "name": "Terror Bird",
+    "nameDescription": "a terror bird",
+    "race": "blood",
+    "experience": "150",
+    "speed": "280",
+    "manacost": "490",
+    "health": {
+      "now": "300",
+      "max": "300"
+    },
+    "look": {
+      "type": "218",
+      "corpse": "6057"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "1"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "1"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "skill": "35",
+        "attack": "40"
+      }
+    },
+    "defenses": {
+      "armor": "13",
+      "defense": "21"
+    },
+    "elements": {
+      "element": [
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "20"
+        },
+        {
+          "firePercent": "-10"
+        },
+        {
+          "earthPercent": "-10"
+        },
+        {
+          "deathPercent": "-5"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "CRAAAHHH!"
+        },
+        {
+          "sentence": "Gruuuh Gruuuh."
+        },
+        {
+          "sentence": "Carrah Carrah!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "30",
+          "chance": "22500"
+        },
+        {
+          "id": "3976",
+          "countmax": "3",
+          "chance": "15000"
+        },
+        {
+          "id": "2148",
+          "countmax": "3",
+          "chance": "11000"
+        },
+        {
+          "id": "1987",
+          "chance": "100000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "3970",
+              "chance": "2000"
+            },
+            {
+              "id": "3970",
+              "chance": "750"
+            },
+            {
+              "id": "3970",
+              "chance": "2500"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

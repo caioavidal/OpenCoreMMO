@@ -1,0 +1,212 @@
+{
+  "monster": {
+    "name": "Stampor",
+    "nameDescription": "a stampor",
+    "race": "blood",
+    "experience": "780",
+    "speed": "240",
+    "health": {
+      "now": "1200",
+      "max": "1200"
+    },
+    "look": {
+      "type": "381",
+      "corpse": "13312"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        },
+        {
+          "canwalkonpoison": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-130"
+        },
+        {
+          "name": "physical",
+          "interval": "2000",
+          "chance": "15",
+          "radius": "3",
+          "target": "0",
+          "min": "-150",
+          "max": "-280",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "groundshaker"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "15",
+          "target": "1",
+          "min": "-75",
+          "max": "-100",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "smallstone"
+          }
+        },
+        {
+          "name": "stampor skill reducer",
+          "range": "5",
+          "interval": "2000",
+          "chance": "10"
+        }
+      ]
+    },
+    "defenses": {
+      "defense": {
+        "name": "healing",
+        "interval": "2000",
+        "chance": "15",
+        "min": "90",
+        "max": "120",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "holyPercent": "50"
+        },
+        {
+          "deathPercent": "10"
+        },
+        {
+          "firePercent": "20"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": {
+        "sentence": "KRRRRRNG",
+        "yell": "1"
+      }
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "242",
+          "chance": "30000"
+        },
+        {
+          "name": "platinum coin",
+          "countmax": "2",
+          "chance": "9920"
+        },
+        {
+          "name": "war hammer",
+          "chance": "1010"
+        },
+        {
+          "name": "knight armor",
+          "chance": "870"
+        },
+        {
+          "name": "spiked squelcher",
+          "chance": "160"
+        },
+        {
+          "name": "strong health potion",
+          "countmax": "2",
+          "chance": "5000"
+        },
+        {
+          "name": "strong mana potion",
+          "countmax": "2",
+          "chance": "5000"
+        },
+        {
+          "name": "small topaz",
+          "countmax": "2",
+          "chance": "7940"
+        },
+        {
+          "name": "stampor horn",
+          "chance": "4920"
+        },
+        {
+          "name": "stampor talons",
+          "countmax": "2",
+          "chance": "9950"
+        },
+        {
+          "name": "hollow stampor hoof",
+          "chance": "3020"
+        }
+      ]
+    }
+  }
+}

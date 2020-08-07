@@ -1,0 +1,260 @@
+{
+  "monster": {
+    "name": "Wyrm",
+    "nameDescription": "a wyrm",
+    "race": "blood",
+    "experience": "1450",
+    "speed": "300",
+    "manacost": "0",
+    "health": {
+      "now": "1825",
+      "max": "1825"
+    },
+    "look": {
+      "type": "291",
+      "corpse": "8941"
+    },
+    "targetchange": {
+      "interval": "60000",
+      "chance": "0"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "staticattack": "50"
+        },
+        {
+          "lightlevel": "0"
+        },
+        {
+          "lightcolor": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "1"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "110"
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "30",
+          "radius": "3",
+          "min": "-100",
+          "max": "-220",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "yellowenergy"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "30",
+          "length": "5",
+          "spread": "3",
+          "min": "-10",
+          "max": "-170",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "energyarea"
+          }
+        },
+        {
+          "name": "energy",
+          "interval": "2000",
+          "chance": "40",
+          "range": "7",
+          "min": "-100",
+          "max": "-125",
+          "attribute": {
+            "key": "shootEffect",
+            "value": "energy"
+          }
+        },
+        {
+          "name": "lifedrain",
+          "interval": "2000",
+          "chance": "20",
+          "length": "4",
+          "spread": "0",
+          "min": "-98",
+          "max": "-145",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "poff"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "30",
+      "defense": "31",
+      "defense": {
+        "name": "healing",
+        "interval": "3000",
+        "chance": "40",
+        "min": "125",
+        "max": "275",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "energy": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        },
+        {
+          "lifedrain": "1"
+        }
+      ]/* so they won't damage self. also, we cannot test are they really immune
+		in Cipbia, as there are no spells nor weapons to attack with life drain */
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "GRRR!"
+        },
+        {
+          "sentence": "GROOOOAAAAAAAAR!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2148",
+          "countmax": "90",
+          "chance": "30000"
+        },
+        {
+          "id": "2148",
+          "countmax": "80",
+          "chance": "30000"
+        },
+        {
+          "id": "2148",
+          "countmax": "60",
+          "chance": "30000"
+        },
+        {
+          "id": "2672",
+          "countmax": "3",
+          "chance": "15000"
+        },
+        {
+          "id": "2546",
+          "countmax": "10",
+          "chance": "4750"
+        },
+        {
+          "id": "7588",
+          "chance": "4750"
+        },
+        {
+          "id": "2647",
+          "chance": "1750"
+        },
+        {
+          "id": "8921",
+          "chance": "700"
+        },
+        {
+          "id": "2145",
+          "countmax": "3",
+          "chance": "750"
+        },
+        {
+          "id": "1987",
+          "chance": "10000",
+          "#comment": [],
+          "item": [
+            {
+              "id": "7589",
+              "chance": "4000"
+            },
+            {
+              "id": "2455",
+              "chance": "15000"
+            },
+            {
+              "id": "2457",
+              "chance": "7500"
+            },
+            {
+              "id": "7889",
+              "chance": "650"
+            },
+            {
+              "id": "8871",
+              "chance": "600"
+            },
+            {
+              "id": "8920",
+              "chance": "550"
+            },
+            {
+              "id": "8873",
+              "chance": "750"
+            },
+            {
+              "id": "7430",
+              "chance": "300"
+            },
+            {
+              "id": "8855",
+              "chance": "200"
+            }
+          ]
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

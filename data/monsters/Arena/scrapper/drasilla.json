@@ -1,0 +1,149 @@
+{
+  "monster": {
+    "name": "Drasilla",
+    "nameDescription": "drasilla",
+    "race": "blood",
+    "experience": "700",
+    "speed": "170",
+    "manacost": "0",
+    "health": {
+      "now": "1320",
+      "max": "1320"
+    },
+    "look": {
+      "type": "34",
+      "corpse": "7349"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "0"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "runonhealth": "100"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "30",
+          "attack": "60"
+        },
+        {
+          "name": "fire",
+          "interval": "6000",
+          "chance": "60",
+          "min": "-100",
+          "max": "-180",
+          "length": "8",
+          "spread": "3",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        },
+        {
+          "name": "fire",
+          "interval": "3000",
+          "range": "10",
+          "radius": "5",
+          "target": "1",
+          "chance": "50",
+          "min": "-70",
+          "max": "-115",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "firearea"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "32",
+      "defense": "33",
+      "defense": {
+        "name": "healing",
+        "interval": "6000",
+        "chance": "65",
+        "min": "20",
+        "max": "50",
+        "attribute": {
+          "key": "areaEffect",
+          "value": "blueshimmer"
+        }
+      }
+    },
+    "elements": {
+      "element": [
+        {
+          "firePercent": "100"
+        },
+        {
+          "energyPercent": "20"
+        },
+        {
+          "icePercent": "-10"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "outfit": "1"
+        },
+        {
+          "drunk": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "2000",
+      "chance": "5",
+      "voice": [
+        {
+          "sentence": "FCHHHHHHHH!"
+        },
+        {
+          "sentence": "GROOOOAAAAAAAAR!"
+        },
+        {
+          "sentence": "DIRTY LITTLE HUMANS"
+        },
+        {
+          "sentence": "YOU CAN'T KEEP ME HERE FOREVER"
+        }
+      ]
+    }
+  }
+}

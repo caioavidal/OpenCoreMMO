@@ -1,0 +1,224 @@
+{
+  "monster": {
+    "name": "Mummy",
+    "nameDescription": "a mummy",
+    "race": "undead",
+    "experience": "150",
+    "speed": "150",
+    "health": {
+      "now": "240",
+      "max": "240"
+    },
+    "look": {
+      "type": "65",
+      "corpse": "6004"
+    },
+    "targetchange": {
+      "interval": "4000",
+      "chance": "10"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        },
+        {
+          "canwalkonenergy": "0"
+        },
+        {
+          "canwalkonfire": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "min": "0",
+          "max": "-85",
+          "poison": "4"
+        },
+        {
+          "name": "death",
+          "interval": "2000",
+          "chance": "20",
+          "range": "1",
+          "target": "1",
+          "min": "-30",
+          "max": "-40",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "smallclouds"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "2000",
+          "chance": "15",
+          "range": "7",
+          "target": "1",
+          "speedchange": "-226",
+          "duration": "10000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "elements": {
+      "element": [
+        {
+          "icePercent": "20"
+        },
+        {
+          "holyPercent": "-25"
+        }
+      ]
+    },
+    "immunities": {
+      "immunity": [
+        {
+          "death": "1"
+        },
+        {
+          "earth": "1"
+        },
+        {
+          "drown": "1"
+        },
+        {
+          "lifedrain": "1"
+        },
+        {
+          "paralyze": "1"
+        },
+        {
+          "invisible": "1"
+        }
+      ]
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "I will ssswallow your sssoul!"
+        },
+        {
+          "sentence": "Mort ulhegh dakh visss."
+        },
+        {
+          "sentence": "Flesssh to dussst!"
+        },
+        {
+          "sentence": "I will tassste life again!"
+        },
+        {
+          "sentence": "Ahkahra exura belil mort!"
+        },
+        {
+          "sentence": "Yohag Sssetham!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "id": "2124",
+          "chance": "1500"
+        },
+        {
+          "name": "silver brooch",
+          "chance": "4000"
+        },
+        {
+          "name": "black pearl",
+          "chance": "1000"
+        },
+        {
+          "name": "gold coin",
+          "countmax": "80",
+          "chance": "38000"
+        },
+        {
+          "name": "strange talisman",
+          "chance": "5000"
+        },
+        {
+          "id": "2162",
+          "chance": "5800"
+        },
+        {
+          "name": "silver amulet",
+          "chance": "100"
+        },
+        {
+          "name": "poison dagger",
+          "chance": "450"
+        },
+        {
+          "name": "black shield",
+          "chance": "170"
+        },
+        {
+          "name": "worm",
+          "countmax": "3",
+          "chance": "19000"
+        },
+        {
+          "name": "yellow piece of cloth",
+          "chance": "900"
+        },
+        {
+          "name": "gauze bandage",
+          "chance": "10000"
+        },
+        {
+          "name": "mini mummy",
+          "chance": "10"
+        },
+        {
+          "name": "flask of embalming fluid",
+          "chance": "11690"
+        }
+      ],
+      "#comment": []
+    }
+  }
+}

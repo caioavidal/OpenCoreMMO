@@ -1,0 +1,116 @@
+{
+  "monster": {
+    "name": "Furious Troll",
+    "nameDescription": "a furious troll",
+    "race": "blood",
+    "experience": "185",
+    "speed": "190",
+    "health": {
+      "now": "245",
+      "max": "245"
+    },
+    "look": {
+      "type": "15",
+      "corpse": "5960"
+    },
+    "targetchange": {
+      "interval": "2000",
+      "chance": "5"
+    },
+    "flags": {
+      "flag": [
+        {
+          "summonable": "0"
+        },
+        {
+          "attackable": "1"
+        },
+        {
+          "hostile": "1"
+        },
+        {
+          "illusionable": "1"
+        },
+        {
+          "convinceable": "0"
+        },
+        {
+          "pushable": "0"
+        },
+        {
+          "canpushitems": "1"
+        },
+        {
+          "canpushcreatures": "0"
+        },
+        {
+          "targetdistance": "1"
+        },
+        {
+          "staticattack": "90"
+        },
+        {
+          "runonhealth": "0"
+        }
+      ]
+    },
+    "attacks": {
+      "attack": {
+        "name": "melee",
+        "interval": "2000",
+        "min": "0",
+        "max": "-100"
+      }
+    },
+    "defenses": {
+      "armor": "15",
+      "defense": "15"
+    },
+    "immunities": {
+      "immunity": {
+        "invisible": "1"
+      }
+    },
+    "summons": {
+      "maxSummons": "2",
+      "summon": {
+        "name": "Mechanical Fighter",
+        "interval": "2000",
+        "chance": "90"
+      }
+    },
+    "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Slice! Slice!"
+        },
+        {
+          "sentence": "DIE!!!"
+        }
+      ]
+    },
+    "loot": {
+      "item": [
+        {
+          "name": "gold coin",
+          "countmax": "146",
+          "chance": "93000"
+        },
+        {
+          "name": "platinum coin",
+          "chance": "6000"
+        },
+        {
+          "name": "war hammer",
+          "chance": "750"
+        },
+        {
+          "name": "bunch of troll hair",
+          "chance": "4400"
+        }
+      ]
+    }
+  }
+}
