@@ -9,8 +9,9 @@ using System.Collections.Generic;
 namespace NeoServer.Game.Items
 {
 
-    public class ItemFactory
+    public class ItemFactory : IItemFactory
     {
+
         public static IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
 
@@ -38,7 +39,7 @@ namespace NeoServer.Game.Items
             {
                 return new DistanceWeaponItem(itemType, location);
             }
-           
+
             if (PickupableContainer.IsApplicable(itemType))
             {
                 return new PickupableContainer(itemType, location);

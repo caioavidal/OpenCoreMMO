@@ -2,6 +2,7 @@
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Events;
+using NeoServer.Server.Events.Creature;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,11 +13,13 @@ namespace NeoServer.Game.Creatures
     {
         private readonly IMonsterDataManager _monsterManager;
         private readonly CreatureInjuredEventHandler _creatureReceiveDamageEventHandler;
+        private readonly CreatureKilledEventHandler _creatureKilledEventHandler;
 
-        public MonsterFactory(IMonsterDataManager monsterManager, CreatureInjuredEventHandler creatureReceiveDamageEventHandler)
+        public MonsterFactory(IMonsterDataManager monsterManager, CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
+            _creatureKilledEventHandler = creatureKilledEventHandler;
         }
         public IMonster Create(string name)
         {
@@ -29,6 +32,7 @@ namespace NeoServer.Game.Creatures
             var monster = new Monster(monsterType);
 
             monster.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
+            monster.OnKilled += _creatureKilledEventHandler.Execute;
 
             return monster;
         }

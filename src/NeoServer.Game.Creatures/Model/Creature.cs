@@ -351,7 +351,14 @@ namespace NeoServer.Game.Creatures.Model
 
         private void ReduceHealth(ushort damage)
         {
-            HealthPoints -= damage;
+            if (damage > HealthPoints)
+            {
+                HealthPoints = 0;
+            }
+            else
+            {
+                HealthPoints -= damage;
+            }
 
             if (IsDead)
             {
@@ -360,6 +367,7 @@ namespace NeoServer.Game.Creatures.Model
 
         }
 
+        public abstract bool UsingDistanceWeapon { get; }
 
         public void ReceiveAttack(ICreature enemy, ushort damage)
         {
@@ -367,8 +375,20 @@ namespace NeoServer.Game.Creatures.Model
             OnDamaged?.Invoke(enemy, this, damage);
         }
 
+        private void StopAttack() => AutoAttackTargetId = 0;
+        
         public void Attack(ICreature enemy)
         {
+            if (!UsingDistanceWeapon && !Tile.IsNextTo(enemy.Tile))
+            {
+                return;
+            }
+
+            if (enemy.IsDead)
+            {
+                StopAttack();
+                return;
+            }
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
             if (remainingCooldown > 0)
             {

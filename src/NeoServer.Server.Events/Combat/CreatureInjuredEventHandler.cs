@@ -22,7 +22,6 @@ namespace NeoServer.Server.Events
         }
         public void Execute(ICreature enemy, ICreature victim, ushort healthDamage)
         {
-
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
             foreach (var spectatorId in map.GetPlayersAtPositionZone(victim.Location))

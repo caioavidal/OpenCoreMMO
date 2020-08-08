@@ -2,6 +2,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Enums.Creatures;
@@ -241,6 +242,8 @@ namespace NeoServer.Server.Model.Players
 
         public byte SecureMode { get; private set; }
         public float CarryStrength { get; }
+
+        public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;

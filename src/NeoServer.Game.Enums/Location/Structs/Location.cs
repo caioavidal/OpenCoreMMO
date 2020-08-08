@@ -163,8 +163,8 @@ namespace NeoServer.Game.Enums.Location.Structs
             catch (NullReferenceException)
             {
                 return false;
-            }
-        }
+              }
+         }
 
         public static long[] GetOffsetBetween(Location origin, Location targetLocation)
         {
@@ -232,6 +232,13 @@ namespace NeoServer.Game.Enums.Location.Structs
 
             return (ushort)(Math.Abs(offset[0]) + Math.Abs(offset[1]));
         }
+
+        /// <summary>
+        /// Check whether location is 1 sqm next to dest
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        public bool IsNextTo(Location dest) => Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
         
     }
 }

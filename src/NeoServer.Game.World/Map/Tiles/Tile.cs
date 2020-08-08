@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location;
@@ -40,6 +41,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
+
 
 
         public byte NextStackPosition

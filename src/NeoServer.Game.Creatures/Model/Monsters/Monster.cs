@@ -43,5 +43,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override IOutfit Outfit { get; protected set ; }
 
         public override ushort MinimumAttackPower => 0;
+
+        public override bool UsingDistanceWeapon => throw new NotImplementedException();
     }
 }
