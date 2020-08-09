@@ -6,6 +6,7 @@ using NeoServer.Game.Items;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Items;
+using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,14 +25,19 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(ICreature creature)
         {
-            var tile = creature.Tile;
 
-            var thing = creature as IMoveableThing;
-            map.RemoveThing(ref thing, tile);
+            game.Scheduler.AddEvent(new SchedulerEvent(600, () =>
+            {
+                var tile = creature.Tile;
 
-            var corpse = ItemFactory.Create(creature.Corpse, creature.Location, null) as IMoveableThing;
+                var thing = creature as IMoveableThing;
+                map.RemoveThing(ref thing, tile);
 
-            map.AddItem(ref corpse, tile);
+                var corpse = ItemFactory.Create(creature.Corpse, creature.Location, null) as IMoveableThing;
+
+                map.AddItem(ref corpse, tile);
+            }));
+
 
             //var outgoingPackets = new Queue<IOutgoingPacket>();
 

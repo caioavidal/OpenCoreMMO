@@ -371,24 +371,32 @@ namespace NeoServer.Game.Creatures.Model
 
         public void ReceiveAttack(ICreature enemy, ushort damage)
         {
-            ReduceHealth(damage);
-            OnDamaged?.Invoke(enemy, this, damage);
+            if (!IsDead)
+            {
+                ReduceHealth(damage);
+                OnDamaged?.Invoke(enemy, this, damage);
+                return;
+            }
         }
 
         private void StopAttack() => AutoAttackTargetId = 0;
+
+        
         
         public void Attack(ICreature enemy)
         {
-            if (!UsingDistanceWeapon && !Tile.IsNextTo(enemy.Tile))
-            {
-                return;
-            }
-
             if (enemy.IsDead)
             {
                 StopAttack();
                 return;
             }
+
+            if (!UsingDistanceWeapon && !Tile.IsNextTo(enemy.Tile))
+            {
+                return;
+            }
+
+           
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
             if (remainingCooldown > 0)
             {

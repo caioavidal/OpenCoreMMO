@@ -146,7 +146,7 @@ namespace NeoServer.Server.Standalone.IoC
                     Console.WriteLine($"Incoming Packet not handled: {packet}");
                     return null;
                 }
-               // Console.WriteLine($"Incoming Packet: {packet}");
+                Console.WriteLine($"Incoming Packet: {packet}");
 
                 if (c.TryResolve(handlerType, out object instance))
                 {
