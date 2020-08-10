@@ -37,6 +37,7 @@
         PlayerSkills = 0xA1,
         PlayerConditions = 0xA2,
         CreatureSpeech = 0xAA,
+        CancelTarget = 0xA3,
         TextMessage = 0xB4,
         FloorChangeUp = 0xBE,
         FloorChangeDown = 0xBF,

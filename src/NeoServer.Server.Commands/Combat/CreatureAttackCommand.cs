@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
@@ -16,7 +17,7 @@ namespace NeoServer.Server.Commands.Combat
         {
             if (targetId == 0)
             {
-                player.SetAttackTarget(0);
+                player.StopAttack();         
                 return;
             }
 

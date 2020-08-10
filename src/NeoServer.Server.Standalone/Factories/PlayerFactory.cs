@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
@@ -25,9 +26,10 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler;
         private readonly ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler;
         private readonly InvalidOperationEventHandler invalidOperationEventHandler;
+        private readonly CreatureStopedAttackEventHandler creatureStopedAttackEventHandler;
 
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler)
+        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler, CreatureStopedAttackEventHandler creatureStopedAttackEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
@@ -37,6 +39,7 @@ namespace NeoServer.Server.Standalone.Factories
             this.contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
             this.itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
             this.invalidOperationEventHandler = invalidOperationEventHandler;
+            this.creatureStopedAttackEventHandler = creatureStopedAttackEventHandler;
         }
         public IPlayer Create(PlayerModel player)
         {
@@ -79,8 +82,7 @@ namespace NeoServer.Server.Standalone.Factories
             newPlayer.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
 
             newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
-
-            
+            newPlayer.OnStoppedAttack += (actor) => creatureStopedAttackEventHandler?.Execute(newPlayer);
 
             return newPlayer;
         }

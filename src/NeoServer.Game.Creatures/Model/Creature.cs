@@ -39,7 +39,11 @@ namespace NeoServer.Game.Creatures.Model
 
         public event Die OnKilled;
 
+        public event StopAttack OnStoppedAttack;
+
         private readonly ICreatureType _creatureType;
+
+        
 
         public Creature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0)
         {
@@ -152,7 +156,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public abstract ushort DefensePower { get; }
 
-        public uint AutoAttackTargetId { get; protected set; }
+        public uint AutoAttackTargetId { get; private set; }
 
         public abstract byte AutoAttackRange { get; }
 
@@ -379,10 +383,14 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-        private void StopAttack() => AutoAttackTargetId = 0;
+        public void StopAttack()
+        {
+            AutoAttackTargetId = 0;
+            OnStoppedAttack?.Invoke(this);
+        }
 
-        
-        
+
+
         public void Attack(ICreature enemy)
         {
             if (enemy.IsDead)
@@ -396,7 +404,7 @@ namespace NeoServer.Game.Creatures.Model
                 return;
             }
 
-           
+
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
             if (remainingCooldown > 0)
             {
