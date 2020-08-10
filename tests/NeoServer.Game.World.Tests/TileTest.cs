@@ -1,5 +1,6 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items.Items;
@@ -31,6 +32,20 @@ namespace NeoServer.Game.World.Tests
     }
     public class TileTest
     {
+
+        public static IEnumerable<object[]> NextTilesTestData =>
+      new List<object[]>
+      {
+         new object[] {new Tile(new Coordinate(101, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+         new object[] {new Tile(new Coordinate(101, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+         new object[] {new Tile(new Coordinate(100, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+         new object[] {new Tile(new Coordinate(99, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+         new object[] {new Tile(new Coordinate(100, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+         new object[] {new Tile(new Coordinate(99, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+         new object[] {new Tile(new Coordinate(101, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+         new object[] {new Tile(new Coordinate(99, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+      };
+
         private Tile CreateTile(params IItem[] item)
         {
             var topItems = new List<IItem> {
@@ -138,6 +153,26 @@ namespace NeoServer.Game.World.Tests
 
             Assert.Equal(500, sut.DownItems.First().ClientId);
             Assert.Equal(8, (sut.DownItems.First() as ICumulativeItem).Amount);
+        }
+
+        
+        [Theory]
+        [MemberData(nameof(NextTilesTestData))]
+        public void IsNextTo_When_1_Sqm_Distant_Returns_True(ITile dest)
+        {
+            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+
+            Assert.True(sut.IsNextTo(dest));
+        }
+
+
+        [Fact]
+        public void IsNextTo_When_2_Or_More_Sqm_Distant_Returns_True()
+        {
+            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+
+            Assert.False(sut.IsNextTo(dest));
         }
     }
 

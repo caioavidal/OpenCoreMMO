@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts;
+﻿using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
@@ -12,6 +13,7 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -39,7 +41,10 @@ namespace NeoServer.Game.Creatures.Model
 
         public event Die OnKilled;
 
+        public event StopAttack OnStoppedAttack;
+
         private readonly ICreatureType _creatureType;
+
 
         public Creature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0)
         {
@@ -134,6 +139,8 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
+        
+
 
         public byte LightBrightness { get; protected set; }
 
@@ -152,7 +159,8 @@ namespace NeoServer.Game.Creatures.Model
 
         public abstract ushort DefensePower { get; }
 
-        public uint AutoAttackTargetId { get; protected set; }
+        public uint AutoAttackTargetId { get; private set; }
+        public bool Attacking => AutoAttackTargetId > 0;
 
         public abstract byte AutoAttackRange { get; }
 
@@ -214,6 +222,10 @@ namespace NeoServer.Game.Creatures.Model
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
 
+        public void ResetHealthPoints()
+        {
+            HealthPoints = MaxHealthpoints;
+        }
         public bool CanSee(Location pos)
         {
             if (Location.Z <= 7)
@@ -326,6 +338,10 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetAttackTarget(uint targetId)
         {
+            if(targetId == 0)
+            {
+                StopAttack();
+            }
             AutoAttackTargetId = targetId;
 
         }
@@ -351,7 +367,14 @@ namespace NeoServer.Game.Creatures.Model
 
         private void ReduceHealth(ushort damage)
         {
-            HealthPoints -= damage;
+            if (damage > HealthPoints)
+            {
+                HealthPoints = 0;
+            }
+            else
+            {
+                HealthPoints -= damage;
+            }
 
             if (IsDead)
             {
@@ -360,15 +383,38 @@ namespace NeoServer.Game.Creatures.Model
 
         }
 
+        public abstract bool UsingDistanceWeapon { get; }
 
         public void ReceiveAttack(ICreature enemy, ushort damage)
         {
-            ReduceHealth(damage);
-            OnDamaged?.Invoke(enemy, this, damage);
+            if (!IsDead)
+            {
+                ReduceHealth(damage);
+                OnDamaged?.Invoke(enemy, this, damage);
+                return;
+            }
+        }
+
+        public void StopAttack()
+        {
+            AutoAttackTargetId = 0;
+            OnStoppedAttack?.Invoke(this);
         }
 
         public void Attack(ICreature enemy)
         {
+            if (enemy.IsDead)
+            {
+                StopAttack();
+                return;
+            }
+
+            if (!UsingDistanceWeapon && !Tile.IsNextTo(enemy.Tile))
+            {
+                return;
+            }
+
+
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
             if (remainingCooldown > 0)
             {
@@ -441,6 +487,7 @@ namespace NeoServer.Game.Creatures.Model
                 foreach (var direction in directions)
                 {
                     WalkingQueue.Enqueue(direction);
+                    
                 }
             }
             return true;

@@ -11,6 +11,7 @@ using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Game.World.Map
 {
@@ -501,5 +502,8 @@ namespace NeoServer.Game.World.Map
 
 
         }
+
+        public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
+
     }
 }

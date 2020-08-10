@@ -2,6 +2,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Enums.Creatures;
@@ -191,12 +192,12 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public ushort DamageFactor => FightMode switch
+        public float DamageFactor => FightMode switch
         {
             FightMode.Attack => 1,
-            FightMode.Balanced => (ushort)0.75,
-            FightMode.Defense => (ushort)0.5,
-            _ => (ushort)0.75
+            FightMode.Balanced => 0.75f,
+            FightMode.Defense => 0.5f,
+            _ => 0.75f
         };
 
         public SkillType SkillInUse
@@ -227,7 +228,7 @@ namespace NeoServer.Server.Model.Players
             get
             {
 
-                return (ushort)(0.085 * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
+                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
             }
         }
 
@@ -241,6 +242,8 @@ namespace NeoServer.Server.Model.Players
 
         public byte SecureMode { get; private set; }
         public float CarryStrength { get; }
+
+        public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;

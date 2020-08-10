@@ -5,6 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
     <ProjectReference Include="..\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />

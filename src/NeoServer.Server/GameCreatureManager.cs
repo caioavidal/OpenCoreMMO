@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts;
+﻿using Microsoft.Diagnostics.Tracing.Parsers.MicrosoftWindowsWPF;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Contracts.Network;
@@ -7,6 +8,7 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace NeoServer.Server
 {
@@ -20,6 +22,7 @@ namespace NeoServer.Server
         private ICreatureGameInstance creatureInstances;
         private readonly Dictionary<uint, ICreature> Monsters;
         private readonly Dictionary<uint, ICreature> Npcs;
+
 
         private readonly Func<PlayerModel, IPlayer> playerFactory;
 
@@ -48,12 +51,33 @@ namespace NeoServer.Server
             return true;
         }
 
+        public void AddKilledMonsters(IMonster monster)
+        {
+            creatureInstances.AddKilledMonsters(monster);
+        }
+
+        public IImmutableList<Tuple<IMonster, TimeSpan>> GetKilledMonsters() => creatureInstances.AllKilledMonsters();
+
         /// <summary>
         /// Gets creature instance on game
         /// </summary>
         /// <param name="id">Creature Id</param>
         /// <param name="creature">Creature instance</param>
         /// <returns></returns>
+
+
+        public bool TryGetPlayer(uint id, out IPlayer player)
+        {
+            player = null;
+
+            if (creatureInstances.TryGetCreature(id, out ICreature creature) && creature is IPlayer)
+            {
+                player = creature as IPlayer;
+                return true;
+            }
+            return false;
+        }
+
 
         public bool TryGetCreature(uint id, out ICreature creature) => creatureInstances.TryGetCreature(id, out creature);
         /// <summary>

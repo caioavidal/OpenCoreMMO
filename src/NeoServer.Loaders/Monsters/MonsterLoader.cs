@@ -41,7 +41,9 @@ namespace NeoServer.Loaders.Monsters
         {
             var json = File.ReadAllText(Path.Combine(basePath, monsterFile["file"]));
 
-            var monster = JsonConvert.DeserializeObject<MonsterData>(json);
+            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings
+            {
+            });
 
             return MonsterConverter.Convert(monster);
         }

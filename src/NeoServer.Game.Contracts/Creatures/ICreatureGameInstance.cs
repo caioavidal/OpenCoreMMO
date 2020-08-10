@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -8,5 +11,8 @@ namespace NeoServer.Game.Contracts.Creatures
         void Add(ICreature creature);
         IEnumerable<ICreature> All();
         bool TryRemove(uint id);
+        void AddKilledMonsters(IMonster monster);
+        ImmutableList<Tuple<IMonster, TimeSpan>> AllKilledMonsters();
+        bool TryRemoveFromKilledMonsters(uint id);
     }
 }

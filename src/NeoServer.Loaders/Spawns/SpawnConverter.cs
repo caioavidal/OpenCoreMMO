@@ -30,9 +30,8 @@ namespace NeoServer.Loaders.Spawns
             {
                 spawn.Monsters[i++] = new Spawn.Monster
                 {
-                    Location = new Location(monster.X + spawn.Location.X, monster.Y + spawn.Location.Y, monster.Z),
                     Name = monster.Name,
-                    SpawnTime = monster.Spawntime
+                    Spawn = new SpawnPoint(new Location(monster.X + spawn.Location.X, monster.Y + spawn.Location.Y, monster.Z), monster.Spawntime)
                 };
             }
 

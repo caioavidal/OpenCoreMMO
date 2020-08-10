@@ -1,17 +1,17 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Location.Structs;
 using System;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void OnAttackTargetChange(uint oldTargetId, uint newTargetId);
     public delegate void Damage(ICreature enemy, ICreature victim, ushort healthDamage);
-
+    public delegate void StopAttack(ICreature actor);
     public interface ICombatActor : INeedsCooldowns
     {
         event OnAttackTargetChange OnTargetChanged;
         event Damage OnDamaged;
+        event StopAttack OnStoppedAttack;
 
         /// <summary>
         /// Gets the id of the actor.
@@ -54,6 +54,7 @@ namespace NeoServer.Game.Contracts.Creatures
         ushort ArmorRating { get; }
         uint LastCombatEvent { get; set; }
         ushort MinimumAttackPower { get; }
+        bool Attacking { get; }
 
         void SetAttackTarget(uint targetId);
 
@@ -61,5 +62,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         void CheckAutoAttack(IThing thingChanged, IThingStateChangedEventArgs eventAgrs);
         void Attack(ICreature enemy);
+        void StopAttack();
     }
 }
