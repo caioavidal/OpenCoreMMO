@@ -11,7 +11,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         public override void WriteToMessage(INetworkMessage message)
         {
             message.AddByte((byte)GameOutgoingPacketType.CancelTarget);
-            message.AddByte(0x00);
+            message.AddUInt32(0x00);
         }
     }
 }

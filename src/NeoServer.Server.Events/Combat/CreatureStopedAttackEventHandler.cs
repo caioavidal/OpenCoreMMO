@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace NeoServer.Server.Events
 {
-    public class CreatureStopedAttackEventHandler
+    public class CreatureStoppedAttackEventHandler
     {
         private readonly Game game;
 
-        public CreatureStopedAttackEventHandler(Game game)
+        public CreatureStoppedAttackEventHandler(Game game)
         {
             this.game = game;
         }

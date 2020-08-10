@@ -139,6 +139,8 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
+        
+
 
         public byte LightBrightness { get; protected set; }
 
@@ -220,6 +222,10 @@ namespace NeoServer.Game.Creatures.Model
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
 
+        public void ResetHealthPoints()
+        {
+            HealthPoints = MaxHealthpoints;
+        }
         public bool CanSee(Location pos)
         {
             if (Location.Z <= 7)

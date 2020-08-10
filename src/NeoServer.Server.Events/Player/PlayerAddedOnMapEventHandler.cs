@@ -19,33 +19,28 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(IPlayer player)
+        public void Execute(ICreature creature)
 
         {
 
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(player.Location))
+            foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
             {
                 
-                var isSpectator = !(player.CreatureId == spectatorId);
+                var isSpectator = !(creature.CreatureId == spectatorId);
                 if (!isSpectator)
                 {
-                    SendPacketsToPlayer(player, outgoingPackets);
+                    SendPacketsToPlayer(creature as IPlayer, outgoingPackets);
                 }
                 else
                 {
-                    ICreature spectator;
-                    if (!game.CreatureManager.TryGetCreature(spectatorId, out spectator))
+                    if (!game.CreatureManager.TryGetPlayer(spectatorId, out IPlayer spectator))
                     {
                         continue;
                     }
-                    else if(spectator is IMonster)
-                    {
-                        continue;
-                    }
-
-                    SendPacketsToSpectator((IPlayer)spectator, player, outgoingPackets);
+                   
+                    SendPacketsToSpectator(spectator, creature, outgoingPackets);
                 }
 
                 IConnection connection;
@@ -64,7 +59,7 @@ namespace NeoServer.Server.Events
         private void SendPacketsToSpectator(IPlayer playerToSend, ICreature creatureAdded, Queue<IOutgoingPacket> outgoingPackets)
         {
             //spectator.add
-            outgoingPackets.Enqueue(new AddAtStackPositionPacket((IPlayer)creatureAdded));
+            outgoingPackets.Enqueue(new AddAtStackPositionPacket(creatureAdded));
             outgoingPackets.Enqueue(new AddCreaturePacket(playerToSend, creatureAdded));
             outgoingPackets.Enqueue(new MagicEffectPacket(creatureAdded.Location, EffectT.BubbleBlue));
 

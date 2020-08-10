@@ -30,6 +30,7 @@ namespace NeoServer.Game.Contracts
         event UpdateThingOnTile OnThingUpdatedOnTile;
 
         IList<byte> GetDescription(Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
+        bool ArePlayersAround(Location location);
         void AddCreature(ICreature creature);
         ITile GetNextTile(Location fromLocation, Direction direction);
         IEnumerable<ITile> GetOffsetTiles(Location location);

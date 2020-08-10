@@ -26,7 +26,6 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
 
-        byte GetStackPosition() => Tile.GetStackPositionOfThing(this);
    
         float CarryStrength { get; }
 

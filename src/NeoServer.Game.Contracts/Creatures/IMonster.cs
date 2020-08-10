@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Enums.Location.Structs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +11,12 @@ namespace NeoServer.Game.Contracts.Creatures
     {
         event Born OnWasBorn;
 
-        void Born();
+        void Reborn();
 
         IMonsterType Metadata { get; }
+
+        public ISpawnPoint Spawn { get;  }
+        public bool FromSpawn => Spawn != null;
+
     }
 }

@@ -13,9 +13,14 @@ namespace NeoServer.Game.Contracts.World
         public interface IMonster
         {
             string Name { get; set; }
-            Location Location { get; set; }
-            ushort SpawnTime { get; set; }
+            ISpawnPoint Spawn { get; set; }
         }
         IMonster[] Monsters { get; set; }
+    }
+
+    public interface ISpawnPoint
+    {
+        Location Location { get; }
+        ushort SpawnTime { get; }
     }
 }

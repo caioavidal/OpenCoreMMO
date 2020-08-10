@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Items;
+using NeoServer.Game.World.Spawns;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Items;
@@ -25,7 +26,6 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(ICreature creature)
         {
-
             game.Scheduler.AddEvent(new SchedulerEvent(600, () =>
             {
                 var tile = creature.Tile;
@@ -37,6 +37,11 @@ namespace NeoServer.Server.Events.Creature
 
                 map.AddItem(ref corpse, tile);
             }));
+
+            if (creature is IMonster monster)
+            {
+                game.CreatureManager.AddKilledMonsters(creature as IMonster);
+            }
 
 
             //var outgoingPackets = new Queue<IOutgoingPacket>();

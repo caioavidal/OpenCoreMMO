@@ -1,4 +1,5 @@
-﻿using NeoServer.Server.Model.Players.Contracts;
+﻿using NeoServer.Game.World.Spawns;
+using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Jobs.Creatures
@@ -7,10 +8,12 @@ namespace NeoServer.Server.Jobs.Creatures
     {
         private const ushort EVENT_CHECK_CREATURE_INTERVAL = 100;
         private readonly Game game;
+        private readonly SpawnManager spawnManager;
 
-        public GameCreatureJob(Game game)
+        public GameCreatureJob(Game game, SpawnManager spawnManager)
         {
             this.game = game;
+            this.spawnManager = spawnManager;
         }
 
 
@@ -32,6 +35,7 @@ namespace NeoServer.Server.Jobs.Creatures
                 }
 
                 CreatureAttakingJob.Execute(creature, game);
+                RespawnJob.Execute(spawnManager);
             }
 
         }

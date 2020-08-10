@@ -15,20 +15,22 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             Metadata = type;
         }
+        public Monster(IMonsterType type, ISpawnPoint spawn) : base(type)
+        {
+            Metadata = type;
+            Spawn = spawn;
+        }
 
         public event Born OnWasBorn;
 
-        public void Born()
+        public void Reborn()
         {
+            ResetHealthPoints();
+            SetNewLocation(Spawn.Location);
             OnWasBorn?.Invoke(this, Spawn.Location);
         }
 
         public new ushort Speed => Metadata.Speed;
-
-       
-
-        ISpawn Spawn { get; set; }
-
 
         public override ushort AttackPower => throw new NotImplementedException();
 
@@ -45,5 +47,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override ushort MinimumAttackPower => 0;
 
         public override bool UsingDistanceWeapon => throw new NotImplementedException();
+
+        public ISpawnPoint Spawn { get; }
     }
 }

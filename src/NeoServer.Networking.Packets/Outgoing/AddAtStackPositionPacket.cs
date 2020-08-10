@@ -1,21 +1,22 @@
-﻿using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
     public class AddAtStackPositionPacket : OutgoingPacket
     {
-        private readonly IPlayer player;
-        public AddAtStackPositionPacket(IPlayer player)
+        private readonly ICreature creature;
+        public AddAtStackPositionPacket(ICreature creature)
         {
-            this.player = player;
+            this.creature = creature;
         }
 
         public override void WriteToMessage(INetworkMessage message)
         {
             message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
-            message.AddLocation(player.Location);
-            message.AddByte(player.GetStackPosition());
+            message.AddLocation(creature.Location);
+            message.AddByte(creature.GetStackPosition());
         }
     }
 }
