@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts;
+﻿using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
@@ -12,6 +13,7 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -43,7 +45,6 @@ namespace NeoServer.Game.Creatures.Model
 
         private readonly ICreatureType _creatureType;
 
-        
 
         public Creature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0)
         {
@@ -157,6 +158,7 @@ namespace NeoServer.Game.Creatures.Model
         public abstract ushort DefensePower { get; }
 
         public uint AutoAttackTargetId { get; private set; }
+        public bool Attacking => AutoAttackTargetId > 0;
 
         public abstract byte AutoAttackRange { get; }
 
@@ -330,6 +332,10 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetAttackTarget(uint targetId)
         {
+            if(targetId == 0)
+            {
+                StopAttack();
+            }
             AutoAttackTargetId = targetId;
 
         }
@@ -388,8 +394,6 @@ namespace NeoServer.Game.Creatures.Model
             AutoAttackTargetId = 0;
             OnStoppedAttack?.Invoke(this);
         }
-
-
 
         public void Attack(ICreature enemy)
         {
@@ -477,6 +481,7 @@ namespace NeoServer.Game.Creatures.Model
                 foreach (var direction in directions)
                 {
                     WalkingQueue.Enqueue(direction);
+                    
                 }
             }
             return true;

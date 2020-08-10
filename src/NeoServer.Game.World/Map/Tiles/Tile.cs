@@ -279,7 +279,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             }
 
-            if (cache != null)
+            if (cache != null && !Creatures.Any())
             {
                 return cache;
             }

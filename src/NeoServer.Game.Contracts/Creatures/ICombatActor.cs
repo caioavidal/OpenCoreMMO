@@ -54,6 +54,7 @@ namespace NeoServer.Game.Contracts.Creatures
         ushort ArmorRating { get; }
         uint LastCombatEvent { get; set; }
         ushort MinimumAttackPower { get; }
+        bool Attacking { get; }
 
         void SetAttackTarget(uint targetId);
 

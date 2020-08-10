@@ -192,12 +192,12 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public ushort DamageFactor => FightMode switch
+        public float DamageFactor => FightMode switch
         {
             FightMode.Attack => 1,
-            FightMode.Balanced => (ushort)0.75,
-            FightMode.Defense => (ushort)0.5,
-            _ => (ushort)0.75
+            FightMode.Balanced => 0.75f,
+            FightMode.Defense => 0.5f,
+            _ => 0.75f
         };
 
         public SkillType SkillInUse
@@ -228,7 +228,7 @@ namespace NeoServer.Server.Model.Players
             get
             {
 
-                return (ushort)(0.085 * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
+                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
             }
         }
 

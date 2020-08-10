@@ -31,6 +31,7 @@ namespace NeoServer.Server.Jobs.Creatures
                     PlayerPingJob.Execute((IPlayer)creature, game);
                 }
 
+                CreatureAttakingJob.Execute(creature, game);
             }
 
         }
