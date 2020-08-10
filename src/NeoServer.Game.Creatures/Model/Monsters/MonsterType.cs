@@ -21,6 +21,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public CombatStrategy CombatStrategy { get; set; }
         public IDictionary<CreatureFlagAttribute, byte> Flags { get; set; }
         public IDictionary<DamageType, CombatAttack> Attacks { get; set; }
-
+        public ushort Armor { get; set; }
+        public ushort Defence { get; set; }
     }
 }

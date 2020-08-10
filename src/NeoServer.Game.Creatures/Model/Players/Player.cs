@@ -321,7 +321,15 @@ namespace NeoServer.Server.Model.Players
             OnCancelledWalk(this);
         }
 
+        public override int ShieldDefend(int attack)
+        {
+            throw new NotImplementedException();
+        }
 
+        public override int ArmorDefend(int attack)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -18,5 +18,6 @@ namespace NeoServer.Game.Contracts.Creatures
         public ISpawnPoint Spawn { get;  }
         public bool FromSpawn => Spawn != null;
 
+        ushort Defense { get; }
     }
 }

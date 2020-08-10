@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using Autofac.Features.Metadata;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Enums.Location.Structs;
@@ -30,24 +31,52 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             OnWasBorn?.Invoke(this, Spawn.Location);
         }
 
+        public override int ShieldDefend(int attack)
+        {
+            if (WasDamagedOnLastAttack)
+            {
+                attack -= RandomDamagePower((Defense / 2), Defense);
+            }
+            return attack;
+        }
+
+        public override int ArmorDefend(int attack)
+        {
+            if (ArmorRating > 3)
+            {
+                attack -= RandomDamagePower(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
+            }
+            else if (ArmorRating > 0)
+            {
+                --attack;
+            }
+            return attack;
+        }
+
         public new ushort Speed => Metadata.Speed;
 
         public override ushort AttackPower => throw new NotImplementedException();
 
-        public override ushort ArmorRating => throw new NotImplementedException();
+        public override ushort ArmorRating => Metadata.Armor;
 
-        public override ushort DefensePower => throw new NotImplementedException();
+
+        
+
 
         public override byte AutoAttackRange => throw new NotImplementedException();
 
 
         public IMonsterType Metadata { get; }
-        public override IOutfit Outfit { get; protected set ; }
+        public override IOutfit Outfit { get; protected set; }
 
         public override ushort MinimumAttackPower => 0;
 
         public override bool UsingDistanceWeapon => throw new NotImplementedException();
 
         public ISpawnPoint Spawn { get; }
+
+        public override ushort DefensePower => throw new NotImplementedException();
+
+        public ushort Defense => Metadata.Defence;
     }
 }

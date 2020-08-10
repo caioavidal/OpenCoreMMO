@@ -5,7 +5,9 @@ using System.Text;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
-    public interface IMonsterType: ICreatureType
+    public interface IMonsterType : ICreatureType
     {
+        ushort Armor { get; set; }
+        ushort Defence { get; set; }
     }
 }

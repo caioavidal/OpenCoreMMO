@@ -18,6 +18,8 @@ namespace NeoServer.Loaders.World
                 MaxHealth = data.Health.Max,
                 Look = new Dictionary<LookType, ushort>() { { LookType.Type, data.Look.Type }, { LookType.Corpse, data.Look.Corpse } },
                 Speed = data.Speed,
+                Armor = ushort.Parse(data.Defenses.Armor),
+                Defence = ushort.Parse(data.Defenses.Defense)
             };
             return monster;
         }

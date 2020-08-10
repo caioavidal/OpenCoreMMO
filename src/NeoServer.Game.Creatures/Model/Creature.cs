@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
@@ -26,8 +27,6 @@ namespace NeoServer.Game.Creatures.Model
 {
     public abstract class Creature : MoveableThing, ICreature, ICombatActor
     {
-        private static readonly object _idLock = new object();
-        private static uint _idCounter = 1;
 
         private readonly object _enqueueWalkLock;
 
@@ -43,8 +42,36 @@ namespace NeoServer.Game.Creatures.Model
 
         public event StopAttack OnStoppedAttack;
 
+        public event BlockAttack OnBlockedAttack;
+
         private readonly ICreatureType _creatureType;
 
+        public abstract int ShieldDefend(int attack);
+        public abstract int ArmorDefend(int attack);
+
+
+        public ushort ReduceDamage(int attack)
+        {
+            int damage = ShieldDefend(attack);
+
+            if (damage <= 0)
+            {
+                damage = 0;
+                OnBlockedAttack?.Invoke(this, BlockType.Shield);
+                return (ushort)damage;
+            }
+
+            damage = ArmorDefend(attack);
+
+            if (damage <= 0)
+            {
+                damage = 0;
+                OnBlockedAttack?.Invoke(this, BlockType.Armor);
+            }
+
+            return (ushort)damage;
+
+        }
 
         public Creature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0)
         {
@@ -139,7 +166,7 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-        
+
 
 
         public byte LightBrightness { get; protected set; }
@@ -338,7 +365,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetAttackTarget(uint targetId)
         {
-            if(targetId == 0)
+            if (targetId == 0)
             {
                 StopAttack();
             }
@@ -387,10 +414,19 @@ namespace NeoServer.Game.Creatures.Model
 
         public void ReceiveAttack(ICreature enemy, ushort damage)
         {
+            damage = ReduceDamage(damage);
+
+            if (damage <= 0)
+            {
+                WasDamagedOnLastAttack = false;
+                return;
+            }
+
             if (!IsDead)
             {
                 ReduceHealth(damage);
                 OnDamaged?.Invoke(enemy, this, damage);
+                WasDamagedOnLastAttack = true;
                 return;
             }
         }
@@ -426,7 +462,32 @@ namespace NeoServer.Game.Creatures.Model
 
         }
 
+        public bool WasDamagedOnLastAttack = true;
+
+
         private GaussianRandom _random = new GaussianRandom();
+
+        protected ushort RandomDamagePower(int min, int max)
+        {
+            var diff = max - min;
+            var gaussian = _random.Next(0.5f, 0.25f);
+
+            double increment;
+            if (gaussian < 0.0)
+            {
+                increment = diff / 2;
+            }
+            else if (gaussian > 1.0)
+            {
+                increment = (diff + 1) / 2;
+            }
+            else
+            {
+                increment = Math.Round(gaussian * diff);
+            }
+
+            return (ushort)(min + increment);
+        }
 
         private ushort CalculateDamage()
         {
@@ -487,7 +548,7 @@ namespace NeoServer.Game.Creatures.Model
                 foreach (var direction in directions)
                 {
                     WalkingQueue.Enqueue(direction);
-                    
+
                 }
             }
             return true;
