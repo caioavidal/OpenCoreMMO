@@ -16,10 +16,10 @@ namespace NeoServer.OTB.Parsers
         /// <returns></returns>
         public static OTBNode Deserialize(ReadOnlyMemory<byte> otbmStream)
         {
-            
+
             var serializedOTBMData = otbmStream.Slice(4);
             var memoryStream = new ReadOnlyMemoryStream(serializedOTBMData);
-            
+
             return BuildTree(new OTBNode(NodeType.NotSetYet), memoryStream).Children.First();
         }
 

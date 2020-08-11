@@ -9,7 +9,7 @@ using System;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {
-    public struct Location:IEquatable<Location>
+    public struct Location : IEquatable<Location>
     {
 
 
@@ -54,7 +54,7 @@ namespace NeoServer.Game.Enums.Location.Structs
             }
         }
 
-      
+
         public static Location operator +(Location location1, Location location2)
         {
             return new Location
@@ -163,8 +163,8 @@ namespace NeoServer.Game.Enums.Location.Structs
             catch (NullReferenceException)
             {
                 return false;
-              }
-         }
+            }
+        }
 
         public static long[] GetOffsetBetween(Location origin, Location targetLocation)
         {
@@ -239,6 +239,6 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// <param name="location"></param>
         /// <returns></returns>
         public bool IsNextTo(Location dest) => Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
-        
+
     }
 }

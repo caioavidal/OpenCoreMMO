@@ -1,5 +1,4 @@
-﻿using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
-using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
@@ -14,14 +13,11 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -456,6 +452,8 @@ namespace NeoServer.Game.Creatures.Model
             {
                 return;
             }
+
+            SetAttackTarget(enemy.CreatureId);
 
             enemy.ReceiveAttack(this, CalculateDamage());
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));

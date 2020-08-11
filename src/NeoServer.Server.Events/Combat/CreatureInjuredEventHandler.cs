@@ -1,10 +1,8 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 
 
@@ -36,7 +34,7 @@ namespace NeoServer.Server.Events
                 outgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, Enums.Creatures.Enums.EffectT.XBlood));
                 outgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, TextColor.Red, healthDamageString));
                 outgoingPackets.Enqueue(new CreatureHealthPacket(victim));
-                
+
                 IConnection connection = null;
                 if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
                 {

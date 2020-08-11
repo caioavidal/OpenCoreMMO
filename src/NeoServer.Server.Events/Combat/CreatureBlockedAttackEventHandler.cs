@@ -1,13 +1,8 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Combat;
-using NeoServer.Game.Enums.Location;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
-using System.Collections.Generic;
 
 
 namespace NeoServer.Server.Events

@@ -1,12 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items.Items;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Items.Tests
 {
@@ -88,7 +83,7 @@ namespace NeoServer.Game.Items.Tests
             return new ThrowableDistanceWeaponItem(type, new Location(100, 100, 7), amount);
         }
 
-        public static object CreateRing(ushort id )
+        public static object CreateRing(ushort id)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -107,7 +102,7 @@ namespace NeoServer.Game.Items.Tests
             return new Necklace(type, new Location(100, 100, 7));
         }
 
-        public static IPickupable CreateBodyEquipmentItem(ushort id, string slot,string weaponType = "")
+        public static IPickupable CreateBodyEquipmentItem(ushort id, string slot, string weaponType = "")
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -119,7 +114,7 @@ namespace NeoServer.Game.Items.Tests
             return new BodyDefenseEquimentItem(type, new Location(100, 100, 7));
         }
 
-     
+
 
         public static IPickupable CreateAmmoItem(ushort id, byte amount)
         {
@@ -130,7 +125,7 @@ namespace NeoServer.Game.Items.Tests
             type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "ammo");
             type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 100);
 
-            return new AmmoItem(type, new Location(100, 100, 7),amount);
+            return new AmmoItem(type, new Location(100, 100, 7), amount);
         }
 
         public static IItem CreateTopItem(ushort id, byte topOrder)
@@ -151,6 +146,6 @@ namespace NeoServer.Game.Items.Tests
             return new Item(type, new Location(100, 100, 7));
         }
 
-      
+
     }
 }

@@ -1,11 +1,7 @@
-﻿using Autofac.Features.Metadata;
+﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Enums.Location.Structs;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
@@ -55,27 +51,33 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public new ushort Speed => Metadata.Speed;
 
-        public override ushort AttackPower => throw new NotImplementedException();
+        public override ushort AttackPower
+        {
+            get
+            {
+                if (Metadata.Attacks.TryGetValue(Game.Enums.Item.DamageType.Melee, out ICombatAttack combatAttack))
+                {
+                    return (ushort)(Math.Ceiling((combatAttack.Skill * (combatAttack.Attack * 0.05)) + (combatAttack.Attack * 0.5)));
+                }
+
+                return 0;
+            }
+        }
 
         public override ushort ArmorRating => Metadata.Armor;
 
-
-        
-
-
-        public override byte AutoAttackRange => throw new NotImplementedException();
-
+        public override byte AutoAttackRange => 0;
 
         public IMonsterType Metadata { get; }
         public override IOutfit Outfit { get; protected set; }
 
         public override ushort MinimumAttackPower => 0;
 
-        public override bool UsingDistanceWeapon => throw new NotImplementedException();
+        public override bool UsingDistanceWeapon => false;
 
         public ISpawnPoint Spawn { get; }
 
-        public override ushort DefensePower => throw new NotImplementedException();
+        public override ushort DefensePower => 30;
 
         public ushort Defense => Metadata.Defence;
     }

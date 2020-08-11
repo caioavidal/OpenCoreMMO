@@ -1,9 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Location.Structs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -17,6 +14,6 @@ namespace NeoServer.Game.Items.Items
 
         public void Dress() => InUse = true;
         public void Undress() => InUse = false;
-        
+
     }
 }

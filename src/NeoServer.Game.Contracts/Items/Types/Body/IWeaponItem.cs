@@ -4,7 +4,7 @@ using System;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {
-    public interface IWeapon: IBodyEquipmentItem
+    public interface IWeapon : IBodyEquipmentItem
     {
         bool TwoHanded => Metadata.BodyPosition == Slot.TwoHanded;
 

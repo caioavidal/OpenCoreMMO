@@ -20,7 +20,6 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
 using NeoServer.Server.Tasks.Contracts;
-using Raven.Client.Documents.Linq;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;

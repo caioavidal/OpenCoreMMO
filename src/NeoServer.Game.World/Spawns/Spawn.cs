@@ -1,9 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.World;
+﻿using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location.Structs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.World.Spawns
 {
@@ -29,7 +25,7 @@ namespace NeoServer.Game.World.Spawns
             SpawnTime = spawnTime;
         }
 
-        public Location Location { get;  }
-        public ushort SpawnTime { get;  }
+        public Location Location { get; }
+        public ushort SpawnTime { get; }
     }
 }

@@ -1,7 +1,6 @@
-﻿using NeoServer.Game.Enums.Creatures;
-using System;
+﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Enums.Item;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -9,5 +8,6 @@ namespace NeoServer.Game.Contracts.Creatures
     {
         ushort Armor { get; set; }
         ushort Defence { get; set; }
+        IDictionary<DamageType, ICombatAttack> Attacks { get; set; }
     }
 }

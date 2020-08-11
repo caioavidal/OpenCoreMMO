@@ -1,6 +1,4 @@
-using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Creatures.Model;
@@ -199,6 +197,13 @@ namespace NeoServer.Server.Model.Players
             FightMode.Defense => 0.5f,
             _ => 0.75f
         };
+        public int DefenseFactor => FightMode switch
+        {
+            FightMode.Attack => 5,
+            FightMode.Balanced => 7,
+            FightMode.Defense => 10,
+            _ => 7
+        };
 
         public SkillType SkillInUse
         {
@@ -323,12 +328,26 @@ namespace NeoServer.Server.Model.Players
 
         public override int ShieldDefend(int attack)
         {
-            throw new NotImplementedException();
+
+
+            return (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
+
+
         }
 
         public override int ArmorDefend(int attack)
         {
-            throw new NotImplementedException();
+            if (ArmorRating > 3)
+            {
+                var min = ArmorRating / 2;
+                var max = (ArmorRating / 2) * 2 - 1;
+                attack -= RandomDamagePower(min, max);
+            }
+            else if (ArmorRating > 0)
+            {
+                --attack;
+            }
+            return attack;
         }
     }
 }

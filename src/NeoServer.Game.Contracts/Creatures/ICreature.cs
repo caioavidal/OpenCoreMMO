@@ -1,7 +1,6 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
@@ -41,7 +40,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         Direction ClientSafeDirection { get; }
 
-        byte LightBrightness { get; } 
+        byte LightBrightness { get; }
 
         byte LightColor { get; }
 

@@ -1,9 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items.Items;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests

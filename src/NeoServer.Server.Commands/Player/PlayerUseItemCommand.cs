@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Player

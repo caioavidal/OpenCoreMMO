@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 
 namespace NeoServer.Networking.Packets.Outgoing

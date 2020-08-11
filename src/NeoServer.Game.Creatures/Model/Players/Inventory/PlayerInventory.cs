@@ -3,13 +3,10 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -31,11 +28,11 @@ namespace NeoServer.Server.Model.Players
                 if (Weapon is IDistanceWeaponItem distance)
                 {
                     attack += distance.Attack;
-                    if(Ammo != null)
+                    if (Ammo != null)
                     {
                         attack += distance.Attack;
                     }
-                    
+
                 }
 
                 return attack;
@@ -44,7 +41,23 @@ namespace NeoServer.Server.Model.Players
 
         public IAmmoItem Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoItem ammo ? Inventory[Slot.Ammo].Item1 as IAmmoItem : null;
 
-        public byte TotalDefense => (byte)Math.Max(Inventory.ContainsKey(Slot.Left) ? (Inventory[Slot.Left].Item1 as IWeaponItem).Defense : 0, Inventory.ContainsKey(Slot.Right) ? (Inventory[Slot.Right].Item1 as IWeaponItem).Defense : 0);
+        public ushort TotalDefense
+        {
+            get
+            {
+                var totalDefense = 0;
+                if (Weapon is IWeaponItem weapon)
+                {
+                    totalDefense += weapon.Defense;
+                }
+
+                totalDefense += Shield?.DefenseValue ?? 0;
+
+                return (ushort)totalDefense;
+            }
+        }
+
+        public IDefenseEquipmentItem Shield => Inventory.ContainsKey(Slot.Right) ? Inventory[Slot.Right].Item1 as IDefenseEquipmentItem : null;
 
         public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
 

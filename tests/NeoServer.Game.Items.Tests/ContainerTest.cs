@@ -1,8 +1,8 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items.Items;
@@ -443,7 +443,7 @@ namespace NeoServer.Game.Items.Tests
 
              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
 
-            
+
             var sut = CreateContainer(2);
             sut.TryAddItem(CreateRegularItem(100));
 
@@ -459,7 +459,7 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void IsEquiped_When_Parent_Is_Null_Returns_False()
         {
-         
+
 
             var sut = CreateContainer(2);
             sut.TryAddItem(CreateRegularItem(100));

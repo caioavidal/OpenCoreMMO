@@ -1,8 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Loaders.World
 {
@@ -47,11 +44,11 @@ namespace NeoServer.Loaders.World
             public string Defense { get; set; }
         }
 
-        
+
         public class Flags
         {
             [JsonProperty("flag")]
-            public List<IDictionary<string,byte>> Flag { get; set; }
+            public List<IDictionary<string, byte>> Flag { get; set; }
         }
 
         public class CombatAttack
@@ -84,11 +81,11 @@ namespace NeoServer.Loaders.World
             public string Defense { get; set; }
         }
 
-      
+
         public class Elements
         {
             [JsonProperty("element")]
-            public List<Dictionary<string,sbyte>> Element { get; set; }
+            public List<Dictionary<string, sbyte>> Element { get; set; }
         }
 
         public class Voice

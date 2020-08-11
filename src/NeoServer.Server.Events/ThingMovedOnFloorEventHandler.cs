@@ -36,17 +36,24 @@ namespace NeoServer.Server.Events
 
             foreach (var spectatorId in spectators)
             {
-                IConnection connection;
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+
+
+                if (!game.CreatureManager.TryGetCreature(spectatorId, out ICreature spectator))
                 {
                     continue;
                 }
 
-                ICreature spectator;
-                if (!game.CreatureManager.TryGetCreature(connection.PlayerId, out spectator))
+                if (spectator is IMonster && !spectator.Attacking)
+                {
+                    spectator.Attack(player);
+                    continue;
+                }
+
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
                 {
                     continue;
                 }
+
 
                 if (spectatorId == player.CreatureId) //myself
                 {

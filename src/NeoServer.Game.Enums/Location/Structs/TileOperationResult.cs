@@ -1,7 +1,4 @@
-﻿using NeoServer.Game.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {

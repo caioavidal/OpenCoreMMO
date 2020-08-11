@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Creatures.Model.Monsters.Attacks
+﻿namespace NeoServer.Game.Creatures.Model.Monsters.Attacks
 {
-    public class AreaAttack: MagicalAttack
+    public class AreaAttack : MagicalAttack
     {
         public byte Radius { get; set; }
         public byte Length { get; set; }

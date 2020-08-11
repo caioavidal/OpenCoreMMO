@@ -1,15 +1,10 @@
-﻿using NeoServer.Game.Enums.Location;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Enums
+﻿namespace NeoServer.Game.Enums
 {
     public readonly ref struct Result
     {
         public Result(InvalidOperation error)
         {
-     
+
             Error = error;
         }
 

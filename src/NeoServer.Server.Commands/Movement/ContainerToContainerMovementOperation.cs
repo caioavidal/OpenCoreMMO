@@ -1,9 +1,6 @@
 ﻿using NeoServer.Game.Enums.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Commands.Movement
 {
@@ -27,7 +24,7 @@ namespace NeoServer.Server.Commands.Movement
 
             var tryingMoveContainerToItself = !sameIds && sameContainers;
 
-            if (tryingMoveContainerToItself) 
+            if (tryingMoveContainerToItself)
             {
                 //this is impossible error
                 return;
@@ -39,7 +36,7 @@ namespace NeoServer.Server.Commands.Movement
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>
               itemThrowPacket.FromLocation.Type == LocationType.Container
               && itemThrowPacket.ToLocation.Type == LocationType.Container;
-            
-        
+
+
     }
 }
