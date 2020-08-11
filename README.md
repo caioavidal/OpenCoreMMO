@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to OpenCoreMMO 👋</h1>
+<h1 align="center">OpenCoreMMO</h1>
 <p align="center">
   
   <a href="https://travis-ci.com/caioavidal/OpenCoreMMO" target="_blank">
