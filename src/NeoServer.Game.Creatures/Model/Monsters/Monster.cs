@@ -1,6 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Location;
 using System;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
@@ -29,10 +31,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override int ShieldDefend(int attack)
         {
-            if (WasDamagedOnLastAttack)
-            {
-                attack -= RandomDamagePower((Defense / 2), Defense);
-            }
+
+            attack -= RandomDamagePower((Defense / 2), Defense);
+
             return attack;
         }
 
@@ -64,6 +65,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
+
+
         public override ushort ArmorRating => Metadata.Armor;
 
         public override byte AutoAttackRange => 0;
@@ -80,5 +83,22 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override ushort DefensePower => 30;
 
         public ushort Defense => Metadata.Defence;
+
+        public override bool TryGetNextStep(out Direction direction)
+        {
+            var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Move, DateTime.Now);
+            if (remainingCooldown > 0)
+            {
+                direction = Direction.None;
+                return false;
+
+            }
+            if (base.TryGetNextStep(out direction))
+            {
+                Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(StepDelayMilliseconds));
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -73,6 +73,9 @@ namespace NeoServer.Game.Contracts.Creatures
         byte Shield { get; }
         bool IsHealthHidden => false;
 
+        bool IsFollowing { get; }
+        uint Following { get; }
+
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
         event StopWalk OnStoppedWalking;
@@ -109,5 +112,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void SetAsRemoved();
         void ReceiveAttack(ICreature enemy, ushort attackPower);
         void ResetHealthPoints();
+        void Follow(uint id);
+        void SetDirection(Direction direction);
     }
 }

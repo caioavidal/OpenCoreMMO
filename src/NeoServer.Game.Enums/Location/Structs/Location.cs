@@ -6,6 +6,8 @@
 
 using NeoServer.Game.Enums.Players;
 using System;
+using System.Buffers;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {
@@ -231,6 +233,28 @@ namespace NeoServer.Game.Enums.Location.Structs
             var offset = GetOffsetBetween(this, dest);
 
             return (ushort)(Math.Abs(offset[0]) + Math.Abs(offset[1]));
+        }
+
+        public Location[] Neighbours
+        {
+            get
+            {
+                var pool = ArrayPool<Location>.Shared;
+                var locations = pool.Rent(8); 
+
+                locations[0] = this + new Location(0, -1, 0);
+                locations[1] = this + new Location(0, 1, 0);
+                locations[2] = this + new Location(1, 0, 0);
+                locations[3] = this + new Location(1, 1, 0);
+                locations[4] = this + new Location(1, -1, 0);
+                locations[5] = this + new Location(-1, 0, 0);
+                locations[6] = this + new Location(-1, 1, 0);
+                locations[7] = this + new Location(-1, -1, 0);
+
+                pool.Return(locations);
+
+                return locations[0..8];
+            }
         }
 
         /// <summary>

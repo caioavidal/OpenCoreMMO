@@ -28,7 +28,11 @@ namespace NeoServer.Server.Commands.Player
                 player.NextStepId = 0;
             }
 
+            //if(game.Map.GetNextTile(player.Location, direction);
+
             player.StopWalking();
+
+        
 
 
             player.TryWalkTo(directions);

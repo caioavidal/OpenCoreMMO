@@ -125,6 +125,9 @@ namespace NeoServer.Game.Creatures.Model
 
         public uint CreatureId { get; }
 
+        public uint Following { get; private set; }
+        public bool IsFollowing => Following > 0;
+
         public ushort Corpse => _creatureType.Look[LookType.Corpse];
 
         public uint HealthPoints { get; private set; }
@@ -161,9 +164,6 @@ namespace NeoServer.Game.Creatures.Model
                 }
             }
         }
-
-
-
 
         public byte LightBrightness { get; protected set; }
 
@@ -355,7 +355,7 @@ namespace NeoServer.Game.Creatures.Model
                 cache.Add(0x00); //guild emblem
             }
 
-            cache.Add(0x00);
+            cache.Add(0x01);
             return cache.ToArray();
         }
 
@@ -552,7 +552,11 @@ namespace NeoServer.Game.Creatures.Model
             return true;
         }
 
-
+        
+        public void Follow(uint id)
+        {
+            Following = id;
+        }
 
         public double CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
         {
@@ -623,10 +627,13 @@ namespace NeoServer.Game.Creatures.Model
             return stepDuration;
         }
 
-        public bool TryGetNextStep(out Direction direction)
+        public virtual bool TryGetNextStep(out Direction direction)
         {
             return WalkingQueue.TryDequeue(out direction);
         }
+
+        public void SetDirection(Direction direction) => Direction = direction;
+        
 
         //public bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         //public bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

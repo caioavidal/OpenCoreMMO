@@ -35,6 +35,8 @@ namespace NeoServer.Server.Jobs.Creatures
                 }
 
                 CreatureAttakingJob.Execute(creature, game);
+                CreatureFollowingJob.Execute(creature, game);
+
                 RespawnJob.Execute(spawnManager);
             }
 

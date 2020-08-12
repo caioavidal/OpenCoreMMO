@@ -75,11 +75,14 @@ namespace NeoServer.Game.World.Map
             var fromStackPosition = fromTile.GetStackPositionOfThing(thing);
 
             //todo: not thead safe
-            fromTile.RemoveThing(ref thing);
+            var result = fromTile.MoveThing(ref thing, toTile);
 
-            toTile.AddThing(ref thing);
+            if (!result.Success)
+            {
+                return false;
+            }
 
-            OnThingMoved?.Invoke(thing, fromTile, toTile, fromStackPosition);
+             OnThingMoved?.Invoke(thing, fromTile, toTile, fromStackPosition);
 
             var tileDestination = GetTileDestination(toTile);
 
@@ -208,7 +211,7 @@ namespace NeoServer.Game.World.Map
                     case Operation.Added: OnThingAddedToTile?.Invoke(thing, tile, stackPosition); break;
                     case Operation.Updated: OnThingUpdatedOnTile?.Invoke(tile.TopItemOnStack, tile, stackPosition); break;
                     default: break;
-                };
+                }
             }
         }
 
@@ -258,9 +261,9 @@ namespace NeoServer.Game.World.Map
                         {
                             foreach (var creature in tile.Creatures)
                             {
-                                if (creature is IPlayer)
+                                if (creature.Value is IPlayer)
                                 {
-                                    yield return creature.CreatureId; //todo: slow
+                                    yield return creature.Key; // TODO slow
                                 }
                             }
                         }
@@ -327,7 +330,7 @@ namespace NeoServer.Game.World.Map
                         {
                             foreach (var creature in tile.Creatures)
                             {
-                                creaturedIds.Add(creature.CreatureId);
+                                creaturedIds.Add(creature.Key);
                             }
 
                         }
