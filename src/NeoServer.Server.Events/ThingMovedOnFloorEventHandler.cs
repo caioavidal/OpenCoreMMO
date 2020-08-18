@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Outgoing;
@@ -30,30 +31,47 @@ namespace NeoServer.Server.Events
 
             var spectators = game.Map.GetCreaturesAtPositionZone(fromLocation, toLocation);
 
-            var player = thing as IPlayer;
+            ICreature creature = (ICreature)thing;
 
-            player.SetDirection(toDirection);
+            if(thing is ICreature)
+            {
+                creature.SetDirection(toDirection);
+            }
 
             foreach (var spectatorId in spectators)
             {
-                IConnection connection;
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+
+
+                if (!game.CreatureManager.TryGetCreature(spectatorId, out ICreature spectator))
                 {
                     continue;
                 }
 
-                ICreature spectator;
-                if (!game.CreatureManager.TryGetCreature(connection.PlayerId, out spectator))
+                if (spectator is IMonster monster)
+                {
+                    if (thing is IPlayer enemy && !spectator.Attacking)
+                    {
+                        monster.SetAttackTarget(enemy.CreatureId);
+                    }
+
+                    continue;
+                }
+
+                //var player = (IPlayer)spectator;
+
+             
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
                 {
                     continue;
                 }
 
-                if (spectatorId == player.CreatureId) //myself
+
+                if (spectatorId == creature.CreatureId) //myself
                 {
                     if (fromLocation.Z != toLocation.Z)
                     {
                         connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
-                        connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
+                        connection.OutgoingPackets.Enqueue(new MapDescriptionPacket((IPlayer)creature, game.Map));
                     }
                     else
                     {
@@ -69,9 +87,9 @@ namespace NeoServer.Server.Events
                     if (fromLocation.Z != toLocation.Z)
                     {
                         connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, fromStackPosition));
-                        connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
+                        connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature));
 
-                        connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
+                        connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
 
                     }
                     else
@@ -95,8 +113,8 @@ namespace NeoServer.Server.Events
                 if (spectator.CanSee(toLocation)) //spectator can't see old position but the new
                 {
                     //happens when player enters spectator's view area
-                    connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(player));
-                    connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, player));
+                    connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature));
+                    connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
                     connection.Send();
                     continue;
                 }

@@ -1,10 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Loaders.World;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace NeoServer.Loaders.Monsters
 {
@@ -27,11 +25,11 @@ namespace NeoServer.Loaders.Monsters
             var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));
             var monstersPath = JsonConvert.DeserializeObject<List<IDictionary<string, string>>>(jsonString);
 
-            
+
 
             foreach (var monsterFile in monstersPath)
             {
-               yield return ConvertMonster(basePath, monsterFile);
+                yield return ConvertMonster(basePath, monsterFile);
 
             }
             //return monsters;

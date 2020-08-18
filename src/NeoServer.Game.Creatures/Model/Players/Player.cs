@@ -1,6 +1,4 @@
-using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Creatures.Model;
@@ -39,6 +37,11 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
+
+            if(Skills.TryGetValue(SkillType.Level, out ISkill skill))
+            {
+                Experience = (uint)skill.Count;
+            }
 
             //Location = location;
             SetNewLocation(location);
@@ -89,7 +92,7 @@ namespace NeoServer.Server.Model.Players
 
         public ushort StaminaMinutes { get; private set; }
 
-        public uint Experience => (uint)Skills[SkillType.Level].Count;
+        public uint Experience { get; private set; }
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
         public bool IsMounted()
@@ -122,8 +125,15 @@ namespace NeoServer.Server.Model.Players
             IdleTime = 0;
         }
 
-        /////
-        ///
+        public override void GainExperience(uint exp)
+        {
+            if (exp == 0)
+            {
+                return;
+            }
+            Experience += exp;
+            base.GainExperience(exp);
+        }
 
         public override string InspectionText => Name;
 
@@ -199,6 +209,13 @@ namespace NeoServer.Server.Model.Players
             FightMode.Defense => 0.5f,
             _ => 0.75f
         };
+        public int DefenseFactor => FightMode switch
+        {
+            FightMode.Attack => 5,
+            FightMode.Balanced => 7,
+            FightMode.Defense => 10,
+            _ => 7
+        };
 
         public SkillType SkillInUse
         {
@@ -219,9 +236,6 @@ namespace NeoServer.Server.Model.Players
                 return SkillType.Fist;
             }
         }
-
-
-
 
         public override ushort AttackPower
         {
@@ -303,16 +317,20 @@ namespace NeoServer.Server.Model.Players
         public void SetChaseMode(ChaseMode mode)
         {
             ChaseMode = mode;
+            FollowCreature = mode == ChaseMode.Follow;
+            if (FollowCreature)
+            {
+                StartFollowing(AutoAttackTargetId);
+                return;
+            }
+
+            StopFollowing();
+
         }
 
         public void SetSecureMode(byte mode)
         {
             SecureMode = mode;
-        }
-
-        public void SetDirection(Direction direction)
-        {
-            Direction = direction;
         }
 
         public void CancelWalk()
@@ -321,7 +339,25 @@ namespace NeoServer.Server.Model.Players
             OnCancelledWalk(this);
         }
 
+        public override int ShieldDefend(int attack)
+        {
+            return (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
+        }
 
+        public override int ArmorDefend(int attack)
+        {
+            if (ArmorRating > 3)
+            {
+                var min = ArmorRating / 2;
+                var max = (ArmorRating / 2) * 2 - 1;
+                attack -= RandomDamagePower(min, max);
+            }
+            else if (ArmorRating > 0)
+            {
+                --attack;
+            }
+            return attack;
+        }
     }
 }
 

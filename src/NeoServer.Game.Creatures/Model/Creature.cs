@@ -1,11 +1,11 @@
-﻿using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
-using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
@@ -13,38 +13,89 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Model
 {
     public abstract class Creature : MoveableThing, ICreature, ICombatActor
     {
-        private static readonly object _idLock = new object();
-        private static uint _idCounter = 1;
 
         private readonly object _enqueueWalkLock;
 
         public event RemoveCreature OnCreatureRemoved;
-
         public event OnTurnedToDirection OnTurnedToDirection;
-
         public event StopWalk OnStoppedWalking;
-
         public event Damage OnDamaged;
-
         public event Die OnKilled;
-
         public event StopAttack OnStoppedAttack;
+        public event BlockAttack OnBlockedAttack;
+        public event GainExperience OnGainedExperience;
 
         private readonly ICreatureType _creatureType;
 
+        public abstract int ShieldDefend(int attack);
+        public abstract int ArmorDefend(int attack);
+
+        private byte blockCount = 0;
+        private const byte BLOCK_LIMIT = 2;
+
+        private bool canBlock()
+        {
+            var hasCoolDownExpired = coolDownExpired(CooldownType.Block);
+
+            if (!hasCoolDownExpired && blockCount >= BLOCK_LIMIT)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void block()
+        {
+            if (coolDownExpired(CooldownType.Block))
+            {
+                Cooldowns[CooldownType.Block] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(2000));
+                blockCount = 0;
+            }
+
+            blockCount++;
+        }
+
+        private bool coolDownExpired(CooldownType cooldown) => CalculateRemainingCooldownTime(cooldown, DateTime.Now) <= 0;
+
+        public ushort ReduceDamage(int attack)
+        {
+            int damage;
+
+            if (canBlock())
+            {
+                damage = ShieldDefend(attack);
+
+                if (damage <= 0)
+                {
+                    damage = 0;
+
+                    block();
+                    OnBlockedAttack?.Invoke(this, BlockType.Shield);
+                    return (ushort)damage;
+                }
+            }
+
+            damage = ArmorDefend(attack);
+
+            if (damage <= 0)
+            {
+                damage = 0;
+                OnBlockedAttack?.Invoke(this, BlockType.Armor);
+            }
+
+            return (ushort)damage;
+
+        }
 
         public Creature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0)
         {
@@ -71,7 +122,8 @@ namespace NeoServer.Game.Creatures.Model
                 { CooldownType.Move, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
                 { CooldownType.Action, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
                 { CooldownType.Combat, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
-                { CooldownType.Talk, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) }
+                { CooldownType.Talk, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
+                { CooldownType.Block, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) }
             };
 
             WalkingQueue = new ConcurrentQueue<Direction>();
@@ -101,6 +153,9 @@ namespace NeoServer.Game.Creatures.Model
         public uint ActorId => CreatureId;
 
         public uint CreatureId { get; }
+
+        public uint Following { get; private set; }
+        public bool IsFollowing => Following > 0;
 
         public ushort Corpse => _creatureType.Look[LookType.Corpse];
 
@@ -139,9 +194,6 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-        
-
-
         public byte LightBrightness { get; protected set; }
 
         public byte LightColor { get; protected set; }
@@ -167,6 +219,8 @@ namespace NeoServer.Game.Creatures.Model
         public byte AutoAttackCredits { get; }
 
         public byte AutoDefenseCredits { get; }
+
+        public bool FollowCreature { get; protected set; }
 
         public decimal BaseAttackSpeed { get; }
 
@@ -332,16 +386,23 @@ namespace NeoServer.Game.Creatures.Model
                 cache.Add(0x00); //guild emblem
             }
 
-            cache.Add(0x00);
+            cache.Add(0x01);
             return cache.ToArray();
         }
 
-        public void SetAttackTarget(uint targetId)
+        public virtual void SetAttackTarget(uint targetId)
         {
-            if(targetId == 0)
+            if (targetId == 0)
             {
                 StopAttack();
+                StopFollowing();
             }
+
+            if (FollowCreature)
+            {
+                StartFollowing(targetId);
+            }
+
             AutoAttackTargetId = targetId;
 
         }
@@ -385,12 +446,21 @@ namespace NeoServer.Game.Creatures.Model
 
         public abstract bool UsingDistanceWeapon { get; }
 
-        public void ReceiveAttack(ICreature enemy, ushort damage)
+        public virtual void ReceiveAttack(ICreature enemy, ushort damage)
         {
+            damage = ReduceDamage(damage);
+
+            if (damage <= 0)
+            {
+                WasDamagedOnLastAttack = false;
+                return;
+            }
+
             if (!IsDead)
             {
                 ReduceHealth(damage);
                 OnDamaged?.Invoke(enemy, this, damage);
+                WasDamagedOnLastAttack = true;
                 return;
             }
         }
@@ -398,10 +468,14 @@ namespace NeoServer.Game.Creatures.Model
         public void StopAttack()
         {
             AutoAttackTargetId = 0;
+
+
             OnStoppedAttack?.Invoke(this);
         }
 
-        public void Attack(ICreature enemy)
+        public void StopFollowing() => Following = 0;
+
+        public virtual void Attack(ICreature enemy)
         {
             if (enemy.IsDead)
             {
@@ -421,12 +495,39 @@ namespace NeoServer.Game.Creatures.Model
                 return;
             }
 
+            SetAttackTarget(enemy.CreatureId);
+
             enemy.ReceiveAttack(this, CalculateDamage());
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
         }
 
+        public bool WasDamagedOnLastAttack = true;
+
+
         private GaussianRandom _random = new GaussianRandom();
+
+        protected ushort RandomDamagePower(int min, int max)
+        {
+            var diff = max - min;
+            var gaussian = _random.Next(0.5f, 0.25f);
+
+            double increment;
+            if (gaussian < 0.0)
+            {
+                increment = diff / 2;
+            }
+            else if (gaussian > 1.0)
+            {
+                increment = (diff + 1) / 2;
+            }
+            else
+            {
+                increment = Math.Round(gaussian * diff);
+            }
+
+            return (ushort)(min + increment);
+        }
 
         private ushort CalculateDamage()
         {
@@ -487,13 +588,17 @@ namespace NeoServer.Game.Creatures.Model
                 foreach (var direction in directions)
                 {
                     WalkingQueue.Enqueue(direction);
-                    
+
                 }
             }
             return true;
         }
 
 
+        public void StartFollowing(uint id)
+        {
+            Following = id;
+        }
 
         public double CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
         {
@@ -564,10 +669,30 @@ namespace NeoServer.Game.Creatures.Model
             return stepDuration;
         }
 
-        public bool TryGetNextStep(out Direction direction)
+        public virtual bool TryGetNextStep(out Direction direction)
         {
-            return WalkingQueue.TryDequeue(out direction);
+            var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Move, DateTime.Now);
+            if (remainingCooldown > 0)
+            {
+                direction = Direction.None;
+                return false;
+
+            }
+
+            if (WalkingQueue.TryDequeue(out direction))
+            {
+                Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(StepDelayMilliseconds));
+                return true;
+            }
+
+            return false;
+
         }
+
+        public void SetDirection(Direction direction) => Direction = direction;
+
+        public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
+
 
         //public bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         //public bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

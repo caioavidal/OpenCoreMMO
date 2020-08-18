@@ -5,10 +5,8 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.World.Tests.TestData
 {
@@ -17,14 +15,14 @@ namespace NeoServer.Game.World.Tests.TestData
     {
         public class Data
         {
-            public  IMap Map{ get; set; }
+            public IMap Map { get; set; }
             public ICumulativeItem Item { get; set; }
             public byte Amount { get; set; }
             public Location ToLocation { get; set; }
             public List<IItem> ExpectedFromTileDowmItems { get; set; }
             public List<IItem> ExpectedToTileDowmItems { get; set; }
 
-           
+
 
             public Data(ICumulativeItem item, byte amount, Location toLocation, List<IItem> expectedFromTileDowmItems, List<IItem> expectedToTileDowmItems)
             {
@@ -55,7 +53,7 @@ namespace NeoServer.Game.World.Tests.TestData
                             items.Add(item);
                         }
 
-                        world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None,null,new IItem[0], items.ToArray()));
+                        world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None, null, new IItem[0], items.ToArray()));
                     }
                 }
 
@@ -68,9 +66,9 @@ namespace NeoServer.Game.World.Tests.TestData
 
             yield return new object[] { new Data(ItemTestData.CreateCumulativeItem(5, 100),amount:40, toLocation: new Location(101, 100, 7),
                 expectedFromTileDowmItems: new List<IItem>(){
-                    
+
                 }, expectedToTileDowmItems: new List<IItem>())};
-            
+
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

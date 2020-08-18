@@ -13,7 +13,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
         ushort Ground { get; }
         ushort[] TopItems { get; }
         ConcurrentStack<IItem> DownItems { get; }
-        ConcurrentStack<ICreature> Creatures { get; }
+        ConcurrentDictionary<uint, ICreature> Creatures { get; }
         ushort StepSpeed { get; }
         bool CannotLogout { get; }
         bool ProtectionZone { get; }
@@ -21,11 +21,13 @@ namespace NeoServer.Game.Contracts.World.Tiles
         byte MovementPenalty { get; }
         byte NextStackPosition { get; }
         IItem TopItemOnStack { get; }
+        bool HasCreature { get; }
 
         Result<TileOperationResult> AddThing(ref IMoveableThing thing);
         byte[] GetRaw(IPlayer playerRequesting = null);
         byte GetStackPositionOfItem(ushort id);
         byte GetStackPositionOfThing(Items.IThing thing);
+        Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1);
         IThing RemoveThing(ref IMoveableThing thing, byte count = 1);
     }
 }

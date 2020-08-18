@@ -1,7 +1,4 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -13,7 +10,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void CancelWalk(IPlayer player);
     public delegate void ClosedContainer(IPlayer player, byte containerId);
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
-    
+
     public interface IPlayer : ICreature
     {
         ushort Level { get; }
@@ -26,7 +23,7 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
 
-   
+
         float CarryStrength { get; }
 
         IDictionary<SkillType, ISkill> Skills { get; }
@@ -34,7 +31,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
 
-     
+
         Location LocationInFront { get; }
         FightMode FightMode { get; }
         ChaseMode ChaseMode { get; }

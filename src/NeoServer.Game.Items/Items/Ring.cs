@@ -1,14 +1,11 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -42,7 +39,7 @@ namespace NeoServer.Game.Items.Items
 
         public ImmutableHashSet<VocationType> AllowedVocations => new HashSet<VocationType>().ToImmutableHashSet();
 
-     
+
 
         public static bool IsApplicable(IItemType type) => type.BodyPosition == Enums.Players.Slot.Ring;
 

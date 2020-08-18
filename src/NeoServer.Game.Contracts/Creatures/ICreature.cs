@@ -1,7 +1,6 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
@@ -15,6 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void RemoveCreature(ICreature creature);
     public delegate void StopWalk(ICreature creature);
     public delegate void Die(ICreature creature);
+    public delegate void GainExperience(ICreature creature, uint exp);
 
     public interface ICreature : INeedsCooldowns, IMoveableThing, ICombatActor
     {
@@ -41,7 +41,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         Direction ClientSafeDirection { get; }
 
-        byte LightBrightness { get; } 
+        byte LightBrightness { get; }
 
         byte LightColor { get; }
 
@@ -60,6 +60,9 @@ namespace NeoServer.Game.Contracts.Creatures
         bool CanSeeInvisible { get; } // TODO: implement.
 
         bool IsDead { get; }
+
+        void GainExperience(uint exp);
+
         bool IsRemoved { get; }
         int StepDelayMilliseconds { get; }
         double LastStep { get; }
@@ -73,6 +76,9 @@ namespace NeoServer.Game.Contracts.Creatures
         byte Skull { get; }
         byte Shield { get; }
         bool IsHealthHidden => false;
+
+        bool IsFollowing { get; }
+        uint Following { get; }
 
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
@@ -110,5 +116,8 @@ namespace NeoServer.Game.Contracts.Creatures
         void SetAsRemoved();
         void ReceiveAttack(ICreature enemy, ushort attackPower);
         void ResetHealthPoints();
+        void StartFollowing(uint id);
+        void SetDirection(Direction direction);
+        void StopFollowing();
     }
 }

@@ -4,8 +4,6 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Outgoing;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace NeoServer.Networking.Tests.Packets.Outgoing
@@ -33,7 +31,7 @@ namespace NeoServer.Networking.Tests.Packets.Outgoing
             var message = new NetworkMessage();
             sut.WriteToMessage(message);
 
-            var expected = new byte[] { 0x6A, (byte)100, (byte)0, (byte)100, (byte)0, (byte)7, (byte)1, (byte)20, (byte)0 };
+            var expected = new byte[] { 0x6A, 100, 0, 100, 0, 7, 1, 20, 0 };
 
             Assert.Equal(expected, message.GetMessageInBytes());
         }

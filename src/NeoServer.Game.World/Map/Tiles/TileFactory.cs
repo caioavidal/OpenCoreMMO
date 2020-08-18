@@ -41,7 +41,7 @@ namespace NeoServer.Game.World.Map.Tiles
                     continue;
                 }
 
-                if(item is IGround)
+                if (item is IGround)
                 {
                     ground = item as IGround;
                     continue;

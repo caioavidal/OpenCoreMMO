@@ -1,16 +1,8 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
 using NeoServer.Game.Items;
-using NeoServer.Game.World.Spawns;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Items;
 using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Events.Creature
 {

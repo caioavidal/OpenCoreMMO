@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Enums.Item
+﻿namespace NeoServer.Game.Enums.Item
 {
     public enum ShootType : byte
     {

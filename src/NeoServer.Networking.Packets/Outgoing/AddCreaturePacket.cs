@@ -76,7 +76,7 @@ namespace NeoServer.Networking.Packets.Outgoing
                 message.AddByte(0x00); //todo: guild emblem
             }
 
-            message.AddByte(0x00); //todo see TFS
+            message.AddByte(0x01); //todo canWalkthroughEx
         }
     }
 }

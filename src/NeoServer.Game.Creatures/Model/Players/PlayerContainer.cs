@@ -3,12 +3,10 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
-    internal class PlayerContainer:IEquatable<PlayerContainer>
+    internal class PlayerContainer : IEquatable<PlayerContainer>
     {
         public IPlayer Player { get; }
         public PlayerContainer(IContainer container, IPlayer player)
@@ -49,7 +47,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 AddItem += addItemAction;
             }
-            if(UpdateItem == null)
+            if (UpdateItem == null)
             {
                 UpdateItem += updateItemAction;
             }

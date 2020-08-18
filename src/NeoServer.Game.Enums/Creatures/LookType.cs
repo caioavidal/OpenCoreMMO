@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Enums.Creatures
+﻿namespace NeoServer.Game.Enums.Creatures
 {
-    public enum LookType:byte
+    public enum LookType : byte
     {
         Type,
         Head,

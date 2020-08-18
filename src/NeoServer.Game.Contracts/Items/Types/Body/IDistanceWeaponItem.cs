@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Game.Contracts.Items.Types.Body
 {
-    public interface IDistanceWeaponItem : IWeapon,IBodyEquipmentItem
+    public interface IDistanceWeaponItem : IWeapon, IBodyEquipmentItem
     {
         byte MaxAttackDistance { get; }
         byte Attack => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Attack);

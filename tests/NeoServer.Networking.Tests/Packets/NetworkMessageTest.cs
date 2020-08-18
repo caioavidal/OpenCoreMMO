@@ -1,11 +1,5 @@
 ﻿using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Server.Contracts.Network.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace NeoServer.Networking.Tests.Packets
@@ -63,7 +57,7 @@ namespace NeoServer.Networking.Tests.Packets
         public void AddUInt16_As_Ushort_Insert_ushort_Bytes()
         {
             var sut = new NetworkMessage();
-            sut.AddUInt16((ushort)784);
+            sut.AddUInt16(784);
 
             var expected = new byte[] { 16, 3 };
 

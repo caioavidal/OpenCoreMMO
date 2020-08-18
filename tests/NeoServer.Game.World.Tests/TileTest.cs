@@ -3,10 +3,8 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -155,7 +153,7 @@ namespace NeoServer.Game.World.Tests
             Assert.Equal(8, (sut.DownItems.First() as ICumulativeItem).Amount);
         }
 
-        
+
         [Theory]
         [MemberData(nameof(NextTilesTestData))]
         public void IsNextTo_When_1_Sqm_Distant_Returns_True(ITile dest)

@@ -14,7 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         ushort TotalAttack { get; }
 
-        byte TotalDefense { get; }
+        ushort TotalDefense { get; }
 
         byte TotalArmor { get; }
 

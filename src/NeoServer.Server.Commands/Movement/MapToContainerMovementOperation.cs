@@ -3,9 +3,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Commands.Movement
 {
@@ -25,14 +22,14 @@ namespace NeoServer.Server.Commands.Movement
             var tile = map[itemThrowPacket.FromLocation];
             var containerId = itemThrowPacket.ToLocation.ContainerId;
 
-           // map.RemoveThing(ref thing, tile);
+            // map.RemoveThing(ref thing, tile);
             player.Containers.MoveItemBetweenContainers(itemThrowPacket.FromLocation, itemThrowPacket.ToLocation, itemThrowPacket.Count);
 
         }
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>
               itemThrowPacket.FromLocation.Type == LocationType.Ground
               && itemThrowPacket.ToLocation.Type == LocationType.Container;
-            
-        
+
+
     }
 }

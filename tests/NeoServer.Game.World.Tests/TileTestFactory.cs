@@ -4,9 +4,7 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.World.Tests
 {
@@ -21,7 +19,7 @@ namespace NeoServer.Game.World.Tests
             };
 
             var items = new List<IItem> {
-           
+
                 ItemTestData.CreateRegularItem(100),
                 ItemTestData.CreateRegularItem(200)
             };

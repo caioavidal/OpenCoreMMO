@@ -1,10 +1,10 @@
-using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using NeoServer.Data.Model;
 using NeoServer.Server.Contracts.Repositories;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
+using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace NeoServer.Data.RavenDB
 {

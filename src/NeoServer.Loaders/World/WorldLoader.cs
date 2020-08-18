@@ -11,7 +11,6 @@ using NeoServer.OTBM;
 using NeoServer.OTBM.Structure;
 using Serilog.Core;
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,9 +34,9 @@ namespace NeoServer.Loaders.World
         public void Load()
         {
             var fileStream = File.ReadAllBytes("./data/world/small.otbm");
-            
+
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
-            
+
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
             var tiles = GetTiles(otbm);
@@ -122,7 +121,7 @@ namespace NeoServer.Loaders.World
                     //yield return item;
                 }
                 items[i++] = item;
-                
+
             }
 
             return items;

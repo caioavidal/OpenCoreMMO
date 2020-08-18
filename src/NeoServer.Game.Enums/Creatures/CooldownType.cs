@@ -5,6 +5,7 @@
         Move,
         Action,
         Combat,
-        Talk
+        Talk,
+        Block
     }
 }

@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
@@ -8,7 +7,7 @@ using System;
 using System.Text;
 
 
-    
+
 
 namespace NeoServer.Networking.Packets
 {
