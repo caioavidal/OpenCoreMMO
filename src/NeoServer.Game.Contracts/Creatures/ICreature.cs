@@ -14,6 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void RemoveCreature(ICreature creature);
     public delegate void StopWalk(ICreature creature);
     public delegate void Die(ICreature creature);
+    public delegate void GainExperience(ICreature creature, uint exp);
 
     public interface ICreature : INeedsCooldowns, IMoveableThing, ICombatActor
     {
@@ -59,6 +60,9 @@ namespace NeoServer.Game.Contracts.Creatures
         bool CanSeeInvisible { get; } // TODO: implement.
 
         bool IsDead { get; }
+
+        void GainExperience(uint exp);
+
         bool IsRemoved { get; }
         int StepDelayMilliseconds { get; }
         double LastStep { get; }

@@ -154,7 +154,7 @@ namespace NeoServer.Loaders.World
             public string Race { get; set; }
 
             [JsonProperty("experience")]
-            public string Experience { get; set; }
+            public uint Experience { get; set; }
 
             [JsonProperty("speed")]
             public ushort Speed { get; set; }

@@ -20,5 +20,8 @@ namespace NeoServer.Game.Contracts.Creatures
         MonsterState State { get; }
 
         void SetState(MonsterState attacking);
+        uint Experience { get; }
+
     }
+
 }

@@ -22,7 +22,8 @@ namespace NeoServer.Loaders.World
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defenses.Armor),
                 Defence = ushort.Parse(data.Defenses.Defense),
-                Attacks = new Dictionary<DamageType, ICombatAttack>()
+                Attacks = new Dictionary<DamageType, ICombatAttack>(),
+                Experience = data.Experience
             };
 
             if (data.Attacks is Collection attacks)

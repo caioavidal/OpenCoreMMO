@@ -37,6 +37,7 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
+            Experience = (uint)Skills[SkillType.Level].Count;
 
             //Location = location;
             SetNewLocation(location);
@@ -87,7 +88,7 @@ namespace NeoServer.Server.Model.Players
 
         public ushort StaminaMinutes { get; private set; }
 
-        public uint Experience => (uint)Skills[SkillType.Level].Count;
+        public uint Experience { get; private set; }
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
         public bool IsMounted()
@@ -120,8 +121,15 @@ namespace NeoServer.Server.Model.Players
             IdleTime = 0;
         }
 
-        /////
-        ///
+        public override void GainExperience(uint exp)
+        {
+            if (exp == 0)
+            {
+                return;
+            }
+            Experience += exp;
+            base.GainExperience(exp);
+        }
 
         public override string InspectionText => Name;
 
@@ -224,9 +232,6 @@ namespace NeoServer.Server.Model.Players
                 return SkillType.Fist;
             }
         }
-
-
-
 
         public override ushort AttackPower
         {
@@ -332,11 +337,7 @@ namespace NeoServer.Server.Model.Players
 
         public override int ShieldDefend(int attack)
         {
-
-
             return (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
-
-
         }
 
         public override int ArmorDefend(int attack)

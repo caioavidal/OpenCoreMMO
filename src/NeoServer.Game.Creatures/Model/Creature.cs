@@ -27,18 +27,13 @@ namespace NeoServer.Game.Creatures.Model
         private readonly object _enqueueWalkLock;
 
         public event RemoveCreature OnCreatureRemoved;
-
         public event OnTurnedToDirection OnTurnedToDirection;
-
         public event StopWalk OnStoppedWalking;
-
         public event Damage OnDamaged;
-
         public event Die OnKilled;
-
         public event StopAttack OnStoppedAttack;
-
         public event BlockAttack OnBlockedAttack;
+        public event GainExperience OnGainedExperience;
 
         private readonly ICreatureType _creatureType;
 
@@ -417,7 +412,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public abstract bool UsingDistanceWeapon { get; }
 
-        public void ReceiveAttack(ICreature enemy, ushort damage)
+        public virtual void ReceiveAttack(ICreature enemy, ushort damage)
         {
             damage = ReduceDamage(damage);
 
@@ -661,7 +656,9 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public void SetDirection(Direction direction) => Direction = direction;
-        
+
+        public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
+
 
         //public bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         //public bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

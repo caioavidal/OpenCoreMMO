@@ -26,6 +26,7 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
         private readonly CreatureInjuredEventHandler _creatureReceiveDamageEventHandler;
         private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
+        private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
 
 
 
@@ -35,7 +36,8 @@ namespace NeoServer.Server.Standalone.Factories
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
-            CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler)
+            CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, 
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
@@ -48,6 +50,7 @@ namespace NeoServer.Server.Standalone.Factories
             this.creatureStopedAttackEventHandler = creatureStopedAttackEventHandler;
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureBlockedAttackEventHandler = creatureBlockedAttackEventHandler;
+            _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
         }
         public IPlayer Create(PlayerModel player)
         {
@@ -93,6 +96,7 @@ namespace NeoServer.Server.Standalone.Factories
             newPlayer.OnStoppedAttack += (actor) => creatureStopedAttackEventHandler?.Execute(newPlayer);
             newPlayer.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
             newPlayer.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
+            newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
             return newPlayer;
         }

@@ -8,6 +8,8 @@ namespace NeoServer.Game.Contracts.Creatures
     {
         ushort Armor { get; set; }
         ushort Defence { get; set; }
+
+        public uint Experience { get; set; }
         IDictionary<DamageType, ICombatAttack> Attacks { get; set; }
     }
 }

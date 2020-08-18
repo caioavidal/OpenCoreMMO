@@ -6,6 +6,10 @@ using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using Org.BouncyCastle.Asn1.X509;
 using System;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
@@ -20,11 +24,34 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             Metadata = type;
             Spawn = spawn;
+            Damages = new ConcurrentDictionary<ICreature, ushort>();
+
+            OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage);
+            OnKilled += (enemy) => GiveExperience();
         }
+
 
         public MonsterState State { get; private set; } = MonsterState.Sleeping;
 
+        public ConcurrentDictionary<ICreature, ushort> Damages;
 
+        public void RecordDamage(ICreature enemy, ushort damage) => Damages.AddOrUpdate(enemy, damage, (key, oldValue) => (ushort)(oldValue + damage));
+
+        private void GiveExperience()
+        {
+            var totalDamage = Damages.Sum(x => x.Value);
+
+            foreach (var enemyDamage in Damages)
+            {
+                var damage = enemyDamage.Value;
+
+                var damagePercent = damage * 100 / totalDamage;
+
+                var exp = damagePercent * Experience / 100;
+
+                enemyDamage.Key.GainExperience((uint)exp);
+            }
+        }
 
         public event Born OnWasBorn;
 
@@ -89,16 +116,18 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public ushort Defense => Metadata.Defence;
 
+        public uint Experience => Metadata.Experience;
+
         public void SetState(MonsterState state) => State = state;
 
         public override void SetAttackTarget(uint targetId)
         {
-            if(targetId != 0)
+            if (targetId != 0)
             {
                 SetState(MonsterState.Alive);
             }
 
-            FollowCreature = true; 
+            FollowCreature = true;
 
             base.SetAttackTarget(targetId);
         }
