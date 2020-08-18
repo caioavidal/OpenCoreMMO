@@ -40,16 +40,49 @@ namespace NeoServer.Game.Creatures.Model
         public abstract int ShieldDefend(int attack);
         public abstract int ArmorDefend(int attack);
 
+        private byte blockCount = 0;
+        private const byte BLOCK_LIMIT = 2;
+
+        private bool canBlock()
+        {
+            var hasCoolDownExpired = coolDownExpired(CooldownType.Block);
+
+            if (!hasCoolDownExpired && blockCount >= BLOCK_LIMIT)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void block()
+        {
+            if (coolDownExpired(CooldownType.Block))
+            {
+                Cooldowns[CooldownType.Block] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(2000));
+                blockCount = 0;
+            }
+
+            blockCount++;
+        }
+
+        private bool coolDownExpired(CooldownType cooldown) => CalculateRemainingCooldownTime(cooldown, DateTime.Now) <= 0;
 
         public ushort ReduceDamage(int attack)
         {
-            int damage = ShieldDefend(attack);
+            int damage;
 
-            if (damage <= 0)
+            if (canBlock())
             {
-                damage = 0;
-                OnBlockedAttack?.Invoke(this, BlockType.Shield);
-                return (ushort)damage;
+                damage = ShieldDefend(attack);
+
+                if (damage <= 0)
+                {
+                    damage = 0;
+
+                    block();
+                    OnBlockedAttack?.Invoke(this, BlockType.Shield);
+                    return (ushort)damage;
+                }
             }
 
             damage = ArmorDefend(attack);
@@ -89,7 +122,8 @@ namespace NeoServer.Game.Creatures.Model
                 { CooldownType.Move, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
                 { CooldownType.Action, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
                 { CooldownType.Combat, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
-                { CooldownType.Talk, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) }
+                { CooldownType.Talk, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
+                { CooldownType.Block, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) }
             };
 
             WalkingQueue = new ConcurrentQueue<Direction>();
@@ -435,7 +469,7 @@ namespace NeoServer.Game.Creatures.Model
         {
             AutoAttackTargetId = 0;
 
-          
+
             OnStoppedAttack?.Invoke(this);
         }
 
@@ -560,7 +594,7 @@ namespace NeoServer.Game.Creatures.Model
             return true;
         }
 
-        
+
         public void StartFollowing(uint id)
         {
             Following = id;
@@ -645,14 +679,14 @@ namespace NeoServer.Game.Creatures.Model
 
             }
 
-            if(WalkingQueue.TryDequeue(out direction))
+            if (WalkingQueue.TryDequeue(out direction))
             {
                 Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(StepDelayMilliseconds));
                 return true;
             }
 
             return false;
-            
+
         }
 
         public void SetDirection(Direction direction) => Direction = direction;
