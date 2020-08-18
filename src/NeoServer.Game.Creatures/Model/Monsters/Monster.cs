@@ -2,7 +2,9 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
@@ -19,6 +21,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Metadata = type;
             Spawn = spawn;
         }
+
+        public MonsterState State { get; private set; } = MonsterState.Sleeping;
+
+
 
         public event Born OnWasBorn;
 
@@ -66,7 +72,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
 
-
         public override ushort ArmorRating => Metadata.Armor;
 
         public override byte AutoAttackRange => 0;
@@ -84,21 +89,18 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public ushort Defense => Metadata.Defence;
 
-        public override bool TryGetNextStep(out Direction direction)
-        {
-            var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Move, DateTime.Now);
-            if (remainingCooldown > 0)
-            {
-                direction = Direction.None;
-                return false;
+        public void SetState(MonsterState state) => State = state;
 
-            }
-            if (base.TryGetNextStep(out direction))
+        public override void SetAttackTarget(uint targetId)
+        {
+            if(targetId != 0)
             {
-                Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(StepDelayMilliseconds));
-                return true;
+                SetState(MonsterState.Alive);
             }
-            return false;
+
+            FollowCreature = true; 
+
+            base.SetAttackTarget(targetId);
         }
     }
 }

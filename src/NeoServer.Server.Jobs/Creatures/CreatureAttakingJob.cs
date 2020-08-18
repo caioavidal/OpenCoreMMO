@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Enums.Creatures;
 
 namespace NeoServer.Server.Jobs.Creatures
 {

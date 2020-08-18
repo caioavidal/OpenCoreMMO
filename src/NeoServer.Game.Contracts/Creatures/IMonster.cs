@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Contracts.Creatures
@@ -16,5 +17,8 @@ namespace NeoServer.Game.Contracts.Creatures
         public bool FromSpawn => Spawn != null;
 
         ushort Defense { get; }
+        MonsterState State { get; }
+
+        void SetState(MonsterState attacking);
     }
 }

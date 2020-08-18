@@ -191,6 +191,8 @@ namespace NeoServer.Game.Creatures.Model
 
         public byte AutoDefenseCredits { get; }
 
+        public bool FollowCreature { get; protected set; }
+
         public decimal BaseAttackSpeed { get; }
 
         public decimal BaseDefenseSpeed { get; }
@@ -359,12 +361,19 @@ namespace NeoServer.Game.Creatures.Model
             return cache.ToArray();
         }
 
-        public void SetAttackTarget(uint targetId)
+        public virtual void SetAttackTarget(uint targetId)
         {
             if (targetId == 0)
             {
                 StopAttack();
+                StopFollowing();
             }
+
+            if (FollowCreature)
+            {
+                StartFollowing(targetId);
+            }
+
             AutoAttackTargetId = targetId;
 
         }
@@ -430,10 +439,14 @@ namespace NeoServer.Game.Creatures.Model
         public void StopAttack()
         {
             AutoAttackTargetId = 0;
+
+          
             OnStoppedAttack?.Invoke(this);
         }
 
-        public void Attack(ICreature enemy)
+        public void StopFollowing() => Following = 0;
+
+        public virtual void Attack(ICreature enemy)
         {
             if (enemy.IsDead)
             {
@@ -553,7 +566,7 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         
-        public void Follow(uint id)
+        public void StartFollowing(uint id)
         {
             Following = id;
         }
@@ -629,7 +642,22 @@ namespace NeoServer.Game.Creatures.Model
 
         public virtual bool TryGetNextStep(out Direction direction)
         {
-            return WalkingQueue.TryDequeue(out direction);
+            var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Move, DateTime.Now);
+            if (remainingCooldown > 0)
+            {
+                direction = Direction.None;
+                return false;
+
+            }
+
+            if(WalkingQueue.TryDequeue(out direction))
+            {
+                Cooldowns[CooldownType.Move] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(StepDelayMilliseconds));
+                return true;
+            }
+
+            return false;
+            
         }
 
         public void SetDirection(Direction direction) => Direction = direction;

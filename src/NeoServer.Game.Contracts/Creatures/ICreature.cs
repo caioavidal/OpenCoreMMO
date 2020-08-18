@@ -112,7 +112,8 @@ namespace NeoServer.Game.Contracts.Creatures
         void SetAsRemoved();
         void ReceiveAttack(ICreature enemy, ushort attackPower);
         void ResetHealthPoints();
-        void Follow(uint id);
+        void StartFollowing(uint id);
         void SetDirection(Direction direction);
+        void StopFollowing();
     }
 }

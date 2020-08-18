@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Outgoing;
@@ -46,12 +47,11 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (spectator is IMonster)
+                if (spectator is IMonster monster)
                 {
                     if (thing is IPlayer enemy && !spectator.Attacking)
                     {
-                        spectator.Attack(enemy);
-                        spectator.Follow(enemy.CreatureId);
+                        monster.SetAttackTarget(enemy.CreatureId);
                     }
 
                     continue;

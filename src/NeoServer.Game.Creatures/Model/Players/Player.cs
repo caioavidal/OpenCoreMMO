@@ -308,6 +308,15 @@ namespace NeoServer.Server.Model.Players
         public void SetChaseMode(ChaseMode mode)
         {
             ChaseMode = mode;
+            FollowCreature = mode == ChaseMode.Follow;
+            if (FollowCreature)
+            {
+                StartFollowing(AutoAttackTargetId);
+                return;
+            }
+
+            StopFollowing();
+
         }
 
         public void SetSecureMode(byte mode)
