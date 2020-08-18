@@ -37,7 +37,11 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
-            Experience = (uint)Skills[SkillType.Level].Count;
+
+            if(Skills.TryGetValue(SkillType.Level, out ISkill skill))
+            {
+                Experience = (uint)skill.Count;
+            }
 
             //Location = location;
             SetNewLocation(location);
