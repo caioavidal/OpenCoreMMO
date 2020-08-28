@@ -7,7 +7,14 @@ namespace NeoServer.Server
 {
     public class Game
     {
+        /// <summary>
+        /// Game's light level
+        /// </summary>
         public byte LightLevel => 250;
+
+        /// <summary>
+        /// Indicates Game's light color
+        /// </summary>
         public byte LightColor => 215;
 
         /// <summary>

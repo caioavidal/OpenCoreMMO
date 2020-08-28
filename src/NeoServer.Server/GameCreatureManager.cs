@@ -26,6 +26,10 @@ namespace NeoServer.Server
 
         private readonly Func<PlayerModel, IPlayer> playerFactory;
 
+        /// <summary>
+        /// Gets all creatures all game
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ICreature> GetCreatures() => creatureInstances.All();
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
@@ -39,7 +43,7 @@ namespace NeoServer.Server
         }
 
         /// <summary>
-        /// Adds creature to game
+        /// Adds creature to game and to map
         /// </summary>
         /// <param name="creature"></param>
         /// <returns></returns>
@@ -51,10 +55,19 @@ namespace NeoServer.Server
             return true;
         }
 
+        /// <summary>
+        /// Adds killed monsters
+        /// </summary>
+        /// <param name="monster"></param>
         public void AddKilledMonsters(IMonster monster)
         {
             creatureInstances.AddKilledMonsters(monster);
         }
+
+        /// <summary>
+        /// Returns all killed monsters
+        /// </summary>
+        /// <returns></returns>
 
         public IImmutableList<Tuple<IMonster, TimeSpan>> GetKilledMonsters() => creatureInstances.AllKilledMonsters();
 
@@ -78,7 +91,12 @@ namespace NeoServer.Server
             return false;
         }
 
-
+        /// <summary>
+        /// Returns a creature by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="creature"></param>
+        /// <returns></returns>
         public bool TryGetCreature(uint id, out ICreature creature) => creatureInstances.TryGetCreature(id, out creature);
         /// <summary>
         /// Removes creature from game

@@ -15,6 +15,10 @@ namespace NeoServer.Server.Tasks
         private readonly ChannelReader<IEvent> reader;
         private ulong cycles = 0;
 
+
+        /// <summary>
+        /// A queue responsible for process events
+        /// </summary>
         public Dispatcher()
         {
             var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions() { SingleReader = true });
@@ -25,6 +29,11 @@ namespace NeoServer.Server.Tasks
             priorityWriter = channel.Writer;
         }
 
+        /// <summary>
+        /// Adds an event to dispatcher queue
+        /// </summary>
+        /// <param name="evt"></param>
+        /// <param name="hasPriority"></param>
         public void AddEvent(IEvent evt, bool hasPriority = false)
         {
             if (hasPriority)
@@ -43,7 +52,10 @@ namespace NeoServer.Server.Tasks
             return cycles;
         }
 
-
+        /// <summary>
+        /// Starts dispatcher processing queue
+        /// </summary>
+        /// <param name="token"></param>
         public void Start(CancellationToken token)
         {
 

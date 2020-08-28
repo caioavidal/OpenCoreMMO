@@ -27,6 +27,11 @@ namespace NeoServer.Server.Tasks
             writer = channel.Writer;
         }
 
+        /// <summary>
+        /// Adds event to be scheduled on the queue
+        /// </summary>
+        /// <param name="evt"></param>
+        /// <returns></returns>
         public uint AddEvent(ISchedulerEvent evt)
         {
 
@@ -43,6 +48,11 @@ namespace NeoServer.Server.Tasks
 
             return evt.EventId;
         }
+
+        /// <summary>
+        /// Starts scheduler queue
+        /// </summary>
+        /// <param name="token"></param>
 
         public void Start(CancellationToken token)
         {
@@ -77,6 +87,11 @@ namespace NeoServer.Server.Tasks
             activeEventIds.TryRemove(evt.EventId, out _);
         }
 
+        /// <summary>
+        /// Cancels event. Event will be not dispatched
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         public bool CancelEvent(uint eventId)
         {
             if (eventId == default)
@@ -87,6 +102,11 @@ namespace NeoServer.Server.Tasks
             return activeEventIds.TryRemove(eventId, out _);
         }
 
+        /// <summary>
+        /// Indicates whether event was cancelled
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         public bool EventIsCancelled(uint eventId) => !activeEventIds.ContainsKey(eventId);
 
 
