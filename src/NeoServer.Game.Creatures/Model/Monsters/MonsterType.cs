@@ -1,13 +1,12 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
-    public sealed class MonsterType: IMonsterType
+    public sealed class MonsterType : IMonsterType
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -20,7 +19,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public TargetChance TargetChance { get; set; }
         public CombatStrategy CombatStrategy { get; set; }
         public IDictionary<CreatureFlagAttribute, byte> Flags { get; set; }
-        public IDictionary<DamageType, CombatAttack> Attacks { get; set; }
-
+        public IDictionary<DamageType, ICombatAttack> Attacks { get; set; }
+        public ushort Armor { get; set; }
+        public ushort Defence { get; set; }
     }
 }

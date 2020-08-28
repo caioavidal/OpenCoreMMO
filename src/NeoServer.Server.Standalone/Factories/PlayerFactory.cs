@@ -1,15 +1,12 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Items.Items;
 using NeoServer.Server.Events;
 using NeoServer.Server.Events.Player;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
-using Raven.Client.ServerWide.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +24,20 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler;
         private readonly InvalidOperationEventHandler invalidOperationEventHandler;
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
+        private readonly CreatureInjuredEventHandler _creatureReceiveDamageEventHandler;
+        private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
+        private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
 
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory, PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler)
+
+
+        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
+            PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
+            PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
+            ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
+            InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
+            CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, 
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerTurnToDirectionEventHandler = playerTurnToDirectionEventHandler;
@@ -40,6 +48,9 @@ namespace NeoServer.Server.Standalone.Factories
             this.itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
             this.invalidOperationEventHandler = invalidOperationEventHandler;
             this.creatureStopedAttackEventHandler = creatureStopedAttackEventHandler;
+            _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
+            _creatureBlockedAttackEventHandler = creatureBlockedAttackEventHandler;
+            _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
         }
         public IPlayer Create(PlayerModel player)
         {
@@ -83,6 +94,9 @@ namespace NeoServer.Server.Standalone.Factories
 
             newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
             newPlayer.OnStoppedAttack += (actor) => creatureStopedAttackEventHandler?.Execute(newPlayer);
+            newPlayer.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
+            newPlayer.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
+            newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
             return newPlayer;
         }
@@ -107,7 +121,7 @@ namespace NeoServer.Server.Standalone.Factories
                     BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
                 }
 
-                
+
 
                 inventoryDic.Add(slot.Key, new Tuple<IPickupable, ushort>(createdItem, slot.Value));
 

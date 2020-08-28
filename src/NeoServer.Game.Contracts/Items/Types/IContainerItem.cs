@@ -1,9 +1,5 @@
 ﻿using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Players;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {
@@ -32,7 +28,7 @@ namespace NeoServer.Game.Contracts.Items.Types
 
         bool GetContainerAt(byte index, out IContainer container);
         Result MoveItem(byte fromSlotIndex, byte toSlotIndex);
-        void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount =1);
+        void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
         IItem RemoveItem(byte slotIndex);
         IItem RemoveItem(byte slotIndex, byte amount);
         void SetParent(IThing thing);

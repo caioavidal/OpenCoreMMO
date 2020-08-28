@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using NeoServer.Game.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {

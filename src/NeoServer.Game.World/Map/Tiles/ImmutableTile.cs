@@ -22,7 +22,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public byte[] GetRaw(IItem[] items)
         {
-           
+
 
             var ground = new List<byte>();
             var top1 = new List<byte>();

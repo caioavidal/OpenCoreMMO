@@ -55,10 +55,10 @@ namespace NeoServer.Game.Items.Items
             Amount -= amount;
         }
 
-    
+
 
         public byte AmountToComplete => (byte)(100 - Amount);
-        
+
 
         public bool TryJoin(ref ICumulativeItem item)
         {

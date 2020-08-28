@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to OpenCoreMMO 👋</h1>
+<h1 align="center">OpenCoreMMO</h1>
 <p align="center">
   
   <a href="https://travis-ci.com/caioavidal/OpenCoreMMO" target="_blank">
@@ -62,7 +62,7 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 
 * C#
 * .Net Core 3.1
-* ReavenDB - NoSQL Database
+* RavenDB - NoSQL Database
 * XUnit Testing
 
 ## Author

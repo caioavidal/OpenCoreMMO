@@ -27,7 +27,7 @@ namespace NeoServer.Server.Events
 
             foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
             {
-                
+
                 var isSpectator = !(creature.CreatureId == spectatorId);
                 if (!isSpectator)
                 {
@@ -39,7 +39,7 @@ namespace NeoServer.Server.Events
                     {
                         continue;
                     }
-                   
+
                     SendPacketsToSpectator(spectator, creature, outgoingPackets);
                 }
 

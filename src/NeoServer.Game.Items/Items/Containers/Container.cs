@@ -1,13 +1,11 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -39,9 +37,9 @@ namespace NeoServer.Game.Items.Items
             get
             {
                 IThing parent = this;
-                while(true)
+                while (true)
                 {
-                    if(parent is IContainer container)
+                    if (parent is IContainer container)
                     {
                         parent = container.Parent;
                     }
@@ -79,7 +77,7 @@ namespace NeoServer.Game.Items.Items
             {
                 throw new ArgumentOutOfRangeException("Slot is bigger than capacity");
             }
-           
+
             if (item is ICumulativeItem == false)
             {
                 return AddItemToFront(item);
@@ -162,7 +160,7 @@ namespace NeoServer.Game.Items.Items
             return new Result();
         }
 
-        
+
 
         private Result AddItemToChild(IItem item, IContainer child)
         {
@@ -226,7 +224,7 @@ namespace NeoServer.Game.Items.Items
 
             Items.RemoveAt(slotIndex);
 
-            if(item is IContainer container)
+            if (item is IContainer container)
             {
                 container.SetParent(null);
                 container.OnItemUpdated -= OnItemUpdated;

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 
 namespace NeoServer.Game.Creature
 {
@@ -56,7 +55,7 @@ namespace NeoServer.Game.Creature
             }
             return true;
         }
-      
+
         public bool TryRemove(uint id)
         {
             if (!_gameInstances.TryRemove(id, out ICreature creature))

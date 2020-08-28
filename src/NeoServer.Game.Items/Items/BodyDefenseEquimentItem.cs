@@ -1,7 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
@@ -19,7 +17,6 @@ namespace NeoServer.Game.Items.Items
 
         public bool Pickupable => true;
 
-        public ushort DefenseValue => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
         public ImmutableDictionary<DamageType, byte> DamageProtection { get; }
 

@@ -1,17 +1,13 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void RemoveItemFromOpenedContainer(IPlayer player, byte containerId, byte slotIndex, IItem item);
     public delegate void AddItemOnOpenedContainer(IPlayer player, byte containerId, IItem item);
     public delegate void UpdateItemOnOpenedContainer(IPlayer player, byte containerId, byte slotIndex, IItem item, sbyte amount);
-    
+
     public interface IPlayerContainerList
     {
         Items.Types.IContainer this[byte id] { get; }
@@ -23,7 +19,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event ClosedContainer OnClosedContainer;
         event OpenedContainer OnOpenedContainer;
 
-        
+
 
         void CloseContainer(byte containerId);
         void GoBackContainer(byte containerId);

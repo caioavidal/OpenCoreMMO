@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

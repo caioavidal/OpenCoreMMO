@@ -9,6 +9,7 @@
         NorthEast,
         SouthEast,
         NorthWest,
-        SouthWest
+        SouthWest,
+        None
     }
 }

@@ -1,8 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
-using BenchmarkDotNet.Reports;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Benchmarks
 {
@@ -16,7 +13,7 @@ namespace NeoServer.Benchmarks
         public long NoMethod()
         {
             var sum = 0;
-            for(int i = 0; i < 1_00000; i++)
+            for (int i = 0; i < 1_00000; i++)
             {
                 sum = i + i;
             }
@@ -30,7 +27,7 @@ namespace NeoServer.Benchmarks
             var sum = 0;
             for (int i = 0; i < 1_00000; i++)
             {
-                sum = Static.Sum(i,i);
+                sum = Static.Sum(i, i);
             }
             return sum;
 
@@ -39,11 +36,11 @@ namespace NeoServer.Benchmarks
         [Benchmark]
         public long InstanceMethod()
         {
-            
+
             var sum = 0;
             for (int i = 0; i < 1_00000; i++)
             {
-                var instance = new Instance(1,1);
+                var instance = new Instance(1, 1);
                 sum = instance.Sum();
             }
 
@@ -74,7 +71,7 @@ namespace NeoServer.Benchmarks
 
     public class Static
     {
-        public static int Sum( int a, int b) => a + b;
+        public static int Sum(int a, int b) => a + b;
 
     }
 

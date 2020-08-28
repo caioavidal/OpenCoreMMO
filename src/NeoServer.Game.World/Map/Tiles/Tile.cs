@@ -9,7 +9,6 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
@@ -37,11 +36,12 @@ namespace NeoServer.Game.World.Map.Tiles
         public ushort[] TopItems { get; private set; }
 
         public ConcurrentStack<IItem> DownItems { get; private set; } = new ConcurrentStack<IItem>();
-        public ConcurrentStack<ICreature> Creatures { get; private set; } = new ConcurrentStack<ICreature>();
+        public ConcurrentDictionary<uint, ICreature> Creatures { get; private set; } = new ConcurrentDictionary<uint, ICreature>();
 
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
+        public bool HasCreature => Creatures.Any();
 
 
         public byte NextStackPosition
@@ -117,7 +117,7 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 ++n;
 
-                if (thing is ICreature thisCreature && thisCreature == creature)
+                if (thing is ICreature thisCreature && thisCreature.CreatureId == creature.Key)
                 {
                     return (byte)n;
                 }
@@ -142,7 +142,12 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (thing is ICreature creature)
             {
-                Creatures.Push(creature);
+                if (Creatures.Any())
+                {
+                    operations.Add(Operation.None);
+                    return operations;
+                }
+                Creatures.TryAdd(creature.CreatureId, creature);
                 creature.Tile = this;
             }
             else if (thing is IItem item)
@@ -183,7 +188,12 @@ namespace NeoServer.Game.World.Map.Tiles
         public Result<TileOperationResult> AddThing(ref IMoveableThing thing)
         {
             var operations = AddThingToTile(thing);
-            thing.SetNewLocation(Location);
+
+            if (!operations.HasNoneOperation)
+            {
+                thing.SetNewLocation(Location);
+            }
+            
             return new Result<TileOperationResult>(operations);
         }
 
@@ -224,6 +234,18 @@ namespace NeoServer.Game.World.Map.Tiles
             }
         }
 
+        public Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1)
+        {
+            if(thing is ICreature && dest.HasCreature)
+            {
+                return new Result<TileOperationResult>(InvalidOperation.NotPossible);
+            }
+
+            RemoveThing(ref thing);
+
+            return dest.AddThing(ref thing);
+        }
+
 
         public IThing RemoveThing(ref IMoveableThing thing, byte amount = 1)
         {
@@ -231,9 +253,10 @@ namespace NeoServer.Game.World.Map.Tiles
             IThing removedThing = null;
             var itemToRemove = thing as IItem;
 
-            if (thing is ICreature)
+            if (thing is ICreature c)
             {
-                Creatures.TryPop(out var creature);
+               
+                Creatures.TryRemove(c.CreatureId, out var creature);
                 removedThing = creature;
             }
             //else if (itemToRemove.IsAlwaysOnTop)
@@ -317,7 +340,7 @@ namespace NeoServer.Game.World.Map.Tiles
                     break;
                 }
 
-                var raw = creature.GetRaw(playerRequesting);
+                var raw = creature.Value.GetRaw(playerRequesting);
                 raw.CopyTo(stream.Slice(countBytes, raw.Length));
 
                 countThings++;

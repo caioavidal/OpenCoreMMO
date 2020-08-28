@@ -1,7 +1,4 @@
-﻿using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
-using System;
+﻿using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

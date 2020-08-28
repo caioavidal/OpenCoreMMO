@@ -1,10 +1,7 @@
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Model.Monsters;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 
 namespace NeoServer.Game.Creature
 {
@@ -18,7 +15,7 @@ namespace NeoServer.Game.Creature
 
         public void Load(IEnumerable<IMonsterType> monsters)
         {
-            if(_loaded == true)
+            if (_loaded == true)
             {
                 throw new InvalidOperationException("Monsters already loaded");
             }

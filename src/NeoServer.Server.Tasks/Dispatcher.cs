@@ -78,7 +78,7 @@ namespace NeoServer.Server.Tasks
                             {
                                 evt.Action.Invoke(); //execute event
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }

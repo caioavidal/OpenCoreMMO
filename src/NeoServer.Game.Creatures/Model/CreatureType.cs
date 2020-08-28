@@ -1,8 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Creatures;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -17,7 +15,7 @@ namespace NeoServer.Game.Creatures.Model
             Look = look;
         }
 
-        public string Name { get;}
+        public string Name { get; }
         public string Description { get; }
         public uint MaxHealth { get; private set; }
         public ushort Speed { get; set; }

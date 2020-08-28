@@ -1,8 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Contracts.Network;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NeoServer.Game.Enums.Creatures;
 
 namespace NeoServer.Server.Jobs.Creatures
 {

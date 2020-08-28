@@ -3,7 +3,6 @@ using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Items.Parsers;
 using System;
 using System.Collections.Generic;
 using System.IO;

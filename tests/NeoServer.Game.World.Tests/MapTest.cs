@@ -1,16 +1,12 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.World.Tests.TestData;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace NeoServer.Game.World.Tests
@@ -38,7 +34,7 @@ namespace NeoServer.Game.World.Tests
                         items.Add(item);
                     }
 
-                    world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None,null, new IItem[0], items.ToArray()));
+                    world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None, null, System.Array.Empty<IItem>(), items.ToArray()));
                 }
             }
 
@@ -49,7 +45,7 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void RemoveThing_RemovesThingFromTile()
         {
-            var item = ItemTestData.CreateMoveableItem(2) as IItem;
+            var item = ItemTestData.CreateMoveableItem(2);
 
             var map = CreateMap(item);
 
@@ -63,7 +59,7 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void TryMoveThing_Moves_Thing()
         {
-            var item = ItemTestData.CreateMoveableItem(2) as IItem;
+            var item = ItemTestData.CreateMoveableItem(2);
 
             var sup = CreateMap(item);
             var fromTile = sup[item.Location] as IWalkableTile;
@@ -84,7 +80,7 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void TryMoveThing_GivenRegularItem_Moves_Thing()
         {
-            var item = ItemTestData.CreateMoveableItem(2) as IItem;
+            var item = ItemTestData.CreateMoveableItem(2);
 
             var sup = CreateMap(item);
             var fromTile = sup[item.Location] as IWalkableTile;
@@ -105,7 +101,7 @@ namespace NeoServer.Game.World.Tests
         [ClassData(typeof(MoveCumulativeItemTestData))]
         public void TryMoveThing_GivenCumulativeItem_Moves_Thing(MoveCumulativeItemTestData.Data data)
         {
-            var item = ItemTestData.CreateMoveableItem(2) as IItem;
+            var item = ItemTestData.CreateMoveableItem(2);
 
             var sup = CreateMap(item);
             var fromTile = sup[item.Location] as IWalkableTile;

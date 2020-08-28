@@ -3,9 +3,7 @@ using BenchmarkDotNet.Engines;
 using NeoServer.Game.Enums.Location.Structs.Helpers;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace NeoServer.Benchmarks.Collections
 {

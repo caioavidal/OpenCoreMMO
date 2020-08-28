@@ -1,5 +1,4 @@
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.Server.Items;
 using Newtonsoft.Json;
@@ -24,7 +23,7 @@ namespace NeoServer.Loaders.Items
         /// </summary>
         public void Load()
         {
-            
+
             var basePath = "./data/items/";
             var itemTypes = LoadOTB(basePath);
 
