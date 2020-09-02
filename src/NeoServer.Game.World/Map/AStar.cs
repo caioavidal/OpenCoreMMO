@@ -22,7 +22,6 @@ using System.Collections.Generic;
 namespace NeoServer.Game.World.PathFinding
 {
 
-
     /// <summary>
     /// Interface to setup and run the AStar algorithm.
     /// </summary>

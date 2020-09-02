@@ -28,9 +28,6 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
 
-
-
-
         public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
             PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
@@ -121,8 +118,6 @@ namespace NeoServer.Server.Standalone.Factories
                     BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
                 }
 
-
-
                 inventoryDic.Add(slot.Key, new Tuple<IPickupable, ushort>(createdItem, slot.Value));
 
             }
@@ -156,7 +151,6 @@ namespace NeoServer.Server.Standalone.Factories
 
             return BuildContainer(items, ++index, location, container);
         }
-
 
     }
 }

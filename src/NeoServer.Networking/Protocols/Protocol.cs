@@ -6,8 +6,6 @@ namespace NeoServer.Networking.Protocols
     {
         public virtual bool KeepConnectionOpen { get; protected set; }
 
-
-
         public virtual void OnAccept(IConnection connection)
         {
             connection.BeginStreamRead();
@@ -23,7 +21,6 @@ namespace NeoServer.Networking.Protocols
                 return;
             }
         }
-
 
         public abstract void ProcessMessage(object sender, IConnectionEventArgs connection);
     }

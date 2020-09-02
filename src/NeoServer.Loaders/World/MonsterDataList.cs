@@ -44,7 +44,6 @@ namespace NeoServer.Loaders.World
             public string Defense { get; set; }
         }
 
-
         public class Flags
         {
             [JsonProperty("flag")]
@@ -80,7 +79,6 @@ namespace NeoServer.Loaders.World
             [JsonProperty("defense")]
             public string Defense { get; set; }
         }
-
 
         public class Elements
         {
@@ -125,7 +123,6 @@ namespace NeoServer.Loaders.World
 
             [JsonProperty("chance")]
             public string Chance { get; set; }
-
 
             [JsonProperty("item")]
             public List<Item2> Item { get; set; }
@@ -176,8 +173,6 @@ namespace NeoServer.Loaders.World
 
             [JsonProperty("flags")]
             public Flags Flags { get; set; }
-
-
 
             [JsonProperty("attacks")]
             public dynamic Attacks { get; set; }

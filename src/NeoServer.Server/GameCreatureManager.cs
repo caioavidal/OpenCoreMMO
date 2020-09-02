@@ -22,7 +22,6 @@ namespace NeoServer.Server
         private readonly Dictionary<uint, ICreature> Monsters;
         private readonly Dictionary<uint, ICreature> Npcs;
 
-
         private readonly Func<PlayerModel, IPlayer> playerFactory;
 
         /// <summary>
@@ -77,7 +76,6 @@ namespace NeoServer.Server
         /// <param name="creature">Creature instance</param>
         /// <returns></returns>
 
-
         public bool TryGetPlayer(uint id, out IPlayer player)
         {
             player = null;
@@ -114,7 +112,6 @@ namespace NeoServer.Server
 
             map.RemoveThing(ref thing, creature.Tile);
 
-
             creatureInstances.TryRemove(creature.CreatureId);
             creature.SetAsRemoved();
 
@@ -132,7 +129,6 @@ namespace NeoServer.Server
         public IPlayer AddPlayer(PlayerModel playerRecord, IConnection connection)
         {
             var player = playerFactory(playerRecord);
-
 
             connection.SetConnectionOwner(player);
 

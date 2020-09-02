@@ -39,7 +39,6 @@ namespace NeoServer.Game.Creatures.Model.Conditions
 
         public abstract void Add(ICreature creature, ICondition condition);
 
-
         public abstract ICondition Clone();
 
         public abstract void End(ICreature creature);

@@ -16,7 +16,6 @@ namespace NeoServer.Game.Items.Items
 
         public byte MaxAttackDistance => 10;
 
-
         public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Enums.ItemAttribute.WeaponType) == "distance" && !type.HasFlag(Enums.ItemFlag.Stackable);
     }
 }

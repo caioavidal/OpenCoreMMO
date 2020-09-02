@@ -2,7 +2,6 @@
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 
-
 namespace NeoServer.Server.Events
 {
     public class CreatureStoppedAttackEventHandler

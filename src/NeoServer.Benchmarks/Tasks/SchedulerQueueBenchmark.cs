@@ -91,7 +91,6 @@ namespace NeoServer.Benchmarks.Tasks
                             continue;
                         }
 
-
                         await Task.Delay(evt.ExpirationDelay);
 
                         evt.Action();
@@ -117,9 +116,6 @@ namespace NeoServer.Benchmarks.Tasks
 
         private bool EventIsCancelled(uint eventId) => cancelledEventIds.ContainsKey(eventId);
 
-
     }
-
-
 
 }

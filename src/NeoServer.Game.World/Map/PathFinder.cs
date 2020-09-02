@@ -65,7 +65,6 @@ namespace NeoServer.Game.World.Map
 
         public INode Parent { get; set; }
 
-
         public IEnumerable<INode> Children
         {
             get

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace NeoServer.Server.Tasks
 {
 
-
     public class Scheduler : IScheduler
     {
         private readonly ChannelWriter<ISchedulerEvent> writer;
@@ -34,7 +33,6 @@ namespace NeoServer.Server.Tasks
         /// <returns></returns>
         public uint AddEvent(ISchedulerEvent evt)
         {
-
 
             if (evt.EventId == default)
             {
@@ -67,7 +65,6 @@ namespace NeoServer.Server.Tasks
                         {
                             continue;
                         }
-
 
                         DispatchEvent(evt);
                     }
@@ -108,7 +105,6 @@ namespace NeoServer.Server.Tasks
         /// <param name="eventId"></param>
         /// <returns></returns>
         public bool EventIsCancelled(uint eventId) => !activeEventIds.ContainsKey(eventId);
-
 
     }
 }

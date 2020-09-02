@@ -12,7 +12,6 @@ namespace NeoServer.Game.Creature
 
         public bool TryGetMonster(string name, out IMonsterType monster) => _monsters.TryGetValue(name, out monster);
 
-
         public void Load(IEnumerable<IMonsterType> monsters)
         {
             if (_loaded == true)

@@ -58,7 +58,6 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<SpawnManager>().StartSpawn();
 
-
             var listeningTask = StartListening(container, cancellationToken);
 
             var scheduler = container.Resolve<IScheduler>();
@@ -72,7 +71,6 @@ namespace NeoServer.Server.Standalone
             container.Resolve<EventSubscriber>().AttachEvents();
 
             container.Resolve<Game>().Open();
-
 
             sw.Stop();
             logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");

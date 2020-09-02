@@ -35,6 +35,5 @@ namespace NeoServer.Game.Contracts.Items.Types
         Result TryAddItem(IItem item, byte slot);
         Result TryAddItem(IItem item, byte? slot = null);
 
-
     }
 }

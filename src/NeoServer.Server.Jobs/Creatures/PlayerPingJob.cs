@@ -28,7 +28,6 @@ namespace NeoServer.Server.Jobs
                 return;
             }
 
-
             var remainingTime = TimeSpan.FromTicks(now - connection.LastPingRequest).TotalMilliseconds;
 
             if (remainingTime >= PING_INTERVAL)

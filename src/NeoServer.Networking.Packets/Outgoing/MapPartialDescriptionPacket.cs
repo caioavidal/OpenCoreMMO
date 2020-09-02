@@ -69,7 +69,6 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddBytes(GetDescription(thing, fromLocation, toLocation, map, direction));
         }
 
-
         private byte[] GetDescription(Game.Contracts.Items.IThing thing, Location fromLocation, Location toLocation, IMap map, Direction direction)
         {
             var newLocation = toLocation;

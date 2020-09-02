@@ -15,7 +15,6 @@ namespace NeoServer.Game.Contracts.Items
 
         Span<byte> GetRaw() => BitConverter.GetBytes(ClientId);
 
-
         bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
         bool IsBlockeable => Metadata.HasFlag(ItemFlag.BlockSolid);
         bool IsCumulative => Metadata.HasFlag(ItemFlag.Stackable);

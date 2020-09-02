@@ -14,7 +14,6 @@ namespace NeoServer.Game.World.Tests
     public class MapTest
     {
 
-
         public Map.Map CreateMap(IItem item)
         {
             var world = new World();

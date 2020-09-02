@@ -55,7 +55,6 @@ namespace NeoServer.Server.Model.Players
             Inventory = new PlayerInventory(this, inventory);
         }
 
-
         public event CancelWalk OnCancelledWalk;
 
         private uint IdleTime;
@@ -72,8 +71,6 @@ namespace NeoServer.Server.Model.Players
 
         public Dictionary<uint, long> KnownCreatures { get; }
         public Dictionary<string, bool> VipList { get; }
-
-
 
         public ChaseMode ChaseMode { get; private set; }
         public uint Capacity { get; private set; }
@@ -303,7 +300,6 @@ namespace NeoServer.Server.Model.Players
 
         public void ChangeOutfit(IOutfit outfit) => Outfit = outfit;
 
-
         public override bool TryWalkTo(params Direction[] directions)
         {
             ResetIdleTime();
@@ -360,6 +356,4 @@ namespace NeoServer.Server.Model.Players
         }
     }
 }
-
-
 

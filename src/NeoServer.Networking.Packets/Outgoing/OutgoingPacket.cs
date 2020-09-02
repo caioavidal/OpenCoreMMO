@@ -8,5 +8,4 @@ namespace NeoServer.Networking.Packets.Outgoing
         public abstract void WriteToMessage(INetworkMessage message);
     }
 
-
 }

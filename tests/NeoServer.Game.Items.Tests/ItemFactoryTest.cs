@@ -6,7 +6,6 @@ namespace NeoServer.Game.Items.Tests
     public class ItemFactoryTest
     {
 
-
         [Fact]
         public void Create_When_TypeId_Less_Than_100_Returns_Null()
         {
@@ -14,7 +13,6 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Null(sup);
         }
-
 
     }
 }

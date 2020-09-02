@@ -22,8 +22,6 @@ namespace NeoServer.Game.World.Tests.TestData
             public List<IItem> ExpectedFromTileDowmItems { get; set; }
             public List<IItem> ExpectedToTileDowmItems { get; set; }
 
-
-
             public Data(ICumulativeItem item, byte amount, Location toLocation, List<IItem> expectedFromTileDowmItems, List<IItem> expectedToTileDowmItems)
             {
                 Map = CreateMap(item);
@@ -73,6 +71,5 @@ namespace NeoServer.Game.World.Tests.TestData
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     }
-
 
 }

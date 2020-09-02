@@ -37,7 +37,6 @@ namespace NeoServer.Networking.Packets.Security
 
             return new NetworkMessage(newBytes, msg.Length);
 
-
         }
 
         public static unsafe bool Decrypt(IReadOnlyNetworkMessage msg, int index, uint[] key)
@@ -91,7 +90,6 @@ namespace NeoServer.Networking.Packets.Security
             }
             return bytes;
         }
-
 
         private static Span<uint> Split(ReadOnlySpan<byte> array)
         {

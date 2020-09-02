@@ -23,7 +23,6 @@ namespace NeoServer.Loaders.World
         private Game.World.World world;
         private readonly Logger logger;
 
-
         public WorldLoader(Game.World.World world, Logger logger, Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> item1Factory)
         {
             //this.itemFactory = itemFactory;
@@ -40,7 +39,6 @@ namespace NeoServer.Loaders.World
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
             var tiles = GetTiles(otbm);
-
 
             // tiles.AsParallel().ForAll(x => world.AddTile(x));
             foreach (var tile in tiles)
@@ -103,10 +101,7 @@ namespace NeoServer.Loaders.World
 
                 var item = item1Factory?.Invoke(itemNode.ItemId, new Location(tileNode.Coordinate), attributes);
 
-
                 item.ThrowIfNull($"Failed to create item on {tileNode.Coordinate}");
-
-
 
                 // item.LoadedFromMap = true;
 

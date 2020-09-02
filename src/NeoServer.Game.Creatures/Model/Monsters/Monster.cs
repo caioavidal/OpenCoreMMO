@@ -30,7 +30,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             OnKilled += (enemy) => GiveExperience();
         }
 
-
         public MonsterState State { get; private set; } = MonsterState.Sleeping;
 
         public ConcurrentDictionary<ICreature, ushort> Damages;
@@ -97,7 +96,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return 0;
             }
         }
-
 
         public override ushort ArmorRating => Metadata.Armor;
 

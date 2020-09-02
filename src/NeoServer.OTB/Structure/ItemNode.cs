@@ -23,7 +23,6 @@ namespace NeoServer.OTB.Structure
             return default(T);
         }
 
-
         /// <summary>
         /// Gets the item's ServerId
         /// In case of ServerId is between 30000 and 30100, subtract 30000

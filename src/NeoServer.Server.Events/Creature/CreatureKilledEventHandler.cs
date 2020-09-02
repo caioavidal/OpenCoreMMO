@@ -35,7 +35,6 @@ namespace NeoServer.Server.Events.Creature
                 game.CreatureManager.AddKilledMonsters(creature as IMonster);
             }
 
-
             //var outgoingPackets = new Queue<IOutgoingPacket>();
 
             //foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
@@ -57,7 +56,6 @@ namespace NeoServer.Server.Events.Creature
             //    }
 
             //    connection.Send(outgoingPackets);
-
 
             //}
         }

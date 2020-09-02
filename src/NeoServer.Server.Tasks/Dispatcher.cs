@@ -15,7 +15,6 @@ namespace NeoServer.Server.Tasks
         private readonly ChannelReader<IEvent> reader;
         private ulong cycles = 0;
 
-
         /// <summary>
         /// A queue responsible for process events
         /// </summary>
@@ -45,7 +44,6 @@ namespace NeoServer.Server.Tasks
                 writer.TryWrite(evt);
             }
         }
-
 
         public ulong GetCycles()
         {

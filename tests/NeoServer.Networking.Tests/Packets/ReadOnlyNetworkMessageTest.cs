@@ -283,6 +283,5 @@ namespace NeoServer.Networking.Tests.Packets
             Assert.Equal(0, sut.BytesRead);
         }
 
-
     }
 }

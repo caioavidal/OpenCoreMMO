@@ -47,7 +47,6 @@ namespace NeoServer.Loaders.Items
             var jsonString = File.ReadAllText(Path.Combine(basePath, "items.json"));
             var itemTypeMetadatas = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(jsonString);
 
-
             var itemTypeMetadataParser = new ItemTypeMetadataParser(itemTypes);
             foreach (var metadata in itemTypeMetadatas)
             {

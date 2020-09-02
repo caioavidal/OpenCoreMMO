@@ -43,7 +43,6 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public bool HasCreature => Creatures.Any();
 
-
         public byte NextStackPosition
         {
             get
@@ -246,7 +245,6 @@ namespace NeoServer.Game.World.Map.Tiles
             return dest.AddThing(ref thing);
         }
 
-
         public IThing RemoveThing(ref IMoveableThing thing, byte amount = 1)
         {
 
@@ -364,10 +362,8 @@ namespace NeoServer.Game.World.Map.Tiles
             cache = stream.Slice(0, countBytes).ToArray();
             return cache;
 
-
         }
 
     }
-
 
 }

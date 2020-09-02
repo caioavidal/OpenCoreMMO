@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Creatures;
 namespace NeoServer.Game.Creature.Model
 {
 
-
     public class Outfit : IOutfit
     {
         public ushort LookType { get; set; }

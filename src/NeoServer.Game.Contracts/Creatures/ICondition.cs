@@ -16,7 +16,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         ConditionSlot ConditionSlot { get; }
 
-
         long EndTime { get; }
         int Ticks { get; }
         void SetTicks(uint ticks);

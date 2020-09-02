@@ -25,8 +25,6 @@ namespace NeoServer.Loaders.Monsters
             var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));
             var monstersPath = JsonConvert.DeserializeObject<List<IDictionary<string, string>>>(jsonString);
 
-
-
             foreach (var monsterFile in monstersPath)
             {
                 yield return ConvertMonster(basePath, monsterFile);

@@ -43,7 +43,6 @@ namespace NeoServer.Game.Items.Items
 
         public ImmutableDictionary<SkillType, byte> SkillBonus { get; }
 
-
         public static new bool IsApplicable(IItemType type) => type.WeaponType == WeaponType.Ammunition;
     }
 }

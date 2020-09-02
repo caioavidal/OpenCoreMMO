@@ -21,8 +21,6 @@ namespace NeoServer.Game.World.Spawns
             _creatureGameInstance = creatureGameInstance;
         }
 
-
-
         public void Respawn()
         {
             foreach (var respawn in _creatureGameInstance.AllKilledMonsters())
@@ -47,8 +45,6 @@ namespace NeoServer.Game.World.Spawns
                 }
             }
         }
-
-
 
         public void StartSpawn()
         {

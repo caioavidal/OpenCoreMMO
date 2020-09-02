@@ -48,7 +48,6 @@ namespace NeoServer.Server.Commands.Movement
 
             map.RemoveThing(ref thing, tile, amountToRemove);
 
-
             if (result.Value != null)
             {
                 var returnedThing = result.Value as IMoveableThing;

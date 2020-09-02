@@ -3,7 +3,6 @@
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
 
-
     public class CombatAttack : ICombatAttack
     {
         public string Name { get; set; }
@@ -18,7 +17,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         //public Tuple<short,short> MinMax { get; set; }
 
         //public IDictionary<string,string> Attributes { get; set; }
-
 
     }
 }

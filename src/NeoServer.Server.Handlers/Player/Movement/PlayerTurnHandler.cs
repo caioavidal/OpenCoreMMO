@@ -11,9 +11,6 @@ namespace NeoServer.Server.Handlers.Players
         private readonly Game game;
         private readonly IMap map;
 
-
-
-
         public PlayerTurnHandler(Game game, IMap map)
         {
             this.game = game;

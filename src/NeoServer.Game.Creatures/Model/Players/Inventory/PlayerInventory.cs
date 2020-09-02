@@ -80,8 +80,6 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-
-
         public byte AttackRange
         {
             get
@@ -106,7 +104,6 @@ namespace NeoServer.Server.Model.Players
                 return (byte)Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
             }
         }
-
 
         public IPlayer Owner { get; }
 
@@ -138,7 +135,6 @@ namespace NeoServer.Server.Model.Players
                 return sum;
             }
         }
-
 
         public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
@@ -263,7 +259,6 @@ namespace NeoServer.Server.Model.Players
         {
             var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
 
-
             if (slot == Slot.Backpack)
             {
                 if (item is IPickupableContainer && !Inventory.ContainsKey(Slot.Backpack))
@@ -296,7 +291,6 @@ namespace NeoServer.Server.Model.Players
                 return new Result<bool>(true);
             }
 
-
             if (slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded)
             {
                 //trying to add a shield while left slot has a two handed weapon
@@ -307,7 +301,6 @@ namespace NeoServer.Server.Model.Players
             {
                 return cannotDressFail;
             }
-
 
             return new Result<bool>(true);
         }

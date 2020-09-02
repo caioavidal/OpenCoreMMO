@@ -11,7 +11,6 @@ namespace NeoServer.Server.Commands
         private readonly Game game;
         private readonly IConnection connection;
 
-
         public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection)
         {
             this.account = account;
@@ -20,7 +19,6 @@ namespace NeoServer.Server.Commands
             this.game = game;
             this.connection = connection;
         }
-
 
         public override async void Execute()
         {

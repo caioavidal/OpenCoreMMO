@@ -22,7 +22,6 @@ namespace NeoServer.Game.Items.Items
         public IItemType Metadata { get; }
         public ushort ClientId { get; }
 
-
         public LiquidPoolItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
             Metadata = type;

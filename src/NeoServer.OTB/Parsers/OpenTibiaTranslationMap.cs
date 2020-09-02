@@ -132,7 +132,6 @@ namespace NeoServer.OTB.Parsers
             }
         }
 
-
         public static int TranslateMeeleWeaponTypeName(string typeName, out bool success)
         {
             success = true;

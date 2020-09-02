@@ -116,7 +116,6 @@ namespace NeoServer.Game.Creatures.Model
                 LookType = type.Look[LookType.Type]
             };
 
-
             Cooldowns = new Dictionary<CooldownType, Tuple<DateTime, TimeSpan>>
             {
                 { CooldownType.Move, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
@@ -206,7 +205,6 @@ namespace NeoServer.Game.Creatures.Model
 
         public abstract ushort AttackPower { get; }
 
-
         public abstract ushort ArmorRating { get; }
 
         public abstract ushort DefensePower { get; }
@@ -233,7 +231,6 @@ namespace NeoServer.Game.Creatures.Model
 
         public TimeSpan LastAttackCost => Cooldowns[CooldownType.Combat].Item2;
 
-
         public IDictionary<CooldownType, Tuple<DateTime, TimeSpan>> Cooldowns { get; }
 
         // public IList<Condition> Conditions { get; protected set; } // TODO: implement.
@@ -248,7 +245,6 @@ namespace NeoServer.Game.Creatures.Model
         public HashSet<uint> Hostiles { get; }
 
         public HashSet<uint> Friendly { get; }
-
 
         public bool IsRemoved { get; private set; }
 
@@ -420,11 +416,9 @@ namespace NeoServer.Game.Creatures.Model
                 return;
             }
 
-
         }
 
         public uint LastCombatEvent { get; set; }
-
 
         private void ReduceHealth(ushort damage)
         {
@@ -469,7 +463,6 @@ namespace NeoServer.Game.Creatures.Model
         {
             AutoAttackTargetId = 0;
 
-
             OnStoppedAttack?.Invoke(this);
         }
 
@@ -488,7 +481,6 @@ namespace NeoServer.Game.Creatures.Model
                 return;
             }
 
-
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
             if (remainingCooldown > 0)
             {
@@ -503,7 +495,6 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public bool WasDamagedOnLastAttack = true;
-
 
         private GaussianRandom _random = new GaussianRandom();
 
@@ -576,7 +567,6 @@ namespace NeoServer.Game.Creatures.Model
             }
         }
 
-
         public virtual bool TryWalkTo(params Direction[] directions)
         {
             lock (_enqueueWalkLock)
@@ -593,7 +583,6 @@ namespace NeoServer.Game.Creatures.Model
             }
             return true;
         }
-
 
         public void StartFollowing(uint id)
         {
@@ -633,7 +622,6 @@ namespace NeoServer.Game.Creatures.Model
                 var stepDuration = CalculateStepDuration() * lastStepCost;
                 return (int)(stepDuration - (DateTime.Now.TimeOfDay.TotalMilliseconds - LastStep));
 
-
             }
         }
         public int StepDelayMilliseconds
@@ -650,7 +638,6 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public double LastStep { get; private set; }
-
 
         public List<uint> NextSteps { get; set; }
         public bool CancelNextWalk { get; set; }
@@ -692,7 +679,6 @@ namespace NeoServer.Game.Creatures.Model
         public void SetDirection(Direction direction) => Direction = direction;
 
         public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
-
 
         //public bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         //public bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

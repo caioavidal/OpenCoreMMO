@@ -23,14 +23,12 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
 
-
         float CarryStrength { get; }
 
         IDictionary<SkillType, ISkill> Skills { get; }
 
         bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
-
 
         Location LocationInFront { get; }
         FightMode FightMode { get; }

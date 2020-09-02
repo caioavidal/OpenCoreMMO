@@ -48,7 +48,6 @@ namespace NeoServer.OTB.DataStructures
         /// </summary>
         IEnumerator IEnumerable.GetEnumerator() => _items.GetEnumerator();
 
-
         /// <summary>
         /// Creates a new instance of <see cref="ReadOnlyArray{T}"/> to wrap the provided array.
         /// </summary>

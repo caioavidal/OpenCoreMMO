@@ -31,7 +31,6 @@ namespace NeoServer.Benchmarks
             }
             return sum;
 
-
         }
         [Benchmark]
         public long InstanceMethod()
@@ -48,9 +47,6 @@ namespace NeoServer.Benchmarks
         }
 
     }
-
-
-
 
     public class Instance
     {

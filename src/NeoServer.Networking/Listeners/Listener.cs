@@ -54,7 +54,6 @@ namespace NeoServer.Networking.Listeners
             //  _connections.Remove(connection);
         }
 
-
         public void EndListening()
         {
             Stop();

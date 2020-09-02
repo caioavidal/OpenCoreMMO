@@ -7,12 +7,10 @@ using System.Collections.Immutable;
 namespace NeoServer.Game.Creature
 {
 
-
     public class CreatureGameInstance : ICreatureGameInstance
     {
         private ConcurrentDictionary<uint, ICreature> _gameInstances;
         private ConcurrentDictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
-
 
         public CreatureGameInstance()
         {

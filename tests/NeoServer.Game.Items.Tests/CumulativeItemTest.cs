@@ -94,12 +94,10 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(100);
             type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, weight);
 
-
             var sup = new CumulativeItem(type, new Location(100, 100, 7), amount);
             Assert.Equal(totalWeight, sup.Weight);
 
         }
-
 
     }
 }

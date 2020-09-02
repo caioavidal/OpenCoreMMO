@@ -14,7 +14,6 @@ namespace NeoServer.Game.Enums.Location.Structs
     public struct Location : IEquatable<Location>
     {
 
-
         public Location(int x, int y, sbyte z)
         {
             X = x;
@@ -55,7 +54,6 @@ namespace NeoServer.Game.Enums.Location.Structs
                 return LocationType.Slot;
             }
         }
-
 
         public static Location operator +(Location location1, Location location2)
         {

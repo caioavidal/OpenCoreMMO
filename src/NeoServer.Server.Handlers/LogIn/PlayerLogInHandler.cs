@@ -37,7 +37,6 @@ namespace NeoServer.Server.Handlers.Authentication
 
             //todo: ip ban validation
 
-
             var accountRecord = await repository.FirstOrDefaultAsync(a => a.AccountName == packet.Account && a.Password == packet.Password);
 
             if (accountRecord == null)

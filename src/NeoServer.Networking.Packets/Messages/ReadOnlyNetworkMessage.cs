@@ -45,7 +45,6 @@ namespace NeoServer.Networking.Packets.Messages
             return (GameIncomingPacketType)Buffer[6];
         }
 
-
         public ReadOnlyNetworkMessage(byte[] buffer, int length)
         {
             buffer.ThrowIfNull();
@@ -58,7 +57,6 @@ namespace NeoServer.Networking.Packets.Messages
         private void IncreaseByteRead(int length) => BytesRead += length;
 
         private static int SizeOf<T>() where T : struct => Marshal.SizeOf(default(T));
-
 
         private T Convert<T>(Func<byte[], int, T> converter) where T : struct
         {
@@ -73,8 +71,6 @@ namespace NeoServer.Networking.Packets.Messages
             IncreaseByteRead(length);
             return result;
         }
-
-
 
         public ushort GetUInt16() => Convert(BitConverter.ToUInt16);
 
@@ -129,8 +125,6 @@ namespace NeoServer.Networking.Packets.Messages
         }
 
         public Location GetLocation() => new Location() { X = GetUInt16(), Y = GetUInt16(), Z = (sbyte)GetByte() };
-
-
 
     }
 

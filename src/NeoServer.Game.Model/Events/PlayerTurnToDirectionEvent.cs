@@ -1,7 +1,6 @@
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Model.Players.Contracts;
 
-
 namespace NeoServer.Game.Events
 {
     public class PlayerTurnToDirectionEvent

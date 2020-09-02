@@ -114,8 +114,6 @@ namespace NeoServer.Game.Items.Tests
             return new BodyDefenseEquimentItem(type, new Location(100, 100, 7));
         }
 
-
-
         public static IPickupable CreateAmmoItem(ushort id, byte amount)
         {
             var type = new ItemType();
@@ -145,7 +143,6 @@ namespace NeoServer.Game.Items.Tests
 
             return new Item(type, new Location(100, 100, 7));
         }
-
 
     }
 }

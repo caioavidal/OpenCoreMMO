@@ -21,9 +21,6 @@ namespace NeoServer.Server.Jobs.Creatures
                 //return;
             }
 
-          
-      
-
             if (creature.IsDead)
             {
                 return;
@@ -52,8 +49,6 @@ namespace NeoServer.Server.Jobs.Creatures
                 }
                 _lastWalk = now;
             }
-
-            
 
         }
     }

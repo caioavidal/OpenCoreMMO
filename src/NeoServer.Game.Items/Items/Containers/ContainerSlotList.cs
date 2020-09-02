@@ -83,7 +83,6 @@
 //            if (item is IContainer container)
 //                container.SetParent(_container);
 
-
 //            OnItemAdded?.Invoke(item);
 
 //            return new Result<IPickupableItem>(item);

@@ -26,6 +26,5 @@ namespace NeoServer.Data.Model
             !string.IsNullOrWhiteSpace(AccountName) &&
             !string.IsNullOrWhiteSpace(Password);
 
-
     }
 }

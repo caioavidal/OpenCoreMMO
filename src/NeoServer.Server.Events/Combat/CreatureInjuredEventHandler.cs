@@ -5,7 +5,6 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using System.Collections.Generic;
 
-
 namespace NeoServer.Server.Events
 {
     public class CreatureInjuredEventHandler
@@ -43,9 +42,7 @@ namespace NeoServer.Server.Events
 
                 connection.Send(outgoingPackets);
 
-
             }
-
 
         }
     }

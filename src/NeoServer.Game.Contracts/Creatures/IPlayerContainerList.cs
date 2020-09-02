@@ -19,8 +19,6 @@ namespace NeoServer.Game.Contracts.Creatures
         event ClosedContainer OnClosedContainer;
         event OpenedContainer OnOpenedContainer;
 
-
-
         void CloseContainer(byte containerId);
         void GoBackContainer(byte containerId);
         void MoveItemBetweenContainers(Location fromLocation, Location toLocation, byte count = 1);

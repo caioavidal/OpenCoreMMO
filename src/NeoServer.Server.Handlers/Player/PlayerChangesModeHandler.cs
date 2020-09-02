@@ -19,7 +19,6 @@ namespace NeoServer.Server.Handlers.Authentication
         {
             var changeMode = new ChangeModePacket(message);
 
-
             if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature creature))
             {
                 var player = creature as IPlayer;

@@ -25,7 +25,6 @@ namespace NeoServer.Networking
         private object writeLock;
         private object connectionLock;
 
-
         public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
         public IReadOnlyNetworkMessage InMessage { get; private set; }
 
@@ -67,7 +66,6 @@ namespace NeoServer.Networking
         {
             XteaKey = xtea;
         }
-
 
         private void OnRead(IAsyncResult ar)
         {
@@ -141,13 +139,10 @@ namespace NeoServer.Networking
                     //Console.WriteLine($"{size} bytes read on connection {PlayerId}");
                 }
 
-
-
                 return true;
             }
             catch (Exception e)
             {
-
 
                 // TODO: is closing the connection really necesary?
                 this.Close();
@@ -155,8 +150,6 @@ namespace NeoServer.Networking
 
             return false;
         }
-
-
 
         public void Close(bool force = false)
         {

@@ -13,7 +13,6 @@ namespace NeoServer.Loaders.Spawns
             public ushort Spawntime { get; set; }
         }
 
-
         public int Centerx { get; set; }
         public int Centery { get; set; }
         public sbyte Centerz { get; set; }

@@ -53,7 +53,6 @@ namespace NeoServer.Server.Events
 
             }
 
-
         }
 
         private void SendPacketsToSpectator(IPlayer playerToSend, ICreature creatureAdded, Queue<IOutgoingPacket> outgoingPackets)
@@ -79,7 +78,6 @@ namespace NeoServer.Server.Events
             outgoingPackets.Enqueue(new CreatureLightPacket(player));
 
             outgoingPackets.Enqueue(new PlayerConditionsPacket());
-
 
         }
     }

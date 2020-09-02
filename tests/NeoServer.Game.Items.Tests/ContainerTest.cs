@@ -443,7 +443,6 @@ namespace NeoServer.Game.Items.Tests
 
              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
 
-
             var sut = CreateContainer(2);
             sut.TryAddItem(CreateRegularItem(100));
 
@@ -460,13 +459,11 @@ namespace NeoServer.Game.Items.Tests
         public void IsEquiped_When_Parent_Is_Null_Returns_False()
         {
 
-
             var sut = CreateContainer(2);
             sut.TryAddItem(CreateRegularItem(100));
 
             var child = CreateContainer(2);
             sut.TryAddItem(child);
-
 
             Assert.False(child.IsEquiped);
             Assert.False(sut.IsEquiped);
@@ -481,7 +478,6 @@ namespace NeoServer.Game.Items.Tests
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
 
              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
-
 
             var sut = CreateContainer(2);
 
