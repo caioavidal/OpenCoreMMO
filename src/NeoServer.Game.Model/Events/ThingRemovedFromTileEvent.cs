@@ -1,7 +1,6 @@
 
 using NeoServer.Game.Contracts;
 
-
 namespace NeoServer.Game.Events
 {
     public class ThingRemovedFromTileEvent

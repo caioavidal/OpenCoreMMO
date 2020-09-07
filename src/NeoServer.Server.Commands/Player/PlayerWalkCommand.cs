@@ -32,9 +32,6 @@ namespace NeoServer.Server.Commands.Player
 
             player.StopWalking();
 
-        
-
-
             player.TryWalkTo(directions);
 
             AddEventWalk(player, game, directions.Length == 1);

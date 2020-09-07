@@ -15,7 +15,6 @@ namespace NeoServer.Game.Contracts
     public delegate void AddThingToTile(Items.IThing thing, ITile tile, byte toStackPosition);
     public delegate void UpdateThingOnTile(Items.IThing thing, ITile tile, byte toStackPosition);
 
-
     public delegate void FailedMoveThing(Items.IThing thing, InvalidOperation error);
     public interface IMap
     {

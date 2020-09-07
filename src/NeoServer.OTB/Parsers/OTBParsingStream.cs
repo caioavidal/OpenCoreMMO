@@ -74,7 +74,6 @@ namespace NeoServer.OTB.Parsers
             return new Coordinate(x, y, z);
         }
 
-
         /// <summary>
         /// Reads a bytes from the underlaying stream, considering OTB's escape values,
         /// until enough bytes were read to parse them as a UInt32.

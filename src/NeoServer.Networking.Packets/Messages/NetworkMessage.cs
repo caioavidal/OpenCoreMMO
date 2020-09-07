@@ -6,9 +6,6 @@ using NeoServer.Server.Security;
 using System;
 using System.Text;
 
-
-
-
 namespace NeoServer.Networking.Packets
 {
     /// <summary>
@@ -65,7 +62,6 @@ namespace NeoServer.Networking.Packets
 
             AddBytes(item.GetRaw().ToArray());
 
-
             //AddUInt16(item.ClientId);
 
             //if (item.IsCumulative)
@@ -114,7 +110,6 @@ namespace NeoServer.Networking.Packets
         /// <param name="count">how many times the padding will be added</param>
         public void AddPaddingBytes(int count) => WriteBytes(0x33, count);
 
-
         private void WriteBytes(byte[] bytes)
         {
             foreach (var b in bytes)
@@ -136,9 +131,6 @@ namespace NeoServer.Networking.Packets
             Buffer[Cursor++] = b;
         }
 
-
-
-
         /// <summary>
         /// Add header bytes and return the whole packet
         /// </summary>
@@ -157,7 +149,6 @@ namespace NeoServer.Networking.Packets
             return newArray;
         }
 
-
         /// <summary>
         /// Add payload length to the buffer
         /// The ushort bytes will be added in front of buffer
@@ -173,7 +164,6 @@ namespace NeoServer.Networking.Packets
             newArray[1] = lengthBytes[1];
 
             srcBuffer.CopyTo(newArray.Slice(2, Length));
-
 
             Length = Length + 2;
             Cursor += 2;

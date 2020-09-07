@@ -94,7 +94,6 @@ namespace NeoServer.Benchmarks.Tasks
             var reader = channel.Reader;
             _writer = channel.Writer;
 
-
             Task.Run(async () =>
             {
                 while (await reader.WaitToReadAsync())
@@ -128,7 +127,6 @@ namespace NeoServer.Benchmarks.Tasks
             _writer = channel.Writer;
             var reader = channel.Reader;
 
-
             var thread = new Thread(new ThreadStart(() => Start(reader)));
             thread.IsBackground = true;
             thread.Start();
@@ -136,7 +134,6 @@ namespace NeoServer.Benchmarks.Tasks
 
         public async void Start(ChannelReader<Action> reader)
         {
-
 
             while (await reader.WaitToReadAsync())
             {

@@ -29,8 +29,6 @@ namespace NeoServer.Networking.Packets.Outgoing
                 message.AddItem(inventory[slot]);
             }
 
-
-
         }
     }
 }

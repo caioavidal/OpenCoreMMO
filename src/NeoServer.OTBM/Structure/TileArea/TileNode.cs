@@ -23,7 +23,6 @@ namespace NeoServer.OTBM.Structure
         public TileFlags Flag { get; set; }
         public List<ItemNode> Items { get; set; }
 
-
         // public abstract void LoadTile(OTBParsingStream stream); //template method
 
         public TileNode(TileArea tileArea, OTBNode node)

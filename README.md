@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to OpenCoreMMO 👋</h1>
+<h1 align="center">OpenCoreMMO</h1>
 <p align="center">
   
   <a href="https://travis-ci.com/caioavidal/OpenCoreMMO" target="_blank">
@@ -20,7 +20,7 @@
 > The OpenCoreMMO is a free and open-source MMORPG server emulator written in C#. It is based on the [forgottenserver](https://github.com/otland/forgottenserver)
 > <br>To connect to the server, you can use [OTClient](https://github.com/edubart/otclient) or [OpenTibiaUnity](https://github.com/slavidodo/OpenTibia-Unity).
 
-## ✨ Demo
+## Demo
 
 <p align="center">
   <img width="700" align="center" src="https://github.com/caioavidal/OpenCoreMMO/blob/develop/opencoremmo.gif?raw=true" alt="demo"/>
@@ -62,7 +62,7 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 
 * C#
 * .Net Core 3.1
-* ReavenDB - NoSQL Database
+* RavenDB - NoSQL Database
 * XUnit Testing
 
 ## Author
@@ -75,6 +75,3 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

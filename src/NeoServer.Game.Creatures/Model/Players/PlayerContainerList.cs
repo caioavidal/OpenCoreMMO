@@ -111,7 +111,6 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-
             if (item is ICumulativeItem)
             {
                 var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerPosition, amount) as ICumulativeItem;
@@ -137,7 +136,6 @@ namespace NeoServer.Game.Creatures.Model.Players
                 OnClosedContainer?.Invoke(player, containerId);
             }
         }
-
 
     }
 

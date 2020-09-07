@@ -27,7 +27,6 @@ namespace NeoServer.Networking.Protocols
             connection.SendFirstConnection();
         }
 
-
         public override void ProcessMessage(object sender, IConnectionEventArgs args)
         {
             var connection = args.Connection;

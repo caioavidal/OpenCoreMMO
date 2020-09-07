@@ -11,7 +11,6 @@ namespace NeoServer.Game.Contracts.Items.Types
         Slot Slot => Slot.Left;
         public WeaponType Type => Metadata.WeaponType;
 
-
     }
     public interface IWeaponItem : IWeapon, IBodyEquipmentItem
     {

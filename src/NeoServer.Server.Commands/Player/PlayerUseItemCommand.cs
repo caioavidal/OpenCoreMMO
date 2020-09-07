@@ -27,6 +27,5 @@ namespace NeoServer.Server.Commands.Player
             }
         }
 
-
     }
 }

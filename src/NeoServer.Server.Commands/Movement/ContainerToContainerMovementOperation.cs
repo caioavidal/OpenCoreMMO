@@ -37,6 +37,5 @@ namespace NeoServer.Server.Commands.Movement
               itemThrowPacket.FromLocation.Type == LocationType.Container
               && itemThrowPacket.ToLocation.Type == LocationType.Container;
 
-
     }
 }

@@ -59,7 +59,6 @@ namespace NeoServer.Game.World.Tests
             return tile;
         }
 
-
         [Fact]
         public void Constructor_Given_Items_Creates_Tile()
         {
@@ -97,8 +96,6 @@ namespace NeoServer.Game.World.Tests
             };
 
             Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item));
-
-
 
             Assert.Collection(tile.DownItems, item => { Assert.Equal(downItemsExpected[5].ClientId, item.ClientId); Assert.Equal((downItemsExpected[5] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
                                               item => { Assert.Equal(downItemsExpected[4].ClientId, item.ClientId); Assert.Equal((downItemsExpected[4] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
@@ -153,7 +150,6 @@ namespace NeoServer.Game.World.Tests
             Assert.Equal(8, (sut.DownItems.First() as ICumulativeItem).Amount);
         }
 
-
         [Theory]
         [MemberData(nameof(NextTilesTestData))]
         public void IsNextTo_When_1_Sqm_Distant_Returns_True(ITile dest)
@@ -162,7 +158,6 @@ namespace NeoServer.Game.World.Tests
 
             Assert.True(sut.IsNextTo(dest));
         }
-
 
         [Fact]
         public void IsNextTo_When_2_Or_More_Sqm_Distant_Returns_True()
@@ -173,6 +168,5 @@ namespace NeoServer.Game.World.Tests
             Assert.False(sut.IsNextTo(dest));
         }
     }
-
 
 }

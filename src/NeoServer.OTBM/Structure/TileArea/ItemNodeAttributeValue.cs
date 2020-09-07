@@ -73,7 +73,6 @@ namespace NeoServer.OTBM.Structure
                     stream.Skip(5); //todo
                     break;
 
-
                 case ItemNodeAttribute.CustomAttributes:
                     throw new NotImplementedException(); //todo
                     var size = stream.ReadUInt64();

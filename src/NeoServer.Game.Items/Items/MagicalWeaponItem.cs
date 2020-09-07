@@ -22,8 +22,6 @@ namespace NeoServer.Game.Items.Items
             //Weight = itemType.GetAttribute<float>(ItemAttribute.Weight);
         }
 
-
-
         public DamageType DamageType { get; }
 
         public byte AverageDamage { get; }

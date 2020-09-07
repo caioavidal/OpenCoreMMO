@@ -7,8 +7,6 @@ namespace NeoServer.OTB.Tests
     public class ReadOnlyArrayTest
     {
 
-
-
         [Fact]
         public void WrapCollection_NullItems_Throws()
         {
@@ -51,7 +49,6 @@ namespace NeoServer.OTB.Tests
 
             Assert.NotNull(instance.GetEnumerator());
         }
-
 
     }
 }

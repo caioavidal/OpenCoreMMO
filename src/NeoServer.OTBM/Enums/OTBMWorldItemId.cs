@@ -2,7 +2,6 @@ using System;
 namespace NeoServer.OTBM.Enums
 {
 
-
     /// <summary>
     /// This is a port TFS's enum "ItemType" definied in const.h, line 435
     /// Used to parse OTBM worlds.

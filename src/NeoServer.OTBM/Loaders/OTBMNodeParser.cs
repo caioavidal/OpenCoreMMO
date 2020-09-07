@@ -33,8 +33,6 @@ namespace NeoServer.OTBM
 
             otbm.MapData = GetMapData(mapData);
 
-
-
             otbm.TileAreas = mapData.Children.Where(c => c.Type == NodeType.TileArea)
                                                .Select(c => new TileArea(c));
 
@@ -50,15 +48,12 @@ namespace NeoServer.OTBM
             return otbm;
         }
 
-
-
         private MapData GetMapData(OTBNode mapData)
         {
             if (mapData.Type != NodeType.MapData)
             {
                 throw new Exception("Could not read root data node");
             }
-
 
             return new MapData(mapData);
         }

@@ -40,8 +40,6 @@ namespace NeoServer.Game.World
 
         public bool TryGetTile(Location location, out ITile tile) => tiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out tile);
 
-
-
         public void AddTown(ITown town)
         {
             town.ThrowIfNull();
@@ -58,8 +56,6 @@ namespace NeoServer.Game.World
         }
 
         public bool TryGetWaypoint(Location location, IWaypoint waypoint) => waypoints.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out waypoint);
-
-
 
     }
 }

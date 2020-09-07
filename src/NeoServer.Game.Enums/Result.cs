@@ -24,7 +24,6 @@
             Error = error;
         }
 
-
         public T Value { get; }
         public InvalidOperation Error { get; }
         public readonly bool Success => Error == InvalidOperation.None;

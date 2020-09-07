@@ -31,10 +31,7 @@ namespace NeoServer.Game.World.Map
         public event MoveThingOnFloor OnThingMoved;
         public event FailedMoveThing OnThingMovedFailed;
 
-
-
         private readonly World world;
-
 
         public Map(World world)
         {
@@ -160,7 +157,6 @@ namespace NeoServer.Game.World.Map
             {
                 z--;
 
-
                 if (hasFloorDestination(tile, FloorChangeDirection.North))
                 {
                     --y;
@@ -215,9 +211,6 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-
-
-
         public IEnumerable<uint> GetPlayersAtPositionZone(Location location)
         {
             var viewPortX = (ushort)MapViewPort.ViewPortX;
@@ -247,7 +240,6 @@ namespace NeoServer.Game.World.Map
             {
                 maxZ = 7;
             }
-
 
             for (ushort x = minX; x <= maxX; x++)
             {
@@ -314,7 +306,6 @@ namespace NeoServer.Game.World.Map
                 maxZ = Math.Max(maxZ + 1, 15);
             }
 
-
             var minX = (ushort)(location.X + -viewPortX);
             var minY = (ushort)(location.Y + -viewPortY);
             var maxX = (ushort)(location.X + viewPortX);
@@ -365,7 +356,6 @@ namespace NeoServer.Game.World.Map
             var tempBytes = new List<byte>();
 
             var skip = -1;
-
 
             // we crawl from the ground up to the very top of the world (7 -> 0).
             int crawlTo;
@@ -490,9 +480,6 @@ namespace NeoServer.Game.World.Map
             return this[toLocation];
         }
 
-
-
-
         public void AddCreature(ICreature creature)
         {
             var thing = creature as IMoveableThing;
@@ -502,7 +489,6 @@ namespace NeoServer.Game.World.Map
                 tile.AddThing(ref thing);
                 OnCreatureAddedOnMap?.Invoke(creature);
             }
-
 
         }
 

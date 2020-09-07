@@ -10,7 +10,6 @@ using System.IO;
 namespace NeoServer.Game.Items
 {
 
-
     public sealed class ItemAttributeList : IItemAttributeList
     {
         private IDictionary<ItemAttribute, IConvertible> _defaultAttributes;
@@ -56,10 +55,8 @@ namespace NeoServer.Game.Items
                 return (string)value;
             }
 
-
             return default;
         }
-
 
         public FloorChangeDirection GetFloorChangeDirection()
         {
@@ -168,7 +165,6 @@ namespace NeoServer.Game.Items
                 return dictionary;
             }
         }
-
 
     }
 }

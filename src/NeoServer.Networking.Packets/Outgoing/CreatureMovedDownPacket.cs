@@ -48,7 +48,6 @@ namespace NeoServer.Networking.Packets.Outgoing
 
             }
 
-
             if (skip >= 0)
             {
                 message.AddByte((byte)skip);

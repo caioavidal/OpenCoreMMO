@@ -54,7 +54,5 @@ namespace NeoServer.OTB.Structure
             data.Add(b);
         }
 
-
-
     }
 }

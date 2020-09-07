@@ -39,10 +39,7 @@ namespace NeoServer.Game.Items.Items
 
         public ImmutableHashSet<VocationType> AllowedVocations => new HashSet<VocationType>().ToImmutableHashSet();
 
-
-
         public static bool IsApplicable(IItemType type) => type.BodyPosition == Enums.Players.Slot.Ring;
-
 
     }
 }

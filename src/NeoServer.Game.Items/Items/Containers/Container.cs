@@ -160,8 +160,6 @@ namespace NeoServer.Game.Items.Items
             return new Result();
         }
 
-
-
         private Result AddItemToChild(IItem item, IContainer child)
         {
             if (!item.IsCumulative && child.IsFull)

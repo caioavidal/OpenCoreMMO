@@ -55,10 +55,8 @@ namespace NeoServer.Game.World.Map.Tiles
                 return new ImmutableTile(coordinate, items);
             }
 
-
             return new Tile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
         }
     }
 }
-
 

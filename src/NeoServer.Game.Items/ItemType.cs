@@ -158,7 +158,6 @@ namespace NeoServer.Game.Items
             Flags.Add(flag);
         }
 
-
         public void ParseOTFlags(uint flags)
         {
             if (HasOTFlag(flags, 1 << 0)) // blockSolid
@@ -215,9 +214,6 @@ namespace NeoServer.Game.Items
             if (HasOTFlag(flags, 1 << 23)) // lookTrough
                 SetFlag(ItemFlag.LookTrough);
 
-
-
-
             if (HasOTFlag(flags, 1 << 26)) // forceUse
                 SetFlag(ItemFlag.ForceUse);
         }
@@ -226,8 +222,6 @@ namespace NeoServer.Game.Items
         {
             return (flags & flag) != 0;
         }
-
-
 
         public void SetArticle(string article)
         {

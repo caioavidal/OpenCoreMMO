@@ -6,7 +6,6 @@ using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 
-
 namespace NeoServer.Server.Events
 {
     public class PlayerTurnToDirectionEventHandler
@@ -38,9 +37,7 @@ namespace NeoServer.Server.Events
 
                 connection.Send(outgoingPackets);
 
-
             }
-
 
         }
     }

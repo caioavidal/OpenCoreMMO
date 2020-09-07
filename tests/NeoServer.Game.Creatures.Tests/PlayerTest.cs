@@ -28,7 +28,6 @@ namespace NeoServer.Game.Creatures.Tests
 
                 }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
 
-
             Assert.Equal(expected, sut.CanMoveThing(new Location(toX, toY, 7)));
         }
     }

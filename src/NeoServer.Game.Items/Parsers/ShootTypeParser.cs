@@ -38,6 +38,5 @@ namespace NeoServer.Game.Items.Parsers
                 _ => ShootType.None
             };
 
-
     }
 }

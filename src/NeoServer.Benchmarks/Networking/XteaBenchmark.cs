@@ -19,7 +19,6 @@ namespace NeoServer.Benchmarks.Networking
             return input;
         }
 
-
         private uint[] keys = new uint[4] { 2742731963, 828439173, 895464428, 91929452 };
 
         [Benchmark]
@@ -29,11 +28,7 @@ namespace NeoServer.Benchmarks.Networking
 
         public INetworkMessage WithSpan() => Xtea.EncryptWithSpan(GetNetworkMessage(), keys);
 
-
-
-
     }
-
 
     public class Xtea
     {
@@ -68,7 +63,6 @@ namespace NeoServer.Benchmarks.Networking
 
             return new NetworkMessage(newBytes, msg.Length);
 
-
         }
 
         public static INetworkMessage EncryptWithSpan(INetworkMessage msg, uint[] key)
@@ -102,10 +96,7 @@ namespace NeoServer.Benchmarks.Networking
 
             return new NetworkMessage(newBytes, msg.Length);
 
-
         }
-
-
 
         private static byte[] ConvertToBytes(Span<uint> array)
         {
@@ -124,7 +115,6 @@ namespace NeoServer.Benchmarks.Networking
             }
             return bytes;
         }
-
 
         private static IEnumerable<uint> Split(byte[] array)
         {

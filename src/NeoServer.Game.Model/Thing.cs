@@ -9,7 +9,6 @@
 //        public event OnThingStateChanged OnThingChanged;
 //        public event OnThingRemoved OnThingRemoved;
 
-
 //        //protected Location location;
 
 //        //public const ushort CreatureThingId = 0x63;
@@ -25,9 +24,6 @@
 //        //public abstract bool CanBeMoved { get; }
 
 //        public Location Location { get; }
-
-
-
 
 //        public virtual void Removed()
 //        {

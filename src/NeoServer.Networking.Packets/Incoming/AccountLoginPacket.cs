@@ -34,6 +34,5 @@ namespace NeoServer.Networking.Packets.Incoming
 
         public bool IsValid() => !(string.IsNullOrWhiteSpace(Account) || string.IsNullOrWhiteSpace(Password));
 
-
     }
 }

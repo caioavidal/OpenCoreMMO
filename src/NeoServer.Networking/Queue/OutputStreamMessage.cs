@@ -20,6 +20,5 @@
 //         public Connection Connection { get; }
 //         public OutgoingPacket Packet { get; }
 
-
 //     }
 // }

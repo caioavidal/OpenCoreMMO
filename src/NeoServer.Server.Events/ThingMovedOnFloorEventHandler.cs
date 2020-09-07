@@ -25,7 +25,6 @@ namespace NeoServer.Server.Events
             MoveThing(fromStackPosition, toDirection, fromTile.Location, toTile.Location, thing, fromTile);
         }
 
-
         private void MoveThing(byte fromStackPosition, Direction toDirection, Location fromLocation, Location toLocation, IThing thing, ITile fromTile)
         {
 
@@ -40,7 +39,6 @@ namespace NeoServer.Server.Events
 
             foreach (var spectatorId in spectators)
             {
-
 
                 if (!game.CreatureManager.TryGetCreature(spectatorId, out ICreature spectator))
                 {
@@ -59,12 +57,10 @@ namespace NeoServer.Server.Events
 
                 //var player = (IPlayer)spectator;
 
-             
                 if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
                 {
                     continue;
                 }
-
 
                 if (spectatorId == creature.CreatureId) //myself
                 {

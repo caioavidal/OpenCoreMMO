@@ -49,7 +49,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Database>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
 
-
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();
             builder.RegisterType<GameProtocol>().SingleInstance();
@@ -67,7 +66,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
 
             RegisterEvents(builder);
-
 
             RegisterIncomingPacketFactory(builder);
 
@@ -106,7 +104,6 @@ namespace NeoServer.Server.Standalone.IoC
             var assemblies = Assembly.GetAssembly(typeof(PacketHandler));
             builder.RegisterAssemblyTypes(assemblies).SingleInstance();
         }
-
 
         private static void RegisterEvents(ContainerBuilder builder)
         {
@@ -162,7 +159,6 @@ namespace NeoServer.Server.Standalone.IoC
             //{
             //    var typeId = p.TypedAs<ushort>();
 
-
             //    return ItemFactory.Create(typeId);
             //});
         }
@@ -174,7 +170,6 @@ namespace NeoServer.Server.Standalone.IoC
                 var typeId = p.TypedAs<ushort>();
                 var location = p.TypedAs<Location>();
                 var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
-
 
                 return ItemFactory.Create(typeId, location, attributes);
             });

@@ -6,11 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\Items\items.otb" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Data\Items\items.otb" />
+    <Compile Remove="Items\**" />
+    <EmbeddedResource Remove="Items\**" />
+    <None Remove="Items\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,10 +16,6 @@
         <PackageReference Include="Autofac" Version="5.2.0" />
         <PackageReference Include="Serilog" Version="2.9.0" />
 
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Items\" />
   </ItemGroup>
 
   <ItemGroup>

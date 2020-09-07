@@ -5,7 +5,6 @@ namespace NeoServer.Benchmarks.Networking
 {
     [SimpleJob(launchCount: 1)]
 
-
     public class BlockCopyVsSpan
     {
 
@@ -48,7 +47,6 @@ namespace NeoServer.Benchmarks.Networking
 
             srcBuffer.CopyTo(newArray.Slice(2, Length));
 
-
             //Length = Length + 2;
             //Cursor += 2;
             Buffer = newArray.ToArray();
@@ -56,6 +54,5 @@ namespace NeoServer.Benchmarks.Networking
             return Buffer;
         }
     }
-
 
 }

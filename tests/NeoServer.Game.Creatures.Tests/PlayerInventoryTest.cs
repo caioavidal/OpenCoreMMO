@@ -26,7 +26,6 @@ namespace NeoServer.Game.Creatures.Tests
             new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100,"sword",true)},
             new object[] {Slot.Necklace, ItemTestData.CreateBodyEquipmentItem(100,"necklace")},
 
-
        };
 
         public static IEnumerable<object[]> BackpackSlotAddItemsData =>
@@ -69,9 +68,6 @@ namespace NeoServer.Game.Creatures.Tests
                 new object[] {Slot.Left, ItemTestData.CreateThrowableDistanceItem(100, 1),ItemTestData.CreateThrowableDistanceItem(100, 5), ItemTestData.CreateThrowableDistanceItem(100, 6) }
      };
 
-
-
-
         private static List<object[]> GenerateWrongSlotItemsData()
         {
             var result = new List<object[]>();
@@ -113,7 +109,6 @@ namespace NeoServer.Game.Creatures.Tests
         }
 
         public static IEnumerable<object[]> WrongSlotItemsData => GenerateWrongSlotItemsData();
-
 
         [Theory]
         [MemberData(nameof(SlotItemsData))]
@@ -193,7 +188,6 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.Null(sut[Slot.Left]);
         }
-
 
         [Fact]
         public void AddItemToSlot_When_Exceeds_Capacity_Returns_False()
@@ -365,7 +359,6 @@ namespace NeoServer.Game.Creatures.Tests
 
             result = sut.TryAddItemToSlot(Slot.Ammo, ItemTestData.CreateAmmoItem(100, 80));
 
-
             Assert.Equal(30, (result.Value as ICumulativeItem).Amount);
         }
 
@@ -382,7 +375,6 @@ namespace NeoServer.Game.Creatures.Tests
             var result = sut.TryAddItemToSlot(Slot.Backpack, item);
 
             Assert.Null(result.Value);
-
 
             Assert.Equal(sut[Slot.Backpack], backpack);
             Assert.Equal(1, backpack.SlotsUsed);

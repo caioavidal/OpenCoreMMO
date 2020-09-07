@@ -24,7 +24,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         byte GetStackPosition() => Tile.GetStackPositionOfThing(this);
 
-
         ushort Corpse { get; }
 
         /// <summary>
@@ -49,11 +48,9 @@ namespace NeoServer.Game.Contracts.Creatures
 
         uint Flags { get; }
 
-
         IWalkableTile Tile { get; set; }
 
         byte NextStepId { get; set; }
-
 
         bool IsInvisible { get; } // TODO: implement.
 
