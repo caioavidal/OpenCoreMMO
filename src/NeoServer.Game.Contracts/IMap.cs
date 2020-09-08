@@ -39,5 +39,7 @@ namespace NeoServer.Game.Contracts
         HashSet<uint> GetCreaturesAtPositionZone(Location location, Location toLocation);
         IEnumerable<uint> GetPlayersAtPositionZone(Location location);
         void AddItem(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1);
+        bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
+        bool CanWalkTo(Location location, out ITile tile);
     }
 }

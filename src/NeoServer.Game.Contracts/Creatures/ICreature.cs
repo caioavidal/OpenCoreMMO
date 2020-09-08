@@ -116,5 +116,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void StartFollowing(uint id);
         void SetDirection(Direction direction);
         void StopFollowing();
+        bool TryUpdatePath();
     }
 }

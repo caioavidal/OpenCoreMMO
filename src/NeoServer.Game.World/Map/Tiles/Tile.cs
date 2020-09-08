@@ -56,6 +56,56 @@ namespace NeoServer.Game.World.Map.Tiles
                 return (byte)++n;
             }
         }
+
+        public IMagicField MagicField
+        {
+            get
+            {
+                if (!HasFlag(TileFlags.MagicField))
+                {
+                    return null;
+                }
+
+                foreach (var downItem in DownItems)
+                {
+                    if (downItem is IMagicField magicField)
+                    {
+                        return magicField;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public ICreature GetTopVisibleCreature(ICreature creature)
+        {
+            foreach (var tileCreature in Creatures)
+            {
+                if (creature != null)
+                {
+                    if (creature.CanSee(tileCreature.Value))
+                    {
+                        return tileCreature.Value;
+                    }
+                }
+                else
+                {
+                    var isPlayer = tileCreature.Value is IPlayer;
+
+                    var player = isPlayer ? tileCreature.Value as IPlayer : null;
+
+                    if (!tileCreature.Value.IsInvisible)
+                    {
+                        if (!isPlayer || !player.IsInvisible)
+                        {
+                            return tileCreature.Value;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
         public byte GetStackPositionOfItem(ushort id)
         {
             if (id == default)
@@ -192,7 +242,7 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 thing.SetNewLocation(Location);
             }
-            
+
             return new Result<TileOperationResult>(operations);
         }
 
@@ -235,7 +285,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1)
         {
-            if(thing is ICreature && dest.HasCreature)
+            if (thing is ICreature && dest.HasCreature)
             {
                 return new Result<TileOperationResult>(InvalidOperation.NotPossible);
             }
@@ -253,7 +303,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (thing is ICreature c)
             {
-               
+
                 Creatures.TryRemove(c.CreatureId, out var creature);
                 removedThing = creature;
             }

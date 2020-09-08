@@ -4,9 +4,9 @@ using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
 {
-    public readonly struct MagicFieldItem : IItem
+    public readonly struct MagicField : IItem, IMagicField
     {
-        public MagicFieldItem(IItemType type, Location location)
+        public MagicField(IItemType type, Location location)
         {
             Metadata = type;
             Location = location;

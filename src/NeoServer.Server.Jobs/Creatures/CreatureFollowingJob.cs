@@ -8,17 +8,19 @@ namespace NeoServer.Server.Jobs.Creatures
     internal class CreatureFollowingJob
     {
         private const uint INTERVAL = 300;
+
         private static long _lastWalk = 0;
+
 
         public static void Execute(ICreature creature, Game game)
         {
             
             var now = DateTime.Now.Ticks;
             var remainingTime = TimeSpan.FromTicks(now - _lastWalk).TotalMilliseconds;
-
+            
             if (remainingTime < INTERVAL)
             {
-                //return;
+               // return;
             }
 
             if (creature.IsDead)
@@ -32,10 +34,14 @@ namespace NeoServer.Server.Jobs.Creatures
                     return;
                 }
 
-                var p = new PathFinder();
-                var directions = p.Find(creature.Location, enemy.Location);
+                if(creature.TryUpdatePath())
+                {
+                    var p = new PathFinder();
+                    var directions = p.Find(game.Map, creature, creature.Location, enemy.Location);
 
-                creature.TryWalkTo(directions);
+                    creature.TryWalkTo(directions);
+                }
+                
 
                 var thing = creature as IMoveableThing;
 
@@ -47,9 +53,9 @@ namespace NeoServer.Server.Jobs.Creatures
                         // player.CancelWalk();
                     }
                 }
-                _lastWalk = now;
             }
 
+            _lastWalk = now;
         }
     }
 }

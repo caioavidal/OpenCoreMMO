@@ -22,11 +22,13 @@ namespace NeoServer.Game.Contracts.World.Tiles
         byte NextStackPosition { get; }
         IItem TopItemOnStack { get; }
         bool HasCreature { get; }
+        IMagicField MagicField { get; }
 
         Result<TileOperationResult> AddThing(ref IMoveableThing thing);
         byte[] GetRaw(IPlayer playerRequesting = null);
         byte GetStackPositionOfItem(ushort id);
         byte GetStackPositionOfThing(Items.IThing thing);
+        ICreature GetTopVisibleCreature(ICreature creature);
         Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1);
         IThing RemoveThing(ref IMoveableThing thing, byte count = 1);
     }

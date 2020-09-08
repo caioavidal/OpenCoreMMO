@@ -1,13 +1,10 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.World.PathFinding;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.World.Map
 {
@@ -15,34 +12,12 @@ namespace NeoServer.Game.World.Map
     {
         public PathNode Start { get; set; }
         public PathNode Target { get; set; }
-        public Direction[] Find(Location start, Location target)
+        public Direction[] Find(IMap map, ICreature creature, Location start, Location target)
         {
-
-            Start = new PathNode(start);
-            Target = new PathNode(target);
-
-            var a = new AStar(Start, Target, 12);
-            a.Run();
-
-            var path = a.GetPath().ToList();
-
-            var directionsCount = path.Count - 1;
-
-            var pool = ArrayPool<Direction>.Shared;
-            var directions = pool.Rent(directionsCount);
-
-            for (int i = 0; i < path.Count - 1; i++)
-            {
-                var from = (path[i] as PathNode).Location;
-                var dest = (path[i + 1] as PathNode).Location;
-
-                directions[i] = from.DirectionTo(dest);
-            }
-            pool.Return(directions);
-
-            return directions[0..directionsCount];
+            var AStarTibia = new AStarTibia();
+            AStarTibia.MaxSteps = 50;
+            return AStarTibia.GetPathMatching(map, creature, start, target, new FindPathParams(true, true, true, false, 0, 0, 1));
         }
-
     }
 
     public class PathNode : INode
@@ -76,7 +51,7 @@ namespace NeoServer.Game.World.Map
                 foreach (var neighbour in Location.Neighbours)
                 {
                     children[i++] = new PathNode(neighbour);
-                    
+
                 }
                 pool.Return(children);
                 return children[0..Location.Neighbours.Length];
@@ -104,7 +79,5 @@ namespace NeoServer.Game.World.Map
             MovementCost = Parent.MovementCost + 1;
         }
 
-        private static int[] childXPos = new int[] { 0, -1, 1, 0, };
-        private static int[] childYPos = new int[] { -1, 0, 0, 1, };
     }
 }
