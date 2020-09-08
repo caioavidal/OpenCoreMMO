@@ -122,7 +122,8 @@ namespace NeoServer.Game.Creatures.Model
                 { CooldownType.Action, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
                 { CooldownType.Combat, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
                 { CooldownType.Talk, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
-                { CooldownType.Block, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) }
+                { CooldownType.Block, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) },
+                { CooldownType.UpdatePath, new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero) }
             };
 
             WalkingQueue = new ConcurrentQueue<Direction>();
@@ -654,6 +655,19 @@ namespace NeoServer.Game.Creatures.Model
 
             //todo check monster creature.cpp 1367
             return stepDuration;
+        }
+
+        public bool TryUpdatePath()
+        {
+            var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.UpdatePath, DateTime.Now);
+
+            if (remainingCooldown > 0)
+            {
+                return false;
+            }
+            Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000));
+
+            return true;
         }
 
         public virtual bool TryGetNextStep(out Direction direction)

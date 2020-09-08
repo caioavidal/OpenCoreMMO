@@ -76,9 +76,9 @@ namespace NeoServer.Game.Items
             {
                 return new LiquidPoolItem(itemType, location, attributes);
             }
-            if (MagicFieldItem.IsApplicable(itemType))
+            if (MagicField.IsApplicable(itemType))
             {
-                return new MagicFieldItem(itemType, location);
+                return new MagicField(itemType, location);
             }
 
             //throw new NotImplementedException("Item not handled");

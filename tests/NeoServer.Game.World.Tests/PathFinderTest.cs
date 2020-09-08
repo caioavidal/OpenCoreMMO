@@ -1,4 +1,5 @@
 ﻿
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World.Map;
 using System;
@@ -13,8 +14,12 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void Find()
         {
-            var sut = new PathFinder();
-            sut.Find(new Location(100, 100, 7), new Location(105, 109, 7));
+            //var sut = new PathFinder();
+            //sut.Find(new Location(100, 100, 7), new Location(105, 109, 7));
+            var sut = new AStarTibia();
+            sut.MaxSteps = 50;
+
+            //var result = sut.GetPathMatching(null, new Location(100, 100, 7), new Location(103, 100, 7), keepDistance: false);
         }
     }
 }

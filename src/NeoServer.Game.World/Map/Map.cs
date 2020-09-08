@@ -91,6 +91,82 @@ namespace NeoServer.Game.World.Map
             return TryMoveThing(ref thing, tileDestination.Location);
         }
 
+        public bool IsInRange(Location start, Location current, Location target, FindPathParams fpp)
+        {
+            if (fpp.FullPathSearch)
+            {
+                if (current.X > target.X + fpp.MaxTargetDist)
+                {
+                    return false;
+                }
+
+                if (current.X < target.X - fpp.MaxTargetDist)
+                {
+                    return false;
+                }
+
+                if (current.Y > target.Y + fpp.MaxTargetDist)
+                {
+                    return false;
+                }
+
+                if (current.Y < target.Y - fpp.MaxTargetDist)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                int dx = start.GetSqmDistanceX(target);
+
+                int dxMax = (dx >= 0 ? fpp.MaxTargetDist : 0);
+                if (current.X > target.X + dxMax)
+                {
+                    return false;
+                }
+
+                int dxMin = (dx <= 0 ? fpp.MaxTargetDist : 0);
+                if (current.X < target.X - dxMin)
+                {
+                    return false;
+                }
+
+                int dy = start.GetSqmDistanceY(target);
+
+                int dyMax = (dy >= 0 ? fpp.MaxTargetDist : 0);
+                if (current.Y > target.Y + dyMax)
+                {
+                    return false;
+                }
+
+                int dyMin = (dy <= 0 ? fpp.MaxTargetDist : 0);
+                if (current.Y < target.Y - dyMin)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool CanWalkTo(Location location, out ITile tile)
+        {
+        
+            tile = this[location];
+
+            if(tile == null || tile is IImmutableTile)
+            {
+                return false;
+            }
+
+            if (tile is IWalkableTile walkableTile && walkableTile.HasCreature)
+            {
+                return false;
+            }
+            
+
+            return true;
+        }
+
         private ITile GetTileDestination(IWalkableTile tile)
         {
             Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) => tile is IWalkableTile walkable ? walkable.FloorDirection == direction : false;

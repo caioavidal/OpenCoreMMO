@@ -3,6 +3,7 @@
     public enum CooldownType
     {
         Move,
+        UpdatePath,
         Action,
         Combat,
         Talk,
