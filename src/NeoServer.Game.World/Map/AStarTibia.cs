@@ -503,11 +503,11 @@ namespace NeoServer.Game.World.Map
     {
         public static Tuple<int, int>[] West => new Tuple<int, int>[5]
                 {
-                   new Tuple<int,int>( -1, 0),
+                   new Tuple<int,int>( 0, 1),
                    new Tuple<int,int>( 1, 0),
                    new Tuple<int,int>( 0, -1),
-                   new Tuple<int,int>( -1, -1),
-                   new Tuple<int,int>( 1, -1)
+                   new Tuple<int,int>( 1, -1),
+                   new Tuple<int,int>( 1, 1)
                 };
 
         public static Tuple<int, int>[] East => new Tuple<int, int>[5]
