@@ -25,8 +25,19 @@ namespace NeoServer.Server.Events
 
             var outgoingPackets = new Queue<IOutgoingPacket>();
 
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectatorId in map.GetCreaturesAtPositionZone(creature.Location, creature.Location))
             {
+
+                if (!game.CreatureManager.TryGetCreature(spectatorId, out var spectator))
+                {
+                    return;
+                }
+
+                if (spectator is IMonster monster && creature is IPlayer target)
+                {
+                    monster.AddToTargetList(target);
+                    continue;
+                }
 
                 var isSpectator = !(creature.CreatureId == spectatorId);
                 if (!isSpectator)
@@ -35,12 +46,12 @@ namespace NeoServer.Server.Events
                 }
                 else
                 {
-                    if (!game.CreatureManager.TryGetPlayer(spectatorId, out IPlayer spectator))
+                    if (!game.CreatureManager.TryGetPlayer(spectatorId, out IPlayer spectatorPlayer))
                     {
                         continue;
                     }
 
-                    SendPacketsToSpectator(spectator, creature, outgoingPackets);
+                    SendPacketsToSpectator(spectatorPlayer, creature, outgoingPackets);
                 }
 
                 IConnection connection;

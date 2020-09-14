@@ -47,9 +47,9 @@ namespace NeoServer.Server.Events
 
                 if (spectator is IMonster monster)
                 {
-                    if (thing is IPlayer enemy && !spectator.Attacking)
+                    if (thing is IPlayer enemy)
                     {
-                        monster.SetAttackTarget(enemy.CreatureId);
+                        monster.AddToTargetList(enemy);
                     }
 
                     continue;

@@ -116,18 +116,61 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public uint Experience => Metadata.Experience;
 
+        public bool HasAnyTarget => Targets.Count > 0;
+
         public void SetState(MonsterState state) => State = state;
 
-        public override void SetAttackTarget(uint targetId)
+        private IDictionary<uint, ICreature> Targets = new Dictionary<uint, ICreature>(150);
+
+        public void AddToTargetList(ICreature creature)
         {
-            if (targetId != 0)
+            Targets.TryAdd(creature.CreatureId, creature);
+        }
+        public void RemoveFromTargetList(ICreature creature)
+        {
+            Targets.Remove(creature.CreatureId);
+
+            if(AutoAttackTargetId == creature.CreatureId)
+            {
+                StopAttack();
+            }
+        }
+
+        private ICreature searchTarget()
+        {
+            var nearest = ushort.MaxValue;
+            ICreature nearestCreature = null;
+
+            foreach (var target in Targets)
+            {
+                var offset = Location.GetSqmDistance(target.Value.Location);
+                if (offset < nearest)
+                {
+                    nearest = offset;
+                    nearestCreature = target.Value;
+                }
+            }
+
+            return nearestCreature;
+        }
+
+        public void SetAttackTarget()
+        {
+            var target = searchTarget();
+
+            if(target == null)
+            {
+                return;
+            }
+
+            if (target != null)
             {
                 SetState(MonsterState.Alive);
             }
 
             FollowCreature = true;
 
-            base.SetAttackTarget(targetId);
+            SetAttackTarget(target.CreatureId);
         }
     }
 }

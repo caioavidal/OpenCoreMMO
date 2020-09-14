@@ -401,7 +401,6 @@ namespace NeoServer.Game.Creatures.Model
             }
 
             AutoAttackTargetId = targetId;
-
         }
 
         public void UpdateLastAttack(TimeSpan exahust)

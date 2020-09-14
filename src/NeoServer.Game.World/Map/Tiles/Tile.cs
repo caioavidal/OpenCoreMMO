@@ -139,6 +139,48 @@ namespace NeoServer.Game.World.Map.Tiles
             }
             throw new Exception("Thing not found in tile.");
         }
+
+        public uint GetThingByStackPosition(byte stackPosition)
+        {
+            if (stackPosition == 0)
+            {
+                return Ground;
+            }
+
+            var n = 0;
+
+            foreach (var clientId in TopItems)
+            {
+                ++n;
+
+                if(n == stackPosition)
+                {
+                    return clientId;
+                }
+            }
+
+            foreach (var creature in Creatures)
+            {
+                ++n;
+
+                if (n == stackPosition)
+                {
+                    return creature.Key;
+                }
+            }
+
+            foreach (var item in DownItems)
+            {
+                ++n;
+                if (n == stackPosition)
+                {
+                    return item.ClientId;
+                }
+            }
+
+            // return byte.MaxValue; // TODO: throw?
+            throw new Exception("stackposition invalid");
+        }
         public byte GetStackPositionOfThing(IThing thing)
         {
             if (thing == null)

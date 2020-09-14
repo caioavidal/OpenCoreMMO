@@ -20,8 +20,12 @@ namespace NeoServer.Game.Contracts.Creatures
         MonsterState State { get; }
 
         void SetState(MonsterState attacking);
-        uint Experience { get; }
+        void SetAttackTarget();
+        void AddToTargetList(ICreature creature);
+        void RemoveFromTargetList(ICreature creature);
 
+        uint Experience { get; }
+        bool HasAnyTarget { get; }
     }
 
 }
