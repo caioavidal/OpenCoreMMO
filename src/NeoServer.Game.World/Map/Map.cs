@@ -158,11 +158,13 @@ namespace NeoServer.Game.World.Map
                 return false;
             }
 
-            if (tile is IWalkableTile walkableTile && walkableTile.HasCreature)
+            if (!(tile is IWalkableTile walkableTile))
             {
                 return false;
             }
-            
+
+            if (walkableTile.HasCreature) return false;
+            if (walkableTile.HasBlockPathFinding) return false;
 
             return true;
         }

@@ -1,10 +1,12 @@
-﻿using NeoServer.Game.Contracts.Combat;
+﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
 using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections;
@@ -16,19 +18,25 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 {
     public class Monster : Creature, IMonster
     {
+        public delegate bool PathFinder(ICreature creature, Location target, out Direction[] directions);
 
-        public Monster(IMonsterType type) : base(type)
+        private PathFinder findPathToDestination;
+
+        public Monster(IMonsterType type, ISpawnPoint spawn, PathFinder pathFinder) : base(type)
         {
-            Metadata = type;
-        }
-        public Monster(IMonsterType type, ISpawnPoint spawn) : base(type)
-        {
+            pathFinder.ThrowIfNull();
+            type.ThrowIfNull();
+            spawn.ThrowIfNull();
+
+            findPathToDestination = pathFinder;
             Metadata = type;
             Spawn = spawn;
             Damages = new ConcurrentDictionary<ICreature, ushort>();
 
             OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage);
             OnKilled += (enemy) => GiveExperience();
+
+            Cooldowns[CooldownType.LookForNewEnemy] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero);
         }
 
         public MonsterState State { get; private set; } = MonsterState.Sleeping;
@@ -123,15 +131,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         private IDictionary<uint, CombatTarget> Targets = new Dictionary<uint, CombatTarget>(150);
 
-        public void SetTargetAsUnreachable(uint targetId)
-        {
-            if (!Targets.TryGetValue(targetId, out var target))
-            {
-                return;
-            }
-
-            target.SetAsUnreachable();
-        }
+     
+      
         public void AddToTargetList(ICreature creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
@@ -146,21 +147,46 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
+        
+
+        public bool LookForNewEnemy()
+        {
+            if(CalculateRemainingCooldownTime(CooldownType.LookForNewEnemy, DateTime.Now) > 0) return false;
+
+            if (CanReachAnyTarget) return false;
+            
+            int randomIndex =_random.Next(minValue:0, maxValue: 4);
+
+            var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
+
+            TryWalkTo(directions[randomIndex]);
+
+            RestartCoolDown(CooldownType.LookForNewEnemy, 2000);
+
+            return true;
+        }
+
         public bool CanReachAnyTarget { get; private set; } = false;
 
-        private ICreature searchTarget()
+        private CombatTarget searchTarget()
         {
+            findPathToDestination.ThrowIfNull();
+            Targets.ThrowIfNull();
+
             var nearest = ushort.MaxValue;
-            ICreature nearestCreature = null;
+            CombatTarget nearestCombat = null;
 
             var canReachAnyTarget = false;
 
             foreach (var target in Targets)
             {
-                if (!target.Value.CanReachCreature)
+                if(findPathToDestination.Invoke(this, target.Value.Creature.Location, out var directions) == false)
                 {
+                    target.Value.SetAsUnreachable();
                     continue;
                 }
+
+                target.Value.SetAsReachable(directions);
 
                 canReachAnyTarget = true;
 
@@ -168,21 +194,22 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 if (offset < nearest)
                 {
                     nearest = offset;
-                    nearestCreature = target.Value.Creature;
+                    nearestCombat = target.Value;
                 }
             }
 
             CanReachAnyTarget = canReachAnyTarget;
 
-            return nearestCreature;
+            return nearestCombat;
         }
 
-        public void SetAttackTarget()
+        public void SelectTargetToAttack()
         {
             var target = searchTarget();
 
-            if (target == null)
+            if (target == null && !CanReachAnyTarget)
             {
+                LookForNewEnemy();
                 return;
             }
 
@@ -193,7 +220,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             FollowCreature = true;
 
-            SetAttackTarget(target.CreatureId);
+            if (FollowCreature)
+            {
+                StartFollowing(target.Creature.CreatureId, target.PathToCreature);
+            }
+
+            SetAttackTarget(target.Creature.CreatureId);
         }
     }
 }

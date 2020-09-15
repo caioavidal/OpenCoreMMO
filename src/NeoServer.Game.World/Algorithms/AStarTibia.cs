@@ -52,10 +52,10 @@ namespace NeoServer.Game.World.Map
             return false;
         }
 
-        public bool GetPathMatching(IMap map, ICreature creature, Location startLocation, Location targetPos, FindPathParams
+        public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
             fpp, out Direction[] directions)
         {
-            var pos = startLocation;
+            var pos = creature.Location;
 
             directions = new Direction[0];
 

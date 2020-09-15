@@ -113,9 +113,9 @@ namespace NeoServer.Game.Contracts.Creatures
         void SetAsRemoved();
         void ReceiveAttack(ICreature enemy, ushort attackPower);
         void ResetHealthPoints();
-        void StartFollowing(uint id);
+        void StartFollowing(uint id, params Direction[] directions);
         void SetDirection(Direction direction);
         void StopFollowing();
-        bool TryUpdatePath();
+        bool TryUpdatePath(Direction[] newPath);
     }
 }

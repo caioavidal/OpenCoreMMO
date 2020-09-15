@@ -34,29 +34,30 @@ namespace NeoServer.Server.Jobs.Creatures
                     return;
                 }
 
-                if (creature.TryUpdatePath())
-                {
-                    var p = new PathFinder();
-                    if (p.Find(game.Map, creature, creature.Location, enemy.Location, out var directions))
-                    {
-                        creature.TryWalkTo(directions);
-                    }
-                    else if (creature is IMonster monster)
-                    {
-                        monster.SetTargetAsUnreachable(enemy.CreatureId);
-                    }
-                }
+                //if (creature.TryUpdatePath())
+                //{
+                //    //var p = new PathFinder();
+                //    //if (p.Find(game.Map, creature, creature.Location, enemy.Location, out var directions))
+                //    //{
+                        
+                //    //    creature.TryWalkTo(directions);
+                //    //}
+                //    //else if (creature is IMonster monster)
+                //    //{
+                //    //    monster.SetTargetAsUnreachable(enemy.CreatureId);
+                //    //}
+                //}
 
-                var thing = creature as IMoveableThing;
+                //var thing = creature as IMoveableThing;
 
-                if (creature.TryGetNextStep(out var direction))
-                {
-                    var toTile = game.Map.GetNextTile(thing.Location, direction);
-                    if (!game.Map.TryMoveThing(ref thing, toTile.Location))
-                    {
-                        // player.CancelWalk();
-                    }
-                }
+                //if (creature.TryGetNextStep(out var direction))
+                //{
+                //    var toTile = game.Map.GetNextTile(thing.Location, direction);
+                //    if (!game.Map.TryMoveThing(ref thing, toTile.Location))
+                //    {
+                //        // player.CancelWalk();
+                //    }
+                //}
             }
 
             _lastWalk = now;

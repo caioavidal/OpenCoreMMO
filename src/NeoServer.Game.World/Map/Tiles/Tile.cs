@@ -227,6 +227,21 @@ namespace NeoServer.Game.World.Map.Tiles
             throw new Exception("Thing not found in tile.");
         }
 
+        public bool HasBlockPathFinding
+        {
+            get
+            {
+                foreach (var item in DownItems)
+                {
+                    if (item.BlockPathFinding)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+       
         private TileOperationResult AddThingToTile(Contracts.Items.IThing thing)
         {
             var operations = new TileOperationResult();

@@ -309,6 +309,9 @@ namespace NeoServer.Game.Creatures.Model
             return false;
         }
 
+        public void RestartCoolDown(CooldownType type, int timeoutMs) => Cooldowns[type] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(timeoutMs));
+        
+
         public void TurnTo(Direction direction)
         {
             Direction = direction;
@@ -395,10 +398,7 @@ namespace NeoServer.Game.Creatures.Model
                 StopFollowing();
             }
 
-            if (FollowCreature)
-            {
-                StartFollowing(targetId);
-            }
+          
 
             AutoAttackTargetId = targetId;
         }
@@ -466,7 +466,11 @@ namespace NeoServer.Game.Creatures.Model
             OnStoppedAttack?.Invoke(this);
         }
 
-        public void StopFollowing() => Following = 0;
+        public void StopFollowing()
+        {
+            Following = 0;
+            StopWalking();
+        }
 
         public virtual void Attack(ICreature enemy)
         {
@@ -496,7 +500,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public bool WasDamagedOnLastAttack = true;
 
-        private GaussianRandom _random = new GaussianRandom();
+        protected GaussianRandom _random = new GaussianRandom();
 
         protected ushort RandomDamagePower(int min, int max)
         {
@@ -584,9 +588,10 @@ namespace NeoServer.Game.Creatures.Model
             return true;
         }
 
-        public void StartFollowing(uint id)
+        public void StartFollowing(uint id, params Direction[] pathToCreature)
         {
             Following = id;
+            TryUpdatePath(pathToCreature);
         }
 
         public double CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
@@ -656,7 +661,7 @@ namespace NeoServer.Game.Creatures.Model
             return stepDuration;
         }
 
-        public bool TryUpdatePath()
+        public bool TryUpdatePath(Direction[] newPath)
         {
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.UpdatePath, DateTime.Now);
 
@@ -664,7 +669,10 @@ namespace NeoServer.Game.Creatures.Model
             {
                 return false;
             }
-            Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000));
+            Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(2000));
+
+            
+            TryWalkTo(newPath);
 
             return true;
         }

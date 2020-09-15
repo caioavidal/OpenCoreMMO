@@ -21,7 +21,7 @@ namespace NeoServer.Server.Jobs.Creatures
 
             if(monster.HasAnyTarget)
             {
-                monster.SetAttackTarget();
+                monster.SelectTargetToAttack();
             }
         }
     }

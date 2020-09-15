@@ -14,15 +14,17 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureKilledEventHandler _creatureKilledEventHandler;
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
+        private readonly IPathFinder _pathFinder;
 
         public MonsterFactory(IMonsterDataManager monsterManager, CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler,
-            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler)
+            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, IPathFinder pathFinder)
         {
             _monsterManager = monsterManager;
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
             _creatureBlockedAttackEventHandler = creatureBlockedAttackEventHandler;
+            _pathFinder = pathFinder;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
@@ -32,7 +34,7 @@ namespace NeoServer.Game.Creatures
                 throw new KeyNotFoundException($"Given monster name: {name} is not loaded");
             }
 
-            var monster = new Monster(monsterType, spawn);
+            var monster = new Monster(monsterType, spawn, _pathFinder.Find);
 
             monster.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
             monster.OnKilled += _creatureKilledEventHandler.Execute;

@@ -2,6 +2,7 @@
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.Enums;
@@ -58,6 +59,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameCreatureManager>().SingleInstance();
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
             builder.RegisterType<SpawnManager>().SingleInstance();
+
+            builder.RegisterType<PathFinder>().As<IPathFinder>().SingleInstance();
 
             RegisterPacketHandlers(builder);
 
