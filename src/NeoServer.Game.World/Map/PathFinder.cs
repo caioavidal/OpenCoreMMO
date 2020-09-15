@@ -12,11 +12,10 @@ namespace NeoServer.Game.World.Map
     {
         public PathNode Start { get; set; }
         public PathNode Target { get; set; }
-        public Direction[] Find(IMap map, ICreature creature, Location start, Location target)
+        public bool Find(IMap map, ICreature creature, Location start, Location target, out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
-            AStarTibia.MaxSteps = 50;
-            return AStarTibia.GetPathMatching(map, creature, start, target, new FindPathParams(true, true, true, false, 0, 0, 1));
+            return AStarTibia.GetPathMatching(map, creature, start, target, new FindPathParams(true, true, true, false, 0, 0, 1), out directions);
         }
     }
 

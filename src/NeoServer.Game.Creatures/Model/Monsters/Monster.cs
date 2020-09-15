@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Creatures.Model.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using Org.BouncyCastle.Asn1.X509;
@@ -120,36 +121,58 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SetState(MonsterState state) => State = state;
 
-        private IDictionary<uint, ICreature> Targets = new Dictionary<uint, ICreature>(150);
+        private IDictionary<uint, CombatTarget> Targets = new Dictionary<uint, CombatTarget>(150);
 
+        public void SetTargetAsUnreachable(uint targetId)
+        {
+            if (!Targets.TryGetValue(targetId, out var target))
+            {
+                return;
+            }
+
+            target.SetAsUnreachable();
+        }
         public void AddToTargetList(ICreature creature)
         {
-            Targets.TryAdd(creature.CreatureId, creature);
+            Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
         }
         public void RemoveFromTargetList(ICreature creature)
         {
             Targets.Remove(creature.CreatureId);
 
-            if(AutoAttackTargetId == creature.CreatureId)
+            if (AutoAttackTargetId == creature.CreatureId)
             {
                 StopAttack();
             }
         }
+
+        public bool CanReachAnyTarget { get; private set; } = false;
 
         private ICreature searchTarget()
         {
             var nearest = ushort.MaxValue;
             ICreature nearestCreature = null;
 
+            var canReachAnyTarget = false;
+
             foreach (var target in Targets)
             {
-                var offset = Location.GetSqmDistance(target.Value.Location);
+                if (!target.Value.CanReachCreature)
+                {
+                    continue;
+                }
+
+                canReachAnyTarget = true;
+
+                var offset = Location.GetSqmDistance(target.Value.Creature.Location);
                 if (offset < nearest)
                 {
                     nearest = offset;
-                    nearestCreature = target.Value;
+                    nearestCreature = target.Value.Creature;
                 }
             }
+
+            CanReachAnyTarget = canReachAnyTarget;
 
             return nearestCreature;
         }
@@ -158,7 +181,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             var target = searchTarget();
 
-            if(target == null)
+            if (target == null)
             {
                 return;
             }

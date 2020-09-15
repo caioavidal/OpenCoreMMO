@@ -23,6 +23,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void SetAttackTarget();
         void AddToTargetList(ICreature creature);
         void RemoveFromTargetList(ICreature creature);
+        void SetTargetAsUnreachable(uint targetId);
 
         uint Experience { get; }
         bool HasAnyTarget { get; }

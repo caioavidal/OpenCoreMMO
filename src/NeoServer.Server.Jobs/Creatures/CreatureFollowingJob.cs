@@ -14,13 +14,13 @@ namespace NeoServer.Server.Jobs.Creatures
 
         public static void Execute(ICreature creature, Game game)
         {
-            
+
             var now = DateTime.Now.Ticks;
             var remainingTime = TimeSpan.FromTicks(now - _lastWalk).TotalMilliseconds;
-            
+
             if (remainingTime < INTERVAL)
             {
-               // return;
+                // return;
             }
 
             if (creature.IsDead)
@@ -34,14 +34,18 @@ namespace NeoServer.Server.Jobs.Creatures
                     return;
                 }
 
-                if(creature.TryUpdatePath())
+                if (creature.TryUpdatePath())
                 {
                     var p = new PathFinder();
-                    var directions = p.Find(game.Map, creature, creature.Location, enemy.Location);
-
-                    creature.TryWalkTo(directions);
+                    if (p.Find(game.Map, creature, creature.Location, enemy.Location, out var directions))
+                    {
+                        creature.TryWalkTo(directions);
+                    }
+                    else if (creature is IMonster monster)
+                    {
+                        monster.SetTargetAsUnreachable(enemy.CreatureId);
+                    }
                 }
-                
 
                 var thing = creature as IMoveableThing;
 
