@@ -1,11 +1,11 @@
 [
    {
-      "centerx": "1025",
+      "centerx": "1023",
       "centery": "1019",
       "centerz": "7",
       "radius": "1",
       "monsters": [
-	{
+		{
          "name": "Troll",
          "x": "0",
          "y": "0",

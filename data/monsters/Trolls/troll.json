@@ -4,7 +4,7 @@
     "nameDescription": "a troll",
     "race": "blood",
     "experience": "20",
-    "speed": "126",
+    "speed": "400",
     "manacost": "290",
     "health": {
       "now": "50",

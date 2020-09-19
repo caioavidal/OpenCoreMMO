@@ -5,6 +5,7 @@ using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 
 namespace NeoServer.Loaders.World
@@ -26,9 +27,20 @@ namespace NeoServer.Loaders.World
                 Experience = data.Experience
             };
 
-            if (data.Attacks is Collection attacks)
+            if (data.Attacks?["attack"] is JArray attacks)
             {
 
+                foreach (var attack in attacks)
+                {
+                    monster.Attacks.Add(ParseDamageType(attack["name"].ToString()), new CombatAttack()
+                    {
+                        Name = attack["name"].ToString(),
+                        Interval = ushort.Parse(attack["interval"].ToString()),
+                        Skill = ushort.Parse(attack["skill"].ToString()),
+                        Attack = ushort.Parse(attack["attack"].ToString()),
+                    });
+                }
+             
             }
             else
             {

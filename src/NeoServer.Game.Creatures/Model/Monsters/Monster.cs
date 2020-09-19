@@ -151,8 +151,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public bool LookForNewEnemy()
         {
-            if(CalculateRemainingCooldownTime(CooldownType.LookForNewEnemy, DateTime.Now) > 0) return false;
-
             if (CanReachAnyTarget) return false;
             
             int randomIndex =_random.Next(minValue:0, maxValue: 4);
@@ -160,8 +158,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
 
             TryWalkTo(directions[randomIndex]);
-
-            RestartCoolDown(CooldownType.LookForNewEnemy, 2000);
 
             return true;
         }

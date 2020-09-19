@@ -669,7 +669,7 @@ namespace NeoServer.Game.Creatures.Model
             {
                 return false;
             }
-            Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(2000));
+            Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000));
 
             
             TryWalkTo(newPath);

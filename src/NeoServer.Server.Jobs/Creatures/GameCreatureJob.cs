@@ -6,7 +6,7 @@ namespace NeoServer.Server.Jobs.Creatures
 {
     public class GameCreatureJob
     {
-        private const ushort EVENT_CHECK_CREATURE_INTERVAL = 100;
+        private const ushort EVENT_CHECK_CREATURE_INTERVAL = 1000;
         private readonly Game game;
         private readonly SpawnManager spawnManager;
 
@@ -32,7 +32,6 @@ namespace NeoServer.Server.Jobs.Creatures
                 }
 
                 CreatureAttakingJob.Execute(creature, game);
-               // CreatureFollowingJob.Execute(creature, game);
                 CreatureTargetJob.Execute(creature, game);
                 CreatureMovementJob.Execute(creature, game);
                 RespawnJob.Execute(spawnManager);
