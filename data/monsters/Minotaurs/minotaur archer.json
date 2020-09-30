@@ -59,14 +59,9 @@
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "10",
-          "attack": "25"
-        },
+    
+      "attacks": [
+      
         {
           "name": "physical",
           "interval": "1000",
@@ -79,8 +74,8 @@
             "value": "bolt"
           }
         }
-      ]
-    },
+      ],
+
     "defenses": {
       "armor": "7",
       "defense": "8"

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
@@ -34,6 +35,7 @@ namespace NeoServer.Game.Creatures.Model
         public event StopAttack OnStoppedAttack;
         public event BlockAttack OnBlockedAttack;
         public event GainExperience OnGainedExperience;
+        public event Attack OnAttack;
 
         private readonly ICreatureType _creatureType;
 
@@ -470,6 +472,33 @@ namespace NeoServer.Game.Creatures.Model
         {
             Following = 0;
             StopWalking();
+        }
+
+        public virtual void Attack(ICreature enemy, ICombatAttack combatAttack)
+        {
+            if (enemy.IsDead)
+            {
+                StopAttack();
+                return;
+            }
+
+            if (!UsingDistanceWeapon && !Tile.IsNextTo(enemy.Tile))
+            {
+                return;
+            }
+
+            var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
+            if (remainingCooldown > 0)
+            {
+                return;
+            }
+
+            SetAttackTarget(enemy.CreatureId);
+
+            enemy.ReceiveAttack(this, CalculateDamage());
+            UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
+
+            OnAttack?.Invoke(this, enemy, combatAttack);
         }
 
         public virtual void Attack(ICreature enemy)

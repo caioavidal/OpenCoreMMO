@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Combat;
+﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
@@ -7,9 +6,7 @@ using NeoServer.Game.Creatures.Model.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
-using Org.BouncyCastle.Asn1.X509;
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +75,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return attack;
         }
 
+        public List<ICombatAttack> Attacks => Metadata.Attacks;
+
         public override int ArmorDefend(int attack)
         {
             if (ArmorRating > 3)
@@ -97,10 +96,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             get
             {
-                if (Metadata.Attacks.TryGetValue(Game.Enums.Item.DamageType.Melee, out ICombatAttack combatAttack))
-                {
-                    return (ushort)(Math.Ceiling((combatAttack.Skill * (combatAttack.Attack * 0.05)) + (combatAttack.Attack * 0.5)));
-                }
+                //if (Metadata.Attacks.)
+                //{
+                //    return (ushort)(Math.Ceiling((combatAttack.Skill * (combatAttack.Attack * 0.05)) + (combatAttack.Attack * 0.5)));
+                //}
 
                 return 0;
             }
@@ -222,6 +221,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
 
             SetAttackTarget(target.Creature.CreatureId);
+        }
+
+        public override void Attack(ICreature enemy)
+        {
+
+            base.Attack(enemy, Attacks.First());
         }
     }
 }

@@ -29,6 +29,7 @@
         WorldLight = 0x82,
         MagicEffect = 0x83,
         AnimatedText = 0x84,
+        DistanceShootEffect = 0x85,
         PlayerWalkCancel = 0xB5,
         CreatureLight = 0x8D,
         CreatureHealth = 0x8C,
