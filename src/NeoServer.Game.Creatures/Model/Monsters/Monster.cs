@@ -177,7 +177,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var canReachAnyTarget = false;
 
-            var fpp = new FindPathParams(false, true, true, false, 12, 1, TargetDistance);
+            var fpp = new FindPathParams(false, true, true, KeepDistance, 12, 1, TargetDistance);
 
             foreach (var target in Targets)
             {
@@ -248,5 +248,20 @@ namespace NeoServer.Game.Creatures.Model.Monsters
           
         }
 
+
+        public void TakeDistanceFromEnemy(ICreature enemy)
+        {
+            if (!KeepDistance)
+            {
+                return;
+            }
+
+            var enemyLocation = enemy.Location;
+
+            if (Location.GetSqmDistanceX(enemyLocation) >= TargetDistance && Location.GetSqmDistanceY(enemyLocation) >= TargetDistance)
+            {
+                return;
+            }
+        }
     }
 }
