@@ -23,20 +23,20 @@
       "defense": "0"
     },
     "flags": {
-      "flag": [
-        {
+      
+      
           "summonable": "1"
-        },
-        {
+      ,
+      
           "attackable": "1"
-        },
-        {
+      ,
+      
           "hostile": "1"
-        },
-        {
+        ,
+        
           "illusionable": "1"
-        },
-        {
+        ,
+        
           "convinceable": "1"
         },
         {

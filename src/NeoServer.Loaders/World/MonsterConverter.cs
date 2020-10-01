@@ -7,6 +7,8 @@ using NeoServer.Game.Enums.Item;
 using System;
 using System.Collections.Generic;
 using NeoServer.Server.Helpers.Extensions;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace NeoServer.Loaders.World
 {
@@ -41,13 +43,18 @@ namespace NeoServer.Loaders.World
                     attack.TryGetValue("min", out decimal min);
                     attack.TryGetValue("max", out decimal max);
 
+                    attack.TryGetValue<JArray>("attributes", out var attributes);
+
+                    var shootEffect = attributes.FirstOrDefault(a=>a.Value<string>("key") == "shootEffect").Value<string>("value");
+                 
+
                     monster.Attacks.Add(new DistanceCombatAttack(ParseDamageType(attackName), new CombatAttackOption
                     {
                         Chance = chance,
                         Range = range,
                         Min = (ushort)Math.Abs(min),
                         Max = (ushort)Math.Abs(max),
-                        ShootType = ShootType.Bolt
+                        ShootType = ParseShootType(shootEffect)
                     }));
 
 

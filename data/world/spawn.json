@@ -5,29 +5,8 @@
       "centerz": "7",
       "radius": "1",
       "monsters": [
-		{
-         "name": "Minotaur Archer",
-         "x": "0",
-         "y": "0",
-         "z": "7",
-         "spawntime": "60"
-      },
-	  	{
-         "name": "Minotaur Archer",
-         "x": "1",
-         "y": "0",
-         "z": "7",
-         "spawntime": "60"
-      },
 	  {
-         "name": "Minotaur Archer",
-         "x": "2",
-         "y": "0",
-         "z": "7",
-         "spawntime": "60"
-      },
-	  {
-         "name": "Minotaur Archer",
+         "name": "Monster",
          "x": "1",
          "y": "1",
          "z": "7",

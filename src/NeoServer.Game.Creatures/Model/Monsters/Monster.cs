@@ -177,7 +177,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var canReachAnyTarget = false;
 
-            var fpp = new FindPathParams(false, true, true, KeepDistance, 12, 1, TargetDistance);
+            var fpp = new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance);
 
             foreach (var target in Targets)
             {

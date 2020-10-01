@@ -1,7 +1,8 @@
  [
 	
+
 	{
-        "name": "Minotaur Archer",
-        "file": "Minotaurs/minotaur archer.json"
-    }
+		"name": "Monster",
+        "file": "monster.json"
+	}
 ]

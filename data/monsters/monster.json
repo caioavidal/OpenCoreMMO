@@ -1,0 +1,89 @@
+{
+  "monster": {
+    "name": "Monster",
+    "nameDescription": "a orc spearman",
+    "race": "blood",
+    "experience": "38",
+    "speed": "176",
+    "manacost": "310",
+    "health": {
+      "now": "105",
+      "max": "105"
+    },
+    "look": {
+      "type": "50",
+      "corpse": "5996"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      
+      
+          "summonable": "1"
+      ,
+      
+          "attackable": "1"
+      ,
+      
+          "hostile": "1"
+        ,
+        
+          "illusionable": "1"
+        ,
+        
+          "convinceable": "1"
+        ,
+        
+          "pushable": "1"
+        ,
+        
+          "canpushitems": "0"
+        ,
+        
+          "canpushcreatures": "0"
+        ,
+        
+          "targetdistance": "4"
+        ,
+        
+          "staticattack": "90"
+        ,
+        
+          "runonhealth": "10"
+        
+      
+    },
+      "attacks": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "25",
+          "attack": "20"
+        },
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "7",
+          "range": "7",
+          "min": "-16",
+          "max": "-40",
+          "attributes": [{
+            "key": "shootEffect",
+            "value": "spear"
+          }]
+        }
+      ],
+	     "defenses": {
+      "armor": "15",
+      "defense": "20"
+    }
+  
+    
+  }
+}
