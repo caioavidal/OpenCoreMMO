@@ -261,21 +261,7 @@ namespace NeoServer.Networking
             SendMessage(encryptedMessage);
         }
 
-        public void Send(Queue<IOutgoingPacket> outgoingPackets)
-        {
-            var message = new NetworkMessage();
 
-            while (outgoingPackets.Any())
-            {
-                outgoingPackets.Dequeue().WriteToMessage(message);
-            }
-
-            message.AddLength();
-
-            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
-
-            SendMessage(encryptedMessage);
-        }
         public void Disconnect(string text)
         {
             var message = new NetworkMessage();

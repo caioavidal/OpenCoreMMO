@@ -171,7 +171,7 @@ namespace NeoServer.Loaders.World
             public Strategy Strategy { get; set; }
 
             [JsonProperty("flags")]
-            public Flags Flags { get; set; }
+            public IDictionary<string, byte> Flags { get; set; }
 
             [JsonProperty("attacks")]
             public List<Dictionary<string,object>> Attacks { get; set; }

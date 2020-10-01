@@ -16,10 +16,12 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
+        private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
         private readonly IPathFinder _pathFinder;
 
         public MonsterFactory(IMonsterDataManager monsterManager, CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler,
-            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler)
+            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler, 
+            CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
@@ -28,6 +30,7 @@ namespace NeoServer.Game.Creatures
             _creatureBlockedAttackEventHandler = creatureBlockedAttackEventHandler;
             _pathFinder = pathFinder;
             _creatureAttackEventHandler = creatureAttackEventHandler;
+            _creatureTurnToDirectionEventHandler = creatureTurnToDirectionEventHandler;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
@@ -44,6 +47,7 @@ namespace NeoServer.Game.Creatures
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
             monster.OnAttack += _creatureAttackEventHandler.Execute;
+            monster.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
             return monster;
         }
     }

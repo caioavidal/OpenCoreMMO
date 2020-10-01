@@ -25,7 +25,6 @@ namespace NeoServer.Server.Contracts.Network
         void Close(bool force = false);
         void Disconnect(string text);
         void Send(IOutgoingPacket packet);
-        void Send(Queue<IOutgoingPacket> outgoingPackets);
         void SendFirstConnection();
         void SetXtea(uint[] xtea);
         void SetAsAuthenticated();

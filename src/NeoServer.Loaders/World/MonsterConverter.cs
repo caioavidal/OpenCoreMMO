@@ -52,12 +52,19 @@ namespace NeoServer.Loaders.World
 
 
                 }
-                else if(ParseDamageType(attackName?.ToString()) == DamageType.Melee)
+                else if (ParseDamageType(attackName?.ToString()) == DamageType.Melee)
                 {
 
                     monster.Attacks.Add(new MeleeCombatAttack(attackValue, skill));
-                  
+
                 }
+            }
+
+            foreach (var flag in data.Flags)
+            {
+                var creatureFlag = ParseCreatureFlag(flag.Key);
+
+                monster.Flags.Add(creatureFlag, flag.Value);
             }
 
             return monster;
@@ -82,5 +89,24 @@ namespace NeoServer.Loaders.World
                 _ => ShootType.None
             };
         }
+        private static CreatureFlagAttribute ParseCreatureFlag(string flag)
+        {
+            return flag switch
+            {
+                "summonable" => CreatureFlagAttribute.Summonable,
+                "attackable" => CreatureFlagAttribute.Attackable,
+                "hostile" => CreatureFlagAttribute.Hostile,
+                "illusionable" => CreatureFlagAttribute.Illusionable,
+                "convinceable" => CreatureFlagAttribute.Convinceable,
+                "pushable" => CreatureFlagAttribute.Pushable,
+                "canpushitems" => CreatureFlagAttribute.CanPushItems,
+                "canpushcreatures" => CreatureFlagAttribute.CanPushCreatures,
+                "targetdistance" => CreatureFlagAttribute.TargetDistance,
+                "staticattack" => CreatureFlagAttribute.StaticAttack,
+                "runonhealth" => CreatureFlagAttribute.RunOnHealth,
+                _ => CreatureFlagAttribute.None
+            };
+        }
+
     }
 }

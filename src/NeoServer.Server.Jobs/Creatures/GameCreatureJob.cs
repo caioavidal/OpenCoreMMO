@@ -6,7 +6,7 @@ namespace NeoServer.Server.Jobs.Creatures
 {
     public class GameCreatureJob
     {
-        private const ushort EVENT_CHECK_CREATURE_INTERVAL = 1000;
+        private const ushort EVENT_CHECK_CREATURE_INTERVAL = 500;
         private readonly Game game;
         private readonly SpawnManager spawnManager;
 

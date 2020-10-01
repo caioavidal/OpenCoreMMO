@@ -43,7 +43,6 @@ namespace NeoServer.Server.Jobs.Creatures
 
         private static void AddEventWalk(ICreature creature, Game game, bool firstStep)
         {
-            creature.CancelNextWalk = false;
 
             if (creature.EventWalk != 0)
             {

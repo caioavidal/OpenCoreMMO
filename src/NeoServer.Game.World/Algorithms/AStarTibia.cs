@@ -16,28 +16,33 @@ namespace NeoServer.Game.World.Map
 {
     public class AStarTibia
     {
-        private bool pathCondition(Location startPos, Location testPos,
-            Location targetPos, int bestMatchDist, int maxTargetDist = 1,
-        int minTargetDist = 1)
+        private bool pathCondition(IMap map, Location startPos, Location testPos,
+            Location targetPos, int bestMatchDist, FindPathParams fpp)
         {
-            int testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
-            if (maxTargetDist == 1)
+
+            if (!map.IsInRange(startPos, testPos, targetPos, fpp))
             {
-                if (testDist < minTargetDist || testDist > maxTargetDist)
+                return false;
+            }
+
+            int testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
+            if (fpp.MaxTargetDist== 1)
+            {
+                if (testDist < fpp.MinTargetDist || testDist > fpp.MaxTargetDist)
                 {
                     return false;
                 }
 
                 return true;
             }
-            else if (testDist <= maxTargetDist)
+            else if (testDist <= fpp.MaxTargetDist)
             {
-                if (testDist < minTargetDist)
+                if (testDist < fpp.MinTargetDist)
                 {
                     return false;
                 }
 
-                if (testDist == maxTargetDist)
+                if (testDist == fpp.MaxTargetDist)
                 {
                     bestMatchDist = 0;
                     return true;
@@ -100,7 +105,7 @@ namespace NeoServer.Game.World.Map
                 pos.X = x;
                 pos.Y = y;
 
-                if (pathCondition(startPos, pos, targetPos, bestMatch, minTargetDist: 0))
+                if (pathCondition(map, startPos, pos, targetPos, bestMatch, fpp))
                 {
                     found = n;
                     endPos = pos;

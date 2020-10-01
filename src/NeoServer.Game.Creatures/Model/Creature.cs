@@ -474,23 +474,23 @@ namespace NeoServer.Game.Creatures.Model
             StopWalking();
         }
 
-        public virtual void Attack(ICreature enemy, ICombatAttack combatAttack)
+        public virtual bool Attack(ICreature enemy, ICombatAttack combatAttack)
         {
             if (enemy.IsDead)
             {
                 StopAttack();
-                return;
+                return false;
             }
 
-            if (!UsingDistanceWeapon && !Tile.IsNextTo(enemy.Tile))
+            if (!(combatAttack is IDistanceCombatAttack) && !Tile.IsNextTo(enemy.Tile))
             {
-                return;
+                return false;
             }
 
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
             if (remainingCooldown > 0)
             {
-                return;
+                return false;
             }
 
             SetAttackTarget(enemy.CreatureId);
@@ -499,6 +499,7 @@ namespace NeoServer.Game.Creatures.Model
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
             OnAttack?.Invoke(this, enemy, combatAttack);
+            return true;
         }
 
         public virtual void Attack(ICreature enemy)
@@ -674,7 +675,6 @@ namespace NeoServer.Game.Creatures.Model
         public double LastStep { get; private set; }
 
         public List<uint> NextSteps { get; set; }
-        public bool CancelNextWalk { get; set; }
         public uint EventWalk { get; set; }
         public IWalkableTile Tile { get; set; }
 

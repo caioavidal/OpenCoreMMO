@@ -68,7 +68,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         bool StopWalkingRequested { get; set; }
         List<uint> NextSteps { get; set; }
-        bool CancelNextWalk { get; set; }
         uint EventWalk { get; set; }
         byte Skull { get; }
         byte Shield { get; }

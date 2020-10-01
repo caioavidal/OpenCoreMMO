@@ -17,8 +17,17 @@ namespace NeoServer.Server.Helpers
             return rand_normal;
         }
 
-        public static GaussianRandom Instance;
+        private static GaussianRandom Instance;
 
-        public static GaussianRandom Randon => Instance ?? new GaussianRandom();
+        public static GaussianRandom Random
+        {
+            get
+            {
+                if (Instance == null) Instance = new GaussianRandom();
+
+                return Instance;
+            }
+
+        }
     }
 }
