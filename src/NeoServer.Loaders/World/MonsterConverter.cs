@@ -46,16 +46,33 @@ namespace NeoServer.Loaders.World
                     attack.TryGetValue<JArray>("attributes", out var attributes);
 
                     var shootEffect = attributes.FirstOrDefault(a=>a.Value<string>("key") == "shootEffect").Value<string>("value");
-                 
 
-                    monster.Attacks.Add(new DistanceCombatAttack(ParseDamageType(attackName), new CombatAttackOption
+                    if (attack.ContainsKey("radius"))
                     {
-                        Chance = chance,
-                        Range = range,
-                        Min = (ushort)Math.Abs(min),
-                        Max = (ushort)Math.Abs(max),
-                        ShootType = ParseShootType(shootEffect)
-                    }));
+                        attack.TryGetValue("radius", out byte radius);
+
+                        monster.Attacks.Add(new DistanceAreaCombatAttack(ParseDamageType(attackName), new CombatAttackOption
+                        {
+                            Chance = chance,
+                            Range = range,
+                            Min = (ushort)Math.Abs(min),
+                            Max = (ushort)Math.Abs(max),
+                            Radius = radius,
+                            ShootType = ParseShootType(shootEffect)
+                        }));
+                    }
+                    else
+                    {
+
+                        monster.Attacks.Add(new DistanceCombatAttack(ParseDamageType(attackName), new CombatAttackOption
+                        {
+                            Chance = chance,
+                            Range = range,
+                            Min = (ushort)Math.Abs(min),
+                            Max = (ushort)Math.Abs(max),
+                            ShootType = ParseShootType(shootEffect)
+                        }));
+                    }
 
 
                 }
@@ -83,6 +100,8 @@ namespace NeoServer.Loaders.World
             {
                 "melee" => DamageType.Melee,
                 "physical" => DamageType.Physical,
+                "energy" => DamageType.Energy,
+                "fire" => DamageType.Fire,
                 _ => DamageType.Melee
             };
         }
@@ -93,6 +112,8 @@ namespace NeoServer.Loaders.World
                 "bolt" => ShootType.Bolt,
                 "spear" => ShootType.Spear,
                 "star" => ShootType.ThrowingStar,
+                "energy" => ShootType.Energy,
+                "fire" => ShootType.Fire,
                 _ => ShootType.None
             };
         }

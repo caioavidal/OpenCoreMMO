@@ -5,9 +5,8 @@ using System.Text;
 
 namespace NeoServer.Game.Contracts.Combat
 {
-    public interface IDistanceCombatAttack: ICombatAttack
+    public interface IDistanceAreaCombatAttack : IDistanceCombatAttack
     {
-        ShootType ShootType { get; }
-
+        byte Radius { get; }
     }
 }

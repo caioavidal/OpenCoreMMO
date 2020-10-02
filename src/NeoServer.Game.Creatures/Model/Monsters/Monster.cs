@@ -31,7 +31,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Spawn = spawn;
             Damages = new ConcurrentDictionary<ICreature, ushort>();
 
-            OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage);
+            OnDamaged += (enemy, victim, combatAttack, damage) => RecordDamage(enemy, damage);
             OnKilled += (enemy) => GiveExperience();
 
             Cooldowns[CooldownType.LookForNewEnemy] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero);

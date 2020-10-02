@@ -7,7 +7,7 @@ using System;
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void OnAttackTargetChange(uint oldTargetId, uint newTargetId);
-    public delegate void Damage(ICreature enemy, ICreature victim, ushort healthDamage);
+    public delegate void Damage(ICreature enemy, ICreature victim, ICombatAttack attack, ushort healthDamage);
     public delegate void StopAttack(ICreature actor);
     public delegate void BlockAttack(ICreature creature, BlockType block);
     public delegate void Attack(ICreature creature, ICreature victim, ICombatAttack combatAttack);

@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
@@ -442,9 +443,12 @@ namespace NeoServer.Game.Creatures.Model
 
         public abstract bool UsingDistanceWeapon { get; }
 
-        public virtual void ReceiveAttack(ICreature enemy, ushort damage)
+        public virtual void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage)
         {
-            damage = ReduceDamage(damage);
+            if (!attack.IsMagicalDamage)
+            {
+                damage = ReduceDamage(damage);
+            }
 
             if (damage <= 0)
             {
@@ -454,8 +458,10 @@ namespace NeoServer.Game.Creatures.Model
 
             if (!IsDead)
             {
+
                 ReduceHealth(damage);
-                OnDamaged?.Invoke(enemy, this, damage);
+               
+                OnDamaged?.Invoke(enemy, this, attack, damage);
                 WasDamagedOnLastAttack = true;
                 return;
             }
@@ -495,7 +501,7 @@ namespace NeoServer.Game.Creatures.Model
 
             SetAttackTarget(enemy.CreatureId);
 
-            enemy.ReceiveAttack(this, CalculateDamage());
+            enemy.ReceiveAttack(this, combatAttack, combatAttack.CalculateDamage(AttackPower, MinimumAttackPower));
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
             OnAttack?.Invoke(this, enemy, combatAttack);
@@ -523,7 +529,9 @@ namespace NeoServer.Game.Creatures.Model
 
             SetAttackTarget(enemy.CreatureId);
 
-            enemy.ReceiveAttack(this, CalculateDamage());
+            var combatAttack = new MeleeCombatAttack(10,10);
+
+            enemy.ReceiveAttack(this, combatAttack, CalculateDamage());
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
         }
