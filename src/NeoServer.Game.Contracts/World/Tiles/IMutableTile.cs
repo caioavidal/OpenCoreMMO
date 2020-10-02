@@ -28,7 +28,9 @@ namespace NeoServer.Game.Contracts.World.Tiles
         byte[] GetRaw(IPlayer playerRequesting = null);
         byte GetStackPositionOfItem(ushort id);
         byte GetStackPositionOfThing(Items.IThing thing);
+        uint GetThingByStackPosition(byte stackPosition);
         ICreature GetTopVisibleCreature(ICreature creature);
+        bool HasBlockPathFinding { get; }
         Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1);
         IThing RemoveThing(ref IMoveableThing thing, byte count = 1);
     }

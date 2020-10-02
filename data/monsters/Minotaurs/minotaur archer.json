@@ -22,51 +22,41 @@
       "attack": "100",
       "defense": "0"
     },
-    "flags": {
-      "flag": [
+    "flags":  
         {
-          "summonable": "1"
-        },
-        {
+          "summonable": "1",
+        
+        
           "attackable": "1"
-        },
-        {
+        ,
           "hostile": "1"
-        },
-        {
+       ,
           "illusionable": "1"
-        },
-        {
+      ,
           "convinceable": "1"
-        },
-        {
+       ,
           "pushable": "0"
-        },
-        {
+     ,
           "canpushitems": "0"
-        },
-        {
+       ,
           "canpushcreatures": "0"
-        },
-        {
+      ,
           "targetdistance": "4"
-        },
-        {
+      ,
           "staticattack": "90"
-        },
-        {
+      ,
           "runonhealth": "10"
         }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "10",
-          "attack": "25"
-        },
+      
+    ,
+    
+      "attacks": [
+       {
+        "name": "melee",
+        "interval": "1500",
+        "skill": "20",
+        "attack": "16"
+      },
         {
           "name": "physical",
           "interval": "1000",
@@ -79,8 +69,8 @@
             "value": "bolt"
           }
         }
-      ]
-    },
+      ],
+
     "defenses": {
       "armor": "7",
       "defense": "8"

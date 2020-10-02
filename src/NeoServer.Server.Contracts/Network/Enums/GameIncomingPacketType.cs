@@ -34,7 +34,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         ContainerUp = 0x88, // "up-arrow" - container
         WindowText = 0x89,
         WindowHouse = 0x8A,
-        ItemLook = 0x8C, // look at item
+        LookAt = 0x8C, // look at item
         Speech = 0x96,  // say something
         ChannelListRequest = 0x97, // request Channels
         ChannelOpen = 0x98, // open Channel

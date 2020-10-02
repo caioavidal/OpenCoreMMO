@@ -1,59 +1,22 @@
 [
    {
-      "centerx": "1025",
+      "centerx": "1023",
       "centery": "1019",
       "centerz": "7",
       "radius": "1",
       "monsters": [
-	{
-         "name": "Troll",
-         "x": "0",
-         "y": "0",
-         "z": "7",
-         "spawntime": "60"
-      },
 	  {
-         "name": "Troll",
-         "x": "4",
-         "y": "0",
-         "z": "7",
-         "spawntime": "60"
-      }]
-   },
-   {
-      "centerx": "1008",
-      "centery": "1028",
-      "centerz": "7",
-      "radius": "1",
-      "monsters": [{
-         "name": "Troll",
-         "x": "0",
-         "y": "0",
-         "z": "7",
-         "spawntime": "60"
-      }]
-   },
-   {
-      "centerx": "1018",
-      "centery": "1030",
-      "centerz": "7",
-      "radius": "1",
-      "monsters": [{
-         "name": "Troll",
-         "x": "0",
-         "y": "0",
-         "z": "7",
-         "spawntime": "60"
-      },
-	  {
-         "name": "Troll",
-         "x": "5",
-         "y": "0",
+         "name": "Monster",
+         "x": "1",
+         "y": "1",
          "z": "7",
          "spawntime": "60"
       }
-	 
 	 ]
+   
+  
+	 
+	 
    }
   
 ]

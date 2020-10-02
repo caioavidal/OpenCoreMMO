@@ -16,31 +16,33 @@ namespace NeoServer.Game.World.Map
 {
     public class AStarTibia
     {
-        public int MaxSteps { get; set; }
-        public int Steps { get; set; }
-
-        private bool pathCondition(Location startPos, Location testPos,
-            Location targetPos, int bestMatchDist, int maxTargetDist = 1,
-        int minTargetDist = 1)
+        private bool pathCondition(IMap map, Location startPos, Location testPos,
+            Location targetPos, int bestMatchDist, FindPathParams fpp)
         {
-            int testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
-            if (maxTargetDist == 1)
+
+            if (!map.IsInRange(startPos, testPos, targetPos, fpp))
             {
-                if (testDist < minTargetDist || testDist > maxTargetDist)
+                return false;
+            }
+
+            int testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
+            if (fpp.MaxTargetDist== 1)
+            {
+                if (testDist < fpp.MinTargetDist || testDist > fpp.MaxTargetDist)
                 {
                     return false;
                 }
 
                 return true;
             }
-            else if (testDist <= maxTargetDist)
+            else if (testDist <= fpp.MaxTargetDist)
             {
-                if (testDist < minTargetDist)
+                if (testDist < fpp.MinTargetDist)
                 {
                     return false;
                 }
 
-                if (testDist == maxTargetDist)
+                if (testDist == fpp.MaxTargetDist)
                 {
                     bestMatchDist = 0;
                     return true;
@@ -55,10 +57,12 @@ namespace NeoServer.Game.World.Map
             return false;
         }
 
-        public  Direction[] GetPathMatching(IMap map, ICreature creature, Location startLocation, Location targetPos, FindPathParams
-            fpp)
+        public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
+            fpp, out Direction[] directions)
         {
-            var pos = startLocation;
+            var pos = creature.Location;
+
+            directions = new Direction[0];
 
             Location endPos = new Location();
 
@@ -83,7 +87,7 @@ namespace NeoServer.Game.World.Map
             var startPos = pos;
             AStarNode found = null;
 
-            while (MaxSteps > 0 && Steps < MaxSteps)
+            while (fpp.MaxSearchDist != 0 || nodes.ClosedNodes < 100)
             {
                 var n = nodes.GetBestNode();
                 if (n == null)
@@ -92,7 +96,7 @@ namespace NeoServer.Game.World.Map
                     {
                         break;
                     }
-                    return dirList.ToArray();
+                    return false;
                 }
 
                 int x = n.X;
@@ -101,7 +105,7 @@ namespace NeoServer.Game.World.Map
                 pos.X = x;
                 pos.Y = y;
 
-                if (pathCondition(startPos,pos, targetPos, bestMatch, minTargetDist:0))
+                if (pathCondition(map, startPos, pos, targetPos, bestMatch, fpp))
                 {
                     found = n;
                     endPos = pos;
@@ -174,7 +178,7 @@ namespace NeoServer.Game.World.Map
                     pos.X = x + neighbors[i].Item1;
                     pos.Y = y + neighbors[i].Item2;
 
-                    if (MaxSteps != 0 && (startPos.GetSqmDistanceX(pos) > MaxSteps || startPos.GetSqmDistanceY(pos) > MaxSteps))
+                    if (fpp.MaxSearchDist != 0 && (startPos.GetSqmDistanceX(pos) > fpp.MaxSearchDist || startPos.GetSqmDistanceY(pos) > fpp.MaxSearchDist))
                     {
                         continue;
                     }
@@ -229,7 +233,7 @@ namespace NeoServer.Game.World.Map
                             {
                                 break;
                             }
-                            return dirList.ToArray();
+                            return false;
                         }
                     }
                 }
@@ -239,7 +243,7 @@ namespace NeoServer.Game.World.Map
 
             if (found == null)
             {
-                return null;
+                return false;
             }
 
             int prevx = endPos.X;
@@ -260,7 +264,7 @@ namespace NeoServer.Game.World.Map
 
                 if (dx == 1 && dy == 1)
                 {
-                    dirList.Insert(0,Direction.NorthWest);
+                    dirList.Insert(0, Direction.NorthWest);
                 }
                 else if (dx == -1 && dy == 1)
                 {
@@ -277,7 +281,7 @@ namespace NeoServer.Game.World.Map
 
                 }
                 else if (dx == 1)
-                {                    
+                {
                     dirList.Insert(0, Direction.West);
                 }
                 else if (dx == -1)
@@ -295,16 +299,16 @@ namespace NeoServer.Game.World.Map
 
                 found = found.Parent;
             }
-            return dirList.ToArray();
+            directions = dirList.ToArray();
+            return true;
 
         }
-
     }
 
     internal class Nodes
     {
         public int currentNode;
-        private int closedNodes;
+        public int ClosedNodes { get; private set; }
         private bool[] openNodes = new bool[512];
         private List<AStarNode> nodes = new List<AStarNode>(512);
         private Dictionary<AStarPosition, AStarNode> nodesMap = new Dictionary<AStarPosition, AStarNode>();
@@ -313,7 +317,7 @@ namespace NeoServer.Game.World.Map
         public Nodes(Location location)
         {
             currentNode = 1;
-            closedNodes = 0;
+            ClosedNodes = 0;
             openNodes[0] = true;
 
             startNode = new AStarNode(location.X, location.Y)
@@ -358,9 +362,9 @@ namespace NeoServer.Game.World.Map
             var start = 0;
             while (true)
             {
-                
-                index = nodes.IndexOf(node,start);
-                if(openNodes[index] == false)
+
+                index = nodes.IndexOf(node, start);
+                if (openNodes[index] == false)
                 {
                     start = ++index;
                 }
@@ -368,7 +372,7 @@ namespace NeoServer.Game.World.Map
                 {
                     break;
                 }
-                
+
             }
 
             if (index >= 512)
@@ -377,7 +381,7 @@ namespace NeoServer.Game.World.Map
             }
 
             openNodes[index] = false;
-            ++closedNodes;
+            ++ClosedNodes;
         }
 
         internal AStarNode CreateOpenNode(AStarNode parent, int x, int y, int newF)
@@ -409,7 +413,7 @@ namespace NeoServer.Game.World.Map
 
         internal void OpenNode(AStarNode node)
         {
-            
+
             var index = nodes.IndexOf(node);
 
             if (index >= 512)
@@ -420,7 +424,7 @@ namespace NeoServer.Game.World.Map
             if (!openNodes[index])
             {
                 openNodes[index] = true;
-                --closedNodes;
+                --ClosedNodes;
             }
         }
     }
@@ -486,7 +490,7 @@ namespace NeoServer.Game.World.Map
                 cost += 10 * 3;
             }
 
-            if(tile.MagicField != null)
+            if (tile.MagicField != null)
             {
                 //if(creature.IsImmune() tile.MagicField.Type;
             }
@@ -503,11 +507,11 @@ namespace NeoServer.Game.World.Map
     {
         public static Tuple<int, int>[] West => new Tuple<int, int>[5]
                 {
-                   new Tuple<int,int>( -1, 0),
+                   new Tuple<int,int>( 0, 1),
                    new Tuple<int,int>( 1, 0),
                    new Tuple<int,int>( 0, -1),
-                   new Tuple<int,int>( -1, -1),
-                   new Tuple<int,int>( 1, -1)
+                   new Tuple<int,int>( 1, -1),
+                   new Tuple<int,int>( 1, 1)
                 };
 
         public static Tuple<int, int>[] East => new Tuple<int, int>[5]

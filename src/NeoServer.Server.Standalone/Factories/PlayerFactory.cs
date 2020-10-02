@@ -16,7 +16,7 @@ namespace NeoServer.Server.Standalone.Factories
     internal class PlayerFactory
     {
         private readonly Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory;
-        private readonly PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler;
+        private readonly CreatureTurnedToDirectionEventHandler playerTurnToDirectionEventHandler;
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
@@ -29,7 +29,7 @@ namespace NeoServer.Server.Standalone.Factories
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
 
         public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
-            PlayerTurnToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
+            CreatureTurnedToDirectionEventHandler playerTurnToDirectionEventHandler, PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,

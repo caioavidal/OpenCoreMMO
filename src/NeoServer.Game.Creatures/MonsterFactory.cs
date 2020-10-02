@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Server.Events;
+using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
 using System.Collections.Generic;
 
@@ -14,15 +15,22 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureKilledEventHandler _creatureKilledEventHandler;
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
+        private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
+        private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
+        private readonly IPathFinder _pathFinder;
 
         public MonsterFactory(IMonsterDataManager monsterManager, CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler,
-            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler)
+            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler, 
+            CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
             _creatureBlockedAttackEventHandler = creatureBlockedAttackEventHandler;
+            _pathFinder = pathFinder;
+            _creatureAttackEventHandler = creatureAttackEventHandler;
+            _creatureTurnToDirectionEventHandler = creatureTurnToDirectionEventHandler;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
@@ -32,12 +40,14 @@ namespace NeoServer.Game.Creatures
                 throw new KeyNotFoundException($"Given monster name: {name} is not loaded");
             }
 
-            var monster = new Monster(monsterType, spawn);
+            var monster = new Monster(monsterType, spawn, _pathFinder.Find);
 
             monster.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
             monster.OnKilled += _creatureKilledEventHandler.Execute;
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
+            monster.OnAttack += _creatureAttackEventHandler.Execute;
+            monster.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
             return monster;
         }
     }

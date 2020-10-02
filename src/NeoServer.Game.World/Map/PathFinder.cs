@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using System;
@@ -8,76 +9,68 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.World.Map
 {
-    public class PathFinder
+    public class PathFinder : IPathFinder
     {
-        public PathNode Start { get; set; }
-        public PathNode Target { get; set; }
-        public Direction[] Find(IMap map, ICreature creature, Location start, Location target)
+        public PathFinder(IMap map)
+        {
+            Map = map;
+        }
+
+        public IMap Map { get; set; }
+
+        public bool Find(ICreature creature, Location target, out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
-            AStarTibia.MaxSteps = 50;
-            return AStarTibia.GetPathMatching(map, creature, start, target, new FindPathParams(true, true, true, false, 0, 0, 1));
+            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), out directions);
         }
-    }
 
-    public class PathNode : INode
-    {
-        public PathNode(Location location)
+        public bool Find(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
         {
-            //  _grid = grid;
-            Location = location;
-        }
-        public bool IsInOpenList { get; set; } = false;
-        public bool IsInClosedList { get; set; } = false;
+            var AStarTibia = new AStarTibia();
 
-        public Location Location { get; set; }
-
-        public int TotalCost => MovementCost + EstimatedCost;
-
-        public int MovementCost { get; private set; }
-
-        public int EstimatedCost { get; private set; }
-
-        public INode Parent { get; set; }
-
-        public IEnumerable<INode> Children
-        {
-            get
+            if (fpp.KeepDistance)
             {
-                var pool = ArrayPool<PathNode>.Shared;
-                var children = pool.Rent(Location.Neighbours.Length);
+                FindPathToKeepDistance(creature, target, fpp, out directions);
 
-                var i = 0;
-                foreach (var neighbour in Location.Neighbours)
+                if (creature.Location.GetSqmDistanceX(target) > fpp.MaxTargetDist || creature.Location.GetSqmDistanceY(target) > fpp.MaxTargetDist)
                 {
-                    children[i++] = new PathNode(neighbour);
-
+                    return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(fpp.FullPathSearch, fpp.ClearSight, fpp.AllowDiagonal, false, fpp.MaxSearchDist, 1, fpp.MaxTargetDist), out directions);
                 }
-                pool.Return(children);
-                return children[0..Location.Neighbours.Length];
+                return true;
+            }
+
+            return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
+
+        }
+
+        public void FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        {
+            directions = new Direction[0];
+
+            if (fpp.KeepDistance == false)
+            {
+                return;
+            }
+            var startLocation = creature.Location;
+
+            var xDistance = startLocation.GetSqmDistanceX(target);
+            var yDistance = startLocation.GetSqmDistanceY(target);
+
+            if (xDistance >= fpp.MaxTargetDist || yDistance >= fpp.MaxTargetDist)
+            {
+                return;
+            }
+
+            if (xDistance < fpp.MaxTargetDist && xDistance >= yDistance)
+            {
+                directions = new Direction[1] { startLocation.DirectionTo(target) == Direction.West ? Direction.East : Direction.West };
+                return;
+            }
+            if (yDistance < fpp.MaxTargetDist && yDistance > xDistance)
+            {
+                directions = new Direction[1] { startLocation.DirectionTo(target) == Direction.South ? Direction.North : Direction.South };
+                return;
             }
         }
-
-        public bool IsGoal(INode goal)
-        {
-            return IsEqual((PathNode)goal);
-        }
-
-        public bool IsEqual(PathNode node)
-        {
-            return (this == node) || (Location.X == node.Location.X && Location.Y == node.Location.Y);
-        }
-
-        public void SetEstimatedCost(INode goal)
-        {
-            var g = (PathNode)goal;
-            EstimatedCost = Math.Abs(this.Location.X - g.Location.X) + Math.Abs(this.Location.Y - g.Location.Y);
-        }
-
-        public void SetMovementCost(INode parent)
-        {
-            MovementCost = Parent.MovementCost + 1;
-        }
-
     }
 }

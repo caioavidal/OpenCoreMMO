@@ -1,3 +1,4 @@
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
@@ -68,7 +69,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         bool StopWalkingRequested { get; set; }
         List<uint> NextSteps { get; set; }
-        bool CancelNextWalk { get; set; }
         uint EventWalk { get; set; }
         byte Skull { get; }
         byte Shield { get; }
@@ -111,11 +111,11 @@ namespace NeoServer.Game.Contracts.Creatures
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
         byte[] GetRaw(IPlayer playerRequesting);
         void SetAsRemoved();
-        void ReceiveAttack(ICreature enemy, ushort attackPower);
+        void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort attackPower);
         void ResetHealthPoints();
-        void StartFollowing(uint id);
+        void StartFollowing(uint id, params Direction[] directions);
         void SetDirection(Direction direction);
         void StopFollowing();
-        bool TryUpdatePath();
+        bool TryUpdatePath(Direction[] newPath);
     }
 }

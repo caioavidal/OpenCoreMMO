@@ -1,14 +1,8 @@
  [
+	
+
 	{
-        "name": "Cyclops",
-        "file": "Giants/cyclops.json"
-    },
-	{
-        "name": "Troll",
-        "file": "Trolls/troll.json"
-    },
-	{
-        "name": "Orc",
-        "file": "Orcs/orc.json"
-    }
+		"name": "Monster",
+        "file": "monster.json"
+	}
 ]

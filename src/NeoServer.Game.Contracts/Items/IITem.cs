@@ -17,6 +17,7 @@ namespace NeoServer.Game.Contracts.Items
 
         bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
         bool IsBlockeable => Metadata.HasFlag(ItemFlag.BlockSolid);
+        bool BlockPathFinding => Metadata.HasFlag(ItemFlag.BlockPathFind);
         bool IsCumulative => Metadata.HasFlag(ItemFlag.Stackable);
         bool IsAlwaysOnTop => Metadata.HasFlag(ItemFlag.AlwaysOnTop) ||
               Metadata.HasFlag(ItemFlag.Hangable);

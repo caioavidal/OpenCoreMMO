@@ -139,7 +139,6 @@ namespace NeoServer.Loaders.World
 
         public class MonsterMetadata
         {
-            private dynamic attacks;
 
             [JsonProperty("name")]
             public string Name { get; set; }
@@ -172,10 +171,10 @@ namespace NeoServer.Loaders.World
             public Strategy Strategy { get; set; }
 
             [JsonProperty("flags")]
-            public Flags Flags { get; set; }
+            public IDictionary<string, byte> Flags { get; set; }
 
             [JsonProperty("attacks")]
-            public dynamic Attacks { get; set; }
+            public List<Dictionary<string,object>> Attacks { get; set; }
 
             [JsonProperty("defenses")]
             public Defenses Defenses { get; set; }

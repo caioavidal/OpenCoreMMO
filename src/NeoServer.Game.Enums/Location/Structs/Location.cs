@@ -189,17 +189,22 @@ namespace NeoServer.Game.Enums.Location.Structs
 
             if (!returnDiagonals)
             {
-                if (locationDiff.X < 0)
-                {
-                    return Direction.West;
-                }
+                var directionX = Direction.None;
+                var directionY = Direction.None;
 
-                if (locationDiff.X > 0)
-                {
-                    return Direction.East;
-                }
+                if (locationDiff.X < 0) directionX = Direction.West;
+                if (locationDiff.X > 0) directionX = Direction.East;
+                if (locationDiff.Y > 0) directionY = Direction.South;
+                if (locationDiff.Y < 0) directionY = Direction.North;
 
-                return locationDiff.Y < 0 ? Direction.North : Direction.South;
+
+                if (directionX != Direction.None && directionY == Direction.None) return directionX;
+                if (directionY != Direction.None && directionX == Direction.None) return directionY;
+
+                if (directionX == Direction.None && directionY == Direction.None) return Direction.None;
+
+                return GetSqmDistanceX(targetLocation) >= GetSqmDistanceY(targetLocation) ? directionX: directionY;
+
             }
 
             if (locationDiff.X < 0)

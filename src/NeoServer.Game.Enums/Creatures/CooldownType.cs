@@ -7,6 +7,7 @@
         Action,
         Combat,
         Talk,
-        Block
+        Block,
+        LookForNewEnemy
     }
 }

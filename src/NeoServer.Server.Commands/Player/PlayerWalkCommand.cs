@@ -40,7 +40,6 @@ namespace NeoServer.Server.Commands.Player
         private static void AddEventWalk(IPlayer player, Game game, bool firstStep)
         {
             var creature = player as ICreature;
-            creature.CancelNextWalk = false;
 
             if (creature.EventWalk != 0)
             {

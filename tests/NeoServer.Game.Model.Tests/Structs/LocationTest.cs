@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
 using Xunit;
 
 namespace NeoServer.Game.Model.Tests.Structs
@@ -17,6 +18,27 @@ namespace NeoServer.Game.Model.Tests.Structs
             var toLocation = new Location(toX, toY, 7);
 
             Assert.Equal(total, fromLocation.GetSqmDistance(toLocation));
+        }
+
+        [Theory]
+        [InlineData(100, 100, 100, 100, Direction.None)]
+        [InlineData(100, 100, 101, 100, Direction.East)]
+        [InlineData(100, 100, 99, 100, Direction.West)]
+        [InlineData(100, 100, 100, 101, Direction.South)]
+        [InlineData(100, 100, 100, 99, Direction.North)]
+        [InlineData(100, 100, 101, 99, Direction.East)]
+        [InlineData(100, 100, 99, 101, Direction.West)]
+        [InlineData(100, 100, 102, 101, Direction.East)]
+        [InlineData(100, 100, 102, 103, Direction.South)]
+        [InlineData(100, 100, 98, 101, Direction.West)]
+        [InlineData(100, 100, 102, 97, Direction.North)]
+
+        public void DirectionTo_Returns_TargetDirection(int fromX, int fromY, int toX, int toY, Direction direction)
+        {
+            var fromLocation = new Location(fromX, fromY, 7);
+            var toLocation = new Location(toX, toY, 7);
+
+            Assert.Equal(direction, fromLocation.DirectionTo(toLocation));
         }
     }
 }

@@ -23,24 +23,13 @@ namespace NeoServer.Server.Events
 
         {
 
-            var outgoingPackets = new Queue<IOutgoingPacket>();
 
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectatorId in map.GetCreaturesAtPositionZone(creature.Location, creature.Location))
             {
 
-                var isSpectator = !(creature.CreatureId == spectatorId);
-                if (!isSpectator)
+                if (!game.CreatureManager.TryGetCreature(spectatorId, out var spectator))
                 {
-                    SendPacketsToPlayer(creature as IPlayer, outgoingPackets);
-                }
-                else
-                {
-                    if (!game.CreatureManager.TryGetPlayer(spectatorId, out IPlayer spectator))
-                    {
-                        continue;
-                    }
-
-                    SendPacketsToSpectator(spectator, creature, outgoingPackets);
+                    return;
                 }
 
                 IConnection connection;
@@ -49,35 +38,56 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                connection.Send(outgoingPackets);
+                if (spectator is IMonster monster && creature is IPlayer target)
+                {
+                    monster.AddToTargetList(target);
+                    continue;
+                }
+
+                var isSpectator = !(creature.CreatureId == spectatorId);
+                if (!isSpectator)
+                {
+                    SendPacketsToPlayer(creature as IPlayer, connection);
+                }
+                else
+                {
+                    if (!game.CreatureManager.TryGetPlayer(spectatorId, out IPlayer spectatorPlayer))
+                    {
+                        continue;
+                    }
+
+                    SendPacketsToSpectator(spectatorPlayer, creature, connection);
+                }           
+                connection.Send();
 
             }
 
         }
 
-        private void SendPacketsToSpectator(IPlayer playerToSend, ICreature creatureAdded, Queue<IOutgoingPacket> outgoingPackets)
+        private void SendPacketsToSpectator(IPlayer playerToSend, ICreature creatureAdded, IConnection connection)
         {
+            
             //spectator.add
-            outgoingPackets.Enqueue(new AddAtStackPositionPacket(creatureAdded));
-            outgoingPackets.Enqueue(new AddCreaturePacket(playerToSend, creatureAdded));
-            outgoingPackets.Enqueue(new MagicEffectPacket(creatureAdded.Location, EffectT.BubbleBlue));
+            connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creatureAdded));
+            connection.OutgoingPackets.Enqueue(new AddCreaturePacket(playerToSend, creatureAdded));
+            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(creatureAdded.Location, EffectT.BubbleBlue));
 
         }
 
-        private void SendPacketsToPlayer(IPlayer player, Queue<IOutgoingPacket> outgoingPackets)
+        private void SendPacketsToPlayer(IPlayer player, IConnection connection)
         {
-            outgoingPackets.Enqueue(new SelfAppearPacket(player));
-            outgoingPackets.Enqueue(new MapDescriptionPacket(player, map));
-            outgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.BubbleBlue));
-            outgoingPackets.Enqueue(new PlayerInventoryPacket(player.Inventory));
-            outgoingPackets.Enqueue(new PlayerStatusPacket(player));
-            outgoingPackets.Enqueue(new PlayerSkillsPacket(player));
+            connection.OutgoingPackets.Enqueue(new SelfAppearPacket(player));
+            connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, map));
+            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.BubbleBlue));
+            connection.OutgoingPackets.Enqueue(new PlayerInventoryPacket(player.Inventory));
+            connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
+            connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
 
-            outgoingPackets.Enqueue(new WorldLightPacket(game.LightLevel, game.LightColor));
+            connection.OutgoingPackets.Enqueue(new WorldLightPacket(game.LightLevel, game.LightColor));
 
-            outgoingPackets.Enqueue(new CreatureLightPacket(player));
+            connection.OutgoingPackets.Enqueue(new CreatureLightPacket(player));
 
-            outgoingPackets.Enqueue(new PlayerConditionsPacket());
+            connection.OutgoingPackets.Enqueue(new PlayerConditionsPacket());
 
         }
     }

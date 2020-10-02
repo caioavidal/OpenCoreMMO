@@ -238,7 +238,6 @@ namespace NeoServer.Server.Model.Players
         {
             get
             {
-
                 return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
             }
         }

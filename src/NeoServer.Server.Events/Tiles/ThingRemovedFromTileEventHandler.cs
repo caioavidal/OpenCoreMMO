@@ -1,5 +1,6 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
@@ -20,8 +21,19 @@ namespace NeoServer.Server.Events
         }
         public void Execute(NeoServer.Game.Contracts.Items.IThing thing, ITile tile, byte fromStackPosition)
         {
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(tile.Location))
+            foreach (var spectatorId in map.GetCreaturesAtPositionZone(tile.Location, tile.Location))
             {
+                if (!game.CreatureManager.TryGetCreature(spectatorId, out var  creature))
+                {
+                    return;
+                }
+
+                if(creature is IMonster monster && thing is IPlayer target)
+                {
+                    monster.RemoveFromTargetList(target);
+                    continue;
+                }
+
                 IConnection connection = null;
                 if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
                 {

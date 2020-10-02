@@ -13,5 +13,6 @@
         TargetDistance,
         StaticAttack,
         RunOnHealth,
+        None,
     }
 }

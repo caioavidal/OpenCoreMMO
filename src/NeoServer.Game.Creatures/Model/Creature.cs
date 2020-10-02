@@ -1,10 +1,12 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
@@ -34,6 +36,7 @@ namespace NeoServer.Game.Creatures.Model
         public event StopAttack OnStoppedAttack;
         public event BlockAttack OnBlockedAttack;
         public event GainExperience OnGainedExperience;
+        public event Attack OnAttack;
 
         private readonly ICreatureType _creatureType;
 
@@ -309,6 +312,9 @@ namespace NeoServer.Game.Creatures.Model
             return false;
         }
 
+        public void RestartCoolDown(CooldownType type, int timeoutMs) => Cooldowns[type] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(timeoutMs));
+        
+
         public void TurnTo(Direction direction)
         {
             Direction = direction;
@@ -395,13 +401,9 @@ namespace NeoServer.Game.Creatures.Model
                 StopFollowing();
             }
 
-            if (FollowCreature)
-            {
-                StartFollowing(targetId);
-            }
+          
 
             AutoAttackTargetId = targetId;
-
         }
 
         public void UpdateLastAttack(TimeSpan exahust)
@@ -441,9 +443,12 @@ namespace NeoServer.Game.Creatures.Model
 
         public abstract bool UsingDistanceWeapon { get; }
 
-        public virtual void ReceiveAttack(ICreature enemy, ushort damage)
+        public virtual void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage)
         {
-            damage = ReduceDamage(damage);
+            if (!attack.IsMagicalDamage)
+            {
+                damage = ReduceDamage(damage);
+            }
 
             if (damage <= 0)
             {
@@ -453,8 +458,10 @@ namespace NeoServer.Game.Creatures.Model
 
             if (!IsDead)
             {
+
                 ReduceHealth(damage);
-                OnDamaged?.Invoke(enemy, this, damage);
+               
+                OnDamaged?.Invoke(enemy, this, attack, damage);
                 WasDamagedOnLastAttack = true;
                 return;
             }
@@ -467,7 +474,39 @@ namespace NeoServer.Game.Creatures.Model
             OnStoppedAttack?.Invoke(this);
         }
 
-        public void StopFollowing() => Following = 0;
+        public void StopFollowing()
+        {
+            Following = 0;
+            StopWalking();
+        }
+
+        public virtual bool Attack(ICreature enemy, ICombatAttack combatAttack)
+        {
+            if (enemy.IsDead)
+            {
+                StopAttack();
+                return false;
+            }
+
+            if (!(combatAttack is IDistanceCombatAttack) && !Tile.IsNextTo(enemy.Tile))
+            {
+                return false;
+            }
+
+            var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.Combat, DateTime.Now);
+            if (remainingCooldown > 0)
+            {
+                return false;
+            }
+
+            SetAttackTarget(enemy.CreatureId);
+
+            enemy.ReceiveAttack(this, combatAttack, combatAttack.CalculateDamage(AttackPower, MinimumAttackPower));
+            UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
+
+            OnAttack?.Invoke(this, enemy, combatAttack);
+            return true;
+        }
 
         public virtual void Attack(ICreature enemy)
         {
@@ -490,14 +529,16 @@ namespace NeoServer.Game.Creatures.Model
 
             SetAttackTarget(enemy.CreatureId);
 
-            enemy.ReceiveAttack(this, CalculateDamage());
+            var combatAttack = new MeleeCombatAttack(10,10);
+
+            enemy.ReceiveAttack(this, combatAttack, CalculateDamage());
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
         }
 
         public bool WasDamagedOnLastAttack = true;
 
-        private GaussianRandom _random = new GaussianRandom();
+        protected GaussianRandom _random = new GaussianRandom();
 
         protected ushort RandomDamagePower(int min, int max)
         {
@@ -585,9 +626,10 @@ namespace NeoServer.Game.Creatures.Model
             return true;
         }
 
-        public void StartFollowing(uint id)
+        public void StartFollowing(uint id, params Direction[] pathToCreature)
         {
             Following = id;
+            TryUpdatePath(pathToCreature);
         }
 
         public double CalculateRemainingCooldownTime(CooldownType type, DateTime currentTime)
@@ -641,7 +683,6 @@ namespace NeoServer.Game.Creatures.Model
         public double LastStep { get; private set; }
 
         public List<uint> NextSteps { get; set; }
-        public bool CancelNextWalk { get; set; }
         public uint EventWalk { get; set; }
         public IWalkableTile Tile { get; set; }
 
@@ -657,7 +698,7 @@ namespace NeoServer.Game.Creatures.Model
             return stepDuration;
         }
 
-        public bool TryUpdatePath()
+        public bool TryUpdatePath(Direction[] newPath)
         {
             var remainingCooldown = CalculateRemainingCooldownTime(CooldownType.UpdatePath, DateTime.Now);
 
@@ -666,6 +707,9 @@ namespace NeoServer.Game.Creatures.Model
                 return false;
             }
             Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000));
+
+            
+            TryWalkTo(newPath);
 
             return true;
         }

@@ -1,0 +1,121 @@
+{
+  "monster": {
+    "name": "Monster",
+    "nameDescription": "a orc spearman",
+    "race": "blood",
+    "experience": "38",
+    "speed": "176",
+    "manacost": "310",
+    "health": {
+      "now": "105",
+      "max": "105"
+    },
+    "look": {
+      "type": "50",
+      "corpse": "5996"
+    },
+    "targetchange": {
+      "interval": "5000",
+      "chance": "8"
+    },
+    "strategy": {
+      "attack": "100",
+      "defense": "0"
+    },
+    "flags": {
+      
+      
+          "summonable": "1"
+      ,
+      
+          "attackable": "1"
+      ,
+      
+          "hostile": "1"
+        ,
+        
+          "illusionable": "1"
+        ,
+        
+          "convinceable": "1"
+        ,
+        
+          "pushable": "1"
+        ,
+        
+          "canpushitems": "0"
+        ,
+        
+          "canpushcreatures": "0"
+        ,
+        
+          "targetdistance": "4"
+        ,
+        
+          "staticattack": "90"
+        ,
+        
+          "runonhealth": "10"
+        
+      
+    },
+      "attacks": [
+        {
+          "name": "melee",
+          "interval": "2000",
+          "skill": "25",
+          "attack": "20"
+        },
+        {
+          "name": "energy",
+          "interval": "1000",
+          "chance": "7",
+          "range": "7",
+          "min": "-16",
+          "max": "-40",
+          "attributes": [{
+            "key": "shootEffect",
+            "value": "energy"
+          }]
+        },
+		  {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "7",
+          "range": "7",
+          "min": "-16",
+          "max": "-40",
+          "attributes": [{
+            "key": "shootEffect",
+            "value": "fire"
+          }]
+        },
+		 {
+          "name": "fire",
+          "interval": "2000",
+          "chance": "25",
+          "range": "7",
+          "radius": "7",
+          "target": "1",
+          "min": "-20",
+          "max": "-50",
+          "attributes": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        }
+      ],
+	     "defenses": {
+      "armor": "15",
+      "defense": "20"
+    }
+  
+    
+  }
+}
