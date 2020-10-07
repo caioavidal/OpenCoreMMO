@@ -10,15 +10,15 @@ namespace NeoServer.Game.World.Spawns
 
         private readonly World _world;
         private readonly IMap _map;
-        private readonly IMonsterFactory _monsterFactory;
+        private readonly ICreatureFactory _creatureFactory;
         private readonly ICreatureGameInstance _creatureGameInstance;
-        public SpawnManager(World world, IMonsterFactory monsterFactory, IMap map, ICreatureGameInstance creatureGameInstance)
+        public SpawnManager(World world, IMap map, ICreatureGameInstance creatureGameInstance, ICreatureFactory creatureFactory)
         {
             _world = world;
 
-            _monsterFactory = monsterFactory;
             _map = map;
             _creatureGameInstance = creatureGameInstance;
+            _creatureFactory = creatureFactory;
         }
 
         public void Respawn()
@@ -50,7 +50,7 @@ namespace NeoServer.Game.World.Spawns
         {
             foreach (var monsterToSpawn in _world.Spawns.SelectMany(x => x.Monsters))
             {
-                var monster = _monsterFactory.Create(monsterToSpawn.Name, monsterToSpawn.Spawn);
+                var monster = _creatureFactory.CreateMonster(monsterToSpawn.Name, monsterToSpawn.Spawn);
                 monster.SetNewLocation(monsterToSpawn.Spawn.Location);
                 _map.AddCreature(monster);
 

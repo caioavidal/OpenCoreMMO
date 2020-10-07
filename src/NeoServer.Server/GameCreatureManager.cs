@@ -22,7 +22,7 @@ namespace NeoServer.Server
         private readonly Dictionary<uint, ICreature> Monsters;
         private readonly Dictionary<uint, ICreature> Npcs;
 
-        private readonly Func<PlayerModel, IPlayer> playerFactory;
+        private readonly Func<IPlayerModel, IPlayer> playerFactory;
 
         /// <summary>
         /// Gets all creatures all game
@@ -32,7 +32,7 @@ namespace NeoServer.Server
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
         private IMap map;
-        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Func<PlayerModel, IPlayer> playerFactory)
+        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Func<IPlayerModel, IPlayer> playerFactory)
         {
             this.creatureInstances = creatureInstances;
             this.map = map;
@@ -126,7 +126,7 @@ namespace NeoServer.Server
         /// <param name="playerRecord"></param>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public IPlayer AddPlayer(PlayerModel playerRecord, IConnection connection)
+        public IPlayer AddPlayer(IPlayerModel playerRecord, IConnection connection)
         {
             var player = playerFactory(playerRecord);
 
