@@ -313,7 +313,7 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public void RestartCoolDown(CooldownType type, int timeoutMs) => Cooldowns[type] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(timeoutMs));
-        
+
 
         public void TurnTo(Direction direction)
         {
@@ -401,7 +401,7 @@ namespace NeoServer.Game.Creatures.Model
                 StopFollowing();
             }
 
-          
+
 
             AutoAttackTargetId = targetId;
         }
@@ -456,15 +456,21 @@ namespace NeoServer.Game.Creatures.Model
                 return;
             }
 
-            if (!IsDead)
+            if (IsDead)
             {
-
-                ReduceHealth(damage);
-               
-                OnDamaged?.Invoke(enemy, this, attack, damage);
-                WasDamagedOnLastAttack = true;
                 return;
             }
+
+            if (attack.DamageType != Game.Enums.Item.DamageType.ManaDrain)
+            {
+                ReduceHealth(damage);
+            }
+
+
+            OnDamaged?.Invoke(enemy, this, attack, damage);
+            WasDamagedOnLastAttack = true;
+            return;
+
         }
 
         public void StopAttack()
@@ -529,7 +535,7 @@ namespace NeoServer.Game.Creatures.Model
 
             SetAttackTarget(enemy.CreatureId);
 
-            var combatAttack = new MeleeCombatAttack(10,10);
+            var combatAttack = new MeleeCombatAttack(10, 10);
 
             enemy.ReceiveAttack(this, combatAttack, CalculateDamage());
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
@@ -708,7 +714,7 @@ namespace NeoServer.Game.Creatures.Model
             }
             Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000));
 
-            
+
             TryWalkTo(newPath);
 
             return true;

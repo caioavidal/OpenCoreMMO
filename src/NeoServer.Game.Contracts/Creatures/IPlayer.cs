@@ -10,6 +10,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void CancelWalk(IPlayer player);
     public delegate void ClosedContainer(IPlayer player, byte containerId);
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
+    public delegate void ReduceMana(IPlayer player);
 
     public interface IPlayer : ICreature
     {

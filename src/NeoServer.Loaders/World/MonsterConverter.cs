@@ -45,7 +45,7 @@ namespace NeoServer.Loaders.World
 
                     attack.TryGetValue<JArray>("attributes", out var attributes);
 
-                    var shootEffect = attributes.FirstOrDefault(a=>a.Value<string>("key") == "shootEffect").Value<string>("value");
+                    var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
 
                     if (attack.ContainsKey("radius"))
                     {
@@ -61,9 +61,19 @@ namespace NeoServer.Loaders.World
                             ShootType = ParseShootType(shootEffect)
                         }));
                     }
-                    else
+                    else if (attackName == "manadrain")
                     {
 
+                        monster.Attacks.Add(new ManaDrainCombatAttack(new CombatAttackOption
+                        {
+                            Chance = chance,
+                            Range = range,
+                            Min = (ushort)Math.Abs(min),
+                            Max = (ushort)Math.Abs(max)
+                        }));
+                    }
+                    else
+                    {
                         monster.Attacks.Add(new DistanceCombatAttack(ParseDamageType(attackName), new CombatAttackOption
                         {
                             Chance = chance,
@@ -73,6 +83,7 @@ namespace NeoServer.Loaders.World
                             ShootType = ParseShootType(shootEffect)
                         }));
                     }
+
 
 
                 }
@@ -102,6 +113,7 @@ namespace NeoServer.Loaders.World
                 "physical" => DamageType.Physical,
                 "energy" => DamageType.Energy,
                 "fire" => DamageType.Fire,
+                "manadrain"=>DamageType.ManaDrain,
                 _ => DamageType.Melee
             };
         }

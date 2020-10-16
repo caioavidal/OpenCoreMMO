@@ -26,13 +26,14 @@ namespace NeoServer.Game.Creatures
         private readonly InvalidOperationEventHandler invalidOperationEventHandler;
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
+        private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
 
         public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
              PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
-            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler)
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -44,6 +45,7 @@ namespace NeoServer.Game.Creatures
             this.creatureStopedAttackEventHandler = creatureStopedAttackEventHandler;
 
             _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
+            _playerManaReducedEventHandler = playerManaReducedEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -87,6 +89,8 @@ namespace NeoServer.Game.Creatures
             newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
             newPlayer.OnStoppedAttack += (actor) => creatureStopedAttackEventHandler?.Execute(newPlayer);
             newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
+
+            newPlayer.OnManaReduced += _playerManaReducedEventHandler.Execute;
 
             return newPlayer;
         }

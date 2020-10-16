@@ -2,7 +2,7 @@
 {
     public enum ShootType : byte
     {
-		None,
+		None = default,
 		Spear = 1,
 		Bolt = 2,
 		Arrow = 3,

@@ -12,6 +12,7 @@
         All,
         AbsorbPercentPhysical,
         AbsorbPercentMagic,
+        ManaDrain,
         FireField,
         Melee
     }
