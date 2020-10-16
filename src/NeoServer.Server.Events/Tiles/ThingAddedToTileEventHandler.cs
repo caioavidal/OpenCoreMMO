@@ -20,8 +20,7 @@ namespace NeoServer.Server.Events
         {
             foreach (var spectatorId in map.GetPlayersAtPositionZone(tile.Location))
             {
-                IConnection connection = null;
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
                 {
                     continue;
                 }

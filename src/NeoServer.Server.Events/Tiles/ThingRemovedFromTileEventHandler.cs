@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
+using System.Linq;
 
 namespace NeoServer.Server.Events
 {
@@ -21,7 +22,9 @@ namespace NeoServer.Server.Events
         }
         public void Execute(NeoServer.Game.Contracts.Items.IThing thing, ITile tile, byte fromStackPosition)
         {
-            foreach (var spectatorId in map.GetCreaturesAtPositionZone(tile.Location, tile.Location))
+            var creaturesAtPositionZone = map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
+
+            foreach (var spectatorId in creaturesAtPositionZone)
             {
                 if (!game.CreatureManager.TryGetCreature(spectatorId, out var  creature))
                 {
@@ -34,8 +37,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                IConnection connection = null;
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out var connection))
                 {
                     continue;
                 }
@@ -56,6 +58,7 @@ namespace NeoServer.Server.Events
 
                 connection.Send();
             }
+
         }
     }
 }

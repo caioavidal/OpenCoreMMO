@@ -90,7 +90,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
 
             //factories
-            builder.RegisterType<PlayerFactory>().SingleInstance();
+            builder.RegisterType<PlayerFactory>().As<IPlayerFactory>().SingleInstance();
+            builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
             builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
 
             //creature
@@ -120,9 +121,9 @@ namespace NeoServer.Server.Standalone.IoC
         {
             builder.Register((c, p) =>
             {
-                var player = p.TypedAs<PlayerModel>();
+                var player = p.TypedAs<IPlayerModel>();
 
-                return c.Resolve<PlayerFactory>().Create(player);
+                return c.Resolve<ICreatureFactory>().CreatePlayer(player);
             });
         }
 

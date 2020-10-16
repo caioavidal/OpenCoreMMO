@@ -1,4 +1,5 @@
 using NeoServer.Data.Model;
+using NeoServer.Game.Contracts;
 using NeoServer.Server.Contracts.Repositories;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace NeoServer.Data.RavenDB
 {
 
-    public class AccountRepository : BaseRepository<AccountModel>, IAccountRepository
+    public class AccountRepository : BaseRepository<IAccountModel>, IAccountRepository
     {
         public AccountRepository(Database database) : base(database)
         {
@@ -20,7 +21,7 @@ namespace NeoServer.Data.RavenDB
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        public async void Create(AccountModel account)
+        public async void Create(IAccountModel account)
         {
             using (var store = new DocumentStore())
             {
@@ -63,7 +64,7 @@ namespace NeoServer.Data.RavenDB
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public async Task<AccountModel> Get(string account, string password)
+        public async Task<IAccountModel> Get(string account, string password)
         {
 
             using (IAsyncDocumentSession Session = Database.OpenAsyncSession())

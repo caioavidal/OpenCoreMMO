@@ -1,12 +1,14 @@
 ﻿using NeoServer.Data.Model;
+using NeoServer.Game.Contracts;
 using NeoServer.Server.Contracts.Network;
+using System.Linq;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
     public class CharacterListPacket : OutgoingPacket
     {
-        private readonly AccountModel _acountModel;
-        public CharacterListPacket(AccountModel account)
+        private readonly IAccountModel _acountModel;
+        public CharacterListPacket(IAccountModel account)
         {
             _acountModel = account;
 
@@ -20,7 +22,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         private void AddCharList(INetworkMessage message)
         {
             message.AddByte(0x64); //todo charlist
-            message.AddByte((byte)_acountModel.Players.Count);
+            message.AddByte((byte)_acountModel.Players.Count());
             foreach (var player in _acountModel.Players)
             {
                 message.AddString(player.CharacterName);

@@ -1,17 +1,21 @@
 using NeoServer.Data.Model;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using System.Collections.Generic;
 namespace NeoServer.Server.Model.Players
 {
-    public class PlayerModel
+  
+
+    public class PlayerModel : IPlayerModel
     {
         public int Id { get; }
         public string CharacterName { get; set; }
 
-        public AccountModel Account { get; set; }
+        public IAccountModel Account { get; set; }
         public ChaseMode ChaseMode { get; set; }
         public float Capacity { get; set; }
         public ushort Level { get; set; }
@@ -32,7 +36,7 @@ namespace NeoServer.Server.Model.Players
         public ushort StaminaMinutes { get; set; }
 
         public Dictionary<Slot, ushort> Inventory { get; set; }
-        public ItemModel[] Items { get; set; }
+        public IEnumerable<IItemModel> Items { get; set; } = new List<ItemModel>();
         public ushort Speed { get; set; }
 
         public Location Location { get; set; }
@@ -43,10 +47,10 @@ namespace NeoServer.Server.Model.Players
         }
     }
 
-    public class ItemModel
+    public class ItemModel:IItemModel
     {
         public ushort ServerId { get; set; }
         public byte Amount { get; set; }
-        public ItemModel[] Items { get; set; }
+        public IEnumerable<IItemModel> Items { get; set; } = new List<ItemModel>();
     }
 }

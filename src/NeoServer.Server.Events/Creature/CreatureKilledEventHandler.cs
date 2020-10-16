@@ -2,6 +2,8 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Items;
+using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Creature
@@ -23,41 +25,27 @@ namespace NeoServer.Server.Events.Creature
                 var tile = creature.Tile;
 
                 var thing = creature as IMoveableThing;
+
                 map.RemoveThing(ref thing, tile);
 
                 var corpse = ItemFactory.Create(creature.Corpse, creature.Location, null) as IMoveableThing;
-
                 map.AddItem(ref corpse, tile);
+
+
+                //send dead corpse to killed player
+                if (creature is IPlayer killedPlayer && game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
+                {
+                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, 1));
+                    connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)corpse, 1));
+                    connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
+                    connection.Send();
+                }
             }));
 
             if (creature is IMonster monster)
             {
                 game.CreatureManager.AddKilledMonsters(creature as IMonster);
             }
-
-            //var outgoingPackets = new Queue<IOutgoingPacket>();
-
-            //foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
-            //{
-
-            //    if (creature.CreatureId == spectatorId)
-            //    {
-            //        //outgoingPackets.Enqueue(new TextMessagePacket($"{victim.Name} loses {healthDamageString} due to your attack", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
-            //    }
-
-            //    outgoingPackets.Enqueue(new RemoveTileThingPacket(tile, 1));
-            //    //outgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, TextColor.Red, healthDamageString));
-            //    //outgoingPackets.Enqueue(new CreatureHealthPacket(victim));
-
-            //    IConnection connection = null;
-            //    if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
-            //    {
-            //        continue;
-            //    }
-
-            //    connection.Send(outgoingPackets);
-
-            //}
         }
     }
 }

@@ -1,9 +1,12 @@
-﻿using NeoServer.Server.Model.Players;
+﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Model.Players;
 using System.Collections.Generic;
 
 namespace NeoServer.Data.Model
 {
-    public class AccountModel
+  
+    public class AccountModel : IAccountModel
     {
         public AccountModel(string accountName, string password)
         {
@@ -20,7 +23,7 @@ namespace NeoServer.Data.Model
         public string Password { get; set; }
         public string Email { get; set; }
         public int PremiumTime { get; set; }
-        public ICollection<PlayerModel> Players { get; set; } = new List<PlayerModel>();
+        public IEnumerable<IPlayerModel> Players { get; set; } = new List<PlayerModel>();
 
         public bool IsValid() =>
             !string.IsNullOrWhiteSpace(AccountName) &&
