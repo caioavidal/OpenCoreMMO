@@ -42,6 +42,7 @@
         TextMessage = 0xB4,
         FloorChangeUp = 0xBE,
         FloorChangeDown = 0xBF,
-        OutfitWindow = 0xC8
+        OutfitWindow = 0xC8,
+        ReLoginWindow = 0x28
     }
 }
