@@ -8,6 +8,8 @@ using System.Collections.Concurrent;
 
 namespace NeoServer.Game.Contracts.World.Tiles
 {
+    public delegate void AddThingToTileDel(IThing thing, ITile tile);
+
     public interface IWalkableTile : ITile
     {
         ushort Ground { get; }
@@ -19,19 +21,19 @@ namespace NeoServer.Game.Contracts.World.Tiles
         bool ProtectionZone { get; }
         FloorChangeDirection FloorDirection { get; }
         byte MovementPenalty { get; }
-        byte NextStackPosition { get; }
         IItem TopItemOnStack { get; }
         bool HasCreature { get; }
         IMagicField MagicField { get; }
 
+        event AddThingToTileDel OnThingAddedToTile;
+
         Result<TileOperationResult> AddThing(ref IMoveableThing thing);
         byte[] GetRaw(IPlayer playerRequesting = null);
-        byte GetStackPositionOfItem(ushort id);
-        byte GetStackPositionOfThing(Items.IThing thing);
         uint GetThingByStackPosition(byte stackPosition);
         ICreature GetTopVisibleCreature(ICreature creature);
         bool HasBlockPathFinding { get; }
-        Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1);
+        //Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1);
         IThing RemoveThing(ref IMoveableThing thing, byte count = 1);
+        Result<TileOperationResult> AddThing(ref IThing thing);
     }
 }

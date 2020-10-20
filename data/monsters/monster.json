@@ -60,55 +60,18 @@
       
     },
       "attacks": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "25",
-          "attack": "20"
-        },
-        {
-          "name": "energy",
+       
+		 {
+          "name": "firefield",
           "interval": "1000",
-          "chance": "7",
+          "chance": "15",
           "range": "7",
-          "min": "-16",
-          "max": "-40",
-          "attributes": [{
-            "key": "shootEffect",
-            "value": "energy"
-          }]
-        },
-		  {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "7",
-          "range": "7",
-          "min": "-16",
-          "max": "-40",
+          "radius": "1",
+          "target": "1",
           "attributes": [{
             "key": "shootEffect",
             "value": "fire"
           }]
-        },
-		 {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "25",
-          "range": "7",
-          "radius": "7",
-          "target": "1",
-          "min": "-20",
-          "max": "-50",
-          "attributes": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
         }
       ],
 	     "defenses": {

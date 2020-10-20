@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Enums.Item;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Enums.Item;
 
 namespace NeoServer.Game.Contracts.Combat
 {
@@ -7,6 +8,7 @@ namespace NeoServer.Game.Contracts.Combat
         DamageType DamageType { get; }
 
         ushort CalculateDamage(ushort attackPower, ushort minAttackPower);
+        void CauseDamage(ICreature actor, ICreature enemy);
 
         public bool IsMagicalDamage => DamageType switch
         {

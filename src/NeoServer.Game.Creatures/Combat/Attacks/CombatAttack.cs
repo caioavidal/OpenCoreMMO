@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Helpers;
@@ -36,6 +37,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 increment = Math.Round(gaussian * diff);
             }
             return (ushort)(minAttackPower + increment);
+        }
+
+        public virtual void CauseDamage(ICreature actor, ICreature enemy)
+        {
+            enemy.ReceiveAttack(actor, this, CalculateDamage(actor.AttackPower, actor.MinimumAttackPower));
         }
     }
 

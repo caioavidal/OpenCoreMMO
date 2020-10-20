@@ -1,0 +1,131 @@
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Enums.Creatures;
+using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players.Contracts;
+
+namespace NeoServer.Server.Events
+{
+    public class CreatureMovedOnFloorEventHandler
+    {
+        private readonly Game game;
+
+        public CreatureMovedOnFloorEventHandler(Game game)
+        {
+            this.game = game;
+        }
+        public void Execute(ICreature creature, ICylinder cylinder)
+        {
+            cylinder.ThrowIfNull();
+            cylinder.TileSpectators.ThrowIfNull();
+            creature.ThrowIfNull();
+
+            var toTile = cylinder.ToTile;
+            var fromTile = cylinder.FromTile;
+            toTile.ThrowIfNull();
+            fromTile.ThrowIfNull();
+
+            var toDirection = fromTile.Location.DirectionTo(toTile.Location, true);
+
+            MoveCreature(toDirection, creature, cylinder);
+        }
+
+        private void MoveCreature(Direction toDirection, ICreature  creature, ICylinder cylinder)
+        {
+            var fromLocation = cylinder.FromTile.Location;
+            var toLocation = cylinder.ToTile.Location;
+            var fromTile = cylinder.FromTile;
+            var toTile = cylinder.ToTile;
+
+            if(creature is ICreature)
+            {
+                creature.SetDirection(toDirection);
+            }
+
+            foreach (var cylinderSpectator in cylinder.TileSpectators.Values)
+            {
+                var spectator = cylinderSpectator.Spectator;
+
+                if (spectator is IMonster monster) //&& !cylinder.SpectatorExitedCylinder(spectator))
+                {
+                    if (creature is IPlayer enemy)
+                    {
+                        monster.AddToTargetList(enemy);
+                    }
+
+                    continue;
+                }
+
+                //var player = (IPlayer)spectator;
+
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
+                {
+                    continue;
+                }
+                if(!(spectator is IPlayer player))
+                {
+                    continue;
+                }
+
+            
+                if (spectator.CreatureId == creature.CreatureId) //myself
+                {
+                    if (fromLocation.Z != toLocation.Z)
+                    {
+                        connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
+                        connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
+                    }
+                    else
+                    {
+                        connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, cylinderSpectator.FromStackPosition));
+                        connection.OutgoingPackets.Enqueue(new MapPartialDescriptionPacket(creature, fromLocation, toLocation, toDirection, game.Map));
+                    }
+                    connection.Send();
+                    continue;
+                }
+
+                if (spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
+                {
+                    if (fromLocation.Z != toLocation.Z)
+                    {
+                        connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
+                        connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, cylinderSpectator.ToStackPosition));
+
+                        connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
+
+                    }
+                    else
+                    {
+                        connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation, cylinderSpectator.FromStackPosition));
+                    }
+                    connection.Send();
+
+                    continue;
+                }
+
+                if (spectator.CanSee(fromLocation)) //spectator can see old position but not the new
+                {
+                    //happens when player leaves spectator's view area
+                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
+                    connection.Send();
+
+                    continue;
+                }
+
+                if (spectator.CanSee(toLocation)) //spectator can't see old position but the new
+                {
+                    //happens when player enters spectator's view area
+                    connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, cylinderSpectator.ToStackPosition));
+                    connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
+                    connection.Send();
+                    continue;
+                }
+
+            }
+        }
+    }
+}

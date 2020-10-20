@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts
 {
-    public delegate void PlaceCreatureOnMap(ICreature creature);
-    public delegate void RemoveThingFromTile(Items.IThing thing, ITile tile, byte fromStackPosition);
-    public delegate void MoveThingOnFloor(IMoveableThing thing, ITile fromTile, ITile toTile, byte fromStackPosition);
-    public delegate void AddThingToTile(Items.IThing thing, ITile tile, byte toStackPosition);
-    public delegate void UpdateThingOnTile(Items.IThing thing, ITile tile, byte toStackPosition);
+    public delegate void PlaceCreatureOnMap(ICreature creature, ICylinder cylinder);
+    public delegate void RemoveThingFromTile(Items.IThing thing, ICylinder tile);
+    public delegate void MoveCreatureOnFloor(ICreature creature, ICylinder cylinder);
+    public delegate void AddThingToTile(Items.IThing thing, ICylinder cylinder);
+    public delegate void UpdateThingOnTile(Items.IThing thing, ICylinder cylinder);
 
     public delegate void FailedMoveThing(Items.IThing thing, InvalidOperation error);
     public interface IMap
@@ -23,7 +23,7 @@ namespace NeoServer.Game.Contracts
 
         event PlaceCreatureOnMap OnCreatureAddedOnMap;
         event RemoveThingFromTile OnThingRemovedFromTile;
-        event MoveThingOnFloor OnThingMoved;
+        event MoveCreatureOnFloor OnThingMoved;
         event FailedMoveThing OnThingMovedFailed;
         event AddThingToTile OnThingAddedToTile;
         event UpdateThingOnTile OnThingUpdatedOnTile;
@@ -36,10 +36,10 @@ namespace NeoServer.Game.Contracts
         bool TryMoveThing(ref IMoveableThing thing, Location toLocation);
         void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1);
         IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip);
-        HashSet<uint> GetCreaturesAtPositionZone(Location location, Location toLocation);
         IEnumerable<uint> GetPlayersAtPositionZone(Location location);
         void AddItem(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1);
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
+        Dictionary<uint, ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
     }
 }

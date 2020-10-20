@@ -42,14 +42,39 @@ namespace NeoServer.Loaders.World
                     attack.TryGetValue("range", out byte range);
                     attack.TryGetValue("min", out decimal min);
                     attack.TryGetValue("max", out decimal max);
+                    attack.TryGetValue("radius", out byte radius);
+
 
                     attack.TryGetValue<JArray>("attributes", out var attributes);
 
                     var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
 
-                    if (attack.ContainsKey("radius"))
+                   
+                    if (attackName == "manadrain")
                     {
-                        attack.TryGetValue("radius", out byte radius);
+
+                        monster.Attacks.Add(new ManaDrainCombatAttack(new CombatAttackOption
+                        {
+                            Chance = chance,
+                            Range = range,
+                            Min = (ushort)Math.Abs(min),
+                            Max = (ushort)Math.Abs(max)
+                        }));
+                    }
+                    else if (attackName == "firefield")
+                    {
+                        monster.Attacks.Add(new FieldCombatAttack(new CombatAttackOption
+                        {
+                            Chance = chance,
+                            Radius = radius,
+                            Range = range,
+                            Min = (ushort)Math.Abs(min),
+                            Max = (ushort)Math.Abs(max),
+                            ShootType = ParseShootType(shootEffect)
+                        }));
+                    }
+                    else if (attack.ContainsKey("radius"))
+                    {
 
                         monster.Attacks.Add(new DistanceAreaCombatAttack(ParseDamageType(attackName), new CombatAttackOption
                         {
@@ -59,17 +84,6 @@ namespace NeoServer.Loaders.World
                             Max = (ushort)Math.Abs(max),
                             Radius = radius,
                             ShootType = ParseShootType(shootEffect)
-                        }));
-                    }
-                    else if (attackName == "manadrain")
-                    {
-
-                        monster.Attacks.Add(new ManaDrainCombatAttack(new CombatAttackOption
-                        {
-                            Chance = chance,
-                            Range = range,
-                            Min = (ushort)Math.Abs(min),
-                            Max = (ushort)Math.Abs(max)
                         }));
                     }
                     else
@@ -113,7 +127,7 @@ namespace NeoServer.Loaders.World
                 "physical" => DamageType.Physical,
                 "energy" => DamageType.Energy,
                 "fire" => DamageType.Fire,
-                "manadrain"=>DamageType.ManaDrain,
+                "manadrain" => DamageType.ManaDrain,
                 _ => DamageType.Melee
             };
         }

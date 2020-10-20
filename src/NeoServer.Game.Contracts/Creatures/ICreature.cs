@@ -23,8 +23,6 @@ namespace NeoServer.Game.Contracts.Creatures
         // event OnCreatureStateChange OnInventoryChanged;
         uint CreatureId { get; }
 
-        byte GetStackPosition() => Tile.GetStackPositionOfThing(this);
-
         ushort Corpse { get; }
 
         /// <summary>
@@ -111,7 +109,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void UpdateLastStepInfo(byte lastStepId, bool wasDiagonal = true);
         byte[] GetRaw(IPlayer playerRequesting);
         void SetAsRemoved();
-        void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort attackPower);
+        void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage);
         void ResetHealthPoints();
         void StartFollowing(uint id, params Direction[] directions);
         void SetDirection(Direction direction);

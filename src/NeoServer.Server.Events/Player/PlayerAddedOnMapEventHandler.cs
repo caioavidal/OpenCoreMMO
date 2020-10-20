@@ -1,11 +1,15 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace NeoServer.Server.Events
 {
@@ -19,21 +23,21 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(ICreature creature)
-
+        public void Execute(ICreature creature, ICylinder cylinder)
         {
+            cylinder.ThrowIfNull();
+            cylinder.TileSpectators.ThrowIfNull();
+            creature.ThrowIfNull();
 
+            var tile = cylinder.ToTile;
+            tile.ThrowIfNull();
 
-            foreach (var spectatorId in map.GetCreaturesAtPositionZone(creature.Location, creature.Location))
+            foreach (var cylinderSpectator in cylinder.TileSpectators.Values)
             {
-
-                if (!game.CreatureManager.TryGetCreature(spectatorId, out var spectator))
-                {
-                    return;
-                }
+                var spectator = cylinderSpectator.Spectator;
 
                 IConnection connection;
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out connection))
                 {
                     continue;
                 }
@@ -44,19 +48,21 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                var isSpectator = !(creature.CreatureId == spectatorId);
-                if (!isSpectator)
+                var isMyself = creature.CreatureId == spectator.CreatureId;
+
+                if (isMyself)
                 {
                     SendPacketsToPlayer(creature as IPlayer, connection);
                 }
                 else
                 {
-                    if (!game.CreatureManager.TryGetPlayer(spectatorId, out IPlayer spectatorPlayer))
+                    if (!(spectator is IPlayer spectatorPlayer))
                     {
                         continue;
                     }
 
-                    SendPacketsToSpectator(spectatorPlayer, creature, connection);
+
+                    SendPacketsToSpectator(spectatorPlayer, creature, connection, cylinderSpectator.ToStackPosition);
                 }           
                 connection.Send();
 
@@ -64,11 +70,11 @@ namespace NeoServer.Server.Events
 
         }
 
-        private void SendPacketsToSpectator(IPlayer playerToSend, ICreature creatureAdded, IConnection connection)
+        private void SendPacketsToSpectator(IPlayer playerToSend, ICreature creatureAdded, IConnection connection, byte stackPosition)
         {
             
             //spectator.add
-            connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creatureAdded));
+            connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creatureAdded, stackPosition));
             connection.OutgoingPackets.Enqueue(new AddCreaturePacket(playerToSend, creatureAdded));
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(creatureAdded.Location, EffectT.BubbleBlue));
 

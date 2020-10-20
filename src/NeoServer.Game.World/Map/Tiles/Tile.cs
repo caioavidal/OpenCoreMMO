@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
@@ -9,12 +10,15 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
     public class Tile : IWalkableTile
     {
+        public event AddThingToTileDel OnThingAddedToTile;
+
         public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
             Location = new Location(coordinate.X, coordinate.Y, coordinate.Z);
@@ -42,20 +46,6 @@ namespace NeoServer.Game.World.Map.Tiles
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
         public bool HasCreature => Creatures.Any();
-
-        public byte NextStackPosition
-        {
-            get
-            {
-                var n = 0;
-
-                foreach (var item in TopItems)
-                {
-                    n++;
-                }
-                return (byte)++n;
-            }
-        }
 
         public IMagicField MagicField
         {
@@ -106,38 +96,142 @@ namespace NeoServer.Game.World.Map.Tiles
 
             return null;
         }
-        public byte GetStackPositionOfItem(ushort id)
+
+        public bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
         {
+            stackPosition = default;
+
+            if (thing is IItem item)
+            {
+                return TryGetStackPositionOfItem(player, item, out stackPosition);
+            }
+            else if (thing is ICreature creature)
+            {
+                return TryGetStackPositionOfCreature(player, creature, out stackPosition);
+            }
+
+            return false;
+        }
+        public bool TryGetStackPositionOfItem(IPlayer player, IItem item, out byte stackPosition)
+        {
+            stackPosition = default;
+
+            var id = item.ClientId;
             if (id == default)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
+            byte n = 0;
+
             if (Ground == id)
             {
-                return 0;
+                stackPosition = 0;
+                return true;
+            }
+            if (Ground != 0)
+            {
+                ++n;
             }
 
-            var n = 0;
+            if (item.IsAlwaysOnTop)
+            {
+                foreach (var clientId in TopItems)
+                {
+                    if (id == clientId)
+                    {
+                        stackPosition = n;
+                        return true;
+                    }
+                    else if (++n == 10)
+                    {
+                        return false;
+                    }
+                }
+
+            }
+            else
+            {
+                n += (byte)TopItems.Length;
+                if (n >= 10)
+                {
+                    return false;
+                }
+            }
+
+            foreach (var creature in Creatures)
+            {
+                if (player.CanSee(creature.Value))
+                {
+                    if (++n >= 10)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (!item.IsAlwaysOnTop)
+            {
+                foreach (var downItem in DownItems)
+                {
+                    if (id == downItem.ClientId)
+                    {
+                        stackPosition = n;
+                        return true;
+                    }
+                    else if (++n >= 10)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return false;
+            //throw new Exception("Thing not found in tile.");
+        }
+
+        public bool TryGetStackPositionOfCreature(IPlayer player, ICreature creature, out byte stackPosition)
+        {
+            stackPosition = default;
+
+            var id = creature.CreatureId;
+            if (id == default)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            if (Ground != 0)
+            {
+                stackPosition++;
+            }
+
 
             foreach (var clientId in TopItems)
             {
-                ++n;
-                if (id == clientId)
+
+                stackPosition += (byte)TopItems.Length;
+                if (stackPosition >= 10)
                 {
-                    return (byte)n;
+                    return false;
                 }
             }
 
-            foreach (var item in DownItems)
+            foreach (var c in Creatures.Values?.Reverse())
             {
-                ++n;
-                if (id == item.ClientId)
+                if (c.CreatureId == creature.CreatureId)
                 {
-                    return (byte)n;
+                    return true;
+                }
+                else if (player.CanSee(creature))
+                {
+                    if (++stackPosition >= 10)
+                    {
+                        return false;
+                    }
                 }
             }
-            throw new Exception("Thing not found in tile.");
+
+            return false;
         }
 
         public uint GetThingByStackPosition(byte stackPosition)
@@ -153,7 +247,7 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 ++n;
 
-                if(n == stackPosition)
+                if (n == stackPosition)
                 {
                     return clientId;
                 }
@@ -181,51 +275,7 @@ namespace NeoServer.Game.World.Map.Tiles
             // return byte.MaxValue; // TODO: throw?
             throw new Exception("stackposition invalid");
         }
-        public byte GetStackPositionOfThing(IThing thing)
-        {
-            if (thing == null)
-            {
-                throw new ArgumentNullException(nameof(thing));
-            }
 
-            if (Ground != default && thing is IGround)
-            {
-                return 0;
-            }
-
-            var n = 0;
-
-            foreach (var clientId in TopItems)
-            {
-                ++n;
-                if (thing is IItem item && item.ClientId == clientId)
-                {
-                    return (byte)n;
-                }
-            }
-
-            foreach (var creature in Creatures)
-            {
-                ++n;
-
-                if (thing is ICreature thisCreature && thisCreature.CreatureId == creature.Key)
-                {
-                    return (byte)n;
-                }
-            }
-
-            foreach (var item in DownItems)
-            {
-                ++n;
-                if (thing == item)
-                {
-                    return (byte)n;
-                }
-            }
-
-            // return byte.MaxValue; // TODO: throw?
-            throw new Exception("Thing not found in tile.");
-        }
 
         public bool HasBlockPathFinding
         {
@@ -241,8 +291,8 @@ namespace NeoServer.Game.World.Map.Tiles
                 return false;
             }
         }
-       
-        private TileOperationResult AddThingToTile(Contracts.Items.IThing thing)
+
+        private TileOperationResult AddThingToTile(IThing thing)
         {
             var operations = new TileOperationResult();
 
@@ -288,8 +338,28 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
 
             }
+            if (operations.Operations != null)
+            {
+                foreach (var operation in operations.Operations)
+                {
+                    switch (operation)
+                    {
+                        case Operation.Added: OnThingAddedToTile?.Invoke(thing, this); break;
+                        //case Operation.Updated: OnThingUpdatedOnTile?.Invoke(tile.TopItemOnStack, tile, stackPosition); break;
+                        default: break;
+                    }
+                }
+            }
+
             SetCacheAsExpired();
             return operations;
+        }
+
+        public Result<TileOperationResult> AddThing(ref IThing thing)
+        {
+            var operations = AddThingToTile(thing);
+
+            return new Result<TileOperationResult>(operations);
         }
         public Result<TileOperationResult> AddThing(ref IMoveableThing thing)
         {
@@ -338,18 +408,6 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 AddThingToTile(item);
             }
-        }
-
-        public Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1)
-        {
-            if (thing is ICreature && dest.HasCreature)
-            {
-                return new Result<TileOperationResult>(InvalidOperation.NotPossible);
-            }
-
-            RemoveThing(ref thing);
-
-            return dest.AddThing(ref thing);
         }
 
         public IThing RemoveThing(ref IMoveableThing thing, byte amount = 1)

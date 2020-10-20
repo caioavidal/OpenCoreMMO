@@ -507,7 +507,9 @@ namespace NeoServer.Game.Creatures.Model
 
             SetAttackTarget(enemy.CreatureId);
 
-            enemy.ReceiveAttack(this, combatAttack, combatAttack.CalculateDamage(AttackPower, MinimumAttackPower));
+            combatAttack.CauseDamage(this, enemy);
+
+            //enemy.ReceiveAttack(this, combatAttack, combatAttack.CalculateDamage(AttackPower, MinimumAttackPower));
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
             OnAttack?.Invoke(this, enemy, combatAttack);

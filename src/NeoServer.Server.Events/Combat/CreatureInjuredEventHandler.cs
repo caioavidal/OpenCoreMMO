@@ -48,21 +48,7 @@ namespace NeoServer.Server.Events
                 }
 
                 var damageTextColor = DamageTextColorParser.Parse(attack.DamageType);
-                var effect = DamageEffectParser.Parse(attack.DamageType);
-
-                if (attack is IDistanceAreaCombatAttack areaAttack)
-                {
-                    var locations = ExplosionEffect.Create(areaAttack.Radius);
-
-                    foreach (var location in locations)
-                    {
-                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location + location, effect));
-                    }
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, effect));
-                }
+             
 
                 connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor, damageString));
                 connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(victim));

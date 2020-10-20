@@ -32,9 +32,10 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
       
 
 
-        public new ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
+        public override ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
         {
             attackPower = Option.Max;
+            
             minAttackPower = Option.Min;
 
             var diff = attackPower - minAttackPower;

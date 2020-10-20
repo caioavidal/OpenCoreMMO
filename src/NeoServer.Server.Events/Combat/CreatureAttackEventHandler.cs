@@ -1,6 +1,8 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Effects.Explosion;
+using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
@@ -18,10 +20,16 @@ namespace NeoServer.Server.Events.Combat
         {
             this.game = game;
         }
-        public void Execute(ICreature creature, ICreature enemy, ICombatAttack attack)
+        public void Execute(ICreature creature, ICreature victim, ICombatAttack attack)
         {
             foreach (var spectatorId in game.Map.GetPlayersAtPositionZone(creature.Location))
             {
+
+                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                {
+                    continue;
+                }
+
                 byte effect = 0;
 
                 if (attack is IDistanceCombatAttack distanceAttack)
@@ -29,12 +37,24 @@ namespace NeoServer.Server.Events.Combat
                     effect = (byte)distanceAttack.ShootType;
                 }
 
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                var damageEffect = DamageEffectParser.Parse(attack.DamageType);
+
+                if (attack is IDistanceAreaCombatAttack areaAttack)
                 {
-                    continue;
+                    var locations = ExplosionEffect.Create(areaAttack.Radius);
+
+                    foreach (var location in locations)
+                    {
+                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location + location, damageEffect));
+                    }
+                }
+                else
+                {
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
                 }
 
-                connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, enemy.Location, effect));
+
+                connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
                 connection.Send();
             }
         }
