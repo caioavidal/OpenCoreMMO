@@ -62,7 +62,7 @@ docker run --rm -d -p 8080:8080 -p 38888:38888 -v c:/RavenDb/Data:/opt/RavenDB/S
 
 * C#
 * .Net Core 3.1
-* RavenDB - NoSQL Database
+* RavenDB - NoSQL Database (Moving to MongoDB)
 * XUnit Testing
 
 ## Author
