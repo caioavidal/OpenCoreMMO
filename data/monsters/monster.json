@@ -69,10 +69,30 @@
           "spread": "0",
           "min": "-5",
           "max": "-10",
-          "attribute": {
+          "attributes": [{
             "key": "areaEffect",
             "value": "energy"
-          }
+          }]
+        },
+		{
+          "name": "fire",
+          "interval": "2000",
+          "chance": "14",
+          "range": "7",
+          "radius": "7",
+          "target": "1",
+          "min": "-5",
+          "max": "-10",
+          "attributes": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
         }
         
       ],

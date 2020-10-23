@@ -539,7 +539,7 @@ namespace NeoServer.Game.Creatures.Model
             
             SetAttackTarget(enemy.CreatureId);
 
-            combatAttack.BuildAttack(this);
+            combatAttack.BuildAttack(this, enemy);
             OnAttack?.Invoke(this, enemy, combatAttack);
 
             if (combatAttack.HasTarget)

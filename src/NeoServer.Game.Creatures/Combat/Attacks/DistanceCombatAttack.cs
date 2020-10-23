@@ -8,14 +8,7 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Combat.Attacks
 {
-    public class DistanceAreaCombatAttack : DistanceCombatAttack, IDistanceAreaCombatAttack
-    {
-        public DistanceAreaCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option)
-        {
-        }
-
-        public byte Radius => Option.Radius;
-    }
+   
 
     public class DistanceCombatAttack : CombatAttack, IDistanceCombatAttack
     {

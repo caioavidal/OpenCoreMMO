@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public CombatAttackOption Option { get; }
 
-        public virtual void BuildAttack(ICreature actor)
+        public virtual void BuildAttack(ICreature actor, ICreature enemy)
         {
 
         }

@@ -41,23 +41,12 @@ namespace NeoServer.Server.Events.Combat
 
                 var damageEffect = DamageEffectParser.Parse(attack.DamageType);
 
-                if (attack is IDistanceAreaCombatAttack areaAttack)
+                if (attack is IAreaAttack areaAttack)
                 {
-                    var locations = ExplosionEffect.Create(areaAttack.Radius);
-
-                    foreach (var location in locations)
-                    {
-                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location + location, damageEffect));
-                    }
-
-                }
-                else if(attack is IDistanceSpreadCombatAttack spreadAttack)
-                {
-                    foreach (var location in spreadAttack.AffectedArea)
+                    foreach (var location in areaAttack.AffectedArea)
                     {
                         connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, damageEffect));
                     }
-
                 }
                 else
                 {

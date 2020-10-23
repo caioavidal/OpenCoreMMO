@@ -582,7 +582,7 @@ namespace NeoServer.Game.World.Map
 
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
 
-        public void PropagateAttack(ICreature creature, ICreature victim, ICombatAttack combatAttack)
+        public void PropagateAttack(ICreature actor, ICreature victim, ICombatAttack combatAttack)
         {
             if(!(combatAttack is IAreaAttack area))
             {
@@ -594,9 +594,18 @@ namespace NeoServer.Game.World.Map
                 var tile = this[location];
                 if(tile is IWalkableTile walkableTile)
                 {
-                    foreach (var c in walkableTile.Creatures.Values)
+                    foreach (var target in walkableTile.Creatures.Values)
                     {
-                        c.ReceiveAttack(creature, combatAttack);
+                        if(combatAttack.HasTarget && victim.CreatureId == target.CreatureId)
+                        {
+                            continue;
+                        }
+                        if(actor.CreatureId == target.CreatureId)
+                        {
+                            continue;
+                        }
+
+                        target.ReceiveAttack(actor, combatAttack);
                     }
                 }
                 

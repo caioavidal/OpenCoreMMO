@@ -17,19 +17,19 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
         {
         }
 
-        public override void BuildAttack(ICreature actor)
+        public override void BuildAttack(ICreature actor, ICreature enemy)
         {
             var i = 0;
 
             var affectedLocations = SpreadEffect.Create(actor.Direction, Length);
             AffectedArea = new Location[affectedLocations.Count()];
 
-            foreach (var location in SpreadEffect.Create(actor.Direction, Length))
+            foreach (var location in affectedLocations)
             {
                 AffectedArea[i++] = actor.Location + location;
             }
 
-            base.BuildAttack(actor);
+            base.BuildAttack(actor, enemy);
         }
 
         public override ushort CalculateDamage(ushort attackPower, ushort minAttackPower) => base.CalculateDamage(Option.MaxDamage, Option.MinDamage);
@@ -41,7 +41,6 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
         public byte Spread => Option.Spread;
         public byte Length => Option.Length;
-
         public Location[] AffectedArea { get; private set; }
     }
 }

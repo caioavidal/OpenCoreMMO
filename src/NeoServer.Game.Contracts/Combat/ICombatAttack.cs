@@ -10,7 +10,7 @@ namespace NeoServer.Game.Contracts.Combat
 
         ushort CalculateDamage(ushort attackPower, ushort minAttackPower);
         void CauseDamage(ICreature actor, ICreature enemy);
-        void BuildAttack(ICreature actor);
+        void BuildAttack(ICreature actor, ICreature enemy);
 
         public bool IsMagicalDamage => Option.DamageType switch
         {
