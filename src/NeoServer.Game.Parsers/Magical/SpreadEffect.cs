@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,9 +14,10 @@ namespace NeoServer.Game.Effects.Magical
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static IEnumerable<Location> Create(Direction direction, int length)
+        public static Location[] Create(Direction direction, int length)
         {
-            var points = new List<Location>();
+            var pool = ArrayPool<Location>.Shared;
+            var points = pool.Rent(length);
 
             var y = 0;
             var x = 0;
@@ -25,16 +27,16 @@ namespace NeoServer.Game.Effects.Magical
                 switch (direction)
                 {
                     case Direction.North:
-                        points.Add(new Location(x, --y, 0));
+                        points[i] = new Location(x, --y, 0);
                         break;
                     case Direction.East:
-                        points.Add(new Location(++x, y, 0));
+                        points[i] = new Location(++x, y, 0);
                         break;
                     case Direction.South:
-                        points.Add(new Location(x, ++y, 0));
+                        points[i] = new Location(x, ++y, 0);
                         break;
                     case Direction.West:
-                        points.Add(new Location(--x, y, 0));
+                        points[i] = new Location(--x, y, 0);
                         break;
                     case Direction.None:
                         break;
@@ -43,7 +45,9 @@ namespace NeoServer.Game.Effects.Magical
                 }
             }
 
-            return points;
+            pool.Return(points);
+
+            return points[0..length];
         }
     }
 }

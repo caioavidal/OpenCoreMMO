@@ -22,7 +22,7 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
             var i = 0;
 
             var affectedLocations = SpreadEffect.Create(actor.Direction, Length);
-            AffectedArea = new Location[affectedLocations.Count()];
+            AffectedArea = new Location[affectedLocations.Length];
 
             foreach (var location in affectedLocations)
             {
