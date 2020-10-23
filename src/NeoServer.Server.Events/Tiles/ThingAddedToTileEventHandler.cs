@@ -3,24 +3,36 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {
     public class ThingAddedToTileEventHandler
     {
-        private readonly IMap map;
         private readonly Game game;
 
-        public ThingAddedToTileEventHandler(IMap map, Game game)
+        public ThingAddedToTileEventHandler(Game game)
         {
-            this.map = map;
             this.game = game;
         }
-        public void Execute(IThing thing, ITile tile, byte toStackPosition)
+        public void Execute(IThing thing, ICylinder cylinder)
         {
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(tile.Location))
+            cylinder.ThrowIfNull();
+            cylinder.TileSpectators.ThrowIfNull();
+            thing.ThrowIfNull();
+
+            var tile = cylinder.ToTile;
+            tile.ThrowIfNull();
+
+            var spectators = cylinder.TileSpectators.Values;
+
+            foreach (var spectator in spectators)
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out IConnection connection))
+                {
+                    continue;
+                }
+                if(!(spectator.Spectator is IPlayer))
                 {
                     continue;
                 }
@@ -34,7 +46,7 @@ namespace NeoServer.Server.Events
                 //    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, fromStackPosition));
                 //}
 
-                connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)thing, toStackPosition));
+                connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)thing, spectator.ToStackPosition));
 
                 connection.Send();
             }

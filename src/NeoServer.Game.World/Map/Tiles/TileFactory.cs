@@ -8,11 +8,6 @@ namespace NeoServer.Game.World.Map.Tiles
 {
     public class TileFactory
     {
-        //public static ITile Build(List<IItem> items, Coordinate coordinate)
-        //{
-
-        //}
-
         public static ITile CreateTile(Coordinate coordinate, TileFlag flag, IItem[] items)
         {
 
@@ -55,7 +50,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 return new ImmutableTile(coordinate, items);
             }
 
-            return new Tile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
+            return new Tile( coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
         }
     }
 }

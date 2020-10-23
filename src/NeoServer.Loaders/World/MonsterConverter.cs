@@ -36,44 +36,85 @@ namespace NeoServer.Loaders.World
                 attack.TryGetValue("attack", out byte attackValue);
                 attack.TryGetValue("skill", out byte skill);
 
+                attack.TryGetValue("min", out decimal min);
+                attack.TryGetValue("max", out decimal max);
+                attack.TryGetValue("chance", out byte chance);
+                attack.TryGetValue<JArray>("attributes", out var attributes);
+
+
                 if (attack.ContainsKey("range"))
                 {
-                    attack.TryGetValue("chance", out byte chance);
                     attack.TryGetValue("range", out byte range);
-                    attack.TryGetValue("min", out decimal min);
-                    attack.TryGetValue("max", out decimal max);
+                    attack.TryGetValue("radius", out byte radius);
 
-                    attack.TryGetValue<JArray>("attributes", out var attributes);
+                    var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
 
-                    var shootEffect = attributes.FirstOrDefault(a=>a.Value<string>("key") == "shootEffect").Value<string>("value");
-
-                    if (attack.ContainsKey("radius"))
+                   
+                    if (attackName == "manadrain")
                     {
-                        attack.TryGetValue("radius", out byte radius);
+
+                        monster.Attacks.Add(new ManaDrainCombatAttack(new CombatAttackOption
+                        {
+                            Chance = chance,
+                            Range = range,
+                            MinDamage = (ushort)Math.Abs(min),
+                            MaxDamage = (ushort)Math.Abs(max)
+                        }));
+                    }
+                    else if (attackName == "firefield")
+                    {
+                        monster.Attacks.Add(new FieldCombatAttack(new CombatAttackOption
+                        {
+                            Chance = chance,
+                            Radius = radius,
+                            Range = range,
+                            MinDamage = (ushort)Math.Abs(min),
+                            MaxDamage = (ushort)Math.Abs(max),
+                            ShootType = ParseShootType(shootEffect)
+                        }));
+                    }
+                    else if (attack.ContainsKey("radius"))
+                    {
 
                         monster.Attacks.Add(new DistanceAreaCombatAttack(ParseDamageType(attackName), new CombatAttackOption
                         {
                             Chance = chance,
                             Range = range,
-                            Min = (ushort)Math.Abs(min),
-                            Max = (ushort)Math.Abs(max),
+                            MinDamage = (ushort)Math.Abs(min),
+                            MaxDamage = (ushort)Math.Abs(max),
                             Radius = radius,
                             ShootType = ParseShootType(shootEffect)
                         }));
                     }
                     else
                     {
-
                         monster.Attacks.Add(new DistanceCombatAttack(ParseDamageType(attackName), new CombatAttackOption
                         {
                             Chance = chance,
                             Range = range,
-                            Min = (ushort)Math.Abs(min),
-                            Max = (ushort)Math.Abs(max),
+                            MinDamage = (ushort)Math.Abs(min),
+                            MaxDamage = (ushort)Math.Abs(max),
                             ShootType = ParseShootType(shootEffect)
                         }));
                     }
 
+
+
+                }
+                else if (attack.ContainsKey("spread"))
+                {
+                    attack.TryGetValue("length", out byte length);
+                    attack.TryGetValue("spread", out byte spread);
+
+
+                    monster.Attacks.Add(new SpreadCombatAttack(ParseDamageType(attackName), new CombatAttackOption
+                    {
+                        Chance = chance,
+                        MinDamage = (ushort)Math.Abs(min),
+                        MaxDamage = (ushort)Math.Abs(max),
+                        Length = length,
+                        Spread = spread
+                    }));
 
                 }
                 else if (ParseDamageType(attackName?.ToString()) == DamageType.Melee)
@@ -102,6 +143,7 @@ namespace NeoServer.Loaders.World
                 "physical" => DamageType.Physical,
                 "energy" => DamageType.Energy,
                 "fire" => DamageType.Fire,
+                "manadrain" => DamageType.ManaDrain,
                 _ => DamageType.Melee
             };
         }

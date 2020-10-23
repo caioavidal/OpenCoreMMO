@@ -21,16 +21,28 @@ namespace NeoServer.Server.Events
         }
         public void Execute(ICreature creature, Direction direction)
         {
+            creature.ThrowIfNull();
+            direction.ThrowIfNull();
+
             foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
             {
-                var isSpectator = !(creature.CreatureId == spectatorId);
 
                 if (!game.CreatureManager.GetPlayerConnection(spectatorId, out var connection))
                 {
                     continue;
                 }
 
-                connection.OutgoingPackets.Enqueue(new TurnToDirectionPacket(creature, direction));
+                if(!game.CreatureManager.TryGetPlayer(spectatorId, out var player))
+                {
+                    continue;
+                }
+
+                if(!creature.Tile.TryGetStackPositionOfThing(player,creature, out var stackPosition))
+                {
+                    continue;
+                }
+
+                connection.OutgoingPackets.Enqueue(new TurnToDirectionPacket(creature, direction, stackPosition));
 
                 connection.Send();
 

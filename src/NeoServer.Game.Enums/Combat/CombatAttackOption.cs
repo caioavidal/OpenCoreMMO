@@ -16,7 +16,9 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
         public byte Target { get; set; }
         public ShootType ShootType { get; set; }
         public DamageType DamageType { get; set; }
-        public ushort Min { get; set; }
-        public ushort Max { get; set; }
+        public ushort MinDamage { get; set; }
+        public ushort MaxDamage { get; set; }
+        public byte Spread { get; set; }
+        public byte Length { get; set; }
     }
 }

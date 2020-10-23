@@ -1,3 +1,4 @@
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
@@ -38,7 +39,7 @@ namespace NeoServer.Server.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
 
-            if(Skills.TryGetValue(SkillType.Level, out ISkill skill))
+            if (Skills.TryGetValue(SkillType.Level, out ISkill skill))
             {
                 Experience = (uint)skill.Count;
             }
@@ -56,6 +57,8 @@ namespace NeoServer.Server.Model.Players
         }
 
         public event CancelWalk OnCancelledWalk;
+        public event ReduceMana OnManaReduced;
+
 
         private uint IdleTime;
 
@@ -352,6 +355,27 @@ namespace NeoServer.Server.Model.Players
                 --attack;
             }
             return attack;
+        }
+
+        public override void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage)
+        {
+            if (attack.DamageType == DamageType.ManaDrain)
+            {
+                ReduceMana(damage);
+            }
+
+            base.ReceiveAttack(enemy, attack, damage);
+        }
+
+        private void ReduceMana(ushort amount)
+        {
+            if (amount == 0 && Mana == 0)
+            {
+                return;
+            }
+            Mana = (ushort)(amount > Mana ? 0 : Mana - amount);
+
+            OnManaReduced?.Invoke(this);
         }
     }
 }

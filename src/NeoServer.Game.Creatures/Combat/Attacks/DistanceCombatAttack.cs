@@ -8,34 +8,21 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Combat.Attacks
 {
-    public class DistanceAreaCombatAttack : DistanceCombatAttack, IDistanceAreaCombatAttack
-    {
-        public DistanceAreaCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option)
-        {
-        }
-
-        public byte Radius => Option.Radius;
-    }
+   
 
     public class DistanceCombatAttack : CombatAttack, IDistanceCombatAttack
     {
-        public DistanceCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType)
+        public DistanceCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option)
         {
-            Option = option;
         }
-        protected CombatAttackOption Option { get; }
         public byte Chance => Option.Chance;
         public byte Range => Option.Range;
-        public virtual byte Target => Option.Target;
-        public ShootType ShootType => Option.ShootType;
 
-      
-
-
-        public new ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
+        public override ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
         {
-            attackPower = Option.Max;
-            minAttackPower = Option.Min;
+            attackPower = Option.MaxDamage;
+            
+            minAttackPower = Option.MinDamage;
 
             var diff = attackPower - minAttackPower;
             var gaussian = GaussianRandom.Random.Next(0.5f, 0.25f);

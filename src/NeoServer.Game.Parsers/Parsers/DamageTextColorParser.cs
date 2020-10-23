@@ -13,6 +13,8 @@ namespace NeoServer.Game.Parsers.Effects
             DamageType.Fire => TextColor.Orange,
             DamageType.Energy => TextColor.Purple,
             DamageType.Melee => TextColor.Red,
+            DamageType.ManaDrain => TextColor.Blue,
+            DamageType.FireField => TextColor.Orange,
             _ => TextColor.None
         };
     }

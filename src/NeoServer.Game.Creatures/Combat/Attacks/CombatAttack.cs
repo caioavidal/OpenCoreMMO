@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Helpers;
@@ -10,13 +11,19 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
     public class CombatAttack : ICombatAttack
     {
-        public CombatAttack(DamageType damageType)
+        public CombatAttack(DamageType damageType, CombatAttackOption option)
         {
-            DamageType = damageType;
+            option.DamageType = damageType;
+            Option = option;
         }
 
-        public DamageType DamageType { get; private set; }
+        public CombatAttackOption Option { get; }
 
+        public virtual void BuildAttack(ICreature actor, ICreature enemy)
+        {
+
+        }
+        
         public virtual ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
         {
             var diff = attackPower - minAttackPower;
@@ -37,37 +44,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
             return (ushort)(minAttackPower + increment);
         }
-    }
 
-    public class MeleeCombatAttack : CombatAttack, IMeleeCombatAttack
-    {
-        public MeleeCombatAttack(byte attack, byte skill) : base(DamageType.Melee)
+        public virtual void CauseDamage(ICreature actor, ICreature enemy)
         {
-            Attack = attack;
-            Skill = skill;
-        }
-        public byte Attack { get; }
-        public byte Skill { get; }
-
-        public virtual ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
-        {
-            var diff = attackPower - minAttackPower;
-            var gaussian = GaussianRandom.Random.Next(0.5f, 0.25f);
-
-            double increment;
-            if (gaussian < 0.0)
-            {
-                increment = diff / 2;
-            }
-            else if (gaussian > 1.0)
-            {
-                increment = (diff + 1) / 2;
-            }
-            else
-            {
-                increment = Math.Round(gaussian * diff);
-            }
-            return (ushort)(minAttackPower + increment);
+            enemy.ReceiveAttack(actor, this, CalculateDamage(actor.AttackPower, actor.MinimumAttackPower));
         }
     }
+
+  
 }

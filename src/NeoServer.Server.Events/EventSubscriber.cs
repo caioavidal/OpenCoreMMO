@@ -16,9 +16,9 @@ namespace NeoServer.Server.Events
 
         public void AttachEvents()
         {
-            map.OnCreatureAddedOnMap += (creature) => container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature);
+            map.OnCreatureAddedOnMap += (creature, cylinder) => container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
             map.OnThingRemovedFromTile += container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
-            map.OnThingMoved += container.Resolve<ThingMovedOnFloorEventHandler>().Execute;
+            map.OnThingMoved += container.Resolve<CreatureMovedOnFloorEventHandler>().Execute;
             map.OnThingMovedFailed += container.Resolve<InvalidOperationEventHandler>().Execute;
             map.OnThingAddedToTile += container.Resolve<ThingAddedToTileEventHandler>().Execute;
             map.OnThingUpdatedOnTile += container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Server.Events;
 using NeoServer.Server.Events.Combat;
@@ -19,7 +20,7 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
         private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
-
+        private readonly IMap _map;
         //factories
         private readonly IPlayerFactory _playerFactory;
         private readonly IMonsterFactory _monsterFactory;
@@ -31,7 +32,7 @@ namespace NeoServer.Game.Creatures
             //IPathFinder pathFinder, 
             CreatureAttackEventHandler creatureAttackEventHandler,
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
-            IPlayerFactory playerFactory, IMonsterFactory monsterFactory)
+            IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -42,6 +43,7 @@ namespace NeoServer.Game.Creatures
             _creatureTurnToDirectionEventHandler = creatureTurnToDirectionEventHandler;
             _playerFactory = playerFactory;
             _monsterFactory = monsterFactory;
+            _map = map;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -62,8 +64,8 @@ namespace NeoServer.Game.Creatures
             creature.OnKilled += _creatureKilledEventHandler.Execute;
             //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
-            //creature.OnAttack += _creatureAttackEventHandler.Execute;
             creature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
+            creature.OnAttack += _map.PropagateAttack;
             return creature;
         }
     }

@@ -8,25 +8,29 @@ namespace NeoServer.Server.Events
 {
     public class ThingUpdatedOnTileEventHandler
     {
-        private readonly IMap map;
         private readonly Game game;
 
-        public ThingUpdatedOnTileEventHandler(IMap map, Game game)
+        public ThingUpdatedOnTileEventHandler(Game game)
         {
-            this.map = map;
             this.game = game;
         }
-        public void Execute(IThing thing, ITile tile, byte toStackPosition)
+        public void Execute(IThing thing, ICylinder cylinder)
         {
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(tile.Location))
+            cylinder.ThrowIfNull();
+            cylinder.TileSpectators.ThrowIfNull();
+            thing.ThrowIfNull();
+
+            var tile = cylinder.ToTile;
+            tile.ThrowIfNull();
+
+            foreach (var spectator in cylinder.TileSpectators.Values)
             {
-                IConnection connection = null;
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }
 
-                connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(thing.Location, toStackPosition, (IItem)thing));
+                connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(thing.Location, spectator.ToStackPosition, (IItem)thing));
 
                 connection.Send();
             }

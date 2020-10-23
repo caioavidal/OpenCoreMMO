@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Location.Structs.Helpers;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,12 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             return HashHelper.Start
                 .CombineHashCode(Raw);
+        }
+
+        public bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
+        {
+            stackPosition = default;
+            return false;
         }
     }
 }

@@ -5,6 +5,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Combat;
@@ -313,7 +314,7 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public void RestartCoolDown(CooldownType type, int timeoutMs) => Cooldowns[type] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(timeoutMs));
-        
+
 
         public void TurnTo(Direction direction)
         {
@@ -401,7 +402,7 @@ namespace NeoServer.Game.Creatures.Model
                 StopFollowing();
             }
 
-          
+
 
             AutoAttackTargetId = targetId;
         }
@@ -442,9 +443,10 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public abstract bool UsingDistanceWeapon { get; }
-
-        public virtual void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage)
+        public virtual void ReceiveAttack(ICreature enemy, ICombatAttack attack)
         {
+            var damage = attack.CalculateDamage(enemy.AttackPower, enemy.MinimumAttackPower);
+
             if (!attack.IsMagicalDamage)
             {
                 damage = ReduceDamage(damage);
@@ -456,15 +458,51 @@ namespace NeoServer.Game.Creatures.Model
                 return;
             }
 
-            if (!IsDead)
+            if (IsDead)
             {
-
-                ReduceHealth(damage);
-               
-                OnDamaged?.Invoke(enemy, this, attack, damage);
-                WasDamagedOnLastAttack = true;
                 return;
             }
+
+            if (attack.DamageType != Game.Enums.Item.DamageType.ManaDrain)
+            {
+                ReduceHealth(damage);
+            }
+
+
+            OnDamaged?.Invoke(enemy, this, attack, damage);
+            WasDamagedOnLastAttack = true;
+            return;
+
+        }
+        public virtual void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage)
+        {
+
+            if (!attack.IsMagicalDamage)
+            {
+                damage = ReduceDamage(damage);
+            }
+
+            if (damage <= 0)
+            {
+                WasDamagedOnLastAttack = false;
+                return;
+            }
+
+            if (IsDead)
+            {
+                return;
+            }
+
+            if (attack.DamageType != Game.Enums.Item.DamageType.ManaDrain)
+            {
+                ReduceHealth(damage);
+            }
+
+
+            OnDamaged?.Invoke(enemy, this, attack, damage);
+            WasDamagedOnLastAttack = true;
+            return;
+
         }
 
         public void StopAttack()
@@ -498,13 +536,20 @@ namespace NeoServer.Game.Creatures.Model
             {
                 return false;
             }
-
+            
             SetAttackTarget(enemy.CreatureId);
 
-            enemy.ReceiveAttack(this, combatAttack, combatAttack.CalculateDamage(AttackPower, MinimumAttackPower));
+            combatAttack.BuildAttack(this, enemy);
+            OnAttack?.Invoke(this, enemy, combatAttack);
+
+            if (combatAttack.HasTarget)
+            {
+                combatAttack.CauseDamage(this, enemy);
+            }
+
+            //enemy.ReceiveAttack(this, combatAttack, combatAttack.CalculateDamage(AttackPower, MinimumAttackPower));
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
-            OnAttack?.Invoke(this, enemy, combatAttack);
             return true;
         }
 
@@ -529,7 +574,7 @@ namespace NeoServer.Game.Creatures.Model
 
             SetAttackTarget(enemy.CreatureId);
 
-            var combatAttack = new MeleeCombatAttack(10,10);
+            var combatAttack = new MeleeCombatAttack(10, 10);
 
             enemy.ReceiveAttack(this, combatAttack, CalculateDamage());
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
@@ -708,7 +753,7 @@ namespace NeoServer.Game.Creatures.Model
             }
             Cooldowns[CooldownType.UpdatePath] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.FromMilliseconds(1000));
 
-            
+
             TryWalkTo(newPath);
 
             return true;

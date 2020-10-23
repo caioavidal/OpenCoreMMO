@@ -1,4 +1,5 @@
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
@@ -28,7 +29,7 @@ namespace NeoServer.Game.World.Map
         public event RemoveThingFromTile OnThingRemovedFromTile;
         public event AddThingToTile OnThingAddedToTile;
         public event UpdateThingOnTile OnThingUpdatedOnTile;
-        public event MoveThingOnFloor OnThingMoved;
+        public event MoveCreatureOnFloor OnThingMoved;
         public event FailedMoveThing OnThingMovedFailed;
 
         private readonly World world;
@@ -44,11 +45,18 @@ namespace NeoServer.Game.World.Map
             {
                 if (world.TryGetTile(location, out ITile tile))
                 {
+                    if (tile is IWalkableTile walkableTile)
+                    {
+                        walkableTile.OnThingAddedToTile -= AttachEvent;
+                        walkableTile.OnThingAddedToTile += AttachEvent;
+                    }
                     return tile;
                 }
                 return null;
             }
         }
+
+        public void AttachEvent(IThing thing, ITile tile) => OnThingAddedToTile?.Invoke(thing, new Cylinder(this, thing, tile));
 
         public ITile this[ushort x, ushort y, sbyte z] => this[new Location(x, y, z)];
 
@@ -69,17 +77,16 @@ namespace NeoServer.Game.World.Map
             var fromTile = this[thing.Location] as IWalkableTile;
             var toTile = this[toLocation] as IWalkableTile;
 
-            var fromStackPosition = fromTile.GetStackPositionOfThing(thing);
-
-            //todo: not thead safe
-            var result = fromTile.MoveThing(ref thing, toTile);
+            var cylinder = new Cylinder(this);
+            //todo: not thread safe
+            var result = cylinder.MoveThing(ref thing, fromTile, toTile);
 
             if (!result.Success)
             {
                 return false;
             }
 
-             OnThingMoved?.Invoke(thing, fromTile, toTile, fromStackPosition);
+            OnThingMoved?.Invoke((ICreature)thing, cylinder);
 
             var tileDestination = GetTileDestination(toTile);
 
@@ -150,10 +157,10 @@ namespace NeoServer.Game.World.Map
 
         public bool CanWalkTo(Location location, out ITile tile)
         {
-        
+
             tile = this[location];
 
-            if(tile == null || tile is IImmutableTile)
+            if (tile == null || tile is IImmutableTile)
             {
                 return false;
             }
@@ -268,22 +275,24 @@ namespace NeoServer.Game.World.Map
         }
         public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
         {
-            var fromStackPosition = tile.GetStackPositionOfThing(thing);
-            tile.RemoveThing(ref thing, amount);
+            Cylinder cylinder = new Cylinder(this);
 
-            OnThingRemovedFromTile?.Invoke(thing, tile, fromStackPosition);
+            cylinder.RemoveThing(ref thing, tile, amount);
+
+            OnThingRemovedFromTile?.Invoke(thing, cylinder);
         }
         public void AddItem(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
         {
-            var stackPosition = tile.NextStackPosition;
-            var result = tile.AddThing(ref thing);
+
+            var cylinder = new Cylinder(this);
+            var result = cylinder.AddThing(ref thing, tile);
 
             foreach (var operation in result.Value.Operations)
             {
                 switch (operation)
                 {
-                    case Operation.Added: OnThingAddedToTile?.Invoke(thing, tile, stackPosition); break;
-                    case Operation.Updated: OnThingUpdatedOnTile?.Invoke(tile.TopItemOnStack, tile, stackPosition); break;
+                    case Operation.Added: OnThingAddedToTile?.Invoke(thing, cylinder); break;
+                    case Operation.Updated: OnThingUpdatedOnTile?.Invoke(tile.TopItemOnStack, cylinder); break;
                     default: break;
                 }
             }
@@ -341,10 +350,10 @@ namespace NeoServer.Game.World.Map
                 }
             }
         }
-        public HashSet<uint> GetCreaturesAtPositionZone(Location location, Location toLocation)
+        public Dictionary<uint, ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation)
         {
 
-            var creaturedIds = new HashSet<uint>();
+            var creatures = new Dictionary<uint, ICreature>();
 
             var viewPortX = (ushort)MapViewPort.ViewPortX;
             var viewPortY = (ushort)MapViewPort.ViewPortY;
@@ -399,7 +408,7 @@ namespace NeoServer.Game.World.Map
                         {
                             foreach (var creature in tile.Creatures)
                             {
-                                creaturedIds.Add(creature.Key);
+                                creatures.TryAdd(creature.Key, creature.Value);
                             }
 
                         }
@@ -408,7 +417,7 @@ namespace NeoServer.Game.World.Map
                 }
 
             }
-            return creaturedIds;
+            return creatures;
         }
 
         public IEnumerable<ITile> GetOffsetTiles(Location location)
@@ -564,13 +573,43 @@ namespace NeoServer.Game.World.Map
 
             if (this[creature.Location] is IWalkableTile tile)
             {
-                tile.AddThing(ref thing);
-                OnCreatureAddedOnMap?.Invoke(creature);
-            }
+                var cylinder = new Cylinder(this);
+                cylinder.AddThing(ref thing, tile);
 
+                OnCreatureAddedOnMap?.Invoke(creature, cylinder);
+            }
         }
 
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
 
+        public void PropagateAttack(ICreature actor, ICreature victim, ICombatAttack combatAttack)
+        {
+            if(!(combatAttack is IAreaAttack area))
+            {
+                return;
+            }
+
+            foreach (var location in area.AffectedArea)
+            {
+                var tile = this[location];
+                if(tile is IWalkableTile walkableTile)
+                {
+                    foreach (var target in walkableTile.Creatures.Values)
+                    {
+                        if(combatAttack.HasTarget && victim.CreatureId == target.CreatureId)
+                        {
+                            continue;
+                        }
+                        if(actor.CreatureId == target.CreatureId)
+                        {
+                            continue;
+                        }
+
+                        target.ReceiveAttack(actor, combatAttack);
+                    }
+                }
+                
+            }
+        }
     }
 }
