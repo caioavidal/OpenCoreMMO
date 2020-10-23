@@ -115,5 +115,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void SetDirection(Direction direction);
         void StopFollowing();
         bool TryUpdatePath(Direction[] newPath);
+        void IncreaseSpeed(ushort speed);
+        void Heal(ushort increasing);
     }
 }

@@ -80,6 +80,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public bool KeepDistance => TargetDistance > 1;
 
         public List<ICombatAttack> Attacks => Metadata.Attacks;
+        public List<ICombatDefense> Defenses => Metadata.Defenses;
 
         public override int ArmorDefend(int attack)
         {

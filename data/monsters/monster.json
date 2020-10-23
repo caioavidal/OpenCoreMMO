@@ -96,11 +96,33 @@
         }
         
       ],
-	     "defenses": {
-      "armor": "15",
-      "defense": "20"
+	 "defense": {
+      "armor": "50",
+      "defense": "55"
+	  },
+      "defenses": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "15",
+          "min": "90",
+          "max": "200",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "15",
+          "speedchange": "200",
+          "duration": "20000",
+          "attribute": {
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }
+        }
+      ]
     }
-  
-    
-  }
 }

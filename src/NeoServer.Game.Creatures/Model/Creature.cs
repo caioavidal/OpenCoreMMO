@@ -536,7 +536,7 @@ namespace NeoServer.Game.Creatures.Model
             {
                 return false;
             }
-            
+
             SetAttackTarget(enemy.CreatureId);
 
             combatAttack.BuildAttack(this, enemy);
@@ -782,6 +782,12 @@ namespace NeoServer.Game.Creatures.Model
         public void SetDirection(Direction direction) => Direction = direction;
 
         public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
+
+        public void IncreaseSpeed(ushort speed) => Speed += speed;
+
+
+        public void Heal(ushort increasing) => HealthPoints = HealthPoints + increasing >= MaxHealthpoints ? MaxHealthpoints : HealthPoints + increasing;
+
 
         //public bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         //public bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

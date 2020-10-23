@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using NeoServer.Game.Contracts.Combat.Defenses;
+using NeoServer.Enums.Creatures.Enums;
 
 namespace NeoServer.Loaders.World
 {
@@ -23,8 +25,8 @@ namespace NeoServer.Loaders.World
                 MaxHealth = data.Health.Max,
                 Look = new Dictionary<LookType, ushort>() { { LookType.Type, data.Look.Type }, { LookType.Corpse, data.Look.Corpse } },
                 Speed = data.Speed,
-                Armor = ushort.Parse(data.Defenses.Armor),
-                Defence = ushort.Parse(data.Defenses.Defense),
+                Armor = ushort.Parse(data.Defense.Armor),
+                Defence = ushort.Parse(data.Defense.Defense),
                 Attacks = new List<ICombatAttack>(),
                 Experience = data.Experience
             };
@@ -49,7 +51,7 @@ namespace NeoServer.Loaders.World
 
                     var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
 
-                   
+
                     if (attackName == "manadrain")
                     {
 
@@ -97,9 +99,6 @@ namespace NeoServer.Loaders.World
                             ShootType = ParseShootType(shootEffect)
                         }));
                     }
-
-
-
                 }
                 else if (attack.ContainsKey("spread"))
                 {
@@ -119,16 +118,52 @@ namespace NeoServer.Loaders.World
                 }
                 else if (ParseDamageType(attackName?.ToString()) == DamageType.Melee)
                 {
-
                     monster.Attacks.Add(new MeleeCombatAttack(attackValue, skill));
+                }
+            }
 
+            foreach (var defense in data.Defenses)
+            {
+                defense.TryGetValue("name", out string defenseName);
+                defense.TryGetValue("chance", out byte chance);
+                defense.TryGetValue("interval", out byte interval);
+                defense.TryGetValue<JArray>("attributes", out var attributes);
+
+
+                if (defenseName == "healing")
+                {
+                    defense.TryGetValue("min", out decimal min);
+                    defense.TryGetValue("max", out decimal max);
+
+                    monster.Defenses.Add(new HealCombatDefence
+                    {
+                        Chance = chance,
+                        Interval = interval,
+                        Min = (ushort)Math.Abs(min),
+                        Max = (ushort)Math.Abs(max),
+                        Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
+
+                    });
+                }
+                if (defenseName == "speed")
+                {
+                    defense.TryGetValue("speedchange", out ushort speed);
+                    defense.TryGetValue("duration", out uint duration);
+
+                    monster.Defenses.Add(new SpeedCombatDefence
+                    {
+                        Chance = chance,
+                        Interval = interval,
+                        SpeedIncrease = speed,
+                        Duration = duration,
+                        Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
+                    });
                 }
             }
 
             foreach (var flag in data.Flags)
             {
                 var creatureFlag = ParseCreatureFlag(flag.Key);
-
                 monster.Flags.Add(creatureFlag, flag.Value);
             }
 
@@ -145,6 +180,15 @@ namespace NeoServer.Loaders.World
                 "fire" => DamageType.Fire,
                 "manadrain" => DamageType.ManaDrain,
                 _ => DamageType.Melee
+            };
+        }
+        private static EffectT ParseAreaEffect(string type)
+        {
+            return type switch
+            {
+                "blueshimmer" => EffectT.GlitterBlue,
+                "redshimmer" => EffectT.GlitterRed,
+                _ => EffectT.None
             };
         }
         private static ShootType ParseShootType(string type)
