@@ -7,7 +7,6 @@ namespace NeoServer.Game.Contracts.Combat
 {
     public interface IDistanceCombatAttack: ICombatAttack
     {
-        ShootType ShootType { get; }
-
+        public ShootType ShootType => Option.ShootType;
     }
 }

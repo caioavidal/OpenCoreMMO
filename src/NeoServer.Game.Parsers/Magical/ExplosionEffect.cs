@@ -48,8 +48,4 @@ namespace NeoServer.Game.Effects.Explosion
         }
     }
 
-    public enum CircleArea
-    {
-        Area3x3
-    }
 }

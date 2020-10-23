@@ -1,3 +1,4 @@
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
@@ -41,5 +42,6 @@ namespace NeoServer.Game.Contracts
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
         Dictionary<uint, ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
+        void PropagateAttack(ICreature creature, ICreature victim, ICombatAttack combatAttack);
     }
 }

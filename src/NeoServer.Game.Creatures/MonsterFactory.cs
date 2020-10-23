@@ -35,7 +35,7 @@ namespace NeoServer.Game.Creatures
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttack += _creatureAttackEventHandler.Execute;
-         
+
             return monster;
         }
     }

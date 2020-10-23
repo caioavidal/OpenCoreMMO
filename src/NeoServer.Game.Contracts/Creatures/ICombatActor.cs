@@ -17,6 +17,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event Damage OnDamaged;
         event StopAttack OnStoppedAttack;
         event BlockAttack OnBlockedAttack;
+        event Attack OnAttack;
 
         /// <summary>
         /// Gets the id of the actor.
@@ -68,5 +69,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void CheckAutoAttack(IThing thingChanged, IThingStateChangedEventArgs eventAgrs);
         void Attack(ICreature enemy);
         void StopAttack();
+        void ReceiveAttack(ICreature enemy, ICombatAttack attack);
     }
 }

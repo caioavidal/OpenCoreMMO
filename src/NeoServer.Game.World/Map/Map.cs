@@ -1,4 +1,5 @@
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
@@ -581,5 +582,25 @@ namespace NeoServer.Game.World.Map
 
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
 
+        public void PropagateAttack(ICreature creature, ICreature victim, ICombatAttack combatAttack)
+        {
+            if(!(combatAttack is IAreaAttack area))
+            {
+                return;
+            }
+
+            foreach (var location in area.AffectedArea)
+            {
+                var tile = this[location];
+                if(tile is IWalkableTile walkableTile)
+                {
+                    foreach (var c in walkableTile.Creatures.Values)
+                    {
+                        c.ReceiveAttack(creature, combatAttack);
+                    }
+                }
+                
+            }
+        }
     }
 }

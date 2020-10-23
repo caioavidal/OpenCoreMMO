@@ -5,6 +5,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Combat;
@@ -442,9 +443,40 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public abstract bool UsingDistanceWeapon { get; }
+        public virtual void ReceiveAttack(ICreature enemy, ICombatAttack attack)
+        {
+            var damage = attack.CalculateDamage(enemy.AttackPower, enemy.MinimumAttackPower);
 
+            if (!attack.IsMagicalDamage)
+            {
+                damage = ReduceDamage(damage);
+            }
+
+            if (damage <= 0)
+            {
+                WasDamagedOnLastAttack = false;
+                return;
+            }
+
+            if (IsDead)
+            {
+                return;
+            }
+
+            if (attack.DamageType != Game.Enums.Item.DamageType.ManaDrain)
+            {
+                ReduceHealth(damage);
+            }
+
+
+            OnDamaged?.Invoke(enemy, this, attack, damage);
+            WasDamagedOnLastAttack = true;
+            return;
+
+        }
         public virtual void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage)
         {
+
             if (!attack.IsMagicalDamage)
             {
                 damage = ReduceDamage(damage);
@@ -504,15 +536,20 @@ namespace NeoServer.Game.Creatures.Model
             {
                 return false;
             }
-
+            
             SetAttackTarget(enemy.CreatureId);
 
-            combatAttack.CauseDamage(this, enemy);
+            combatAttack.BuildAttack(this);
+            OnAttack?.Invoke(this, enemy, combatAttack);
+
+            if (combatAttack.HasTarget)
+            {
+                combatAttack.CauseDamage(this, enemy);
+            }
 
             //enemy.ReceiveAttack(this, combatAttack, combatAttack.CalculateDamage(AttackPower, MinimumAttackPower));
             UpdateLastAttack(TimeSpan.FromMilliseconds(2000));
 
-            OnAttack?.Invoke(this, enemy, combatAttack);
             return true;
         }
 

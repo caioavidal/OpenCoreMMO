@@ -2,6 +2,8 @@
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Effects.Explosion;
+using NeoServer.Game.Effects.Magical;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
@@ -47,6 +49,15 @@ namespace NeoServer.Server.Events.Combat
                     {
                         connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location + location, damageEffect));
                     }
+
+                }
+                else if(attack is IDistanceSpreadCombatAttack spreadAttack)
+                {
+                    foreach (var location in spreadAttack.AffectedArea)
+                    {
+                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, damageEffect));
+                    }
+
                 }
                 else
                 {
@@ -58,5 +69,7 @@ namespace NeoServer.Server.Events.Combat
                 connection.Send();
             }
         }
+
+     
     }
 }

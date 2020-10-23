@@ -19,24 +19,17 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
     public class DistanceCombatAttack : CombatAttack, IDistanceCombatAttack
     {
-        public DistanceCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType)
+        public DistanceCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option)
         {
-            Option = option;
         }
-        protected CombatAttackOption Option { get; }
         public byte Chance => Option.Chance;
         public byte Range => Option.Range;
-        public virtual byte Target => Option.Target;
-        public ShootType ShootType => Option.ShootType;
-
-      
-
 
         public override ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
         {
-            attackPower = Option.Max;
+            attackPower = Option.MaxDamage;
             
-            minAttackPower = Option.Min;
+            minAttackPower = Option.MinDamage;
 
             var diff = attackPower - minAttackPower;
             var gaussian = GaussianRandom.Random.Next(0.5f, 0.25f);
