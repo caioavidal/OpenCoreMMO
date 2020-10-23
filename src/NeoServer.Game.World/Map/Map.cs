@@ -56,7 +56,7 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public void AttachEvent(IThing thing, ITile tile) => OnThingAddedToTile(thing, new Cylinder(this, thing, tile));
+        public void AttachEvent(IThing thing, ITile tile) => OnThingAddedToTile?.Invoke(thing, new Cylinder(this, thing, tile));
 
         public ITile this[ushort x, ushort y, sbyte z] => this[new Location(x, y, z)];
 
