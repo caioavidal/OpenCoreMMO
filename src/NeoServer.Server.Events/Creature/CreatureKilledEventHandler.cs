@@ -20,7 +20,7 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(ICreature creature)
         {
-            game.Scheduler.AddEvent(new SchedulerEvent(600, () =>
+            game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
             {
                 var tile = creature.Tile;
 
