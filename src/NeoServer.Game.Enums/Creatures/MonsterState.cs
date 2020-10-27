@@ -11,7 +11,7 @@ namespace NeoServer.Game.Enums.Creatures
     public enum MonsterState
     {
         Sleeping,
-        Alive,
+        InCombat,
         Running,
         LookingForEnemy
     }

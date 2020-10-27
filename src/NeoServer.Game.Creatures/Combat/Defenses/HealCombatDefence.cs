@@ -11,7 +11,6 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
     {
         public ushort Min { get; set; }
         public ushort Max { get; set; }
-        public EffectT Effect { get; set; }
 
         public override void Defende(ICreature actor)
         {

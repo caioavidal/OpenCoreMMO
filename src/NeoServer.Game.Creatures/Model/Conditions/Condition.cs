@@ -2,20 +2,36 @@
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NeoServer.Game.Creatures.Model.Conditions
 {
     public abstract class Condition : ICondition
     {
         private bool isBuff;
+
+        protected Condition(uint duration)
+        {
+            Duration = duration;
+        }
+
+        public Action OnEnd { private get; set; }
+
+
         public ConditionIcon Icons => isBuff ? ConditionIcon.PartyBuff : 0;
 
-        public ConditionType Type => throw new NotImplementedException();
-
+        public abstract ConditionType Type { get; }
+        public uint Duration { get; }
         public long EndTime { get; private set; }
 
         public int Ticks { get; private set; }
 
+        public void End()
+        {
+            OnEnd?.Invoke();
+        }
+    
         public bool IsPersistent
         {
             get
@@ -37,22 +53,6 @@ namespace NeoServer.Game.Creatures.Model.Conditions
 
         public ConditionSlot ConditionSlot => throw new NotImplementedException();
 
-        public abstract void Add(ICreature creature, ICondition condition);
-
-        public abstract ICondition Clone();
-
-        public abstract void End(ICreature creature);
-
-        public bool Execute(ICreature creature, int interval)
-        {
-            if (Ticks == -1)
-            {
-                return true;
-            }
-
-            Ticks = Math.Max(0, Ticks - interval);
-            return EndTime >= DateTime.Now.Ticks;
-        }
 
         public void SetTicks(uint ticks)
         {
@@ -61,6 +61,11 @@ namespace NeoServer.Game.Creatures.Model.Conditions
 
         public bool Start(ICreature creature)
         {
+            if (UpdateCondition())
+            {
+                return true;
+            }
+
             if (Ticks > 0)
             {
                 EndTime = DateTime.Now.Ticks + Ticks;
@@ -68,19 +73,14 @@ namespace NeoServer.Game.Creatures.Model.Conditions
             return true;
         }
 
-        protected bool UpdateCondition(Condition condition)
+        protected bool UpdateCondition()
         {
-            if (Type != condition.Type)
+            if (Ticks > 0) //condition expired
             {
                 return false;
             }
 
-            if (Ticks == -1 && condition.Ticks > 0) //condition expired
-            {
-                return false;
-            }
-
-            if (condition.Ticks >= 0 && EndTime > (DateTime.Now.Ticks + condition.Ticks))
+            if (Ticks >= 0 && EndTime > (DateTime.Now.Ticks + Ticks))
             {
                 return false;
             }

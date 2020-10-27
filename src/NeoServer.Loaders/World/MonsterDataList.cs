@@ -178,7 +178,7 @@ namespace NeoServer.Loaders.World
 
             [JsonProperty("defenses")]
             public List<Dictionary<string, object>> Defenses { get; set; }
-            [JsonProperty("defenses")]
+            [JsonProperty("defense")]
             public Defenses Defense { get; set; }
 
             [JsonProperty("elements")]

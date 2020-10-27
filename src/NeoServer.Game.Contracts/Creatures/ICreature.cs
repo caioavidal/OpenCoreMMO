@@ -2,6 +2,7 @@ using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
@@ -16,6 +17,8 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void StopWalk(ICreature creature);
     public delegate void Die(ICreature creature);
     public delegate void GainExperience(ICreature creature, uint exp);
+    public delegate void StartWalk(ICreature creature);
+    public delegate void Heal(ICreature creature, ushort amount);
 
     public interface ICreature : INeedsCooldowns, IMoveableThing, ICombatActor
     {
@@ -49,8 +52,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         IWalkableTile Tile { get; set; }
 
-        byte NextStepId { get; set; }
-
         bool IsInvisible { get; } // TODO: implement.
 
         bool CanSeeInvisible { get; } // TODO: implement.
@@ -66,7 +67,6 @@ namespace NeoServer.Game.Contracts.Creatures
         bool TryGetNextStep(out Direction direction);
 
         bool StopWalkingRequested { get; set; }
-        List<uint> NextSteps { get; set; }
         uint EventWalk { get; set; }
         byte Skull { get; }
         byte Shield { get; }
@@ -74,11 +74,14 @@ namespace NeoServer.Game.Contracts.Creatures
 
         bool IsFollowing { get; }
         uint Following { get; }
+        bool HasNextStep { get; }
 
         event OnTurnedToDirection OnTurnedToDirection;
         event RemoveCreature OnCreatureRemoved;
         event StopWalk OnStoppedWalking;
         event Die OnKilled;
+        event StartWalk OnStartedWalking;
+        event Heal OnHeal;
 
         /// <summary>
         /// Checks whether creature can see another creature or not
@@ -117,5 +120,8 @@ namespace NeoServer.Game.Contracts.Creatures
         bool TryUpdatePath(Direction[] newPath);
         void IncreaseSpeed(ushort speed);
         void Heal(ushort increasing);
+        void DecreaseSpeed(ushort speedBoost);
+        void AddCondition(ICondition condition);
+        bool HasCondition(ConditionType type, out ICondition condition);
     }
 }

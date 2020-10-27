@@ -19,7 +19,6 @@ namespace NeoServer.Game.World.Map
 
     public class Map : IMap
     {
-        private static readonly TimeSpan _mapLoadPercentageReportDelay = TimeSpan.FromSeconds(7);
 
         // Start positions
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
@@ -584,7 +583,7 @@ namespace NeoServer.Game.World.Map
 
         public void PropagateAttack(ICreature actor, ICreature victim, ICombatAttack combatAttack)
         {
-            if(!(combatAttack is IAreaAttack area))
+            if (!(combatAttack is IAreaAttack area))
             {
                 return;
             }
@@ -592,15 +591,15 @@ namespace NeoServer.Game.World.Map
             foreach (var location in area.AffectedArea)
             {
                 var tile = this[location];
-                if(tile is IWalkableTile walkableTile)
+                if (tile is IWalkableTile walkableTile)
                 {
                     foreach (var target in walkableTile.Creatures.Values)
                     {
-                        if(combatAttack.HasTarget && victim.CreatureId == target.CreatureId)
+                        if (combatAttack.HasTarget && victim.CreatureId == target.CreatureId)
                         {
                             continue;
                         }
-                        if(actor.CreatureId == target.CreatureId)
+                        if (actor.CreatureId == target.CreatureId)
                         {
                             continue;
                         }
@@ -608,7 +607,28 @@ namespace NeoServer.Game.World.Map
                         target.ReceiveAttack(actor, combatAttack);
                     }
                 }
-                
+
+            }
+        }
+
+        public void MoveCreature(ICreature creature)
+        {
+            var thing = creature as IMoveableThing;
+
+            if (creature.TryGetNextStep(out var direction))
+            {
+                var toTile = GetNextTile(thing.Location, direction);
+
+                if (!TryMoveThing(ref thing, toTile.Location))
+                {
+                    if (creature is IPlayer player) player.CancelWalk();
+                }
+            }
+
+            if (creature.IsRemoved)
+            {
+                creature.StopWalking();
+                return;
             }
         }
     }

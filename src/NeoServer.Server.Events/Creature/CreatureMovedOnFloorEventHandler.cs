@@ -7,6 +7,7 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events
 {

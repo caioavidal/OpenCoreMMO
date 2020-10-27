@@ -13,15 +13,17 @@ namespace NeoServer.Game.Creatures
         private readonly IMonsterDataManager _monsterManager;
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
+        private readonly MonsterDefendEventHandler _monsterDefendEventHandler;
         private readonly IPathFinder _pathFinder;
 
-        public MonsterFactory(IMonsterDataManager monsterManager, 
-            CreatureWasBornEventHandler creatureWasBornEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler)
+        public MonsterFactory(IMonsterDataManager monsterManager,
+            CreatureWasBornEventHandler creatureWasBornEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler, MonsterDefendEventHandler monsterDefendEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
             _pathFinder = pathFinder;
             _creatureAttackEventHandler = creatureAttackEventHandler;
+            _monsterDefendEventHandler = monsterDefendEventHandler;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
@@ -35,7 +37,7 @@ namespace NeoServer.Game.Creatures
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttack += _creatureAttackEventHandler.Execute;
-
+            monster.OnDefende += _monsterDefendEventHandler.Execute;
             return monster;
         }
     }

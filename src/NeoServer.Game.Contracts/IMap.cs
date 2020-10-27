@@ -43,5 +43,6 @@ namespace NeoServer.Game.Contracts
         bool CanWalkTo(Location location, out ITile tile);
         Dictionary<uint, ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
         void PropagateAttack(ICreature creature, ICreature victim, ICombatAttack combatAttack);
+        void MoveCreature(ICreature creature);
     }
 }

@@ -8,6 +8,7 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Helpers;
 using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public delegate bool PathFinder(ICreature creature, Location target, FindPathParams options, out Direction[] directions);
 
         private PathFinder findPathToDestination;
+        public event Born OnWasBorn;
+        public event Defende OnDefende;
 
         public Monster(IMonsterType type, ISpawnPoint spawn, PathFinder pathFinder) : base(type)
         {
@@ -59,7 +62,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-        public event Born OnWasBorn;
 
         public void Reborn()
         {
@@ -95,8 +97,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return attack;
         }
 
-        public new ushort Speed => Metadata.Speed;
-
         public override ushort AttackPower
         {
             get
@@ -108,6 +108,34 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
                 return 0;
             }
+        }
+
+        /// <summary>
+        /// Execute defense action
+        /// </summary>
+        /// <returns>interval</returns>
+        public ushort Defende()
+        {
+            if (!Defenses.Any())
+            {
+                Defending = false;
+                return default;
+            }
+
+            Defending = true;
+
+            var defense = (ICombatDefense)ProbabilityRandom.Next(Defenses.ToArray()); //todo: remove allocation here
+
+            defense?.Defende(this);
+
+            if(defense != null)
+            {
+                OnDefende?.Invoke(this, defense);
+            }
+
+            return defense?.Interval == null ? Defenses[0].Interval : defense.Interval;
+
+            
         }
 
         public override ushort ArmorRating => Metadata.Armor;
@@ -167,6 +195,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
         public bool CanReachAnyTarget { get; private set; } = false;
+        public bool IsInCombat => State == MonsterState.InCombat;
+
+        public bool Defending { get; private set; }
 
         private CombatTarget searchTarget()
         {
@@ -219,7 +250,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (target != null)
             {
-                SetState(MonsterState.Alive);
+                SetState(MonsterState.InCombat);
             }
 
             FollowCreature = true;

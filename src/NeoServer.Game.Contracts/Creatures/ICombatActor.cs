@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat;
 using System;
@@ -11,6 +12,8 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void StopAttack(ICreature actor);
     public delegate void BlockAttack(ICreature creature, BlockType block);
     public delegate void Attack(ICreature creature, ICreature victim, ICombatAttack combatAttack);
+    public delegate void UseSpell(ICreature creature, ISpell spell);
+
     public interface ICombatActor : INeedsCooldowns
     {
         event OnAttackTargetChange OnTargetChanged;
@@ -18,6 +21,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event StopAttack OnStoppedAttack;
         event BlockAttack OnBlockedAttack;
         event Attack OnAttack;
+        event UseSpell OnUsedSpell;
 
         /// <summary>
         /// Gets the id of the actor.

@@ -14,5 +14,6 @@
         Feet,
         Ring,
         Ammo,
+        Speed
     }
 }

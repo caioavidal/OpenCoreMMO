@@ -20,6 +20,8 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
         private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
+        private readonly CreatureStartedWalkingEventHandler _creatureStartedWalkingEventHandler;
+        private readonly CreatureHealedEventHandler _creatureHealedEventHandler;
         private readonly IMap _map;
         //factories
         private readonly IPlayerFactory _playerFactory;
@@ -32,7 +34,8 @@ namespace NeoServer.Game.Creatures
             //IPathFinder pathFinder, 
             CreatureAttackEventHandler creatureAttackEventHandler,
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
-            IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map)
+            IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map, 
+            CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -44,6 +47,8 @@ namespace NeoServer.Game.Creatures
             _playerFactory = playerFactory;
             _monsterFactory = monsterFactory;
             _map = map;
+            _creatureStartedWalkingEventHandler = creatureStartedWalkingEventHandler;
+            _creatureHealedEventHandler = creatureHealedEventHandler;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -66,6 +71,8 @@ namespace NeoServer.Game.Creatures
             creature.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
             creature.OnAttack += _map.PropagateAttack;
+            creature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
+            creature.OnHeal += _creatureHealedEventHandler.Execute;
             return creature;
         }
     }

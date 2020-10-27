@@ -28,6 +28,7 @@ namespace NeoServer.Loaders.World
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defence = ushort.Parse(data.Defense.Defense),
                 Attacks = new List<ICombatAttack>(),
+                Defenses = new List<ICombatDefense>(),
                 Experience = data.Experience
             };
 
@@ -126,7 +127,7 @@ namespace NeoServer.Loaders.World
             {
                 defense.TryGetValue("name", out string defenseName);
                 defense.TryGetValue("chance", out byte chance);
-                defense.TryGetValue("interval", out byte interval);
+                defense.TryGetValue("interval", out ushort interval);
                 defense.TryGetValue<JArray>("attributes", out var attributes);
 
 
@@ -141,7 +142,7 @@ namespace NeoServer.Loaders.World
                         Interval = interval,
                         Min = (ushort)Math.Abs(min),
                         Max = (ushort)Math.Abs(max),
-                        Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
+                        Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a?.Value<string>("key") == "areaEffect")?.Value<string>("value"))
 
                     });
                 }
@@ -150,11 +151,11 @@ namespace NeoServer.Loaders.World
                     defense.TryGetValue("speedchange", out ushort speed);
                     defense.TryGetValue("duration", out uint duration);
 
-                    monster.Defenses.Add(new SpeedCombatDefence
+                    monster.Defenses.Add(new HasteCombatDefence()
                     {
                         Chance = chance,
                         Interval = interval,
-                        SpeedIncrease = speed,
+                        SpeedBoost = speed,
                         Duration = duration,
                         Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
                     });
@@ -221,6 +222,5 @@ namespace NeoServer.Loaders.World
                 _ => CreatureFlagAttribute.None
             };
         }
-
     }
 }

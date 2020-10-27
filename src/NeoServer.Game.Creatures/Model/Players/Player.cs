@@ -57,6 +57,7 @@ namespace NeoServer.Server.Model.Players
         }
 
         public event CancelWalk OnCancelledWalk;
+
         public event ReduceMana OnManaReduced;
 
 

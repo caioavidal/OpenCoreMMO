@@ -7,6 +7,7 @@ using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Creatures.Model.Conditions;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures;
@@ -32,12 +33,16 @@ namespace NeoServer.Game.Creatures.Model
         public event RemoveCreature OnCreatureRemoved;
         public event OnTurnedToDirection OnTurnedToDirection;
         public event StopWalk OnStoppedWalking;
+        public event StartWalk OnStartedWalking;
         public event Damage OnDamaged;
         public event Die OnKilled;
         public event StopAttack OnStoppedAttack;
         public event BlockAttack OnBlockedAttack;
         public event GainExperience OnGainedExperience;
         public event Attack OnAttack;
+        public event UseSpell OnUsedSpell;
+        public event Heal OnHeal;
+
 
         private readonly ICreatureType _creatureType;
 
@@ -165,15 +170,17 @@ namespace NeoServer.Game.Creatures.Model
 
         public uint HealthPoints { get; private set; }
 
+        public bool HasNextStep => WalkingQueue.Count > 0;
+
         public uint MaxHealthpoints => _creatureType.MaxHealth;
 
         public abstract IOutfit Outfit { get; protected set; }
 
         public Direction Direction { get; protected set; }
 
-        public List<ICondition> Conditions { get; set; } = new List<ICondition>();
+        public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
 
-        public bool InFight => Conditions.Any(x => x.Type == ConditionType.InFight);
+        public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
 
         public Direction ClientSafeDirection
         {
@@ -665,9 +672,11 @@ namespace NeoServer.Game.Creatures.Model
                 foreach (var direction in directions)
                 {
                     WalkingQueue.Enqueue(direction);
-
                 }
             }
+
+            StopWalkingRequested = false;
+            OnStartedWalking?.Invoke(this);
             return true;
         }
 
@@ -726,8 +735,6 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         public double LastStep { get; private set; }
-
-        public List<uint> NextSteps { get; set; }
         public uint EventWalk { get; set; }
         public IWalkableTile Tile { get; set; }
 
@@ -784,9 +791,21 @@ namespace NeoServer.Game.Creatures.Model
         public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
 
         public void IncreaseSpeed(ushort speed) => Speed += speed;
+        public void DecreaseSpeed(ushort speedBoost) => Speed -= speedBoost;
 
+        public void Heal(ushort increasing)
+        {
+            HealthPoints = HealthPoints + increasing >= MaxHealthpoints ? MaxHealthpoints : HealthPoints + increasing;
+            OnHeal?.Invoke(this, increasing);
 
-        public void Heal(ushort increasing) => HealthPoints = HealthPoints + increasing >= MaxHealthpoints ? MaxHealthpoints : HealthPoints + increasing;
+        }
+
+        public void AddCondition(ICondition condition)
+        {
+            Conditions.TryAdd(condition.Type, condition);
+            condition.Start(this);
+        }
+        public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
 
 
         //public bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;

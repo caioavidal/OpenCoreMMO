@@ -61,39 +61,7 @@
     },
       "attacks": [
        
-		{
-          "name": "energy",
-          "interval": "3000",
-          "chance": "30",
-          "length": "8",
-          "spread": "0",
-          "min": "-5",
-          "max": "-10",
-          "attributes": [{
-            "key": "areaEffect",
-            "value": "energy"
-          }]
-        },
-		{
-          "name": "fire",
-          "interval": "2000",
-          "chance": "14",
-          "range": "7",
-          "radius": "7",
-          "target": "1",
-          "min": "-5",
-          "max": "-10",
-          "attributes": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        }
+		
         
       ],
 	 "defense": {
@@ -107,10 +75,10 @@
           "chance": "15",
           "min": "90",
           "max": "200",
-          "attribute": {
+          "attributes": [{
             "key": "areaEffect",
             "value": "blueshimmer"
-          }
+          }]
         },
         {
           "name": "speed",
@@ -118,10 +86,10 @@
           "chance": "15",
           "speedchange": "200",
           "duration": "20000",
-          "attribute": {
+          "attributes": [{
             "key": "areaEffect",
             "value": "redshimmer"
-          }
+          }]
         }
       ]
     }
