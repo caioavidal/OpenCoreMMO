@@ -19,7 +19,6 @@ namespace NeoServer.Game.World.Map
 
     public class Map : IMap
     {
-        private static readonly TimeSpan _mapLoadPercentageReportDelay = TimeSpan.FromSeconds(7);
 
         // Start positions
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
@@ -86,7 +85,7 @@ namespace NeoServer.Game.World.Map
                 return false;
             }
 
-            OnThingMoved?.Invoke((ICreature)thing, cylinder);
+            OnThingMoved?.Invoke((IWalkableCreature)thing, cylinder);
 
             var tileDestination = GetTileDestination(toTile);
 
@@ -576,15 +575,15 @@ namespace NeoServer.Game.World.Map
                 var cylinder = new Cylinder(this);
                 cylinder.AddThing(ref thing, tile);
 
-                OnCreatureAddedOnMap?.Invoke(creature, cylinder);
+                if(creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }
         }
 
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
 
-        public void PropagateAttack(ICreature actor, ICreature victim, ICombatAttack combatAttack)
+        public void PropagateAttack(ICombatActor actor, ICombatActor victim, ICombatAttack combatAttack)
         {
-            if(!(combatAttack is IAreaAttack area))
+            if (!(combatAttack is IAreaAttack area))
             {
                 return;
             }
@@ -592,23 +591,48 @@ namespace NeoServer.Game.World.Map
             foreach (var location in area.AffectedArea)
             {
                 var tile = this[location];
-                if(tile is IWalkableTile walkableTile)
+                if (tile is IWalkableTile walkableTile)
                 {
                     foreach (var target in walkableTile.Creatures.Values)
                     {
-                        if(combatAttack.HasTarget && victim.CreatureId == target.CreatureId)
+                        if(!(target is ICombatActor targetCreature))
                         {
                             continue;
                         }
-                        if(actor.CreatureId == target.CreatureId)
+                        if (combatAttack.HasTarget && victim == targetCreature)
+                        {
+                            continue;
+                        }
+                        if (actor == target)
                         {
                             continue;
                         }
 
-                        target.ReceiveAttack(actor, combatAttack);
+                        targetCreature.ReceiveAttack(actor, combatAttack);
                     }
                 }
-                
+
+            }
+        }
+
+        public void MoveCreature(IWalkableCreature creature)
+        {
+            var thing = creature as IMoveableThing;
+
+            if (creature.TryGetNextStep(out var direction))
+            {
+                var toTile = GetNextTile(thing.Location, direction);
+
+                if (!TryMoveThing(ref thing, toTile.Location))
+                {
+                    if (creature is IPlayer player) player.CancelWalk();
+                }
+            }
+
+            if (creature.IsRemoved)
+            {
+                creature.StopWalking();
+                return;
             }
         }
     }

@@ -13,15 +13,17 @@ namespace NeoServer.Game.Creatures
         private readonly IMonsterDataManager _monsterManager;
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
+        private readonly MonsterDefendEventHandler _monsterDefendEventHandler;
         private readonly IPathFinder _pathFinder;
 
-        public MonsterFactory(IMonsterDataManager monsterManager, 
-            CreatureWasBornEventHandler creatureWasBornEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler)
+        public MonsterFactory(IMonsterDataManager monsterManager,
+            CreatureWasBornEventHandler creatureWasBornEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler, MonsterDefendEventHandler monsterDefendEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
             _pathFinder = pathFinder;
             _creatureAttackEventHandler = creatureAttackEventHandler;
+            _monsterDefendEventHandler = monsterDefendEventHandler;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
@@ -31,12 +33,25 @@ namespace NeoServer.Game.Creatures
                 throw new KeyNotFoundException($"Given monster name: {name} is not loaded");
             }
 
-            var monster = new Monster(monsterType, spawn, _pathFinder.Find);
+            var monster = new Monster(monsterType, _pathFinder.Find, spawn);
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttack += _creatureAttackEventHandler.Execute;
+            monster.OnDefende += _monsterDefendEventHandler.Execute;
+            monster.OnKilled += DetachEvents;
 
             return monster;
+        }
+
+        public void DetachEvents(ICreature creature)
+        {
+            if (creature is IMonster monster)
+            {
+                monster.OnWasBorn -= _creatureWasBornEventHandler.Execute;
+                monster.OnAttack -= _creatureAttackEventHandler.Execute;
+                monster.OnDefende -= _monsterDefendEventHandler.Execute;
+                monster.OnKilled -= DetachEvents;
+            }
         }
     }
 }

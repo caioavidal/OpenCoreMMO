@@ -1,4 +1,5 @@
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,12 +10,14 @@ namespace NeoServer.Game.Creature
 
     public class CreatureGameInstance : ICreatureGameInstance
     {
-        private ConcurrentDictionary<uint, ICreature> _gameInstances;
+        private readonly ConcurrentDictionary<uint, ICreature> _creatures;
+
         private ConcurrentDictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
 
         public CreatureGameInstance()
         {
-            _gameInstances = new ConcurrentDictionary<uint, ICreature>();
+
+            _creatures = new ConcurrentDictionary<uint, ICreature>();
             _killedMonsters = new ConcurrentDictionary<uint, Tuple<IMonster, TimeSpan>>();
         }
 
@@ -28,15 +31,15 @@ namespace NeoServer.Game.Creature
             _killedMonsters.TryAdd(monster.CreatureId, new Tuple<IMonster, TimeSpan>(monster, DateTime.Now.TimeOfDay));
         }
 
-        public bool TryGetCreature(uint id, out ICreature creature) => _gameInstances.TryGetValue(id, out creature);
+        public bool TryGetCreature(uint id, out ICreature creature) => _creatures.TryGetValue(id, out creature);
 
-        public IEnumerable<ICreature> All() => _gameInstances.Values;
+        public IEnumerable<ICreature> All() => _creatures.Values;
 
         public ImmutableList<Tuple<IMonster, TimeSpan>> AllKilledMonsters() => _killedMonsters.Values.ToImmutableList();
 
         public void Add(ICreature creature)
         {
-            if (!_gameInstances.TryAdd(creature.CreatureId, creature))
+            if (!_creatures.TryAdd(creature.CreatureId, creature))
             {
                 // TODO: proper logging
                 Console.WriteLine($"WARNING: Failed to add {creature.Name} to the global dictionary.");
@@ -56,7 +59,7 @@ namespace NeoServer.Game.Creature
 
         public bool TryRemove(uint id)
         {
-            if (!_gameInstances.TryRemove(id, out ICreature creature))
+            if (!_creatures.TryRemove(id, out ICreature creature))
             {
                 // TODO: proper logging
                 Console.WriteLine($"WARNING: Failed to remove {creature.Name} from the global dictionary.");

@@ -10,9 +10,9 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts
 {
-    public delegate void PlaceCreatureOnMap(ICreature creature, ICylinder cylinder);
+    public delegate void PlaceCreatureOnMap(IWalkableCreature creature, ICylinder cylinder);
     public delegate void RemoveThingFromTile(Items.IThing thing, ICylinder tile);
-    public delegate void MoveCreatureOnFloor(ICreature creature, ICylinder cylinder);
+    public delegate void MoveCreatureOnFloor(IWalkableCreature creature, ICylinder cylinder);
     public delegate void AddThingToTile(Items.IThing thing, ICylinder cylinder);
     public delegate void UpdateThingOnTile(Items.IThing thing, ICylinder cylinder);
 
@@ -42,6 +42,7 @@ namespace NeoServer.Game.Contracts
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
         Dictionary<uint, ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
-        void PropagateAttack(ICreature creature, ICreature victim, ICombatAttack combatAttack);
+        void PropagateAttack(ICombatActor creature, ICombatActor victim, ICombatAttack combatAttack);
+        void MoveCreature(IWalkableCreature creature);
     }
 }

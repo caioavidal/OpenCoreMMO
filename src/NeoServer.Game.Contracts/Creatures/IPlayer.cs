@@ -12,7 +12,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
     public delegate void ReduceMana(IPlayer player);
 
-    public interface IPlayer : ICreature
+    public interface IPlayer : ICombatActor
     {
         ushort Level { get; }
 
@@ -97,5 +97,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ResetIdleTime();
         void CancelWalk();
         bool CanMoveThing(Location location);
+        void ReceiveManaAttack(ICreature enemy, ushort damage);
     }
 }

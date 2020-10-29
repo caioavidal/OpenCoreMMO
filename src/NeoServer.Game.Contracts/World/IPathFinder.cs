@@ -12,6 +12,5 @@ namespace NeoServer.Game.Contracts.World
         IMap Map { get; set; }
         bool Find(ICreature creature,  Location target, FindPathParams findPathParams, out Direction[] directions);
         bool Find(ICreature creature, Location target, out Direction[] directions);
-
     }
 }

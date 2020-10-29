@@ -13,6 +13,8 @@ namespace NeoServer.Game.Contracts.Creatures
 
         public uint Experience { get; set; }
         public List<ICombatAttack> Attacks { get; set; }
+        public List<ICombatDefense> Defenses { get; set; }
+
         IDictionary<CreatureFlagAttribute, byte> Flags { get; set; }
     }
 }

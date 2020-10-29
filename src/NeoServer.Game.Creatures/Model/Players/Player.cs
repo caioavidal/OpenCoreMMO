@@ -2,13 +2,16 @@ using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,13 +19,13 @@ using System.Linq;
 
 namespace NeoServer.Server.Model.Players
 {
-    public class Player : Creature, IPlayer
+    public class Player : CombatActor, IPlayer
     {
         public Player(string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
-            Location location)
-             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), outfit, healthPoints)
+            Location location, PathFinder pathFinder)
+             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
         {
             CharacterName = characterName;
             ChaseMode = chaseMode;
@@ -57,6 +60,7 @@ namespace NeoServer.Server.Model.Players
         }
 
         public event CancelWalk OnCancelledWalk;
+
         public event ReduceMana OnManaReduced;
 
 
@@ -318,7 +322,7 @@ namespace NeoServer.Server.Model.Players
             FollowCreature = mode == ChaseMode.Follow;
             if (FollowCreature)
             {
-                StartFollowing(AutoAttackTargetId);
+               // StartFollowing(AutoAttackTargetId);
                 return;
             }
 
@@ -348,7 +352,7 @@ namespace NeoServer.Server.Model.Players
             {
                 var min = ArmorRating / 2;
                 var max = (ArmorRating / 2) * 2 - 1;
-                attack -= RandomDamagePower(min, max);
+                attack -= (ushort) GaussianRandom.Random.NextInRange(min, max);
             }
             else if (ArmorRating > 0)
             {
@@ -356,17 +360,11 @@ namespace NeoServer.Server.Model.Players
             }
             return attack;
         }
-
-        public override void ReceiveAttack(ICreature enemy, ICombatAttack attack, ushort damage)
+        public void ReceiveManaAttack(ICreature enemy, ushort damage)
         {
-            if (attack.DamageType == DamageType.ManaDrain)
-            {
-                ReduceMana(damage);
-            }
-
-            base.ReceiveAttack(enemy, attack, damage);
+            ReduceMana(damage);
         }
-
+        
         private void ReduceMana(ushort amount)
         {
             if (amount == 0 && Mana == 0)
@@ -376,6 +374,12 @@ namespace NeoServer.Server.Model.Players
             Mana = (ushort)(amount > Mana ? 0 : Mana - amount);
 
             OnManaReduced?.Invoke(this);
+        }
+
+        public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
+        {
+            var melee = new MeleeCombatAttack(255, 255);
+            return base.Attack(enemy, melee);
         }
     }
 }

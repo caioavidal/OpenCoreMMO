@@ -2,39 +2,36 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Helpers;
 using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
-    public class Monster : Creature, IMonster
+    public class Monster : CombatActor, IMonster
     {
-        public delegate bool PathFinder(ICreature creature, Location target, FindPathParams options, out Direction[] directions);
+        public event Born OnWasBorn;
+        public event Defende OnDefende;
 
-        private PathFinder findPathToDestination;
-
-        public Monster(IMonsterType type, ISpawnPoint spawn, PathFinder pathFinder) : base(type)
+        public Monster(IMonsterType type, PathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
         {
-            pathFinder.ThrowIfNull();
             type.ThrowIfNull();
             spawn.ThrowIfNull();
 
-            findPathToDestination = pathFinder;
             Metadata = type;
             Spawn = spawn;
             Damages = new ConcurrentDictionary<ICreature, ushort>();
 
             OnDamaged += (enemy, victim, combatAttack, damage) => RecordDamage(enemy, damage);
             OnKilled += (enemy) => GiveExperience();
-
-            Cooldowns[CooldownType.LookForNewEnemy] = new Tuple<DateTime, TimeSpan>(DateTime.Now, TimeSpan.Zero);
         }
 
         public MonsterState State { get; private set; } = MonsterState.Sleeping;
@@ -59,7 +56,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-        public event Born OnWasBorn;
 
         public void Reborn()
         {
@@ -71,7 +67,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override int ShieldDefend(int attack)
         {
 
-            attack -= RandomDamagePower((Defense / 2), Defense);
+            attack -= (ushort)GaussianRandom.Random.NextInRange((Defense / 2), Defense);
 
             return attack;
         }
@@ -80,12 +76,13 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public bool KeepDistance => TargetDistance > 1;
 
         public List<ICombatAttack> Attacks => Metadata.Attacks;
+        public List<ICombatDefense> Defenses => Metadata.Defenses;
 
         public override int ArmorDefend(int attack)
         {
             if (ArmorRating > 3)
             {
-                attack -= RandomDamagePower(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
+                attack -= (ushort)GaussianRandom.Random.NextInRange(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
             }
             else if (ArmorRating > 0)
             {
@@ -93,8 +90,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
             return attack;
         }
-
-        public new ushort Speed => Metadata.Speed;
 
         public override ushort AttackPower
         {
@@ -107,6 +102,34 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
                 return 0;
             }
+        }
+
+        /// <summary>
+        /// Execute defense action
+        /// </summary>
+        /// <returns>interval</returns>
+        public ushort Defende()
+        {
+            if (!Defenses.Any())
+            {
+                Defending = false;
+                return default;
+            }
+
+            Defending = true;
+
+            var defense = (ICombatDefense)ProbabilityRandom.Next(Defenses.ToArray()); //todo: remove allocation here
+
+            defense?.Defende(this);
+
+            if (defense != null)
+            {
+                OnDefende?.Invoke(this, defense);
+            }
+
+            return defense?.Interval == null ? Defenses[0].Interval : defense.Interval;
+
+
         }
 
         public override ushort ArmorRating => Metadata.Armor;
@@ -136,9 +159,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
 
 
-        public void AddToTargetList(ICreature creature)
+        public void AddToTargetList(ICombatActor creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
+
+            if (!Attacking) SelectTargetToAttack();
         }
         public void RemoveFromTargetList(ICreature creature)
         {
@@ -149,14 +174,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 StopAttack();
             }
         }
-
-
-
         public bool LookForNewEnemy()
         {
             if (CanReachAnyTarget) return false;
 
-            int randomIndex = _random.Next(minValue: 0, maxValue: 4);
+            int randomIndex = GaussianRandom.Random.Next(minValue: 0, maxValue: 4);
 
             var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
 
@@ -166,10 +188,13 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
         public bool CanReachAnyTarget { get; private set; } = false;
+        public bool IsInCombat => State == MonsterState.InCombat;
+
+        public bool Defending { get; private set; }
 
         private CombatTarget searchTarget()
         {
-            findPathToDestination.ThrowIfNull();
+            //_findPathToDestination.ThrowIfNull();
             Targets.ThrowIfNull();
 
             var nearest = ushort.MaxValue;
@@ -181,7 +206,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
-                if (findPathToDestination.Invoke(this, target.Value.Creature.Location, fpp, out var directions) == false)
+                if (FindPathToDestination.Invoke(this, target.Value.Creature.Location, fpp, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
                     Console.WriteLine("UNREACHABLE");
@@ -218,24 +243,24 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (target != null)
             {
-                SetState(MonsterState.Alive);
+                SetState(MonsterState.InCombat);
             }
 
             FollowCreature = true;
 
             if (FollowCreature)
             {
-                StartFollowing(target.Creature.CreatureId, target.PathToCreature);
+                StartFollowing(target.Creature, new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance));
             }
 
             SetAttackTarget(target.Creature.CreatureId);
         }
 
-        public override void Attack(ICreature enemy)
+        public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
         {
             if ((Attacks?.Count ?? 0) == 0)
             {
-                return;
+                return false;
             }
 
             var index = GaussianRandom.Random.Next(minValue: 0, maxValue: Attacks.Count);
@@ -244,10 +269,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var attack = Attacks[index];
 
-            base.Attack(enemy, attack);
-          
+            return base.Attack(enemy, attack);
         }
-
 
         public void TakeDistanceFromEnemy(ICreature enemy)
         {

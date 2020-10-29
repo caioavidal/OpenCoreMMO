@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Helpers;
@@ -17,30 +18,10 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
         }
         public byte Chance => Option.Chance;
         public byte Range => Option.Range;
-
-        public override ushort CalculateDamage(ushort attackPower, ushort minAttackPower)
+        public bool HasTarget => true;
+        public override void CauseDamage(ICombatActor actor, ICombatActor enemy)
         {
-            attackPower = Option.MaxDamage;
-            
-            minAttackPower = Option.MinDamage;
-
-            var diff = attackPower - minAttackPower;
-            var gaussian = GaussianRandom.Random.Next(0.5f, 0.25f);
-
-            double increment;
-            if (gaussian < 0.0)
-            {
-                increment = diff / 2;
-            }
-            else if (gaussian > 1.0)
-            {
-                increment = (diff + 1) / 2;
-            }
-            else
-            {
-                increment = Math.Round(gaussian * diff);
-            }
-            return (ushort)(minAttackPower + increment);
+            base.CauseDamage(actor, enemy);
         }
     }
 }

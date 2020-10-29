@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.World.Spawns;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.World.Spawns;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
@@ -22,7 +23,7 @@ namespace NeoServer.Server.Jobs.Creatures
 
             foreach (var creature in game.CreatureManager.GetCreatures()) //todo: change to only creatures to check
             {
-                if (creature.IsDead)
+                if (creature is ICombatActor actor && actor.IsDead)
                 {
                     continue;
                 }
@@ -31,9 +32,9 @@ namespace NeoServer.Server.Jobs.Creatures
                     PlayerPingJob.Execute((IPlayer)creature, game);
                 }
 
-                CreatureAttakingJob.Execute(creature, game);
-                CreatureTargetJob.Execute(creature, game);
-                CreatureMovementJob.Execute(creature, game);
+                if(creature is IMonster monster)
+                //CreatureDefenseJob.Execute(monster, game);//todo: not a job
+              //  CreatureTargetJob.Execute(creature, game); //todo: remove, it is not a job
                 RespawnJob.Execute(spawnManager);
             }
 

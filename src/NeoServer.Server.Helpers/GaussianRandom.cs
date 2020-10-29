@@ -17,6 +17,8 @@ namespace NeoServer.Server.Helpers
             return rand_normal;
         }
 
+ 
+
         private static GaussianRandom Instance;
 
         public static GaussianRandom Random
@@ -28,6 +30,27 @@ namespace NeoServer.Server.Helpers
                 return Instance;
             }
 
+        }
+
+        public double NextInRange(double min, double max)
+        {
+            var diff = max - min;
+            var gaussian = Next(0.5f, 0.25f);
+
+            double increment;
+            if (gaussian < 0.0)
+            {
+                increment = diff / 2;
+            }
+            else if (gaussian > 1.0)
+            {
+                increment = (diff + 1) / 2;
+            }
+            else
+            {
+                increment = Math.Round(gaussian * diff);
+            }
+            return (double)(min + increment);
         }
     }
 }

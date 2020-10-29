@@ -1,13 +1,16 @@
-﻿using NeoServer.Game.Contracts.World;
+﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void Born(IMonster monster, Location location);
-    public interface IMonster : ICreature
+    public delegate void Defende(IMonster monster, ICombatDefense defense);
+    public interface IMonster : ICombatActor
     {
         event Born OnWasBorn;
+        event Defende OnDefende;
 
         void Reborn();
 
@@ -21,12 +24,15 @@ namespace NeoServer.Game.Contracts.Creatures
 
         void SetState(MonsterState attacking);
         void SelectTargetToAttack();
-        void AddToTargetList(ICreature creature);
+        void AddToTargetList(ICombatActor creature);
         void RemoveFromTargetList(ICreature creature);
+        ushort Defende();
 
         uint Experience { get; }
         bool HasAnyTarget { get; }
         bool CanReachAnyTarget { get; }
+        bool IsInCombat { get; }
+        bool Defending { get; }
     }
 
 }

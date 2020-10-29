@@ -78,7 +78,7 @@ namespace NeoServer.Server.Tasks
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine(ex.Message);
+                                Console.WriteLine(ex.StackTrace);
                             }
                         }
                     }
@@ -105,7 +105,7 @@ namespace NeoServer.Server.Tasks
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine(ex.Message);
+                                Console.WriteLine(ex.StackTrace);
                             }
                         }
                     }

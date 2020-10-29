@@ -1,4 +1,5 @@
 using NeoServer.Server.Tasks.Contracts;
+using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Channels;
@@ -76,12 +77,12 @@ namespace NeoServer.Server.Tasks
         {
             await Task.Delay(evt.ExpirationDelay);
             evt.SetToNotExpire();
-            if (EventIsCancelled(evt.EventId))
+          
+            if (!EventIsCancelled(evt.EventId))
             {
-                return;
+                activeEventIds.TryRemove(evt.EventId, out _);
+                dispatcher.AddEvent(evt, true); //send to dispatcher      
             }
-            dispatcher.AddEvent(evt, true); //send to dispatcher
-            activeEventIds.TryRemove(evt.EventId, out _);
         }
 
         /// <summary>
@@ -95,8 +96,8 @@ namespace NeoServer.Server.Tasks
             {
                 return false;
             }
-
-            return activeEventIds.TryRemove(eventId, out _);
+            var removed = activeEventIds.TryRemove(eventId, out _);
+            return removed;
         }
 
         /// <summary>

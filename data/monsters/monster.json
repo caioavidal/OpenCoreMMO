@@ -60,47 +60,48 @@
       
     },
       "attacks": [
-       
-		{
-          "name": "energy",
-          "interval": "3000",
-          "chance": "30",
-          "length": "8",
-          "spread": "0",
-          "min": "-5",
-          "max": "-10",
-          "attributes": [{
-            "key": "areaEffect",
-            "value": "energy"
-          }]
-        },
-		{
-          "name": "fire",
-          "interval": "2000",
-          "chance": "14",
+        {
+          "name": "physical",
+          "interval": "1000",
+          "chance": "34",
           "range": "7",
-          "radius": "7",
-          "target": "1",
-          "min": "-5",
-          "max": "-10",
-          "attributes": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
+          "min": "-45",
+          "max": "-85",
+          "attributes": [{
+            "key": "shootEffect",
+            "value": "bolt"
+          }]
         }
+		
         
       ],
-	     "defenses": {
-      "armor": "15",
-      "defense": "20"
+	 "defense": {
+      "armor": "50",
+      "defense": "55"
+	  },
+      "defenses": [
+        {
+          "name": "healing",
+          "interval": "1000",
+          "chance": "15",
+          "min": "90",
+          "max": "200",
+          "attributes": [{
+            "key": "areaEffect",
+            "value": "blueshimmer"
+          }]
+        },
+        {
+          "name": "speed",
+          "interval": "1000",
+          "chance": "15",
+          "speedchange": "200",
+          "duration": "20000",
+          "attributes": [{
+            "key": "areaEffect",
+            "value": "redshimmer"
+          }]
+        }
+      ]
     }
-  
-    
-  }
 }

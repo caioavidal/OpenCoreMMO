@@ -20,9 +20,9 @@ namespace NeoServer.Server.Handlers.Players
         {
             var autoWalk = new AutoWalkPacket(message);
 
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
+            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
             {
-                game.Dispatcher.AddEvent(new Event(() => PlayerWalkCommand.Execute((IPlayer)player, game, autoWalk.Steps.ToArray())));
+                game.Dispatcher.AddEvent(new Event(() => player.TryWalkTo(autoWalk.Steps)));
             }
         }
     }

@@ -23,5 +23,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public List<ICombatAttack> Attacks { get; set; }
         public ushort Armor { get; set; }
         public ushort Defence { get; set; }
+        public List<ICombatDefense> Defenses { get; set; }
     }
 }

@@ -8,6 +8,7 @@
         Combat,
         Talk,
         Block,
-        LookForNewEnemy
+        LookForNewEnemy,
+        Haste
     }
 }
