@@ -159,7 +159,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
 
 
-        public void AddToTargetList(ICreature creature)
+        public void AddToTargetList(ICombatActor creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
 
@@ -250,7 +250,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (FollowCreature)
             {
-                StartFollowing(target.Creature.CreatureId, target.PathToCreature);
+                StartFollowing(target.Creature, new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance));
             }
 
             SetAttackTarget(target.Creature.CreatureId);

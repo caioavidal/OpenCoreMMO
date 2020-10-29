@@ -11,7 +11,7 @@ using System.Text;
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate bool PathFinder(IWalkableCreature creature, Location target, FindPathParams options, out Direction[] directions);
-    public delegate void StartFollow(uint creatureId);
+    public delegate void StartFollow(IWalkableCreature creature, IWalkableCreature following, FindPathParams fpp);
     public interface IWalkableCreature: ICreature
     {
         uint EventWalk { get; set; }
@@ -24,6 +24,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IWalkableTile Tile { get; set; }
         ConcurrentQueue<Direction> WalkingQueue { get; }
         bool FollowCreature { get; }
+        uint FollowEvent { get; set; }
 
         event StartWalk OnStartedWalking;
         event StopWalk OnStoppedWalking;
@@ -34,7 +35,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte[] GetRaw(IPlayer playerRequesting);
         void IncreaseSpeed(ushort speed);
         void Moved(ITile fromTile, ITile toTile);
-        void StartFollowing(uint id, params Direction[] pathToCreature);
+        void Follow(IWalkableCreature creature, FindPathParams fpp);
         void StopFollowing();
         void StopWalking();
         bool TryGetNextStep(out Direction direction);
@@ -42,5 +43,6 @@ namespace NeoServer.Game.Contracts.Creatures
         bool TryWalkTo(params Direction[] directions);
         void TurnTo(Direction direction);
         void UpdateLastStepInfo(bool wasDiagonal = true);
+        void StartFollowing(IWalkableCreature creature, FindPathParams fpp);
     }
 }

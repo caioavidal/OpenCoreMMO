@@ -8,11 +8,11 @@ namespace NeoServer.Game.Creatures.Model.Combat
 {
     public class CombatTarget
     {
-        public ICreature Creature { get; set; }
+        public ICombatActor Creature { get; set; }
         public Direction[] PathToCreature { get; private set; }
         public bool CanReachCreature { get; private set; } = true;
 
-        public CombatTarget(ICreature creature)
+        public CombatTarget(ICombatActor creature)
         {
             Creature = creature;
         }

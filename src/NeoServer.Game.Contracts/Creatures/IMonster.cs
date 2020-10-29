@@ -24,7 +24,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         void SetState(MonsterState attacking);
         void SelectTargetToAttack();
-        void AddToTargetList(ICreature creature);
+        void AddToTargetList(ICombatActor creature);
         void RemoveFromTargetList(ICreature creature);
         ushort Defende();
 

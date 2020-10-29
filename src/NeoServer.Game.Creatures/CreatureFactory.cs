@@ -23,6 +23,7 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureStartedWalkingEventHandler _creatureStartedWalkingEventHandler;
         private readonly CreatureHealedEventHandler _creatureHealedEventHandler;
         private readonly CreatureChangedAttackTargetEventHandler _creatureChangedAttackTargetEventHandler;
+        private readonly CreatureStartedFollowingEventHandler  _creatureStartedFollowingEventHandler;
         private readonly IMap _map;
         //factories
         private readonly IPlayerFactory _playerFactory;
@@ -36,8 +37,8 @@ namespace NeoServer.Game.Creatures
             CreatureAttackEventHandler creatureAttackEventHandler,
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
             IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map,
-            CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler, 
-            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler)
+            CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler,
+            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -52,10 +53,13 @@ namespace NeoServer.Game.Creatures
             _creatureStartedWalkingEventHandler = creatureStartedWalkingEventHandler;
             _creatureHealedEventHandler = creatureHealedEventHandler;
             _creatureChangedAttackTargetEventHandler = creatureChangedAttackTargetEventHandler;
+            _creatureStartedFollowingEventHandler = creatureStartedFollowingEventHandler;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
             var monster = _monsterFactory.Create(name, spawn);
+            // AttachCombatActorEvents(monster);
+            AttachWalkableEvents(monster);
             return AttachEvents(monster) as IMonster;
 
         }
@@ -71,6 +75,11 @@ namespace NeoServer.Game.Creatures
         {
             actor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
             return actor;
+        }
+        private ICreature AttachWalkableEvents(IWalkableCreature creature)
+        {
+            creature.OnStartedFollowing += _creatureStartedFollowingEventHandler.Execute;
+            return creature;
         }
         private ICreature AttachEvents(ICombatActor creature)
         {

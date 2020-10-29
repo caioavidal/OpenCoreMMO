@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Model;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
@@ -44,6 +45,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public ConcurrentQueue<Direction> WalkingQueue { get; } = new ConcurrentQueue<Direction>();
         public bool HasNextStep => WalkingQueue.Count > 0;
         public bool FollowCreature { get; protected set; }
+        public uint FollowEvent { get; set; }
 
         public void UpdateLastStepInfo(bool wasDiagonal = true)
         {
@@ -103,9 +105,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 return (int)(CalculateStepDuration() * lastStepCost);
             }
         }
-
-
-
         public void StopWalking()
         {
             WalkingQueue.Clear(); // reset the actual queue
@@ -120,11 +119,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
             Following = 0;
             StopWalking();
         }
-        public void StartFollowing(uint id, params Direction[] pathToCreature)
+
+        public void StartFollowing(IWalkableCreature creature, FindPathParams fpp)
         {
-            Following = id;
-            TryUpdatePath(pathToCreature);
-            OnStartedFollowing?.Invoke(id);
+            Following = creature.CreatureId;
+            OnStartedFollowing?.Invoke(this, creature, fpp);
+        }
+        public void Follow(IWalkableCreature creature, FindPathParams fpp)
+        {
+            if (!FindPathToDestination(this, creature.Location, fpp, out var directions)) return;
+            TryUpdatePath(directions);
         }
 
 
@@ -179,5 +183,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void IncreaseSpeed(ushort speed) => Speed += speed;
         public void DecreaseSpeed(ushort speedBoost) => Speed -= speedBoost;
+
+        public void Follow(uint id, params Direction[] pathToCreature)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

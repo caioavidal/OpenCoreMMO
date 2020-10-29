@@ -322,7 +322,7 @@ namespace NeoServer.Server.Model.Players
             FollowCreature = mode == ChaseMode.Follow;
             if (FollowCreature)
             {
-                StartFollowing(AutoAttackTargetId);
+           //     Follow(AutoAttackTargetId);
                 return;
             }
 
