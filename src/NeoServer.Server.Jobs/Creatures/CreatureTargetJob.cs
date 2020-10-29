@@ -8,7 +8,7 @@ namespace NeoServer.Server.Jobs.Creatures
     public class CreatureTargetJob
     {
         private const uint INTERVAL = 1000;
-        public static void Execute(ICreature creature, Game game)
+        public static void Execute(ICombatActor creature, Game game)
         {
             if (creature.IsDead)
             {

@@ -18,7 +18,7 @@ namespace NeoServer.Server.Events.Creature
             this.map = map;
             this.game = game;
         }
-        public void Execute(ICreature creature)
+        public void Execute(ICombatActor creature)
         {
             game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
             {

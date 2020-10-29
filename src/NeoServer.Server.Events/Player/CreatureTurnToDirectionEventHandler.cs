@@ -19,7 +19,7 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(ICreature creature, Direction direction)
+        public void Execute(IWalkableCreature creature, Direction direction)
         {
             creature.ThrowIfNull();
             direction.ThrowIfNull();

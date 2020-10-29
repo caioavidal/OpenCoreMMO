@@ -63,7 +63,7 @@ namespace NeoServer.Game.Creatures
         }
 
 
-        private ICreature AttachEvents(ICreature creature)
+        private ICreature AttachEvents(ICombatActor creature)
         {
             creature.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
             creature.OnKilled += _creatureKilledEventHandler.Execute;
@@ -79,7 +79,7 @@ namespace NeoServer.Game.Creatures
             return creature;
 
         }
-        private void DetachEvents(ICreature creature)
+        private void DetachEvents(ICombatActor creature)
         {
             creature.OnDamaged -= _creatureReceiveDamageEventHandler.Execute;
             creature.OnKilled -= _creatureKilledEventHandler.Execute;

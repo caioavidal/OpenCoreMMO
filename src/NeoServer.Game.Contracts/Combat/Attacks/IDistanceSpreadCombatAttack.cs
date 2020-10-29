@@ -9,8 +9,5 @@ namespace NeoServer.Game.Contracts.Combat
     {
         byte Length { get; }
         byte Spread { get; }
-
-        ushort CalculateDamage(ushort attackPower, ushort minAttackPower);
-        void CauseDamage(ICreature actor, ICreature enemy);
     }
 }

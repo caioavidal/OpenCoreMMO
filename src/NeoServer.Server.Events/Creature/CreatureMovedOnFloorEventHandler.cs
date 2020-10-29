@@ -19,7 +19,7 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
-        public void Execute(ICreature creature, ICylinder cylinder)
+        public void Execute(IWalkableCreature creature, ICylinder cylinder)
         {
             cylinder.ThrowIfNull();
             cylinder.TileSpectators.ThrowIfNull();
@@ -35,7 +35,7 @@ namespace NeoServer.Server.Events
             MoveCreature(toDirection, creature, cylinder);
         }
 
-        private void MoveCreature(Direction toDirection, ICreature  creature, ICylinder cylinder)
+        private void MoveCreature(Direction toDirection, IWalkableCreature  creature, ICylinder cylinder)
         {
             var fromLocation = cylinder.FromTile.Location;
             var toLocation = cylinder.ToTile.Location;

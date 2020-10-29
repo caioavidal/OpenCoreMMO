@@ -85,7 +85,7 @@ namespace NeoServer.Game.World.Map
                 return false;
             }
 
-            OnThingMoved?.Invoke((ICreature)thing, cylinder);
+            OnThingMoved?.Invoke((IWalkableCreature)thing, cylinder);
 
             var tileDestination = GetTileDestination(toTile);
 
@@ -575,13 +575,13 @@ namespace NeoServer.Game.World.Map
                 var cylinder = new Cylinder(this);
                 cylinder.AddThing(ref thing, tile);
 
-                OnCreatureAddedOnMap?.Invoke(creature, cylinder);
+                if(creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }
         }
 
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
 
-        public void PropagateAttack(ICreature actor, ICreature victim, ICombatAttack combatAttack)
+        public void PropagateAttack(ICombatActor actor, ICombatActor victim, ICombatAttack combatAttack)
         {
             if (!(combatAttack is IAreaAttack area))
             {
@@ -595,23 +595,27 @@ namespace NeoServer.Game.World.Map
                 {
                     foreach (var target in walkableTile.Creatures.Values)
                     {
-                        if (combatAttack.HasTarget && victim.CreatureId == target.CreatureId)
+                        if(!(target is ICombatActor targetCreature))
                         {
                             continue;
                         }
-                        if (actor.CreatureId == target.CreatureId)
+                        if (combatAttack.HasTarget && victim == targetCreature)
+                        {
+                            continue;
+                        }
+                        if (actor == target)
                         {
                             continue;
                         }
 
-                        target.ReceiveAttack(actor, combatAttack);
+                        targetCreature.ReceiveAttack(actor, combatAttack);
                     }
                 }
 
             }
         }
 
-        public void MoveCreature(ICreature creature)
+        public void MoveCreature(IWalkableCreature creature)
         {
             var thing = creature as IMoveableThing;
 

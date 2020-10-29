@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Players
@@ -21,9 +22,8 @@ namespace NeoServer.Server.Handlers.Players
         {
             var autoWalk = new AutoWalkPacket(message);
 
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
+            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
             {
-
                 game.Dispatcher.AddEvent(new Event(player.StopWalking));
             }
         }

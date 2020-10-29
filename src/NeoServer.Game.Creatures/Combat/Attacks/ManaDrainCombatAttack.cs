@@ -16,7 +16,8 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
         public void Damage(IPlayer enemy)
         {
-            //enemy.ReceiveAttack();
+            var damage = CalculateDamage(enemy.AttackPower, enemy.MinimumAttackPower);
+            enemy.ReceiveManaAttack(enemy, damage);
         }
     }
 }

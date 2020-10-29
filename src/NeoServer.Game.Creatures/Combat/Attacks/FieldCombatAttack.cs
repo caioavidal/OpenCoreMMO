@@ -22,7 +22,7 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
             return 10;
         }
 
-        public override void CauseDamage(ICreature actor, ICreature enemy)
+        public override void CauseDamage(ICombatActor actor, ICombatActor enemy)
         {
             var field = ItemFactory.Create(1487, enemy.Location, null) as IThing;
             enemy.Tile.AddThing(ref field);

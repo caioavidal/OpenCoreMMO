@@ -21,12 +21,10 @@ namespace NeoServer.Server.Handlers.Players
         {
             Direction direction = ParseMovementPacket(message.IncomingPacket);
 
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature creature))
+            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
             {
-                //todo: create command pool
-                game.Dispatcher.AddEvent(new Event(() => PlayerWalkCommand.Execute((IPlayer)creature, game, direction)));
+                game.Dispatcher.AddEvent(new Event(() => player.TryWalkTo(direction)));
             }
-
         }
 
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)

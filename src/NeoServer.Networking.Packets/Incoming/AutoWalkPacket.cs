@@ -8,17 +8,17 @@ namespace NeoServer.Networking.Packets.Incoming
     public class AutoWalkPacket : IncomingPacket
     {
         public byte StepDistance { get; }
-        public List<Direction> Steps { get; }
+        public Direction[] Steps { get; }
 
         public AutoWalkPacket(IReadOnlyNetworkMessage message)
         {
             StepDistance = message.GetByte();
 
-            Steps = new List<Direction>(StepDistance);
+            Steps = new Direction[StepDistance];
 
             for (int i = 0; i < StepDistance; i++)
             {
-                Steps.Add(ParseByte(message.GetByte()));
+                Steps[i] = ParseByte(message.GetByte());
             }
         }
 

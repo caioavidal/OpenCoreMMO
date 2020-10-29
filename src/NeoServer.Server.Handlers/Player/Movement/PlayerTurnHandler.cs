@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Handlers.Players
 {
@@ -22,7 +23,7 @@ namespace NeoServer.Server.Handlers.Players
         {
             Direction direction = ParseTurnPacket(message.IncomingPacket);
 
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
+            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
             {
                 player.TurnTo(direction);
             }

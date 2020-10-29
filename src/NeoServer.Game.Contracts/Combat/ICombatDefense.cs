@@ -11,6 +11,6 @@ namespace NeoServer.Game.Contracts.Combat
         ushort Interval { get; set; }
         EffectT Effect { get; set; }
 
-        void Defende(ICreature actor);
+        void Defende(ICombatActor actor);
     }
 }

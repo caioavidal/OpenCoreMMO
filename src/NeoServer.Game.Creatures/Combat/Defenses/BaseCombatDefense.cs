@@ -22,6 +22,6 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
         /// action to execute when defence occurrs
         /// </summary>
         /// <param name="actor"></param>
-        public abstract void Defende(ICreature actor);
+        public abstract void Defende(ICombatActor actor);
     }
 }

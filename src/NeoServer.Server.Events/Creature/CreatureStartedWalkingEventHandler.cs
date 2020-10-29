@@ -14,7 +14,7 @@ namespace NeoServer.Server.Events.Creature
         {
             this.game = game;
         }
-        public void Execute(ICreature creature)
+        public void Execute(IWalkableCreature creature)
         {
             if(creature.EventWalk != 0)
             {
@@ -26,7 +26,7 @@ namespace NeoServer.Server.Events.Creature
             creature.EventWalk = game.Scheduler.AddEvent(new SchedulerEvent(creature.StepDelayMilliseconds, () => Move(creature)));
         }
 
-        private void Move(ICreature creature)
+        private void Move(IWalkableCreature creature)
         {
             if (creature.HasNextStep)
             {

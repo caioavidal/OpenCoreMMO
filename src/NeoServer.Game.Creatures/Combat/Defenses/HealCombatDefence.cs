@@ -12,7 +12,7 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
         public ushort Min { get; set; }
         public ushort Max { get; set; }
 
-        public override void Defende(ICreature actor)
+        public override void Defende(ICombatActor actor)
         {
             var hpToIncrease = GaussianRandom.Random.NextInRange(Min, Max);
             actor.Heal((ushort)hpToIncrease);

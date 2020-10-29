@@ -12,17 +12,17 @@ namespace NeoServer.Game.Creatures.Spells
         private HasteSpell() { }
         public override EffectT Effect => EffectT.GlitterBlue;
 
-        private void Action(ICreature actor, ushort speed)
+        private void Action(ICombatActor actor, ushort speed)
         {
             actor.IncreaseSpeed(speed);
         }
 
-        public void Remove(ICreature actor, ushort speed)
+        public void Remove(ICombatActor actor, ushort speed)
         {
             actor.IncreaseSpeed(speed);
         }
 
-        public void Invoke(ICreature actor, ushort speedBoost, uint duration)
+        public void Invoke(ICombatActor actor, ushort speedBoost, uint duration)
         {
             if (actor.HasCondition(ConditionType.Haste, out var condition))
             {

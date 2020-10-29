@@ -23,7 +23,7 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(ICreature creature, ICylinder cylinder)
+        public void Execute(IWalkableCreature creature, ICylinder cylinder)
         {
             cylinder.ThrowIfNull();
             cylinder.TileSpectators.ThrowIfNull();
@@ -70,7 +70,7 @@ namespace NeoServer.Server.Events
 
         }
 
-        private void SendPacketsToSpectator(IPlayer playerToSend, ICreature creatureAdded, IConnection connection, byte stackPosition)
+        private void SendPacketsToSpectator(IPlayer playerToSend, IWalkableCreature creatureAdded, IConnection connection, byte stackPosition)
         {
             
             //spectator.add

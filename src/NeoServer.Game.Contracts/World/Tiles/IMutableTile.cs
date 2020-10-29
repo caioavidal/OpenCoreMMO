@@ -15,7 +15,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
         ushort Ground { get; }
         ushort[] TopItems { get; }
         ConcurrentStack<IItem> DownItems { get; }
-        ConcurrentDictionary<uint, ICreature> Creatures { get; }
+        ConcurrentDictionary<uint, IWalkableCreature> Creatures { get; }
         ushort StepSpeed { get; }
         bool CannotLogout { get; }
         bool ProtectionZone { get; }

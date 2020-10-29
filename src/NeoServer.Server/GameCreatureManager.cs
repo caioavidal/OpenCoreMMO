@@ -19,8 +19,7 @@ namespace NeoServer.Server
     {
 
         private ICreatureGameInstance creatureInstances;
-        private readonly Dictionary<uint, ICreature> Monsters;
-        private readonly Dictionary<uint, ICreature> Npcs;
+
 
         private readonly Func<IPlayerModel, IPlayer> playerFactory;
 
@@ -78,9 +77,8 @@ namespace NeoServer.Server
 
         public bool TryGetPlayer(uint id, out IPlayer player)
         {
-            player = null;
-
-            if (creatureInstances.TryGetCreature(id, out ICreature creature) && creature is IPlayer)
+            player = default;
+            if (TryGetCreature(id, out ICreature creature) && creature is IPlayer)
             {
                 player = creature as IPlayer;
                 return true;
@@ -95,6 +93,7 @@ namespace NeoServer.Server
         /// <param name="creature"></param>
         /// <returns></returns>
         public bool TryGetCreature(uint id, out ICreature creature) => creatureInstances.TryGetCreature(id, out creature);
+
         /// <summary>
         /// Removes creature from game
         /// This method also removes creature from map
@@ -110,7 +109,10 @@ namespace NeoServer.Server
 
             var thing = creature as IMoveableThing;
 
-            map.RemoveThing(ref thing, creature.Tile);
+            if (creature is IWalkableCreature walkableCreature)
+            {
+                map.RemoveThing(ref thing, walkableCreature.Tile);
+            }
 
             creatureInstances.TryRemove(creature.CreatureId);
             creature.SetAsRemoved();

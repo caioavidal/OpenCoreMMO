@@ -40,7 +40,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public ushort[] TopItems { get; private set; }
 
         public ConcurrentStack<IItem> DownItems { get; private set; } = new ConcurrentStack<IItem>();
-        public ConcurrentDictionary<uint, ICreature> Creatures { get; private set; } = new ConcurrentDictionary<uint, ICreature>();
+        public ConcurrentDictionary<uint, IWalkableCreature> Creatures { get; private set; } = new ConcurrentDictionary<uint, IWalkableCreature>();
 
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
@@ -296,7 +296,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             var operations = new TileOperationResult();
 
-            if (thing is ICreature creature)
+            if (thing is IWalkableCreature creature)
             {
                 if (Creatures.Any())
                 {
