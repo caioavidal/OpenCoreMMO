@@ -18,19 +18,14 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 {
     public class Monster : CombatActor, IMonster
     {
-        public delegate bool PathFinder(ICreature creature, Location target, FindPathParams options, out Direction[] directions);
-
-        private PathFinder findPathToDestination;
         public event Born OnWasBorn;
         public event Defende OnDefende;
 
-        public Monster(IMonsterType type, ISpawnPoint spawn, PathFinder pathFinder) : base(type)
+        public Monster(IMonsterType type, PathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
         {
-            pathFinder.ThrowIfNull();
             type.ThrowIfNull();
             spawn.ThrowIfNull();
 
-            findPathToDestination = pathFinder;
             Metadata = type;
             Spawn = spawn;
             Damages = new ConcurrentDictionary<ICreature, ushort>();
@@ -199,7 +194,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         private CombatTarget searchTarget()
         {
-            findPathToDestination.ThrowIfNull();
+            //_findPathToDestination.ThrowIfNull();
             Targets.ThrowIfNull();
 
             var nearest = ushort.MaxValue;
@@ -211,7 +206,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
-                if (findPathToDestination.Invoke(this, target.Value.Creature.Location, fpp, out var directions) == false)
+                if (FindPathToDestination.Invoke(this, target.Value.Creature.Location, fpp, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
                     Console.WriteLine("UNREACHABLE");

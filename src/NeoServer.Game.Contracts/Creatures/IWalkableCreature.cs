@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
@@ -9,6 +10,7 @@ using System.Text;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
+    public delegate bool PathFinder(IWalkableCreature creature, Location target, FindPathParams options, out Direction[] directions);
     public delegate void StartFollow(uint creatureId);
     public interface IWalkableCreature: ICreature
     {

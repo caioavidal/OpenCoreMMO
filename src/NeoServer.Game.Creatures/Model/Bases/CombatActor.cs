@@ -49,7 +49,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private byte blockCount = 0;
         private const byte BLOCK_LIMIT = 2;
 
-        protected CombatActor(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
+        protected CombatActor(ICreatureType type, PathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathFinder, outfit, healthPoints)
         {
         }
         public abstract int ShieldDefend(int attack);

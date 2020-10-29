@@ -33,7 +33,7 @@ namespace NeoServer.Game.Creatures
                 throw new KeyNotFoundException($"Given monster name: {name} is not loaded");
             }
 
-            var monster = new Monster(monsterType, spawn, _pathFinder.Find);
+            var monster = new Monster(monsterType, _pathFinder.Find, spawn);
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttack += _creatureAttackEventHandler.Execute;

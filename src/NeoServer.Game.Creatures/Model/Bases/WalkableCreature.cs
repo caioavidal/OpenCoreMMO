@@ -13,7 +13,7 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
-  
+
     public abstract class WalkableCreature : Creature, IWalkableCreature
     {
         #region Events
@@ -24,13 +24,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
         #endregion
 
         private readonly object _enqueueWalkLock = new object();
-
+        protected PathFinder FindPathToDestination { get; }
 
         private uint lastStepCost = 1;
 
-        protected WalkableCreature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
+        protected WalkableCreature(ICreatureType type, PathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
             Speed = type.Speed;
+            FindPathToDestination = pathFinder;
         }
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
@@ -174,7 +175,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
 
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);
-        
+
 
         public void IncreaseSpeed(ushort speed) => Speed += speed;
         public void DecreaseSpeed(ushort speedBoost) => Speed -= speedBoost;

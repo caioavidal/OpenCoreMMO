@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
@@ -15,7 +16,7 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures
 {
-    public class PlayerFactory:IPlayerFactory
+    public class PlayerFactory : IPlayerFactory
     {
         private readonly Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory;
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
@@ -27,13 +28,14 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
         private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
+        private readonly IPathFinder _pathFinder;
 
         public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
              PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
-            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler)
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler, IPathFinder pathFinder)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -46,6 +48,7 @@ namespace NeoServer.Game.Creatures
 
             _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
             _playerManaReducedEventHandler = playerManaReducedEventHandler;
+            _pathFinder = pathFinder;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -68,7 +71,8 @@ namespace NeoServer.Game.Creatures
                 player.Outfit,
                 ConvertToInventory(player),
                 player.Speed,
-                player.Location
+                player.Location,
+                _pathFinder.Find
                 );
 
             newPlayer.OnCancelledWalk += playerWalkCancelledEventHandler.Execute;

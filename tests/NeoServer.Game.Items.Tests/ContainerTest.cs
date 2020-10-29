@@ -6,6 +6,7 @@ using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Game.Items.Items;
+using NeoServer.Game.World.Map;
 using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
@@ -441,7 +442,7 @@ namespace NeoServer.Game.Items.Tests
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
 
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
+             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
 
             var sut = CreateContainer(2);
             sut.TryAddItem(CreateRegularItem(100));
@@ -477,7 +478,7 @@ namespace NeoServer.Game.Items.Tests
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
 
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
+             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
 
             var sut = CreateContainer(2);
 
