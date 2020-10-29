@@ -61,7 +61,7 @@ namespace NeoServer.Game.Creatures
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
             var monster = _monsterFactory.Create(name, spawn);
-            // AttachCombatActorEvents(monster);
+            AttachCombatActorEvents(monster);
             AttachWalkableEvents(monster);
             return AttachEvents(monster) as IMonster;
 
@@ -70,6 +70,7 @@ namespace NeoServer.Game.Creatures
         {
             var player = _playerFactory.Create(playerModel);
             AttachCombatActorEvents(player);
+            AttachWalkableEvents(player);
             return AttachEvents(player) as IPlayer;
         }
 

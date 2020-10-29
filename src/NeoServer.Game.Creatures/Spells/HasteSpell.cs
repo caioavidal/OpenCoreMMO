@@ -12,7 +12,7 @@ namespace NeoServer.Game.Creatures.Spells
         private HasteSpell() { }
         public override EffectT Effect => EffectT.GlitterBlue;
 
-        private void Action(ICombatActor actor, ushort speed)
+        private void OnCast(ICombatActor actor, ushort speed)
         {
             actor.IncreaseSpeed(speed);
         }
@@ -34,9 +34,9 @@ namespace NeoServer.Game.Creatures.Spells
 
             hasteCondition.OnEnd = () => Remove(actor, speedBoost);
 
-            actor.AddCondition(hasteCondition);
+            actor.AddCondition(hasteCondition);            
 
-            Action(actor, speedBoost);
+            OnCast(actor, speedBoost);
         }
     }
 }
