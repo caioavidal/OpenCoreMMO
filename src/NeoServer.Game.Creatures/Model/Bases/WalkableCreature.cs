@@ -163,7 +163,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool TryGetNextStep(out Direction direction)
         {
-            if (!Cooldowns.Expired(CooldownType.UpdatePath))
+            if (!Cooldowns.Expired(CooldownType.Move))
             {
                 direction = Direction.None;
                 return false;

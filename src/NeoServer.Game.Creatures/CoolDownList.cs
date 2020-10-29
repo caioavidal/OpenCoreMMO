@@ -18,7 +18,11 @@ namespace NeoServer.Game.Creatures
         /// </summary>
         /// <param name="type"></param>
         /// <param name="duration">milliseconds</param>
-        public bool Start(CooldownType type, int duration) => Cooldowns.TryAdd(type, new CooldownTime(DateTime.Now, duration));
+        public bool Start(CooldownType type, int duration)
+        {
+            if (Expired(type)) Cooldowns.Remove(type);
+            return Cooldowns.TryAdd(type, new CooldownTime(DateTime.Now, duration));
+        }
 
         public void Add(ISpell spell, int duration)
         {
@@ -46,12 +50,18 @@ namespace NeoServer.Game.Creatures
         public CooldownTime(DateTime start, int duration)
         {
             Start = start.Ticks;
-            Duration = duration;
+            Duration = TimeSpan.TicksPerMillisecond * duration;
         }
 
         public long Start { get; set; }
-        public int Duration { get; set; }
-        public bool Expired => Start + Duration < DateTime.Now.Ticks;
+        public long Duration { get; set; }
+        public bool Expired {
+            get
+            {
+                Console.WriteLine($"{Start + Duration} --- {DateTime.Now.Ticks}");
+                return Start + Duration <= DateTime.Now.Ticks;
+            }
+        }
 
         public void Reset() => Start = DateTime.Now.Ticks;
     }
