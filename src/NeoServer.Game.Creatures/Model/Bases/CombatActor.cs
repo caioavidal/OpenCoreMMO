@@ -32,9 +32,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         #region Properties
         public bool IsDead => HealthPoints <= 0;
-        public decimal BaseAttackSpeed { get; }
-        public uint MaxHealthpoints { get; private set; }
-        public uint HealthPoints { get; private set; }
+        public decimal BaseAttackSpeed  => 2000M;
         public decimal BaseDefenseSpeed { get; }
         public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
         public abstract ushort AttackPower { get; }
@@ -45,7 +43,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public abstract byte AutoAttackRange { get; }
         public abstract ushort MinimumAttackPower { get; }
         public abstract bool UsingDistanceWeapon { get; }
-
+        public uint AttackEvent { get; set; }
         #endregion
 
         private byte blockCount = 0;
@@ -53,9 +51,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         protected CombatActor(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
-            MaxHealthpoints = CreatureType.MaxHealth;
-            HealthPoints = Math.Min(MaxHealthpoints, healthPoints == 0 ? MaxHealthpoints : healthPoints);
-
         }
         public abstract int ShieldDefend(int attack);
         public abstract int ArmorDefend(int attack);
@@ -175,18 +170,23 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 combatAttack.CauseDamage(this, enemy);
             }
 
-            Cooldowns.Start(CooldownType.Combat, 2000);
+            Cooldowns.Start(CooldownType.Combat, (int)BaseAttackSpeed);
 
             return true;
         }
         public virtual void SetAttackTarget(uint targetId)
         {
+            if (targetId == AutoAttackTargetId) return;
+
+            var oldAttackTarget = AutoAttackTargetId;
+            AutoAttackTargetId = targetId;
+
             if (targetId == 0)
             {
                 StopAttack();
                 StopFollowing();
             }
-            AutoAttackTargetId = targetId;
+            OnTargetChanged?.Invoke(this, oldAttackTarget, targetId);
         }
 
         private void ReduceHealth(ushort damage)

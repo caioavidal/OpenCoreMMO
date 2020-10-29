@@ -167,6 +167,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void AddToTargetList(ICreature creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
+
+            if (!Attacking) SelectTargetToAttack();
         }
         public void RemoveFromTargetList(ICreature creature)
         {
@@ -177,9 +179,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 StopAttack();
             }
         }
-
-
-
         public bool LookForNewEnemy()
         {
             if (CanReachAnyTarget) return false;

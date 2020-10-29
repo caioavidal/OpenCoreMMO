@@ -51,7 +51,7 @@ namespace NeoServer.Game.Creatures
 
         public long Start { get; set; }
         public int Duration { get; set; }
-        public bool Expired => Start + Duration > DateTime.Now.Ticks;
+        public bool Expired => Start + Duration < DateTime.Now.Ticks;
 
         public void Reset() => Start = DateTime.Now.Ticks;
     }

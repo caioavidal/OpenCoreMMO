@@ -2,6 +2,7 @@ using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
@@ -373,6 +374,12 @@ namespace NeoServer.Server.Model.Players
             Mana = (ushort)(amount > Mana ? 0 : Mana - amount);
 
             OnManaReduced?.Invoke(this);
+        }
+
+        public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
+        {
+            var melee = new MeleeCombatAttack(255, 255);
+            return base.Attack(enemy, melee);
         }
     }
 }

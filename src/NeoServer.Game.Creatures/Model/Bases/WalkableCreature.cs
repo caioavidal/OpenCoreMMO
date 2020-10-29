@@ -20,6 +20,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event StopWalk OnStoppedWalking;
         public event StartWalk OnStartedWalking;
         public event OnTurnedToDirection OnTurnedToDirection;
+        public event StartFollow OnStartedFollowing;
         #endregion
 
         private readonly object _enqueueWalkLock = new object();
@@ -122,6 +123,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             Following = id;
             TryUpdatePath(pathToCreature);
+            OnStartedFollowing?.Invoke(id);
         }
 
 

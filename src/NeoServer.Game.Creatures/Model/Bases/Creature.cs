@@ -38,6 +38,8 @@ namespace NeoServer.Game.Creatures.Model
             {
                 throw new ArgumentNullException(nameof(type.Name));
             }
+            MaxHealthpoints = type.MaxHealth;
+            HealthPoints = Math.Min(MaxHealthpoints, healthPoints == 0 ? MaxHealthpoints : healthPoints);
 
             CreatureType = type;
 
@@ -52,8 +54,8 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetAsRemoved() => IsRemoved = true;
 
-        public uint HealthPoints { get; }
-        public uint MaxHealthpoints { get; }
+        public uint HealthPoints { get; protected set; }
+        public uint MaxHealthpoints { get; protected set; }
         public new string Name => CreatureType.Name;
         public override string InspectionText => $"{Name}";
         public override string CloseInspectionText => InspectionText;

@@ -22,6 +22,7 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
         private readonly CreatureStartedWalkingEventHandler _creatureStartedWalkingEventHandler;
         private readonly CreatureHealedEventHandler _creatureHealedEventHandler;
+        private readonly CreatureChangedAttackTargetEventHandler _creatureChangedAttackTargetEventHandler;
         private readonly IMap _map;
         //factories
         private readonly IPlayerFactory _playerFactory;
@@ -34,8 +35,9 @@ namespace NeoServer.Game.Creatures
             //IPathFinder pathFinder, 
             CreatureAttackEventHandler creatureAttackEventHandler,
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
-            IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map, 
-            CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler)
+            IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map,
+            CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler, 
+            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -49,6 +51,7 @@ namespace NeoServer.Game.Creatures
             _map = map;
             _creatureStartedWalkingEventHandler = creatureStartedWalkingEventHandler;
             _creatureHealedEventHandler = creatureHealedEventHandler;
+            _creatureChangedAttackTargetEventHandler = creatureChangedAttackTargetEventHandler;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -59,10 +62,16 @@ namespace NeoServer.Game.Creatures
         public IPlayer CreatePlayer(IPlayerModel playerModel)
         {
             var player = _playerFactory.Create(playerModel);
+            AttachCombatActorEvents(player);
             return AttachEvents(player) as IPlayer;
         }
 
 
+        private ICreature AttachCombatActorEvents(ICombatActor actor)
+        {
+            actor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
+            return actor;
+        }
         private ICreature AttachEvents(ICombatActor creature)
         {
             creature.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
@@ -77,7 +86,6 @@ namespace NeoServer.Game.Creatures
             creature.OnKilled += DetachEvents;
 
             return creature;
-
         }
         private void DetachEvents(ICombatActor creature)
         {

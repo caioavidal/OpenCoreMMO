@@ -7,7 +7,7 @@ using System;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
-    public delegate void OnAttackTargetChange(uint oldTargetId, uint newTargetId);
+    public delegate void OnAttackTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId);
     public delegate void Damage(ICombatActor enemy, ICombatActor victim, ICombatAttack attack, ushort healthDamage);
     public delegate void StopAttack(ICombatActor actor);
     public delegate void BlockAttack(ICombatActor creature, BlockType block);
@@ -37,6 +37,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool IsDead { get; }
         ushort MinimumAttackPower { get; }
         bool UsingDistanceWeapon { get; }
+        uint AttackEvent { get; set; }
 
         int ArmorDefend(int attack);
         bool Attack(ICombatActor enemy, ICombatAttack combatAttack);

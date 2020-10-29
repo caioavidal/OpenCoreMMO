@@ -10,7 +10,7 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 {
     public class MeleeCombatAttack : CombatAttack, IMeleeCombatAttack
     {
-        public MeleeCombatAttack(byte attack, byte skill) : base(DamageType.Melee, new CombatAttackOption() { Attack = attack, Skill = skill })
+        public MeleeCombatAttack(byte attack, byte skill) : base(DamageType.Melee, new CombatAttackOption() { Attack = attack, Skill = skill, Target = 1 })
         {
      
         }

@@ -9,6 +9,7 @@ using System.Text;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
+    public delegate void StartFollow(uint creatureId);
     public interface IWalkableCreature: ICreature
     {
         uint EventWalk { get; set; }
@@ -25,6 +26,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event StartWalk OnStartedWalking;
         event StopWalk OnStoppedWalking;
         event OnTurnedToDirection OnTurnedToDirection;
+        event StartFollow OnStartedFollowing;
 
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);
