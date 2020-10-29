@@ -24,6 +24,7 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureHealedEventHandler _creatureHealedEventHandler;
         private readonly CreatureChangedAttackTargetEventHandler _creatureChangedAttackTargetEventHandler;
         private readonly CreatureStartedFollowingEventHandler  _creatureStartedFollowingEventHandler;
+        private readonly CreatureChangedSpeedEventHandler _creatureChangedSpeedEventHandler;
         private readonly IMap _map;
         //factories
         private readonly IPlayerFactory _playerFactory;
@@ -38,7 +39,8 @@ namespace NeoServer.Game.Creatures
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
             IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map,
             CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler,
-            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler)
+            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler, 
+            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -54,6 +56,7 @@ namespace NeoServer.Game.Creatures
             _creatureHealedEventHandler = creatureHealedEventHandler;
             _creatureChangedAttackTargetEventHandler = creatureChangedAttackTargetEventHandler;
             _creatureStartedFollowingEventHandler = creatureStartedFollowingEventHandler;
+            _creatureChangedSpeedEventHandler = creatureChangedSpeedEventHandler;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -79,6 +82,7 @@ namespace NeoServer.Game.Creatures
         private ICreature AttachWalkableEvents(IWalkableCreature creature)
         {
             creature.OnStartedFollowing += _creatureStartedFollowingEventHandler.Execute;
+            creature.OnChangedSpeed += _creatureChangedSpeedEventHandler.Execute;
             return creature;
         }
         private ICreature AttachEvents(ICombatActor creature)

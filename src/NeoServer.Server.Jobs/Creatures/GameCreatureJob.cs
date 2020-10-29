@@ -32,7 +32,8 @@ namespace NeoServer.Server.Jobs.Creatures
                     PlayerPingJob.Execute((IPlayer)creature, game);
                 }
 
-              //  CreatureDefenseJob.Execute(creature, game);//todo: not a job
+                if(creature is IMonster monster)
+                CreatureDefenseJob.Execute(monster, game);//todo: not a job
               //  CreatureTargetJob.Execute(creature, game); //todo: remove, it is not a job
                 RespawnJob.Execute(spawnManager);
             }

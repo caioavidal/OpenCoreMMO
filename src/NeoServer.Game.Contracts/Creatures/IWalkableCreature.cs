@@ -12,6 +12,7 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate bool PathFinder(IWalkableCreature creature, Location target, FindPathParams options, out Direction[] directions);
     public delegate void StartFollow(IWalkableCreature creature, IWalkableCreature following, FindPathParams fpp);
+    public delegate void ChangeSpeed(IWalkableCreature creature, ushort speed);
     public interface IWalkableCreature: ICreature
     {
         uint EventWalk { get; set; }
@@ -30,6 +31,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event StopWalk OnStoppedWalking;
         event OnTurnedToDirection OnTurnedToDirection;
         event StartFollow OnStartedFollowing;
+        event ChangeSpeed OnChangedSpeed;
 
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);

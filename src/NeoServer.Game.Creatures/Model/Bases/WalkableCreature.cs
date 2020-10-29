@@ -22,6 +22,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event StartWalk OnStartedWalking;
         public event OnTurnedToDirection OnTurnedToDirection;
         public event StartFollow OnStartedFollowing;
+        public event ChangeSpeed OnChangedSpeed;
         #endregion
 
         private readonly object _enqueueWalkLock = new object();
@@ -180,9 +181,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);
 
-
-        public void IncreaseSpeed(ushort speed) => Speed += speed;
-        public void DecreaseSpeed(ushort speedBoost) => Speed -= speedBoost;
+        public void ChangeSpeed(int newSpeed)
+        {
+            Speed = (ushort)newSpeed;
+            OnChangedSpeed?.Invoke(this, Speed);
+        }
+        public void IncreaseSpeed(ushort speed) => ChangeSpeed(speed + Speed);
+        public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Speed - speedBoost);
 
         public void Follow(uint id, params Direction[] pathToCreature)
         {
