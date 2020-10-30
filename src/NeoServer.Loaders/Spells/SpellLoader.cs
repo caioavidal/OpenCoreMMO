@@ -28,12 +28,11 @@ namespace NeoServer.Loaders.Spells
             {
                 var type = ScriptList.Assemblies.FirstOrDefault(x => x.Key == spell["script"]).Value;
                 var spellInstance = Activator.CreateInstance(type, true) as ISpell;
-                SpellList.Spells.Add(spell["words"], spellInstance);
-                //ScriptList
-            }
-            //throw new NotImplementedException();
-            //return monsters;
 
+                spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
+
+                SpellList.Spells.Add(spell["words"], spellInstance);
+            }
         }
     }
 }

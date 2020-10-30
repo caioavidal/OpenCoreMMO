@@ -17,8 +17,6 @@ namespace NeoServer.Server.Compiler
 {
     internal class Compiler
     {
-
-
         public byte[] CompileSource(params string[] sourceCodes)
         {
             using (var peStream = new MemoryStream())
@@ -27,7 +25,7 @@ namespace NeoServer.Server.Compiler
 
                 if (!result.Success)
                 {
-                    return null;
+                    throw new Exception(string.Join("\n",result.Diagnostics.Select(x => x.GetMessage())));
                 }
 
                 peStream.Seek(0, SeekOrigin.Begin);

@@ -14,7 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void BlockAttack(ICombatActor creature, BlockType block);
     public delegate void Attack(ICombatActor creature, ICombatActor victim, ICombatAttack combatAttack);
     public delegate void UseSpell(ICreature creature, ISpell spell);
-
+    public delegate void ChangeVisibility(ICombatActor actor);
     public interface ICombatActor: IWalkableCreature
     {
         event Attack OnAttack;
@@ -24,6 +24,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event Die OnKilled;
         event StopAttack OnStoppedAttack;
         event OnAttackTargetChange OnTargetChanged;
+        event ChangeVisibility OnChangedVisibility;
 
         ushort ArmorRating { get; }
         bool Attacking { get; }
@@ -50,5 +51,7 @@ namespace NeoServer.Game.Contracts.Creatures
         int ShieldDefend(int attack);
         void StopAttack();
         void ResetHealthPoints();
+        void TurnInvisible();
+        void TurnVisible();
     }
 }

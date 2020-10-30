@@ -2,11 +2,24 @@
 	{
 		"name":"Haste",
 		"words":"utani hur",
-		"script": "Haste"
+		"script": "Haste",
+		"mana": 60
 	},
 	{
 		"name":"Strong Haste",
 		"words":"utani gran hur",
-		"script": "StrongHaste"
+		"script": "StrongHaste",
+		"mana": 60
+	},{
+		"name":"Intense Healing",
+		"words":"exura gran",
+		"script": "IntenseHealing",
+		"mana": 60
+	},
+	{
+		"name":"Invisibility",
+		"words":"utana vid",
+		"script": "Invisibility",
+		"mana": 60
 	}
 ]

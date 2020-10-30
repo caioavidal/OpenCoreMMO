@@ -13,15 +13,13 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
     public class DistanceCombatAttack : CombatAttack, IDistanceCombatAttack
     {
-        public DistanceCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option)
-        {
-        }
+        public DistanceCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option) { }
         public byte Chance => Option.Chance;
         public byte Range => Option.Range;
         public bool HasTarget => true;
         public override void CauseDamage(ICombatActor actor, ICombatActor enemy)
         {
-            base.CauseDamage(actor, enemy);
+            enemy.ReceiveAttack(actor, this, CalculateDamage(Option.MaxDamage, Option.MinDamage));;
         }
     }
 }
