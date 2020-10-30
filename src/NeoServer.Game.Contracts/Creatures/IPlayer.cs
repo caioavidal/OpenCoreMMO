@@ -3,6 +3,7 @@ using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Enums.Talks;
 using System.Collections.Generic;
 
 namespace NeoServer.Server.Model.Players.Contracts
@@ -14,6 +15,8 @@ namespace NeoServer.Server.Model.Players.Contracts
 
     public interface IPlayer : ICombatActor
     {
+        event UseSpell OnUsedSpell;
+
         ushort Level { get; }
 
         byte LevelPercent { get; }
@@ -98,5 +101,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void CancelWalk();
         bool CanMoveThing(Location location);
         void ReceiveManaAttack(ICreature enemy, ushort damage);
+        void Say(string message, TalkType talkType);
     }
 }

@@ -12,6 +12,7 @@ using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Enums.Talks;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
@@ -28,7 +29,7 @@ namespace NeoServer.Game.Creatures.Model
     {
         public event RemoveCreature OnCreatureRemoved;
         public event GainExperience OnGainedExperience;
-        public event UseSpell OnUsedSpell;
+        public event Say OnSay;
 
         protected readonly ICreatureType CreatureType;
 
@@ -162,6 +163,11 @@ namespace NeoServer.Game.Creatures.Model
             condition.Start(this);
         }
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
+
+        public virtual void Say(string message, TalkType talkType)
+        {
+            OnSay?.Invoke(this, talkType, message);
+        }
 
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == this.CreatureId;
 

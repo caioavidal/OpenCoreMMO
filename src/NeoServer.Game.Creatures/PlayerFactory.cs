@@ -28,6 +28,8 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
         private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
+        private readonly PlayerUsedSpellEventHandler _playerUsedSpellEventHandler;
+
         private readonly IPathFinder _pathFinder;
 
         public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
@@ -35,7 +37,7 @@ namespace NeoServer.Game.Creatures
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
-            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler, IPathFinder pathFinder)
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler, IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -49,6 +51,7 @@ namespace NeoServer.Game.Creatures
             _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
             _playerManaReducedEventHandler = playerManaReducedEventHandler;
             _pathFinder = pathFinder;
+            _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -95,6 +98,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
             newPlayer.OnManaReduced += _playerManaReducedEventHandler.Execute;
+            newPlayer.OnUsedSpell += _playerUsedSpellEventHandler.Execute;
 
             return newPlayer;
         }

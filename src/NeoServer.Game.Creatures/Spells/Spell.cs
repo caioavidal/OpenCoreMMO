@@ -16,10 +16,13 @@ namespace NeoServer.Game.Creatures.Spells
         {
 
         }
-        public abstract EffectT Effect { get; } 
+        public abstract EffectT Effect { get; }
+        public abstract uint Duration { get; }
 
         private static readonly Lazy<T> Lazy = new Lazy<T>(() => Activator.CreateInstance(typeof(T), true) as T);
         public static T Instance => Lazy.Value;
+
+        public abstract void Invoke(ICombatActor actor);
     }
 
 }

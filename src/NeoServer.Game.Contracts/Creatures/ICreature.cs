@@ -5,6 +5,7 @@ using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Enums.Talks;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void GainExperience(ICreature creature, uint exp);
     public delegate void StartWalk(IWalkableCreature creature);
     public delegate void Heal(ICombatActor creature, ushort amount);
-
+    public delegate void Say(ICreature creature, TalkType type, string message);
     public interface ICreature : IMoveableThing
     {
         BloodType Blood { get; }
@@ -45,7 +46,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         event RemoveCreature OnCreatureRemoved;
         event GainExperience OnGainedExperience;
-        event UseSpell OnUsedSpell;
+        event Say OnSay;
 
         void AddCondition(ICondition condition);
         bool CanSee(Contracts.Creatures.ICreature otherCreature);
@@ -53,6 +54,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void GainExperience(uint exp);
         bool HasCondition(ConditionType type, out ICondition condition);
         bool HasFlag(CreatureFlag flag);
+        void Say(string message, TalkType talkType);
         void SetAsRemoved();
         void SetDirection(Direction direction);
         void SetFlag(CreatureFlag flag);

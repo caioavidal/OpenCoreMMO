@@ -6,6 +6,7 @@
     <ProjectReference Include="..\NeoServer.OTB\NeoServer.OTB.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
     <ProjectReference Include="..\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj" />
   </ItemGroup>
 
   <ItemGroup>

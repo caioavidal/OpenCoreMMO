@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 
 namespace NeoServer.Game.Contracts.Creatures

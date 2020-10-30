@@ -87,7 +87,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Creatures", "Creatures", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Effects", "NeoServer.Game.Parsers\NeoServer.Game.Effects.csproj", "{5F6B64AC-9865-4974-9A6B-3C9C10486A8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game.Effects.Tests", "NeoServer.Game.Effects.Tests\NeoServer.Game.Effects.Tests.csproj", "{67556DF6-13FD-4416-8219-FFE2A3F7B839}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Effects.Tests", "NeoServer.Game.Effects.Tests\NeoServer.Game.Effects.Tests.csproj", "{67556DF6-13FD-4416-8219-FFE2A3F7B839}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Talks", "Talks", "{08C7C076-77B6-465A-84A5-A830928CF61A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Scripts", "..\data\scripts\NeoServer.Scripts\NeoServer.Scripts.csproj", "{F9748A4D-F069-408B-986B-7633236B280D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.Compiler", "NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj", "{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -361,6 +367,22 @@ Global
 		{67556DF6-13FD-4416-8219-FFE2A3F7B839}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67556DF6-13FD-4416-8219-FFE2A3F7B839}.Release|x64.ActiveCfg = Release|Any CPU
 		{67556DF6-13FD-4416-8219-FFE2A3F7B839}.Release|x64.Build.0 = Release|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Debug|x64.Build.0 = Debug|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Release|x64.ActiveCfg = Release|Any CPU
+		{F9748A4D-F069-408B-986B-7633236B280D}.Release|x64.Build.0 = Release|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Debug|x64.Build.0 = Debug|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Release|x64.ActiveCfg = Release|Any CPU
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -402,6 +424,8 @@ Global
 		{417FDC3A-FCB6-4875-BC91-CE55E9314F1D} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
 		{5F6B64AC-9865-4974-9A6B-3C9C10486A8C} = {EE9BB283-9544-4AC5-8536-2A1A4EAE5B05}
 		{67556DF6-13FD-4416-8219-FFE2A3F7B839} = {EE9BB283-9544-4AC5-8536-2A1A4EAE5B05}
+		{08C7C076-77B6-465A-84A5-A830928CF61A} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
+		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69} = {E0298381-8C65-4339-835B-0F4D230E479E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B3C7097-0071-4218-BE24-5EE9128763B6}
