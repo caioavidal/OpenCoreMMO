@@ -3,5 +3,10 @@
 		"name":"Haste",
 		"words":"utani hur",
 		"script": "Haste"
+	},
+	{
+		"name":"Strong Haste",
+		"words":"utani gran hur",
+		"script": "StrongHaste"
 	}
 ]

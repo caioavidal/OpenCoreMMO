@@ -1,10 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.CSharp;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,45 +17,44 @@ namespace NeoServer.Server.Compiler
 {
     internal class Compiler
     {
-        public byte[] Compile(string filepath)
+
+
+        public byte[] CompileSource(params string[] sourceCodes)
         {
-            Console.WriteLine($"Starting compilation of: '{filepath}'");
-
-            var sourceCode = File.ReadAllText(filepath);
-
             using (var peStream = new MemoryStream())
             {
-                var result = GenerateCode(sourceCode).Emit(peStream);
+                var result = GenerateCode(sourceCodes).Emit(peStream);
 
                 if (!result.Success)
                 {
-                    Console.WriteLine("Compilation done with error.");
-
-                    var failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
-
-                    foreach (var diagnostic in failures)
-                    {
-                        Console.Error.WriteLine("{0}: {1}", diagnostic.Id, diagnostic.GetMessage());
-                    }
-
                     return null;
                 }
-
-                Console.WriteLine("Compilation done without any error.");
 
                 peStream.Seek(0, SeekOrigin.Begin);
 
                 return peStream.ToArray();
             }
         }
-
-        private static CSharpCompilation GenerateCode(string sourceCode)
+        public byte[] Compile(params string [] filepaths)
         {
-            var codeString = SourceText.From(sourceCode);
-            var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp8);
+            var sources = filepaths.Select(x => File.ReadAllText(x)).ToArray();
+            return CompileSource(sources);
+        }
 
-            var parsedSyntaxTree = SyntaxFactory.ParseSyntaxTree(codeString, options);
-            
+        private static CSharpCompilation GenerateCode(params string[] sourceCodes)
+        {
+            var syntaxTrees = new SyntaxTree[sourceCodes.Length];
+            var i = 0;
+
+            foreach (var source in sourceCodes)
+            {
+                var codeString = SourceText.From(source);
+                var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp8);
+
+                syntaxTrees[i++] = SyntaxFactory.ParseSyntaxTree(codeString, options);
+            }
+
+
             var references = new MetadataReference[]
             {
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
@@ -66,7 +67,7 @@ namespace NeoServer.Server.Compiler
             };
 
             return CSharpCompilation.Create("Scripts.dll",
-                new[] { parsedSyntaxTree },
+              syntaxTrees,
                 references: references,
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
                     optimizationLevel: OptimizationLevel.Release,

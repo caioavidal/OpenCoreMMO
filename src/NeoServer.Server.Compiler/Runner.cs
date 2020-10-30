@@ -13,7 +13,6 @@ namespace NeoServer.Server.Compiler
         public void Execute(byte[] compiledAssembly, params string[] args)
         {
             var assemblyLoadContextWeakRef = LoadAndExecute(compiledAssembly);
-
         }
         public IEnumerable<TypeInfo> GetAssemblies(byte[] compiledAssembly)
         {
