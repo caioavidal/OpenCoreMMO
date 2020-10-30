@@ -9,8 +9,10 @@ using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
 using NeoServer.Loaders.Spawns;
+using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
+using NeoServer.Server.Compiler;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
 using NeoServer.Server.Jobs.Creatures;
@@ -48,6 +50,8 @@ namespace NeoServer.Server.Standalone
 
             RSA.LoadPem();
 
+            ScriptCompiler.Compile();
+
             container.Resolve<ItemTypeLoader>().Load();
 
             container.Resolve<WorldLoader>().Load();
@@ -55,7 +59,7 @@ namespace NeoServer.Server.Standalone
             container.Resolve<SpawnLoader>().Load();
 
             container.Resolve<MonsterLoader>().Load();
-
+            new SpellLoader().Load();
             container.Resolve<SpawnManager>().StartSpawn();
 
             var listeningTask = StartListening(container, cancellationToken);
@@ -69,6 +73,8 @@ namespace NeoServer.Server.Standalone
             scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
 
             container.Resolve<EventSubscriber>().AttachEvents();
+
+
 
             container.Resolve<Game>().Open();
 

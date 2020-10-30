@@ -25,6 +25,8 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureChangedAttackTargetEventHandler _creatureChangedAttackTargetEventHandler;
         private readonly CreatureStartedFollowingEventHandler  _creatureStartedFollowingEventHandler;
         private readonly CreatureChangedSpeedEventHandler _creatureChangedSpeedEventHandler;
+        private readonly CreatureSayEventHandler _creatureSayEventHandler;
+
         private readonly IMap _map;
         //factories
         private readonly IPlayerFactory _playerFactory;
@@ -39,8 +41,8 @@ namespace NeoServer.Game.Creatures
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
             IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map,
             CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler,
-            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler, 
-            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler)
+            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler,
+            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, CreatureSayEventHandler creatureSayEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -57,6 +59,7 @@ namespace NeoServer.Game.Creatures
             _creatureChangedAttackTargetEventHandler = creatureChangedAttackTargetEventHandler;
             _creatureStartedFollowingEventHandler = creatureStartedFollowingEventHandler;
             _creatureChangedSpeedEventHandler = creatureChangedSpeedEventHandler;
+            _creatureSayEventHandler = creatureSayEventHandler;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -96,9 +99,8 @@ namespace NeoServer.Game.Creatures
             creature.OnAttack += _map.PropagateAttack;
             creature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
             creature.OnHeal += _creatureHealedEventHandler.Execute;
-
+            creature.OnSay += _creatureSayEventHandler.Execute;
             creature.OnKilled += DetachEvents;
-
             return creature;
         }
         private void DetachEvents(ICombatActor creature)
@@ -112,6 +114,7 @@ namespace NeoServer.Game.Creatures
             creature.OnAttack -= _map.PropagateAttack;
             creature.OnStartedWalking -= _creatureStartedWalkingEventHandler.Execute;
             creature.OnHeal -= _creatureHealedEventHandler.Execute;
+            creature.OnSay -= _creatureSayEventHandler.Execute;
         }
     }
 }

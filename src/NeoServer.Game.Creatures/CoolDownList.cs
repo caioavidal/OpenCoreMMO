@@ -58,7 +58,6 @@ namespace NeoServer.Game.Creatures
         public bool Expired {
             get
             {
-                Console.WriteLine($"{Start + Duration} --- {DateTime.Now.Ticks}");
                 return Start + Duration <= DateTime.Now.Ticks;
             }
         }

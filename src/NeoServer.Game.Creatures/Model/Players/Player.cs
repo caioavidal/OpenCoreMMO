@@ -6,11 +6,13 @@ using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Spells;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Enums.Talks;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -62,6 +64,7 @@ namespace NeoServer.Server.Model.Players
         public event CancelWalk OnCancelledWalk;
 
         public event ReduceMana OnManaReduced;
+        public event UseSpell OnUsedSpell;
 
 
         private uint IdleTime;
@@ -380,6 +383,17 @@ namespace NeoServer.Server.Model.Players
         {
             var melee = new MeleeCombatAttack(255, 255);
             return base.Attack(enemy, melee);
+        }
+
+        public override void Say(string message, TalkType talkType)
+        {
+            if(SpellList.Spells.TryGetValue(message.Trim(), out var spell))
+            {
+                spell.Invoke(this);
+                OnUsedSpell?.Invoke(this, spell);
+            }
+
+            base.Say(message, talkType);
         }
     }
 }
