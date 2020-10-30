@@ -28,6 +28,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event Damage OnDamaged;
         public event Die OnKilled;
         public event OnAttackTargetChange OnTargetChanged;
+        public event ChangeVisibility OnChangedVisibility;
         #endregion
 
         #region Properties
@@ -201,5 +202,15 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnHeal?.Invoke(this, increasing);
         }
 
+        public void TurnInvisible()
+        {
+            IsInvisible = true;
+            OnChangedVisibility?.Invoke(this);
+        }
+        public void TurnVisible()
+        {
+            IsInvisible = false;
+            OnChangedVisibility?.Invoke(this);
+        }
     }
 }

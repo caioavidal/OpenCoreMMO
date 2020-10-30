@@ -9,39 +9,20 @@ namespace NeoServer.Game.Creatures.Spells
 {
     public class HasteSpell: Spell<HasteSpell>
     {
-        public HasteSpell() { }
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 10000;
         public virtual ushort SpeedBoost => 200;
+        public override ushort Mana => 60;
+        public override ConditionType ConditionType => ConditionType.Haste;
 
-        public virtual void OnCast(ICombatActor actor, ushort speed)
+        public override void OnCast(ICombatActor actor)
         {
-            actor.IncreaseSpeed(speed);
+            actor.IncreaseSpeed(SpeedBoost);
         }
-
-        public void Remove(ICombatActor actor, ushort speed)
+        public override void OnEnd(ICombatActor actor)
         {
-            actor.IncreaseSpeed(speed);
-        }
-        public override void Invoke(ICombatActor actor)
-        {
-            Invoke(actor, SpeedBoost, Duration);
-        }
-        public void Invoke(ICombatActor actor, ushort speedBoost, uint duration)
-        {
-            if (actor.HasCondition(ConditionType.Haste, out var condition))
-            {
-                actor.AddCondition(condition);
-                return;
-            }
-
-            var hasteCondition = new HasteCondition(duration);
-
-            hasteCondition.OnEnd = () => Remove(actor, speedBoost);
-
-            actor.AddCondition(hasteCondition);            
-
-            OnCast(actor, speedBoost);
+            actor.DecreaseSpeed(SpeedBoost);
+            base.OnEnd(actor);
         }
     }
 }

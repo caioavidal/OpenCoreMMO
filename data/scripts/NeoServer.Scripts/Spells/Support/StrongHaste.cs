@@ -5,11 +5,11 @@ using System;
 
 namespace NeoServer.Scripts
 {
-    public class Haste : HasteSpell
+    public class StrongHaste : HasteSpell
     {
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 20000;
-        public override ushort SpeedBoost => 400;
+        public override ushort SpeedBoost => 600;
 
     }
 }

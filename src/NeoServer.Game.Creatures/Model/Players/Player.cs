@@ -49,7 +49,6 @@ namespace NeoServer.Server.Model.Players
                 Experience = (uint)skill.Count;
             }
 
-            //Location = location;
             SetNewLocation(location);
 
             Containers = new PlayerContainerList(this);
@@ -57,7 +56,6 @@ namespace NeoServer.Server.Model.Players
             KnownCreatures = new Dictionary<uint, long>();//todo
             VipList = new Dictionary<string, bool>(); //todo
 
-            //OnThingChanged += CheckInventoryContainerProximity;
             Inventory = new PlayerInventory(this, inventory);
         }
 
@@ -325,7 +323,7 @@ namespace NeoServer.Server.Model.Players
             FollowCreature = mode == ChaseMode.Follow;
             if (FollowCreature)
             {
-               // StartFollowing(AutoAttackTargetId);
+                // StartFollowing(AutoAttackTargetId);
                 return;
             }
 
@@ -355,7 +353,7 @@ namespace NeoServer.Server.Model.Players
             {
                 var min = ArmorRating / 2;
                 var max = (ArmorRating / 2) * 2 - 1;
-                attack -= (ushort) GaussianRandom.Random.NextInRange(min, max);
+                attack -= (ushort)GaussianRandom.Random.NextInRange(min, max);
             }
             else if (ArmorRating > 0)
             {
@@ -365,18 +363,7 @@ namespace NeoServer.Server.Model.Players
         }
         public void ReceiveManaAttack(ICreature enemy, ushort damage)
         {
-            ReduceMana(damage);
-        }
-        
-        private void ReduceMana(ushort amount)
-        {
-            if (amount == 0 && Mana == 0)
-            {
-                return;
-            }
-            Mana = (ushort)(amount > Mana ? 0 : Mana - amount);
-
-            OnManaReduced?.Invoke(this);
+            ConsumeMana(damage);
         }
 
         public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
@@ -387,13 +374,23 @@ namespace NeoServer.Server.Model.Players
 
         public override void Say(string message, TalkType talkType)
         {
-            if(SpellList.Spells.TryGetValue(message.Trim(), out var spell))
+            if (SpellList.Spells.TryGetValue(message.Trim(), out var spell))
             {
-                spell.Invoke(this);
+                if (!spell.Invoke(this)) return;
+
                 OnUsedSpell?.Invoke(this, spell);
             }
-
             base.Say(message, talkType);
+        }
+
+        public bool HasEnoughMana(ushort mana) => Mana >= mana;
+        public void ConsumeMana(ushort mana)
+        {
+            if (mana == 0) return;
+            if (!HasEnoughMana(mana)) return;
+
+            Mana -= mana;
+            OnManaReduced?.Invoke(this);
         }
     }
 }

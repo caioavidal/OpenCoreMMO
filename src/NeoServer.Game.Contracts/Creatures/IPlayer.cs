@@ -102,5 +102,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool CanMoveThing(Location location);
         void ReceiveManaAttack(ICreature enemy, ushort damage);
         void Say(string message, TalkType talkType);
+        bool HasEnoughMana(ushort mana);
+        void ConsumeMana(ushort mana);
     }
 }

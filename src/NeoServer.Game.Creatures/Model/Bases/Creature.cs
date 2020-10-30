@@ -145,8 +145,6 @@ namespace NeoServer.Game.Creatures.Model
             return false;
         }
 
-      
-
         public byte Skull { get; protected set; } // TODO: implement.
 
         public byte Shield { get; protected set; } // TODO: implement.

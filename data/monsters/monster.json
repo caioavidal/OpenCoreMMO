@@ -66,7 +66,7 @@
           "chance": "34",
           "range": "7",
           "min": "-45",
-          "max": "-85",
+          "max": "-285",
           "attributes": [{
             "key": "shootEffect",
             "value": "bolt"
