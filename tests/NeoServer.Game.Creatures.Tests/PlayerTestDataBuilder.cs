@@ -20,7 +20,7 @@ namespace NeoServer.Game.Creatures.Tests
               {
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
 
-              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
+              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
             return sut;
         }
     }
