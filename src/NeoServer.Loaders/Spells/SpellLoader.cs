@@ -30,6 +30,7 @@ namespace NeoServer.Loaders.Spells
                 var spellInstance = Activator.CreateInstance(type, true) as ISpell;
 
                 spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
+                spellInstance.MinLevel = Convert.ToUInt16(spell["level"]);
 
                 SpellList.Spells.Add(spell["words"], spellInstance);
             }

@@ -12,7 +12,6 @@ using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Enums.Spells;
 using NeoServer.Game.Enums.Talks;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
@@ -399,6 +398,7 @@ namespace NeoServer.Server.Model.Players
             Mana -= mana;
             OnManaReduced?.Invoke(this);
         }
+        public bool HasEnoughLevel(ushort level) => Level >= level;
     }
 }
 

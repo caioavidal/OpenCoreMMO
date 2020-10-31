@@ -1,10 +1,10 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Enums.Spells;
 using NeoServer.Game.Enums.Talks;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void ClosedContainer(IPlayer player, byte containerId);
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
     public delegate void ReduceMana(IPlayer player);
-    public delegate void CannotUseSpell(IPlayer player, ISpell spell, SpellError error);
+    public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
 
     public interface IPlayer : ICombatActor
     {
@@ -109,5 +109,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void Say(string message, TalkType talkType);
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
+        bool HasEnoughLevel(ushort level);
     }
 }

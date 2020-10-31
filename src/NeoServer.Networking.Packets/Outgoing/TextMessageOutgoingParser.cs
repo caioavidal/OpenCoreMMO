@@ -13,6 +13,9 @@ namespace NeoServer.Networking.Packets.Outgoing
                     InvalidOperation.CannotDress => "You cannot dress this object there.",
                     InvalidOperation.NotPossible => "Sorry, not possible.",
                     InvalidOperation.TooHeavy => "This object is too heavy for you to carry.",
+                    InvalidOperation.VocationCannotUseSpell => "Your vocation cannot use this spell.",
+                    InvalidOperation.NotEnoughMana => "You do not have enough mana.",
+                    InvalidOperation.NotEnoughLevel => "You do not have enough level.",
                     _ => string.Empty
                 };
 

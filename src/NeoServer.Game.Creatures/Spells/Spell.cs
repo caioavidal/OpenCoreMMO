@@ -1,13 +1,10 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Creatures.Model.Conditions;
+using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Creatures.Players;
-using NeoServer.Game.Enums.Spells;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Spells
 {
@@ -17,11 +14,13 @@ namespace NeoServer.Game.Creatures.Spells
         public abstract EffectT Effect { get; }
         public abstract uint Duration { get; }
         public virtual ushort Mana { get;  set; }
+        public ushort MinLevel { get; set; }
+
         private static readonly Lazy<T> Lazy = new Lazy<T>(() => Activator.CreateInstance(typeof(T), true) as T);
         public static T Instance => Lazy.Value;
 
         public abstract void OnCast(ICombatActor actor);
-        public bool Invoke(ICombatActor actor, out SpellError error)
+        public bool Invoke(ICombatActor actor, out InvalidOperation error)
         {
             if (!CanBeUsedBy(actor, out error)) return false;
             if(actor is IPlayer player) player.ConsumeMana(Mana);
@@ -30,15 +29,20 @@ namespace NeoServer.Game.Creatures.Spells
             AddCondition(actor);
             return true;
         }
-        public bool CanBeUsedBy(ICombatActor actor, out SpellError error)
+        public bool CanBeUsedBy(ICombatActor actor, out InvalidOperation error)
         {
-            error = SpellError.None;
+            error = InvalidOperation.None;
 
             if (actor is IPlayer player)
             {
                 if (!player.HasEnoughMana(Mana))
                 {
-                    error = SpellError.NotEnoughMana;
+                    error = InvalidOperation.NotEnoughMana;
+                    return false;
+                }
+                if(!player.HasEnoughLevel(MinLevel))
+                {
+                    error = InvalidOperation.NotEnoughLevel;
                     return false;
                 }
             }
@@ -46,6 +50,7 @@ namespace NeoServer.Game.Creatures.Spells
         }
 
         public abstract ConditionType ConditionType { get; }
+
         public virtual void OnEnd(ICombatActor actor) { }
 
         public virtual void AddCondition(ICombatActor actor)
