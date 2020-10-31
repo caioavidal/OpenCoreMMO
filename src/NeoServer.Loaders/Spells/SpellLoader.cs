@@ -6,18 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Loaders.Spells
 {
     public class SpellLoader
     {
-      
         public void Load()
         {
             LoadSpells();
         }
-
         private void LoadSpells()
         {
             var basePath = "./data/spells";

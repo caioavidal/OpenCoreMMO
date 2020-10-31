@@ -1,5 +1,6 @@
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Creatures.Combat.Attacks;
@@ -367,7 +368,6 @@ namespace NeoServer.Server.Model.Players
         {
             ConsumeMana(damage);
         }
-
         public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
         {
             var melee = new MeleeCombatAttack(255, 255);
@@ -399,6 +399,13 @@ namespace NeoServer.Server.Model.Players
             OnManaReduced?.Invoke(this);
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
+
+        public override IItem CreateItem(ushort itemId)
+        {
+            var item = base.CreateItem(itemId);
+            Inventory.BackpackSlot.TryAddItem(item);
+            return item;
+        }
     }
 }
 

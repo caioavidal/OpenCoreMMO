@@ -14,7 +14,6 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
     {
         public ushort SpeedBoost { get; set; }
         public uint Duration { get; set; }
-
         public override void Defende(ICombatActor actor) => HasteSpell.Instance.Invoke(actor, out var error);
     }
 }

@@ -4,7 +4,7 @@
 		"words":"utani hur",
 		"script": "Haste",
 		"mana": 60,
-		"level":8
+		"level":800
 	},
 	{
 		"name":"Strong Haste",
@@ -24,6 +24,13 @@
 		"words":"utana vid",
 		"script": "Invisibility",
 		"mana": 60,
+		"level":8
+	},
+	{
+		"name":"Food",
+		"words":"exevo pan",
+		"script": "Food",
+		"mana": 1,
 		"level":8
 	}
 ]

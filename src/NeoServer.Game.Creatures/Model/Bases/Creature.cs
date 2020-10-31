@@ -13,6 +13,7 @@ using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Talks;
+using NeoServer.Game.Items;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
@@ -166,6 +167,8 @@ namespace NeoServer.Game.Creatures.Model
         {
             OnSay?.Invoke(this, talkType, message);
         }
+        public virtual IItem CreateItem(ushort itemId) => ItemFactory.Create(itemId, Location, null);
+        
 
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == this.CreatureId;
 
