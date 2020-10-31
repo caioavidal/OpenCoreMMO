@@ -400,10 +400,14 @@ namespace NeoServer.Server.Model.Players
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
 
-        public override IItem CreateItem(ushort itemId)
+        public override IItem CreateItem(ushort itemId, byte amount)
         {
-            var item = base.CreateItem(itemId);
-            Inventory.BackpackSlot.TryAddItem(item);
+            var item = base.CreateItem(itemId, amount);
+            if (!Inventory.BackpackSlot.TryAddItem(item).Success)
+            {
+                var thing = item as IThing;
+                Tile.AddThing(ref thing);
+            }
             return item;
         }
     }

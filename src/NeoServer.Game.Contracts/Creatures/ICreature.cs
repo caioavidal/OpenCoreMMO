@@ -51,7 +51,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void AddCondition(ICondition condition);
         bool CanSee(Contracts.Creatures.ICreature otherCreature);
         bool CanSee(Location pos);
-        IItem CreateItem(ushort itemId);
+        IItem CreateItem(ushort itemId, byte amount);
         void GainExperience(uint exp);
         bool HasCondition(ConditionType type, out ICondition condition);
         bool HasFlag(CreatureFlag flag);

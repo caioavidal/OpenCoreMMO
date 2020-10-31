@@ -105,7 +105,6 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
             return newPlayer;
         }
-
         private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(IPlayerModel player)
         {
             var inventoryDic = new Dictionary<Slot, Tuple<IPickupable, ushort>>();

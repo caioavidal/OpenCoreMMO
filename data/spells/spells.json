@@ -30,7 +30,7 @@
 		"name":"Food",
 		"words":"exevo pan",
 		"script": "Food",
-		"mana": 1,
+		"mana": 0,
 		"level":8
 	}
 ]

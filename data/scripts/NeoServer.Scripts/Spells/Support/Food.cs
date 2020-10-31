@@ -18,7 +18,7 @@ namespace NeoServer.Scripts.Spells.Support
 
         public override void OnCast(ICombatActor actor)
         {
-            actor.CreateItem(2666);
+            actor.CreateItem(2666, 100);
         }
     }
 }

@@ -7,6 +7,7 @@
         float CalculateWeight(byte amount);
         ICumulativeItem Clone(byte amount);
         void Reduce(byte amount);
+        void Increase(byte amount);
 
         new float Weight { get; }
         byte AmountToComplete { get; }

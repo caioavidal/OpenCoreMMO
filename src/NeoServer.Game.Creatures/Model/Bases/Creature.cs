@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
@@ -151,7 +152,7 @@ namespace NeoServer.Game.Creatures.Model
         public byte Shield { get; protected set; } // TODO: implement.
         public bool IsHealthHidden { get; protected set; }
 
-       
+
         public void SetDirection(Direction direction) => Direction = direction;
 
         public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
@@ -167,8 +168,13 @@ namespace NeoServer.Game.Creatures.Model
         {
             OnSay?.Invoke(this, talkType, message);
         }
-        public virtual IItem CreateItem(ushort itemId) => ItemFactory.Create(itemId, Location, null);
-        
+        public virtual IItem CreateItem(ushort itemId, byte amount)
+        {
+            var item = ItemFactory.Create(itemId, Location, null);
+            if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
+            return item;
+        }
+
 
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == this.CreatureId;
 
