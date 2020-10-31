@@ -379,9 +379,9 @@ namespace NeoServer.Server.Model.Players
         {
             if (SpellList.Spells.TryGetValue(message.Trim(), out var spell))
             {
-                if (!spell.Invoke(this))
+                if (!spell.Invoke(this, out var error))
                 {
-                    OnCannotUseSpell?.Invoke(this, spell, SpellError.NotEnoughMana);
+                    OnCannotUseSpell?.Invoke(this, spell, error);
                     return;
                 }
 

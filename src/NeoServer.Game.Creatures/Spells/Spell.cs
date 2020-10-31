@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Model.Conditions;
 using NeoServer.Game.Enums.Creatures.Players;
+using NeoServer.Game.Enums.Spells;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -20,16 +21,27 @@ namespace NeoServer.Game.Creatures.Spells
         public static T Instance => Lazy.Value;
 
         public abstract void OnCast(ICombatActor actor);
-        public bool Invoke(ICombatActor actor)
+        public bool Invoke(ICombatActor actor, out SpellError error)
         {
-            if (actor is IPlayer player)
-            {
-                if (!player.HasEnoughMana(Mana)) return false;
-                player.ConsumeMana(Mana);
-            }
+            if (!CanBeUsedBy(actor, out error)) return false;
+            if(actor is IPlayer player) player.ConsumeMana(Mana);
             
             OnCast(actor);
             AddCondition(actor);
+            return true;
+        }
+        public bool CanBeUsedBy(ICombatActor actor, out SpellError error)
+        {
+            error = SpellError.None;
+
+            if (actor is IPlayer player)
+            {
+                if (!player.HasEnoughMana(Mana))
+                {
+                    error = SpellError.NotEnoughMana;
+                    return false;
+                }
+            }
             return true;
         }
 

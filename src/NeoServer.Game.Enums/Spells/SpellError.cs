@@ -7,6 +7,7 @@ namespace NeoServer.Game.Enums.Spells
     public enum SpellError: byte
     {
         NotEnoughMana,
-        VocationCannotUse
+        VocationCannotUse,
+        None
     }
 }
