@@ -12,6 +12,7 @@ using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Enums.Spells;
 using NeoServer.Game.Enums.Talks;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
@@ -62,6 +63,8 @@ namespace NeoServer.Server.Model.Players
         public event CancelWalk OnCancelledWalk;
 
         public event ReduceMana OnManaReduced;
+        public event CannotUseSpell OnCannotUseSpell;
+
         public event UseSpell OnUsedSpell;
 
 
@@ -376,7 +379,11 @@ namespace NeoServer.Server.Model.Players
         {
             if (SpellList.Spells.TryGetValue(message.Trim(), out var spell))
             {
-                if (!spell.Invoke(this)) return;
+                if (!spell.Invoke(this))
+                {
+                    OnCannotUseSpell?.Invoke(this, spell, SpellError.NotEnoughMana);
+                    return;
+                }
 
                 OnUsedSpell?.Invoke(this, spell);
             }

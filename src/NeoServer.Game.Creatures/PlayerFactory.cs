@@ -29,6 +29,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
         private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
         private readonly PlayerUsedSpellEventHandler _playerUsedSpellEventHandler;
+        private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
 
         private readonly IPathFinder _pathFinder;
 
@@ -37,7 +38,8 @@ namespace NeoServer.Game.Creatures
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
-            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler, IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler)
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler, 
+            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler, PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -52,6 +54,7 @@ namespace NeoServer.Game.Creatures
             _playerManaReducedEventHandler = playerManaReducedEventHandler;
             _pathFinder = pathFinder;
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
+            _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -99,7 +102,7 @@ namespace NeoServer.Game.Creatures
 
             newPlayer.OnManaReduced += _playerManaReducedEventHandler.Execute;
             newPlayer.OnUsedSpell += _playerUsedSpellEventHandler.Execute;
-
+            newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
             return newPlayer;
         }
 
