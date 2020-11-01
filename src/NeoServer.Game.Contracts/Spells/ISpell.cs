@@ -11,6 +11,8 @@ namespace NeoServer.Game.Contracts.Spells
         ConditionType ConditionType { get; }
         ushort Mana { get; set; }
         ushort MinLevel { get; set; }
+        string Name { get; set; }
+        uint Cooldown { get; set; }
 
         bool Invoke(ICombatActor actor, out InvalidOperation error);
     }

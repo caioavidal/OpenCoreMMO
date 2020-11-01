@@ -26,6 +26,8 @@ namespace NeoServer.Loaders.Spells
                 var type = ScriptList.Assemblies.FirstOrDefault(x => x.Key == spell["script"]).Value;
                 var spellInstance = Activator.CreateInstance(type, true) as ISpell;
 
+                spellInstance.Name = spell["name"];
+                spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
                 spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
                 spellInstance.MinLevel = Convert.ToUInt16(spell["level"]);
 

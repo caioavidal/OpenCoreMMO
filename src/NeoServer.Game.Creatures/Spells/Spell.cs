@@ -10,11 +10,12 @@ namespace NeoServer.Game.Creatures.Spells
 {
     public abstract class Spell<T> : ISpell where T : Spell<T>
     {
-
+        public virtual string Name{ get; set; }
         public abstract EffectT Effect { get; }
         public abstract uint Duration { get; }
         public virtual ushort Mana { get;  set; }
         public ushort MinLevel { get; set; }
+        public uint Cooldown { get; set; }
 
         private static readonly Lazy<T> Lazy = new Lazy<T>(() => Activator.CreateInstance(typeof(T), true) as T);
         public static T Instance => Lazy.Value;
@@ -27,6 +28,7 @@ namespace NeoServer.Game.Creatures.Spells
             
             OnCast(actor);
             AddCondition(actor);
+            AddCooldown(actor);
             return true;
         }
         public bool CanBeUsedBy(ICombatActor actor, out InvalidOperation error)
@@ -43,6 +45,11 @@ namespace NeoServer.Game.Creatures.Spells
                 if(!player.HasEnoughLevel(MinLevel))
                 {
                     error = InvalidOperation.NotEnoughLevel;
+                    return false;
+                }
+                if (!player.SpellCooldownHasExpired(this))
+                {
+                    error = InvalidOperation.Exhausted;
                     return false;
                 }
             }
@@ -68,6 +75,10 @@ namespace NeoServer.Game.Creatures.Spells
             hasteCondition.OnEnd = () => OnEnd(actor);
 
             actor.AddCondition(hasteCondition);
+        }
+        private void AddCooldown(ICombatActor actor)
+        {
+            actor.StartSpellCooldown(this);
         }
     }
 

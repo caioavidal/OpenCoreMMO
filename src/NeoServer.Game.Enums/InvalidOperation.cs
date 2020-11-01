@@ -11,6 +11,7 @@
         BothHandsNeedToBeFree,
         NotEnoughMana,
         VocationCannotUseSpell,
-        NotEnoughLevel
+        NotEnoughLevel,
+        Exhausted
     }
 }

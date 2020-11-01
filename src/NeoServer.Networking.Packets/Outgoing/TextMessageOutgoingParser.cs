@@ -16,6 +16,7 @@ namespace NeoServer.Networking.Packets.Outgoing
                     InvalidOperation.VocationCannotUseSpell => "Your vocation cannot use this spell.",
                     InvalidOperation.NotEnoughMana => "You do not have enough mana.",
                     InvalidOperation.NotEnoughLevel => "You do not have enough level.",
+                    InvalidOperation.Exhausted => "You are exhausted.",
                     _ => string.Empty
                 };
 
