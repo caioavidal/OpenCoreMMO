@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
@@ -146,6 +147,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public bool WasDamagedOnLastAttack = true;
 
+     
         public virtual bool Attack(ICombatActor enemy, ICombatAttack combatAttack)
         {
             if (enemy.IsDead)
@@ -212,5 +214,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             IsInvisible = false;
             OnChangedVisibility?.Invoke(this);
         }
+        public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);
+        public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
     }
 }

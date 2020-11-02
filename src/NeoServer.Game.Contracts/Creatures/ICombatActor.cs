@@ -53,5 +53,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void ResetHealthPoints();
         void TurnInvisible();
         void TurnVisible();
+        void StartSpellCooldown(ISpell spell);
+        bool SpellCooldownHasExpired(ISpell spell);
     }
 }

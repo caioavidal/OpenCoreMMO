@@ -8,6 +8,10 @@
         Impossible,
         TooHeavy,
         CannotDress,
-        BothHandsNeedToBeFree
+        BothHandsNeedToBeFree,
+        NotEnoughMana,
+        VocationCannotUseSpell,
+        NotEnoughLevel,
+        Exhausted
     }
 }

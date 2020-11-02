@@ -21,6 +21,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void StartWalk(IWalkableCreature creature);
     public delegate void Heal(ICombatActor creature, ushort amount);
     public delegate void Say(ICreature creature, TalkType type, string message);
+    public delegate void AddCondition(ICreature creature);
     public interface ICreature : IMoveableThing
     {
         BloodType Blood { get; }
@@ -51,6 +52,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void AddCondition(ICondition condition);
         bool CanSee(Contracts.Creatures.ICreature otherCreature);
         bool CanSee(Location pos);
+        IItem CreateItem(ushort itemId, byte amount);
         void GainExperience(uint exp);
         bool HasCondition(ConditionType type, out ICondition condition);
         bool HasFlag(CreatureFlag flag);

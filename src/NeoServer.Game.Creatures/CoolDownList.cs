@@ -11,7 +11,7 @@ namespace NeoServer.Game.Creatures
     public class CooldownList
     {
         public IDictionary<CooldownType, CooldownTime> Cooldowns { get; } = new Dictionary<CooldownType, CooldownTime>();
-        public IDictionary<ISpell, CooldownTime> Spells { get; } = new Dictionary<ISpell, CooldownTime>();
+        public IDictionary<string, CooldownTime> Spells { get; } = new Dictionary<string, CooldownTime>();
 
         /// <summary>
         /// Add cooldown
@@ -24,13 +24,27 @@ namespace NeoServer.Game.Creatures
             return Cooldowns.TryAdd(type, new CooldownTime(DateTime.Now, duration));
         }
 
-        public void Add(ISpell spell, int duration)
+        public bool Start(string spell, int duration)
+        {
+            if (Expired(spell)) Spells.Remove(spell);
+            return Spells.TryAdd(spell, new CooldownTime(DateTime.Now, duration));
+        }
+
+        public void Add(string spell, int duration)
         {
             Spells.TryAdd(spell, new CooldownTime(DateTime.Now, duration));
         }
         public bool Expired(CooldownType type)
         {
             if (Cooldowns.TryGetValue(type, out var cooldown))
+            {
+                return cooldown.Expired;
+            }
+            return true;
+        }
+        public bool Expired(string spell)
+        {
+            if (Spells.TryGetValue(spell, out var cooldown))
             {
                 return cooldown.Expired;
             }

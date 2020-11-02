@@ -34,7 +34,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 var parentContainer = playerContainer.Container.Parent;
 
-                InsertOrOverrideOpenedConainer(containerId, new PlayerContainer(parentContainer as IContainer, player));
+                InsertOrOverrideOpenedContainer(containerId, new PlayerContainer(parentContainer as IContainer, player));
 
                 OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
             }
@@ -62,14 +62,14 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            InsertOrOverrideOpenedConainer(containerLevel, playerContainer);
+            InsertOrOverrideOpenedContainer(containerLevel, playerContainer);
 
             OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
             return;
 
         }
 
-        private void InsertOrOverrideOpenedConainer(byte containerLevel, PlayerContainer playerContainer)
+        private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
         {
             playerContainer.Id = containerLevel;
 

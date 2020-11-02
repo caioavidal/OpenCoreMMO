@@ -55,6 +55,9 @@ namespace NeoServer.Game.Items.Items
             Amount -= amount;
         }
 
+        public void Increase(byte amount) => Amount = (byte)(amount + Amount > 100 ? 100 : amount + Amount);
+       
+
         public byte AmountToComplete => (byte)(100 - Amount);
 
         public bool TryJoin(ref ICumulativeItem item)

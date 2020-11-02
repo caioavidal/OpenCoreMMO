@@ -14,7 +14,6 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
-
     public abstract class WalkableCreature : Creature, IWalkableCreature
     {
         #region Events
@@ -189,9 +188,5 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void IncreaseSpeed(ushort speed) => ChangeSpeed(speed + Speed);
         public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Speed - speedBoost);
 
-        public void Follow(uint id, params Direction[] pathToCreature)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

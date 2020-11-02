@@ -1,5 +1,6 @@
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Creatures.Combat.Attacks;
@@ -62,6 +63,8 @@ namespace NeoServer.Server.Model.Players
         public event CancelWalk OnCancelledWalk;
 
         public event ReduceMana OnManaReduced;
+        public event CannotUseSpell OnCannotUseSpell;
+
         public event UseSpell OnUsedSpell;
 
 
@@ -365,7 +368,6 @@ namespace NeoServer.Server.Model.Players
         {
             ConsumeMana(damage);
         }
-
         public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
         {
             var melee = new MeleeCombatAttack(255, 255);
@@ -376,7 +378,11 @@ namespace NeoServer.Server.Model.Players
         {
             if (SpellList.Spells.TryGetValue(message.Trim(), out var spell))
             {
-                if (!spell.Invoke(this)) return;
+                if (!spell.Invoke(this, out var error))
+                {
+                    OnCannotUseSpell?.Invoke(this, spell, error);
+                    return;
+                }
 
                 OnUsedSpell?.Invoke(this, spell);
             }
@@ -391,6 +397,18 @@ namespace NeoServer.Server.Model.Players
 
             Mana -= mana;
             OnManaReduced?.Invoke(this);
+        }
+        public bool HasEnoughLevel(ushort level) => Level >= level;
+
+        public override IItem CreateItem(ushort itemId, byte amount)
+        {
+            var item = base.CreateItem(itemId, amount);
+            if (!Inventory.BackpackSlot.TryAddItem(item).Success)
+            {
+                var thing = item as IThing;
+                Tile.AddThing(ref thing);
+            }
+            return item;
         }
     }
 }

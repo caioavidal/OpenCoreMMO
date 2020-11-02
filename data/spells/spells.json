@@ -3,23 +3,39 @@
 		"name":"Haste",
 		"words":"utani hur",
 		"script": "Haste",
-		"mana": 60
+		"mana": 60,
+		"cooldown":"1000",
+		"level":8
 	},
 	{
 		"name":"Strong Haste",
 		"words":"utani gran hur",
 		"script": "StrongHaste",
-		"mana": 60
+		"mana": 60,
+		"cooldown":"1000",
+		"level":8
 	},{
 		"name":"Intense Healing",
 		"words":"exura gran",
 		"script": "IntenseHealing",
-		"mana": 60
+		"mana": 0,
+		"cooldown":"1000",
+		"level":8
 	},
 	{
 		"name":"Invisibility",
 		"words":"utana vid",
 		"script": "Invisibility",
-		"mana": 60
+		"mana": 60,
+		"cooldown":"1000",
+		"level":8
+	},
+	{
+		"name":"Food",
+		"words":"exevo pan",
+		"script": "Food",
+		"mana": 0,
+		"cooldown":"1000",
+		"level":8
 	}
 ]
