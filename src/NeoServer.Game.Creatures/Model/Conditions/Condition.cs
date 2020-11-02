@@ -7,11 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace NeoServer.Game.Creatures.Model.Conditions
 {
-    public abstract class Condition : ICondition
+    public abstract class BaseCondition : ICondition
     {
         private bool isBuff;
 
-        protected Condition(uint duration)
+        protected BaseCondition(uint duration)
         {
             Duration = duration;
         }

@@ -10,10 +10,10 @@ namespace NeoServer.Game.Creatures.Spells
 {
     public abstract class Spell<T> : ISpell where T : Spell<T>
     {
-        public virtual string Name{ get; set; }
+        public virtual string Name { get; set; }
         public abstract EffectT Effect { get; }
         public abstract uint Duration { get; }
-        public virtual ushort Mana { get;  set; }
+        public virtual ushort Mana { get; set; }
         public ushort MinLevel { get; set; }
         public uint Cooldown { get; set; }
 
@@ -24,8 +24,8 @@ namespace NeoServer.Game.Creatures.Spells
         public bool Invoke(ICombatActor actor, out InvalidOperation error)
         {
             if (!CanBeUsedBy(actor, out error)) return false;
-            if(actor is IPlayer player) player.ConsumeMana(Mana);
-            
+            if (actor is IPlayer player) player.ConsumeMana(Mana);
+
             OnCast(actor);
             AddCondition(actor);
             AddCooldown(actor);
@@ -42,7 +42,7 @@ namespace NeoServer.Game.Creatures.Spells
                     error = InvalidOperation.NotEnoughMana;
                     return false;
                 }
-                if(!player.HasEnoughLevel(MinLevel))
+                if (!player.HasEnoughLevel(MinLevel))
                 {
                     error = InvalidOperation.NotEnoughLevel;
                     return false;
@@ -64,22 +64,18 @@ namespace NeoServer.Game.Creatures.Spells
         {
             if (ConditionType == ConditionType.None) return;
 
-            if (actor.HasCondition(ConditionType.Haste, out var condition))
+            if (actor.HasCondition(ConditionType, out var existingCondition))
             {
-                actor.AddCondition(condition);
+                actor.AddCondition(existingCondition);
                 return;
             }
 
-            var hasteCondition = new HasteCondition(Duration);
+            var condition = new Condition(ConditionType, Duration);
+            condition.OnEnd = () => OnEnd(actor);
 
-            hasteCondition.OnEnd = () => OnEnd(actor);
-
-            actor.AddCondition(hasteCondition);
+            actor.AddCondition(condition);
         }
-        private void AddCooldown(ICombatActor actor)
-        {
-            actor.StartSpellCooldown(this);
-        }
+        private void AddCooldown(ICombatActor actor) => actor.StartSpellCooldown(this);
     }
 
 }

@@ -21,6 +21,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void StartWalk(IWalkableCreature creature);
     public delegate void Heal(ICombatActor creature, ushort amount);
     public delegate void Say(ICreature creature, TalkType type, string message);
+    public delegate void AddCondition(ICreature creature);
     public interface ICreature : IMoveableThing
     {
         BloodType Blood { get; }

@@ -8,11 +8,13 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures
 {
-    public class HasteCondition : Condition
+    public class Condition : BaseCondition
     {
-        public HasteCondition(uint duration) : base(duration) { }
-
-        public override ConditionType Type => ConditionType.Haste;
+        public Condition(ConditionType type, uint duration):base(duration)
+        {
+            Type = type;
+        }
+        public override ConditionType Type { get; }
         
     }
 }

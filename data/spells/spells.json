@@ -5,7 +5,7 @@
 		"script": "Haste",
 		"mana": 60,
 		"cooldown":"1000",
-		"level":800
+		"level":8
 	},
 	{
 		"name":"Strong Haste",

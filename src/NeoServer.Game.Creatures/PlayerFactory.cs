@@ -30,6 +30,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
         private readonly PlayerUsedSpellEventHandler _playerUsedSpellEventHandler;
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
+        private readonly PlayerConditionAddedEventHandler _playerConditionAddedEventHandler;
 
         private readonly IPathFinder _pathFinder;
 
@@ -38,8 +39,9 @@ namespace NeoServer.Game.Creatures
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
-            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler, 
-            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler, PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler)
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler,
+            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler, 
+            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionAddedEventHandler playerConditionAddedEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -55,6 +57,7 @@ namespace NeoServer.Game.Creatures
             _pathFinder = pathFinder;
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
             _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
+            _playerConditionAddedEventHandler = playerConditionAddedEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -103,6 +106,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnManaReduced += _playerManaReducedEventHandler.Execute;
             newPlayer.OnUsedSpell += _playerUsedSpellEventHandler.Execute;
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
+            newPlayer.OnAddedCondition += _playerConditionAddedEventHandler.Execute;
             return newPlayer;
         }
         private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(IPlayerModel player)
@@ -155,7 +159,6 @@ namespace NeoServer.Game.Creatures
                 container.TryAddItem(item);
 
             }
-
             return BuildContainer(items, ++index, location, container);
         }
 
