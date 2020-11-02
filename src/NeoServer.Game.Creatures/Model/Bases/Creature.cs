@@ -32,6 +32,8 @@ namespace NeoServer.Game.Creatures.Model
         public event RemoveCreature OnCreatureRemoved;
         public event GainExperience OnGainedExperience;
         public event AddCondition OnAddedCondition;
+        public event RemoveCondition OnRemovedCondition;
+
         public event Say OnSay;
 
         protected readonly ICreatureType CreatureType;
@@ -162,8 +164,12 @@ namespace NeoServer.Game.Creatures.Model
         {
             Conditions.TryAdd(condition.Type, condition);
             condition.Start(this);
-            OnAddedCondition?.Invoke(this);
-            
+            OnAddedCondition?.Invoke(this, condition);
+        }
+        public void RemoveCondition(ICondition condition)
+        {
+            Conditions.Remove(condition.Type);
+            OnRemovedCondition?.Invoke(this, condition);
         }
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
 

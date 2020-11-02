@@ -55,5 +55,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void TurnVisible();
         void StartSpellCooldown(ISpell spell);
         bool SpellCooldownHasExpired(ISpell spell);
+        bool CooldownHasExpired(CooldownType type);
     }
 }

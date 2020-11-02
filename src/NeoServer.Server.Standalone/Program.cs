@@ -36,6 +36,7 @@ namespace NeoServer.Server.Standalone
     {
         static void Main(string[] args)
         {
+            Console.Title = "OpenCoreMMO Server";
 
             var sw = new Stopwatch();
             sw.Start();
@@ -73,8 +74,6 @@ namespace NeoServer.Server.Standalone
             scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
 
             container.Resolve<EventSubscriber>().AttachEvents();
-
-
 
             container.Resolve<Game>().Open();
 

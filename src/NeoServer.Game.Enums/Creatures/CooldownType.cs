@@ -9,6 +9,7 @@
         Talk,
         Block,
         LookForNewEnemy,
-        Haste
+        Haste,
+        Spell
     }
 }

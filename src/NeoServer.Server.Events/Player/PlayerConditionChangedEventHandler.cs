@@ -9,16 +9,16 @@ using System.Text;
 
 namespace NeoServer.Server.Events.Player
 {
-    public class PlayerConditionAddedEventHandler
+    public class PlayerConditionChangedEventHandler
     {
         private readonly Game game;
 
-        public PlayerConditionAddedEventHandler(Game game)
+        public PlayerConditionChangedEventHandler(Game game)
         {
             this.game = game;
         }
 
-        public void Execute(ICreature creature)
+        public void Execute(ICreature creature, ICondition c)
         {
             ushort icons = 0;
             foreach (var condition in creature.Conditions)

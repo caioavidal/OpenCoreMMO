@@ -21,7 +21,9 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void StartWalk(IWalkableCreature creature);
     public delegate void Heal(ICombatActor creature, ushort amount);
     public delegate void Say(ICreature creature, TalkType type, string message);
-    public delegate void AddCondition(ICreature creature);
+    public delegate void AddCondition(ICreature creature, ICondition condition);
+    public delegate void RemoveCondition(ICreature creature, ICondition condition);
+
     public interface ICreature : IMoveableThing
     {
         BloodType Blood { get; }
@@ -48,6 +50,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event RemoveCreature OnCreatureRemoved;
         event GainExperience OnGainedExperience;
         event Say OnSay;
+        event RemoveCondition OnRemovedCondition;
 
         void AddCondition(ICondition condition);
         bool CanSee(Contracts.Creatures.ICreature otherCreature);
@@ -56,6 +59,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void GainExperience(uint exp);
         bool HasCondition(ConditionType type, out ICondition condition);
         bool HasFlag(CreatureFlag flag);
+        void RemoveCondition(ICondition condition);
         void Say(string message, TalkType talkType);
         void SetAsRemoved();
         void SetDirection(Direction direction);
