@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Creatures.Combat.Attacks;
+using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
@@ -384,6 +385,7 @@ namespace NeoServer.Server.Model.Players
                     return;
                 }
 
+                Cooldowns.Start(CooldownType.Spell, 1000); //odo: 1000 should be a const
                 OnUsedSpell?.Invoke(this, spell);
             }
             base.Say(message, talkType);

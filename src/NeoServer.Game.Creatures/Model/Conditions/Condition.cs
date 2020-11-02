@@ -13,7 +13,7 @@ namespace NeoServer.Game.Creatures.Model.Conditions
 
         protected BaseCondition(uint duration)
         {
-            Duration = duration;
+            Duration = duration * TimeSpan.TicksPerMillisecond;
         }
 
         public Action OnEnd { private get; set; }
@@ -22,30 +22,29 @@ namespace NeoServer.Game.Creatures.Model.Conditions
         public ConditionIcon Icons => isBuff ? ConditionIcon.PartyBuff : 0;
 
         public abstract ConditionType Type { get; }
-        public uint Duration { get; }
+        public long Duration { get; }
         public long EndTime { get; private set; }
-
-        public int Ticks { get; private set; }
 
         public void End()
         {
             OnEnd?.Invoke();
         }
-    
+
         public bool IsPersistent
         {
             get
             {
-                if (Ticks == -1)
-                {
-                    return false;
-                }
-                if (!(ConditionSlot == ConditionSlot.Default ||
-                    ConditionSlot == ConditionSlot.Combat ||
-                    Type == ConditionType.Muted))
-                {
-                    return false;
-                }
+                //todo
+                //if (Ticks == -1)
+                //{
+                //    return false;
+                //}
+                //if (!(ConditionSlot == ConditionSlot.Default ||
+                //    ConditionSlot == ConditionSlot.Combat ||
+                //    Type == ConditionType.Muted))
+                //{
+                //    return false;
+                //}
 
                 return true;
             }
@@ -53,39 +52,13 @@ namespace NeoServer.Game.Creatures.Model.Conditions
 
         public ConditionSlot ConditionSlot => throw new NotImplementedException();
 
-
-        public void SetTicks(uint ticks)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Start(ICreature creature)
         {
-            if (UpdateCondition())
-            {
-                return true;
-            }
-
-            if (Ticks > 0)
-            {
-                EndTime = DateTime.Now.Ticks + Ticks;
-            }
-            return true;
-        }
-
-        protected bool UpdateCondition()
-        {
-            if (Ticks > 0) //condition expired
-            {
-                return false;
-            }
-
-            if (Ticks >= 0 && EndTime > (DateTime.Now.Ticks + Ticks))
-            {
-                return false;
-            }
+           
+            EndTime = DateTime.Now.Ticks + Duration;
 
             return true;
         }
+        public bool HasExpired => EndTime < DateTime.Now.Ticks;
     }
 }

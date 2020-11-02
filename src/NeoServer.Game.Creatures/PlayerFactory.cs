@@ -30,7 +30,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
         private readonly PlayerUsedSpellEventHandler _playerUsedSpellEventHandler;
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
-        private readonly PlayerConditionAddedEventHandler _playerConditionAddedEventHandler;
+        private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
 
         private readonly IPathFinder _pathFinder;
 
@@ -41,7 +41,7 @@ namespace NeoServer.Game.Creatures
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler,
             IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler, 
-            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionAddedEventHandler playerConditionAddedEventHandler)
+            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -57,7 +57,7 @@ namespace NeoServer.Game.Creatures
             _pathFinder = pathFinder;
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
             _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
-            _playerConditionAddedEventHandler = playerConditionAddedEventHandler;
+            _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -106,7 +106,9 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnManaReduced += _playerManaReducedEventHandler.Execute;
             newPlayer.OnUsedSpell += _playerUsedSpellEventHandler.Execute;
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
-            newPlayer.OnAddedCondition += _playerConditionAddedEventHandler.Execute;
+            newPlayer.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
+            newPlayer.OnRemovedCondition += _playerConditionChangedEventHandler.Execute;
+
             return newPlayer;
         }
         private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(IPlayerModel player)

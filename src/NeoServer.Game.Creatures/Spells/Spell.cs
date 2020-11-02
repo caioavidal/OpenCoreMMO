@@ -47,7 +47,7 @@ namespace NeoServer.Game.Creatures.Spells
                     error = InvalidOperation.NotEnoughLevel;
                     return false;
                 }
-                if (!player.SpellCooldownHasExpired(this))
+                if (!player.SpellCooldownHasExpired(this) || !player.CooldownHasExpired(Enums.CooldownType.Spell))
                 {
                     error = InvalidOperation.Exhausted;
                     return false;
