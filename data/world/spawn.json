@@ -11,6 +11,20 @@
          "y": "1",
          "z": "7",
          "spawntime": "60"
+      },
+	   {
+         "name": "Monster",
+         "x": "2",
+         "y": "1",
+         "z": "7",
+         "spawntime": "60"
+      },
+	  {
+         "name": "Monster",
+         "x": "3",
+         "y": "1",
+         "z": "7",
+         "spawntime": "60"
       }
 	 ]
    

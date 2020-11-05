@@ -51,7 +51,7 @@ namespace NeoServer.Game.World.Map
                 return true;
             }
 
-            if(creature.Location.GetSqmDistance(target) > 2)
+            if (creature.Location.GetSqmDistance(target) > 2)
             {
                 return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
             }
@@ -65,21 +65,19 @@ namespace NeoServer.Game.World.Map
 
             var startLocation = creature.Location;
 
-            if(fpp.KeepDistance == false)
+            foreach (var neighbour in startLocation.Neighbours.Random())
             {
-                foreach (var neighbour in startLocation.Neighbours.Random())
-                {
-                    if (neighbour.GetSqmDistanceX(target) > 1 || neighbour.GetSqmDistanceY(target) > 1) continue;
+                if (neighbour.GetSqmDistanceX(target) > fpp.MaxTargetDist || neighbour.GetSqmDistanceY(target) > fpp.MaxTargetDist) continue;
 
-                    if(Map.CanWalkTo(neighbour, out var tile))
-                    {
-                        
-                        directions = new Direction[1] { startLocation.DirectionTo(neighbour) };
-                        Console.WriteLine(directions[0]);
-                        return true;
-                    }
+                if (fpp.KeepDistance == true && (neighbour.GetSqmDistanceX(target) < fpp.MaxTargetDist && neighbour.GetSqmDistanceY(target) < fpp.MaxTargetDist)) continue;
+
+                if (Map.CanWalkTo(neighbour, out var tile))
+                {
+                    directions = new Direction[1] { startLocation.DirectionTo(neighbour) };
+                    return true;
                 }
             }
+
             return false;
         }
 

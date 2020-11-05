@@ -255,7 +255,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if(!Targets.TryGetValue(AutoAttackTargetId, out var combatTarget)) return;
 
             if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
-            Cooldowns.Start(CooldownType.MoveAroundEnemy, 5000);
+            Cooldowns.Start(CooldownType.MoveAroundEnemy, GaussianRandom.Random.Next(minValue:3000, maxValue:5000));
 
             if (!IsInPerfectPostionToCombat(combatTarget)) return;
 

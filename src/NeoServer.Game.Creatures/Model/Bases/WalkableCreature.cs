@@ -113,7 +113,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnStoppedWalking?.Invoke(this);
         }
 
-
         public void StopFollowing()
         {
             Following = 0;

@@ -82,8 +82,6 @@ namespace NeoServer.Server.Standalone
             logger.Information($"Memory usage: {Math.Round((System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2)} MB");
 
             listeningTask.Wait(cancellationToken);
-
-            //   CreateChar();
         }
 
         private static async Task StartListening(IContainer container, CancellationToken token)
