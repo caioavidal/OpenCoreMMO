@@ -152,6 +152,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public bool TryUpdatePath(Direction[] newPath)
         {
+            if (newPath.Length == 0) return false;
             if (!Cooldowns.Expired(CooldownType.UpdatePath)) return false;
 
             Cooldowns.Start(CooldownType.UpdatePath, 1000);

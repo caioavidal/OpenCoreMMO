@@ -10,6 +10,7 @@
         Block,
         LookForNewEnemy,
         Haste,
-        Spell
+        Spell,
+        MoveAroundEnemy
     }
 }

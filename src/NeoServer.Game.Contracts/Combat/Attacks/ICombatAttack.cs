@@ -11,6 +11,7 @@ namespace NeoServer.Game.Contracts.Combat
         ushort CalculateDamage(ushort attackPower, ushort minAttackPower);
         void CauseDamage(ICombatActor actor, ICombatActor enemy);
         void BuildAttack(ICombatActor actor, ICombatActor enemy);
+        bool CanAttack(ICombatActor actor, ICombatActor enemy);
 
         public bool IsMagicalDamage => Option.DamageType switch
         {

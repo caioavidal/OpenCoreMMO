@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Helpers;
@@ -14,7 +15,15 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
         {
      
         }
+        public MeleeCombatAttack() : base(DamageType.Melee, new CombatAttackOption() { Target = 1 })
+        {
+        }
         public byte Attack => Option.Attack;
         public byte Skill => Option.Skill;
+
+        public override bool CanAttack(ICombatActor actor, ICombatActor enemy)
+        {
+            return actor.Location.IsNextTo(enemy.Location);
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace NeoServer.Server.Events.Combat
                 if (game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature) && creature is ICombatActor enemy)
                 {
                     actor.Attack(enemy, null);
+                    MoveAroundEnemy(actor);
                 }
             }
             else
@@ -58,6 +59,13 @@ namespace NeoServer.Server.Events.Combat
                 actor.AttackEvent = 0;
                 Execute(actor, 0, 0);
             }
+        }
+
+        private void MoveAroundEnemy(ICombatActor actor)
+        {
+            if (!(actor is IMonster monster)) return;
+
+            monster.MoveAroundEnemy();
         }
     }
 }

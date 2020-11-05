@@ -371,7 +371,7 @@ namespace NeoServer.Server.Model.Players
         }
         public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
         {
-            var melee = new MeleeCombatAttack(255, 255);
+            var melee = new MeleeCombatAttack();
             return base.Attack(enemy, melee);
         }
 

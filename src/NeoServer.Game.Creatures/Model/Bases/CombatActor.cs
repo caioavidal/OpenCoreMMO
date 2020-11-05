@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures.Players;
@@ -147,6 +148,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public bool WasDamagedOnLastAttack = true;
 
+        //public virtual bool MagicalAttack(ICombatAttack enemy)
+        //{
+
+        //}
+
      
         public virtual bool Attack(ICombatActor enemy, ICombatAttack combatAttack)
         {
@@ -156,7 +162,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 return false;
             }
 
-            if (!(combatAttack is IDistanceCombatAttack) && !Tile.IsNextTo(enemy.Tile))
+            if (!combatAttack.CanAttack(this,enemy))
             {
                 return false;
             }

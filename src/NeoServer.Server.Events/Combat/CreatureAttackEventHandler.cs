@@ -32,13 +32,6 @@ namespace NeoServer.Server.Events.Combat
                     continue;
                 }
 
-                byte effect = 0;
-
-                if (attack is IDistanceCombatAttack distanceAttack)
-                {
-                    effect = (byte)distanceAttack.ShootType;
-                }
-
                 var damageEffect = DamageEffectParser.Parse(attack.DamageType);
 
                 if (attack is IAreaAttack areaAttack)
@@ -48,17 +41,20 @@ namespace NeoServer.Server.Events.Combat
                         connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, damageEffect));
                     }
                 }
-                else
+                //else
+                //{
+                //    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                //}
+
+                if (attack is IDistanceCombatAttack distanceAttack)
                 {
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                    var effect = (byte)distanceAttack.ShootType;
+                    connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
                 }
-
-
-                connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
                 connection.Send();
             }
         }
 
-     
+
     }
 }

@@ -29,6 +29,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             enemy.ReceiveAttack(actor, this, CalculateDamage(actor.AttackPower, actor.MinimumAttackPower));
         }
+
+        public virtual bool CanAttack(ICombatActor actor, ICombatActor enemy)
+        {
+            return true;
+        }
     }
 
 

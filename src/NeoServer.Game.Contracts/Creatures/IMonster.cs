@@ -27,6 +27,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void AddToTargetList(ICombatActor creature);
         void RemoveFromTargetList(ICreature creature);
         ushort Defende();
+        void MoveAroundEnemy();
 
         uint Experience { get; }
         bool HasAnyTarget { get; }

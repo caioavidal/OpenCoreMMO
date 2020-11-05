@@ -8,7 +8,6 @@ namespace NeoServer.Server.Handlers.Authentication
     public class AccountLoginHandler : PacketHandler
     {
         private readonly IAccountRepository _repository;
-
         public AccountLoginHandler(IAccountRepository repository)
         {
             _repository = repository;

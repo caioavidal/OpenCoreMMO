@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Server.Helpers.Extensions;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -28,19 +29,58 @@ namespace NeoServer.Game.World.Map
         {
             var AStarTibia = new AStarTibia();
 
+            directions = new Direction[0];
+
+            if (fpp.OneStep)
+            {
+                return FindStep(creature, target, fpp, out directions);
+            }
+
             if (fpp.KeepDistance)
             {
-                FindPathToKeepDistance(creature, target, fpp, out directions);
+                if (creature.Location.GetSqmDistanceX(target) < fpp.MaxTargetDist || creature.Location.GetSqmDistanceY(target) < fpp.MaxTargetDist)
+                {
+                    FindPathToKeepDistance(creature, target, fpp, out directions);
+                }
 
                 if (creature.Location.GetSqmDistanceX(target) > fpp.MaxTargetDist || creature.Location.GetSqmDistanceY(target) > fpp.MaxTargetDist)
                 {
-                    return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(fpp.FullPathSearch, fpp.ClearSight, fpp.AllowDiagonal, false, fpp.MaxSearchDist, 1, fpp.MaxTargetDist), out directions);
+                    return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(fpp.FullPathSearch, fpp.ClearSight, fpp.AllowDiagonal, false, fpp.MaxSearchDist, 1, fpp.MaxTargetDist, false), out directions);
                 }
+
                 return true;
             }
 
-            return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
+            if(creature.Location.GetSqmDistance(target) > 2)
+            {
+                return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
+            }
 
+            return true;
+        }
+
+        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        {
+            directions = new Direction[0];
+
+            var startLocation = creature.Location;
+
+            if(fpp.KeepDistance == false)
+            {
+                foreach (var neighbour in startLocation.Neighbours.Random())
+                {
+                    if (neighbour.GetSqmDistanceX(target) > 1 || neighbour.GetSqmDistanceY(target) > 1) continue;
+
+                    if(Map.CanWalkTo(neighbour, out var tile))
+                    {
+                        
+                        directions = new Direction[1] { startLocation.DirectionTo(neighbour) };
+                        Console.WriteLine(directions[0]);
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)

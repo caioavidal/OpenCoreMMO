@@ -189,6 +189,25 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public bool CanReachAnyTarget { get; private set; } = false;
         public bool IsInCombat => State == MonsterState.InCombat;
+        public bool IsInPerfectPostionToCombat(CombatTarget target)
+        {
+            if (KeepDistance)
+            {
+                if (target.Creature.Location.GetSqmDistanceX(Location) == TargetDistance || target.Creature.Location.GetSqmDistanceY(Location) == TargetDistance)
+                {
+                    return true && target.CanReachCreature;
+                }
+            }
+            else
+            {
+                if (target.Creature.Location.GetSqmDistanceX(Location) <= TargetDistance && target.Creature.Location.GetSqmDistanceY(Location) <= TargetDistance)
+                {
+                    return true && target.CanReachCreature;
+
+                }
+            }
+            return false;
+        }
 
         public bool Defending { get; private set; }
 
@@ -202,7 +221,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var canReachAnyTarget = false;
 
-            var fpp = new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance);
+            var fpp = new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance, false);
 
             foreach (var target in Targets)
             {
@@ -231,6 +250,21 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return nearestCombat;
         }
 
+        public void MoveAroundEnemy()
+        {
+            if(!Targets.TryGetValue(AutoAttackTargetId, out var combatTarget)) return;
+
+            if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
+            Cooldowns.Start(CooldownType.MoveAroundEnemy, 5000);
+
+            if (!IsInPerfectPostionToCombat(combatTarget)) return;
+
+            if (FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance, true), out var directions))
+            {
+                TryWalkTo(directions);
+            }
+        }
+
         public void SelectTargetToAttack()
         {
             var target = searchTarget();
@@ -250,7 +284,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (FollowCreature)
             {
-                StartFollowing(target.Creature, new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance));
+                StartFollowing(target.Creature, new FindPathParams(false, true, true, KeepDistance, 12, 1, TargetDistance, false));
             }
 
             SetAttackTarget(target.Creature.CreatureId);
@@ -272,19 +306,5 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return base.Attack(enemy, attack);
         }
 
-        public void TakeDistanceFromEnemy(ICreature enemy)
-        {
-            if (!KeepDistance)
-            {
-                return;
-            }
-
-            var enemyLocation = enemy.Location;
-
-            if (Location.GetSqmDistanceX(enemyLocation) >= TargetDistance && Location.GetSqmDistanceY(enemyLocation) >= TargetDistance)
-            {
-                return;
-            }
-        }
     }
 }
