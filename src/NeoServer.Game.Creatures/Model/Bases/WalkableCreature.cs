@@ -46,6 +46,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool HasNextStep => WalkingQueue.Count > 0;
         public bool FollowCreature { get; protected set; }
         public uint FollowEvent { get; set; }
+        public bool HasFollowPath { get; private set; }
 
         public void UpdateLastStepInfo(bool wasDiagonal = true)
         {
@@ -126,8 +127,15 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void Follow(IWalkableCreature creature, FindPathParams fpp)
         {
+            HasFollowPath = false;
+
             if (!FindPathToDestination(this, creature.Location, fpp, out var directions)) return;
-            TryUpdatePath(directions);
+                        
+            if(directions.Length > 0)
+            {
+                HasFollowPath = true;
+                TryUpdatePath(directions);
+            }
         }
 
 

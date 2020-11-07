@@ -32,7 +32,7 @@
           "pushable": "0",
           "canpushitems": "1",
           "canpushcreatures": "1",
-         "targetdistance": "7",
+         "targetdistance": "4",
           "staticattack": "90",
           "runonhealth": "0"
     },
@@ -52,7 +52,7 @@
           "max": "-85",
           "attributes": [{
             "key": "shootEffect",
-            "value": "bolt"
+            "value": "spear"
           }]
         }
 		

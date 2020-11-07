@@ -64,7 +64,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             Container.OnItemUpdated += ItemUpdated;
             eventsAttached = true;
         }
-
         internal void DetachContainerEvents()
         {
 

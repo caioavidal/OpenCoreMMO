@@ -66,7 +66,6 @@ namespace NeoServer.Networking
         {
             XteaKey = xtea;
         }
-
         private void OnRead(IAsyncResult ar)
         {
 

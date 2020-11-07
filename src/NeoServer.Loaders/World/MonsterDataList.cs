@@ -174,10 +174,10 @@ namespace NeoServer.Loaders.World
             public IDictionary<string, byte> Flags { get; set; }
 
             [JsonProperty("attacks")]
-            public List<Dictionary<string,object>> Attacks { get; set; }
+            public List<Dictionary<string, object>> Attacks { get; set; } = new List<Dictionary<string, object>>();
 
             [JsonProperty("defenses")]
-            public List<Dictionary<string, object>> Defenses { get; set; }
+            public List<Dictionary<string, object>> Defenses { get; set; } = new List<Dictionary<string, object>>();
             [JsonProperty("defense")]
             public Defenses Defense { get; set; }
 

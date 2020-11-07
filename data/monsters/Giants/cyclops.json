@@ -43,7 +43,7 @@
         "attack": "30"
       }
     ],
-    "defenses": {
+    "defense": {
       "armor": "15",
       "defense": "20"
     },

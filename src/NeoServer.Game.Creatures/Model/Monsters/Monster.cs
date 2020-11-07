@@ -157,8 +157,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         private IDictionary<uint, CombatTarget> Targets = new Dictionary<uint, CombatTarget>(150);
 
-
-
         public void AddToTargetList(ICombatActor creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
@@ -221,7 +219,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var canReachAnyTarget = false;
 
-            var fpp = new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance, false);
+            var fpp = new FindPathParams(!HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, false);
 
             foreach (var target in Targets)
             {
@@ -259,7 +257,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (!IsInPerfectPostionToCombat(combatTarget)) return;
 
-            if (FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(!KeepDistance, true, true, KeepDistance, 12, 1, TargetDistance, true), out var directions))
+            if (FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, true), out var directions))
             {
                 TryWalkTo(directions);
             }
@@ -284,7 +282,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (FollowCreature)
             {
-                StartFollowing(target.Creature, new FindPathParams(false, true, true, KeepDistance, 12, 1, TargetDistance, false));
+                StartFollowing(target.Creature, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, false));
             }
 
             SetAttackTarget(target.Creature.CreatureId);

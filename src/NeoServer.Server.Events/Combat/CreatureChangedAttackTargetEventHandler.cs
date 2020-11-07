@@ -34,7 +34,6 @@ namespace NeoServer.Server.Events.Combat
 
             actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int)actor.BaseAttackSpeed, () => Attack(actor)));
         }
-
         private void Attack(ICombatActor actor)
         {
             if (actor.Attacking)

@@ -38,29 +38,28 @@
         ,
         
           "convinceable": "1"
-        },
-        {
+        ,
+        
           "pushable": "1"
-        },
-        {
+        ,
+        
           "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
+        ,
+                  "canpushcreatures": "0"
+        ,
+        
           "targetdistance": "4"
-        },
-        {
+        ,
+        
           "staticattack": "90"
-        },
-        {
+        ,
+        
           "runonhealth": "10"
-        }
-      ]
+        
+      
     },
-    "attacks": {
-      "attack": [
+    "attacks": 
+      [
         {
           "name": "melee",
           "interval": "2000",
@@ -74,14 +73,14 @@
           "range": "7",
           "min": "-16",
           "max": "-40",
-          "attribute": {
+          "attributes": [{
             "key": "shootEffect",
             "value": "spear"
-          }
+          }]
         }
       ]
-    },
-    "defenses": {
+    ,
+    "defense": {
       "armor": "6",
       "defense": "12"
     },
@@ -101,13 +100,7 @@
         }
       ]
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Ugaar!"
-      }
-    },
+   
     "loot": {
       "item": [
         {

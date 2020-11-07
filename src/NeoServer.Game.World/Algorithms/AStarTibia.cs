@@ -56,6 +56,8 @@ namespace NeoServer.Game.World.Map
         public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
             fpp, out Direction[] directions)
         {
+
+            Console.WriteLine($"{creature.Name}: {fpp.FullPathSearch}");
             var pos = creature.Location;
 
             directions = new Direction[0];

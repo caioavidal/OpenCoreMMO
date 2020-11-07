@@ -96,7 +96,6 @@ namespace NeoServer.Server.Model.Players
         public FightMode FightMode { get; private set; }
         public byte SoulPoints { get; private set; }
         public uint MaxSoulPoints { get; private set; }
-
         public IInventory Inventory { get; set; }
 
         public ushort StaminaMinutes { get; private set; }

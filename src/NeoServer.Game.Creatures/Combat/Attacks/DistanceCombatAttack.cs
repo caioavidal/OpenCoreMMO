@@ -21,5 +21,9 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
         {
             enemy.ReceiveAttack(actor, this, CalculateDamage(Option.MaxDamage, Option.MinDamage));;
         }
+        public override bool CanAttack(ICombatActor actor, ICombatActor enemy)
+        {
+            return actor.Location.GetSqmDistanceX(enemy.Location) <= Range || actor.Location.GetSqmDistanceY(enemy.Location) <= Range;
+        }
     }
 }

@@ -1,8 +1,10 @@
  [
-	
-
 	{
-		"name": "Monster",
-        "file": "monster.json"
+		"name": "Orc Spearman",
+        "file": "Orcs/orc spearman.json"
+	},
+	{
+		"name": "Cyclops",
+        "file": "Giants/cyclops.json"
 	}
 ]
