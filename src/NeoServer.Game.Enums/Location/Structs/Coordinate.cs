@@ -110,9 +110,9 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// <summary>
         /// Returns the hash code of this instance.
         /// </summary>
-        public override int GetHashCode() => System.HashCode.Combine(X, Y, Z);
+        //public override int GetHashCode() => System.HashCode.Combine(X, Y, Z);
 
-        public override bool Equals(object obj) => obj is Coordinate c && Equals(c);
+        //public override bool Equals(object obj) => obj is Coordinate c && Equals(c);
         /// <summary>
         /// Returns a string representation of this instance.
         /// </summary>
@@ -125,42 +125,9 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// </summary>
         public bool Equals(Coordinate other) => X == other.X && Y == other.Y && Z == other.Z;
 
-        /// <summary>
-        /// Compares two <see cref="Coordinate"/> objects. The result specifies whether the values
-        /// of the <see cref="X"/>, <see cref="Y"/> and <see cref="Z"/> fields of the two
-        /// <see cref="Coordinate"/> objects are equal.
-        /// </summary>
-        public static bool operator ==(Coordinate first, Coordinate second) => first.Equals(second);
-
-        /// <summary>
-        /// Compares two <see cref="Coordinate"/> objects. The result specifies whether the values
-        /// of the <see cref="X"/> or <see cref="Y"/> or <see cref="Z"/> fields of the two
-        /// <see cref="Coordinate"/> objects are unequal.
-        /// </summary>
-        public static bool operator !=(Coordinate first, Coordinate second) => !(first == second);
-
-        public static bool operator >=(Coordinate first, Coordinate second)
+        public override int GetHashCode()
         {
-            try
-            {
-                return first.X >= second.X || first.Y >= second.Y || first.Z >= second.Z;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-        }
-
-        public static bool operator <=(Coordinate first, Coordinate second)
-        {
-            try
-            {
-                return first.X <= second.X || first.Y <= second.Y || first.Z <= second.Z;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
+            return HashCode.Combine(X, Y, Z);
         }
     }
 }

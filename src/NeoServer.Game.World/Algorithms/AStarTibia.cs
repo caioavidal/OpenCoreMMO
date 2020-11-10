@@ -13,7 +13,7 @@ namespace NeoServer.Game.World.Map
     public class AStarTibia
     {
         private bool pathCondition(IMap map, Location startPos, Location testPos,
-            Location targetPos, int bestMatchDist, FindPathParams fpp)
+            Location targetPos, ref int bestMatchDist, FindPathParams fpp)
         {
 
             if (!map.IsInRange(startPos, testPos, targetPos, fpp))
@@ -103,7 +103,7 @@ namespace NeoServer.Game.World.Map
                 pos.X = x;
                 pos.Y = y;
 
-                if (pathCondition(map, startPos, pos, targetPos, bestMatch, fpp))
+                if (pathCondition(map, startPos, pos, targetPos, ref bestMatch, fpp))
                 {
                     found = n;
                     endPos = pos;
@@ -310,6 +310,7 @@ namespace NeoServer.Game.World.Map
         private bool[] openNodes = new bool[512];
         private List<AStarNode> nodes = new List<AStarNode>(512);
         private Dictionary<AStarPosition, AStarNode> nodesMap = new Dictionary<AStarPosition, AStarNode>();
+        private Dictionary<AStarNode, int> nodesIndexMap = new Dictionary<AStarNode, int>();
         private AStarNode startNode;
 
         public Nodes(Location location)
@@ -324,7 +325,7 @@ namespace NeoServer.Game.World.Map
             };
 
             nodes.Add(startNode);
-
+            nodesIndexMap.Add(startNode, nodes.Count - 1);
             nodesMap.Add(new AStarPosition(location.X, location.Y), nodes[0]);
         }
 
@@ -361,7 +362,7 @@ namespace NeoServer.Game.World.Map
             while (true)
             {
 
-                index = nodes.IndexOf(node, start);
+                index = nodesIndexMap[node];
                 if (openNodes[index] == false)
                 {
                     start = ++index;
@@ -399,6 +400,7 @@ namespace NeoServer.Game.World.Map
             };
             nodes.Add(node);
 
+            nodesIndexMap.Add(node, nodes.Count - 1);
             nodesMap.TryAdd(new AStarPosition(node.X, node.Y), node);
             return node;
         }
@@ -412,7 +414,7 @@ namespace NeoServer.Game.World.Map
         internal void OpenNode(AStarNode node)
         {
 
-            var index = nodes.IndexOf(node);
+            var index = nodesIndexMap[node];
 
             if (index >= 512)
             {
@@ -427,7 +429,7 @@ namespace NeoServer.Game.World.Map
         }
     }
 
-    internal readonly struct AStarPosition
+    internal readonly struct AStarPosition: IEquatable<AStarPosition>
     {
         public AStarPosition(int x, int y)
         {
@@ -437,6 +439,21 @@ namespace NeoServer.Game.World.Map
 
         public int X { get; }
         public int Y { get; }
+
+        public bool Equals([AllowNull] AStarPosition other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AStarPosition pos && Equals(pos);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
+        }
     }
 
     internal class AStarNode : IEquatable<AStarNode>

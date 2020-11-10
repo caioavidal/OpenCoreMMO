@@ -1,5 +1,6 @@
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.World.Map;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,26 +10,50 @@ namespace NeoServer.Game.World
 {
     public class World
     {
-        public bool HasLoaded(int x, int y, byte z) => tiles.Any();
-        public int LoadedTilesCount => tiles.Count();
+        //public bool HasLoaded(int x, int y, byte z) => tiles.Any();
+        public int LoadedTilesCount { get; private set; }
         public int LoadedTownsCount => towns.Count();
         public int LoadedWaypointsCount => waypoints.Count();
 
-        private readonly ConcurrentDictionary<Coordinate, ITile> tiles = new ConcurrentDictionary<Coordinate, ITile>();
         private readonly ConcurrentDictionary<Coordinate, ITown> towns = new ConcurrentDictionary<Coordinate, ITown>();
         private readonly ConcurrentDictionary<Coordinate, IWaypoint> waypoints = new ConcurrentDictionary<Coordinate, IWaypoint>();
+        private readonly Region region  = new Region();
+
         public ImmutableList<ISpawn> Spawns { get; private set; }
 
-        public void AddTile(ITile tile)
+        public void AddTile(ITile newTile)
         {
-            tile.ThrowIfNull();
+            var x = newTile.Location.X;
+            var y = newTile.Location.Y;
+            var z = newTile.Location.Z;
 
-            var tileCoordinates = new Coordinate(
-                x: tile.Location.X,
-                y: tile.Location.Y,
-                z: tile.Location.Z);
+            var sector = region.AddChild(x, y, 15);
 
-            tiles[tileCoordinates] = tile;
+            if (sector != null)
+            {
+                var northSector = region.GetSector(x, y - 8);
+                if (northSector != null) northSector.South = sector;
+
+                var westSector = region.GetSector(x - 8, y);
+                if (westSector != null) westSector.East = sector;
+
+                var southSector = region.GetSector(x, y + 8);
+                if (southSector != null) sector.South = southSector;
+
+                var eastSector = region.GetSector(x + 8, y);
+                if (eastSector != null) sector.East = eastSector;
+            }
+
+            var floor = sector.AddFloor(z);
+            int offSetX = x & 7;
+            int offSetY = y & 7;
+
+            var tile = floor.Tiles[offSetX, offSetY];
+            if (tile == null)
+            {
+               floor.AddTile(newTile);
+               LoadedTilesCount++;
+            }
         }
 
         public void LoadSpawns(IEnumerable<ISpawn> spawns)
@@ -38,7 +63,19 @@ namespace NeoServer.Game.World
             Spawns = spawns.ToImmutableList();
         }
 
-        public bool TryGetTile(Location location, out ITile tile) => tiles.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out tile);
+        public bool TryGetTile(Location location, out ITile tile)
+        {
+            tile = null;
+            var sector = region.GetSector(location.X, location.Y);
+            if (sector == null)
+            {
+                return false;
+            }
+            var floor = sector.GetFloor(location.Z);
+
+            tile = floor.Tiles == null? null : floor.Tiles[location.X & 7, location.Y & 7];
+            return tile != null;
+        }
 
         public void AddTown(ITown town)
         {

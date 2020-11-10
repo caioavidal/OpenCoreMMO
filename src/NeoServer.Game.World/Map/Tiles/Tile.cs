@@ -10,12 +10,13 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
-    public class Tile : IWalkableTile
+    public class Tile : BaseTile, IWalkableTile
     {
         public event AddThingToTileDel OnThingAddedToTile;
 
@@ -29,7 +30,7 @@ namespace NeoServer.Game.World.Map.Tiles
         private byte[] cache;
 
         public Location Location { get; }
-
+        private int CreaturesCount;
         public ushort StepSpeed { get; private set; }
 
         public FloorChangeDirection FloorDirection { get; private set; }
@@ -41,11 +42,12 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public ConcurrentStack<IItem> DownItems { get; private set; } = new ConcurrentStack<IItem>();
         public ConcurrentDictionary<uint, IWalkableCreature> Creatures { get; private set; } = new ConcurrentDictionary<uint, IWalkableCreature>();
+        private List<uint> creatures = new List<uint>();
 
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
-        public bool HasCreature => Creatures.Any();
+        public bool HasCreature => CreaturesCount > 0;
 
         public IMagicField MagicField
         {
@@ -69,26 +71,27 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public ICreature GetTopVisibleCreature(ICreature creature)
         {
-            foreach (var tileCreature in Creatures)
+            foreach (var creatureId in creatures)
             {
+                var tileCreature = Creatures[creatureId];
                 if (creature != null)
                 {
-                    if (creature.CanSee(tileCreature.Value))
+                    if (creature.CanSee(tileCreature))
                     {
-                        return tileCreature.Value;
+                        return tileCreature;
                     }
                 }
                 else
                 {
-                    var isPlayer = tileCreature.Value is IPlayer;
+                    var isPlayer = tileCreature is IPlayer;
 
-                    var player = isPlayer ? tileCreature.Value as IPlayer : null;
+                    var player = isPlayer ? tileCreature as IPlayer : null;
 
-                    if (!tileCreature.Value.IsInvisible)
+                    if (!tileCreature.IsInvisible)
                     {
                         if (!isPlayer || !player.IsInvisible)
                         {
-                            return tileCreature.Value;
+                            return tileCreature;
                         }
                     }
                 }
@@ -97,7 +100,7 @@ namespace NeoServer.Game.World.Map.Tiles
             return null;
         }
 
-        public bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
+        public override bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
         {
             stackPosition = default;
 
@@ -298,12 +301,17 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (thing is IWalkableCreature creature)
             {
-                if (Creatures.Any())
+                if (HasCreature)
                 {
                     operations.Add(Operation.None);
                     return operations;
                 }
-                Creatures.TryAdd(creature.CreatureId, creature);
+                if(Creatures.TryAdd(creature.CreatureId, creature))
+                {
+                    creatures.Add(creature.CreatureId);
+                    CreaturesCount++;
+                }
+                
                 creature.Tile = this;
             }
             else if (thing is IItem item)
@@ -419,7 +427,11 @@ namespace NeoServer.Game.World.Map.Tiles
             if (thing is ICreature c)
             {
 
-                Creatures.TryRemove(c.CreatureId, out var creature);
+                if(Creatures.TryRemove(c.CreatureId, out var creature))
+                {
+                    creatures.Remove(c.CreatureId);
+                    CreaturesCount--;
+                }
                 removedThing = creature;
             }
             //else if (itemToRemove.IsAlwaysOnTop)

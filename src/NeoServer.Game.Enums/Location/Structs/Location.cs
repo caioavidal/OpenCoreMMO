@@ -102,13 +102,7 @@ namespace NeoServer.Game.Enums.Location.Structs
 
         public override int GetHashCode()
         {
-            int hash = 13;
-
-            hash = (hash * 7) + X.GetHashCode();
-            hash = (hash * 7) + Y.GetHashCode();
-            hash = (hash * 7) + Z.GetHashCode();
-
-            return hash;
+            return HashCode.Combine(X, Y, Z);
         }
 
         public static bool operator ==(Location origin, Location targetLocation)
@@ -263,5 +257,9 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// <returns></returns>
         public bool IsNextTo(Location dest) => Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
 
+        public override bool Equals(object obj)
+        {
+            return obj is Location && Equals(obj);
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace NeoServer.Server.Events.Combat
         }
         public void Execute(ICombatActor actor, uint oldTarget, uint newTarget)
         {
+            return;
             if (actor.AttackEvent != 0)
             {
                 return;

@@ -5,7 +5,7 @@ using System.Text;
 namespace NeoServer.Game.Enums.Location.Structs
 {
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Auto)]
-    public readonly struct FindPathParams
+    public struct FindPathParams
     {
       
         public FindPathParams(bool fullPathSearch, bool clearSight, bool allowDiagonal, bool keepDistance, int maxSearchDist, int minTargetDist, int maxTargetDist, bool oneStep)
@@ -43,13 +43,13 @@ namespace NeoServer.Game.Enums.Location.Structs
 
         }
 
-        public bool FullPathSearch { get; }
-        public bool ClearSight { get; }
-        public bool AllowDiagonal { get; }
-        public bool KeepDistance { get; }
-        public bool OneStep { get; }
-        public int MaxSearchDist { get; }
-        public int MinTargetDist { get; }
-        public int MaxTargetDist { get; }
+        public bool FullPathSearch { get; set; }
+        public bool ClearSight { get; set; }
+        public bool AllowDiagonal { get; set; }
+        public bool KeepDistance { get; set; }
+        public bool OneStep { get; set; }
+        public int MaxSearchDist { get; set; }
+        public int MinTargetDist { get; set; }
+        public int MaxTargetDist { get; set; }
     }
 }

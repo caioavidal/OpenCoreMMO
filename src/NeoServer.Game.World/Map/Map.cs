@@ -46,8 +46,8 @@ namespace NeoServer.Game.World.Map
                 {
                     if (tile is IWalkableTile walkableTile)
                     {
-                        walkableTile.OnThingAddedToTile -= AttachEvent;
-                        walkableTile.OnThingAddedToTile += AttachEvent;
+                      //  walkableTile.OnThingAddedToTile -= AttachEvent;
+                      //  walkableTile.OnThingAddedToTile += AttachEvent;
                     }
                     return tile;
                 }
@@ -61,13 +61,13 @@ namespace NeoServer.Game.World.Map
 
         public bool TryMoveThing(ref IMoveableThing thing, Location toLocation)
         {
-            if (this[thing.Location] is IImmutableTile)
+            if (this[thing.Location] is IStaticTile)
             {
                 OnThingMovedFailed(thing, InvalidOperation.NotPossible);
                 return false;
             }
 
-            if (this[toLocation] is IImmutableTile)//immutable tiles cannot be modified
+            if (this[toLocation] is IStaticTile)//immutable tiles cannot be modified
             {
                 OnThingMovedFailed(thing, InvalidOperation.NotEnoughRoom);
                 return false;
@@ -159,7 +159,7 @@ namespace NeoServer.Game.World.Map
 
             tile = this[location];
 
-            if (tile == null || tile is IImmutableTile)
+            if (tile == null || tile is IStaticTile)
             {
                 return false;
             }
@@ -500,7 +500,7 @@ namespace NeoServer.Game.World.Map
 
                         skip = 0;
 
-                        if (tile is IImmutableTile immutableTile)
+                        if (tile is IStaticTile immutableTile)
                         {
                             tempBytes.AddRange(immutableTile.Raw);
                         }

@@ -148,7 +148,7 @@ namespace NeoServer.Server.Model.Players
         public override string CloseInspectionText => InspectionText;
         public byte AccessLevel { get; set; } // TODO: implement.
 
-        public bool CannotLogout => !Tile.ProtectionZone && InFight;
+        public bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
 
         public bool CanLogout
         {
@@ -156,11 +156,11 @@ namespace NeoServer.Server.Model.Players
             {
                 //todo inconnection validation
 
-                if (Tile.CannotLogout)
+                if (Tile?.CannotLogout ?? false)
                 {
                     return false;
                 }
-                if (Tile.ProtectionZone)
+                if (Tile?.ProtectionZone ?? false)
                 {
                     return true;
                 }
@@ -271,17 +271,7 @@ namespace NeoServer.Server.Model.Players
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
         public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
-        public void AddKnownCreature(uint creatureId)
-        {
-            try
-            {
-                KnownCreatures[creatureId] = DateTime.Now.Ticks;
-            }
-            catch
-            {
-                // happens when 2 try to add at the same time, which we don't care about.
-            }
-        }
+        public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
 
         const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
         public uint ChooseToRemoveFromKnownSet()

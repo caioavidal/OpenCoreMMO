@@ -3,7 +3,7 @@ using NeoServer.Game.Contracts.World;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
-    public interface IImmutableTile : ITile
+    public interface IStaticTile : ITile
     {
         byte[] Raw { get; }
 

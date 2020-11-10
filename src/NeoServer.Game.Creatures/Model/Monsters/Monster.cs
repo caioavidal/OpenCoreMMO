@@ -209,9 +209,18 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public bool Defending { get; private set; }
 
+        public override FindPathParams PathSearchParams 
+        {
+            get
+            {
+                var fpp = base.PathSearchParams;
+                fpp.MaxTargetDist = TargetDistance;
+                if (TargetDistance <= 1) fpp.FullPathSearch = true; //todo: needs to check if mosnter can attack from distance
+                return fpp;
+            }
+        }
         private CombatTarget searchTarget()
         {
-            //_findPathToDestination.ThrowIfNull();
             Targets.ThrowIfNull();
 
             var nearest = ushort.MaxValue;
@@ -219,11 +228,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var canReachAnyTarget = false;
 
-            var fpp = new FindPathParams(!HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, false);
-
             foreach (var target in Targets)
             {
-                if (FindPathToDestination.Invoke(this, target.Value.Creature.Location, fpp, out var directions) == false)
+                if (FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
                     Console.WriteLine("UNREACHABLE");
@@ -250,10 +257,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void MoveAroundEnemy()
         {
-            if(!Targets.TryGetValue(AutoAttackTargetId, out var combatTarget)) return;
+            return;
+            if (!Targets.TryGetValue(AutoAttackTargetId, out var combatTarget)) return;
 
             if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
-            Cooldowns.Start(CooldownType.MoveAroundEnemy, GaussianRandom.Random.Next(minValue:3000, maxValue:5000));
+            Cooldowns.Start(CooldownType.MoveAroundEnemy, GaussianRandom.Random.Next(minValue: 3000, maxValue: 5000));
 
             if (!IsInPerfectPostionToCombat(combatTarget)) return;
 
@@ -282,7 +290,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (FollowCreature)
             {
-                StartFollowing(target.Creature, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, false));
+                StartFollowing(target.Creature, PathSearchParams);
             }
 
             SetAttackTarget(target.Creature.CreatureId);

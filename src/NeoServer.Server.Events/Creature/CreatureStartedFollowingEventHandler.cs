@@ -31,7 +31,7 @@ namespace NeoServer.Server.Events.Creature
         {
             if (creature.IsFollowing)
             {
-                creature.Follow(following, fpp);
+                creature.Follow(following);
             }
             else
             {

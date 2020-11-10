@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
-    public readonly struct ImmutableTile : IImmutableTile
+    public class StaticTile : BaseTile, IStaticTile
     {
-        public ImmutableTile(Coordinate coordinate, params IItem[] items)
+        public StaticTile(Coordinate coordinate, params IItem[] items)
         {
             Location = new Location(coordinate.X, coordinate.Y, coordinate.Z);
             Raw = null;
@@ -59,7 +59,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 .CombineHashCode(Raw);
         }
 
-        public bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
+        public override bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
         {
             stackPosition = default;
             return false;
