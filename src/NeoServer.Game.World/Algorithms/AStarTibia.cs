@@ -100,8 +100,8 @@ namespace NeoServer.Game.World.Map
                 int x = n.X;
                 int y = n.Y;
 
-                pos.X = x;
-                pos.Y = y;
+                pos.X = (ushort)x;
+                pos.Y = (ushort)y;
 
                 if (pathCondition(map, startPos, pos, targetPos, ref bestMatch, fpp))
                 {
@@ -173,8 +173,8 @@ namespace NeoServer.Game.World.Map
                 int f = n.F;
                 for (int i = 0; i < dirCount; ++i)
                 {
-                    pos.X = x + neighbors[i].Item1;
-                    pos.Y = y + neighbors[i].Item2;
+                    pos.X = (ushort)(x + neighbors[i].Item1);
+                    pos.Y = (ushort)(y + neighbors[i].Item2);
 
                     if (fpp.MaxSearchDist != 0 && (startPos.GetSqmDistanceX(pos) > fpp.MaxSearchDist || startPos.GetSqmDistanceY(pos) > fpp.MaxSearchDist))
                     {
@@ -251,8 +251,8 @@ namespace NeoServer.Game.World.Map
 
             while (found != null)
             {
-                pos.X = found.X;
-                pos.Y = found.Y;
+                pos.X = (ushort)found.X;
+                pos.Y = (ushort)found.Y;
 
                 int dx = pos.X - prevx;
                 int dy = pos.Y - prevy;

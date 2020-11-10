@@ -14,8 +14,8 @@ namespace NeoServer.Game.Model.Tests.Structs
         [InlineData(100, 0, 0, 100, 200)]
         public void GetSqmDistance_Returns_Sum_Of_Sqm_Distance(int fromX, int fromY, int toX, int toY, ushort total)
         {
-            var fromLocation = new Location(fromX, fromY, 7);
-            var toLocation = new Location(toX, toY, 7);
+            var fromLocation = new Location((ushort)fromX, (ushort)fromY, 7);
+            var toLocation = new Location((ushort)toX, (ushort)toY, 7);
 
             Assert.Equal(total, fromLocation.GetSqmDistance(toLocation));
         }
@@ -35,8 +35,8 @@ namespace NeoServer.Game.Model.Tests.Structs
 
         public void DirectionTo_Returns_TargetDirection(int fromX, int fromY, int toX, int toY, Direction direction)
         {
-            var fromLocation = new Location(fromX, fromY, 7);
-            var toLocation = new Location(toX, toY, 7);
+            var fromLocation = new Location((ushort)fromX, (ushort)fromY, 7);
+            var toLocation = new Location((ushort)toX, (ushort)toY, 7);
 
             Assert.Equal(direction, fromLocation.DirectionTo(toLocation));
         }

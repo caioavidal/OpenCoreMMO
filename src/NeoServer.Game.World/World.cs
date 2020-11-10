@@ -1,3 +1,4 @@
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World.Map;
@@ -17,7 +18,7 @@ namespace NeoServer.Game.World
 
         private readonly ConcurrentDictionary<Coordinate, ITown> towns = new ConcurrentDictionary<Coordinate, ITown>();
         private readonly ConcurrentDictionary<Coordinate, IWaypoint> waypoints = new ConcurrentDictionary<Coordinate, IWaypoint>();
-        private readonly Region region  = new Region();
+        private readonly Region region = new Region();
 
         public ImmutableList<ISpawn> Spawns { get; private set; }
 
@@ -51,8 +52,8 @@ namespace NeoServer.Game.World
             var tile = floor.Tiles[offSetX, offSetY];
             if (tile == null)
             {
-               floor.AddTile(newTile);
-               LoadedTilesCount++;
+                floor.AddTile(newTile);
+                LoadedTilesCount++;
             }
         }
 
@@ -63,7 +64,7 @@ namespace NeoServer.Game.World
             Spawns = spawns.ToImmutableList();
         }
 
-        public bool TryGetTile(Location location, out ITile tile)
+        public bool TryGetTile(ref Location location, out ITile tile)
         {
             tile = null;
             var sector = region.GetSector(location.X, location.Y);
@@ -73,9 +74,13 @@ namespace NeoServer.Game.World
             }
             var floor = sector.GetFloor(location.Z);
 
-            tile = floor.Tiles == null? null : floor.Tiles[location.X & 7, location.Y & 7];
+            tile = floor.Tiles == null ? null : floor.Tiles[location.X & 7, location.Y & 7];
             return tile != null;
         }
+
+        public Sector GetSector(ushort x, ushort y) => region.GetSector(x, y);
+
+        public List<ICreature> GetSpectators(ref SpectatorSearch search) => region.GetSpectators(ref search);
 
         public void AddTown(ITown town)
         {
@@ -83,7 +88,7 @@ namespace NeoServer.Game.World
             towns[town.Coordinate] = town;
         }
 
-        public bool TryGetTown(Location location, out ITown town) => towns.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out town);
+        public bool TryGetTown(Location location, out ITown town) => towns.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out town);
 
         public void AddWaypoint(IWaypoint waypoint)
         {
@@ -92,7 +97,7 @@ namespace NeoServer.Game.World
             waypoints[waypoint.Coordinate] = waypoint;
         }
 
-        public bool TryGetWaypoint(Location location, IWaypoint waypoint) => waypoints.TryGetValue(new Coordinate(location.X, location.Y, location.Z), out waypoint);
+        public bool TryGetWaypoint(Location location, IWaypoint waypoint) => waypoints.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out waypoint);
 
     }
 }

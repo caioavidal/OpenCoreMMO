@@ -24,10 +24,10 @@ namespace NeoServer.Server.Events.Combat
         }
         public void Execute(ICreature creature, ICreature victim, ICombatAttack attack)
         {
-            foreach (var spectatorId in game.Map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
             {
 
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }
@@ -36,9 +36,9 @@ namespace NeoServer.Server.Events.Combat
 
                 if (attack is IAreaAttack areaAttack)
                 {
-                    foreach (var location in areaAttack.AffectedArea)
+                    foreach (var coordinate in areaAttack.AffectedArea)
                     {
-                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, damageEffect));
+                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, damageEffect));
                     }
                 }
                 //else

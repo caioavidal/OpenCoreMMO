@@ -22,10 +22,10 @@ namespace NeoServer.Server.Events
         {
             creature.ThrowIfNull();
 
-            foreach (var spectatorId in game.Map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
             {
 
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out var connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
                 {
                     continue;
                 }

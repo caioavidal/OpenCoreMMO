@@ -34,7 +34,7 @@ namespace NeoServer.Server.Events
 
             foreach (var spectator in cylinder.TileSpectators)
             {
-                var creature = spectator.Value.Spectator;
+                var creature = spectator.Spectator;
 
                 if (creature is IMonster monster && thing is IPlayer target)
                 {
@@ -57,7 +57,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                var stackPosition = spectator.Value.FromStackPosition;
+                var stackPosition = spectator.FromStackPosition;
 
                 connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
 

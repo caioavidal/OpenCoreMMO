@@ -47,7 +47,7 @@ namespace NeoServer.Server.Events
                 creature.SetDirection(toDirection);
             }
 
-            foreach (var cylinderSpectator in cylinder.TileSpectators.Values)
+            foreach (var cylinderSpectator in cylinder.TileSpectators)
             {
                 var spectator = cylinderSpectator.Spectator;
 

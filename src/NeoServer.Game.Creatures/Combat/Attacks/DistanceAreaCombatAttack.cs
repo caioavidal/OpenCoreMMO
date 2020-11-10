@@ -22,11 +22,11 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
             var i = 0;
 
             var affectedLocations = ExplosionEffect.Create(Radius);
-            AffectedArea = new Location[affectedLocations.Count()];
+            AffectedArea = new Coordinate[affectedLocations.Count()];
 
             foreach (var location in affectedLocations)
             {
-                AffectedArea[i++] = enemy.Location + location;
+                AffectedArea[i++] = enemy.Location.Translate() + location;
             }
 
             base.BuildAttack(actor, enemy);
@@ -36,6 +36,6 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
         public byte Radius => Option.Radius;
 
-        public Location[] AffectedArea { get; private set; }
+        public Coordinate[] AffectedArea { get; private set; }
     }
 }

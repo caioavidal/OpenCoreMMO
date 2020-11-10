@@ -95,6 +95,8 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// </summary>
         public Coordinate Translate(int xOffset, int yOffset) => Translate(xOffset: xOffset, yOffset: yOffset, zOffset: 0);
 
+        public Location Location => new Location((ushort)X, (ushort) Y, (byte)Z);
+
         /// <summary>
         /// Creates a new <see cref="Coordinate"/> whose coordinates are equal to this instance's
         /// plus the provided offesets.
@@ -128,6 +130,25 @@ namespace NeoServer.Game.Enums.Location.Structs
         public override int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z);
+        }
+
+        public static Coordinate operator +(Coordinate location1, Coordinate location2)
+        {
+            return new Coordinate(
+            x: (location1.X + location2.X),
+            y: (location1.Y + location2.Y),
+            z: (sbyte)(location1.Z + location2.Z)
+            );
+        }
+
+        public static Coordinate operator -(Coordinate location1, Coordinate location2)
+        {
+            return new Coordinate
+            (
+                x: location2.X - location1.X,
+                y: location2.Y - location1.Y,
+                z: (sbyte)(location2.Z - location1.Z)
+            );
         }
     }
 }

@@ -23,6 +23,7 @@ namespace NeoServer.Game.World.Map
         // Start positions
         public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
         public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
+        const int MAP_MAX_LAYERS = 16;
 
         public event PlaceCreatureOnMap OnCreatureAddedOnMap;
         public event RemoveThingFromTile OnThingRemovedFromTile;
@@ -42,12 +43,12 @@ namespace NeoServer.Game.World.Map
         {
             get
             {
-                if (world.TryGetTile(location, out ITile tile))
+                if (world.TryGetTile(ref location, out ITile tile))
                 {
                     if (tile is IWalkableTile walkableTile)
                     {
-                      //  walkableTile.OnThingAddedToTile -= AttachEvent;
-                      //  walkableTile.OnThingAddedToTile += AttachEvent;
+                        //  walkableTile.OnThingAddedToTile -= AttachEvent;
+                        //  walkableTile.OnThingAddedToTile += AttachEvent;
                     }
                     return tile;
                 }
@@ -57,7 +58,7 @@ namespace NeoServer.Game.World.Map
 
         public void AttachEvent(IThing thing, ITile tile) => OnThingAddedToTile?.Invoke(thing, new Cylinder(this, thing, tile));
 
-        public ITile this[ushort x, ushort y, sbyte z] => this[new Location(x, y, z)];
+        public ITile this[ushort x, ushort y, byte z] => this[new Location(x, y, z)];
 
         public bool TryMoveThing(ref IMoveableThing thing, Location toLocation)
         {
@@ -75,6 +76,8 @@ namespace NeoServer.Game.World.Map
 
             var fromTile = this[thing.Location] as IWalkableTile;
             var toTile = this[toLocation] as IWalkableTile;
+
+            SwapCreatureBetweenSectors(thing, toLocation);
 
             var cylinder = new Cylinder(this);
             //todo: not thread safe
@@ -95,6 +98,21 @@ namespace NeoServer.Game.World.Map
             }
 
             return TryMoveThing(ref thing, tileDestination.Location);
+        }
+
+        private void SwapCreatureBetweenSectors(IMoveableThing thing, Location toLocation)
+        {
+            if (thing is ICreature creature)
+            {
+                var oldSector = world.GetSector(thing.Location.X, thing.Location.Y);
+                var newSector = world.GetSector(toLocation.X, toLocation.Y);
+
+                if (oldSector != newSector)
+                {
+                    oldSector.RemoveCreature(creature);
+                    newSector.AddCreature(creature);
+                }
+            }
         }
 
         public bool IsInRange(Location start, Location current, Location target, FindPathParams fpp)
@@ -179,8 +197,8 @@ namespace NeoServer.Game.World.Map
         {
             Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) => tile is IWalkableTile walkable ? walkable.FloorDirection == direction : false;
 
-            var x = (ushort)tile.Location.X;
-            var y = (ushort)tile.Location.Y;
+            var x = tile.Location.X;
+            var y = tile.Location.Y;
             var z = tile.Location.Z;
 
             if (hasFloorDestination(tile, FloorChangeDirection.Down))
@@ -297,15 +315,35 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public IEnumerable<uint> GetPlayersAtPositionZone(Location location)
+        public IEnumerable<ICreature> GetPlayersAtPositionZone(Location location)
         {
+            return GetCreaturesAtPositionZone(location, onlyPlayers: true);
+        }
+        public HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation)
+        {
+            if(location == toLocation)
+            {
+                return GetCreaturesAtPositionZone(location).ToHashSet();
+            }
+
+            var fromSpectators = GetCreaturesAtPositionZone(location);
+            var toSpectators = GetCreaturesAtPositionZone(toLocation);
+
+            var spectators = new List<ICreature>(fromSpectators.Count() + toSpectators.Count());
+
+            spectators.AddRange(fromSpectators);
+            spectators.AddRange(toSpectators);
+            return spectators.ToHashSet();
+      
+        }
+
+        public IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false)
+        {
+
+            if (location.Z > MAP_MAX_LAYERS) return new List<ICreature>(0);
+
             var viewPortX = (ushort)MapViewPort.ViewPortX;
             var viewPortY = (ushort)MapViewPort.ViewPortY;
-
-            var minX = (ushort)(location.X + -viewPortX);
-            var minY = (ushort)(location.Y + -viewPortY);
-            var maxX = (ushort)(location.X + viewPortX);
-            var maxY = (ushort)(location.Y + viewPortY);
 
             int minZ = 0;
             int maxZ;
@@ -327,117 +365,23 @@ namespace NeoServer.Game.World.Map
                 maxZ = 7;
             }
 
-            for (ushort x = minX; x <= maxX; x++)
-            {
-                for (ushort y = minY; y <= maxY; y++)
-                {
-                    for (sbyte z = (sbyte)minZ; z <= maxZ; z++)
-                    {
-                        //ITile tile = this[x, y, z];
-
-                        if (this[x, y, z] is IWalkableTile tile)
-                        {
-                            foreach (var creature in tile.Creatures)
-                            {
-                                if (creature.Value is IPlayer)
-                                {
-                                    yield return creature.Key; // TODO slow
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        public Dictionary<uint, ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation)
-        {
-
-            var creatures = new Dictionary<uint, ICreature>();
-
-            var viewPortX = (ushort)MapViewPort.ViewPortX;
-            var viewPortY = (ushort)MapViewPort.ViewPortY;
-
-            if (location.X != toLocation.X)
-            {
-                viewPortX++;
-            }
-            if (location.Y != toLocation.Y)
-            {
-                viewPortY++;
-            }
-
-            int minZ = 0;
-            int maxZ;
-            if (location.IsUnderground)
-            {
-                minZ = Math.Max(location.Z - 2, 0);
-                maxZ = Math.Min(location.Z + 2, 15); //15 = max floor value
-            }
-            else if (location.Z == 6)
-            {
-                maxZ = 8;
-            }
-            else if (location.IsSurface)
-            {
-                maxZ = 9;
-            }
-            else
-            {
-                maxZ = 7;
-            }
-
-            if (location.Z != toLocation.Z) //if player changed floor, we have to increase the min and max z range
-            {
-                minZ = Math.Max(minZ - 1, 0);
-                maxZ = Math.Max(maxZ + 1, 15);
-            }
+            //if (location.Z != toLocation.Z) //if player changed floor, we have to increase the min and max z range
+            //{
+            //    minZ = Math.Max(minZ - 1, 0);
+            //    maxZ = Math.Max(maxZ + 1, 15);
+            //}
 
             var minX = (ushort)(location.X + -viewPortX);
             var minY = (ushort)(location.Y + -viewPortY);
             var maxX = (ushort)(location.X + viewPortX);
             var maxY = (ushort)(location.Y + viewPortY);
 
-            for (ushort x = minX; x <= maxX; x++)
-            {
-                for (ushort y = minY; y <= maxY; y++)
-                {
-                    for (sbyte z = (sbyte)minZ; z <= maxZ; z++)
-                    {
-                        if (this[x, y, z] is IWalkableTile tile)
-                        {
-                            foreach (var creature in tile.Creatures)
-                            {
-                                creatures.TryAdd(creature.Key, creature.Value);
-                            }
-
-                        }
-
-                    }
-                }
-
-            }
-            return creatures;
+            var search = new SpectatorSearch(ref location, minRangeX: -viewPortX, minRangeY: -viewPortY, maxRangeX: viewPortX, maxRangeY: viewPortY, minRangeZ: minZ, maxRangeZ: maxZ, onlyPlayers: onlyPlayers);
+            return world.GetSpectators(ref search);
         }
 
-        public IEnumerable<ITile> GetOffsetTiles(Location location)
-        {
-            var fromX = location.X - 8;
-            var fromY = location.Y - 6;
-
-            var toX = location.X + 8;
-            var toY = location.Y + 6;
-
-            for (var x = fromX; x <= toX; x++)
-            {
-                for (var y = fromY; y <= toY; y++)
-                {
-                    var tile = this[(ushort)x, (ushort)y, location.Z];
-                    yield return tile;
-                }
-            }
-        }
-
-        public IList<byte> GetDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
+      
+        public IList<byte> GetDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
         {
             var tempBytes = new List<byte>();
 
@@ -464,7 +408,7 @@ namespace NeoServer.Game.World.Map
 
             for (var nz = crawlFrom; nz != crawlTo + crawlDelta; nz += crawlDelta)
             {
-                tempBytes.AddRange(GetFloorDescription(thing, fromX, fromY, (sbyte)nz, windowSizeX, windowSizeY, currentZ - nz, ref skip));
+                tempBytes.AddRange(GetFloorDescription(thing, fromX, fromY, (byte)nz, windowSizeX, windowSizeY, currentZ - nz, ref skip));
             }
 
             if (skip >= 0)
@@ -476,7 +420,7 @@ namespace NeoServer.Game.World.Map
             return tempBytes;
         }
 
-        public IList<byte> GetFloorDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip)
+        public IList<byte> GetFloorDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, byte width, byte height, int verticalOffset, ref int skip)
         {
             var tempBytes = new List<byte>();
 
@@ -572,10 +516,13 @@ namespace NeoServer.Game.World.Map
 
             if (this[creature.Location] is IWalkableTile tile)
             {
+                var sector = world.GetSector(creature.Location.X, creature.Location.Y);
+                sector.AddCreature(creature);
+
                 var cylinder = new Cylinder(this);
                 cylinder.AddThing(ref thing, tile);
 
-                if(creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
+                if (creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }
         }
 
@@ -588,14 +535,14 @@ namespace NeoServer.Game.World.Map
                 return;
             }
 
-            foreach (var location in area.AffectedArea)
+            foreach (var coordinates in area.AffectedArea)
             {
-                var tile = this[location];
+                var tile = this[coordinates.Location];
                 if (tile is IWalkableTile walkableTile)
                 {
                     foreach (var target in walkableTile.Creatures.Values)
                     {
-                        if(!(target is ICombatActor targetCreature))
+                        if (!(target is ICombatActor targetCreature))
                         {
                             continue;
                         }

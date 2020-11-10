@@ -22,7 +22,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
-            Location = new Location(coordinate.X, coordinate.Y, coordinate.Z);
+            Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
             flags |= (byte)tileFlag;
             AddContent(ground, topItems, items);
         }

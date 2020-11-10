@@ -24,16 +24,16 @@ namespace NeoServer.Server.Events
         }
         public void Execute(ICreature enemy, ICreature victim, ICombatAttack attack, ushort damage)
         {
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(victim.Location))
+            foreach (var spectator in map.GetPlayersAtPositionZone(victim.Location))
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }
 
                 var damageString = damage.ToString();
 
-                if (victim.CreatureId == spectatorId) //myself
+                if (victim == spectator) //myself
                 {
                     connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)victim));
 
@@ -42,7 +42,7 @@ namespace NeoServer.Server.Events
                 }
 
 
-                if (enemy.CreatureId == spectatorId)
+                if (enemy == spectator)
                 {
                     connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{victim.Name} loses {damageString} due to your attack", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                 }

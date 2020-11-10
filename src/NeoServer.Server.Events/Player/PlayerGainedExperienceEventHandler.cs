@@ -17,13 +17,13 @@ namespace NeoServer.Server.Events
         public void Execute(ICreature player, uint experience)
         {
             var experienceText = experience.ToString();
-            foreach (var playerId in game.Map.GetPlayersAtPositionZone(player.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(player.Location))
             {
-                if (game.CreatureManager.GetPlayerConnection(playerId, out var connection))
+                if (game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
                 {
                     connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(player.Location, TextColor.White, experienceText));
 
-                    if (playerId == player.CreatureId)
+                    if (spectator == player)
                     {
                         connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You gained {experienceText} experience points.", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                         connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));

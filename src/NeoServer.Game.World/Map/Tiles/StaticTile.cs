@@ -12,7 +12,7 @@ namespace NeoServer.Game.World.Map.Tiles
     {
         public StaticTile(Coordinate coordinate, params IItem[] items)
         {
-            Location = new Location(coordinate.X, coordinate.Y, coordinate.Z);
+            Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte) coordinate.Z);
             Raw = null;
             Raw = GetRaw(items);
         }

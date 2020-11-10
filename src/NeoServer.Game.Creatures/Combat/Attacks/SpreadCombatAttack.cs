@@ -22,11 +22,11 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
             var i = 0;
 
             var affectedLocations = SpreadEffect.Create(actor.Direction, Length);
-            AffectedArea = new Location[affectedLocations.Length];
+            AffectedArea = new Coordinate[affectedLocations.Length];
 
             foreach (var location in affectedLocations)
             {
-                AffectedArea[i++] = actor.Location + location;
+                AffectedArea[i++] = actor.Location.Translate() + location;
             }
 
             base.BuildAttack(actor, enemy);
@@ -41,6 +41,6 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
         public byte Spread => Option.Spread;
         public byte Length => Option.Length;
-        public Location[] AffectedArea { get; private set; }
+        public Coordinate[] AffectedArea { get; private set; }
     }
 }

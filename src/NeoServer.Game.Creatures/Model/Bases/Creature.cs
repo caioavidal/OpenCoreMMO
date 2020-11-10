@@ -21,13 +21,14 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
 namespace NeoServer.Game.Creatures.Model
 {
 
-    public abstract class Creature : MoveableThing, ICreature
+    public abstract class Creature : MoveableThing, IEquatable<Creature>, ICreature
     {
         public event RemoveCreature OnCreatureRemoved;
         public event GainExperience OnGainedExperience;
@@ -185,9 +186,14 @@ namespace NeoServer.Game.Creatures.Model
         }
 
 
-        public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == this.CreatureId;
+        public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == CreatureId;
 
         public override int GetHashCode() => HashCode.Combine(CreatureId);
+
+        public bool Equals([AllowNull] Creature other)
+        {
+           return this == other;
+        }
 
         public static bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         public static bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

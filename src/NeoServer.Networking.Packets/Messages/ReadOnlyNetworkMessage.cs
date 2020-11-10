@@ -124,7 +124,7 @@ namespace NeoServer.Networking.Packets.Messages
             Length = 0;
         }
 
-        public Location GetLocation() => new Location() { X = GetUInt16(), Y = GetUInt16(), Z = (sbyte)GetByte() };
+        public Location GetLocation() => new Location() { X = GetUInt16(), Y = GetUInt16(), Z = GetByte() };
 
     }
 

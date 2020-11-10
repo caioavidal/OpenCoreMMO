@@ -23,7 +23,7 @@ namespace NeoServer.Server.Events
             var tile = cylinder.ToTile;
             tile.ThrowIfNull();
 
-            foreach (var spectator in cylinder.TileSpectators.Values)
+            foreach (var spectator in cylinder.TileSpectators)
             {
                 if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out IConnection connection))
                 {

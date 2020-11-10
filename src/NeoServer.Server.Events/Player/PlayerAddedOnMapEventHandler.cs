@@ -32,7 +32,7 @@ namespace NeoServer.Server.Events
             var tile = cylinder.ToTile;
             tile.ThrowIfNull();
 
-            foreach (var cylinderSpectator in cylinder.TileSpectators.Values)
+            foreach (var cylinderSpectator in cylinder.TileSpectators)
             {
                 var spectator = cylinderSpectator.Spectator;
 

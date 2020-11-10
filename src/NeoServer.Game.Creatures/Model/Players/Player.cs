@@ -180,20 +180,20 @@ namespace NeoServer.Server.Model.Players
                         return new Location
                         {
                             X = Location.X,
-                            Y = Location.Y - 1,
+                            Y = (ushort)(Location.Y - 1),
                             Z = Location.Z
                         };
                     case Direction.East:
                         return new Location
                         {
-                            X = Location.X + 1,
+                            X = (ushort)(Location.X + 1),
                             Y = Location.Y,
                             Z = Location.Z
                         };
                     case Direction.West:
                         return new Location
                         {
-                            X = Location.X - 1,
+                            X = (ushort)(Location.X - 1),
                             Y = Location.Y,
                             Z = Location.Z
                         };
@@ -201,7 +201,7 @@ namespace NeoServer.Server.Model.Players
                         return new Location
                         {
                             X = Location.X,
-                            Y = Location.Y + 1,
+                            Y = (ushort)(Location.Y + 1),
                             Z = Location.Z
                         };
                     default:

@@ -21,14 +21,14 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(ICreature creature, ushort amount)
         {
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }
 
-                if (creature.CreatureId == spectatorId) //myself
+                if (creature == spectator) //myself
                 {
                     connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)creature));
                 }

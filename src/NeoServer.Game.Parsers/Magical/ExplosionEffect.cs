@@ -26,9 +26,9 @@ namespace NeoServer.Game.Effects.Explosion
     };
 
 
-        public static IEnumerable<Location> Create(int radius)
+        public static IEnumerable<Coordinate> Create(int radius)
         {
-            var points = new List<Location>();
+            var points = new List<Coordinate>();
           
 
             for (int row = 0; row < 13; row++)
@@ -39,7 +39,7 @@ namespace NeoServer.Game.Effects.Explosion
                     {
                         var y = row - 6;
                         var x = col - 6;
-                        points.Add(new Location(x, y, 0));
+                        points.Add(new Coordinate(x, y, 0));
                     }
                 }
             }
