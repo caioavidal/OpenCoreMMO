@@ -30,6 +30,11 @@ namespace NeoServer.Game.Contracts.Creatures
         void SelectTargetToAttack();
         void AddToTargetList(ICombatActor creature);
         void RemoveFromTargetList(ICreature creature);
+
+        /// <summary>
+        /// Executes defense action
+        /// </summary>
+        /// <returns>interval</returns>
         ushort Defende();
         void MoveAroundEnemy();
         void UpdateLastTargetChange();
@@ -39,12 +44,18 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         /// <param name="creature"></param>
         void SetAsEnemy(ICombatActor creature);
+        void Sleep();
 
         uint Experience { get; }
         bool HasAnyTarget { get; }
         bool CanReachAnyTarget { get; }
         bool IsInCombat { get; }
         bool Defending { get; }
+
+        /// <summary>
+        /// Checks if monster is sleeping
+        /// </summary>
+        bool IsSleeping { get; }
     }
 
 }

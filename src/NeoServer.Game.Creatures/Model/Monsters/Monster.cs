@@ -104,10 +104,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-        /// <summary>
-        /// Execute defense action
-        /// </summary>
-        /// <returns>interval</returns>
+    
         public ushort Defende()
         {
             if (!Defenses.Any())
@@ -197,6 +194,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public bool CanReachAnyTarget { get; private set; } = false;
         public bool IsInCombat => State == MonsterState.InCombat;
+        public bool IsSleeping => State == MonsterState.Sleeping;
         public bool IsInPerfectPostionToCombat(CombatTarget target)
         {
             if (KeepDistance)
@@ -290,7 +288,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SelectTargetToAttack()
         {
-            Console.WriteLine(Targets.Count);
+            if (!Targets.Any())
+            {
+                Sleep();
+                return;
+            }
+
             if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
 
             var target = searchTarget();
@@ -308,9 +311,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 SetState(MonsterState.InCombat);
             }
 
-            Console.WriteLine(target.Creature.Name);
-
-
             FollowCreature = true;
 
             if (FollowCreature)
@@ -320,6 +320,13 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             SetAttackTarget(target.Creature.CreatureId);
             UpdateLastTargetChange();
+        }
+
+        public void Sleep()
+        {
+            State = MonsterState.Sleeping;
+            StopAttack();
+            StopFollowing();
         }
 
         public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)

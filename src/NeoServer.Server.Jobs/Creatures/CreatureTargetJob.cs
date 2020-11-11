@@ -15,7 +15,7 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 return;
             }
-            if (monster.IsDead)
+            if (monster.IsDead || monster.IsSleeping)
             {
                 return;
             }
