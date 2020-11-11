@@ -128,8 +128,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
 
             return defense?.Interval == null ? Defenses[0].Interval : defense.Interval;
-
-
         }
 
         public override ushort ArmorRating => Metadata.Armor;
@@ -248,12 +246,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
-                if (!CanSee(target.Value.Creature.Location))
-                {
-                    target.Value.CanSee = false;
-                    target.Value.SetAsUnreachable();
-                    continue;
-                }
                 if (FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
@@ -293,18 +285,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, true), out var directions))
             {
                 TryWalkTo(directions);
-            }
-        }
-
-      
-        public void ForgetTargets()
-        {
-            foreach (var target in Targets)
-            {
-                if(target.Value.CanSee == false)
-                {
-                    RemoveFromTargetList(target.Value.Creature);
-                }
             }
         }
 

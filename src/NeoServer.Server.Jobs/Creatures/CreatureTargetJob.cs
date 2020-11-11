@@ -33,7 +33,6 @@ namespace NeoServer.Server.Jobs.Creatures
                 return;
             }
 
-            monster.ForgetTargets();
             monster.SelectTargetToAttack();
         }
     }

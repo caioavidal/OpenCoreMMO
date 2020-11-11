@@ -33,12 +33,12 @@ namespace NeoServer.Game.Contracts.Creatures
         ushort Defende();
         void MoveAroundEnemy();
         void UpdateLastTargetChange();
-        void SetAsEnemy(ICombatActor creature);
 
         /// <summary>
-        /// Remove all targets whose creature cant see
+        /// Set creature as enemy. If monster can't see creature it will be forgotten
         /// </summary>
-        void ForgetTargets();
+        /// <param name="creature"></param>
+        void SetAsEnemy(ICombatActor creature);
 
         uint Experience { get; }
         bool HasAnyTarget { get; }
