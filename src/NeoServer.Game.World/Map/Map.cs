@@ -82,7 +82,10 @@ namespace NeoServer.Game.World.Map
             var cylinder = new Cylinder(this);
             //todo: not thread safe
             var result = cylinder.MoveThing(ref thing, fromTile, toTile);
-
+            if (!result.Success)
+            {
+                return false;
+            }
 
             foreach (var spectator in cylinder.TileSpectators)
             {
@@ -97,10 +100,7 @@ namespace NeoServer.Game.World.Map
             }
 
 
-            if (!result.Success)
-            {
-                return false;
-            }
+        
 
             OnThingMoved?.Invoke((IWalkableCreature)thing, cylinder);
 

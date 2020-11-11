@@ -160,7 +160,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void AddToTargetList(ICombatActor creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
-
+            
             if (!Attacking) SelectTargetToAttack();
         }
         public void RemoveFromTargetList(ICreature creature)
@@ -188,6 +188,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SetAsEnemy(ICombatActor creature)
         {
+            if (!CanSee(creature.Location))
+            {
+                RemoveFromTargetList(creature);
+                return;
+            }
+
             AddToTargetList(creature);
         }
 
@@ -242,12 +248,19 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
+                if (!CanSee(target.Value.Creature.Location))
+                {
+                    target.Value.CanSee = false;
+                    target.Value.SetAsUnreachable();
+                    continue;
+                }
                 if (FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
-                    Console.WriteLine("UNREACHABLE");
                     continue;
                 }
+
+                target.Value.CanSee = true;
 
                 target.Value.SetAsReachable(directions);
 
@@ -283,8 +296,21 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
+      
+        public void ForgetTargets()
+        {
+            foreach (var target in Targets)
+            {
+                if(target.Value.CanSee == false)
+                {
+                    RemoveFromTargetList(target.Value.Creature);
+                }
+            }
+        }
+
         public void SelectTargetToAttack()
         {
+            Console.WriteLine(Targets.Count);
             if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
 
             var target = searchTarget();
@@ -301,6 +327,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             {
                 SetState(MonsterState.InCombat);
             }
+
+            Console.WriteLine(target.Creature.Name);
+
 
             FollowCreature = true;
 

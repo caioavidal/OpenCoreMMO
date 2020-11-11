@@ -23,6 +23,10 @@ namespace NeoServer.Game.Contracts.Creatures
         MonsterState State { get; }
 
         void SetState(MonsterState attacking);
+
+        /// <summary>
+        /// Select a target to attack
+        /// </summary>
         void SelectTargetToAttack();
         void AddToTargetList(ICombatActor creature);
         void RemoveFromTargetList(ICreature creature);
@@ -30,6 +34,11 @@ namespace NeoServer.Game.Contracts.Creatures
         void MoveAroundEnemy();
         void UpdateLastTargetChange();
         void SetAsEnemy(ICombatActor creature);
+
+        /// <summary>
+        /// Remove all targets whose creature cant see
+        /// </summary>
+        void ForgetTargets();
 
         uint Experience { get; }
         bool HasAnyTarget { get; }
