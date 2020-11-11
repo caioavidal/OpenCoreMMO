@@ -51,16 +51,6 @@ namespace NeoServer.Server.Events
             {
                 var spectator = cylinderSpectator.Spectator;
 
-                if (spectator is IMonster monster) //&& !cylinder.SpectatorExitedCylinder(spectator))
-                {
-                    if (creature is IPlayer enemy)
-                    {
-                        monster.AddToTargetList(enemy);
-                    }
-
-                    continue;
-                }
-
                 //var player = (IPlayer)spectator;
 
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))

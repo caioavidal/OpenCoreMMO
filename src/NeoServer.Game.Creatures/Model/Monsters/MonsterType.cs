@@ -17,7 +17,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public ushort ManaCost { get; set; }
         public uint MaxHealth { get; set; }
         public IDictionary<LookType, ushort> Look { get; set; }
-        public TargetChance TargetChance { get; set; }
+        public ITargetChange TargetChange { get; set; }
         public CombatStrategy CombatStrategy { get; set; }
         public IDictionary<CreatureFlagAttribute, byte> Flags { get; set; } = new Dictionary<CreatureFlagAttribute, byte>();
         public List<ICombatAttack> Attacks { get; set; }

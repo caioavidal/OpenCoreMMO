@@ -123,16 +123,34 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void StopFollowing()
         {
             Following = 0;
+            HasFollowPath = false;
             StopWalking();
+        }
+
+        public virtual void OnCreatureDisappear(ICreature creature)
+        {
+            StopFollowing();
         }
 
         public void StartFollowing(IWalkableCreature creature, FindPathParams fpp)
         {
+            if (IsFollowing)
+            {
+                Following = creature.CreatureId;
+                Follow(creature);
+                return;
+            }
+
             Following = creature.CreatureId;
             OnStartedFollowing?.Invoke(this, creature, fpp);
         }
         public void Follow(IWalkableCreature creature)
         {
+            if (!CanSee(creature.Location))
+            {
+                OnCreatureDisappear(creature);
+                return;
+            }
             if (!FindPathToDestination(this, creature.Location, PathSearchParams, out var directions))
             {
                 HasFollowPath = false;

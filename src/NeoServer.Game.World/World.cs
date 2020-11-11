@@ -80,7 +80,7 @@ namespace NeoServer.Game.World
 
         public Sector GetSector(ushort x, ushort y) => region.GetSector(x, y);
 
-        public List<ICreature> GetSpectators(ref SpectatorSearch search) => region.GetSpectators(ref search);
+        public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search) => region.GetSpectators(ref search);
 
         public void AddTown(ITown town)
         {

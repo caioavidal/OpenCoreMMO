@@ -11,6 +11,7 @@
         LookForNewEnemy,
         Haste,
         Spell,
-        MoveAroundEnemy
+        MoveAroundEnemy,
+        TargetChange
     }
 }

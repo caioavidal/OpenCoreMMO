@@ -33,7 +33,7 @@ namespace NeoServer.Server.Jobs.Creatures
                 }
 
                 CreatureConditionJob.Execute(creature as ICombatActor);
-
+                CreatureTargetJob.Execute(creature as ICombatActor);
                 RespawnJob.Execute(spawnManager);
             }
 

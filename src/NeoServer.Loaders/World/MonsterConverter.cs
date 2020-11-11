@@ -32,6 +32,7 @@ namespace NeoServer.Loaders.World
                 Experience = data.Experience
             };
 
+            monster.TargetChange = new TargetChange(System.Convert.ToUInt16(data.Targetchange.Interval), System.Convert.ToByte(data.Targetchange.Chance));
 
             foreach (var attack in data.Attacks)
             {

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NeoServer.Game.World.Map
@@ -42,8 +43,7 @@ namespace NeoServer.Game.World.Map
             }
             return region.GetSector(x << 1, y << 1);
         }
-
-        public List<ICreature> GetSpectators(ref SpectatorSearch search)
+        public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search)
         {
             var spectators = new List<ICreature>();
 
@@ -59,24 +59,32 @@ namespace NeoServer.Game.World.Map
                 {
                     if (east != null)
                     {
-                        IEnumerable<ICreature> creatures = (search.OnlyPlayers ? east.Players : east.Creatures);
+                        //if (east.SpectatorsCache.Any())
+                        //{
+                        //    spectators.AddRange(east.SpectatorsCache);
+                        //}
+                        //else
+                        //{
+                            IEnumerable<ICreature> creatures = (search.OnlyPlayers ? east.Players : east.Creatures);
 
-                        foreach (ICreature creature in creatures)
-                        {
-                            var cpos = creature.Location;
-                            if (search.RangeZ.Min > cpos.Z || search.RangeZ.Max < cpos.Z)
+                            foreach (ICreature creature in creatures)
                             {
-                                continue;
-                            }
+                                var cpos = creature.Location;
+                                if (search.RangeZ.Min > cpos.Z || search.RangeZ.Max < cpos.Z)
+                                {
+                                    continue;
+                                }
 
-                            int offsetZ = search.CenterPosition.GetOffSetZ(cpos);
-                            if ((search.Y.Min + offsetZ) > cpos.Y || (search.Y.Max + offsetZ) < cpos.Y || (search.X.Min + offsetZ) > cpos.X || (search.X.Max + offsetZ) < cpos.X)
-                            {
-                                continue;
-                            }
+                                int offsetZ = search.CenterPosition.GetOffSetZ(cpos);
+                                if ((search.Y.Min + offsetZ) > cpos.Y || (search.Y.Max + offsetZ) < cpos.Y || (search.X.Min + offsetZ) > cpos.X || (search.X.Max + offsetZ) < cpos.X)
+                                {
+                                    continue;
+                                }
 
-                            spectators.Add(creature);
-                        }
+                                east.SpectatorsCache.Add(creature);
+                                spectators.Add(creature);
+                            }
+                       // }
                         east = east.East;
                     }
                     else

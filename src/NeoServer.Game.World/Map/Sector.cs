@@ -13,8 +13,10 @@ namespace NeoServer.Game.World.Map
         public Sector South { get; set; }
         public Sector East { get; set; }
         public Floor[] Floors { get; set; } = new Floor[16];
-        public List<ICreature> Creatures { get; private set; } = new List<ICreature>(); //lists are faster to iterate than dictionaries. iterations will be more frequent than remove or add operations
-        public List<ICreature> Players { get; private set; } = new List<ICreature>();
+        public HashSet<ICreature> Creatures { get; private set; } = new HashSet<ICreature>();
+        public HashSet<ICreature> Players { get; private set; } = new HashSet<ICreature>();
+        public List<ICreature> SpectatorsCache { get; private set; } = new List<ICreature>(32);
+
         public Floor GetFloor(byte z) => Floors[z];
         public Floor AddFloor(byte z)
         {
@@ -33,6 +35,7 @@ namespace NeoServer.Game.World.Map
             {
                 Players.Add(player);
             }
+            SpectatorsCache.Clear();
         }
         public void RemoveCreature(ICreature creature)
         {
@@ -40,6 +43,8 @@ namespace NeoServer.Game.World.Map
 
             if (creature is IPlayer player)
                 Players.Remove(player);
+
+            SpectatorsCache.Clear();
         }
     }
 

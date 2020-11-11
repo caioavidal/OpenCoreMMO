@@ -114,7 +114,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetFlag(CreatureFlag flag) => Flags |= (uint)flag;
         public void UnsetFlag(CreatureFlag flag) => Flags &= ~(uint)flag;
-        public bool CanSee(ICreature otherCreature)
+        public virtual bool CanSee(ICreature otherCreature)
         {
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }

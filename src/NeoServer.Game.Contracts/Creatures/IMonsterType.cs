@@ -16,5 +16,6 @@ namespace NeoServer.Game.Contracts.Creatures
         public List<ICombatDefense> Defenses { get; set; }
 
         IDictionary<CreatureFlagAttribute, byte> Flags { get; set; }
+        ITargetChange TargetChange { get; set; }
     }
 }

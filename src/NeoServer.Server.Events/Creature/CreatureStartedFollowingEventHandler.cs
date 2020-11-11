@@ -45,6 +45,12 @@ namespace NeoServer.Server.Events.Creature
             if (creature.FollowEvent != 0)
             {
                 creature.FollowEvent = 0;
+
+                if(creature.Following != following.CreatureId && game.CreatureManager.TryGetCreature(creature.Following, out var newFollowing))
+                {
+                    Execute(creature, newFollowing as IWalkableCreature, fpp);
+                    return;
+                }
                 Execute(creature, following, fpp);
             }
         }

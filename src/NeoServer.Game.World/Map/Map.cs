@@ -83,6 +83,20 @@ namespace NeoServer.Game.World.Map
             //todo: not thread safe
             var result = cylinder.MoveThing(ref thing, fromTile, toTile);
 
+
+            foreach (var spectator in cylinder.TileSpectators)
+            {
+                if (spectator.Spectator is IMonster monsterSpectator && thing is IPlayer playerWalking)
+                {
+                    monsterSpectator.SetAsEnemy(playerWalking);
+                }
+                if (spectator.Spectator is IPlayer playerSpectator && thing is IMonster monsterWalking)
+                {
+                    monsterWalking.SetAsEnemy(playerSpectator);
+                }
+            }
+
+
             if (!result.Success)
             {
                 return false;
@@ -321,7 +335,7 @@ namespace NeoServer.Game.World.Map
         }
         public HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation)
         {
-            if(location == toLocation)
+            if (location == toLocation)
             {
                 return GetCreaturesAtPositionZone(location).ToHashSet();
             }
@@ -334,7 +348,7 @@ namespace NeoServer.Game.World.Map
             spectators.AddRange(fromSpectators);
             spectators.AddRange(toSpectators);
             return spectators.ToHashSet();
-      
+
         }
 
         public IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false)
@@ -380,7 +394,7 @@ namespace NeoServer.Game.World.Map
             return world.GetSpectators(ref search);
         }
 
-      
+
         public IList<byte> GetDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
         {
             var tempBytes = new List<byte>();
@@ -521,6 +535,17 @@ namespace NeoServer.Game.World.Map
 
                 var cylinder = new Cylinder(this);
                 cylinder.AddThing(ref thing, tile);
+
+                if (creature is IPlayer player)
+                {
+                    foreach (var spectator in cylinder.TileSpectators)
+                    {
+                        if (spectator.Spectator is IMonster monster)
+                        {
+                            monster.SetAsEnemy(player);
+                        }
+                    }
+                }
 
                 if (creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }

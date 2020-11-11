@@ -174,6 +174,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
         public bool LookForNewEnemy()
         {
+            StopFollowing();
             if (CanReachAnyTarget) return false;
 
             int randomIndex = GaussianRandom.Random.Next(minValue: 0, maxValue: 4);
@@ -183,6 +184,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             TryWalkTo(directions[randomIndex]);
 
             return true;
+        }
+
+        public void SetAsEnemy(ICombatActor creature)
+        {
+            AddToTargetList(creature);
         }
 
         public bool CanReachAnyTarget { get; private set; } = false;
@@ -209,7 +215,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public bool Defending { get; private set; }
 
-        public override FindPathParams PathSearchParams 
+        public override FindPathParams PathSearchParams
         {
             get
             {
@@ -219,6 +225,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return fpp;
             }
         }
+        public override void OnCreatureDisappear(ICreature creature)
+        {
+            RemoveFromTargetList(creature);
+            SelectTargetToAttack();
+        }
+
         private CombatTarget searchTarget()
         {
             Targets.ThrowIfNull();
@@ -273,6 +285,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SelectTargetToAttack()
         {
+            if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
+
             var target = searchTarget();
 
             if (target == null && !CanReachAnyTarget)
@@ -280,6 +294,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 LookForNewEnemy();
                 return;
             }
+
+            if (target != null && !CanSee(target.Creature.Location)) return;
 
             if (target != null)
             {
@@ -294,6 +310,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
 
             SetAttackTarget(target.Creature.CreatureId);
+            UpdateLastTargetChange();
         }
 
         public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
@@ -312,5 +329,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return base.Attack(enemy, attack);
         }
 
+        public void UpdateLastTargetChange()
+        {
+            if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
+            Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChange.Interval);
+        }
     }
 }
