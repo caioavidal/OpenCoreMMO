@@ -3,9 +3,9 @@
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
 
-    public struct TargetChange : ITargetChange
+    public struct IntervalChance : IIntervalChance
     {
-        public TargetChange(ushort interval, byte chance)
+        public IntervalChance(ushort interval, byte chance)
         {
             Interval = interval;
             Chance = chance;

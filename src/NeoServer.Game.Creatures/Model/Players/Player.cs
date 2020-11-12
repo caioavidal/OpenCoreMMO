@@ -346,7 +346,7 @@ namespace NeoServer.Server.Model.Players
             {
                 var min = ArmorRating / 2;
                 var max = (ArmorRating / 2) * 2 - 1;
-                attack -= (ushort)GaussianRandom.Random.NextInRange(min, max);
+                attack -= (ushort)ServerRandom.Random.NextInRange(min, max);
             }
             else if (ArmorRating > 0)
             {

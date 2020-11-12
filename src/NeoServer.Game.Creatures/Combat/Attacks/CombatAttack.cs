@@ -22,7 +22,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         //todo code smell
         public virtual void BuildAttack(ICombatActor actor, ICombatActor enemy) { }
 
-        public virtual ushort CalculateDamage(ushort attackPower, ushort minAttackPower) => (ushort)GaussianRandom.Random.NextInRange(minAttackPower, attackPower);
+        public virtual ushort CalculateDamage(ushort attackPower, ushort minAttackPower) => (ushort)ServerRandom.Random.NextInRange(minAttackPower, attackPower);
 
 
         public virtual void CauseDamage(ICombatActor actor, ICombatActor enemy)

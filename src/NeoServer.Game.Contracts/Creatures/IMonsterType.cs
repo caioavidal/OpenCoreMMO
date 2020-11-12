@@ -16,6 +16,15 @@ namespace NeoServer.Game.Contracts.Creatures
         public List<ICombatDefense> Defenses { get; set; }
 
         IDictionary<CreatureFlagAttribute, byte> Flags { get; set; }
-        ITargetChange TargetChange { get; set; }
+        IIntervalChance TargetChance { get; set; }
+
+        /// <summary>
+        /// Monster's phases
+        /// </summary>
+        string[] Voices { get; set; }
+        /// <summary>
+        /// Voice interval and chance to happen
+        /// </summary>
+        IIntervalChance VoiceConfig { get; set; }
     }
 }

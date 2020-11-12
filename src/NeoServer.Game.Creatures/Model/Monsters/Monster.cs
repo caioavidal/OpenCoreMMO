@@ -7,6 +7,7 @@ using NeoServer.Game.Creatures.Model.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Enums.Talks;
 using NeoServer.Server.Helpers;
 using System;
 using System.Buffers;
@@ -67,7 +68,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override int ShieldDefend(int attack)
         {
 
-            attack -= (ushort)GaussianRandom.Random.NextInRange((Defense / 2), Defense);
+            attack -= (ushort)ServerRandom.Random.NextInRange((Defense / 2), Defense);
 
             return attack;
         }
@@ -82,7 +83,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (ArmorRating > 3)
             {
-                attack -= (ushort)GaussianRandom.Random.NextInRange(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
+                attack -= (ushort)ServerRandom.Random.NextInRange(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
             }
             else if (ArmorRating > 0)
             {
@@ -104,7 +105,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-    
+
         public ushort Defende()
         {
             if (!Defenses.Any())
@@ -155,7 +156,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void AddToTargetList(ICombatActor creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
-            
+
             if (!Attacking) SelectTargetToAttack();
         }
         public void RemoveFromTargetList(ICreature creature)
@@ -172,7 +173,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             StopFollowing();
             if (CanReachAnyTarget) return false;
 
-            int randomIndex = GaussianRandom.Random.Next(minValue: 0, maxValue: 4);
+            int randomIndex = ServerRandom.Random.Next(minValue: 0, maxValue: 4);
 
             var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
 
@@ -276,7 +277,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (!Targets.TryGetValue(AutoAttackTargetId, out var combatTarget)) return;
 
             if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
-            Cooldowns.Start(CooldownType.MoveAroundEnemy, GaussianRandom.Random.Next(minValue: 3000, maxValue: 5000));
+            Cooldowns.Start(CooldownType.MoveAroundEnemy, ServerRandom.Random.Next(minValue: 3000, maxValue: 5000));
 
             if (!IsInPerfectPostionToCombat(combatTarget)) return;
 
@@ -319,7 +320,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
 
             SetAttackTarget(target.Creature.CreatureId);
-            UpdateLastTargetChange();
+            UpdateLastTargetChance();
         }
 
         public void Sleep()
@@ -329,6 +330,21 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             StopFollowing();
         }
 
+        public void Yell()
+        {
+            if (!Cooldowns.Expired(CooldownType.Yell)) return;
+            Cooldowns.Start(CooldownType.Yell, Metadata.VoiceConfig.Interval);
+
+            if (!Metadata.Voices.Any() || Metadata.VoiceConfig.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100))
+            {
+                return;
+            }
+
+            var voiceIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Metadata.Voices.Length - 1);
+
+            Say(Metadata.Voices[voiceIndex], TalkType.MonsterYell);
+        }
+
         public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
         {
             if ((Attacks?.Count ?? 0) == 0)
@@ -336,7 +352,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return false;
             }
 
-            var index = GaussianRandom.Random.Next(minValue: 0, maxValue: Attacks.Count);
+            var index = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Count);
 
             TurnTo(Location.DirectionTo(enemy.Location));
 
@@ -345,10 +361,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return base.Attack(enemy, attack);
         }
 
-        public void UpdateLastTargetChange()
+        public void UpdateLastTargetChance()
         {
             if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
-            Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChange.Interval);
+            Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
         }
     }
 }

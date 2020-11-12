@@ -58,6 +58,27 @@
         
       
     },
+	 "voices": {
+      "interval": "5000",
+      "chance": "10",
+      "voice": [
+        {
+          "sentence": "Il lorstok human!"
+        },
+        {
+          "sentence": "Toks utat."
+        },
+        {
+          "sentence": "Human, uh whil dyh!"
+        },
+        {
+          "sentence": "Youh ah trak!"
+        },
+        {
+          "sentence": "Let da mashing begin!"
+        }
+      ]
+    },
     "attacks": 
       [
         {

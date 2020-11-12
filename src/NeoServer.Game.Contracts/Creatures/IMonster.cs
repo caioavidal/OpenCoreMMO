@@ -37,7 +37,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <returns>interval</returns>
         ushort Defende();
         void MoveAroundEnemy();
-        void UpdateLastTargetChange();
+        void UpdateLastTargetChance();
 
         /// <summary>
         /// Set creature as enemy. If monster can't see creature it will be forgotten
@@ -45,6 +45,11 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <param name="creature"></param>
         void SetAsEnemy(ICombatActor creature);
         void Sleep();
+
+        /// <summary>
+        /// Monster yells a sentence
+        /// </summary>
+        void Yell();
 
         uint Experience { get; }
         bool HasAnyTarget { get; }

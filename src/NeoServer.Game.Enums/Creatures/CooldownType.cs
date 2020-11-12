@@ -12,6 +12,7 @@
         Haste,
         Spell,
         MoveAroundEnemy,
-        TargetChange
+        TargetChange,
+        Yell
     }
 }

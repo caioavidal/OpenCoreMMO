@@ -32,7 +32,11 @@ namespace NeoServer.Loaders.World
                 Experience = data.Experience
             };
 
-            monster.TargetChange = new TargetChange(System.Convert.ToUInt16(data.Targetchange.Interval), System.Convert.ToByte(data.Targetchange.Chance));
+            monster.TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval), System.Convert.ToByte(data.Targetchange.Chance));
+
+            monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval), System.Convert.ToByte(data.Voices.Chance));
+
+            monster.Voices = data.Voices.Voice.Select(x=>x.Sentence).ToArray();
 
             foreach (var attack in data.Attacks)
             {
@@ -44,7 +48,6 @@ namespace NeoServer.Loaders.World
                 attack.TryGetValue("max", out decimal max);
                 attack.TryGetValue("chance", out byte chance);
                 attack.TryGetValue<JArray>("attributes", out var attributes);
-
 
                 if (attack.ContainsKey("range"))
                 {

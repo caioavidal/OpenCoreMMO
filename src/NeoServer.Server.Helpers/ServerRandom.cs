@@ -2,7 +2,7 @@
 
 namespace NeoServer.Server.Helpers
 {
-    public class GaussianRandom : Random
+    public class ServerRandom : Random
     {
         public double Next(double mu = 0, double sigma = 1)
         {
@@ -19,13 +19,13 @@ namespace NeoServer.Server.Helpers
 
  
 
-        private static GaussianRandom Instance;
+        private static ServerRandom Instance;
 
-        public static GaussianRandom Random
+        public static ServerRandom Random
         {
             get
             {
-                if (Instance == null) Instance = new GaussianRandom();
+                if (Instance == null) Instance = new ServerRandom();
 
                 return Instance;
             }

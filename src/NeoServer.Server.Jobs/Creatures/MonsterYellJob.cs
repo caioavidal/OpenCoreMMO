@@ -6,7 +6,7 @@ using System;
 
 namespace NeoServer.Server.Jobs.Creatures
 {
-    public class CreatureTargetJob
+    public class MonsterYellJob
     {        
         public static void Execute(ICombatActor creature)
         {
@@ -19,21 +19,8 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 return;
             }
-            if (!monster.IsInCombat)
-            {
-                return;
-            }
-            if (monster.Metadata.TargetChance.Interval == 0)
-            {
-                return;
-            }
-
-            if (monster.Metadata.TargetChance.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100))
-            {
-                return;
-            }
-
-            monster.SelectTargetToAttack();
+           
+            monster.Yell();
         }
     }
 }
