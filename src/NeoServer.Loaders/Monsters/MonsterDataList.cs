@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace NeoServer.Loaders.World
+namespace NeoServer.Loaders.Monsters
 {
     public class MonsterData
     {

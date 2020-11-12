@@ -20,7 +20,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public IIntervalChance TargetChance { get; set; }
         public CombatStrategy CombatStrategy { get; set; }
         public IDictionary<CreatureFlagAttribute, byte> Flags { get; set; } = new Dictionary<CreatureFlagAttribute, byte>();
-        public List<ICombatAttack> Attacks { get; set; }
+        public CombatAttackOption[] Attacks { get; set; }
         public ushort Armor { get; set; }
         public ushort Defence { get; set; }
         public List<ICombatDefense> Defenses { get; set; }

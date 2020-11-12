@@ -11,8 +11,9 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using NeoServer.Game.Contracts.Combat.Defenses;
 using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Loaders.Monsters.Converters;
 
-namespace NeoServer.Loaders.World
+namespace NeoServer.Loaders.Monsters
 {
     public class MonsterConverter
     {
@@ -27,7 +28,6 @@ namespace NeoServer.Loaders.World
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defence = ushort.Parse(data.Defense.Defense),
-                Attacks = new List<ICombatAttack>(),
                 Defenses = new List<ICombatDefense>(),
                 Experience = data.Experience
             };
@@ -38,94 +38,7 @@ namespace NeoServer.Loaders.World
 
             monster.Voices = data.Voices.Voice.Select(x=>x.Sentence).ToArray();
 
-            foreach (var attack in data.Attacks)
-            {
-                attack.TryGetValue("name", out string attackName);
-                attack.TryGetValue("attack", out byte attackValue);
-                attack.TryGetValue("skill", out byte skill);
-
-                attack.TryGetValue("min", out decimal min);
-                attack.TryGetValue("max", out decimal max);
-                attack.TryGetValue("chance", out byte chance);
-                attack.TryGetValue<JArray>("attributes", out var attributes);
-
-                if (attack.ContainsKey("range"))
-                {
-                    attack.TryGetValue("range", out byte range);
-                    attack.TryGetValue("radius", out byte radius);
-
-                    var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
-
-
-                    if (attackName == "manadrain")
-                    {
-
-                        monster.Attacks.Add(new ManaDrainCombatAttack(new CombatAttackOption
-                        {
-                            Chance = chance,
-                            Range = range,
-                            MinDamage = (ushort)Math.Abs(min),
-                            MaxDamage = (ushort)Math.Abs(max)
-                        }));
-                    }
-                    else if (attackName == "firefield")
-                    {
-                        monster.Attacks.Add(new FieldCombatAttack(new CombatAttackOption
-                        {
-                            Chance = chance,
-                            Radius = radius,
-                            Range = range,
-                            MinDamage = (ushort)Math.Abs(min),
-                            MaxDamage = (ushort)Math.Abs(max),
-                            ShootType = ParseShootType(shootEffect)
-                        }));
-                    }
-                    else if (attack.ContainsKey("radius"))
-                    {
-
-                        monster.Attacks.Add(new DistanceAreaCombatAttack(ParseDamageType(attackName), new CombatAttackOption
-                        {
-                            Chance = chance,
-                            Range = range,
-                            MinDamage = (ushort)Math.Abs(min),
-                            MaxDamage = (ushort)Math.Abs(max),
-                            Radius = radius,
-                            ShootType = ParseShootType(shootEffect)
-                        }));
-                    }
-                    else
-                    {
-                        monster.Attacks.Add(new DistanceCombatAttack(ParseDamageType(attackName), new CombatAttackOption
-                        {
-                            Chance = chance,
-                            Range = range,
-                            MinDamage = (ushort)Math.Abs(min),
-                            MaxDamage = (ushort)Math.Abs(max),
-                            ShootType = ParseShootType(shootEffect)
-                        }));
-                    }
-                }
-                else if (attack.ContainsKey("spread"))
-                {
-                    attack.TryGetValue("length", out byte length);
-                    attack.TryGetValue("spread", out byte spread);
-
-
-                    monster.Attacks.Add(new SpreadCombatAttack(ParseDamageType(attackName), new CombatAttackOption
-                    {
-                        Chance = chance,
-                        MinDamage = (ushort)Math.Abs(min),
-                        MaxDamage = (ushort)Math.Abs(max),
-                        Length = length,
-                        Spread = spread
-                    }));
-
-                }
-                else if (ParseDamageType(attackName?.ToString()) == DamageType.Melee)
-                {
-                    monster.Attacks.Add(new MeleeCombatAttack(attackValue, skill));
-                }
-            }
+            monster.Attacks = MonsterAttackConverter.Convert(data);
 
             foreach (var defense in data.Defenses)
             {

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Combat;
@@ -9,8 +10,6 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Talks;
 using NeoServer.Server.Helpers;
-using System;
-using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +56,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-
         public void Reborn()
         {
             ResetHealthPoints();
@@ -67,16 +65,14 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override int ShieldDefend(int attack)
         {
-
             attack -= (ushort)ServerRandom.Random.NextInRange((Defense / 2), Defense);
-
             return attack;
         }
 
         public byte TargetDistance => Metadata.Flags[CreatureFlagAttribute.TargetDistance];
         public bool KeepDistance => TargetDistance > 1;
 
-        public List<ICombatAttack> Attacks => Metadata.Attacks;
+        public CombatAttackOption[] Attacks => Metadata.Attacks;
         public List<ICombatDefense> Defenses => Metadata.Defenses;
 
         public override int ArmorDefend(int attack)
@@ -345,21 +341,21 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Say(Metadata.Voices[voiceIndex], TalkType.MonsterYell);
         }
 
-        public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
-        {
-            if ((Attacks?.Count ?? 0) == 0)
-            {
-                return false;
-            }
+        //public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
+        //{
+        //    if ((Attacks?.Count ?? 0) == 0)
+        //    {
+        //        return false;
+        //    }
 
-            var index = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Count);
+        //    var index = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Count);
 
-            TurnTo(Location.DirectionTo(enemy.Location));
+        //    TurnTo(Location.DirectionTo(enemy.Location));
 
-            var attack = Attacks[index];
+        //    var attack = Attacks[index];
 
-            return base.Attack(enemy, attack);
-        }
+        //    return base.Attack(enemy, attack);
+        //}
 
         public void UpdateLastTargetChance()
         {

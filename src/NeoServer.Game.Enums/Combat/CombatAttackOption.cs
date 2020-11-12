@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Enums.Item;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Enums.Item;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,5 +21,7 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
         public ushort MaxDamage { get; set; }
         public byte Spread { get; set; }
         public byte Length { get; set; }
+        public string Name { get; set; }
+        public EffectT AreaEffect { get; set; }
     }
 }
