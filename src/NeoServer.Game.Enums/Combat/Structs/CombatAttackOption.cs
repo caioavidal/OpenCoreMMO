@@ -1,8 +1,5 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Enums.Item;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Combat.Attacks
 {

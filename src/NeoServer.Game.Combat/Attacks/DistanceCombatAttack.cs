@@ -1,0 +1,26 @@
+﻿using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures.Combat.Attacks;
+using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Server.Helpers;
+
+namespace NeoServer.Game.Combat.Attacks
+{
+    public class DistanceCombatAttack : CombatAttack<DistanceCombatAttack>
+    {
+        public bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatDamage damage)
+        {
+            damage = new CombatDamage();
+
+            if (actor.Location.GetSqmDistanceX(enemy.Location) > option.Range || actor.Location.GetSqmDistanceY(enemy.Location) > option.Range) return false;
+
+            var damageValue = (ushort)ServerRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
+
+            var missed = option.HitChance < ServerRandom.Random.Next(minValue: 1, maxValue: 100);
+
+            damage = new CombatDamage(damageValue, option.DamageType, missed);
+
+            return true;
+        }
+    }
+}

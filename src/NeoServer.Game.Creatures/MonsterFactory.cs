@@ -36,7 +36,7 @@ namespace NeoServer.Game.Creatures
             var monster = new Monster(monsterType, _pathFinder.Find, spawn);
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
-            monster.OnAttack += _creatureAttackEventHandler.Execute;
+            monster.OnAttackEnemy += _creatureAttackEventHandler.Execute;
             monster.OnDefende += _monsterDefendEventHandler.Execute;
             monster.OnKilled += DetachEvents;
 
@@ -48,7 +48,7 @@ namespace NeoServer.Game.Creatures
             if (creature is IMonster monster)
             {
                 monster.OnWasBorn -= _creatureWasBornEventHandler.Execute;
-                monster.OnAttack -= _creatureAttackEventHandler.Execute;
+                monster.OnAttackEnemy -= _creatureAttackEventHandler.Execute;
                 monster.OnDefende -= _monsterDefendEventHandler.Execute;
                 monster.OnKilled -= DetachEvents;
             }

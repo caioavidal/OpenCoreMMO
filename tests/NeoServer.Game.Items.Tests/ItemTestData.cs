@@ -57,7 +57,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.SetName("item");
 
-            return new WeaponItem(type, new Location(100, 100, 7));
+            return new MeleeWeapon(type, new Location(100, 100, 7));
         }
         public static IPickupable CreateWeaponItem(ushort id, string weaponType, bool twoHanded = false)
         {
@@ -69,7 +69,7 @@ namespace NeoServer.Game.Items.Tests
 
             if (twoHanded)
                 type.Attributes.SetAttribute(Enums.ItemAttribute.BodyPosition, "two-handed");
-            return new WeaponItem(type, new Location(100, 100, 7));
+            return new MeleeWeapon(type, new Location(100, 100, 7));
         }
         public static IPickupable CreateThrowableDistanceItem(ushort id, byte amount, bool twoHanded = false)
         {

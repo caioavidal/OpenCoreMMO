@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace NeoServer.Game.Contracts
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
         HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
-        void PropagateAttack(ICombatActor creature, ICombatActor victim, ICombatAttack combatAttack);
+        void PropagateAttack(ICombatActor creature, ICombatActor victim, CombatAttackValue combatAttack);
         void MoveCreature(IWalkableCreature creature);
     }
 }

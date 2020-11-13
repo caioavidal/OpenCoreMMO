@@ -1,12 +1,7 @@
-﻿using NeoServer.Game.Enums.Item;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Contracts.Combat
+﻿namespace NeoServer.Game.Contracts.Combat
 {
-    public interface IDistanceCombatAttack: ICombatAttack
-    {
-        public ShootType ShootType => Option.ShootType;
-    }
+    //public interface IDistanceCombatAttack
+    //{
+    //    bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackOption option, out CombatDamage damage);
+    //}
 }

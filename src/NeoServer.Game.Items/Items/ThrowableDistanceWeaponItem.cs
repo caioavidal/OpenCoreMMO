@@ -1,6 +1,8 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using System;
@@ -18,5 +20,10 @@ namespace NeoServer.Game.Items.Items
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
         public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Enums.ItemAttribute.WeaponType) == "distance" && type.HasFlag(Enums.ItemFlag.Stackable);
+
+        public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackValue combat)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

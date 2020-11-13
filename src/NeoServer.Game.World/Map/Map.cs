@@ -5,6 +5,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World.Map.Tiles;
@@ -553,38 +554,38 @@ namespace NeoServer.Game.World.Map
 
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
 
-        public void PropagateAttack(ICombatActor actor, ICombatActor victim, ICombatAttack combatAttack)
+        public void PropagateAttack(ICombatActor actor, ICombatActor victim, CombatAttackValue combatAttack)
         {
-            if (!(combatAttack is IAreaAttack area))
-            {
-                return;
-            }
+            //if (!(combatAttack is IAreaAttack area))
+            //{
+            //    return;
+            //}
 
-            foreach (var coordinates in area.AffectedArea)
-            {
-                var tile = this[coordinates.Location];
-                if (tile is IWalkableTile walkableTile)
-                {
-                    foreach (var target in walkableTile.Creatures.Values)
-                    {
-                        if (!(target is ICombatActor targetCreature))
-                        {
-                            continue;
-                        }
-                        if (combatAttack.HasTarget && victim == targetCreature)
-                        {
-                            continue;
-                        }
-                        if (actor == target)
-                        {
-                            continue;
-                        }
+            //foreach (var coordinates in area.AffectedArea)
+            //{
+            //    var tile = this[coordinates.Location];
+            //    if (tile is IWalkableTile walkableTile)
+            //    {
+            //        foreach (var target in walkableTile.Creatures.Values)
+            //        {
+            //            if (!(target is ICombatActor targetCreature))
+            //            {
+            //                continue;
+            //            }
+            //            if (combatAttack.HasTarget && victim == targetCreature)
+            //            {
+            //                continue;
+            //            }
+            //            if (actor == target)
+            //            {
+            //                continue;
+            //            }
 
-                        targetCreature.ReceiveAttack(actor, combatAttack);
-                    }
-                }
+            //            //targetCreature.ReceiveAttack(actor, combatAttack);
+            //        }
+            //    }
 
-            }
+            //}
         }
 
         public void MoveCreature(IWalkableCreature creature)

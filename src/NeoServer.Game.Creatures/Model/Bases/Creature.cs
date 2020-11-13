@@ -1,29 +1,17 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Talks;
-using NeoServer.Game.Items;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -180,9 +168,10 @@ namespace NeoServer.Game.Creatures.Model
         }
         public virtual IItem CreateItem(ushort itemId, byte amount)
         {
-            var item = ItemFactory.Create(itemId, Location, null);
-            if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
-            return item;
+            throw new NotImplementedException();
+            //var item = ItemFactory.Create(itemId, Location, null);
+            //if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
+            //return item;
         }
 
 

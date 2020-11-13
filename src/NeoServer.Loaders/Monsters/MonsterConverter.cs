@@ -40,44 +40,44 @@ namespace NeoServer.Loaders.Monsters
 
             monster.Attacks = MonsterAttackConverter.Convert(data);
 
-            foreach (var defense in data.Defenses)
-            {
-                defense.TryGetValue("name", out string defenseName);
-                defense.TryGetValue("chance", out byte chance);
-                defense.TryGetValue("interval", out ushort interval);
-                defense.TryGetValue<JArray>("attributes", out var attributes);
+            //foreach (var defense in data.Defenses)
+            //{
+            //    defense.TryGetValue("name", out string defenseName);
+            //    defense.TryGetValue("chance", out byte chance);
+            //    defense.TryGetValue("interval", out ushort interval);
+            //    defense.TryGetValue<JArray>("attributes", out var attributes);
 
 
-                if (defenseName == "healing")
-                {
-                    defense.TryGetValue("min", out decimal min);
-                    defense.TryGetValue("max", out decimal max);
+            //    if (defenseName == "healing")
+            //    {
+            //        defense.TryGetValue("min", out decimal min);
+            //        defense.TryGetValue("max", out decimal max);
 
-                    monster.Defenses.Add(new HealCombatDefence
-                    {
-                        Chance = chance,
-                        Interval = interval,
-                        Min = (ushort)Math.Abs(min),
-                        Max = (ushort)Math.Abs(max),
-                        Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a?.Value<string>("key") == "areaEffect")?.Value<string>("value"))
+            //        monster.Defenses.Add(new HealCombatDefence
+            //        {
+            //            Chance = chance,
+            //            Interval = interval,
+            //            Min = (ushort)Math.Abs(min),
+            //            Max = (ushort)Math.Abs(max),
+            //            Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a?.Value<string>("key") == "areaEffect")?.Value<string>("value"))
 
-                    });
-                }
-                if (defenseName == "speed")
-                {
-                    defense.TryGetValue("speedchange", out ushort speed);
-                    defense.TryGetValue("duration", out uint duration);
+            //        });
+            //    }
+            //    if (defenseName == "speed")
+            //    {
+            //        defense.TryGetValue("speedchange", out ushort speed);
+            //        defense.TryGetValue("duration", out uint duration);
 
-                    monster.Defenses.Add(new HasteCombatDefence()
-                    {
-                        Chance = chance,
-                        Interval = interval,
-                        SpeedBoost = speed,
-                        Duration = duration,
-                        Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
-                    });
-                }
-            }
+            //        monster.Defenses.Add(new HasteCombatDefence()
+            //        {
+            //            Chance = chance,
+            //            Interval = interval,
+            //            SpeedBoost = speed,
+            //            Duration = duration,
+            //            Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
+            //        });
+            //    }
+            //}
 
             foreach (var flag in data.Flags)
             {

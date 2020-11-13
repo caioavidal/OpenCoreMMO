@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
@@ -26,7 +27,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event Heal OnHeal;
         public event StopAttack OnStoppedAttack;
         public event BlockAttack OnBlockedAttack;
-        public event Attack OnAttack;
+        public event Attack OnAttackEnemy;
         public event Damage OnDamaged;
         public event Die OnKilled;
         public event OnAttackTargetChange OnTargetChanged;
@@ -108,38 +109,38 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return (ushort)damage;
         }
 
-        public virtual void ReceiveAttack(ICombatActor enemy, ICombatAttack attack)
-        {
-            var damage = attack.CalculateDamage(enemy.AttackPower, enemy.MinimumAttackPower);
-            ReceiveAttack(enemy, attack, damage);
-        }
-        public virtual void ReceiveAttack(ICombatActor enemy, ICombatAttack attack, ushort damage)
-        {
-            if (!attack.IsMagicalDamage)
-            {
-                damage = ReduceDamage(damage);
-            }
+        //public virtual void ReceiveAttack(ICombatActor enemy, ICombatAttack attack)
+        //{
+        //    var damage = attack.CalculateDamage(enemy.AttackPower, enemy.MinimumAttackPower);
+        //    ReceiveAttack(enemy, attack, damage);
+        //}
+        //public virtual void ReceiveAttack(ICombatActor enemy, ICombatAttack attack, ushort damage)
+        //{
+        //    if (!attack.IsMagicalDamage)
+        //    {
+        //        damage = ReduceDamage(damage);
+        //    }
 
-            if (damage <= 0)
-            {
-                WasDamagedOnLastAttack = false;
-                return;
-            }
+        //    if (damage <= 0)
+        //    {
+        //        WasDamagedOnLastAttack = false;
+        //        return;
+        //    }
 
-            if (IsDead)
-            {
-                return;
-            }
+        //    if (IsDead)
+        //    {
+        //        return;
+        //    }
 
-            if (attack.DamageType != DamageType.ManaDrain)
-            {
-                ReduceHealth(damage);
-            }
+        //    if (attack.DamageType != DamageType.ManaDrain)
+        //    {
+        //        ReduceHealth(damage);
+        //    }
 
-            OnDamaged?.Invoke(enemy, this, attack, damage);
-            WasDamagedOnLastAttack = true;
-            return;
-        }
+        //    OnDamaged?.Invoke(enemy, this, attack, damage);
+        //    WasDamagedOnLastAttack = true;
+        //    return;
+        //}
 
         public void StopAttack()
         {
@@ -153,8 +154,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         //}
 
+        public abstract bool OnAttack(ICombatActor enemy, out CombatAttackValue combat);
      
-        public virtual bool Attack(ICombatActor enemy, ICombatAttack combatAttack)
+        public bool Attack(ICombatActor enemy)
         {
             if (enemy.IsDead)
             {
@@ -162,22 +164,15 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 return false;
             }
 
-            if (!combatAttack.CanAttack(this,enemy))
-            {
-                return false;
-            }
-
             if (!Cooldowns.Expired(CooldownType.Combat)) return false;
 
             SetAttackTarget(enemy.CreatureId);
 
-            combatAttack.BuildAttack(this, enemy);
-            OnAttack?.Invoke(this, enemy, combatAttack);
+            if (!OnAttack(enemy, out var combat)) return false;
 
-            if (combatAttack.HasTarget)
-            {
-                combatAttack.CauseDamage(this, enemy);
-            }
+            //combatAttack.BuildAttack(this, enemy);
+
+            OnAttackEnemy?.Invoke(this, enemy, combat);
 
             Cooldowns.Start(CooldownType.Combat, (int)BaseAttackSpeed);
 
@@ -223,5 +218,38 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);
         public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
+
+        public void ReceiveAttack(ICombatActor enemy, CombatDamage damage)
+        {
+            var damageValue = damage.Damage;
+            if (damage.Type == DamageType.Physical)
+            {
+                damageValue = ReduceDamage(damage.Damage);
+            }
+
+            damage.ReduceDamage(damageValue);
+
+            if (damage.Damage <= 0)
+            {
+                WasDamagedOnLastAttack = false;
+                return;
+            }
+
+            if (IsDead)
+            {
+                return;
+            }
+
+            if (damage.Type != DamageType.ManaDrain)
+            {
+                ReduceHealth(damage.Damage);
+            }
+
+            OnDamaged?.Invoke(enemy, this, damage);
+            WasDamagedOnLastAttack = true;
+            return;
+        }
+
+        public virtual ushort CalculateAttackPower(float attackRate, ushort attack) { return 0;  }
     }
 }

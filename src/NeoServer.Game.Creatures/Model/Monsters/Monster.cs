@@ -1,10 +1,11 @@
-﻿using NeoServer.Game.Contracts.Combat;
+﻿using NeoServer.Game.Combat;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.Creatures.Model.Combat;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
@@ -30,7 +31,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Spawn = spawn;
             Damages = new ConcurrentDictionary<ICreature, ushort>();
 
-            OnDamaged += (enemy, victim, combatAttack, damage) => RecordDamage(enemy, damage);
+            OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
             OnKilled += (enemy) => GiveExperience();
         }
 
@@ -92,11 +93,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             get
             {
-                //if (Metadata.Attacks.)
-                //{
-                //    return (ushort)(Math.Ceiling((combatAttack.Skill * (combatAttack.Attack * 0.05)) + (combatAttack.Attack * 0.5)));
-                //}
-
                 return 0;
             }
         }
@@ -315,7 +311,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 StartFollowing(target.Creature, PathSearchParams);
             }
 
-            SetAttackTarget(target.Creature.CreatureId);
+           // SetAttackTarget(target.Creature.CreatureId);
             UpdateLastTargetChance();
         }
 
@@ -331,10 +327,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (!Cooldowns.Expired(CooldownType.Yell)) return;
             Cooldowns.Start(CooldownType.Yell, Metadata.VoiceConfig.Interval);
 
-            if (!Metadata.Voices.Any() || Metadata.VoiceConfig.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100))
-            {
-                return;
-            }
+            if (!Metadata.Voices.Any() || Metadata.VoiceConfig.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100)) return;
 
             var voiceIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Metadata.Voices.Length - 1);
 
@@ -361,6 +354,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
             Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
+        }
+
+      
+        public override bool OnAttack(ICombatActor enemy, out CombatAttackValue combat)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace NeoServer.Game.Creatures
 {
     public class PlayerFactory : IPlayerFactory
     {
-        private readonly Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory;
+        private readonly IItemFactory itemFactory;
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
@@ -34,7 +34,7 @@ namespace NeoServer.Game.Creatures
 
         private readonly IPathFinder _pathFinder;
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
+        public PlayerFactory(IItemFactory itemFactory,
              PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
@@ -116,7 +116,7 @@ namespace NeoServer.Game.Creatures
             var inventoryDic = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             foreach (var slot in player.Inventory)
             {
-                if (!(itemFactory(slot.Value, player.Location, null) is IPickupable createdItem))
+                if (!(itemFactory.Create(slot.Value, player.Location, null) is IPickupable createdItem))
                 {
                     continue;
                 }
@@ -146,7 +146,7 @@ namespace NeoServer.Game.Creatures
 
             var itemModel = items[index];
 
-            var item = itemFactory(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
+            var item = itemFactory.Create(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
                         {
                             {ItemAttribute.Count, itemModel.Amount }
                         });

@@ -1,10 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Location;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace NeoServer.Game.Creatures.Model.Combat
+namespace NeoServer.Game.Combat
 {
     public class CombatTarget
     {

@@ -32,6 +32,12 @@ namespace NeoServer.Server.Helpers
 
         }
 
+        /// <summary>
+        /// Random value in a interval using gaussian
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public double NextInRange(double min, double max)
         {
             var diff = max - min;

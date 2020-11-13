@@ -1,10 +1,13 @@
 ﻿using Autofac;
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.Creatures;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items;
@@ -73,7 +76,7 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterIncomingPacketFactory(builder);
 
             RegisterItemFactory(builder);
-            RegisterNewItemFactory(builder);
+            //RegisterNewItemFactory(builder);
 
             RegisterPlayerFactory(builder);
 
@@ -90,6 +93,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
 
             //factories
+            builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
             builder.RegisterType<PlayerFactory>().As<IPlayerFactory>().SingleInstance();
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
             builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
@@ -167,17 +171,17 @@ namespace NeoServer.Server.Standalone.IoC
             //});
         }
 
-        private static void RegisterNewItemFactory(ContainerBuilder builder)
-        {
-            builder.Register((c, p) =>
-            {
-                var typeId = p.TypedAs<ushort>();
-                var location = p.TypedAs<Location>();
-                var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
+        //private static void RegisterNewItemFactory(ContainerBuilder builder)
+        //{
+        //    builder.Register((c, p) =>
+        //    {
+        //        var typeId = p.TypedAs<ushort>();
+        //        var location = p.TypedAs<Location>();
+        //        var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
 
-                return ItemFactory.Create(typeId, location, attributes);
-            });
-        }
+        //        return ItemFactory.Create(typeId, location, attributes);
+        //    });
+        //}
 
     }
 }

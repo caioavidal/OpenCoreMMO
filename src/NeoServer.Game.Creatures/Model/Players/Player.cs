@@ -9,6 +9,7 @@ using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Spells;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
@@ -245,11 +246,13 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
+        public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
+
         public override ushort AttackPower
         {
             get
             {
-                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
+                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
             }
         }
 
@@ -358,10 +361,10 @@ namespace NeoServer.Server.Model.Players
         {
             ConsumeMana(damage);
         }
-        public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
+        public override bool OnAttack(ICombatActor enemy, out CombatAttackValue combat)
         {
-            var melee = new MeleeCombatAttack();
-            return base.Attack(enemy, melee);
+            combat = new CombatAttackValue();
+            return Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
         }
 
         public override void Say(string message, TalkType talkType)
