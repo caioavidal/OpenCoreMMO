@@ -21,7 +21,7 @@ namespace NeoServer.Game.Items.Items
 
         public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Enums.ItemAttribute.WeaponType) == "distance" && type.HasFlag(Enums.ItemFlag.Stackable);
 
-        public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackValue combat)
+        public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combat)
         {
             throw new NotImplementedException();
         }

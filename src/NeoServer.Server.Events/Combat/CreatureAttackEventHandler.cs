@@ -23,7 +23,7 @@ namespace NeoServer.Server.Events.Combat
         {
             this.game = game;
         }
-        public void Execute(ICreature creature, ICreature victim, CombatAttackValue attack)
+        public void Execute(ICreature creature, ICreature victim, CombatAttackType attack)
         {
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
             {
@@ -32,8 +32,6 @@ namespace NeoServer.Server.Events.Combat
                 {
                     continue;
                 }
-
-                var damageEffect = DamageEffectParser.Parse(attack.DamageType);
 
                 //if (attack is IAreaAttack areaAttack)
                 //{
@@ -54,6 +52,11 @@ namespace NeoServer.Server.Events.Combat
                 //}
 
                 if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
+                if(attack.DamageType != default)
+                {
+                    var damageEffect = DamageEffectParser.Parse(attack.DamageType);
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                }
 
                 connection.Send();
             }

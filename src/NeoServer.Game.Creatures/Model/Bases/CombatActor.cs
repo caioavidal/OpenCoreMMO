@@ -154,7 +154,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         //}
 
-        public abstract bool OnAttack(ICombatActor enemy, out CombatAttackValue combat);
+        public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
      
         public bool Attack(ICombatActor enemy)
         {
@@ -222,7 +222,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
             var damageValue = damage.Damage;
-            if (damage.Type == DamageType.Physical)
+            if (!damage.IsElementalDamage)
             {
                 damageValue = ReduceDamage(damage.Damage);
             }

@@ -96,7 +96,7 @@ namespace NeoServer.Game.Creatures
             //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
-            creature.OnAttackEnemy += _map.PropagateAttack;
+           // creature.OnAttackEnemy += _map.PropagateAttack;
             creature.OnAttackEnemy += _creatureAttackEventHandler.Execute;
             creature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
             creature.OnHeal += _creatureHealedEventHandler.Execute;
@@ -112,7 +112,7 @@ namespace NeoServer.Game.Creatures
             //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack -= _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection -= _creatureTurnToDirectionEventHandler.Execute;
-            creature.OnAttackEnemy -= _map.PropagateAttack;
+         //   creature.OnAttackEnemy -= _map.PropagateAttack;
             creature.OnAttackEnemy -= _creatureAttackEventHandler.Execute;
             creature.OnStartedWalking -= _creatureStartedWalkingEventHandler.Execute;
             creature.OnHeal -= _creatureHealedEventHandler.Execute;

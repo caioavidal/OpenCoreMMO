@@ -361,9 +361,9 @@ namespace NeoServer.Server.Model.Players
         {
             ConsumeMana(damage);
         }
-        public override bool OnAttack(ICombatActor enemy, out CombatAttackValue combat)
+        public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
-            combat = new CombatAttackValue();
+            combat = new CombatAttackType();
             return Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
         }
 

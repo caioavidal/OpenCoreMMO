@@ -9,6 +9,7 @@ using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Model.Players.Contracts;
+using System;
 using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
@@ -20,13 +21,14 @@ namespace NeoServer.Game.Items.Items
         }
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
-        public byte MaxAttackDistance => 6;
+        public byte MaxAttackDistance =>  6;
 
         public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Enums.ItemAttribute.WeaponType) == "distance" && !type.HasFlag(Enums.ItemFlag.Stackable);
 
-        public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackValue combat)
+        public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
-            combat = new CombatAttackValue();
+            var result = false;
+            combatType = new CombatAttackType();
 
             if (!(actor is IPlayer player)) return false;
 
@@ -38,19 +40,31 @@ namespace NeoServer.Game.Items.Items
 
             if (ammo.Amount <= 0) return false;
 
-            var maxDamage = actor.CalculateAttackPower(0.09f, ammo.Attack);
-
             var hitChance = DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level, MaxAttackDistance);
 
-            combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, DamageType.Physical, MaxAttackDistance, ammo.ShootType, hitChance);
+            var maxDamage = actor.CalculateAttackPower(0.09f, ammo.Attack);
+
+            combatType.ShootType = ammo.ShootType;
+
+            var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, MaxAttackDistance, hitChance, DamageType.Physical);
 
             if (DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
             {
                 enemy.ReceiveAttack(enemy, damage);
-                return true;
+                result = true;
             }
 
-            return false;
+            maxDamage = actor.CalculateAttackPower(0.09f, ammo.ElementalDamage.Item2);
+            combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, MaxAttackDistance, hitChance, ammo.ElementalDamage.Item1);
+            if (ammo.ElementalDamage != null && DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var elementalDamage))
+            {
+                combatType.DamageType = ammo.ElementalDamage.Item1;
+
+                enemy.ReceiveAttack(enemy, elementalDamage);
+                result = true;
+            }
+
+            return result;
         }
     }
 }

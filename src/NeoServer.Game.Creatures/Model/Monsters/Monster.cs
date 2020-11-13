@@ -357,7 +357,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
       
-        public override bool OnAttack(ICombatActor enemy, out CombatAttackValue combat)
+        public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             throw new System.NotImplementedException();
         }

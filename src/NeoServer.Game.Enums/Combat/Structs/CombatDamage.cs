@@ -21,6 +21,11 @@ namespace NeoServer.Game.Enums.Combat.Structs
         }
 
         /// <summary>
+        /// Check if damage is elemental
+        /// </summary>
+        public bool IsElementalDamage => Type != DamageType.Melee && Type != DamageType.Physical;
+
+        /// <summary>
         /// Damage value to health or mana
         /// </summary>
         public ushort Damage { get; private set; }

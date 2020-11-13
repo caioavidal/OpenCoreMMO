@@ -15,7 +15,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         Slot Slot => Slot.Left;
         public WeaponType Type => Metadata.WeaponType;
 
-        bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackValue combat);
+        bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combat);
     }
     public interface IWeaponItem : IWeapon, IBodyEquipmentItem
     {

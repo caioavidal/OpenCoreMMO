@@ -1,4 +1,5 @@
-﻿namespace NeoServer.Game.Creatures.Combat.Attacks
+﻿
+namespace NeoServer.Game.Creatures.Combat.Attacks
 {
     //public class DistanceAreaCombatAttack : DistanceCombatAttack, IDistanceAreaCombatAttack, IAreaAttack
     //{

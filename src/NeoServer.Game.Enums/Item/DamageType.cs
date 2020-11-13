@@ -14,6 +14,6 @@
         AbsorbPercentMagic,
         ManaDrain,
         FireField,
-        Melee
+        Melee = default
     }
 }

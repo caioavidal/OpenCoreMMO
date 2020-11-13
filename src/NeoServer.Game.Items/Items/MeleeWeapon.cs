@@ -31,17 +31,16 @@ namespace NeoServer.Game.Items.Items
 
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
-        public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackValue combat)
+        public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
-            var damage = new CombatDamage();
-            combat = new CombatAttackValue();
+            combatType = new CombatAttackType();
 
             var result = false;
 
             if (Attack > 0)
             {
-                combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, Attack), DamageType.Physical);
-                if (MeleeCombatAttack.Instance.TryAttack(actor, enemy, combat, out damage))
+                var combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
+                if (MeleeCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
                 {
                     enemy.ReceiveAttack(enemy, damage);
                     result = true;
@@ -50,9 +49,9 @@ namespace NeoServer.Game.Items.Items
 
             if (ElementalDamage != null)
             {
-                combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
+                var combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
 
-                if (MeleeCombatAttack.Instance.TryAttack(actor, enemy, combat, out damage))
+                if (MeleeCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
                 {
                     enemy.ReceiveAttack(enemy, damage);
                     result = true;

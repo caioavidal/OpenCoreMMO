@@ -36,6 +36,7 @@ namespace NeoServer.Game.Items.Items
         public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.HitChance);
         public AmmoType AmmoType => Metadata.AmmoType;
         public ShootType ShootType => Metadata.ShootType;
+        public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
 
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
