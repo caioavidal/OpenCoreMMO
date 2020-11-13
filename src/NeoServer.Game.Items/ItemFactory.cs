@@ -61,9 +61,9 @@ namespace NeoServer.Game.Items
             }
             if (CumulativeItem.IsApplicable(itemType))
             {
-                if (ThrowableDistanceWeaponItem.IsApplicable(itemType))
+                if (ThrowableDistanceWeapon.IsApplicable(itemType))
                 {
-                    return new ThrowableDistanceWeaponItem(itemType, location, attributes);
+                    return new ThrowableDistanceWeapon(itemType, location, attributes);
                 }
                 if (AmmoItem.IsApplicable(itemType))
                 {

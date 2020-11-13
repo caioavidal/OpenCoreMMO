@@ -33,8 +33,8 @@ namespace NeoServer.Game.Items.Items
 
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
-            combatType = new CombatAttackType();
-
+            combatType = new CombatAttackType(DamageType.Melee);
+            
             var result = false;
 
             if (Attack > 0)

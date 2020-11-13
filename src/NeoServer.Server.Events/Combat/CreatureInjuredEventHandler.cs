@@ -42,14 +42,19 @@ namespace NeoServer.Server.Events
                     connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You lose {damageString} {attackDamageType} due to an attack by a {enemy.Name}", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                 }
 
-
                 if (enemy == spectator)
                 {
                     connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{victim.Name} loses {damageString} due to your attack", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                 }
 
                 var damageTextColor = DamageTextColorParser.Parse(damage.Type);
-             
+
+                if (damage.Type != default)
+                {
+                    var damageEffect = DamageEffectParser.Parse(damage.Type);
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                }
+
 
                 connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor, damageString));
                 connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(victim));

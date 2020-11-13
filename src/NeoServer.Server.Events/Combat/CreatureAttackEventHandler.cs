@@ -52,11 +52,7 @@ namespace NeoServer.Server.Events.Combat
                 //}
 
                 if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
-                if(attack.DamageType != default)
-                {
-                    var damageEffect = DamageEffectParser.Parse(attack.DamageType);
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
-                }
+            
 
                 connection.Send();
             }

@@ -19,5 +19,19 @@ namespace NeoServer.Game.Combat.Calculations
                 _ => 0
             });
         }
+        public static byte CalculateFor1Hand(ushort skill, byte range)
+        {
+            return (byte)(range switch
+            {
+                1 => Math.Min(75, (skill + 1)),
+                2 => Math.Min(75, (2.4 * skill + 8)),
+                3 => Math.Min(75, (1.55 * skill + 6)),
+                4 => Math.Min(75, (1.25 * skill + 3)),
+                5 => Math.Min(75, (skill + 1)),
+                6 => Math.Min(75, 0.8 * skill + 3),
+                7 => Math.Min(75, 0.7 * skill + 2),
+                _ => 0
+            });
+        }
     }
 }

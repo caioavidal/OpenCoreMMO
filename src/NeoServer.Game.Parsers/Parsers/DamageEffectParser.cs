@@ -14,6 +14,7 @@ namespace NeoServer.Game.Parsers.Effects
             DamageType.FireField => EffectT.Flame,
             DamageType.Energy => EffectT.DamageEnergy,
             DamageType.Melee => EffectT.XBlood,
+            DamageType.Physical => EffectT.XBlood,
             _ => EffectT.None
         };
     }

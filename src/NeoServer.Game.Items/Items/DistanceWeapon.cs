@@ -69,7 +69,7 @@ namespace NeoServer.Game.Items.Items
 
             if (result)
             {
-                ammo.Reduce(1);
+               // ammo.Reduce(1); todo
             }
 
             return result;

@@ -27,7 +27,7 @@ namespace NeoServer.Game.Enums.Combat.Structs
         public byte Range { get; set; }
         public ushort MinDamage { get; set; }
         public ushort MaxDamage { get; set; }
-        public DamageType DamageType{ get; set; }
+        public DamageType DamageType { get; set; }
         public byte HitChance { get; set; }
     }
 
@@ -36,6 +36,11 @@ namespace NeoServer.Game.Enums.Combat.Structs
         public CombatAttackType(ShootType shootType) : this()
         {
             ShootType = shootType;
+        }
+
+        public CombatAttackType(DamageType damageType) : this()
+        {
+            DamageType = damageType;
         }
 
         public ShootType ShootType { get; set; }

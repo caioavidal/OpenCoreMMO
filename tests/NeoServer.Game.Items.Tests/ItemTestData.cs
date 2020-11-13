@@ -80,7 +80,7 @@ namespace NeoServer.Game.Items.Tests
             type.Attributes.SetAttribute(Enums.ItemAttribute.WeaponType, "distance");
             type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, 4000);
 
-            return new ThrowableDistanceWeaponItem(type, new Location(100, 100, 7), amount);
+            return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
         }
 
         public static object CreateRing(ushort id)
