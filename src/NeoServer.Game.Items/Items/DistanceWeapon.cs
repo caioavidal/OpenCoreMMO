@@ -14,6 +14,7 @@ using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
+  
     public class DistanceWeapon : MoveableItem, IDistanceWeaponItem
     {
         public DistanceWeapon(IItemType type, Location location) : base(type, location)
@@ -21,7 +22,9 @@ namespace NeoServer.Game.Items.Items
         }
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
-        public byte MaxAttackDistance =>  6;
+        public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Attack);
+        public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.HitChance);
+        public byte Range => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Range);
 
         public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Enums.ItemAttribute.WeaponType) == "distance" && !type.HasFlag(Enums.ItemFlag.Stackable);
 
@@ -36,17 +39,17 @@ namespace NeoServer.Game.Items.Items
 
             if (!(player?.Inventory[Slot.Ammo] is AmmoItem ammo)) return false;
 
-            if(ammo.AmmoType != Metadata.AmmoType) return false;
+            if (ammo.AmmoType != Metadata.AmmoType) return false;
 
             if (ammo.Amount <= 0) return false;
 
-            var hitChance = DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level, MaxAttackDistance);
+            var hitChance = (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level, Range) + ExtraHitChance);
 
-            var maxDamage = actor.CalculateAttackPower(0.09f, ammo.Attack);
+            var maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
 
             combatType.ShootType = ammo.ShootType;
 
-            var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, MaxAttackDistance, hitChance, DamageType.Physical);
+            var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, DamageType.Physical);
 
             if (DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
             {
@@ -54,14 +57,19 @@ namespace NeoServer.Game.Items.Items
                 result = true;
             }
 
-            maxDamage = actor.CalculateAttackPower(0.09f, ammo.ElementalDamage.Item2);
-            combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, MaxAttackDistance, hitChance, ammo.ElementalDamage.Item1);
+            maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack));
+            combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, ammo.ElementalDamage.Item1);
             if (ammo.ElementalDamage != null && DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var elementalDamage))
             {
                 combatType.DamageType = ammo.ElementalDamage.Item1;
 
                 enemy.ReceiveAttack(enemy, elementalDamage);
                 result = true;
+            }
+
+            if (result)
+            {
+                ammo.Reduce(1);
             }
 
             return result;

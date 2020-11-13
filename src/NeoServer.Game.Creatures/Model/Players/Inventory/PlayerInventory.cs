@@ -27,10 +27,10 @@ namespace NeoServer.Server.Model.Players
 
                 if (Weapon is IDistanceWeaponItem distance)
                 {
-                    attack += distance.Attack;
+                    attack += distance.ExtraAttack;
                     if (Ammo != null)
                     {
-                        attack += distance.Attack;
+                        attack += distance.ExtraAttack;
                     }
 
                 }
