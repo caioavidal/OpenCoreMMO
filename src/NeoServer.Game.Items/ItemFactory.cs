@@ -59,6 +59,10 @@ namespace NeoServer.Game.Items
             {
                 return new Necklace(itemType, location);
             }
+            if (Wand.IsApplicable(itemType))
+            {
+                return new Wand(itemType, location);
+            }
             if (CumulativeItem.IsApplicable(itemType))
             {
                 if (ThrowableDistanceWeapon.IsApplicable(itemType))

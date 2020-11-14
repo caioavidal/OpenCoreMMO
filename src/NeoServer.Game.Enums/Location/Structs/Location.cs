@@ -231,14 +231,14 @@ namespace NeoServer.Game.Enums.Location.Structs
                 var pool = ArrayPool<Location>.Shared;
                 var locations = pool.Rent(8);
 
-                //locations[0] = this + new Location(-1, 0, 0);
-                //locations[1] = this + new Location(0, 1, 0);
-                //locations[2] = this + new Location(1, 0, 0);
-                //locations[3] = this + new Location(0, -1, 0);
-                //locations[4] = this + new Location(-1, -1, 0);
-                //locations[5] = this + new Location(1, -1, 0);
-                //locations[6] = this + new Location(1, 1, 0);
-                //locations[7] = this + new Location(-1, 1, 0);
+                locations[0] = (Translate() +  new Coordinate(-1, 0, 0)).Location;
+                locations[1] = (Translate() +  new Coordinate(0, 1, 0)).Location;
+                locations[2] = (Translate() +  new Coordinate(1, 0, 0)).Location;
+                locations[3] = (Translate() +  new Coordinate(0, -1, 0)).Location;
+                locations[4] = (Translate() +  new Coordinate(-1, -1, 0)).Location;
+                locations[5] = (Translate() +  new Coordinate(1, -1, 0)).Location;
+                locations[6] = (Translate() +  new Coordinate(1, 1, 0)).Location;
+                locations[7] = (Translate() + new Coordinate(-1, 1, 0)).Location;
 
                 pool.Return(locations);
 

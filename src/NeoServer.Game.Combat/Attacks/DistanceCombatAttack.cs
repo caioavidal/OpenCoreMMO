@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Server.Helpers;
+using System;
 
 namespace NeoServer.Game.Combat.Attacks
 {
@@ -16,11 +17,17 @@ namespace NeoServer.Game.Combat.Attacks
 
             var damageValue = (ushort)ServerRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
 
-            var missed = option.HitChance < ServerRandom.Random.Next(minValue: 1, maxValue: 100);
 
-            damage = new CombatDamage(damageValue, option.DamageType, missed);
+            damage = new CombatDamage(damageValue, option.DamageType);
 
             return true;
+        }
+
+        public bool MissedAttack(byte hitChance)
+        {
+            var value = ServerRandom.Random.Next(minValue: 1, maxValue: 100);
+            Console.WriteLine(value);
+            return hitChance < value;
         }
     }
 }

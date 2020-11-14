@@ -20,7 +20,7 @@ using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
-   
+
     public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         #region Events
@@ -36,7 +36,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         #region Properties
         public bool IsDead => HealthPoints <= 0;
-        public decimal BaseAttackSpeed  => 2000M;
+        public decimal BaseAttackSpeed => 2000M;
         public decimal BaseDefenseSpeed { get; }
         public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
         public abstract ushort AttackPower { get; }
@@ -155,7 +155,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         //}
 
         public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
-     
+
         public bool Attack(ICombatActor enemy)
         {
             if (enemy.IsDead)
@@ -169,8 +169,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             SetAttackTarget(enemy.CreatureId);
 
             if (!OnAttack(enemy, out var combat)) return false;
-
-            //combatAttack.BuildAttack(this, enemy);
 
             OnAttackEnemy?.Invoke(this, enemy, combat);
 
@@ -226,7 +224,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 damageValue = ReduceDamage(damage.Damage);
             }
-
             damage.ReduceDamage(damageValue);
 
             if (damage.Damage <= 0)
@@ -250,6 +247,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return;
         }
 
-        public virtual ushort CalculateAttackPower(float attackRate, ushort attack) { return 0;  }
+        public virtual ushort CalculateAttackPower(float attackRate, ushort attack) { return 0; }
     }
 }

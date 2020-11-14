@@ -8,6 +8,7 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Helpers;
 using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Generic;
@@ -51,8 +52,20 @@ namespace NeoServer.Server.Events.Combat
                 //    connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
                 //}
 
-                if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
-            
+                if (attack.Missed)
+                {
+                    var index = ServerRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
+                    var destLocation = victim.Location.Neighbours[index];
+                    if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, destLocation, (byte)attack.ShootType));
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(destLocation, EffectT.Puff));
+
+                }
+                else
+                {
+                    if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
+                }
+
+
 
                 connection.Send();
             }

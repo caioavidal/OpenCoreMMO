@@ -42,7 +42,7 @@ namespace NeoServer.Game.Enums.Combat.Structs
         {
             DamageType = damageType;
         }
-
+        public bool Missed { get; set; }
         public ShootType ShootType { get; set; }
         public DamageType DamageType { get; set; }
 

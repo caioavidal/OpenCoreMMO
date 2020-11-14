@@ -43,11 +43,21 @@ namespace NeoServer.Game.Items.Items
 
             if (ammo.Amount <= 0) return false;
 
-            var hitChance = (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level, Range) + ExtraHitChance);
+            var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
+
+            var hitChance = (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level, distance) + ExtraHitChance);
+            combatType.ShootType = ammo.ShootType;
+
+            var missed = DistanceCombatAttack.Instance.MissedAttack(hitChance);
+
+            if (missed)
+            {
+                combatType.Missed = true;
+                return true;
+            }
 
             var maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
 
-            combatType.ShootType = ammo.ShootType;
 
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, DamageType.Physical);
 
