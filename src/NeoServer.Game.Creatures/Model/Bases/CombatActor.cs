@@ -1,22 +1,11 @@
-﻿using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Model;
-using NeoServer.Game.World.Map.Tiles;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -109,39 +98,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             return (ushort)damage;
         }
-
-        //public virtual void ReceiveAttack(ICombatActor enemy, ICombatAttack attack)
-        //{
-        //    var damage = attack.CalculateDamage(enemy.AttackPower, enemy.MinimumAttackPower);
-        //    ReceiveAttack(enemy, attack, damage);
-        //}
-        //public virtual void ReceiveAttack(ICombatActor enemy, ICombatAttack attack, ushort damage)
-        //{
-        //    if (!attack.IsMagicalDamage)
-        //    {
-        //        damage = ReduceDamage(damage);
-        //    }
-
-        //    if (damage <= 0)
-        //    {
-        //        WasDamagedOnLastAttack = false;
-        //        return;
-        //    }
-
-        //    if (IsDead)
-        //    {
-        //        return;
-        //    }
-
-        //    if (attack.DamageType != DamageType.ManaDrain)
-        //    {
-        //        ReduceHealth(damage);
-        //    }
-
-        //    OnDamaged?.Invoke(enemy, this, attack, damage);
-        //    WasDamagedOnLastAttack = true;
-        //    return;
-        //}
 
         public void StopAttack()
         {
