@@ -26,7 +26,6 @@ namespace NeoServer.Game.Combat.Attacks
         public bool MissedAttack(byte hitChance)
         {
             var value = ServerRandom.Random.Next(minValue: 1, maxValue: 100);
-            Console.WriteLine(value);
             return hitChance < value;
         }
     }

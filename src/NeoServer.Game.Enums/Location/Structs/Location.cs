@@ -245,7 +245,7 @@ namespace NeoServer.Game.Enums.Location.Structs
                 return locations[0..8];
             }
         }
-
+    
         /// <summary>
         /// Check whether location is 1 sqm next to dest
         /// </summary>

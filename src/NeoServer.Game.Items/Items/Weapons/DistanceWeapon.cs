@@ -58,7 +58,6 @@ namespace NeoServer.Game.Items.Items
 
             var maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
 
-
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, DamageType.Physical);
 
             if (DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))

@@ -58,8 +58,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public abstract int ShieldDefend(int attack);
         public abstract int ArmorDefend(int attack);
-        private bool canBlock()
+        private bool canBlock(DamageType damage)
         {
+            if (damage != DamageType.Melee) return false;
             var hasCoolDownExpired = Cooldowns.Expired(CooldownType.Block);
 
             if (!hasCoolDownExpired && blockCount >= BLOCK_LIMIT)
@@ -80,13 +81,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void ResetHealthPoints() => HealthPoints = MaxHealthpoints;
 
-        public ushort ReduceDamage(int attack)
+        public ushort ReduceDamage(CombatDamage attack)
         {
             int damage;
 
-            if (canBlock())
+            if (canBlock(attack.Type))
             {
-                damage = ShieldDefend(attack);
+                damage = ShieldDefend(attack.Damage);
 
                 if (damage <= 0)
                 {
@@ -98,7 +99,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 }
             }
 
-            damage = ArmorDefend(attack);
+            damage = ArmorDefend(attack.Damage);
 
             if (damage <= 0)
             {
@@ -222,7 +223,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             var damageValue = damage.Damage;
             if (!damage.IsElementalDamage)
             {
-                damageValue = ReduceDamage(damage.Damage);
+                damageValue = ReduceDamage(damage);
             }
             damage.ReduceDamage(damageValue);
 

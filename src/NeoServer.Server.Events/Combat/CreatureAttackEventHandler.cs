@@ -54,10 +54,7 @@ namespace NeoServer.Server.Events.Combat
 
                 if (attack.Missed)
                 {
-                    var index = ServerRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
-                    var destLocation = victim.Location.Neighbours[index];
-                    if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, destLocation, (byte)attack.ShootType));
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(destLocation, EffectT.Puff));
+                    SendMissedAttack(creature, victim, attack, connection);
 
                 }
                 else
@@ -71,6 +68,18 @@ namespace NeoServer.Server.Events.Combat
             }
         }
 
+        private static void SendMissedAttack(ICreature creature, ICreature victim, CombatAttackType attack, IConnection connection)
+        {
+            var index = 0;
+            Location destLocation;
+            do
+            {
+                index = ServerRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
+                destLocation = victim.Location.Neighbours[index];
+            } while (destLocation == creature.Location);
 
+            if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, destLocation, (byte)attack.ShootType));
+            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(destLocation, EffectT.Puff));
+        }
     }
 }
