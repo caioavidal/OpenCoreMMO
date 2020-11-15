@@ -110,5 +110,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);
+        bool Logout();
     }
 }

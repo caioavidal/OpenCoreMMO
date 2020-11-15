@@ -23,7 +23,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public IDictionary<CreatureFlagAttribute, byte> Flags { get; set; } = new Dictionary<CreatureFlagAttribute, byte>();
         public CombatAttackOption[] Attacks { get; set; }
         public ushort Armor { get; set; }
-        public ushort Defence { get; set; }
+        public ushort Defense { get; set; }
         public List<ICombatDefense> Defenses { get; set; }
         public IIntervalChance VoiceConfig { get; set; }
         public string[] Voices { get; set; }

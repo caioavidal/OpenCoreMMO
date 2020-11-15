@@ -45,9 +45,20 @@ namespace NeoServer.Game.Enums.Combat.Structs
         /// Sets a new damage
         /// </summary>
         /// <param name="newDamage"></param>
-        public void ReduceDamage(ushort newDamage)
+        public void SetNewDamage(ushort newDamage)
         {
             Damage = newDamage;
+        }
+
+        /// <summary>
+        /// Increase damage by value of param
+        /// </summary>
+        /// <param name="damage"></param>
+        public void IncreaseDamage(int damage)
+        {
+            if (Damage + damage < 0)damage = Damage;
+
+            Damage += (ushort)damage;
         }
 
         /// <summary>

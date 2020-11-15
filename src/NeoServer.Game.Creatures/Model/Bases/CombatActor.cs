@@ -70,9 +70,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void ResetHealthPoints() => HealthPoints = MaxHealthpoints;
 
-        public ushort ReduceDamage(CombatDamage attack)
+        public CombatDamage ReduceDamage(CombatDamage attack)
         {
-            int damage;
+            int damage = attack.Damage;
 
             if (canBlock(attack.Type))
             {
@@ -84,19 +84,24 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
                     block();
                     OnBlockedAttack?.Invoke(this, BlockType.Shield);
-                    return (ushort)damage;
+                    attack.SetNewDamage((ushort)damage);
+                    return attack;
                 }
             }
 
-            damage = ArmorDefend(attack.Damage);
+            if(!attack.IsElementalDamage) damage = ArmorDefend(attack.Damage);
 
             if (damage <= 0)
             {
                 damage = 0;
                 OnBlockedAttack?.Invoke(this, BlockType.Armor);
-            }
 
-            return (ushort)damage;
+            }
+            attack.SetNewDamage((ushort)damage);
+
+            return OnImmunityDefense(attack);
+
+            //return attack;
         }
 
         public void StopAttack()
@@ -104,12 +109,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             AutoAttackTargetId = 0;
             OnStoppedAttack?.Invoke(this);
         }
-        public bool WasDamagedOnLastAttack = true;
-
-        //public virtual bool MagicalAttack(ICombatAttack enemy)
-        //{
-
-        //}
+        private bool WasDamagedOnLastAttack = true;
 
         public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
 
@@ -173,16 +173,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);
         public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
-
         public void ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
-            var damageValue = damage.Damage;
-            if (!damage.IsElementalDamage)
-            {
-                damageValue = ReduceDamage(damage);
-            }
-            damage.ReduceDamage(damageValue);
-
+            damage = ReduceDamage(damage);
             if (damage.Damage <= 0)
             {
                 WasDamagedOnLastAttack = false;
@@ -204,6 +197,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return;
         }
 
-        public virtual ushort CalculateAttackPower(float attackRate, ushort attack) { return 0; }
+        public abstract ushort CalculateAttackPower(float attackRate, ushort attack);
+        public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
     }
 }

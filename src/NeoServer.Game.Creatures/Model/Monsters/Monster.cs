@@ -11,6 +11,7 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Talks;
 using NeoServer.Server.Helpers;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,7 +136,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override ushort DefensePower => 30;
 
-        public ushort Defense => Metadata.Defence;
+        public ushort Defense => Metadata.Defense;
 
         public uint Experience => Metadata.Experience;
 
@@ -360,6 +361,24 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override ushort CalculateAttackPower(float attackRate, ushort attack)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override CombatDamage OnImmunityDefense(CombatDamage damage)
+        {
+            if (damage.Damage <= 0) return damage;
+
+            if (!Metadata.Immunities.ContainsKey(damage.Type)) return damage;
+
+            var valueToReduce = Math.Round(damage.Damage * (decimal)(Metadata.Immunities[damage.Type] / 100f));
+
+            damage.IncreaseDamage((int)valueToReduce);
+
+            return damage;
         }
     }
 }

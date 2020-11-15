@@ -28,7 +28,7 @@ namespace NeoServer.Loaders.Monsters
                 Look = new Dictionary<LookType, ushort>() { { LookType.Type, data.Look.Type }, { LookType.Corpse, data.Look.Corpse } },
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defense.Armor),
-                Defence = ushort.Parse(data.Defense.Defense),
+                Defense = ushort.Parse(data.Defense.Defense),
                 Defenses = new List<ICombatDefense>(),
                 Experience = data.Experience
             };

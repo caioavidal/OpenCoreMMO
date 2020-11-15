@@ -246,7 +246,7 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
+        public override ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
 
         public override ushort AttackPower
         {
@@ -343,19 +343,19 @@ namespace NeoServer.Server.Model.Players
             return (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
         }
 
-        public override int ArmorDefend(int attack)
+        public override int ArmorDefend(int damage)
         {
             if (ArmorRating > 3)
             {
                 var min = ArmorRating / 2;
                 var max = (ArmorRating / 2) * 2 - 1;
-                attack -= (ushort)ServerRandom.Random.NextInRange(min, max);
+                damage -= (ushort)ServerRandom.Random.NextInRange(min, max);
             }
             else if (ArmorRating > 0)
             {
-                --attack;
+                --damage;
             }
-            return attack;
+            return damage;
         }
         public void ReceiveManaAttack(ICreature enemy, ushort damage)
         {
@@ -403,6 +403,21 @@ namespace NeoServer.Server.Model.Players
                 Tile.AddThing(ref thing);
             }
             return item;
+        }
+
+        public override CombatDamage OnImmunityDefense(CombatDamage damage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Logout()
+        {
+            if (CannotLogout) return false;
+
+            StopAttack();
+            StopFollowing();
+            StopWalking();
+            return true;
         }
     }
 }
