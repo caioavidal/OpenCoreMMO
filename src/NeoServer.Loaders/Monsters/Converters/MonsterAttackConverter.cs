@@ -59,6 +59,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 attacks.Add(combatAttack);
 
+
                 //    attackName
                 //    attack.TryGetValue<JArray>("attributes", out var attributes);
 

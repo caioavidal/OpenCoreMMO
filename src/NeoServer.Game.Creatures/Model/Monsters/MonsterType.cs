@@ -4,6 +4,7 @@ using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
@@ -26,5 +27,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public List<ICombatDefense> Defenses { get; set; }
         public IIntervalChance VoiceConfig { get; set; }
         public string[] Voices { get; set; }
+        public ImmutableDictionary<DamageType, sbyte> Immunities { get; set; }
     }
 }

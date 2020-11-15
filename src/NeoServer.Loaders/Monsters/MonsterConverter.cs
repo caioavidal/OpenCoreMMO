@@ -12,6 +12,7 @@ using System.Linq;
 using NeoServer.Game.Contracts.Combat.Defenses;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Loaders.Monsters.Converters;
+using System.Collections.Immutable;
 
 namespace NeoServer.Loaders.Monsters
 {
@@ -39,6 +40,9 @@ namespace NeoServer.Loaders.Monsters
             monster.Voices = data.Voices.Voice.Select(x=>x.Sentence).ToArray();
 
             monster.Attacks = MonsterAttackConverter.Convert(data);
+
+            monster.Immunities = MonsterImmunityConverter.Convert(data).ToImmutableDictionary();
+
 
             //foreach (var defense in data.Defenses)
             //{

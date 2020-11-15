@@ -80,11 +80,7 @@ namespace NeoServer.Loaders.Monsters
             public string Defense { get; set; }
         }
 
-        public class Elements
-        {
-            [JsonProperty("element")]
-            public List<Dictionary<string, sbyte>> Element { get; set; }
-        }
+     
 
         public class Voice
         {
@@ -182,7 +178,7 @@ namespace NeoServer.Loaders.Monsters
             public Defenses Defense { get; set; }
 
             [JsonProperty("elements")]
-            public Elements Elements { get; set; }
+            public Dictionary<string,sbyte> Elements { get; set; }
 
             [JsonProperty("voices")]
             public Voices Voices { get; set; }

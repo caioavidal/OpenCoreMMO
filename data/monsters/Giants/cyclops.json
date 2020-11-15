@@ -47,21 +47,21 @@
       "armor": "15",
       "defense": "20"
     },
-    "elements": {
-      "element": [
+    "elements":
+      
         {
           "energyPercent": "25"
-        },
-        {
+        ,
+        
           "holyPercent": "20"
-        },
-        {
+        ,
+        
           "earthPercent": "-10"
-        },
-        {
+        ,
+        
           "deathPercent": "-10"
-        }
-      ]
+        
+      
     },
     "voices": {
       "interval": "5000",
