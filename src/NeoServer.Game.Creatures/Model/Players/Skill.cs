@@ -147,16 +147,15 @@ namespace NeoServer.Server.Model.Players
 
         public void IncreaseLevel()
         {
-            var level = Level;
-            while (Count >= GetExpForLevel(level + 1))
+            var oldLevel = Level;
+            while (Count >= GetExpForLevel(Level + 1))
             {
-                level++;
+                Level++;
             }
 
-            if(level != Level)
+            if(oldLevel != Level)
             {
-                OnAdvance?.Invoke(Type, Level, level);
-                Level = level;
+                OnAdvance?.Invoke(Type, oldLevel, Level);
             }
         }
     }

@@ -192,8 +192,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
             if (damage.Type != DamageType.ManaDrain)
             {
-                OnDamaged?.Invoke(enemy, this, damage);
                 ReduceHealth(damage.Damage);
+                OnDamaged?.Invoke(enemy, this, damage);
             }
 
             WasDamagedOnLastAttack = true;
