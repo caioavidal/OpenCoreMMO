@@ -41,7 +41,19 @@
         "interval": "2000",
         "skill": "60",
         "attack": "30"
-      }
+      },
+	 {	
+          "name": "physical",
+          "interval": "1000",
+          "chance": "34",
+          "range": "7",
+          "min": "-45",
+          "max": "-85",
+          "attributes": [{
+            "key": "shootEffect",
+            "value": "bolt"
+          }]
+        }	  
     ],
     "defense": {
       "armor": "15",

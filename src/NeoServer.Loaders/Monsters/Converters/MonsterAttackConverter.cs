@@ -1,22 +1,20 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Creatures.Combat.Attacks;
+using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
     class MonsterAttackConverter
     {
-        public static CombatAttackOption[] Convert(MonsterData.MonsterMetadata data)
+        public static IMonsterCombatAttack[] Convert(MonsterData.MonsterMetadata data)
         {
-            var attacks = new List<CombatAttackOption>();
+            var attacks = new List<IMonsterCombatAttack>();
 
             foreach (var attack in data.Attacks)
             {
@@ -38,10 +36,10 @@ namespace NeoServer.Loaders.Monsters.Converters
                 var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
                 var areaEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value");
 
-            
-                var combatAttack = new CombatAttackOption()
+
+                var combatAttack = new MonsterCombatAttack()
                 {
-                    Chance = chance,
+                    Chance = chance > 100 || chance <= 0 ? (byte)100 : chance,
                     Interval = interval,
                     Length = length,
                     Radius = radius,
@@ -49,16 +47,20 @@ namespace NeoServer.Loaders.Monsters.Converters
                     MinDamage = (ushort)Math.Abs(min),
                     Spread = spread,
                     Target = target,
-                    Range = range,
                     DamageType = ParseDamageType(attackName),
-                    ShootType = ParseShootType(shootEffect),
-                    AreaEffect = ParseAreaEffect(areaEffect)
+                    //ShootType = ParseShootType(shootEffect),
+                    AreaEffect = ParseAreaEffect(areaEffect),
+
                 };
 
                 if (combatAttack.IsMelee)
                 {
                     combatAttack.MinDamage = 0;
                     combatAttack.MaxDamage = MeleeCombatAttack.CalculateMaxDamage(skill, attackValue);
+                }
+                if (attackName == "physical")
+                {
+                    combatAttack.CombatAttack = new DistanceCombatAttack(range, ParseShootType(shootEffect));
                 }
 
                 attacks.Add(combatAttack);

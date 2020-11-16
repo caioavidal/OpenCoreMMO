@@ -1,15 +1,10 @@
-﻿using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Calculations;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
-using NeoServer.Server.Model.Players.Contracts;
-using System;
 using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items

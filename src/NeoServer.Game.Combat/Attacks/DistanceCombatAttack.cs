@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Helpers;
 using System;
 
@@ -9,6 +10,14 @@ namespace NeoServer.Game.Combat.Attacks
 {
     public class DistanceCombatAttack : CombatAttack
     {
+        public DistanceCombatAttack(byte range, ShootType shootType)
+        {
+            Range = range;
+            ShootType = shootType;
+        }
+        public byte Range { get; }
+        public ShootType ShootType { get; }
+
         public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatDamage damage)
         {
             damage = new CombatDamage();
@@ -27,6 +36,22 @@ namespace NeoServer.Game.Combat.Attacks
         {
             var value = ServerRandom.Random.Next(minValue: 1, maxValue: 100);
             return hitChance < value;
+        }
+
+
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        {
+            combatType = new CombatAttackType(ShootType);
+
+            if (CalculateAttack(actor, enemy, option, out var damage))
+            {
+                combatType.DamageType = option.DamageType;
+
+                enemy.ReceiveAttack(actor, damage);
+                return true;
+            }
+
+            return false;
         }
     }
 }

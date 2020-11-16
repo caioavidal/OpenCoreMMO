@@ -41,7 +41,7 @@ namespace NeoServer.Game.Items.Items
 
             combatType.ShootType = Metadata.ShootType;
 
-            var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, DamageType.Physical);
+            var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
             if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
             {

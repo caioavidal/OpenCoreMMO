@@ -1,9 +1,7 @@
 ﻿using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Item;

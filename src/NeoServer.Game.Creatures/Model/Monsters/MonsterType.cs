@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public IIntervalChance TargetChance { get; set; }
         public CombatStrategy CombatStrategy { get; set; }
         public IDictionary<CreatureFlagAttribute, byte> Flags { get; set; } = new Dictionary<CreatureFlagAttribute, byte>();
-        public CombatAttackOption[] Attacks { get; set; }
+        public IMonsterCombatAttack[] Attacks { get; set; }
         public ushort Armor { get; set; }
         public ushort Defense { get; set; }
         public List<ICombatDefense> Defenses { get; set; }

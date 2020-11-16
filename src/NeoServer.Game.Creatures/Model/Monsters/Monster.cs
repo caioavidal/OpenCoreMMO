@@ -1,9 +1,9 @@
 ﻿using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Enums.Combat.Structs;
@@ -75,7 +75,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public byte TargetDistance => Metadata.Flags[CreatureFlagAttribute.TargetDistance];
         public bool KeepDistance => TargetDistance > 1;
 
-        public CombatAttackOption[] Attacks => Metadata.Attacks;
+        public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
         public List<ICombatDefense> Defenses => Metadata.Defenses;
 
         public override int ArmorDefend(int attack)
@@ -365,18 +365,24 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (!Attacks.Any()) return false;
 
-            var attackIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Length - 1);
+            var attackIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Length);
             var attack = Attacks[attackIndex];
 
             var canAttack = false;
 
-            if (attack.IsMelee && MeleeCombatAttack.CalculateAttack(this, enemy, new CombatAttackValue(attack.MinDamage, attack.MaxDamage, attack.DamageType), out var damage))
+            if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) return true; //can attack but lost his chance
+
+            if (attack.IsMelee && MeleeCombatAttack.CalculateAttack(this, enemy, attack.Translate(), out var damage))
             {
                 combat.DamageType = damage.Type;
                 enemy.ReceiveAttack(this, damage);
                 canAttack = true;
             }
-
+            else if(!attack.IsMelee)
+            {
+                canAttack = attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
+            }
+          
             if(canAttack) TurnTo(Location.DirectionTo(enemy.Location));
 
             return canAttack;

@@ -3,18 +3,16 @@ using NeoServer.Game.Combat.Calculations;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
 using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
-  
+
     public class DistanceWeapon : MoveableItem, IDistanceWeaponItem
     {
         public DistanceWeapon(IItemType type, Location location) : base(type, location)
@@ -58,7 +56,7 @@ namespace NeoServer.Game.Items.Items
 
             var maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
 
-            var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, DamageType.Physical);
+            var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
             if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
             {
@@ -67,7 +65,7 @@ namespace NeoServer.Game.Items.Items
             }
 
             maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack));
-            combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, ammo.ElementalDamage.Item1);
+            combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, ammo.ElementalDamage.Item1);
             if (ammo.ElementalDamage != null && DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage))
             {
                 combatType.DamageType = ammo.ElementalDamage.Item1;

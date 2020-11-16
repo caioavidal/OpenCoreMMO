@@ -14,21 +14,18 @@ namespace NeoServer.Game.Enums.Combat.Structs
             DamageType = damageType;
         }
 
-        public CombatAttackValue(ushort minDamage, ushort maxDamage, byte range, byte hitChance, DamageType damageType) : this()
+        public CombatAttackValue(ushort minDamage, ushort maxDamage, byte range, DamageType damageType)
         {
+            Range = range;
             MinDamage = minDamage;
             MaxDamage = maxDamage;
-            Range = range;
-            HitChance = hitChance;
             DamageType = damageType;
-
         }
 
         public byte Range { get; set; }
         public ushort MinDamage { get; set; }
         public ushort MaxDamage { get; set; }
         public DamageType DamageType { get; set; }
-        public byte HitChance { get; set; }
     }
 
     public ref struct CombatAttackType

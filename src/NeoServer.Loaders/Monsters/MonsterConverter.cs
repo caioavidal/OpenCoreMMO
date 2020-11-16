@@ -1,15 +1,10 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
-using System;
 using System.Collections.Generic;
-using NeoServer.Server.Helpers.Extensions;
-using Newtonsoft.Json.Linq;
 using System.Linq;
-using NeoServer.Game.Contracts.Combat.Defenses;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Loaders.Monsters.Converters;
 using System.Collections.Immutable;
