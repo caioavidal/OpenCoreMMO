@@ -43,7 +43,7 @@ namespace NeoServer.Game.Items.Items
 
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, DamageType.Physical);
 
-            if (DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
+            if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
             {
                 enemy.ReceiveAttack(enemy, damage);
                 result = true;

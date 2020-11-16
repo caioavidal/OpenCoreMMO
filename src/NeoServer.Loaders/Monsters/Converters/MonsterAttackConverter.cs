@@ -1,4 +1,5 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Item;
@@ -37,18 +38,15 @@ namespace NeoServer.Loaders.Monsters.Converters
                 var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
                 var areaEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value");
 
-
+            
                 var combatAttack = new CombatAttackOption()
                 {
-                    Name = attackName,
-                    Attack = attackValue,
                     Chance = chance,
                     Interval = interval,
                     Length = length,
                     Radius = radius,
                     MaxDamage = (ushort)Math.Abs(max),
                     MinDamage = (ushort)Math.Abs(min),
-                    Skill = skill,
                     Spread = spread,
                     Target = target,
                     Range = range,
@@ -56,6 +54,12 @@ namespace NeoServer.Loaders.Monsters.Converters
                     ShootType = ParseShootType(shootEffect),
                     AreaEffect = ParseAreaEffect(areaEffect)
                 };
+
+                if (combatAttack.IsMelee)
+                {
+                    combatAttack.MinDamage = 0;
+                    combatAttack.MaxDamage = MeleeCombatAttack.CalculateMaxDamage(skill, attackValue);
+                }
 
                 attacks.Add(combatAttack);
 

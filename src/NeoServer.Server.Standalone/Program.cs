@@ -51,7 +51,7 @@ namespace NeoServer.Server.Standalone
 
             RSA.LoadPem();
 
-            ScriptCompiler.Compile();
+         //   ScriptCompiler.Compile();
 
             container.Resolve<ItemTypeLoader>().Load();
 
@@ -60,7 +60,7 @@ namespace NeoServer.Server.Standalone
             container.Resolve<SpawnLoader>().Load();
 
             container.Resolve<MonsterLoader>().Load();
-            new SpellLoader().Load();
+            //new SpellLoader().Load();
             container.Resolve<SpawnManager>().StartSpawn();
 
             var listeningTask = StartListening(container, cancellationToken);

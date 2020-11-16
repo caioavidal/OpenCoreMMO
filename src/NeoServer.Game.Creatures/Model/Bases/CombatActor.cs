@@ -47,7 +47,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public abstract int ShieldDefend(int attack);
         public abstract int ArmorDefend(int attack);
-        private bool canBlock(DamageType damage)
+        public virtual bool CanBlock(DamageType damage)
         {
             if (damage != DamageType.Melee) return false;
             var hasCoolDownExpired = Cooldowns.Expired(CooldownType.Block);
@@ -74,7 +74,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             int damage = attack.Damage;
 
-            if (canBlock(attack.Type))
+            if (CanBlock(attack.Type))
             {
                 damage = ShieldDefend(attack.Damage);
 

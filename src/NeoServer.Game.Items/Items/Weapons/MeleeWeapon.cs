@@ -40,7 +40,7 @@ namespace NeoServer.Game.Items.Items
             if (Attack > 0)
             {
                 var combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
-                if (MeleeCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
+                if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
                 {
                     enemy.ReceiveAttack(enemy, damage);
                     result = true;
@@ -51,7 +51,7 @@ namespace NeoServer.Game.Items.Items
             {
                 var combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
 
-                if (MeleeCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
+                if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
                 {
                     enemy.ReceiveAttack(enemy, damage);
                     result = true;

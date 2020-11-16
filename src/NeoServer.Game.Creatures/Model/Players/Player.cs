@@ -407,7 +407,7 @@ namespace NeoServer.Server.Model.Players
 
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
         {
-            throw new NotImplementedException();
+            return damage; //todo
         }
 
         public bool Logout()
@@ -418,6 +418,12 @@ namespace NeoServer.Server.Model.Players
             StopFollowing();
             StopWalking();
             return true;
+
+        }
+        public override bool CanBlock(DamageType damage)
+        {
+            if (!Inventory.HasShield) return false;
+            return base.CanBlock(damage);
         }
     }
 }

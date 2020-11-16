@@ -48,7 +48,7 @@ namespace NeoServer.Game.Items.Items
             var hitChance = (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level, distance) + ExtraHitChance);
             combatType.ShootType = ammo.ShootType;
 
-            var missed = DistanceCombatAttack.Instance.MissedAttack(hitChance);
+            var missed = DistanceCombatAttack.MissedAttack(hitChance);
 
             if (missed)
             {
@@ -60,7 +60,7 @@ namespace NeoServer.Game.Items.Items
 
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, DamageType.Physical);
 
-            if (DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var damage))
+            if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
             {
                 enemy.ReceiveAttack(enemy, damage);
                 result = true;
@@ -68,7 +68,7 @@ namespace NeoServer.Game.Items.Items
 
             maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack));
             combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, hitChance, ammo.ElementalDamage.Item1);
-            if (ammo.ElementalDamage != null && DistanceCombatAttack.Instance.TryAttack(actor, enemy, combat, out var elementalDamage))
+            if (ammo.ElementalDamage != null && DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage))
             {
                 combatType.DamageType = ammo.ElementalDamage.Item1;
 

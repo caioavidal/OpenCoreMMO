@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Combat;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
@@ -312,7 +313,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 StartFollowing(target.Creature, PathSearchParams);
             }
 
-           // SetAttackTarget(target.Creature.CreatureId);
+            SetAttackTarget(target.Creature.CreatureId);
             UpdateLastTargetChance();
         }
 
@@ -357,10 +358,28 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
         }
 
-      
+
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
-            throw new System.NotImplementedException();
+            combat = new CombatAttackType();
+
+            if (!Attacks.Any()) return false;
+
+            var attackIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Length - 1);
+            var attack = Attacks[attackIndex];
+
+            var canAttack = false;
+
+            if (attack.IsMelee && MeleeCombatAttack.CalculateAttack(this, enemy, new CombatAttackValue(attack.MinDamage, attack.MaxDamage, attack.DamageType), out var damage))
+            {
+                combat.DamageType = damage.Type;
+                enemy.ReceiveAttack(this, damage);
+                canAttack = true;
+            }
+
+            if(canAttack) TurnTo(Location.DirectionTo(enemy.Location));
+
+            return canAttack;
         }
 
         public override ushort CalculateAttackPower(float attackRate, ushort attack)

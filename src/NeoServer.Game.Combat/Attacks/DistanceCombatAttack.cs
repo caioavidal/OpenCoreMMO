@@ -7,9 +7,9 @@ using System;
 
 namespace NeoServer.Game.Combat.Attacks
 {
-    public class DistanceCombatAttack : CombatAttack<DistanceCombatAttack>
+    public class DistanceCombatAttack : CombatAttack
     {
-        public bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatDamage damage)
+        public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatDamage damage)
         {
             damage = new CombatDamage();
 
@@ -23,7 +23,7 @@ namespace NeoServer.Game.Combat.Attacks
             return true;
         }
 
-        public bool MissedAttack(byte hitChance)
+        public static bool MissedAttack(byte hitChance)
         {
             var value = ServerRandom.Random.Next(minValue: 1, maxValue: 100);
             return hitChance < value;
