@@ -9,11 +9,7 @@ namespace NeoServer.Server.Events
     public class PlayerGainedExperienceEventHandler
     {
         private readonly Game game;
-
-        public PlayerGainedExperienceEventHandler(Game game)
-        {
-            this.game = game;
-        }
+        public PlayerGainedExperienceEventHandler(Game game) => this.game = game;
         public void Execute(ICreature player, uint experience)
         {
             var experienceText = experience.ToString();

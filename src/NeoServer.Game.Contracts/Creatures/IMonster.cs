@@ -61,6 +61,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Checks if monster is sleeping
         /// </summary>
         bool IsSleeping { get; }
+        bool IsSummon { get; }
     }
 
 }

@@ -1,17 +1,5 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Explosion;
-using NeoServer.Game.Effects.Magical;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Parsers.Effects;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace NeoServer.Server.Events.Combat
 {

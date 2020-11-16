@@ -107,7 +107,7 @@ namespace NeoServer.Game.Creatures
         private void DetachEvents(ICombatActor creature)
         {
             creature.OnDamaged -= _creatureReceiveDamageEventHandler.Execute;
-            creature.OnKilled -= _creatureKilledEventHandler.Execute;
+            //creature.OnKilled -= _creatureKilledEventHandler.Execute;
             creature.OnKilled -= DetachEvents;
             //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack -= _creatureBlockedAttackEventHandler.Execute;

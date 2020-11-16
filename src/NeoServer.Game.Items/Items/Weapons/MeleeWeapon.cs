@@ -7,6 +7,7 @@ using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Players;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Immutable;
 
@@ -32,26 +33,28 @@ namespace NeoServer.Game.Items.Items
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
             combatType = new CombatAttackType(DamageType.Melee);
-            
+
+            if (!(actor is IPlayer player)) return false;
+
             var result = false;
 
             if (Attack > 0)
             {
-                var combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
+                var combat = new CombatAttackValue(actor.MinimumAttackPower, player.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
                 if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
                 {
-                    enemy.ReceiveAttack(enemy, damage);
+                    enemy.ReceiveAttack(actor, damage);
                     result = true;
                 }
             }
 
             if (ElementalDamage != null)
             {
-                var combat = new CombatAttackValue(actor.MinimumAttackPower, actor.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
+                var combat = new CombatAttackValue(actor.MinimumAttackPower, player.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
 
                 if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
                 {
-                    enemy.ReceiveAttack(enemy, damage);
+                    enemy.ReceiveAttack(actor, damage);
                     result = true;
                 }
             }

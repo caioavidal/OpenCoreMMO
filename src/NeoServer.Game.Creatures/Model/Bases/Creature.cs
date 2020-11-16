@@ -147,7 +147,10 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetDirection(Direction direction) => Direction = direction;
 
-        public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
+        public virtual void GainExperience(uint exp)
+        {
+            OnGainedExperience?.Invoke(this, exp);
+        }
 
         public void AddCondition(ICondition condition)
         {

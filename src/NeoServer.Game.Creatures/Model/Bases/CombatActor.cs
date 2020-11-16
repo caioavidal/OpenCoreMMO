@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat;
@@ -151,8 +152,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private void ReduceHealth(ushort damage)
         {
             HealthPoints = damage > HealthPoints ? 0 : HealthPoints - damage;
-
-            if (IsDead) OnKilled?.Invoke(this);
+            if(IsDead) OnDeath();
+        }
+        private void OnDeath() 
+        {
+            StopAttack();
+            StopFollowing();
+            StopWalking();
+            OnKilled?.Invoke(this);
         }
         public void Heal(ushort increasing)
         {
@@ -175,29 +182,24 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
         public void ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
+            if (IsDead) return;
+
             damage = ReduceDamage(damage);
             if (damage.Damage <= 0)
             {
                 WasDamagedOnLastAttack = false;
                 return;
             }
-
-            if (IsDead)
-            {
-                return;
-            }
-
             if (damage.Type != DamageType.ManaDrain)
             {
+                OnDamaged?.Invoke(enemy, this, damage);
                 ReduceHealth(damage.Damage);
             }
 
-            OnDamaged?.Invoke(enemy, this, damage);
             WasDamagedOnLastAttack = true;
             return;
         }
 
-        public abstract ushort CalculateAttackPower(float attackRate, ushort attack);
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
     }
 }

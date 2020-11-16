@@ -58,6 +58,5 @@ namespace NeoServer.Game.Contracts.Creatures
         bool CooldownHasExpired(CooldownType type);
         void ReceiveAttack(ICombatActor enemy, CombatDamage damage);
         bool Attack(ICombatActor enemy);
-        ushort CalculateAttackPower(float attackRate, ushort attack);
     }
 }

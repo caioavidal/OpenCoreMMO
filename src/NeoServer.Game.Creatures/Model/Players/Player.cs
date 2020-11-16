@@ -244,7 +244,7 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public override ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
+        public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
 
         public override ushort AttackPower
         {

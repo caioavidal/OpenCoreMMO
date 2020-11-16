@@ -91,14 +91,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return attack;
         }
 
-        public override ushort AttackPower
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
+        public override ushort AttackPower => 0;
 
         public ushort Defende()
         {
@@ -222,6 +215,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return fpp;
             }
         }
+
+        public bool IsSummon => false;
+
         public override void OnCreatureDisappear(ICreature creature)
         {
             RemoveFromTargetList(creature);
@@ -336,28 +332,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Say(Metadata.Voices[voiceIndex], TalkType.MonsterYell);
         }
 
-        //public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
-        //{
-        //    if ((Attacks?.Count ?? 0) == 0)
-        //    {
-        //        return false;
-        //    }
-
-        //    var index = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Count);
-
-        //    TurnTo(Location.DirectionTo(enemy.Location));
-
-        //    var attack = Attacks[index];
-
-        //    return base.Attack(enemy, attack);
-        //}
-
         public void UpdateLastTargetChance()
         {
             if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
             Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
         }
-
 
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
@@ -378,19 +357,13 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 enemy.ReceiveAttack(this, damage);
                 canAttack = true;
             }
-            else if(!attack.IsMelee)
+            else if (!attack.IsMelee)
             {
                 canAttack = attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
             }
-          
-            if(canAttack) TurnTo(Location.DirectionTo(enemy.Location));
 
+            if (canAttack) TurnTo(Location.DirectionTo(enemy.Location));
             return canAttack;
-        }
-
-        public override ushort CalculateAttackPower(float attackRate, ushort attack)
-        {
-            throw new System.NotImplementedException();
         }
 
         public override CombatDamage OnImmunityDefense(CombatDamage damage)

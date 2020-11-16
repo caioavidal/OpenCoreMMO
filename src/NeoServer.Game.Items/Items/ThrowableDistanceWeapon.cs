@@ -31,21 +31,26 @@ namespace NeoServer.Game.Items.Items
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
             var result = false;
-            combatType = new CombatAttackType();
+            combatType = new CombatAttackType(Metadata.ShootType);
 
             if (!(actor is IPlayer player)) return false;
 
             var hitChance = (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.Skills[player.SkillInUse].Level, Range) + ExtraHitChance);
+            var missed = DistanceCombatAttack.MissedAttack(hitChance);
 
-            var maxDamage = actor.CalculateAttackPower(0.09f, Attack);
+            if (missed)
+            {
+                combatType.Missed = true;
+                return true;
+            }
 
-            combatType.ShootType = Metadata.ShootType;
+            var maxDamage = player.CalculateAttackPower(0.09f, Attack);
 
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
             if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
             {
-                enemy.ReceiveAttack(enemy, damage);
+                enemy.ReceiveAttack(actor, damage);
                 result = true;
             }
             return result;

@@ -59,7 +59,10 @@ namespace NeoServer.Server.Events
 
                 var stackPosition = spectator.FromStackPosition;
 
-                connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
+                if (thing is IPlayer || (thing is IMonster monsterRemoved && monsterRemoved.IsSummon))
+                {
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
+                }
 
                 if (thing is ICumulativeItem cumulative && cumulative.Amount > 0)
                 {

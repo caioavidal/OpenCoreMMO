@@ -111,5 +111,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);
         bool Logout();
+        ushort CalculateAttackPower(float attackRate, ushort attack);
     }
 }

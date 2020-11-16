@@ -54,23 +54,23 @@ namespace NeoServer.Game.Items.Items
                 return true;
             }
 
-            var maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
+            var maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
 
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
             if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
             {
-                enemy.ReceiveAttack(enemy, damage);
+                enemy.ReceiveAttack(actor, damage);
                 result = true;
             }
 
-            maxDamage = actor.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack));
+            maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack));
             combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, ammo.ElementalDamage.Item1);
             if (ammo.ElementalDamage != null && DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage))
             {
                 combatType.DamageType = ammo.ElementalDamage.Item1;
 
-                enemy.ReceiveAttack(enemy, elementalDamage);
+                enemy.ReceiveAttack(actor, elementalDamage);
                 result = true;
             }
 
