@@ -45,6 +45,7 @@ namespace NeoServer.Game.Creatures.Model
             };
             Hostiles = new HashSet<uint>();
             Friendly = new HashSet<uint>();
+            
         }
 
         public void SetAsRemoved() => IsRemoved = true;

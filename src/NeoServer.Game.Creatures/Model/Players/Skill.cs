@@ -8,7 +8,6 @@ namespace NeoServer.Server.Model.Players
     public class Skill : ISkill
     {
         public event OnLevelAdvance OnAdvance;
-
         public SkillType Type { get; }
 
         public ushort Level { get; private set; }
@@ -84,7 +83,7 @@ namespace NeoServer.Server.Model.Players
             Count = count;
         }
 
-        private double GetExpForLevel(int Level) => ((50 * Math.Pow(Level, 3)) / 3) - (100 * Math.Pow(Level, 2)) + ((850 * Level) / 3) - 200;
+        private double GetExpForLevel(int level) => ((50 * Math.Pow(level, 3)) / 3) - (100 * Math.Pow(level, 2)) + ((850 * level) / 3) - 200;
 
         private double CalculatePercentage(double count, double nextLevelCount) => Math.Min(100, (count * 100) / nextLevelCount);
         private double CalculatePercentage(double count)
@@ -141,17 +140,24 @@ namespace NeoServer.Server.Model.Players
 
         public void IncreaseCounter(double value)
         {
-            //todo
-            // Count = Math.Min(Target, Count + value);
 
-            // if (Math.Abs(Count - Target) < 0.001) // Skill level advance
-            // {
-            //     Level++;
-            //     Target = CalculateNextTarget(Count);
+            Count += value;
+            IncreaseLevel();
+        }
 
-            //     // Invoke any subscribers to the level advance.
-            //     OnAdvance?.Invoke(Type);
-            // }
+        public void IncreaseLevel()
+        {
+            var level = Level;
+            while (Count >= GetExpForLevel(level + 1))
+            {
+                level++;
+            }
+
+            if(level != Level)
+            {
+                OnAdvance?.Invoke(Type, Level, level);
+                Level = level;
+            }
         }
     }
 }

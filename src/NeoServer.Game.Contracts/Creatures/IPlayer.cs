@@ -15,7 +15,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
     public delegate void ReduceMana(IPlayer player);
     public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
-
+    public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;

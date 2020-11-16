@@ -24,6 +24,11 @@ namespace NeoServer.Server.Events
                         connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You gained {experienceText} experience points.", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                         connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
                     }
+                    else
+                    {
+                        connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{player.Name} gained {experienceText} experience points.", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
+                        connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
+                    }
 
                     connection.Send();
                 }

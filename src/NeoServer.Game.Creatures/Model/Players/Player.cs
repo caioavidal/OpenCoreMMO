@@ -45,10 +45,7 @@ namespace NeoServer.Server.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
 
-            if (Skills.TryGetValue(SkillType.Level, out ISkill skill))
-            {
-                Experience = (uint)skill.Count;
-            }
+
 
             SetNewLocation(location);
 
@@ -58,7 +55,14 @@ namespace NeoServer.Server.Model.Players
             VipList = new Dictionary<string, bool>(); //todo
 
             Inventory = new PlayerInventory(this, inventory);
+
+            foreach (var skill in Skills.Values)
+            {
+                skill.OnAdvance += OnLevelAdvance;
+            }
         }
+
+        public event PlayerLevelAdvance OnLevelAdvanced;
 
         public event CancelWalk OnCancelledWalk;
 
@@ -66,6 +70,12 @@ namespace NeoServer.Server.Model.Players
         public event CannotUseSpell OnCannotUseSpell;
 
         public event UseSpell OnUsedSpell;
+
+        public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
+        {
+            Heal(MaxHealthPoints);
+            OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
+        }
 
 
         private uint IdleTime;
@@ -99,7 +109,18 @@ namespace NeoServer.Server.Model.Players
 
         public ushort StaminaMinutes { get; private set; }
 
-        public uint Experience { get; private set; }
+        public uint Experience
+        {
+            get
+            {
+                if (Skills.TryGetValue(SkillType.Level, out ISkill skill))
+                {
+                    return (uint)skill.Count;
+                }
+                return 0;
+            }
+         
+        }
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
         public bool IsMounted()
@@ -107,13 +128,9 @@ namespace NeoServer.Server.Model.Players
             return false;
         }
 
-        public void IncreaseSkillCounter(SkillType skill, ushort value)
+        public void IncreaseSkillCounter(SkillType skill, uint value)
         {
-            if (!Skills.ContainsKey(skill))
-            {
-                // TODO: proper logging.
-                Console.WriteLine($"CreatureId {Name} does not have the skill {skill} in it's skill set.");
-            }
+            if (!Skills.ContainsKey(skill)) return;
 
             Skills[skill].IncreaseCounter(value);
         }
@@ -138,8 +155,9 @@ namespace NeoServer.Server.Model.Players
             {
                 return;
             }
-            Experience += exp;
+
             base.GainExperience(exp);
+            IncreaseSkillCounter(SkillType.Level, exp);
         }
 
         public override string InspectionText => Name;

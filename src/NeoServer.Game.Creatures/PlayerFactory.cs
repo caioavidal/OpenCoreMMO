@@ -31,6 +31,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerUsedSpellEventHandler _playerUsedSpellEventHandler;
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
         private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
+        private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
 
         private readonly IPathFinder _pathFinder;
 
@@ -40,8 +41,8 @@ namespace NeoServer.Game.Creatures
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler,
-            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler, 
-            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler)
+            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler,
+            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler, PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -58,6 +59,7 @@ namespace NeoServer.Game.Creatures
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
             _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
             _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
+            _playerLevelAdvancedEventHandler = playerLevelAdvancedEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -108,6 +110,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
             newPlayer.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
             newPlayer.OnRemovedCondition += _playerConditionChangedEventHandler.Execute;
+            newPlayer.OnLevelAdvanced += _playerLevelAdvancedEventHandler.Execute;
 
             return newPlayer;
         }

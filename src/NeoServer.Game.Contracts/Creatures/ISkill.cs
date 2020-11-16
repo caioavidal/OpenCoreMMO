@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Contracts.Creatures
 {
-    public delegate void OnLevelAdvance(SkillType skillType);
+    public delegate void OnLevelAdvance(SkillType skillType, int fromLevel, int toLevel);
 
     public interface ISkill
     {
@@ -26,5 +26,6 @@ namespace NeoServer.Game.Contracts.Creatures
         double Percentage { get; }
 
         void IncreaseCounter(double value);
+
     }
 }
