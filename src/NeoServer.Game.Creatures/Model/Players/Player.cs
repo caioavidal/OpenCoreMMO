@@ -188,7 +188,6 @@ namespace NeoServer.Server.Model.Players
 
         public Location LocationInFront
         {
-
             get
             {
                 switch (Direction)

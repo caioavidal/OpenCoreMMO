@@ -24,7 +24,8 @@ namespace NeoServer.Server.Model.Players
 
         public double BaseIncrease { get; }
 
-        public double Percentage { get; }
+        public double Percentage => CalculatePercentage(Count);
+
 
         //BaseIncrease and Rate
         private IDictionary<SkillType, Tuple<double, double>> SkillsRates = new Dictionary<SkillType, Tuple<double, double>>()
@@ -79,7 +80,7 @@ namespace NeoServer.Server.Model.Players
             BaseIncrease = baseIncrease;
 
             //Target = CalculateNextTarget(count);
-            Percentage = CalculatePercentage(count);
+            //Percentage = CalculatePercentage(count);
             Count = count;
         }
 
