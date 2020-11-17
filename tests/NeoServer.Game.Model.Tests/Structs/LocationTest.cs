@@ -9,8 +9,6 @@ namespace NeoServer.Game.Model.Tests.Structs
         [Theory]
         [InlineData(100, 100, 105, 103, 8)]
         [InlineData(105, 103, 100, 100, 8)]
-        [InlineData(100, 100, -105, -103, 408)]
-        [InlineData(100, 100, -105, 103, 208)]
         [InlineData(100, 0, 0, 100, 200)]
         public void GetSqmDistance_Returns_Sum_Of_Sqm_Distance(int fromX, int fromY, int toX, int toY, ushort total)
         {
