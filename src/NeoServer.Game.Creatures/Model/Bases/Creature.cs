@@ -155,8 +155,10 @@ namespace NeoServer.Game.Creatures.Model
 
         public void AddCondition(ICondition condition)
         {
-            Conditions.TryAdd(condition.Type, condition);
+            var result = Conditions.TryAdd(condition.Type, condition);
             condition.Start(this);
+            if (result == false) return;
+
             OnAddedCondition?.Invoke(this, condition);
         }
         public void RemoveCondition(ICondition condition)

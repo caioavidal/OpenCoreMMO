@@ -177,6 +177,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return;
             }
 
+            creature.SetAsInFight();
             AddToTargetList(creature);
         }
 

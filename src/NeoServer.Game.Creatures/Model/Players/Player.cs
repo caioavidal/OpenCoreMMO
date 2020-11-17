@@ -45,8 +45,6 @@ namespace NeoServer.Server.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
 
-
-
             SetNewLocation(location);
 
             Containers = new PlayerContainerList(this);
@@ -63,7 +61,7 @@ namespace NeoServer.Server.Model.Players
         }
 
         public event PlayerLevelAdvance OnLevelAdvanced;
-
+        public event OperationFail OnOperationFailed;
         public event CancelWalk OnCancelledWalk;
 
         public event ReduceMana OnManaReduced;
@@ -76,10 +74,7 @@ namespace NeoServer.Server.Model.Players
             Heal(MaxHealthPoints);
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
-
-
         private uint IdleTime;
-
         public string CharacterName { get; private set; }
 
         public Account Account { get; private set; }
@@ -427,7 +422,11 @@ namespace NeoServer.Server.Model.Players
 
         public bool Logout()
         {
-            if (CannotLogout) return false;
+            if (CannotLogout)
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You may not logout during or immediately after a fight");
+                return false;
+            }
 
             StopAttack();
             StopFollowing();

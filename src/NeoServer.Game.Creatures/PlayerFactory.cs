@@ -32,6 +32,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
         private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
         private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
+        private readonly PlayerOperationFailedEventHandler _playerOperationFailedEventHandler;
 
         private readonly IPathFinder _pathFinder;
 
@@ -42,7 +43,8 @@ namespace NeoServer.Game.Creatures
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler,
             IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler,
-            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler, PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler)
+            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler, 
+            PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -60,6 +62,7 @@ namespace NeoServer.Game.Creatures
             _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
             _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
             _playerLevelAdvancedEventHandler = playerLevelAdvancedEventHandler;
+            _playerOperationFailedEventHandler = playerOperationFailedEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -111,7 +114,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
             newPlayer.OnRemovedCondition += _playerConditionChangedEventHandler.Execute;
             newPlayer.OnLevelAdvanced += _playerLevelAdvancedEventHandler.Execute;
-
+            newPlayer.OnOperationFailed += _playerOperationFailedEventHandler.Execute;
             return newPlayer;
         }
         private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(IPlayerModel player)

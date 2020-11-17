@@ -90,7 +90,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 }
             }
 
-            if(!attack.IsElementalDamage) damage = ArmorDefend(attack.Damage);
+            if (!attack.IsElementalDamage) damage = ArmorDefend(attack.Damage);
 
             if (damage <= 0)
             {
@@ -155,7 +155,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnDamaged?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath();
         }
-        private void OnDeath() 
+        private void OnDeath()
         {
             StopAttack();
             StopFollowing();
@@ -201,5 +201,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
+
+        public void SetAsInFight() => AddCondition(new Condition(ConditionType.InFight, 60000));
     }
 }
