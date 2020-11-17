@@ -53,39 +53,7 @@ namespace NeoServer.Loaders.Monsters
             return monster;
         }
 
-        private static DamageType ParseDamageType(string type)
-        {
-            return type switch
-            {
-                "melee" => DamageType.Melee,
-                "physical" => DamageType.Physical,
-                "energy" => DamageType.Energy,
-                "fire" => DamageType.Fire,
-                "manadrain" => DamageType.ManaDrain,
-                _ => DamageType.Melee
-            };
-        }
-        private static EffectT ParseAreaEffect(string type)
-        {
-            return type switch
-            {
-                "blueshimmer" => EffectT.GlitterBlue,
-                "redshimmer" => EffectT.GlitterRed,
-                _ => EffectT.None
-            };
-        }
-        private static ShootType ParseShootType(string type)
-        {
-            return type switch
-            {
-                "bolt" => ShootType.Bolt,
-                "spear" => ShootType.Spear,
-                "star" => ShootType.ThrowingStar,
-                "energy" => ShootType.Energy,
-                "fire" => ShootType.Fire,
-                _ => ShootType.None
-            };
-        }
+      
         private static CreatureFlagAttribute ParseCreatureFlag(string flag)
         {
             return flag switch

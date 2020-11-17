@@ -1,35 +1,33 @@
-﻿namespace NeoServer.Game.Creatures.Combat.Attacks
+﻿using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Effects.Magical;
+using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Enums.Item;
+
+namespace NeoServer.Game.Creatures.Combat.Attacks
 {
-    //public class SpreadCombatAttack : DistanceCombatAttack, IDistanceSpreadCombatAttack, IAreaAttack
-    //{
-    //    public SpreadCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option)
-    //    {
-    //    }
+    public class SpreadCombatAttack : CombatAttack
+    {
+        public SpreadCombatAttack(byte length, byte spread)
+        {
+            Length = length;
+            Spread = spread;
+        }
 
-    //    public override void BuildAttack(ICombatActor actor, ICombatActor enemy)
-    //    {
-    //        var i = 0;
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        {
+            combatType = new CombatAttackType(option.DamageType);
 
-    //        var affectedLocations = SpreadEffect.Create(actor.Direction, Length);
-    //        AffectedArea = new Coordinate[affectedLocations.Length];
+            if (CalculateAttack(actor, enemy, option, out var damage))
+            {
+                combatType.Area = SpreadEffect.Create(actor.Location,actor.Direction, Length);
+                actor.PropagateAttack(combatType.Area, damage);
+                return true;
+            }
+            return false;
+        }
 
-    //        foreach (var location in affectedLocations)
-    //        {
-    //            AffectedArea[i++] = actor.Location.Translate() + location;
-    //        }
-
-    //        base.BuildAttack(actor, enemy);
-    //    }
-
-    //    public override ushort CalculateDamage(ushort attackPower, ushort minAttackPower) => base.CalculateDamage(Option.MaxDamage, Option.MinDamage);
-
-    //    public override void CauseDamage(ICombatActor actor, ICombatActor enemy)
-    //    {
-    //        base.CauseDamage(actor, enemy);
-    //    }
-
-    //    public byte Spread => Option.Spread;
-    //    public byte Length => Option.Length;
-    //    public Coordinate[] AffectedArea { get; private set; }
-    //}
+        public byte Spread { get; }
+        public byte Length { get; }
+    }
 }

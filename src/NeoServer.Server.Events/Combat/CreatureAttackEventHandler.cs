@@ -68,7 +68,6 @@ namespace NeoServer.Server.Events.Combat
                     }
                 }
 
-
                 connection.Send();
             }
         }

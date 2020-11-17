@@ -27,13 +27,10 @@ namespace NeoServer.Game.Combat.Attacks
 
         public CombatAttackValue Translate()
         {
-            if (IsMelee)
-                return new CombatAttackValue(MinDamage, MaxDamage, DamageType);
-
             if (CombatAttack is DistanceCombatAttack distance)
                 return new CombatAttackValue(MinDamage, MaxDamage, distance.Range, DamageType);
 
-            return new CombatAttackValue();
+            return new CombatAttackValue(MinDamage,MaxDamage,DamageType);
         }
     }
 }

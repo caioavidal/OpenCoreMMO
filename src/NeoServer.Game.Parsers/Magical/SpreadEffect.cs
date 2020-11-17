@@ -49,5 +49,19 @@ namespace NeoServer.Game.Effects.Magical
 
             return points[0..length];
         }
+
+        public static Coordinate[] Create(Location location, Direction direction, int length)
+        {
+            var i = 0;
+
+            var affectedLocations = Create(direction, length);
+            var affectedArea = new Coordinate[affectedLocations.Length];
+
+            foreach (var affectedlocation in affectedLocations)
+            {
+                affectedArea[i++] = location.Translate() + affectedlocation;
+            }
+            return affectedArea;
+        }
     }
 }

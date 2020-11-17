@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Server.Helpers;
 using System;
 
 namespace NeoServer.Game.Combat.Attacks
@@ -13,6 +14,15 @@ namespace NeoServer.Game.Combat.Attacks
         {
             combatType = new CombatAttackType();
             return false;
+        }
+        public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatDamage damage)
+        {
+            damage = new CombatDamage();
+
+            var damageValue = (ushort)ServerRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
+            damage = new CombatDamage(damageValue, option.DamageType);
+
+            return true;
         }
     }
 }

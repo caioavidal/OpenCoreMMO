@@ -69,9 +69,13 @@ namespace NeoServer.Loaders.Monsters.Converters
                     combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
                     combatAttack.CombatAttack = new DistanceAreaCombatAttack(range, radius, MonsterAttributeParser.ParseShootType(shootEffect));
                 }
+                if (length > 0)
+                {
+                    combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
+                    combatAttack.CombatAttack = new SpreadCombatAttack(length, spread);
+                }
 
                 attacks.Add(combatAttack);
-
 
                 //    attack.TryGetValue<JArray>("attributes", out var attributes);
 

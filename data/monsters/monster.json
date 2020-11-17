@@ -4,7 +4,7 @@
     "nameDescription": "a orc spearman",
     "race": "blood",
     "experience": "38",
-    "speed": "176",
+    "speed": "260",
     "manacost": "310",
     "health": {
       "now": "105",
@@ -32,7 +32,7 @@
           "pushable": "0",
           "canpushitems": "1",
           "canpushcreatures": "1",
-         "targetdistance": "4",
+         "targetdistance": "1",
           "staticattack": "90",
           "runonhealth": "0"
     },
@@ -112,6 +112,19 @@
               "value": "firearea"
             }
           ]
+        },
+		 {
+          "name": "energy",
+          "interval": "3000",
+          "chance": "100",
+          "length": "8",
+          "spread": "0",
+          "min": "-220",
+          "max": "-460",
+          "attributes": [{
+            "key": "areaEffect",
+            "value": "energy"
+          }]
         }
 		
         
