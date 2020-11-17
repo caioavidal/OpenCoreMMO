@@ -2,10 +2,12 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Effects.Explosion;
 using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model.Bases
@@ -22,6 +24,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event Die OnKilled;
         public event OnAttackTargetChange OnTargetChanged;
         public event ChangeVisibility OnChangedVisibility;
+        public event OnPropagateAttack OnPropagateAttack;
         #endregion
 
         #region Properties
@@ -134,6 +137,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             return true;
         }
+
+     
         public virtual void SetAttackTarget(uint targetId)
         {
             if (targetId == AutoAttackTargetId) return;
@@ -198,6 +203,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             WasDamagedOnLastAttack = true;
             return;
+        }
+        public void PropagateAttack(Coordinate[] area, CombatDamage damage )
+        {
+            if (IsDead) return;
+            if (damage.Damage <= 0) return;
+
+            OnPropagateAttack?.Invoke(this, damage, area);
         }
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);

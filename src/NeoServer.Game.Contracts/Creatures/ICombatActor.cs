@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
@@ -16,8 +17,8 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void Attack(ICombatActor creature, ICombatActor victim, CombatAttackType combat);
     public delegate void UseSpell(ICreature creature, ISpell spell);
     public delegate void ChangeVisibility(ICombatActor actor);
-
-    public interface ICombatActor: IWalkableCreature
+    public delegate void OnPropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
+    public interface ICombatActor : IWalkableCreature
     {
         event Attack OnAttackEnemy;
         event BlockAttack OnBlockedAttack;
@@ -27,6 +28,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event StopAttack OnStoppedAttack;
         event OnAttackTargetChange OnTargetChanged;
         event ChangeVisibility OnChangedVisibility;
+        event OnPropagateAttack OnPropagateAttack;
 
         ushort ArmorRating { get; }
         bool Attacking { get; }
@@ -36,7 +38,7 @@ namespace NeoServer.Game.Contracts.Creatures
         decimal BaseAttackSpeed { get; }
         decimal BaseDefenseSpeed { get; }
         ushort DefensePower { get; }
-      
+
         bool InFight { get; }
         bool IsDead { get; }
         ushort MinimumAttackPower { get; }
@@ -59,5 +61,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void ReceiveAttack(ICombatActor enemy, CombatDamage damage);
         bool Attack(ICombatActor enemy);
         void SetAsInFight();
+        void PropagateAttack(Coordinate[] area, CombatDamage damage);
     }
 }

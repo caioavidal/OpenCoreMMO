@@ -1,32 +1,36 @@
 ﻿
+using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Effects.Explosion;
+using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Enums.Location.Structs;
+using System.Linq;
+
 namespace NeoServer.Game.Creatures.Combat.Attacks
 {
-    //public class DistanceAreaCombatAttack : DistanceCombatAttack, IDistanceAreaCombatAttack, IAreaAttack
-    //{
+    public class DistanceAreaCombatAttack : DistanceCombatAttack
+    {
+        public DistanceAreaCombatAttack(byte range, byte radius, ShootType shootType) : base(range, shootType)
+        {
+            Radius = radius;
+        }
 
-    //    public DistanceAreaCombatAttack(DamageType damageType, CombatAttackOption option) : base(damageType, option)
-    //    {
-    //    }
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        {
+            combatType = new CombatAttackType(ShootType);
 
-    //    public override void BuildAttack(ICombatActor actor, ICombatActor enemy)
-    //    {
-    //        var i = 0;
+            if (CalculateAttack(actor, enemy, option, out var damage))
+            {
+                combatType.DamageType = option.DamageType;
+                combatType.Area = ExplosionEffect.Create(enemy.Location, Radius).ToArray();
+                actor.PropagateAttack(combatType.Area, damage);
+                return true;
+            }
 
-    //        var affectedLocations = ExplosionEffect.Create(Radius);
-    //        AffectedArea = new Coordinate[affectedLocations.Count()];
+            return false;
+        }
 
-    //        foreach (var location in affectedLocations)
-    //        {
-    //            AffectedArea[i++] = enemy.Location.Translate() + location;
-    //        }
-
-    //        base.BuildAttack(actor, enemy);
-    //    }
-
-    //    public override ushort CalculateDamage(ushort attackPower, ushort minAttackPower) => base.CalculateDamage(Option.MaxDamage, Option.MinDamage);
-
-    //    public byte Radius => Option.Radius;
-
-    //    public Coordinate[] AffectedArea { get; private set; }
-    //}
+        public byte Radius { get; set; }
+    }
 }

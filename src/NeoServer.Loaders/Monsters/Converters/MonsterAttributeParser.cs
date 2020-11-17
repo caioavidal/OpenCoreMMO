@@ -17,6 +17,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 "energy" => DamageType.Energy,
                 "fire" => DamageType.Fire,
                 "manadrain" => DamageType.ManaDrain,
+                "firearea" => DamageType.Fire,
                 _ => DamageType.Melee
             };
         }

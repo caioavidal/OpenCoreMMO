@@ -2,6 +2,7 @@
 using NeoServer.Game.Enums.Location.Structs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NeoServer.Game.Effects.Explosion
@@ -45,6 +46,20 @@ namespace NeoServer.Game.Effects.Explosion
             }
 
             return points;
+        }
+
+        public static IEnumerable<Coordinate> Create(Location location, int radius)
+        {
+            var i = 0;
+
+            var affectedLocations = Create(radius);
+            var affectedArea = new Coordinate[affectedLocations.Count()];
+
+            foreach (var affectedLocation in affectedLocations)
+            {
+                affectedArea[i++] = location.Translate() + affectedLocation;
+            }
+            return affectedArea;
         }
     }
 

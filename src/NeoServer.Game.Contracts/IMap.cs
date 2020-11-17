@@ -42,7 +42,7 @@ namespace NeoServer.Game.Contracts
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
         HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
-        void PropagateAttack(ICombatActor creature, ICombatActor victim, CombatAttackValue combatAttack);
+        void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
         void MoveCreature(IWalkableCreature creature);
     }
 }

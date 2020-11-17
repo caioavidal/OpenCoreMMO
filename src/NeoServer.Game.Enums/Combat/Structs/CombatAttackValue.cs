@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Enums.Location.Structs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +43,7 @@ namespace NeoServer.Game.Enums.Combat.Structs
         public bool Missed { get; set; }
         public ShootType ShootType { get; set; }
         public DamageType DamageType { get; set; }
+        public Coordinate[] Area { get; set; }
 
     }
 }

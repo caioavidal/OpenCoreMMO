@@ -554,38 +554,22 @@ namespace NeoServer.Game.World.Map
 
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
 
-        public void PropagateAttack(ICombatActor actor, ICombatActor victim, CombatAttackValue combatAttack)
+        public void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area)
         {
-            //if (!(combatAttack is IAreaAttack area))
-            //{
-            //    return;
-            //}
-
-            //foreach (var coordinates in area.AffectedArea)
-            //{
-            //    var tile = this[coordinates.Location];
-            //    if (tile is IWalkableTile walkableTile)
-            //    {
-            //        foreach (var target in walkableTile.Creatures.Values)
-            //        {
-            //            if (!(target is ICombatActor targetCreature))
-            //            {
-            //                continue;
-            //            }
-            //            if (combatAttack.HasTarget && victim == targetCreature)
-            //            {
-            //                continue;
-            //            }
-            //            if (actor == target)
-            //            {
-            //                continue;
-            //            }
-
-            //            //targetCreature.ReceiveAttack(actor, combatAttack);
-            //        }
-            //    }
-
-            //}
+            foreach (var coordinates in area)
+            {
+                var tile = this[coordinates.Location];
+                if (tile is IWalkableTile walkableTile)
+                {
+                    foreach (var target in walkableTile.Creatures.Values)
+                    {
+                        if (actor == target) continue;
+                        if (!(target is ICombatActor targetCreature)) continue;
+                        
+                        targetCreature.ReceiveAttack(actor, damage);
+                    }
+                }
+            }
         }
 
         public void MoveCreature(IWalkableCreature creature)

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Contracts.Combat.Attacks;
+using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
@@ -38,7 +39,6 @@ namespace NeoServer.Loaders.Monsters.Converters
                 var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
                 var areaEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value");
 
-
                 var combatAttack = new MonsterCombatAttack()
                 {
                     Chance = chance > 100 || chance <= 0 ? (byte)100 : chance,
@@ -50,9 +50,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                     Spread = spread,
                     Target = target,
                     DamageType = MonsterAttributeParser.ParseDamageType(attackName),
-                    //ShootType = ParseShootType(shootEffect),
                     AreaEffect = MonsterAttributeParser.ParseAreaEffect(areaEffect),
-
                 };
 
                 if (combatAttack.IsMelee)
@@ -60,15 +58,21 @@ namespace NeoServer.Loaders.Monsters.Converters
                     combatAttack.MinDamage = 0;
                     combatAttack.MaxDamage = MeleeCombatAttack.CalculateMaxDamage(skill, attackValue);
                 }
-                if (attackName == "physical")
+                if (range > 0 && radius <= 1)
                 {
+                    if (areaEffect != null)
+                        combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
                     combatAttack.CombatAttack = new DistanceCombatAttack(range, MonsterAttributeParser.ParseShootType(shootEffect));
+                }
+                if (radius > 1)
+                {
+                    combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
+                    combatAttack.CombatAttack = new DistanceAreaCombatAttack(range, radius, MonsterAttributeParser.ParseShootType(shootEffect));
                 }
 
                 attacks.Add(combatAttack);
 
 
-                //    attackName
                 //    attack.TryGetValue<JArray>("attributes", out var attributes);
 
                 //    if (attack.ContainsKey("range"))
@@ -152,6 +156,6 @@ namespace NeoServer.Loaders.Monsters.Converters
             return attacks.ToArray();
         }
 
-     
+
     }
 }

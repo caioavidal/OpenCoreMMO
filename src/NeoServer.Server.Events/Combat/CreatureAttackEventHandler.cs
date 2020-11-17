@@ -12,6 +12,7 @@ using NeoServer.Server.Helpers;
 using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NeoServer.Server.Events.Combat
@@ -33,7 +34,6 @@ namespace NeoServer.Server.Events.Combat
                 {
                     continue;
                 }
-
                 //if (attack is IAreaAttack areaAttack)
                 //{
                 //    foreach (var coordinate in areaAttack.AffectedArea)
@@ -55,13 +55,18 @@ namespace NeoServer.Server.Events.Combat
                 if (attack.Missed)
                 {
                     SendMissedAttack(creature, victim, attack, connection);
-
                 }
                 else
                 {
                     if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
                 }
-
+                if (attack.Area?.Any() ?? false)
+                {
+                    foreach (var coordinate in attack.Area)
+                    {
+                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, DamageEffectParser.Parse(attack.DamageType)));
+                    }
+                }
 
 
                 connection.Send();
@@ -81,5 +86,6 @@ namespace NeoServer.Server.Events.Combat
             if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, destLocation, (byte)attack.ShootType));
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(destLocation, EffectT.Puff));
         }
+    
     }
 }
