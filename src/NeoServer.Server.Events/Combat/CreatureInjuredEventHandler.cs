@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Effects.Explosion;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
@@ -22,33 +23,38 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(ICreature enemy, ICreature victim, ICombatAttack attack, ushort damage)
+        public void Execute(ICreature enemy, ICreature victim, CombatDamage damage)
         {
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(victim.Location))
+            foreach (var spectator in map.GetPlayersAtPositionZone(victim.Location))
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }
 
                 var damageString = damage.ToString();
 
-                if (victim.CreatureId == spectatorId) //myself
+                if (victim == spectator) //myself
                 {
                     connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)victim));
 
-                    var attackDamageType = attack.DamageType == DamageType.ManaDrain ? "mana points" : "health points";
+                    var attackDamageType = damage.Type == DamageType.ManaDrain ? "mana points" : "health points";
                     connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You lose {damageString} {attackDamageType} due to an attack by a {enemy.Name}", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                 }
 
-
-                if (enemy.CreatureId == spectatorId)
+                if (enemy == spectator)
                 {
                     connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{victim.Name} loses {damageString} due to your attack", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                 }
 
-                var damageTextColor = DamageTextColorParser.Parse(attack.DamageType);
-             
+                var damageTextColor = DamageTextColorParser.Parse(damage.Type);
+
+                if (damage.Type != default)
+                {
+                    var damageEffect = DamageEffectParser.Parse(damage.Type);
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                }
+
 
                 connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor, damageString));
                 connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(victim));

@@ -1,20 +1,13 @@
-// <copyright file="Location.cs" company="2Dudes">
-// Copyright (c) 2018 2Dudes. All rights reserved.
-// Licensed under the MIT license.
-// See LICENSE file in the project root for full license information.
-// </copyright>
-
 using NeoServer.Game.Enums.Players;
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Enums.Location.Structs
 {
     public struct Location : IEquatable<Location>
     {
 
-        public Location(int x, int y, sbyte z)
+        public Location(ushort x, ushort y, byte z)
         {
             X = x;
             Y = y;
@@ -23,19 +16,21 @@ namespace NeoServer.Game.Enums.Location.Structs
 
         public Location(Coordinate coordinate) : this()
         {
-            X = coordinate.X;
-            Y = coordinate.Y;
-            Z = coordinate.Z;
+            X = (ushort)coordinate.X;
+            Y = (ushort)coordinate.Y;
+            Z = (byte)coordinate.Z;
         }
 
-        public int X { get; set; }
+        public ushort X { get; set; }
 
-        public int Y { get; set; }
+        public ushort Y { get; set; }
 
-        public sbyte Z { get; set; }
+        public byte Z { get; set; }
 
         public bool IsUnderground => Z > 7;
         public bool IsSurface => Z == 7;
+
+        public int GetOffSetZ(Location location) => Z - location.Z;
 
         public LocationType Type
         {
@@ -55,24 +50,23 @@ namespace NeoServer.Game.Enums.Location.Structs
             }
         }
 
-        public static Location operator +(Location location1, Location location2)
+        public static Coordinate operator +(Location location1, Location location2)
         {
-            return new Location
-            {
-                X = location1.X + location2.X,
-                Y = location1.Y + location2.Y,
-                Z = (sbyte)(location1.Z + location2.Z)
-            };
+            return new Coordinate(
+            x: (location1.X + location2.X),
+            y: (location1.Y + location2.Y),
+            z: (sbyte)(location1.Z + location2.Z)
+            );
         }
 
-        public static Location operator -(Location location1, Location location2)
+        public static Coordinate operator -(Location location1, Location location2)
         {
-            return new Location
-            {
-                X = location2.X - location1.X,
-                Y = location2.Y - location1.Y,
-                Z = (sbyte)(location2.Z - location1.Z)
-            };
+            return new Coordinate
+            (
+                x: location2.X - location1.X,
+                y: location2.Y - location1.Y,
+                z: (sbyte)(location2.Z - location1.Z)
+            );
         }
 
         public Slot Slot => (Slot)Convert.ToByte(Y);
@@ -85,11 +79,6 @@ namespace NeoServer.Game.Enums.Location.Structs
             get
             {
                 return Convert.ToSByte(Z);
-            }
-
-            set
-            {
-                Z = value;
             }
         }
 
@@ -109,13 +98,7 @@ namespace NeoServer.Game.Enums.Location.Structs
 
         public override int GetHashCode()
         {
-            int hash = 13;
-
-            hash = (hash * 7) + X.GetHashCode();
-            hash = (hash * 7) + Y.GetHashCode();
-            hash = (hash * 7) + Z.GetHashCode();
-
-            return hash;
+            return HashCode.Combine(X, Y, Z);
         }
 
         public static bool operator ==(Location origin, Location targetLocation)
@@ -203,7 +186,7 @@ namespace NeoServer.Game.Enums.Location.Structs
 
                 if (directionX == Direction.None && directionY == Direction.None) return Direction.None;
 
-                return GetSqmDistanceX(targetLocation) >= GetSqmDistanceY(targetLocation) ? directionX: directionY;
+                return GetSqmDistanceX(targetLocation) >= GetSqmDistanceY(targetLocation) ? directionX : directionY;
 
             }
 
@@ -246,23 +229,23 @@ namespace NeoServer.Game.Enums.Location.Structs
             get
             {
                 var pool = ArrayPool<Location>.Shared;
-                var locations = pool.Rent(8); 
+                var locations = pool.Rent(8);
 
-                locations[0] = this + new Location(-1, 0, 0);
-                locations[1] = this + new Location(0, 1, 0);
-                locations[2] = this + new Location(1, 0, 0);
-                locations[3] = this + new Location(0, -1, 0);
-                locations[4] = this + new Location(-1, -1, 0);
-                locations[5] = this + new Location(1, -1, 0);
-                locations[6] = this + new Location(1, 1, 0);
-                locations[7] = this + new Location(-1, 1, 0);
+                locations[0] = (Translate() +  new Coordinate(-1, 0, 0)).Location;
+                locations[1] = (Translate() +  new Coordinate(0, 1, 0)).Location;
+                locations[2] = (Translate() +  new Coordinate(1, 0, 0)).Location;
+                locations[3] = (Translate() +  new Coordinate(0, -1, 0)).Location;
+                locations[4] = (Translate() +  new Coordinate(-1, -1, 0)).Location;
+                locations[5] = (Translate() +  new Coordinate(1, -1, 0)).Location;
+                locations[6] = (Translate() +  new Coordinate(1, 1, 0)).Location;
+                locations[7] = (Translate() + new Coordinate(-1, 1, 0)).Location;
 
                 pool.Return(locations);
 
                 return locations[0..8];
             }
         }
-
+    
         /// <summary>
         /// Check whether location is 1 sqm next to dest
         /// </summary>
@@ -270,5 +253,11 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// <returns></returns>
         public bool IsNextTo(Location dest) => Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
 
+        public override bool Equals(object obj)
+        {
+            return obj is Location && Equals(obj);
+        }
+
+        public Coordinate Translate() => new Coordinate(X, Y, (sbyte)Z);
     }
 }

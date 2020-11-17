@@ -34,7 +34,7 @@ namespace NeoServer.Server.Model.Players
         public IOutfit Outfit { get; set; }
 
         public ushort StaminaMinutes { get; set; }
-
+        public byte AmmoAmount { get; set; }
         public Dictionary<Slot, ushort> Inventory { get; set; }
         public IEnumerable<IItemModel> Items { get; set; } = new List<ItemModel>();
         public ushort Speed { get; set; }

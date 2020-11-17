@@ -8,6 +8,8 @@ using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 
 namespace NeoServer.Game.World.Map
@@ -17,7 +19,7 @@ namespace NeoServer.Game.World.Map
         private readonly IMap _map;
         public ITile FromTile { get; set; }
         public ITile ToTile { get; set; }
-        public Dictionary<uint, ICylinderSpectator> TileSpectators { get; private set; }        
+        public ICylinderSpectator[] TileSpectators { get; private set; }        
 
         public Cylinder(IMap map)
         {
@@ -28,38 +30,41 @@ namespace NeoServer.Game.World.Map
         {
             _map = map;
             ToTile = toTile;
-            TileSpectators = new Dictionary<uint, ICylinderSpectator>();
 
             var spectators = _map.GetCreaturesAtPositionZone(toTile.Location, toTile.Location);
 
+            TileSpectators = new ICylinderSpectator[spectators.Count()];
+            int index = 0;
             foreach (var spectator in spectators)
             {
                 byte stackPosition = default;
-                if (spectator.Value is IPlayer player)
+                if (spectator is IPlayer player)
                 {
                     toTile.TryGetStackPositionOfThing(player, thing, out stackPosition);
                 }
 
-                TileSpectators.Add(spectator.Key, new CylinderSpectator(spectator.Value, 0, stackPosition));
+                TileSpectators[index++] = new CylinderSpectator(spectator, 0, stackPosition);
             }
         }
 
         public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
         {
             FromTile = tile;
-            TileSpectators = new Dictionary<uint, ICylinderSpectator>();
-
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
+
+            TileSpectators = new ICylinderSpectator[spectators.Count()];
+
+            int index = 0;
 
             foreach (var spectator in spectators)
             {
                 byte stackPosition = default;
-                if (spectator.Value is IPlayer player)
+                if (spectator is IPlayer player)
                 {
                     tile.TryGetStackPositionOfThing(player, thing, out stackPosition);
                 }
 
-                TileSpectators.Add(spectator.Key, new CylinderSpectator(spectator.Value, stackPosition, 0));
+                TileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, 0);
             }
 
             tile.RemoveThing(ref thing, amount);
@@ -68,21 +73,23 @@ namespace NeoServer.Game.World.Map
         public Result<TileOperationResult> AddThing(ref IMoveableThing thing, IWalkableTile tile)
         {
             ToTile = tile;
-            TileSpectators = new Dictionary<uint, ICylinderSpectator>();
 
             var result = tile.AddThing(ref thing);
 
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
 
+            TileSpectators = new ICylinderSpectator[spectators.Count()];
+            int index = 0;
+
             foreach (var spectator in spectators)
             {
                 byte stackPosition = default;
-                if (spectator.Value is IPlayer player)
+                if (spectator is IPlayer player)
                 {
                     tile.TryGetStackPositionOfThing(player, thing, out stackPosition);
                 }
 
-                TileSpectators.Add(spectator.Key, new CylinderSpectator(spectator.Value, 0, stackPosition));
+                TileSpectators[index++]= new CylinderSpectator(spectator, 0, stackPosition);
             }
 
             return result;
@@ -90,7 +97,6 @@ namespace NeoServer.Game.World.Map
 
         public Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile fromTile, IWalkableTile toTile, byte amount = 1)
         {
-            TileSpectators = new Dictionary<uint, ICylinderSpectator>();
             ToTile = toTile;
             FromTile = fromTile;
 
@@ -101,6 +107,9 @@ namespace NeoServer.Game.World.Map
 
             var spectators = _map.GetCreaturesAtPositionZone(fromTile.Location, toTile.Location);
 
+            TileSpectators = new ICylinderSpectator[spectators.Count()];
+            int index = 0;
+
             var result = toTile.AddThing(ref thing);
 
             foreach (var spectator in spectators)
@@ -108,13 +117,13 @@ namespace NeoServer.Game.World.Map
                 byte fromStackPosition = default;
                 byte toStackPosition = default;
 
-                if (spectator.Value is IPlayer player)
+                if (spectator is IPlayer player)
                 {
                     fromTile.TryGetStackPositionOfThing(player, thing, out fromStackPosition);
                     toTile.TryGetStackPositionOfThing(player, thing, out toStackPosition);
                 }
 
-                TileSpectators.Add(spectator.Key, new CylinderSpectator(spectator.Value, fromStackPosition, toStackPosition));
+                TileSpectators[index++] = new CylinderSpectator(spectator, fromStackPosition, toStackPosition);
             }
 
             fromTile.RemoveThing(ref thing, amount);
@@ -126,7 +135,7 @@ namespace NeoServer.Game.World.Map
 
 
 
-    public class CylinderSpectator : ICylinderSpectator
+    public readonly struct CylinderSpectator : IEquatable<CylinderSpectator>, ICylinderSpectator
     {
         public CylinderSpectator(ICreature spectator, byte fromStackPosition, byte toStackPosition)
         {
@@ -139,6 +148,15 @@ namespace NeoServer.Game.World.Map
         public byte FromStackPosition { get; }
         public byte ToStackPosition { get; }
         public ICreature Spectator { get; }
+
+        public bool Equals([AllowNull] CylinderSpectator other)
+        {
+            return Spectator.CreatureId == other.Spectator.CreatureId;
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Spectator.CreatureId);
+        }
     }
 }
 

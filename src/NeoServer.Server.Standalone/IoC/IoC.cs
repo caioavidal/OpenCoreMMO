@@ -2,11 +2,10 @@
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.Creatures;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
@@ -23,13 +22,10 @@ using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Jobs.Creatures;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Standalone.Factories;
 using NeoServer.Server.Tasks;
 using NeoServer.Server.Tasks.Contracts;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace NeoServer.Server.Standalone.IoC
@@ -73,7 +69,7 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterIncomingPacketFactory(builder);
 
             RegisterItemFactory(builder);
-            RegisterNewItemFactory(builder);
+            //RegisterNewItemFactory(builder);
 
             RegisterPlayerFactory(builder);
 
@@ -90,6 +86,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
 
             //factories
+            builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
             builder.RegisterType<PlayerFactory>().As<IPlayerFactory>().SingleInstance();
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
             builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
@@ -167,17 +164,17 @@ namespace NeoServer.Server.Standalone.IoC
             //});
         }
 
-        private static void RegisterNewItemFactory(ContainerBuilder builder)
-        {
-            builder.Register((c, p) =>
-            {
-                var typeId = p.TypedAs<ushort>();
-                var location = p.TypedAs<Location>();
-                var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
+        //private static void RegisterNewItemFactory(ContainerBuilder builder)
+        //{
+        //    builder.Register((c, p) =>
+        //    {
+        //        var typeId = p.TypedAs<ushort>();
+        //        var location = p.TypedAs<Location>();
+        //        var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
 
-                return ItemFactory.Create(typeId, location, attributes);
-            });
-        }
+        //        return ItemFactory.Create(typeId, location, attributes);
+        //    });
+        //}
 
     }
 }

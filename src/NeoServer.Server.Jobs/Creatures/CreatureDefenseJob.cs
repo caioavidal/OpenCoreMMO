@@ -19,7 +19,7 @@ namespace NeoServer.Server.Jobs.Creatures
             }
             if (monster.IsInCombat && !monster.Defending)
             {
-                var interval = monster.Defende();
+                var interval = monster.Defend();
 
                 ScheduleDefense(game, monster, interval);
             }
@@ -32,7 +32,7 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 game.Scheduler.AddEvent(new SchedulerEvent(interval, () =>
                 {
-                    var interval = monster.Defende();
+                    var interval = monster.Defend();
                     ScheduleDefense(game, monster, interval);
                 }));
             }

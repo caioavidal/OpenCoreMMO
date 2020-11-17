@@ -14,9 +14,9 @@ namespace NeoServer.Game.Effects.Magical
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static Location[] Create(Direction direction, int length)
+        public static Coordinate[] Create(Direction direction, int length)
         {
-            var pool = ArrayPool<Location>.Shared;
+            var pool = ArrayPool<Coordinate>.Shared;
             var points = pool.Rent(length);
 
             var y = 0;
@@ -27,16 +27,16 @@ namespace NeoServer.Game.Effects.Magical
                 switch (direction)
                 {
                     case Direction.North:
-                        points[i] = new Location(x, --y, 0);
+                        points[i] = new Coordinate(x, --y, 0);
                         break;
                     case Direction.East:
-                        points[i] = new Location(++x, y, 0);
+                        points[i] = new Coordinate(++x, y, 0);
                         break;
                     case Direction.South:
-                        points[i] = new Location(x, ++y, 0);
+                        points[i] = new Coordinate(x, ++y, 0);
                         break;
                     case Direction.West:
-                        points[i] = new Location(--x, y, 0);
+                        points[i] = new Coordinate(--x, y, 0);
                         break;
                     case Direction.None:
                         break;
@@ -48,6 +48,20 @@ namespace NeoServer.Game.Effects.Magical
             pool.Return(points);
 
             return points[0..length];
+        }
+
+        public static Coordinate[] Create(Location location, Direction direction, int length)
+        {
+            var i = 0;
+
+            var affectedLocations = Create(direction, length);
+            var affectedArea = new Coordinate[affectedLocations.Length];
+
+            foreach (var affectedlocation in affectedLocations)
+            {
+                affectedArea[i++] = location.Translate() + affectedlocation;
+            }
+            return affectedArea;
         }
     }
 }

@@ -19,16 +19,16 @@ namespace NeoServer.Loaders.World
 {
     public class WorldLoader
     {
-        private readonly Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> item1Factory;
         private Game.World.World world;
         private readonly Logger logger;
+        private readonly IItemFactory itemFactory;
 
-        public WorldLoader(Game.World.World world, Logger logger, Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> item1Factory)
+        public WorldLoader(Game.World.World world, Logger logger, IItemFactory itemFactory)
         {
             //this.itemFactory = itemFactory;
             this.world = world;
             this.logger = logger;
-            this.item1Factory = item1Factory;
+            this.itemFactory = itemFactory;
         }
         public void Load()
         {
@@ -99,7 +99,7 @@ namespace NeoServer.Loaders.World
                     }
                 }
 
-                var item = item1Factory?.Invoke(itemNode.ItemId, new Location(tileNode.Coordinate), attributes);
+                var item = itemFactory.Create(itemNode.ItemId, new Location(tileNode.Coordinate), attributes);
 
                 item.ThrowIfNull($"Failed to create item on {tileNode.Coordinate}");
 

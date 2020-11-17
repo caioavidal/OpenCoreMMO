@@ -18,6 +18,8 @@ namespace NeoServer.Server.Commands
 
         public override void Execute()
         {
+            if (!player.Logout()) return;
+
             if (!player.IsRemoved)
             {
                 game.CreatureManager.RemovePlayer(player);

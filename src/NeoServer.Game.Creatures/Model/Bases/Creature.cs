@@ -1,33 +1,22 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Combat;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Creatures.Players;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Enums.Talks;
-using NeoServer.Game.Items;
 using NeoServer.Game.Model;
 using NeoServer.Server.Helpers;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NeoServer.Game.Creatures.Model
 {
 
-    public abstract class Creature : MoveableThing, ICreature
+    public abstract class Creature : MoveableThing, IEquatable<Creature>, ICreature
     {
         public event RemoveCreature OnCreatureRemoved;
         public event GainExperience OnGainedExperience;
@@ -56,6 +45,7 @@ namespace NeoServer.Game.Creatures.Model
             };
             Hostiles = new HashSet<uint>();
             Friendly = new HashSet<uint>();
+            
         }
 
         public void SetAsRemoved() => IsRemoved = true;
@@ -113,7 +103,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetFlag(CreatureFlag flag) => Flags |= (uint)flag;
         public void UnsetFlag(CreatureFlag flag) => Flags &= ~(uint)flag;
-        public bool CanSee(ICreature otherCreature)
+        public virtual bool CanSee(ICreature otherCreature)
         {
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
@@ -158,12 +148,17 @@ namespace NeoServer.Game.Creatures.Model
 
         public void SetDirection(Direction direction) => Direction = direction;
 
-        public virtual void GainExperience(uint exp) => OnGainedExperience?.Invoke(this, exp);
+        public virtual void GainExperience(uint exp)
+        {
+            OnGainedExperience?.Invoke(this, exp);
+        }
 
         public void AddCondition(ICondition condition)
         {
-            Conditions.TryAdd(condition.Type, condition);
+            var result = Conditions.TryAdd(condition.Type, condition);
             condition.Start(this);
+            if (result == false) return;
+
             OnAddedCondition?.Invoke(this, condition);
         }
         public void RemoveCondition(ICondition condition)
@@ -172,6 +167,8 @@ namespace NeoServer.Game.Creatures.Model
             OnRemovedCondition?.Invoke(this, condition);
         }
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
+        public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
+
 
         public virtual void Say(string message, TalkType talkType)
         {
@@ -179,15 +176,21 @@ namespace NeoServer.Game.Creatures.Model
         }
         public virtual IItem CreateItem(ushort itemId, byte amount)
         {
-            var item = ItemFactory.Create(itemId, Location, null);
-            if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
-            return item;
+            throw new NotImplementedException();
+            //var item = ItemFactory.Create(itemId, Location, null);
+            //if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
+            //return item;
         }
 
 
-        public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == this.CreatureId;
+        public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == CreatureId;
 
         public override int GetHashCode() => HashCode.Combine(CreatureId);
+
+        public bool Equals([AllowNull] Creature other)
+        {
+           return this == other;
+        }
 
         public static bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         public static bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

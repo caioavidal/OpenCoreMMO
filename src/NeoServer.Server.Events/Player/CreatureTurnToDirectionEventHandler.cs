@@ -24,15 +24,15 @@ namespace NeoServer.Server.Events
             creature.ThrowIfNull();
             direction.ThrowIfNull();
 
-            foreach (var spectatorId in map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
             {
 
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out var connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
                 {
                     continue;
                 }
 
-                if(!game.CreatureManager.TryGetPlayer(spectatorId, out var player))
+                if(!game.CreatureManager.TryGetPlayer(spectator.CreatureId, out var player))
                 {
                     continue;
                 }

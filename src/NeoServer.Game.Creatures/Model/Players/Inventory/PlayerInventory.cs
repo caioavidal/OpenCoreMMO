@@ -27,10 +27,10 @@ namespace NeoServer.Server.Model.Players
 
                 if (Weapon is IDistanceWeaponItem distance)
                 {
-                    attack += distance.Attack;
+                    attack += distance.ExtraAttack;
                     if (Ammo != null)
                     {
-                        attack += distance.Attack;
+                        attack += distance.ExtraAttack;
                     }
 
                 }
@@ -61,6 +61,7 @@ namespace NeoServer.Server.Model.Players
 
         public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
 
+        public bool HasShield => Inventory.ContainsKey(Slot.Right);
         public byte TotalArmor
         {
             get

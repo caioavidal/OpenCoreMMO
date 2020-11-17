@@ -7,8 +7,8 @@
     "speed": "200",
     "manacost": "490",
     "health": {
-      "now": "260",
-      "max": "260"
+      "now": "26000",
+      "max": "26000"
     },
     "look": {
       "type": "22",
@@ -43,25 +43,25 @@
         "attack": "30"
       }
     ],
-    "defenses": {
+    "defense": {
       "armor": "15",
       "defense": "20"
     },
-    "elements": {
-      "element": [
+    "elements":
+      
         {
           "energyPercent": "25"
-        },
-        {
+        ,
+        
           "holyPercent": "20"
-        },
-        {
+        ,
+        
           "earthPercent": "-10"
-        },
-        {
+        ,
+        
           "deathPercent": "-10"
-        }
-      ]
+        
+      
     },
     "voices": {
       "interval": "5000",

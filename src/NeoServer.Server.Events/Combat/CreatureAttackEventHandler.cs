@@ -3,13 +3,16 @@ using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Effects.Explosion;
 using NeoServer.Game.Effects.Magical;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Helpers;
 using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NeoServer.Server.Events.Combat
@@ -22,43 +25,66 @@ namespace NeoServer.Server.Events.Combat
         {
             this.game = game;
         }
-        public void Execute(ICreature creature, ICreature victim, ICombatAttack attack)
+        public void Execute(ICreature creature, ICreature victim, CombatAttackType attack)
         {
-            foreach (var spectatorId in game.Map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
             {
 
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }
+                //if (attack is IAreaAttack areaAttack)
+                //{
+                //    foreach (var coordinate in areaAttack.AffectedArea)
+                //    {
+                //        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, damageEffect));
+                //    }
+                //}
+                //else
+                //{
+                //    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                //}
 
-                byte effect = 0;
+                //if (attack is IDistanceCombatAttack distanceAttack)
+                //{
+                //    var effect = (byte)distanceAttack.ShootType;
+                //    connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
+                //}
 
-                if (attack is IDistanceCombatAttack distanceAttack)
+                if (attack.Missed)
                 {
-                    effect = (byte)distanceAttack.ShootType;
-                }
-
-                var damageEffect = DamageEffectParser.Parse(attack.DamageType);
-
-                if (attack is IAreaAttack areaAttack)
-                {
-                    foreach (var location in areaAttack.AffectedArea)
-                    {
-                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, damageEffect));
-                    }
+                    SendMissedAttack(creature, victim, attack, connection);
                 }
                 else
                 {
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                    if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
+                }
+                if (attack.Area?.Any() ?? false)
+                {
+                    foreach (var coordinate in attack.Area)
+                    {
+                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, DamageEffectParser.Parse(attack.DamageType)));
+                    }
                 }
 
-
-                connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
                 connection.Send();
             }
         }
 
-     
+        private static void SendMissedAttack(ICreature creature, ICreature victim, CombatAttackType attack, IConnection connection)
+        {
+            var index = 0;
+            Location destLocation;
+            do
+            {
+                index = ServerRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
+                destLocation = victim.Location.Neighbours[index];
+            } while (destLocation == creature.Location);
+
+            if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, destLocation, (byte)attack.ShootType));
+            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(destLocation, EffectT.Puff));
+        }
+    
     }
 }

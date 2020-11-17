@@ -17,9 +17,9 @@ namespace NeoServer.Server.Events
         }
         public void Execute(ICreature creature, ISpell spell, InvalidOperation error)
         {
-            foreach (var spectatorId in game.Map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }

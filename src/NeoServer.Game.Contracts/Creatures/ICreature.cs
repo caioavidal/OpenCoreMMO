@@ -58,6 +58,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IItem CreateItem(ushort itemId, byte amount);
         void GainExperience(uint exp);
         bool HasCondition(ConditionType type, out ICondition condition);
+        bool HasCondition(ConditionType type);
         bool HasFlag(CreatureFlag flag);
         void RemoveCondition(ICondition condition);
         void Say(string message, TalkType talkType);

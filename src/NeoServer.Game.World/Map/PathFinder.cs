@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Server.Helpers.Extensions;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -11,11 +12,8 @@ namespace NeoServer.Game.World.Map
 {
     public class PathFinder : IPathFinder
     {
-        public PathFinder(IMap map)
-        {
-            Map = map;
-        }
-
+        public PathFinder(IMap map) => Map = map;
+        
         public IMap Map { get; set; }
 
         public bool Find(ICreature creature, Location target, out Direction[] directions)
@@ -28,49 +26,79 @@ namespace NeoServer.Game.World.Map
         {
             var AStarTibia = new AStarTibia();
 
-            if (fpp.KeepDistance)
-            {
-                FindPathToKeepDistance(creature, target, fpp, out directions);
+            directions = new Direction[0];
 
-                if (creature.Location.GetSqmDistanceX(target) > fpp.MaxTargetDist || creature.Location.GetSqmDistanceY(target) > fpp.MaxTargetDist)
+            if (fpp.OneStep)
+            {
+                return FindStep(creature, target, fpp, out directions);
+            }
+
+            if (fpp.MaxTargetDist > 1)
+            {
+                if (!FindPathToKeepDistance(creature, target, fpp, out directions))
                 {
-                    return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(fpp.FullPathSearch, fpp.ClearSight, fpp.AllowDiagonal, false, fpp.MaxSearchDist, 1, fpp.MaxTargetDist), out directions);
+                    return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
                 }
                 return true;
             }
 
             return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
-
         }
 
-        public void FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
         {
             directions = new Direction[0];
 
-            if (fpp.KeepDistance == false)
+            var startLocation = creature.Location;
+
+            foreach (var neighbour in startLocation.Neighbours.Random())
             {
-                return;
+                if (neighbour.GetSqmDistanceX(target) > fpp.MaxTargetDist || neighbour.GetSqmDistanceY(target) > fpp.MaxTargetDist) continue;
+
+                if (fpp.MaxTargetDist > 1 && (neighbour.GetSqmDistanceX(target) < fpp.MaxTargetDist && neighbour.GetSqmDistanceY(target) < fpp.MaxTargetDist)) continue;
+
+                if (Map.CanWalkTo(neighbour, out var tile))
+                {
+                    directions = new Direction[1] { startLocation.DirectionTo(neighbour) };
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        {
+            directions = new Direction[0];
+
+            if (fpp.MaxTargetDist <= 1)
+            {
+                return true;
             }
             var startLocation = creature.Location;
 
             var xDistance = startLocation.GetSqmDistanceX(target);
             var yDistance = startLocation.GetSqmDistanceY(target);
 
-            if (xDistance >= fpp.MaxTargetDist || yDistance >= fpp.MaxTargetDist)
+            if (xDistance > fpp.MaxTargetDist || yDistance > fpp.MaxTargetDist)
             {
-                return;
+                return false;
             }
+            if (xDistance == fpp.MaxTargetDist || yDistance == fpp.MaxTargetDist) return true;
 
             if (xDistance < fpp.MaxTargetDist && xDistance >= yDistance)
             {
                 directions = new Direction[1] { startLocation.DirectionTo(target) == Direction.West ? Direction.East : Direction.West };
-                return;
+                return true;
             }
-            if (yDistance < fpp.MaxTargetDist && yDistance > xDistance)
+
+            if (yDistance < fpp.MaxTargetDist && yDistance >= xDistance)
             {
                 directions = new Direction[1] { startLocation.DirectionTo(target) == Direction.South ? Direction.North : Direction.South };
-                return;
+                return true;
             }
+
+            return true;
         }
     }
 }

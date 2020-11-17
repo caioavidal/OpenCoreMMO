@@ -7,7 +7,6 @@ namespace NeoServer.Game.World.Spawns
 {
     public class SpawnManager
     {
-
         private readonly World _world;
         private readonly IMap _map;
         private readonly ICreatureFactory _creatureFactory;
@@ -48,7 +47,7 @@ namespace NeoServer.Game.World.Spawns
 
         public void StartSpawn()
         {
-            foreach (var monsterToSpawn in _world.Spawns.SelectMany(x => x.Monsters))
+            foreach (var monsterToSpawn in _world.Spawns.SelectMany(x => x.Monsters).ToList())
             {
                 var monster = _creatureFactory.CreateMonster(monsterToSpawn.Name, monsterToSpawn.Spawn);
                 monster.SetNewLocation(monsterToSpawn.Spawn.Location);

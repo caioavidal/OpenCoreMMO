@@ -96,7 +96,8 @@ namespace NeoServer.Game.Creatures
             //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
-            creature.OnAttack += _map.PropagateAttack;
+            creature.OnPropagateAttack += _map.PropagateAttack;
+            creature.OnAttackEnemy += _creatureAttackEventHandler.Execute;
             creature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
             creature.OnHeal += _creatureHealedEventHandler.Execute;
             creature.OnSay += _creatureSayEventHandler.Execute;
@@ -106,12 +107,14 @@ namespace NeoServer.Game.Creatures
         private void DetachEvents(ICombatActor creature)
         {
             creature.OnDamaged -= _creatureReceiveDamageEventHandler.Execute;
-            creature.OnKilled -= _creatureKilledEventHandler.Execute;
+            //creature.OnKilled -= _creatureKilledEventHandler.Execute;
             creature.OnKilled -= DetachEvents;
             //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack -= _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection -= _creatureTurnToDirectionEventHandler.Execute;
-            creature.OnAttack -= _map.PropagateAttack;
+            creature.OnPropagateAttack -= _map.PropagateAttack;
+            
+            creature.OnAttackEnemy -= _creatureAttackEventHandler.Execute;
             creature.OnStartedWalking -= _creatureStartedWalkingEventHandler.Execute;
             creature.OnHeal -= _creatureHealedEventHandler.Execute;
             creature.OnSay -= _creatureSayEventHandler.Execute;

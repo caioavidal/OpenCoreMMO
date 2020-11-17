@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.Items.Items;
@@ -8,11 +9,9 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Items
 {
-
     public class ItemFactory : IItemFactory
     {
-
-        public static IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+        public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
 
             if (typeId < 100 || !ItemTypeData.InMemory.ContainsKey(typeId))
@@ -31,13 +30,13 @@ namespace NeoServer.Game.Items
             {
                 return new GroundItem(itemType, location);
             }
-            if (WeaponItem.IsApplicable(itemType))
+            if (MeleeWeapon.IsApplicable(itemType))
             {
-                return new WeaponItem(itemType, location);
+                return new MeleeWeapon(itemType, location);
             }
-            if (DistanceWeaponItem.IsApplicable(itemType))
+            if (DistanceWeapon.IsApplicable(itemType))
             {
-                return new DistanceWeaponItem(itemType, location);
+                return new DistanceWeapon(itemType, location);
             }
 
             if (PickupableContainer.IsApplicable(itemType))
@@ -60,11 +59,15 @@ namespace NeoServer.Game.Items
             {
                 return new Necklace(itemType, location);
             }
+            if (Wand.IsApplicable(itemType))
+            {
+                return new Wand(itemType, location);
+            }
             if (CumulativeItem.IsApplicable(itemType))
             {
-                if (ThrowableDistanceWeaponItem.IsApplicable(itemType))
+                if (ThrowableDistanceWeapon.IsApplicable(itemType))
                 {
-                    return new ThrowableDistanceWeaponItem(itemType, location, attributes);
+                    return new ThrowableDistanceWeapon(itemType, location, attributes);
                 }
                 if (AmmoItem.IsApplicable(itemType))
                 {

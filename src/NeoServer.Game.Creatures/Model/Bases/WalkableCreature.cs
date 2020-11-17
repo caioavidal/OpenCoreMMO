@@ -46,7 +46,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool HasNextStep => WalkingQueue.Count > 0;
         public bool FollowCreature { get; protected set; }
         public uint FollowEvent { get; set; }
-
+        public bool HasFollowPath { get; private set; }
+        public virtual FindPathParams PathSearchParams
+        {
+            get
+            {
+                return new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
+            }
+        }
         public void UpdateLastStepInfo(bool wasDiagonal = true)
         {
             var tilePenalty = Tile?.MovementPenalty;
@@ -113,21 +120,43 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnStoppedWalking?.Invoke(this);
         }
 
-
         public void StopFollowing()
         {
             Following = 0;
+            HasFollowPath = false;
             StopWalking();
+        }
+
+        public virtual void OnCreatureDisappear(ICreature creature)
+        {
+            StopFollowing();
         }
 
         public void StartFollowing(IWalkableCreature creature, FindPathParams fpp)
         {
+            if (IsFollowing)
+            {
+                Following = creature.CreatureId;
+                Follow(creature);
+                return;
+            }
+
             Following = creature.CreatureId;
             OnStartedFollowing?.Invoke(this, creature, fpp);
         }
-        public void Follow(IWalkableCreature creature, FindPathParams fpp)
+        public void Follow(IWalkableCreature creature)
         {
-            if (!FindPathToDestination(this, creature.Location, fpp, out var directions)) return;
+            if (!CanSee(creature.Location))
+            {
+                OnCreatureDisappear(creature);
+                return;
+            }
+            if (!FindPathToDestination(this, creature.Location, PathSearchParams, out var directions))
+            {
+                HasFollowPath = false;
+                return;
+            }
+            HasFollowPath = true;
             TryUpdatePath(directions);
         }
 
@@ -152,6 +181,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public bool TryUpdatePath(Direction[] newPath)
         {
+            if (newPath.Length == 0) return false;
             if (!Cooldowns.Expired(CooldownType.UpdatePath)) return false;
 
             Cooldowns.Start(CooldownType.UpdatePath, 1000);

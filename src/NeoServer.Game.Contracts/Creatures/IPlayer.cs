@@ -15,7 +15,8 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
     public delegate void ReduceMana(IPlayer player);
     public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
-
+    public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
+    public delegate void OperationFail(uint id, string message);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -48,6 +49,7 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         event CancelWalk OnCancelledWalk;
         event CannotUseSpell OnCannotUseSpell;
+        event OperationFail OnOperationFailed;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -110,5 +112,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);
+        bool Logout();
+        ushort CalculateAttackPower(float attackRate, ushort attack);
     }
 }

@@ -7,6 +7,6 @@ namespace NeoServer.Game.Contracts.Combat
 {
     public interface IAreaAttack
     {
-         Location[] AffectedArea { get; }
+         Coordinate[] AffectedArea { get; }
     }
 }

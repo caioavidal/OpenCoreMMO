@@ -1,14 +1,13 @@
-using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Spells;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Creatures;
 using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
@@ -46,11 +45,6 @@ namespace NeoServer.Server.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
 
-            if (Skills.TryGetValue(SkillType.Level, out ISkill skill))
-            {
-                Experience = (uint)skill.Count;
-            }
-
             SetNewLocation(location);
 
             Containers = new PlayerContainerList(this);
@@ -59,8 +53,15 @@ namespace NeoServer.Server.Model.Players
             VipList = new Dictionary<string, bool>(); //todo
 
             Inventory = new PlayerInventory(this, inventory);
+
+            foreach (var skill in Skills.Values)
+            {
+                skill.OnAdvance += OnLevelAdvance;
+            }
         }
 
+        public event PlayerLevelAdvance OnLevelAdvanced;
+        public event OperationFail OnOperationFailed;
         public event CancelWalk OnCancelledWalk;
 
         public event ReduceMana OnManaReduced;
@@ -68,9 +69,12 @@ namespace NeoServer.Server.Model.Players
 
         public event UseSpell OnUsedSpell;
 
-
+        public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
+        {
+            Heal(MaxHealthPoints);
+            OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
+        }
         private uint IdleTime;
-
         public string CharacterName { get; private set; }
 
         public Account Account { get; private set; }
@@ -96,12 +100,22 @@ namespace NeoServer.Server.Model.Players
         public FightMode FightMode { get; private set; }
         public byte SoulPoints { get; private set; }
         public uint MaxSoulPoints { get; private set; }
-
         public IInventory Inventory { get; set; }
 
         public ushort StaminaMinutes { get; private set; }
 
-        public uint Experience { get; private set; }
+        public uint Experience
+        {
+            get
+            {
+                if (Skills.TryGetValue(SkillType.Level, out ISkill skill))
+                {
+                    return (uint)skill.Count;
+                }
+                return 0;
+            }
+         
+        }
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
         public bool IsMounted()
@@ -109,13 +123,9 @@ namespace NeoServer.Server.Model.Players
             return false;
         }
 
-        public void IncreaseSkillCounter(SkillType skill, ushort value)
+        public void IncreaseSkillCounter(SkillType skill, uint value)
         {
-            if (!Skills.ContainsKey(skill))
-            {
-                // TODO: proper logging.
-                Console.WriteLine($"CreatureId {Name} does not have the skill {skill} in it's skill set.");
-            }
+            if (!Skills.ContainsKey(skill)) return;
 
             Skills[skill].IncreaseCounter(value);
         }
@@ -140,7 +150,8 @@ namespace NeoServer.Server.Model.Players
             {
                 return;
             }
-            Experience += exp;
+
+            IncreaseSkillCounter(SkillType.Level, exp);
             base.GainExperience(exp);
         }
 
@@ -149,7 +160,7 @@ namespace NeoServer.Server.Model.Players
         public override string CloseInspectionText => InspectionText;
         public byte AccessLevel { get; set; } // TODO: implement.
 
-        public bool CannotLogout => !Tile.ProtectionZone && InFight;
+        public bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
 
         public bool CanLogout
         {
@@ -157,11 +168,11 @@ namespace NeoServer.Server.Model.Players
             {
                 //todo inconnection validation
 
-                if (Tile.CannotLogout)
+                if (Tile?.CannotLogout ?? false)
                 {
                     return false;
                 }
-                if (Tile.ProtectionZone)
+                if (Tile?.ProtectionZone ?? false)
                 {
                     return true;
                 }
@@ -172,7 +183,6 @@ namespace NeoServer.Server.Model.Players
 
         public Location LocationInFront
         {
-
             get
             {
                 switch (Direction)
@@ -181,20 +191,20 @@ namespace NeoServer.Server.Model.Players
                         return new Location
                         {
                             X = Location.X,
-                            Y = Location.Y - 1,
+                            Y = (ushort)(Location.Y - 1),
                             Z = Location.Z
                         };
                     case Direction.East:
                         return new Location
                         {
-                            X = Location.X + 1,
+                            X = (ushort)(Location.X + 1),
                             Y = Location.Y,
                             Z = Location.Z
                         };
                     case Direction.West:
                         return new Location
                         {
-                            X = Location.X - 1,
+                            X = (ushort)(Location.X - 1),
                             Y = Location.Y,
                             Z = Location.Z
                         };
@@ -202,7 +212,7 @@ namespace NeoServer.Server.Model.Players
                         return new Location
                         {
                             X = Location.X,
-                            Y = Location.Y + 1,
+                            Y = (ushort)(Location.Y + 1),
                             Z = Location.Z
                         };
                     default:
@@ -246,11 +256,13 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
+        public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
+
         public override ushort AttackPower
         {
             get
             {
-                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + (Level / 5));
+                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
             }
         }
 
@@ -272,17 +284,7 @@ namespace NeoServer.Server.Model.Players
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
         public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
-        public void AddKnownCreature(uint creatureId)
-        {
-            try
-            {
-                KnownCreatures[creatureId] = DateTime.Now.Ticks;
-            }
-            catch
-            {
-                // happens when 2 try to add at the same time, which we don't care about.
-            }
-        }
+        public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
 
         const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
         public uint ChooseToRemoveFromKnownSet()
@@ -351,28 +353,28 @@ namespace NeoServer.Server.Model.Players
             return (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
         }
 
-        public override int ArmorDefend(int attack)
+        public override int ArmorDefend(int damage)
         {
             if (ArmorRating > 3)
             {
                 var min = ArmorRating / 2;
                 var max = (ArmorRating / 2) * 2 - 1;
-                attack -= (ushort)GaussianRandom.Random.NextInRange(min, max);
+                damage -= (ushort)ServerRandom.Random.NextInRange(min, max);
             }
             else if (ArmorRating > 0)
             {
-                --attack;
+                --damage;
             }
-            return attack;
+            return damage;
         }
         public void ReceiveManaAttack(ICreature enemy, ushort damage)
         {
             ConsumeMana(damage);
         }
-        public override bool Attack(ICombatActor enemy, ICombatAttack combatAttack = null)
+        public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
-            var melee = new MeleeCombatAttack(255, 255);
-            return base.Attack(enemy, melee);
+            combat = new CombatAttackType();
+            return Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
         }
 
         public override void Say(string message, TalkType talkType)
@@ -385,7 +387,7 @@ namespace NeoServer.Server.Model.Players
                     return;
                 }
 
-                Cooldowns.Start(CooldownType.Spell, 1000); //odo: 1000 should be a const
+                Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
                 OnUsedSpell?.Invoke(this, spell);
             }
             base.Say(message, talkType);
@@ -411,6 +413,31 @@ namespace NeoServer.Server.Model.Players
                 Tile.AddThing(ref thing);
             }
             return item;
+        }
+
+        public override CombatDamage OnImmunityDefense(CombatDamage damage)
+        {
+            return damage; //todo
+        }
+
+        public bool Logout()
+        {
+            if (CannotLogout)
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You may not logout during or immediately after a fight");
+                return false;
+            }
+
+            StopAttack();
+            StopFollowing();
+            StopWalking();
+            return true;
+
+        }
+        public override bool CanBlock(DamageType damage)
+        {
+            if (!Inventory.HasShield) return false;
+            return base.CanBlock(damage);
         }
     }
 }

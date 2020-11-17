@@ -100,7 +100,7 @@ namespace NeoServer.Game.Items
                 return new Tuple<DamageType, byte>(DamageType.Energy, GetAttribute<byte>(ItemAttribute.ElementEnergy));
 
             if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementFire) ?? false)
-                return new Tuple<DamageType, byte>(DamageType.Fire, GetAttribute<byte>(ItemAttribute.ElementFire));
+                return new Tuple<DamageType, byte>(DamageType.FireField, GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
 
             if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementIce) ?? false)
                 return new Tuple<DamageType, byte>(DamageType.Ice, GetAttribute<byte>(ItemAttribute.ElementIce));

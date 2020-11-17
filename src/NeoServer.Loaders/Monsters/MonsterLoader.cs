@@ -28,18 +28,14 @@ namespace NeoServer.Loaders.Monsters
             foreach (var monsterFile in monstersPath)
             {
                 yield return ConvertMonster(basePath, monsterFile);
-
             }
-            //return monsters;
         }
 
         private static IMonsterType ConvertMonster(string basePath, IDictionary<string, string> monsterFile)
         {
             var json = File.ReadAllText(Path.Combine(basePath, monsterFile["file"]));
 
-            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings
-            {
-            });
+            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; } });
 
             return MonsterConverter.Convert(monster);
         }

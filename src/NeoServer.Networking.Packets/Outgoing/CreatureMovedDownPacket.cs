@@ -36,15 +36,15 @@ namespace NeoServer.Networking.Packets.Outgoing
 
                 //todo try to find a better way
                 message.AddBytes(map.GetFloorDescription(creature, x, y, toLocation.Z, 18, 14, -1, ref skip).ToArray());
-                message.AddBytes(map.GetFloorDescription(creature, x, y, (sbyte)(toLocation.Z + 1), 18, 14, -2, ref skip).ToArray());
-                message.AddBytes(map.GetFloorDescription(creature, x, y, (sbyte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
+                message.AddBytes(map.GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 1), 18, 14, -2, ref skip).ToArray());
+                message.AddBytes(map.GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
 
             }
             //going further down
             else if (toLocation.Z > location.Z && toLocation.Z > 8 && toLocation.Z < 14)
             {
                 skip = -1;
-                message.AddBytes(map.GetFloorDescription(creature, x, y, (sbyte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
+                message.AddBytes(map.GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
 
             }
 

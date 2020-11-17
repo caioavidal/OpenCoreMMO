@@ -79,23 +79,23 @@ namespace NeoServer.Networking.Packets.Outgoing
             switch (direction)
             {
                 case Direction.East:
-                    newLocation.X = toLocation.X + 9;
-                    newLocation.Y = toLocation.Y - 6;
+                    newLocation.X = (ushort)(toLocation.X + 9);
+                    newLocation.Y = (ushort)(toLocation.Y - 6);
                     height = 14;
                     break;
                 case Direction.West:
-                    newLocation.X = toLocation.X - 8;
-                    newLocation.Y = toLocation.Y - 6;
+                    newLocation.X = (ushort)(toLocation.X - 8);
+                    newLocation.Y = (ushort)(toLocation.Y - 6);
                     height = 14;
                     break;
                 case Direction.North:
-                    newLocation.X = fromLocation.X - 8;
-                    newLocation.Y = toLocation.Y - 6;
+                    newLocation.X = (ushort)(fromLocation.X - 8);
+                    newLocation.Y = (ushort)(toLocation.Y - 6);
                     width = 18;
                     break;
                 case Direction.South:
-                    newLocation.X = fromLocation.X - 8;
-                    newLocation.Y = toLocation.Y + 7;
+                    newLocation.X = (ushort)(fromLocation.X - 8);
+                    newLocation.Y = (ushort)(toLocation.Y + 7);
                     width = 18;
                     break;
             }

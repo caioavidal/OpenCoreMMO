@@ -12,11 +12,12 @@ namespace NeoServer.Server.Events.Creature
     {
         private readonly IMap map;
         private readonly Game game;
-
-        public CreatureKilledEventHandler(IMap map, Game game)
+        private readonly IItemFactory itemFactory;
+        public CreatureKilledEventHandler(IMap map, Game game, IItemFactory itemFactory)
         {
             this.map = map;
             this.game = game;
+            this.itemFactory = itemFactory;
         }
         public void Execute(ICombatActor creature)
         {
@@ -28,7 +29,7 @@ namespace NeoServer.Server.Events.Creature
 
                 map.RemoveThing(ref thing, tile);
 
-                var corpse = ItemFactory.Create(creature.Corpse, creature.Location, null) as IMoveableThing;
+                var corpse = itemFactory.Create(creature.Corpse, creature.Location, null) as IMoveableThing;
                 map.AddItem(ref corpse, tile);
 
                 //send packets to killed player

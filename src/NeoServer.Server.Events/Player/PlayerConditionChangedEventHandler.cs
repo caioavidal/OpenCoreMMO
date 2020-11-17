@@ -39,6 +39,7 @@ namespace NeoServer.Server.Events.Player
             {
                 ConditionType.Haste => ConditionIcon.Haste,
                 ConditionType.Poison => ConditionIcon.Poison,
+                ConditionType.InFight => ConditionIcon.Swords,
                 _ => ConditionIcon.None
             };
         }

@@ -1,22 +1,16 @@
 [
+
    {
-      "centerx": "1023",
-      "centery": "1019",
+      "centerx": "1025",
+      "centery": "1032",
       "centerz": "7",
       "radius": "1",
-      "monsters": [
-	  {
+      "monsters": [{
          "name": "Monster",
-         "x": "1",
-         "y": "1",
+         "x": "0",
+         "y": "0",
          "z": "7",
          "spawntime": "60"
-      }
-	 ]
-   
-  
-	 
-	 
+      }]
    }
-  
 ]
