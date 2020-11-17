@@ -76,7 +76,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public bool KeepDistance => TargetDistance > 1;
 
         public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
-        public List<ICombatDefense> Defenses => Metadata.Defenses;
+        public ICombatDefense[] Defenses => Metadata.Defenses;
 
         public override int ArmorDefend(int attack)
         {
@@ -92,28 +92,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
         public override ushort AttackPower => 0;
-
-        public ushort Defende()
-        {
-            if (!Defenses.Any())
-            {
-                Defending = false;
-                return default;
-            }
-
-            Defending = true;
-
-            var defense = (ICombatDefense)ProbabilityRandom.Next(Defenses.ToArray()); //todo: remove allocation here
-
-            defense?.Defende(this);
-
-            if (defense != null)
-            {
-                OnDefende?.Invoke(this, defense);
-            }
-
-            return defense?.Interval == null ? Defenses[0].Interval : defense.Interval;
-        }
 
         public override ushort ArmorRating => Metadata.Armor;
 
@@ -323,6 +301,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void Yell()
         {
+            if (Metadata.Voices is null) return;
+            if (Metadata.VoiceConfig is null) return;
+
             if (!Cooldowns.Expired(CooldownType.Yell)) return;
             Cooldowns.Start(CooldownType.Yell, Metadata.VoiceConfig.Interval);
 
@@ -337,6 +318,27 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
             Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
+        }
+        public ushort Defend()
+        {
+            if (!Defenses.Any())
+            {
+                Defending = false;
+                return default;
+            }
+
+            Defending = true;
+
+            var defenseIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Defenses.Length);
+            var defense = Defenses[defenseIndex];
+
+            if (defense.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100)) return defense.Interval; //can defend but lost his chance
+
+            defense.Defende(this);
+
+            OnDefende?.Invoke(this, defense);
+
+            return defense.Interval;
         }
 
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)

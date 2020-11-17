@@ -10,9 +10,10 @@ namespace NeoServer.Loaders.Monsters.Converters
     {
         public static IDictionary<DamageType, sbyte> Convert(MonsterData.MonsterMetadata data)
         {
-            if(data.Elements == null) return new Dictionary<DamageType, sbyte>(0);
+            if(data.Elements is null) return new Dictionary<DamageType, sbyte>(0);
 
             var immunities = new Dictionary<DamageType, sbyte>(data.Elements.Count);
+
             foreach (var element in data.Elements)
             {
                 DamageType immunity = DamageType.Melee;

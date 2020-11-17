@@ -387,7 +387,7 @@ namespace NeoServer.Server.Model.Players
                     return;
                 }
 
-                Cooldowns.Start(CooldownType.Spell, 1000); //odo: 1000 should be a const
+                Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
                 OnUsedSpell?.Invoke(this, spell);
             }
             base.Say(message, talkType);

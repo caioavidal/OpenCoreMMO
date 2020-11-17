@@ -167,6 +167,8 @@ namespace NeoServer.Game.Creatures.Model
             OnRemovedCondition?.Invoke(this, condition);
         }
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
+        public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
+
 
         public virtual void Say(string message, TalkType talkType)
         {

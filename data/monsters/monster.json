@@ -11,8 +11,8 @@
       "max": "105"
     },
     "look": {
-      "type": "50",
-      "corpse": "5996"
+      "type": "35",
+      "corpse": "5995"
     },
     "targetchange": {
       "interval": "5000",

@@ -24,59 +24,25 @@ namespace NeoServer.Loaders.Monsters
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defense = ushort.Parse(data.Defense.Defense),
-                Defenses = new List<ICombatDefense>(),
                 Experience = data.Experience
             };
 
             monster.TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval), System.Convert.ToByte(data.Targetchange.Chance));
 
-            monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval), System.Convert.ToByte(data.Voices.Chance));
+            if (data.Voices != null)
+            {
 
-            monster.Voices = data.Voices.Voice.Select(x=>x.Sentence).ToArray();
+                monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval), System.Convert.ToByte(data.Voices.Chance));
+
+                monster.Voices = data.Voices.Voice.Select(x => x.Sentence).ToArray();
+            }
 
             monster.Attacks = MonsterAttackConverter.Convert(data);
 
             monster.Immunities = MonsterImmunityConverter.Convert(data).ToImmutableDictionary();
 
-
-            //foreach (var defense in data.Defenses)
-            //{
-            //    defense.TryGetValue("name", out string defenseName);
-            //    defense.TryGetValue("chance", out byte chance);
-            //    defense.TryGetValue("interval", out ushort interval);
-            //    defense.TryGetValue<JArray>("attributes", out var attributes);
-
-
-            //    if (defenseName == "healing")
-            //    {
-            //        defense.TryGetValue("min", out decimal min);
-            //        defense.TryGetValue("max", out decimal max);
-
-            //        monster.Defenses.Add(new HealCombatDefence
-            //        {
-            //            Chance = chance,
-            //            Interval = interval,
-            //            Min = (ushort)Math.Abs(min),
-            //            Max = (ushort)Math.Abs(max),
-            //            Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a?.Value<string>("key") == "areaEffect")?.Value<string>("value"))
-
-            //        });
-            //    }
-            //    if (defenseName == "speed")
-            //    {
-            //        defense.TryGetValue("speedchange", out ushort speed);
-            //        defense.TryGetValue("duration", out uint duration);
-
-            //        monster.Defenses.Add(new HasteCombatDefence()
-            //        {
-            //            Chance = chance,
-            //            Interval = interval,
-            //            SpeedBoost = speed,
-            //            Duration = duration,
-            //            Effect = ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
-            //        });
-            //    }
-            //}
+            monster.Defenses = MonsterDefenseConverter.Convert(data);
+        
 
             foreach (var flag in data.Flags)
             {

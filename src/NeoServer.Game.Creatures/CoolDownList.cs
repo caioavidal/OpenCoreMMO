@@ -1,10 +1,6 @@
-﻿using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Creatures.Spells;
+﻿using NeoServer.Game.Creatures.Enums;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures
 {

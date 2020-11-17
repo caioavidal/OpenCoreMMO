@@ -42,7 +42,6 @@ namespace NeoServer.Game.Creatures
 
             return monster;
         }
-
         public void DetachEvents(ICreature creature)
         {
             if (creature is IMonster monster)

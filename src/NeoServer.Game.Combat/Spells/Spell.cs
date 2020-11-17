@@ -24,11 +24,17 @@ namespace NeoServer.Game.Creatures.Spells
         public bool Invoke(ICombatActor actor, out InvalidOperation error)
         {
             if (!CanBeUsedBy(actor, out error)) return false;
-            if (actor is IPlayer player) player.ConsumeMana(Mana);
+            if (actor is IPlayer player)
+            {
+                player.ConsumeMana(Mana);
+            }
 
-            OnCast(actor);
+            if (!actor.HasCondition(ConditionType)) OnCast(actor);
+
             AddCondition(actor);
-            AddCooldown(actor);
+
+            if (actor is IPlayer) AddCooldown(actor);
+
             return true;
         }
         public bool CanBeUsedBy(ICombatActor actor, out InvalidOperation error)

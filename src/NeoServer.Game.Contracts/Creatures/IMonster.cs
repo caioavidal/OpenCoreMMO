@@ -35,7 +35,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Executes defense action
         /// </summary>
         /// <returns>interval</returns>
-        ushort Defende();
+        ushort Defend();
         void MoveAroundEnemy();
         void UpdateLastTargetChance();
 

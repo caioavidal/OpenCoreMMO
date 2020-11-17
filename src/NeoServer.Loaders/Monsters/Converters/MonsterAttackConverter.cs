@@ -14,6 +14,8 @@ namespace NeoServer.Loaders.Monsters.Converters
     {
         public static IMonsterCombatAttack[] Convert(MonsterData.MonsterMetadata data)
         {
+            if (data.Attacks is null) return new IMonsterCombatAttack[0];
+
             var attacks = new List<IMonsterCombatAttack>();
 
             foreach (var attack in data.Attacks)
@@ -47,9 +49,9 @@ namespace NeoServer.Loaders.Monsters.Converters
                     MinDamage = (ushort)Math.Abs(min),
                     Spread = spread,
                     Target = target,
-                    DamageType = ParseDamageType(attackName),
+                    DamageType = MonsterAttributeParser.ParseDamageType(attackName),
                     //ShootType = ParseShootType(shootEffect),
-                    AreaEffect = ParseAreaEffect(areaEffect),
+                    AreaEffect = MonsterAttributeParser.ParseAreaEffect(areaEffect),
 
                 };
 
@@ -60,7 +62,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 }
                 if (attackName == "physical")
                 {
-                    combatAttack.CombatAttack = new DistanceCombatAttack(range, ParseShootType(shootEffect));
+                    combatAttack.CombatAttack = new DistanceCombatAttack(range, MonsterAttributeParser.ParseShootType(shootEffect));
                 }
 
                 attacks.Add(combatAttack);
@@ -150,38 +152,6 @@ namespace NeoServer.Loaders.Monsters.Converters
             return attacks.ToArray();
         }
 
-        private static DamageType ParseDamageType(string type)
-        {
-            return type switch
-            {
-                "melee" => DamageType.Melee,
-                "physical" => DamageType.Physical,
-                "energy" => DamageType.Energy,
-                "fire" => DamageType.Fire,
-                "manadrain" => DamageType.ManaDrain,
-                _ => DamageType.Melee
-            };
-        }
-        private static EffectT ParseAreaEffect(string type)
-        {
-            return type switch
-            {
-                "blueshimmer" => EffectT.GlitterBlue,
-                "redshimmer" => EffectT.GlitterRed,
-                _ => EffectT.None
-            };
-        }
-        private static ShootType ParseShootType(string type)
-        {
-            return type switch
-            {
-                "bolt" => ShootType.Bolt,
-                "spear" => ShootType.Spear,
-                "star" => ShootType.ThrowingStar,
-                "energy" => ShootType.Energy,
-                "fire" => ShootType.Fire,
-                _ => ShootType.None
-            };
-        }
+     
     }
 }
