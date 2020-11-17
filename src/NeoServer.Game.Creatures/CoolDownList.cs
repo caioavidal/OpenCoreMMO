@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Enums.Creatures.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -55,23 +56,5 @@ namespace NeoServer.Game.Creatures
         }
 
     }
-    public struct CooldownTime
-    {
-        public CooldownTime(DateTime start, int duration)
-        {
-            Start = start.Ticks;
-            Duration = TimeSpan.TicksPerMillisecond * duration;
-        }
-
-        public long Start { get; set; }
-        public long Duration { get; set; }
-        public bool Expired {
-            get
-            {
-                return Start + Duration <= DateTime.Now.Ticks;
-            }
-        }
-
-        public void Reset() => Start = DateTime.Now.Ticks;
-    }
+   
 }

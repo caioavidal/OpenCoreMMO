@@ -40,6 +40,7 @@ namespace NeoServer.Server.Events.Player
                 ConditionType.Haste => ConditionIcon.Haste,
                 ConditionType.Poison => ConditionIcon.Poison,
                 ConditionType.InFight => ConditionIcon.Swords,
+                ConditionType.Paralyze => ConditionIcon.Paralyze,
                 _ => ConditionIcon.None
             };
         }

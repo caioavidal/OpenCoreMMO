@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
         private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
-        private readonly PlayerUsedSpellEventHandler _playerUsedSpellEventHandler;
+        private readonly SpellInvokedEventHandler _playerUsedSpellEventHandler;
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
         private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
         private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
@@ -42,7 +42,7 @@ namespace NeoServer.Game.Creatures
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler,
-            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler,
+            IPathFinder pathFinder, SpellInvokedEventHandler playerUsedSpellEventHandler,
             PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler, 
             PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler)
         {

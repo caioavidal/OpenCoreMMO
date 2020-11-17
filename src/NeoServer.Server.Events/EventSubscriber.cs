@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Spells;
+using NeoServer.Game.Creatures.Spells;
 
 namespace NeoServer.Server.Events
 {
@@ -22,6 +24,7 @@ namespace NeoServer.Server.Events
             map.OnThingMovedFailed += container.Resolve<InvalidOperationEventHandler>().Execute;
             map.OnThingAddedToTile += container.Resolve<ThingAddedToTileEventHandler>().Execute;
             map.OnThingUpdatedOnTile += container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
+            BaseSpell.OnSpellInvoked += container.Resolve<SpellInvokedEventHandler>().Execute;
         }
     }
 }

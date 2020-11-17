@@ -347,26 +347,25 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (!Attacks.Any()) return false;
 
-            var attackIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Length);
-            var attack = Attacks[attackIndex];
-
-            var canAttack = false;
-
-            if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) return true; //can attack but lost his chance
-
-            if (attack.IsMelee && MeleeCombatAttack.CalculateAttack(this, enemy, attack.Translate(), out var damage))
+            foreach (var attack in Attacks)
             {
-                combat.DamageType = damage.Type;
-                enemy.ReceiveAttack(this, damage);
-                canAttack = true;
-            }
-            else if (!attack.IsMelee)
-            {
-                canAttack = attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
+                if (!attack.Cooldown.Expired) continue;
+
+                if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) continue;
+
+                if (attack.IsMelee && MeleeCombatAttack.CalculateAttack(this, enemy, attack.Translate(), out var damage))
+                {
+                    combat.DamageType = damage.Type;
+                    enemy.ReceiveAttack(this, damage);
+                }
+                else if (!attack.IsMelee)
+                {
+                    attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
+                }
             }
 
-            if (canAttack) TurnTo(Location.DirectionTo(enemy.Location));
-            return canAttack;
+            TurnTo(Location.DirectionTo(enemy.Location));
+            return true;
         }
 
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
