@@ -116,7 +116,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public bool Attack(ICombatActor enemy)
         {
-            if (enemy.IsDead)
+            if (enemy.IsDead || IsDead)
             {
                 StopAttack();
                 return false;

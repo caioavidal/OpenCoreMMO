@@ -156,8 +156,8 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
 
-            base.GainExperience(exp);
             IncreaseSkillCounter(SkillType.Level, exp);
+            base.GainExperience(exp);
         }
 
         public override string InspectionText => Name;
