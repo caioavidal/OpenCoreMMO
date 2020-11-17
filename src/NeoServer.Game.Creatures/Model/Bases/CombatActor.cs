@@ -149,10 +149,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnTargetChanged?.Invoke(this, oldAttackTarget, targetId);
         }
 
-        private void ReduceHealth(ushort damage)
+        private void ReduceHealth(ICombatActor enemy, CombatDamage damage)
         {
-            HealthPoints = damage > HealthPoints ? 0 : HealthPoints - damage;
-            if(IsDead) OnDeath();
+            HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
+            OnDamaged?.Invoke(enemy, this, damage);
+            if (IsDead) OnDeath();
         }
         private void OnDeath() 
         {
@@ -192,8 +193,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
             if (damage.Type != DamageType.ManaDrain)
             {
-                ReduceHealth(damage.Damage);
-                OnDamaged?.Invoke(enemy, this, damage);
+                ReduceHealth(enemy, damage);
             }
 
             WasDamagedOnLastAttack = true;
