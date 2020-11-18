@@ -353,15 +353,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
                 if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) continue;
 
-                if (attack.IsMelee && MeleeCombatAttack.CalculateAttack(this, enemy, attack.Translate(), out var damage))
-                {
-                    combat.DamageType = damage.Type;
-                    enemy.ReceiveAttack(this, damage);
-                }
-                else if (!attack.IsMelee)
-                {
-                    attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
-                }
+                attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
+
             }
 
             TurnTo(Location.DirectionTo(enemy.Location));

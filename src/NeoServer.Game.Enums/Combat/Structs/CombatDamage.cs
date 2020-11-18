@@ -11,15 +11,8 @@ namespace NeoServer.Game.Enums.Combat.Structs
         {
             Damage = damage;
             Type = type;
-            Missed = false;
         }
-        public CombatDamage(ushort damage, DamageType type, bool missed)
-        {
-            Damage = damage;
-            Type = type;
-            Missed = missed;
-        }
-
+     
         /// <summary>
         /// Check if damage is elemental
         /// </summary>
@@ -34,11 +27,6 @@ namespace NeoServer.Game.Enums.Combat.Structs
         /// Type of the damage (physical, fire...)
         /// </summary>
         public DamageType Type { get; }
-
-        /// <summary>
-        /// true when distance missed damage
-        /// </summary>
-        public bool Missed { get; }
 
 
         /// <summary>

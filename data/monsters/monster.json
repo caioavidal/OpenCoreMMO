@@ -41,91 +41,10 @@
            "name": "melee",
         "interval": "2000",
         "skill": "60",
-        "attack": "30"
+        "attack": "30",
+		"poison": "300"
+
         },
-		 {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "34",
-          "range": "7",
-          "min": "-45",
-          "max": "-85",
-          "attributes": [{
-            "key": "shootEffect",
-            "value": "spear"
-          }]
-        },
-		{
-          "name": "energy",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "min": "-20",
-          "max": "-30",
-          "attributes": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-		 {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "30",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "min": "-5",
-          "max": "-45",
-          "attributes": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        },
-		{
-          "name": "fire",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "7",
-          "target": "1",
-          "min": "-160",
-          "max": "-350",
-          "attributes": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        },
-		 {
-          "name": "energy",
-          "interval": "3000",
-          "chance": "20",
-          "length": "8",
-          "spread": "0",
-          "min": "-220",
-          "max": "-460",
-          "attributes": [{
-            "key": "areaEffect",
-            "value": "energy"
-          }]
-        }
 		
         
       ],

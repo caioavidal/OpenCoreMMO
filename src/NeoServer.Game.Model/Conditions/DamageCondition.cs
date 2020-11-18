@@ -1,0 +1,111 @@
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures.Model.Conditions;
+using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Enums.Creatures.Players;
+using NeoServer.Game.Enums.Creatures.Structs;
+using NeoServer.Game.Enums.Item;
+using NeoServer.Server.Helpers;
+using System;
+using System.Collections.Generic;
+
+namespace NeoServer.Game.Creatures
+{
+    public class DamageCondition : BaseCondition
+    {
+        public DamageCondition(ConditionType type, int interval, ushort minDamage, ushort maxDamage) : base(0)
+        {
+            Type = type;
+            Interval = interval;
+            DamageType = ToDamageType(type);
+
+            Amount = (ushort)ServerRandom.Random.Next(minValue: minDamage, maxValue: maxDamage);
+            StartDamage = GetStartDamage(maxDamage, Amount);
+            GenerateDamageList(Amount, StartDamage);
+        }
+        public override ConditionType Type { get; }
+        public DamageType DamageType { get; set; }
+        public int Interval
+        {
+            set
+            {
+                Cooldown = new CooldownTime(DateTime.Now, value);
+            }
+        }
+        private Queue<ushort> DamageQueue;
+        public override bool HasExpired => DamageQueue.Count <= 0;
+        private CooldownTime Cooldown;
+        private int Amount;
+        private int StartDamage;
+
+        public void Execute(ICombatActor creature)
+        {
+            if (!Cooldown.Expired) return;
+
+            Cooldown.Reset();
+            if (!DamageQueue.TryDequeue(out var damage))
+            {
+                End();
+                return;
+            }
+            creature.ReceiveAttack(null, new CombatDamage(damage, DamageType));
+        }
+        public override bool Start(ICreature creature)
+        {
+            GenerateDamageList(Amount, StartDamage);
+            return true;
+        }
+
+        private int GetStartDamage(int maxDamage, int amount)
+        {
+            var startDamage = 0;
+            if (startDamage > maxDamage)
+            {
+                startDamage = maxDamage;
+            }
+            else if (startDamage == 0)
+            {
+                startDamage = (int)Math.Max(1, Math.Ceiling(amount / 20.0));
+            }
+            return startDamage;
+        }
+        private void GenerateDamageList(int amount, int start)
+        {
+            if(DamageQueue is null)
+            {
+                DamageQueue = new Queue<ushort>();
+            }
+
+            DamageQueue.Clear();
+
+            amount = Math.Abs(amount);
+            var sum = 0;
+            double x1, x2;
+
+            for (var i = start; i > 0; --i)
+            {
+                var n = start + 1 - i;
+                var med = (n * amount) / start;
+
+                do
+                {
+                    sum += i;
+                    DamageQueue.Enqueue((ushort)i);
+
+                    x1 = Math.Abs(1.0 - ((float)sum + i) / med);
+                    x2 = Math.Abs(1.0 - ((float)sum / med));
+                } while (x1 < x2);
+            }
+        }
+
+        private DamageType ToDamageType(ConditionType type)
+        {
+            return type switch
+            {
+                ConditionType.Poison => DamageType.Earth,
+                _ => DamageType.None
+            };
+        }
+    }
+}
+
+

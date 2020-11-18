@@ -54,38 +54,40 @@ namespace NeoServer.Loaders.Monsters.Converters
                 {
                     combatAttack.MinDamage = 0;
                     combatAttack.MaxDamage = MeleeCombatAttack.CalculateMaxDamage(skill, attackValue);
-                   
-                    if(attack.TryGetValue("fire", out byte value))
+
+                    combatAttack.CombatAttack = new MeleeCombatAttack();
+
+                    if (attack.TryGetValue("fire", out ushort value))
                     {
                         combatAttack.CombatAttack = new MeleeCombatAttack(value,value, ConditionType.Fire, 9000);
                     }
                     else if (attack.TryGetValue("poison", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 4000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Poison, 4000);
                     }
                     else if (attack.TryGetValue("energy", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 10000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Energy, 10000);
                     }
                     else if (attack.TryGetValue("drown", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 5000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Drown, 5000);
                     }
                     else if (attack.TryGetValue("freeze", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 8000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Freezing, 8000);
                     }
                     else if (attack.TryGetValue("dazzle", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 10000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Dazzled, 10000);
                     }
                     else if (attack.TryGetValue("curse", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 4000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Cursed, 4000);
                     }
                     else if (attack.TryGetValue("bleed", out value) || attack.TryGetValue("physical", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 4000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Bleeding , 4000);
                     }
 
                     if (attack.TryGetValue("tick", out ushort tick) && combatAttack.CombatAttack is MeleeCombatAttack melee) melee.ConditionInterval = tick;

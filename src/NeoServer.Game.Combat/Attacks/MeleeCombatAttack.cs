@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Creatures.Players;
@@ -39,10 +40,31 @@ namespace NeoServer.Game.Combat.Attacks
 
         public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
         {
-            return base.TryAttack(actor, enemy, option, out combatType);
+            combatType = new CombatAttackType(option.DamageType);
+
+            if (CalculateAttack(actor, enemy, option, out var damage))
+            {
+                var wasDamaged = enemy.ReceiveAttack(actor, damage);
+
+                if (!wasDamaged) return true;
+
+                if (ConditionType != ConditionType.None)
+                {
+                    if (!enemy.HasCondition(ConditionType, out var condition))
+                    {
+                        enemy.AddCondition(new DamageCondition(ConditionType, ConditionInterval, Min, Max));
+                    }
+                    else
+                    {
+                        condition.Start(enemy);
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
-        public ushort Min{ get; set; }
+        public ushort Min { get; set; }
         public ushort Max { get; set; }
         public ConditionType ConditionType { get; set; }
         public ushort ConditionInterval { get; set; }

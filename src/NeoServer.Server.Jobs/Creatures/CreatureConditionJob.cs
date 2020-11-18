@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,10 @@ namespace NeoServer.Server.Jobs.Creatures
                 {
                     condition.Value.End();
                     creature.RemoveCondition(condition.Value);
+                }
+                if(condition.Value is DamageCondition damageCondition)
+                {
+                    damageCondition.Execute(creature);
                 }
             }
         }
