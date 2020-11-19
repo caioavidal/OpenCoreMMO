@@ -3,6 +3,7 @@
     public enum Race : byte
     {
         Fire,
-        Bood
+        Bood,
+        Venon
     }
 }

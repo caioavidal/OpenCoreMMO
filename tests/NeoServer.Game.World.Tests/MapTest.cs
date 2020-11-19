@@ -37,7 +37,7 @@ namespace NeoServer.Game.World.Tests
                 }
             }
 
-            return new Map.Map(world);
+            return new Map.Map(world, null);
 
         }
 
@@ -48,7 +48,7 @@ namespace NeoServer.Game.World.Tests
 
             var map = CreateMap(item);
 
-            var thing = item as IMoveableThing;
+            var thing = item as IThing;
             map.RemoveThing(ref thing, map[100, 100, 7] as IWalkableTile);
 
             Assert.Single((map[100, 100, 7] as IWalkableTile).DownItems);

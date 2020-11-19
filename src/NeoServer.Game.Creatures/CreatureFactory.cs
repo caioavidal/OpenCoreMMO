@@ -1,6 +1,8 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Server.Events;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
@@ -26,6 +28,7 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureStartedFollowingEventHandler  _creatureStartedFollowingEventHandler;
         private readonly CreatureChangedSpeedEventHandler _creatureChangedSpeedEventHandler;
         private readonly CreatureSayEventHandler _creatureSayEventHandler;
+        private ILiquidPoolFactory _liquidPoolFactory;
 
         private readonly IMap _map;
         //factories
@@ -42,7 +45,7 @@ namespace NeoServer.Game.Creatures
             IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map,
             CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler,
             CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler,
-            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, CreatureSayEventHandler creatureSayEventHandler)
+            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, CreatureSayEventHandler creatureSayEventHandler, ILiquidPoolFactory liquidPoolFactory)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -60,6 +63,7 @@ namespace NeoServer.Game.Creatures
             _creatureStartedFollowingEventHandler = creatureStartedFollowingEventHandler;
             _creatureChangedSpeedEventHandler = creatureChangedSpeedEventHandler;
             _creatureSayEventHandler = creatureSayEventHandler;
+            _liquidPoolFactory = liquidPoolFactory;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -102,6 +106,8 @@ namespace NeoServer.Game.Creatures
             creature.OnHeal += _creatureHealedEventHandler.Execute;
             creature.OnSay += _creatureSayEventHandler.Execute;
             creature.OnKilled += DetachEvents;
+            creature.OnDamaged += AttachDamageLiquidPoolEvent;
+            creature.OnKilled += AttachDeathLiquidPoolEvent;
             return creature;
         }
         private void DetachEvents(ICombatActor creature)
@@ -118,6 +124,21 @@ namespace NeoServer.Game.Creatures
             creature.OnStartedWalking -= _creatureStartedWalkingEventHandler.Execute;
             creature.OnHeal -= _creatureHealedEventHandler.Execute;
             creature.OnSay -= _creatureSayEventHandler.Execute;
+        }
+
+        private void AttachDamageLiquidPoolEvent(ICombatActor enemy, ICombatActor victim, CombatDamage damage)
+        {
+            if (damage.IsElementalDamage) return;
+
+            var pool = _liquidPoolFactory.CreateDamageLiquidPool(victim.Location, Game.Enums.Item.LiquidColor.Red);
+
+            _map.CreateBloodPool(pool, victim.Tile);
+        }
+        private void AttachDeathLiquidPoolEvent(ICombatActor victim)
+        {
+            var pool = _liquidPoolFactory.Create(victim.Location, Game.Enums.Item.LiquidColor.Red);
+
+            _map.CreateBloodPool(pool, victim.Tile);
         }
     }
 }

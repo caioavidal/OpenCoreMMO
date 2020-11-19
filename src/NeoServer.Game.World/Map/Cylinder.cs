@@ -47,7 +47,7 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
+        public void RemoveThing(ref IThing thing, IWalkableTile tile, byte amount = 1)
         {
             FromTile = tile;
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
@@ -70,10 +70,9 @@ namespace NeoServer.Game.World.Map
             tile.RemoveThing(ref thing, amount);
 
         }
-        public Result<TileOperationResult> AddThing(ref IMoveableThing thing, IWalkableTile tile)
+        public Result<TileOperationResult> AddThing(ref IThing thing, IWalkableTile tile)
         {
             ToTile = tile;
-
             var result = tile.AddThing(ref thing);
 
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
@@ -126,7 +125,8 @@ namespace NeoServer.Game.World.Map
                 TileSpectators[index++] = new CylinderSpectator(spectator, fromStackPosition, toStackPosition);
             }
 
-            fromTile.RemoveThing(ref thing, amount);
+            var thingToRemove = thing as IThing;
+            fromTile.RemoveThing(ref thingToRemove, amount);
 
             return result;
 

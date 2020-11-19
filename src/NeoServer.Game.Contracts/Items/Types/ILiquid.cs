@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Contracts.Items
 {
-    public interface ILiquidItem : IItem
+    public interface ILiquid : IDecayable, IItem
     {
         bool IsLiquidPool { get; }
 
