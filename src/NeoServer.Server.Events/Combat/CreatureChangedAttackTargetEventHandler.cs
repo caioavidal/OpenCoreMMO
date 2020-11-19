@@ -1,17 +1,6 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Explosion;
-using NeoServer.Game.Effects.Magical;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Parsers.Effects;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Tasks;
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace NeoServer.Server.Events.Combat
 {
@@ -25,23 +14,24 @@ namespace NeoServer.Server.Events.Combat
         }
         public void Execute(ICombatActor actor, uint oldTarget, uint newTarget)
         {
+            
             if (actor.AttackEvent != 0)
             {
                 return;
             }
 
-            Attack(actor);
-
+            var result = Attack(actor);
+            var attackSpeed = result ? actor.BaseAttackSpeed : 300;
             actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int)actor.BaseAttackSpeed, () => Attack(actor)));
         }
-
-        private void Attack(ICombatActor actor)
+        private bool Attack(ICombatActor actor)
         {
+            var result = false;
             if (actor.Attacking)
             {
                 if (game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature) && creature is ICombatActor enemy)
                 {
-                    actor.Attack(enemy, null);
+                    result = actor.Attack(enemy);
                 }
             }
             else
@@ -58,6 +48,14 @@ namespace NeoServer.Server.Events.Combat
                 actor.AttackEvent = 0;
                 Execute(actor, 0, 0);
             }
+            return result;
+        }
+
+        private void MoveAroundEnemy(ICombatActor actor)
+        {
+            if (!(actor is IMonster monster)) return;
+
+            monster.MoveAroundEnemy();
         }
     }
 }

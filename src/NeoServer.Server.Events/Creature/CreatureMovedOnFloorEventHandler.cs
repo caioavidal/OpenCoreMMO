@@ -47,19 +47,9 @@ namespace NeoServer.Server.Events
                 creature.SetDirection(toDirection);
             }
 
-            foreach (var cylinderSpectator in cylinder.TileSpectators.Values)
+            foreach (var cylinderSpectator in cylinder.TileSpectators)
             {
                 var spectator = cylinderSpectator.Spectator;
-
-                if (spectator is IMonster monster) //&& !cylinder.SpectatorExitedCylinder(spectator))
-                {
-                    if (creature is IPlayer enemy)
-                    {
-                        monster.AddToTargetList(enemy);
-                    }
-
-                    continue;
-                }
 
                 //var player = (IPlayer)spectator;
 

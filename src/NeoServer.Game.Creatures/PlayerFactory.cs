@@ -18,7 +18,7 @@ namespace NeoServer.Game.Creatures
 {
     public class PlayerFactory : IPlayerFactory
     {
-        private readonly Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory;
+        private readonly IItemFactory itemFactory;
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
@@ -31,17 +31,20 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerUsedSpellEventHandler _playerUsedSpellEventHandler;
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
         private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
+        private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
+        private readonly PlayerOperationFailedEventHandler _playerOperationFailedEventHandler;
 
         private readonly IPathFinder _pathFinder;
 
-        public PlayerFactory(Func<ushort, Location, IDictionary<ItemAttribute, IConvertible>, IItem> itemFactory,
+        public PlayerFactory(IItemFactory itemFactory,
              PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler,
-            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler, 
-            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler)
+            IPathFinder pathFinder, PlayerUsedSpellEventHandler playerUsedSpellEventHandler,
+            PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler, 
+            PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -58,6 +61,8 @@ namespace NeoServer.Game.Creatures
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
             _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
             _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
+            _playerLevelAdvancedEventHandler = playerLevelAdvancedEventHandler;
+            _playerOperationFailedEventHandler = playerOperationFailedEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -108,7 +113,8 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
             newPlayer.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
             newPlayer.OnRemovedCondition += _playerConditionChangedEventHandler.Execute;
-
+            newPlayer.OnLevelAdvanced += _playerLevelAdvancedEventHandler.Execute;
+            newPlayer.OnOperationFailed += _playerOperationFailedEventHandler.Execute;
             return newPlayer;
         }
         private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(IPlayerModel player)
@@ -116,7 +122,7 @@ namespace NeoServer.Game.Creatures
             var inventoryDic = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             foreach (var slot in player.Inventory)
             {
-                if (!(itemFactory(slot.Value, player.Location, null) is IPickupable createdItem))
+                if (!(itemFactory.Create(slot.Value, player.Location, null) is IPickupable createdItem))
                 {
                     continue;
                 }
@@ -146,7 +152,7 @@ namespace NeoServer.Game.Creatures
 
             var itemModel = items[index];
 
-            var item = itemFactory(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
+            var item = itemFactory.Create(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
                         {
                             {ItemAttribute.Count, itemModel.Amount }
                         });

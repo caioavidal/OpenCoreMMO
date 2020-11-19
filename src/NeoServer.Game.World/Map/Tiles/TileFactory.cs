@@ -47,7 +47,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (hasUnpassableItem && !hasMoveableItem)
             {
-                return new ImmutableTile(coordinate, items);
+                return new StaticTile(coordinate, items);
             }
 
             return new Tile( coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());

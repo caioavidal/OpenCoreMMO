@@ -95,6 +95,8 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// </summary>
         public Coordinate Translate(int xOffset, int yOffset) => Translate(xOffset: xOffset, yOffset: yOffset, zOffset: 0);
 
+        public Location Location => new Location((ushort)X, (ushort) Y, (byte)Z);
+
         /// <summary>
         /// Creates a new <see cref="Coordinate"/> whose coordinates are equal to this instance's
         /// plus the provided offesets.
@@ -110,9 +112,9 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// <summary>
         /// Returns the hash code of this instance.
         /// </summary>
-        public override int GetHashCode() => System.HashCode.Combine(X, Y, Z);
+        //public override int GetHashCode() => System.HashCode.Combine(X, Y, Z);
 
-        public override bool Equals(object obj) => obj is Coordinate c && Equals(c);
+        //public override bool Equals(object obj) => obj is Coordinate c && Equals(c);
         /// <summary>
         /// Returns a string representation of this instance.
         /// </summary>
@@ -125,42 +127,28 @@ namespace NeoServer.Game.Enums.Location.Structs
         /// </summary>
         public bool Equals(Coordinate other) => X == other.X && Y == other.Y && Z == other.Z;
 
-        /// <summary>
-        /// Compares two <see cref="Coordinate"/> objects. The result specifies whether the values
-        /// of the <see cref="X"/>, <see cref="Y"/> and <see cref="Z"/> fields of the two
-        /// <see cref="Coordinate"/> objects are equal.
-        /// </summary>
-        public static bool operator ==(Coordinate first, Coordinate second) => first.Equals(second);
-
-        /// <summary>
-        /// Compares two <see cref="Coordinate"/> objects. The result specifies whether the values
-        /// of the <see cref="X"/> or <see cref="Y"/> or <see cref="Z"/> fields of the two
-        /// <see cref="Coordinate"/> objects are unequal.
-        /// </summary>
-        public static bool operator !=(Coordinate first, Coordinate second) => !(first == second);
-
-        public static bool operator >=(Coordinate first, Coordinate second)
+        public override int GetHashCode()
         {
-            try
-            {
-                return first.X >= second.X || first.Y >= second.Y || first.Z >= second.Z;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
+            return HashCode.Combine(X, Y, Z);
         }
 
-        public static bool operator <=(Coordinate first, Coordinate second)
+        public static Coordinate operator +(Coordinate location1, Coordinate location2)
         {
-            try
-            {
-                return first.X <= second.X || first.Y <= second.Y || first.Z <= second.Z;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
+            return new Coordinate(
+            x: (location1.X + location2.X),
+            y: (location1.Y + location2.Y),
+            z: (sbyte)(location1.Z + location2.Z)
+            );
+        }
+
+        public static Coordinate operator -(Coordinate location1, Coordinate location2)
+        {
+            return new Coordinate
+            (
+                x: location2.X - location1.X,
+                y: location2.Y - location1.Y,
+                z: (sbyte)(location2.Z - location1.Z)
+            );
         }
     }
 }

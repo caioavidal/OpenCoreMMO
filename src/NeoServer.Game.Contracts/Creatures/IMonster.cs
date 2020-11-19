@@ -23,16 +23,45 @@ namespace NeoServer.Game.Contracts.Creatures
         MonsterState State { get; }
 
         void SetState(MonsterState attacking);
+
+        /// <summary>
+        /// Select a target to attack
+        /// </summary>
         void SelectTargetToAttack();
         void AddToTargetList(ICombatActor creature);
         void RemoveFromTargetList(ICreature creature);
-        ushort Defende();
+
+        /// <summary>
+        /// Executes defense action
+        /// </summary>
+        /// <returns>interval</returns>
+        ushort Defend();
+        void MoveAroundEnemy();
+        void UpdateLastTargetChance();
+
+        /// <summary>
+        /// Set creature as enemy. If monster can't see creature it will be forgotten
+        /// </summary>
+        /// <param name="creature"></param>
+        void SetAsEnemy(ICombatActor creature);
+        void Sleep();
+
+        /// <summary>
+        /// Monster yells a sentence
+        /// </summary>
+        void Yell();
 
         uint Experience { get; }
         bool HasAnyTarget { get; }
         bool CanReachAnyTarget { get; }
         bool IsInCombat { get; }
         bool Defending { get; }
+
+        /// <summary>
+        /// Checks if monster is sleeping
+        /// </summary>
+        bool IsSleeping { get; }
+        bool IsSummon { get; }
     }
 
 }

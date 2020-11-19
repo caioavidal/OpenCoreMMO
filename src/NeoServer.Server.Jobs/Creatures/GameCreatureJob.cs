@@ -31,9 +31,10 @@ namespace NeoServer.Server.Jobs.Creatures
                 {
                     PlayerPingJob.Execute((IPlayer)creature, game);
                 }
-
+                CreatureDefenseJob.Execute(creature as ICombatActor, game);
                 CreatureConditionJob.Execute(creature as ICombatActor);
-
+                CreatureTargetJob.Execute(creature as ICombatActor);
+                MonsterYellJob.Execute(creature as ICombatActor);
                 RespawnJob.Execute(spawnManager);
             }
 

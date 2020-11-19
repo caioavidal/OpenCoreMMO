@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums;
+using NeoServer.Game.Enums.Combat.Structs;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace NeoServer.Game.Contracts
     public interface IMap
     {
         ITile this[Location location] { get; }
-        ITile this[ushort x, ushort y, sbyte z] { get; }
+        ITile this[ushort x, ushort y, byte z] { get; }
 
         event PlaceCreatureOnMap OnCreatureAddedOnMap;
         event RemoveThingFromTile OnThingRemovedFromTile;
@@ -29,20 +30,19 @@ namespace NeoServer.Game.Contracts
         event AddThingToTile OnThingAddedToTile;
         event UpdateThingOnTile OnThingUpdatedOnTile;
 
-        IList<byte> GetDescription(Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
+        IList<byte> GetDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
         bool ArePlayersAround(Location location);
         void AddCreature(ICreature creature);
         ITile GetNextTile(Location fromLocation, Direction direction);
-        IEnumerable<ITile> GetOffsetTiles(Location location);
         bool TryMoveThing(ref IMoveableThing thing, Location toLocation);
         void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1);
-        IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, sbyte currentZ, byte width, byte height, int verticalOffset, ref int skip);
-        IEnumerable<uint> GetPlayersAtPositionZone(Location location);
+        IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, byte width, byte height, int verticalOffset, ref int skip);
+        IEnumerable<ICreature> GetPlayersAtPositionZone(Location location);
         void AddItem(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1);
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
-        Dictionary<uint, ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
-        void PropagateAttack(ICombatActor creature, ICombatActor victim, ICombatAttack combatAttack);
+        HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
+        void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
         void MoveCreature(IWalkableCreature creature);
     }
 }

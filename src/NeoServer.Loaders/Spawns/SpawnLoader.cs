@@ -8,10 +8,7 @@ namespace NeoServer.Loaders.Spawns
     public class SpawnLoader
     {
         private readonly Game.World.World _world;
-        public SpawnLoader(Game.World.World world)
-        {
-            _world = world;
-        }
+        public SpawnLoader(Game.World.World world) => _world = world;
         public void Load()
         {
             var spawnData = GetSpawnData();

@@ -4,15 +4,15 @@
     "nameDescription": "a orc spearman",
     "race": "blood",
     "experience": "38",
-    "speed": "176",
+    "speed": "260",
     "manacost": "310",
     "health": {
       "now": "105",
       "max": "105"
     },
     "look": {
-      "type": "50",
-      "corpse": "5996"
+      "type": "35",
+      "corpse": "5995"
     },
     "targetchange": {
       "interval": "5000",
@@ -24,52 +24,106 @@
     },
     "flags": {
       
-      
-          "summonable": "1"
-      ,
-      
-          "attackable": "1"
-      ,
-      
-          "hostile": "1"
-        ,
-        
-          "illusionable": "1"
-        ,
-        
-          "convinceable": "1"
-        ,
-        
-          "pushable": "1"
-        ,
-        
-          "canpushitems": "0"
-        ,
-        
-          "canpushcreatures": "0"
-        ,
-        
-          "targetdistance": "4"
-        ,
-        
-          "staticattack": "90"
-        ,
-        
-          "runonhealth": "10"
-        
-      
+         "summonable": "1",
+          "attackable": "1",
+          "hostile": "1",
+          "illusionable": "1",
+          "convinceable": "1",
+          "pushable": "0",
+          "canpushitems": "1",
+          "canpushcreatures": "1",
+         "targetdistance": "1",
+          "staticattack": "90",
+          "runonhealth": "0"
     },
       "attacks": [
         {
+           "name": "melee",
+        "interval": "2000",
+        "skill": "60",
+        "attack": "30"
+        },
+		 {
           "name": "physical",
           "interval": "1000",
           "chance": "34",
           "range": "7",
           "min": "-45",
-          "max": "-285",
+          "max": "-85",
           "attributes": [{
             "key": "shootEffect",
-            "value": "bolt"
+            "value": "spear"
+          }]
+        },
+		{
+          "name": "energy",
+          "interval": "1000",
+          "chance": "100",
+          "range": "7",
+          "min": "-20",
+          "max": "-30",
+          "attributes": [
+            {
+              "key": "shootEffect",
+              "value": "energy"
+            },
+            {
+              "key": "areaEffect",
+              "value": "energy"
+            }
+          ]
+        },
+		 {
+          "name": "fire",
+          "interval": "1000",
+          "chance": "100",
+          "range": "7",
+          "radius": "1",
+          "target": "1",
+          "min": "-5",
+          "max": "-45",
+          "attributes": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+		{
+          "name": "fire",
+          "interval": "2000",
+          "chance": "100",
+          "range": "7",
+          "radius": "7",
+          "target": "1",
+          "min": "-160",
+          "max": "-350",
+          "attributes": [
+            {
+              "key": "shootEffect",
+              "value": "fire"
+            },
+            {
+              "key": "areaEffect",
+              "value": "firearea"
+            }
+          ]
+        },
+		 {
+          "name": "energy",
+          "interval": "3000",
+          "chance": "100",
+          "length": "8",
+          "spread": "0",
+          "min": "-220",
+          "max": "-460",
+          "attributes": [{
+            "key": "areaEffect",
+            "value": "energy"
           }]
         }
 		

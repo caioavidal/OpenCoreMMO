@@ -8,7 +8,6 @@ namespace NeoServer.Server.Model.Players
     public class Skill : ISkill
     {
         public event OnLevelAdvance OnAdvance;
-
         public SkillType Type { get; }
 
         public ushort Level { get; private set; }
@@ -25,7 +24,8 @@ namespace NeoServer.Server.Model.Players
 
         public double BaseIncrease { get; }
 
-        public double Percentage { get; }
+        public double Percentage => CalculatePercentage(Count);
+
 
         //BaseIncrease and Rate
         private IDictionary<SkillType, Tuple<double, double>> SkillsRates = new Dictionary<SkillType, Tuple<double, double>>()
@@ -80,11 +80,11 @@ namespace NeoServer.Server.Model.Players
             BaseIncrease = baseIncrease;
 
             //Target = CalculateNextTarget(count);
-            Percentage = CalculatePercentage(count);
+            //Percentage = CalculatePercentage(count);
             Count = count;
         }
 
-        private double GetExpForLevel(int Level) => ((50 * Math.Pow(Level, 3)) / 3) - (100 * Math.Pow(Level, 2)) + ((850 * Level) / 3) - 200;
+        private double GetExpForLevel(int level) => ((50 * Math.Pow(level, 3)) / 3) - (100 * Math.Pow(level, 2)) + ((850 * level) / 3) - 200;
 
         private double CalculatePercentage(double count, double nextLevelCount) => Math.Min(100, (count * 100) / nextLevelCount);
         private double CalculatePercentage(double count)
@@ -141,17 +141,23 @@ namespace NeoServer.Server.Model.Players
 
         public void IncreaseCounter(double value)
         {
-            //todo
-            // Count = Math.Min(Target, Count + value);
 
-            // if (Math.Abs(Count - Target) < 0.001) // Skill level advance
-            // {
-            //     Level++;
-            //     Target = CalculateNextTarget(Count);
+            Count += value;
+            IncreaseLevel();
+        }
 
-            //     // Invoke any subscribers to the level advance.
-            //     OnAdvance?.Invoke(Type);
-            // }
+        public void IncreaseLevel()
+        {
+            var oldLevel = Level;
+            while (Count >= GetExpForLevel(Level + 1))
+            {
+                Level++;
+            }
+
+            if(oldLevel != Level)
+            {
+                OnAdvance?.Invoke(Type, oldLevel, Level);
+            }
         }
     }
 }

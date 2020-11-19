@@ -13,7 +13,7 @@ namespace NeoServer.Game.World.Map
     public class AStarTibia
     {
         private bool pathCondition(IMap map, Location startPos, Location testPos,
-            Location targetPos, int bestMatchDist, FindPathParams fpp)
+            Location targetPos, ref int bestMatchDist, FindPathParams fpp)
         {
 
             if (!map.IsInRange(startPos, testPos, targetPos, fpp))
@@ -98,10 +98,10 @@ namespace NeoServer.Game.World.Map
                 int x = n.X;
                 int y = n.Y;
 
-                pos.X = x;
-                pos.Y = y;
+                pos.X = (ushort)x;
+                pos.Y = (ushort)y;
 
-                if (pathCondition(map, startPos, pos, targetPos, bestMatch, fpp))
+                if (pathCondition(map, startPos, pos, targetPos, ref bestMatch, fpp))
                 {
                     found = n;
                     endPos = pos;
@@ -171,8 +171,8 @@ namespace NeoServer.Game.World.Map
                 int f = n.F;
                 for (int i = 0; i < dirCount; ++i)
                 {
-                    pos.X = x + neighbors[i].Item1;
-                    pos.Y = y + neighbors[i].Item2;
+                    pos.X = (ushort)(x + neighbors[i].Item1);
+                    pos.Y = (ushort)(y + neighbors[i].Item2);
 
                     if (fpp.MaxSearchDist != 0 && (startPos.GetSqmDistanceX(pos) > fpp.MaxSearchDist || startPos.GetSqmDistanceY(pos) > fpp.MaxSearchDist))
                     {
@@ -249,8 +249,8 @@ namespace NeoServer.Game.World.Map
 
             while (found != null)
             {
-                pos.X = found.X;
-                pos.Y = found.Y;
+                pos.X = (ushort)found.X;
+                pos.Y = (ushort)found.Y;
 
                 int dx = pos.X - prevx;
                 int dy = pos.Y - prevy;
@@ -308,6 +308,7 @@ namespace NeoServer.Game.World.Map
         private bool[] openNodes = new bool[512];
         private List<AStarNode> nodes = new List<AStarNode>(512);
         private Dictionary<AStarPosition, AStarNode> nodesMap = new Dictionary<AStarPosition, AStarNode>();
+        private Dictionary<AStarNode, int> nodesIndexMap = new Dictionary<AStarNode, int>();
         private AStarNode startNode;
 
         public Nodes(Location location)
@@ -322,7 +323,7 @@ namespace NeoServer.Game.World.Map
             };
 
             nodes.Add(startNode);
-
+            nodesIndexMap.Add(startNode, nodes.Count - 1);
             nodesMap.Add(new AStarPosition(location.X, location.Y), nodes[0]);
         }
 
@@ -359,7 +360,7 @@ namespace NeoServer.Game.World.Map
             while (true)
             {
 
-                index = nodes.IndexOf(node, start);
+                index = nodesIndexMap[node];
                 if (openNodes[index] == false)
                 {
                     start = ++index;
@@ -397,6 +398,7 @@ namespace NeoServer.Game.World.Map
             };
             nodes.Add(node);
 
+            nodesIndexMap.Add(node, nodes.Count - 1);
             nodesMap.TryAdd(new AStarPosition(node.X, node.Y), node);
             return node;
         }
@@ -410,7 +412,7 @@ namespace NeoServer.Game.World.Map
         internal void OpenNode(AStarNode node)
         {
 
-            var index = nodes.IndexOf(node);
+            var index = nodesIndexMap[node];
 
             if (index >= 512)
             {
@@ -425,7 +427,7 @@ namespace NeoServer.Game.World.Map
         }
     }
 
-    internal readonly struct AStarPosition
+    internal readonly struct AStarPosition: IEquatable<AStarPosition>
     {
         public AStarPosition(int x, int y)
         {
@@ -435,6 +437,21 @@ namespace NeoServer.Game.World.Map
 
         public int X { get; }
         public int Y { get; }
+
+        public bool Equals([AllowNull] AStarPosition other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AStarPosition pos && Equals(pos);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
+        }
     }
 
     internal class AStarNode : IEquatable<AStarNode>

@@ -19,9 +19,9 @@ namespace NeoServer.Server.Events.Combat
         public void Execute(ICreature creature, ICombatDefense defense)
         {
 
-            foreach (var spectatorId in game.Map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectatorId, out IConnection connection))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
                 }

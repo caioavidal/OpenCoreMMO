@@ -21,6 +21,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte AttackRange { get; }
         Items.Types.IContainer BackpackSlot { get; }
         IWeapon Weapon { get; }
+        bool HasShield { get; }
 
         IItem this[Slot slot] { get; }
 

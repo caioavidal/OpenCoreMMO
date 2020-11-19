@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts.World
 {
     public interface ICylinder
     {
-        Dictionary<uint, ICylinderSpectator> TileSpectators { get; }
+        ICylinderSpectator[] TileSpectators { get; }
         ITile FromTile { get; set; }
         ITile ToTile { get; set; }
 

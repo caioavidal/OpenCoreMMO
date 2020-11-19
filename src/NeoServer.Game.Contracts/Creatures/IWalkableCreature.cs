@@ -37,7 +37,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte[] GetRaw(IPlayer playerRequesting);
         void IncreaseSpeed(ushort speed);
         void Moved(ITile fromTile, ITile toTile);
-        void Follow(IWalkableCreature creature, FindPathParams fpp);
+        void Follow(IWalkableCreature creature);
         void StopFollowing();
         void StopWalking();
         bool TryGetNextStep(out Direction direction);
