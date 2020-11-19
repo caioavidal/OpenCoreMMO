@@ -11,8 +11,8 @@
       "max": "105"
     },
     "look": {
-      "type": "35",
-      "corpse": "5995"
+      "type": "6",
+      "corpse": "5978"
     },
     "targetchange": {
       "interval": "5000",
@@ -45,7 +45,14 @@
 		"poison": "300"
 
         },
-		
+		{
+           "name": "melee",
+        "interval": "2000",
+        "skill": "60",
+        "attack": "30",
+		"poison": "20"
+
+        }
         
       ],
 	 "defense": {

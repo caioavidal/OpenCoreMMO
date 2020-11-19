@@ -19,11 +19,7 @@ namespace NeoServer.Game.Combat.Attacks
             ConditionType = conditionType;
             ConditionInterval = conditionInterval;
         }
-        public MeleeCombatAttack()
-        {
-
-        }
-
+        public MeleeCombatAttack() { }
         public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue combat, out CombatDamage damage)
         {
             damage = new CombatDamage();
@@ -54,10 +50,9 @@ namespace NeoServer.Game.Combat.Attacks
                     {
                         enemy.AddCondition(new DamageCondition(ConditionType, ConditionInterval, Min, Max));
                     }
-                    else
-                    {
-                        condition.Start(enemy);
-                    }
+                    else if (condition is DamageCondition damageCondition) damageCondition.Start(enemy, Min, Max);
+                    else condition.Start(enemy);
+
                 }
                 return true;
             }

@@ -17,10 +17,10 @@ namespace NeoServer.Game.Creatures
             Type = type;
             Interval = interval;
             DamageType = ToDamageType(type);
+            MaxDamage = maxDamage;
+            MinDamage = minDamage;
 
-            Amount = (ushort)ServerRandom.Random.Next(minValue: minDamage, maxValue: maxDamage);
-            StartDamage = GetStartDamage(maxDamage, Amount);
-            GenerateDamageList(Amount, StartDamage);
+            GenerateDamageList();
         }
         public override ConditionType Type { get; }
         public DamageType DamageType { get; set; }
@@ -34,8 +34,8 @@ namespace NeoServer.Game.Creatures
         private Queue<ushort> DamageQueue;
         public override bool HasExpired => DamageQueue.Count <= 0;
         private CooldownTime Cooldown;
-        private int Amount;
-        private int StartDamage;
+        private ushort MinDamage;
+        private ushort MaxDamage;
 
         public void Execute(ICombatActor creature)
         {
@@ -49,9 +49,19 @@ namespace NeoServer.Game.Creatures
             }
             creature.ReceiveAttack(null, new CombatDamage(damage, DamageType));
         }
+        public bool Start(ICreature creature, ushort minDamage, ushort maxDamage)
+        {
+            if (maxDamage < MaxDamage) return false;
+
+            MinDamage = minDamage;
+            MaxDamage = maxDamage;
+
+            Start(creature);
+            return true;
+        }
         public override bool Start(ICreature creature)
         {
-            GenerateDamageList(Amount, StartDamage);
+            GenerateDamageList();
             return true;
         }
 
@@ -68,12 +78,15 @@ namespace NeoServer.Game.Creatures
             }
             return startDamage;
         }
-        private void GenerateDamageList(int amount, int start)
+        private void GenerateDamageList()
         {
-            if(DamageQueue is null)
+            if (DamageQueue is null)
             {
                 DamageQueue = new Queue<ushort>();
             }
+
+            int amount = (ushort)ServerRandom.Random.Next(minValue: MinDamage, maxValue: MaxDamage);
+            var start = GetStartDamage(MaxDamage, amount);
 
             DamageQueue.Clear();
 
