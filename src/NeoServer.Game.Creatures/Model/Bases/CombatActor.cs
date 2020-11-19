@@ -160,7 +160,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnDamaged?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath();
         }
-        private void OnDeath()
+        public virtual void OnDeath()
         {
             StopAttack();
             StopFollowing();
@@ -170,6 +170,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void Heal(ushort increasing)
         {
+            if (HealthPoints <= 0) return;
+
             HealthPoints = HealthPoints + increasing >= MaxHealthpoints ? MaxHealthpoints : HealthPoints + increasing;
             OnHeal?.Invoke(this, increasing);
         }

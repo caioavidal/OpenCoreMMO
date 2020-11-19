@@ -319,11 +319,18 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
             Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
         }
+        public void StopDefending() => Defending = false;
+
+        public override void OnDeath()
+        {
+            StopDefending();
+            base.OnDeath();
+        }
         public ushort Defend()
         {
-            if (!Defenses.Any())
+            if (IsDead || !Defenses.Any())
             {
-                Defending = false;
+                StopDefending();
                 return default;
             }
 
