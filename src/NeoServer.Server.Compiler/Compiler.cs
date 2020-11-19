@@ -1,17 +1,14 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.CSharp;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace NeoServer.Server.Compiler
 {
@@ -52,8 +49,7 @@ namespace NeoServer.Server.Compiler
                 syntaxTrees[i++] = SyntaxFactory.ParseSyntaxTree(codeString, options);
             }
 
-
-            var references = new MetadataReference[]
+            var references = new List<MetadataReference>
             {
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(Console).Assembly.Location),
@@ -63,6 +59,10 @@ namespace NeoServer.Server.Compiler
                 MetadataReference.CreateFromFile(typeof(ICreature).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(Creature).Assembly.Location)
             };
+
+            Assembly.GetEntryAssembly().GetReferencedAssemblies()
+                .ToList()
+                .ForEach(a => references.Add(MetadataReference.CreateFromFile(Assembly.Load(a).Location)));
 
             return CSharpCompilation.Create("Scripts.dll",
               syntaxTrees,
