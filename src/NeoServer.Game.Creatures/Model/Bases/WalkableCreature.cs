@@ -146,7 +146,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void Follow(IWalkableCreature creature)
         {
-            if (!CanSee(creature.Location,9,9))
+            if (!CanSee(creature.Location, 9, 9))
             {
                 OnCreatureDisappear(creature);
                 return;
@@ -163,16 +163,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool TryWalkTo(params Direction[] directions)
         {
-            lock (_enqueueWalkLock)
+
+            if (!WalkingQueue.IsEmpty)
             {
-                if (!WalkingQueue.IsEmpty)
-                {
-                    WalkingQueue.Clear();
-                }
-                foreach (var direction in directions)
-                {
-                    WalkingQueue.Enqueue(direction);
-                }
+                WalkingQueue.Clear();
+            }
+            foreach (var direction in directions)
+            {
+                WalkingQueue.Enqueue(direction);
             }
 
             OnStartedWalking?.Invoke(this);
