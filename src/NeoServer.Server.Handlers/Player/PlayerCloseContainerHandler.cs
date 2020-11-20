@@ -16,13 +16,10 @@ namespace NeoServer.Server.Handlers.Player
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var containerId = message.GetByte();
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
-            {
-                game.Dispatcher.AddEvent(new Event(() =>
-                {
-                    (player as IPlayer).Containers.CloseContainer(containerId);
-                }));
-            }
+            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            
+                game.Dispatcher.AddEvent(new Event(() => player.Containers.CloseContainer(containerId)));
+            
         }
     }
 }

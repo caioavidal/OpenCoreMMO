@@ -95,7 +95,7 @@ namespace NeoServer.Game.World.Tests
                 ItemTestData.CreateTopItem(id: 4, topOrder: 2),
             };
 
-            Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item));
+            Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item.ClientId));
 
             Assert.Collection(tile.DownItems, item => { Assert.Equal(downItemsExpected[5].ClientId, item.ClientId); Assert.Equal((downItemsExpected[5] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
                                               item => { Assert.Equal(downItemsExpected[4].ClientId, item.ClientId); Assert.Equal((downItemsExpected[4] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
@@ -112,7 +112,7 @@ namespace NeoServer.Game.World.Tests
             var item = ItemTestData.CreateMoveableItem(500);
             var sut = CreateTile(item);
 
-            var thing = (IMoveableThing)item;
+            var thing = (IThing)item;
             sut.RemoveThing(ref thing);
 
             Assert.Equal(2, sut.DownItems.Count);
@@ -127,7 +127,7 @@ namespace NeoServer.Game.World.Tests
             var item2 = ItemTestData.CreateCumulativeItem(400, 32);
             var sut = CreateTile(item2, item);
 
-            var thing = (IMoveableThing)item;
+            var thing = (IThing)item;
             sut.RemoveThing(ref thing, amountToRemove);
 
             Assert.Equal(topItemId, sut.DownItems.First().ClientId);

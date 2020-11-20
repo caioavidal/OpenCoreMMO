@@ -17,9 +17,9 @@ namespace NeoServer.Server.Handlers.Authentication
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
+            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player))
             {
-                game.Dispatcher.AddEvent(new Event(new PlayerLogOutCommand((IPlayer)player, game).Execute));
+                game.Dispatcher.AddEvent(new Event(new PlayerLogOutCommand(player, game).Execute));
             }
         }
     }

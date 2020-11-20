@@ -16,9 +16,9 @@ namespace NeoServer.Server.Handlers.Player
         {
             var containerId = message.GetByte();
 
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
+            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player))
             {
-                game.Dispatcher.AddEvent(new Event(() => (player as IPlayer).Containers.GoBackContainer(containerId))); //todo create a const for 2000 expiration time
+                game.Dispatcher.AddEvent(new Event(() => player.Containers.GoBackContainer(containerId))); //todo create a const for 2000 expiration time
             }
         }
     }

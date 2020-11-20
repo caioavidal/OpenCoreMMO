@@ -24,7 +24,7 @@ namespace NeoServer.Server.Jobs.Items
 
             foreach (var item in game.DecayableItemManager.Items) 
             {
-                //LiquidPoolJob.Execute(item, game);
+                LiquidPoolJob.Execute(item, game);
             }
 
             game.DecayableItemManager.Clean();
