@@ -99,7 +99,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public IMonsterType Metadata { get; }
         public override IOutfit Outfit { get; protected set; }
-
         public override ushort MinimumAttackPower => 0;
 
         public override bool UsingDistanceWeapon => TargetDistance > 1;
@@ -107,6 +106,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public ISpawnPoint Spawn { get; }
 
         public override ushort DefensePower => 30;
+        public override BloodType Blood =>  Metadata.Race switch
+        {
+            Race.Bood => BloodType.Blood,
+            Race.Venom => BloodType.Slime,
+            _ => BloodType.Blood
+        };
 
         public ushort Defense => Metadata.Defense;
 
@@ -149,7 +154,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SetAsEnemy(ICombatActor creature)
         {
-            if (!CanSee(creature.Location))
+            if (!CanSee(creature.Location, 9, 9))
             {
                 RemoveFromTargetList(creature);
                 return;
@@ -183,7 +188,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
         public bool Defending { get; private set; }
-
         public override FindPathParams PathSearchParams
         {
             get
@@ -233,8 +237,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                     nearestCombat = target.Value;
                 }
             }
-
-
             CanReachAnyTarget = canReachAnyTarget;
 
             return nearestCombat;
@@ -273,8 +275,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 LookForNewEnemy();
                 return;
             }
-
-            if (target != null && !CanSee(target.Creature.Location)) return;
 
             if (target != null)
             {
@@ -319,11 +319,18 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
             Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
         }
+        public void StopDefending() => Defending = false;
+
+        public override void OnDeath()
+        {
+            StopDefending();
+            base.OnDeath();
+        }
         public ushort Defend()
         {
-            if (!Defenses.Any())
+            if (IsDead || !Defenses.Any())
             {
-                Defending = false;
+                StopDefending();
                 return default;
             }
 
@@ -347,26 +354,17 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (!Attacks.Any()) return false;
 
-            var attackIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Attacks.Length);
-            var attack = Attacks[attackIndex];
-
-            var canAttack = false;
-
-            if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) return true; //can attack but lost his chance
-
-            if (attack.IsMelee && MeleeCombatAttack.CalculateAttack(this, enemy, attack.Translate(), out var damage))
+            foreach (var attack in Attacks)
             {
-                combat.DamageType = damage.Type;
-                enemy.ReceiveAttack(this, damage);
-                canAttack = true;
-            }
-            else if (!attack.IsMelee)
-            {
-                canAttack = attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
+                if (!attack.Cooldown.Expired) continue;
+
+                if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) continue;
+
+                attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
             }
 
-            if (canAttack) TurnTo(Location.DirectionTo(enemy.Location));
-            return canAttack;
+            TurnTo(Location.DirectionTo(enemy.Location));
+            return true;
         }
 
         public override CombatDamage OnImmunityDefense(CombatDamage damage)

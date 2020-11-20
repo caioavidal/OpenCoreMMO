@@ -17,10 +17,10 @@ namespace NeoServer.Server.Handlers.Player
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var itemThrowPacket = new ItemThrowPacket(message);
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature player))
-            {
-                game.Dispatcher.AddEvent(new Event(2000, new PlayerThrowItemCommand((IPlayer)player, itemThrowPacket, game).Execute)); //todo create a const for 2000 expiration time
-            }
+            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+
+            game.Dispatcher.AddEvent(new Event(2000, new PlayerThrowItemCommand(player, itemThrowPacket, game).Execute)); //todo create a const for 2000 expiration time
+
         }
     }
 }

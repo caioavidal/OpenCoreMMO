@@ -39,7 +39,9 @@ namespace NeoServer.Server.Events
                     connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)victim));
 
                     var attackDamageType = damage.Type == DamageType.ManaDrain ? "mana points" : "health points";
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You lose {damageString} {attackDamageType} due to an attack by a {enemy.Name}", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
+                    var endMessage = enemy is null ? string.Empty : $"due to an attack by a { enemy.Name}";
+
+                    connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You lose {damageString} {attackDamageType} {endMessage}", TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
                 }
 
                 if (enemy == spectator)

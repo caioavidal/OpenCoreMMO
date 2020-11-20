@@ -52,13 +52,13 @@ namespace NeoServer.Game.Creatures.Model.Conditions
 
         public ConditionSlot ConditionSlot => throw new NotImplementedException();
 
-        public bool Start(ICreature creature)
+        public virtual bool Start(ICreature creature)
         {
            
             EndTime = DateTime.Now.Ticks + Duration;
 
             return true;
         }
-        public bool HasExpired => EndTime < DateTime.Now.Ticks;
+        public virtual bool HasExpired => EndTime < DateTime.Now.Ticks;
     }
 }

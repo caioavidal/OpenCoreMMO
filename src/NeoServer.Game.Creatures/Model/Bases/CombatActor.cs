@@ -160,15 +160,18 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnDamaged?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath();
         }
-        private void OnDeath()
+        public virtual void OnDeath()
         {
             StopAttack();
             StopFollowing();
             StopWalking();
+            Conditions.Clear();
             OnKilled?.Invoke(this);
         }
         public void Heal(ushort increasing)
         {
+            if (HealthPoints <= 0) return;
+
             HealthPoints = HealthPoints + increasing >= MaxHealthpoints ? MaxHealthpoints : HealthPoints + increasing;
             OnHeal?.Invoke(this, increasing);
         }
@@ -186,15 +189,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);
         public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
-        public void ReceiveAttack(ICombatActor enemy, CombatDamage damage)
+        public bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
-            if (IsDead) return;
+            if (IsDead) return false;
 
+            SetAsInFight();
             damage = ReduceDamage(damage);
             if (damage.Damage <= 0)
             {
                 WasDamagedOnLastAttack = false;
-                return;
+                return false;
             }
             if (damage.Type != DamageType.ManaDrain)
             {
@@ -202,7 +206,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
 
             WasDamagedOnLastAttack = true;
-            return;
+            return true;
         }
         public void PropagateAttack(Coordinate[] area, CombatDamage damage )
         {
@@ -214,6 +218,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-        public void SetAsInFight() => AddCondition(new Condition(ConditionType.InFight, 60000));
+        public void SetAsInFight()
+        {
+            if (HasCondition(ConditionType.InFight, out var condition))
+            {
+                condition.Start(this);
+                return;
+            }
+            AddCondition(new Condition(ConditionType.InFight, 60000));
+        }
     }
 }

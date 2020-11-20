@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Player
 {
@@ -11,14 +12,12 @@ namespace NeoServer.Server.Handlers.Player
         {
             this.game = game;
         }
-
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var targetId = message.GetUInt32();
-            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
-            {
-                player.SetAttackTarget(targetId);
-            }
+            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player)) return;
+
+            game.Dispatcher.AddEvent(new Event(() => player.SetAttackTarget(targetId)));
         }
     }
 }

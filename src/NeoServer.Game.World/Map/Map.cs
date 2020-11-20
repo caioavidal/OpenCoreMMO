@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Enums.Item;
 using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Game.World.Map.Tiles;
@@ -17,13 +18,9 @@ using System.Linq;
 
 namespace NeoServer.Game.World.Map
 {
-
     public class Map : IMap
     {
-
-        // Start positions
-        public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
-        public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
+        
         const int MAP_MAX_LAYERS = 16;
 
         public event PlaceCreatureOnMap OnCreatureAddedOnMap;
@@ -34,7 +31,6 @@ namespace NeoServer.Game.World.Map
         public event FailedMoveThing OnThingMovedFailed;
 
         private readonly World world;
-
         public Map(World world)
         {
             this.world = world;
@@ -46,11 +42,6 @@ namespace NeoServer.Game.World.Map
             {
                 if (world.TryGetTile(ref location, out ITile tile))
                 {
-                    if (tile is IWalkableTile walkableTile)
-                    {
-                        //  walkableTile.OnThingAddedToTile -= AttachEvent;
-                        //  walkableTile.OnThingAddedToTile += AttachEvent;
-                    }
                     return tile;
                 }
                 return null;
@@ -81,7 +72,7 @@ namespace NeoServer.Game.World.Map
             SwapCreatureBetweenSectors(thing, toLocation);
 
             var cylinder = new Cylinder(this);
-            //todo: not thread safe
+
             var result = cylinder.MoveThing(ref thing, fromTile, toTile);
             if (!result.Success)
             {
@@ -99,9 +90,6 @@ namespace NeoServer.Game.World.Map
                     monsterWalking.SetAsEnemy(playerSpectator);
                 }
             }
-
-
-        
 
             OnThingMoved?.Invoke((IWalkableCreature)thing, cylinder);
 
@@ -305,7 +293,7 @@ namespace NeoServer.Game.World.Map
 
             return tile;
         }
-        public void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
+        public void RemoveThing(ref IThing thing, IWalkableTile tile, byte amount = 1)
         {
             Cylinder cylinder = new Cylinder(this);
 
@@ -313,9 +301,8 @@ namespace NeoServer.Game.World.Map
 
             OnThingRemovedFromTile?.Invoke(thing, cylinder);
         }
-        public void AddItem(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1)
+        public void AddItem(ref IThing thing, IWalkableTile tile, byte amount = 1)
         {
-
             var cylinder = new Cylinder(this);
             var result = cylinder.AddThing(ref thing, tile);
 
@@ -446,7 +433,6 @@ namespace NeoServer.Game.World.Map
             {
                 for (var ny = 0; ny < height; ny++)
                 {
-
                     var tile = this[(ushort)(fromX + nx + verticalOffset), (ushort)(fromY + ny + verticalOffset), currentZ];
 
                     if (tile != null)
@@ -527,7 +513,7 @@ namespace NeoServer.Game.World.Map
 
         public void AddCreature(ICreature creature)
         {
-            var thing = creature as IMoveableThing;
+            var thing = creature as IThing;
 
             if (this[creature.Location] is IWalkableTile tile)
             {
@@ -565,7 +551,7 @@ namespace NeoServer.Game.World.Map
                     {
                         if (actor == target) continue;
                         if (!(target is ICombatActor targetCreature)) continue;
-                        
+
                         targetCreature.ReceiveAttack(actor, damage);
                     }
                 }
@@ -591,6 +577,19 @@ namespace NeoServer.Game.World.Map
                 creature.StopWalking();
                 return;
             }
+        }
+        public void CreateBloodPool(ILiquid pool, IWalkableTile tile)
+        {
+            if (tile?.TopItems != null && tile.TopItems.TryPeek(out var topItem) && topItem is ILiquid && topItem is IThing topItemThing)
+            {
+                RemoveThing(ref topItemThing, tile, 1);
+            }
+
+            if (pool is null) return;
+
+            var poolThing = pool as IThing;
+            AddItem(ref poolThing, tile, 1);
+
         }
     }
 }

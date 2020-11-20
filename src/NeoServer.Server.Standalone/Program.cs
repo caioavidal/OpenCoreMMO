@@ -16,6 +16,7 @@ using NeoServer.Server.Compiler;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
 using NeoServer.Server.Jobs.Creatures;
+using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Model.Players;
 
 using NeoServer.Server.Security;
@@ -72,6 +73,8 @@ namespace NeoServer.Server.Standalone
             scheduler.Start(cancellationToken);
 
             scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
+            scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartCheckingItems));
+
 
             container.Resolve<EventSubscriber>().AttachEvents();
 

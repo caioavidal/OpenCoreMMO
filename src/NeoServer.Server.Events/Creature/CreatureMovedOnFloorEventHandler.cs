@@ -51,8 +51,6 @@ namespace NeoServer.Server.Events
             {
                 var spectator = cylinderSpectator.Spectator;
 
-                //var player = (IPlayer)spectator;
-
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
@@ -62,7 +60,6 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-            
                 if (spectator.CreatureId == creature.CreatureId) //myself
                 {
                     if (fromLocation.Z != toLocation.Z)
@@ -87,7 +84,6 @@ namespace NeoServer.Server.Events
                         connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, cylinderSpectator.ToStackPosition));
 
                         connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
-
                     }
                     else
                     {

@@ -58,7 +58,14 @@ namespace NeoServer.Game.Contracts.Creatures
         void StartSpellCooldown(ISpell spell);
         bool SpellCooldownHasExpired(ISpell spell);
         bool CooldownHasExpired(CooldownType type);
-        void ReceiveAttack(ICombatActor enemy, CombatDamage damage);
+
+        /// <summary>
+        /// Creature receive attack damage from enemy
+        /// </summary>
+        /// <param name="enemy"></param>
+        /// <param name="damage"></param>
+        /// <returns>Returns true when damage was bigger than 0</returns>
+        bool ReceiveAttack(ICombatActor enemy, CombatDamage damage);
         bool Attack(ICombatActor enemy);
         void SetAsInFight();
         void PropagateAttack(Coordinate[] area, CombatDamage damage);

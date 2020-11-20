@@ -3,6 +3,7 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
@@ -19,15 +20,14 @@ namespace NeoServer.Server.Handlers.Authentication
         {
             var changeMode = new ChangeModePacket(message);
 
-            if (game.CreatureManager.TryGetCreature(connection.PlayerId, out ICreature creature))
-            {
-                var player = creature as IPlayer;
+            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
 
+            game.Dispatcher.AddEvent(new Event(() =>
+            {
                 player.SetFightMode(changeMode.FightMode);
                 player.SetChaseMode(changeMode.ChaseMode);
                 player.SetSecureMode(changeMode.SecureMode);
-            }
-
+            }));
         }
     }
 }

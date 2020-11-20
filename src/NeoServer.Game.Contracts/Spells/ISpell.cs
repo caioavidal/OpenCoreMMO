@@ -5,6 +5,7 @@ using NeoServer.Game.Enums.Creatures.Players;
 
 namespace NeoServer.Game.Contracts.Spells
 {
+    public delegate void InvokeSpell(ICombatActor creature, ISpell spell);
     public interface ISpell
     {
         EffectT Effect { get; }
@@ -15,5 +16,6 @@ namespace NeoServer.Game.Contracts.Spells
         uint Cooldown { get; set; }
 
         bool Invoke(ICombatActor actor, out InvalidOperation error);
+        bool InvokeOn(ICombatActor actor, ICombatActor onCreature, out InvalidOperation error);
     }
 }

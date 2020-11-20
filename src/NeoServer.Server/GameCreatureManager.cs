@@ -107,7 +107,7 @@ namespace NeoServer.Server
                 return false;
             }
 
-            var thing = creature as IMoveableThing;
+            var thing = creature as IThing;
 
             if (creature is IWalkableCreature walkableCreature)
             {

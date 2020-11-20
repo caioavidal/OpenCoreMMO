@@ -5,7 +5,7 @@ namespace NeoServer.Server.Tasks.Contracts
     public interface IDispatcher
     {
 
-        void AddEvent(IEvent evt, bool hasPriority = false);
+        void AddEvent(IEvent evt);
         ulong GetCycles();
 
         void Start(CancellationToken token);

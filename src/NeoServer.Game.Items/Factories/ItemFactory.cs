@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Combat;
+﻿using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Enums;
 using NeoServer.Game.Enums.Location.Structs;
@@ -9,11 +10,18 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Items
 {
-    public class ItemFactory : IItemFactory
+    public class ItemFactory : IItemFactory, IFactory
     {
+        public event CreateItem OnItemCreated;
+
         public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
+            var createdItem = CreateItem(typeId, location, attributes);
+            return createdItem;
+        }
 
+        private IItem CreateItem(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+        {
             if (typeId < 100 || !ItemTypeData.InMemory.ContainsKey(typeId))
             {
                 return null;
