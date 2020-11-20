@@ -48,7 +48,6 @@ namespace NeoServer.Game.Creatures.Model
             
         }
 
-
         public uint HealthPoints { get; protected set; }
         public uint MaxHealthpoints { get; protected set; }
         public new string Name => CreatureType.Name;

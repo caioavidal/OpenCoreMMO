@@ -414,19 +414,20 @@ namespace NeoServer.Game.World.Map.Tiles
                 StepSpeed = ground.StepSpeed;
                 MovementPenalty = ground.MovementPenalty;
                 Ground = ground.ClientId;
+                FloorDirection = ground.Metadata.Attributes.GetFloorChangeDirection();
             }
 
-            for (int i = 0; i < topItems.Length; i++)
+            foreach (var item in topItems)
             {
-                if (topItems[i].FloorDirection != default)
+                if (item.FloorDirection != default)
                 {
-                    FloorDirection = topItems[i].FloorDirection;
+                    FloorDirection = item.FloorDirection;
                 }
 
-                FloorDirection = topItems[i].FloorDirection;
-                TopItems.Push(topItems[i]);
+                FloorDirection = item.FloorDirection;
+                TopItems.Push(item);
             }
-
+          
             foreach (var item in items)
             {
                 AddThingToTile(item);
@@ -502,12 +503,13 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (TopItems != null)
             {
-                foreach (var item in TopItems)
+                foreach (var item in TopItems.Reverse()) //todo: remove reverse
                 {
                     if (countThings == 9)
                     {
                         break;
                     }
+                    
                     var raw = item.GetRaw();
                     raw.CopyTo(stream.Slice(countBytes, raw.Length));
 

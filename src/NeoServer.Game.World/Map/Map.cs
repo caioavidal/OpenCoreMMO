@@ -566,7 +566,7 @@ namespace NeoServer.Game.World.Map
             {
                 var toTile = GetNextTile(thing.Location, direction);
 
-                if (!TryMoveThing(ref thing, toTile.Location))
+                if (toTile is null || !TryMoveThing(ref thing, toTile.Location))
                 {
                     if (creature is IPlayer player) player.CancelWalk();
                 }
