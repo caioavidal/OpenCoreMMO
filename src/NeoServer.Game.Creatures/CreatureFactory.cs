@@ -2,7 +2,9 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Enums.Item;
 using NeoServer.Server.Events;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
@@ -130,13 +132,25 @@ namespace NeoServer.Game.Creatures
         {
             if (damage.IsElementalDamage) return;
 
-            var pool = _liquidPoolFactory.CreateDamageLiquidPool(victim.Location, Game.Enums.Item.LiquidColor.Red);
+            var liquidColor = victim.Blood switch
+            {
+                BloodType.Blood => LiquidColor.Red,
+                BloodType.Slime => LiquidColor.Green
+            };
+
+            var pool = _liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);
 
             _map.CreateBloodPool(pool, victim.Tile);
         }
         private void AttachDeathLiquidPoolEvent(ICombatActor victim)
         {
-            var pool = _liquidPoolFactory.Create(victim.Location, Game.Enums.Item.LiquidColor.Red);
+            var liquidColor = victim.Blood switch
+            {
+                 BloodType.Blood => LiquidColor.Red,
+                 BloodType.Slime => LiquidColor.Green
+            };
+
+            var pool = _liquidPoolFactory.Create(victim.Location, liquidColor);
 
             _map.CreateBloodPool(pool, victim.Tile);
         }

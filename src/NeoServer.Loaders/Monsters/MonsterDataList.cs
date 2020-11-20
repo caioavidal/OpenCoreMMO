@@ -179,7 +179,6 @@ namespace NeoServer.Loaders.Monsters
 
             [JsonProperty("elements")]
             public Dictionary<string,sbyte> Elements { get; set; }
-
             [JsonProperty("voices")]
             public Voices Voices { get; set; }
 

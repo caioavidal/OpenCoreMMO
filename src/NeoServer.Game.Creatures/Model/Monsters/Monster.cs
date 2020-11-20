@@ -107,6 +107,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public ISpawnPoint Spawn { get; }
 
         public override ushort DefensePower => 30;
+        public override BloodType Blood =>  Metadata.Race switch
+        {
+            Race.Bood => BloodType.Blood,
+            Race.Venom => BloodType.Slime,
+            _ => BloodType.Blood
+        };
 
         public ushort Defense => Metadata.Defense;
 

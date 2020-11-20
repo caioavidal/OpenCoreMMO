@@ -24,16 +24,15 @@ namespace NeoServer.Loaders.Monsters
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defense = ushort.Parse(data.Defense.Defense),
-                Experience = data.Experience
+                Experience = data.Experience,
+                Race = ParseRace(data.Race)
             };
 
             monster.TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval), System.Convert.ToByte(data.Targetchange.Chance));
 
             if (data.Voices != null)
             {
-
                 monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval), System.Convert.ToByte(data.Voices.Chance));
-
                 monster.Voices = data.Voices.Voice.Select(x => x.Sentence).ToArray();
             }
 
@@ -42,7 +41,6 @@ namespace NeoServer.Loaders.Monsters
             monster.Immunities = MonsterImmunityConverter.Convert(data).ToImmutableDictionary();
 
             monster.Defenses = MonsterDefenseConverter.Convert(data);
-        
 
             foreach (var flag in data.Flags)
             {
@@ -53,7 +51,7 @@ namespace NeoServer.Loaders.Monsters
             return monster;
         }
 
-      
+
         private static CreatureFlagAttribute ParseCreatureFlag(string flag)
         {
             return flag switch
@@ -72,5 +70,15 @@ namespace NeoServer.Loaders.Monsters
                 _ => CreatureFlagAttribute.None
             };
         }
+
+        private static Race ParseRace(string race) => race switch
+        {
+            "venom" => Race.Venom,
+            "blood" => Race.Bood,
+            "undead" => Race.Undead,
+            "fire" => Race.Fire,
+            "energy" => Race.Energy,
+            _ => Race.Bood
+        };
     }
 }

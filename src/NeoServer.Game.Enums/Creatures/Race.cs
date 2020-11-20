@@ -2,8 +2,11 @@
 {
     public enum Race : byte
     {
+        None = default,
         Fire,
         Bood,
-        Venon
+        Venom,
+        Undead,
+        Energy,
     }
 }

@@ -12,5 +12,18 @@
          "z": "7",
          "spawntime": "60"
       }]
+   },
+    {
+      "centerx": "1030",
+      "centery": "1024",
+      "centerz": "7",
+      "radius": "1",
+      "monsters": [{
+         "name": "Bug",
+         "x": "0",
+         "y": "0",
+         "z": "7",
+         "spawntime": "60"
+      }]
    }
 ]
