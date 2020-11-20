@@ -11,7 +11,6 @@ namespace NeoServer.Server.Handlers.Player
         {
             this.game = game;
         }
-
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var targetId = message.GetUInt32();

@@ -37,7 +37,7 @@ namespace NeoServer.Game.World.Tests
                 }
             }
 
-            return new Map.Map(world, null);
+            return new Map.Map(world);
 
         }
 

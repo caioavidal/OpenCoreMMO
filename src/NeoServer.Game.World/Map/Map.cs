@@ -18,13 +18,9 @@ using System.Linq;
 
 namespace NeoServer.Game.World.Map
 {
-
     public class Map : IMap
     {
-
-        // Start positions
-        public static Location NewbieStart = new Location { X = 1000, Y = 1000, Z = 7 };
-        public static Location VeteranStart = new Location { X = 1000, Y = 1000, Z = 7 };
+        
         const int MAP_MAX_LAYERS = 16;
 
         public event PlaceCreatureOnMap OnCreatureAddedOnMap;
@@ -76,7 +72,7 @@ namespace NeoServer.Game.World.Map
             SwapCreatureBetweenSectors(thing, toLocation);
 
             var cylinder = new Cylinder(this);
-            //todo: not thread safe
+
             var result = cylinder.MoveThing(ref thing, fromTile, toTile);
             if (!result.Success)
             {
@@ -94,9 +90,6 @@ namespace NeoServer.Game.World.Map
                     monsterWalking.SetAsEnemy(playerSpectator);
                 }
             }
-
-
-
 
             OnThingMoved?.Invoke((IWalkableCreature)thing, cylinder);
 
@@ -440,7 +433,6 @@ namespace NeoServer.Game.World.Map
             {
                 for (var ny = 0; ny < height; ny++)
                 {
-
                     var tile = this[(ushort)(fromX + nx + verticalOffset), (ushort)(fromY + ny + verticalOffset), currentZ];
 
                     if (tile != null)

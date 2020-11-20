@@ -55,7 +55,6 @@ namespace NeoServer.Game.World.Map
             TileSpectators = new ICylinderSpectator[spectators.Count()];
 
             int index = 0;
-
             foreach (var spectator in spectators)
             {
                 byte stackPosition = default;

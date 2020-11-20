@@ -146,7 +146,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void Follow(IWalkableCreature creature)
         {
-            if (!CanSee(creature.Location))
+            if (!CanSee(creature.Location,9,9))
             {
                 OnCreatureDisappear(creature);
                 return;

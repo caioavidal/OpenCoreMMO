@@ -8,9 +8,6 @@ namespace NeoServer.Server.Tasks
 {
     public class Dispatcher : IDispatcher
     {
-        private readonly ChannelWriter<IEvent> priorityWriter;
-        private readonly ChannelReader<IEvent> priorityReader;
-
         private readonly ChannelWriter<IEvent> writer;
         private readonly ChannelReader<IEvent> reader;
         private ulong cycles = 0;
@@ -24,8 +21,7 @@ namespace NeoServer.Server.Tasks
             reader = channel.Reader;
             writer = channel.Writer;
 
-            priorityReader = channel.Reader;
-            priorityWriter = channel.Writer;
+   
         }
 
         /// <summary>
@@ -33,16 +29,11 @@ namespace NeoServer.Server.Tasks
         /// </summary>
         /// <param name="evt"></param>
         /// <param name="hasPriority"></param>
-        public void AddEvent(IEvent evt, bool hasPriority = false)
+        public void AddEvent(IEvent evt)
         {
-            if (hasPriority)
-            {
-                priorityWriter.TryWrite(evt);
-            }
-            else
-            {
-                writer.TryWrite(evt);
-            }
+
+            writer.TryWrite(evt);
+
         }
 
         public ulong GetCycles()
@@ -56,35 +47,6 @@ namespace NeoServer.Server.Tasks
         /// <param name="token"></param>
         public void Start(CancellationToken token)
         {
-
-            //todo: need find a better way instead of create two writers and readers
-            Task.Run(async () =>
-            {
-                while (await priorityReader.WaitToReadAsync())
-                {
-                    if (token.IsCancellationRequested)
-                    {
-                        priorityWriter.Complete();
-                    }
-                    // Fast loop around available jobs
-                    while (priorityReader.TryRead(out var evt))
-                    {
-                        if (!evt.HasExpired || evt.HasNoTimeout)
-                        {
-                            ++cycles;
-                            try
-                            {
-                                evt.Action.Invoke(); //execute event
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.StackTrace);
-                            }
-                        }
-                    }
-                }
-            });
-
             Task.Run(async () =>
             {
                 while (await reader.WaitToReadAsync())

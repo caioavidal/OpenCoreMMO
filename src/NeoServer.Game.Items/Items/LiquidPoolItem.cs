@@ -11,13 +11,9 @@ namespace NeoServer.Game.Items.Items
     public struct LiquidPoolItem : ILiquid
     {
         public bool IsLiquidPool => Metadata.Group == ItemGroup.Splash;
-
         public bool IsLiquidSource => Metadata.Flags.Contains(ItemFlag.LiquidSource);
-
         public bool IsLiquidContainer => Metadata.Group == ItemGroup.ITEM_GROUP_FLUID;
-
         public LiquidColor LiquidColor { get; }
-
         public Location Location { get; }
 
         public IItemType Metadata { get; private set; }

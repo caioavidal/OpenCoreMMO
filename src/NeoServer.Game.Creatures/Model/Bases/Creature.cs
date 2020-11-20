@@ -108,6 +108,38 @@ namespace NeoServer.Game.Creatures.Model
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
 
+
+        public bool CanSee(Location pos, int viewPortX, int viewPortY)
+        {
+            if (Location.Z <= 7)
+            {
+                // we are on ground level or above (7 -> 0)
+                // view is from 7 -> 0
+                if (pos.Z > 7)
+                {
+                    return false;
+                }
+            }
+            else if (Location.Z >= 8)
+            {
+                // we are underground (8 -> 15)
+                // view is +/- 2 from the floor we stand on
+                if (Math.Abs(Location.Z - pos.Z) > 2)
+                {
+                    return false;
+                }
+            }
+
+            var offsetZ = Location.Z - pos.Z;
+
+            if (pos.X >= Location.X - viewPortX + offsetZ && pos.X <= Location.X + viewPortX + offsetZ &&
+                pos.Y >= Location.Y - viewPortY + offsetZ && pos.Y <= Location.Y + viewPortY + offsetZ)
+            {
+                return true;
+            }
+
+            return false;
+        }
         public bool CanSee(Location pos)
         {
             if (Location.Z <= 7)
@@ -131,8 +163,8 @@ namespace NeoServer.Game.Creatures.Model
 
             var offsetZ = Location.Z - pos.Z;
 
-            if (pos.X >= Location.X - 8 + offsetZ && pos.X <= Location.X + 9 + offsetZ &&
-                pos.Y >= Location.Y - 6 + offsetZ && pos.Y <= Location.Y + 7 + offsetZ)
+            if ((pos.X >= Location.X - 8 + offsetZ) && (pos.X <= Location.X + 9 + offsetZ) &&
+                (pos.Y >= Location.Y - 6 + offsetZ) && (pos.Y <= Location.Y + 7 + offsetZ))
             {
                 return true;
             }

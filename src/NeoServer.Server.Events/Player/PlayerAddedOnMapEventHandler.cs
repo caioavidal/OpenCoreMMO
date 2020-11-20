@@ -42,12 +42,6 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (spectator is IMonster monster && creature is IPlayer target)
-                {
-                    monster.AddToTargetList(target);
-                    continue;
-                }
-
                 var isMyself = creature.CreatureId == spectator.CreatureId;
 
                 if (isMyself)

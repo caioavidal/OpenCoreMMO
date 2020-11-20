@@ -149,7 +149,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SetAsEnemy(ICombatActor creature)
         {
-            if (!CanSee(creature.Location))
+            if (!CanSee(creature.Location, 9, 9))
             {
                 RemoveFromTargetList(creature);
                 return;
@@ -273,8 +273,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 LookForNewEnemy();
                 return;
             }
-
-            if (target != null && !CanSee(target.Creature.Location)) return;
 
             if (target != null)
             {

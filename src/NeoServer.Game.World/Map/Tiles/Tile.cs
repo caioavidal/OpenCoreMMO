@@ -30,7 +30,6 @@ namespace NeoServer.Game.World.Map.Tiles
         private byte[] cache;
 
         public Location Location { get; }
-        private int CreaturesCount;
         public ushort StepSpeed { get; private set; }
 
         public FloorChangeDirection FloorDirection { get; private set; }
@@ -41,13 +40,13 @@ namespace NeoServer.Game.World.Map.Tiles
         public Stack<IItem> TopItems { get; private set; }
 
         public Stack<IItem> DownItems { get; private set; }
-        public ConcurrentDictionary<uint, IWalkableCreature> Creatures { get; private set; } = new ConcurrentDictionary<uint, IWalkableCreature>();
-        private List<uint> creatures = new List<uint>();
+        public Dictionary<uint, IWalkableCreature> Creatures { get; private set; } = new Dictionary<uint, IWalkableCreature>();
+        //private List<uint> creatures = new List<uint>();
 
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
-        public bool HasCreature => CreaturesCount > 0;
+        public bool HasCreature => Creatures.Count > 0;
 
         public IMagicField MagicField
         {
@@ -71,9 +70,9 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public ICreature GetTopVisibleCreature(ICreature creature)
         {
-            foreach (var creatureId in creatures)
+            foreach (var tileCreature in Creatures.Values)
             {
-                var tileCreature = Creatures[creatureId];
+                //var tileCreature = Creatures[creatureId];
                 if (creature != null)
                 {
                     if (creature.CanSee(tileCreature))
@@ -155,7 +154,7 @@ namespace NeoServer.Game.World.Map.Tiles
             }
             else
             {
-                
+
                 n += (byte)(TopItems?.Count ?? 0);
                 if (n >= 10)
                 {
@@ -211,14 +210,10 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (TopItems != null)
             {
-                foreach (var clientId in TopItems)
+                stackPosition += (byte)TopItems.Count;
+                if (stackPosition >= 10)
                 {
-
-                    stackPosition += (byte)TopItems.Count;
-                    if (stackPosition >= 10)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
@@ -236,7 +231,6 @@ namespace NeoServer.Game.World.Map.Tiles
                     }
                 }
             }
-
             return false;
         }
 
@@ -246,7 +240,6 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 return Ground;
             }
-
             var n = 0;
 
             if (TopItems != null)
@@ -288,7 +281,6 @@ namespace NeoServer.Game.World.Map.Tiles
             throw new Exception("stackposition invalid");
         }
 
-
         public bool HasBlockPathFinding
         {
             get
@@ -319,8 +311,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
                 if (Creatures.TryAdd(creature.CreatureId, creature))
                 {
-                    creatures.Add(creature.CreatureId);
-                    CreaturesCount++;
+                 //   creatures.Add(creature.CreatureId);
                 }
 
                 creature.Tile = this;
@@ -375,8 +366,6 @@ namespace NeoServer.Game.World.Map.Tiles
 
                     }
                 }
-               
-
             }
 
             SetCacheAsExpired();
@@ -404,10 +393,9 @@ namespace NeoServer.Game.World.Map.Tiles
         /// <summary>
         /// Get the top item on DownItems's stack
         /// </summary>
-        public IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out IItem item)  ? item : null;
+        public IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out IItem item) ? item : null;
 
         private byte flags;
-
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
@@ -444,7 +432,6 @@ namespace NeoServer.Game.World.Map.Tiles
                 AddThingToTile(item);
             }
         }
-
         public IThing RemoveThing(ref IThing thing, byte amount = 1)
         {
 
@@ -453,11 +440,9 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (thing is ICreature c)
             {
-
-                if (Creatures.TryRemove(c.CreatureId, out var creature))
+                if (Creatures.Remove(c.CreatureId, out var creature))
                 {
-                    creatures.Remove(c.CreatureId);
-                    CreaturesCount--;
+                   // creatures.Remove(c.CreatureId);
                 }
                 removedThing = creature;
             }
@@ -493,7 +478,6 @@ namespace NeoServer.Game.World.Map.Tiles
             SetCacheAsExpired();
             return removedThing;
         }
-
         private void SetCacheAsExpired() => cache = null;
 
         public byte[] GetRaw(IPlayer playerRequesting)
@@ -565,9 +549,6 @@ namespace NeoServer.Game.World.Map.Tiles
 
             cache = stream.Slice(0, countBytes).ToArray();
             return cache;
-
         }
-
     }
-
 }
