@@ -115,6 +115,8 @@ namespace NeoServer.Game.Creatures
             return type switch
             {
                 ConditionType.Poison => DamageType.Earth,
+                ConditionType.Fire => DamageType.FireField,
+                ConditionType.Energy => DamageType.Energy,
                 _ => DamageType.None
             };
         }

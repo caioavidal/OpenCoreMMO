@@ -23,9 +23,8 @@ namespace NeoServer.Loaders.Monsters.Converters
             foreach (var attack in data.Attacks)
             {
                 attack.TryGetValue("name", out string attackName);
-                attack.TryGetValue("attack", out byte attackValue);
-                attack.TryGetValue("skill", out byte skill);
-
+                attack.TryGetValue("attack", out ushort attackValue);
+                attack.TryGetValue("skill", out ushort skill);
                 attack.TryGetValue("min", out decimal min);
                 attack.TryGetValue("max", out decimal max);
                 attack.TryGetValue("chance", out byte chance);

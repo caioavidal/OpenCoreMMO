@@ -41,6 +41,13 @@ namespace NeoServer.Server.Events.Player
                 ConditionType.Poison => ConditionIcon.Poison,
                 ConditionType.InFight => ConditionIcon.Swords,
                 ConditionType.Paralyze => ConditionIcon.Paralyze,
+                ConditionType.Fire => ConditionIcon.Burn,
+                ConditionType.Energy => ConditionIcon.Energy,
+                ConditionType.Drunk => ConditionIcon.Drunk,
+                ConditionType.Cursed => ConditionIcon.Cursed,
+                ConditionType.Freezing => ConditionIcon.Freezing,
+                ConditionType.Manashield => ConditionIcon.Manashield,
+                ConditionType.Drown => ConditionIcon.Drowning,
                 _ => ConditionIcon.None
             };
         }

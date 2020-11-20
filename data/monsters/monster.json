@@ -37,21 +37,12 @@
           "runonhealth": "0"
     },
       "attacks": [
-        {
-           "name": "melee",
-        "interval": "2000",
-        "skill": "60",
-        "attack": "30",
-		"poison": "300"
-
-        },
 		{
            "name": "melee",
         "interval": "2000",
-        "skill": "60",
+        "skill": "100",
         "attack": "30",
-		"poison": "20"
-
+		"fire": "200"
         }
         
       ],
@@ -60,28 +51,7 @@
       "defense": "55"
 	  },
       "defenses": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "15",
-          "min": "90",
-          "max": "200",
-          "attributes": [{
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }]
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "15",
-          "speedchange": "200",
-          "duration": "20000",
-          "attributes": [{
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }]
-        }
+      
       ]
     }
 }

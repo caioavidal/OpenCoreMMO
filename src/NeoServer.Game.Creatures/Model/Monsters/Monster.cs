@@ -99,7 +99,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public IMonsterType Metadata { get; }
         public override IOutfit Outfit { get; protected set; }
-
         public override ushort MinimumAttackPower => 0;
 
         public override bool UsingDistanceWeapon => TargetDistance > 1;
@@ -189,7 +188,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
         public bool Defending { get; private set; }
-
         public override FindPathParams PathSearchParams
         {
             get
@@ -239,8 +237,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                     nearestCombat = target.Value;
                 }
             }
-
-
             CanReachAnyTarget = canReachAnyTarget;
 
             return nearestCombat;
@@ -365,7 +361,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) continue;
 
                 attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
-
             }
 
             TurnTo(Location.DirectionTo(enemy.Location));
