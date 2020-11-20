@@ -11,4 +11,5 @@ namespace NeoServer.Game.Creatures
         }
         public override ConditionType Type { get; }
     }
+
 }

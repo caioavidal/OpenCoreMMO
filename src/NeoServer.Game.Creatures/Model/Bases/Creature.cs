@@ -48,7 +48,6 @@ namespace NeoServer.Game.Creatures.Model
             
         }
 
-        public void SetAsRemoved() => IsRemoved = true;
 
         public uint HealthPoints { get; protected set; }
         public uint MaxHealthpoints { get; protected set; }
@@ -57,6 +56,7 @@ namespace NeoServer.Game.Creatures.Model
         public override string CloseInspectionText => InspectionText;
         public uint CreatureId { get; }
         public ushort Corpse => CreatureType.Look[LookType.Corpse];
+        public virtual BloodType Blood => BloodType.Blood;
         public abstract IOutfit Outfit { get; protected set; }
         public Direction Direction { get; protected set; }
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
@@ -85,7 +85,6 @@ namespace NeoServer.Game.Creatures.Model
         public byte LightBrightness { get; protected set; }
         public byte LightColor { get; protected set; }
         public uint Flags { get; private set; }
-        public BloodType Blood { get; protected set; } // TODO: implement.
         public bool IsInvisible { get; protected set; } // TODO: implement.
         public bool CanSeeInvisible { get; } // TODO: implement.
 
@@ -108,6 +107,28 @@ namespace NeoServer.Game.Creatures.Model
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
 
+        public void SetAsRemoved() => IsRemoved = true;
+        public bool CanSee(Location pos, int viewPortX, int viewPortY)
+        {
+            if (Location.Z <= 7)
+            {
+                if (pos.Z > 7) return false;
+            }
+            else if (Location.Z >= 8)
+            {
+                if (Math.Abs(Location.Z - pos.Z) > 2) return false;
+            }
+
+            var offsetZ = Location.Z - pos.Z;
+
+            if (pos.X >= Location.X - viewPortX + offsetZ && pos.X <= Location.X + viewPortX + offsetZ &&
+                pos.Y >= Location.Y - viewPortY + offsetZ && pos.Y <= Location.Y + viewPortY + offsetZ)
+            {
+                return true;
+            }
+
+            return false;
+        }
         public bool CanSee(Location pos)
         {
             if (Location.Z <= 7)
@@ -131,8 +152,8 @@ namespace NeoServer.Game.Creatures.Model
 
             var offsetZ = Location.Z - pos.Z;
 
-            if (pos.X >= Location.X - 8 + offsetZ && pos.X <= Location.X + 9 + offsetZ &&
-                pos.Y >= Location.Y - 6 + offsetZ && pos.Y <= Location.Y + 7 + offsetZ)
+            if ((pos.X >= Location.X - 8 + offsetZ) && (pos.X <= Location.X + 9 + offsetZ) &&
+                (pos.Y >= Location.Y - 6 + offsetZ) && (pos.Y <= Location.Y + 7 + offsetZ))
             {
                 return true;
             }

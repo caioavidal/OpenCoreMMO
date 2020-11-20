@@ -5,6 +5,7 @@ using NeoServer.Game.Enums.Location;
 using NeoServer.Game.Enums.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.World.Tiles
 {
@@ -13,9 +14,9 @@ namespace NeoServer.Game.Contracts.World.Tiles
     public interface IWalkableTile : ITile
     {
         ushort Ground { get; }
-        ushort[] TopItems { get; }
-        ConcurrentStack<IItem> DownItems { get; }
-        ConcurrentDictionary<uint, IWalkableCreature> Creatures { get; }
+        Stack<IItem> TopItems { get; }
+        Stack<IItem> DownItems { get; }
+        Dictionary<uint, IWalkableCreature> Creatures { get; }
         ushort StepSpeed { get; }
         bool CannotLogout { get; }
         bool ProtectionZone { get; }
@@ -32,8 +33,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
         uint GetThingByStackPosition(byte stackPosition);
         ICreature GetTopVisibleCreature(ICreature creature);
         bool HasBlockPathFinding { get; }
-        //Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile dest, byte amount = 1);
-        IThing RemoveThing(ref IMoveableThing thing, byte count = 1);
+        IThing RemoveThing(ref IThing thing, byte count = 1);
         Result<TileOperationResult> AddThing(ref IThing thing);
     }
 }

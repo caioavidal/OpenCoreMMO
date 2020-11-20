@@ -2,6 +2,7 @@
 {
     public enum DamageType : byte
     {
+        None = default,
         Ice,
         Fire,
         Physical,
@@ -14,7 +15,7 @@
         AbsorbPercentMagic,
         ManaDrain,
         FireField,
-        Melee
-
+        Melee,
+        Drown
     }
 }

@@ -101,8 +101,8 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
 
             return
-                map.GetDescription(thing, (ushort)(newLocation.X),
-                (ushort)(newLocation.Y),
+                map.GetDescription(thing, newLocation.X,
+                newLocation.Y,
                 toLocation.Z,
                 thing.Location.IsUnderground, width, height).ToArray();
         }

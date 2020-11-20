@@ -7,6 +7,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.Items;
+using NeoServer.Game.Items.Factories;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Spawns;
@@ -21,7 +22,9 @@ using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
+using NeoServer.Server.Instances;
 using NeoServer.Server.Jobs.Creatures;
+using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Tasks;
 using NeoServer.Server.Tasks.Contracts;
 using Serilog;
@@ -53,6 +56,8 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<Game>().SingleInstance();
             builder.RegisterType<GameCreatureManager>().SingleInstance();
+            builder.RegisterType<DecayableItemManager>().SingleInstance();
+            
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
             builder.RegisterType<SpawnManager>().SingleInstance();
 
@@ -87,6 +92,8 @@ namespace NeoServer.Server.Standalone.IoC
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
+            builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
+
             builder.RegisterType<PlayerFactory>().As<IPlayerFactory>().SingleInstance();
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
             builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
@@ -96,6 +103,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<EventSubscriber>().SingleInstance();
             builder.RegisterType<GameCreatureJob>().SingleInstance();
+            builder.RegisterType<GameItemJob>().SingleInstance();
 
             return builder.Build();
         }
@@ -113,6 +121,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(assembly);
 
         }
+      
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
         {

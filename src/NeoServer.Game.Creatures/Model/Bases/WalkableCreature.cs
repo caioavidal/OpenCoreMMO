@@ -24,7 +24,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event ChangeSpeed OnChangedSpeed;
         #endregion
 
-        private readonly object _enqueueWalkLock = new object();
         protected PathFinder FindPathToDestination { get; }
 
         private uint lastStepCost = 1;
@@ -146,7 +145,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void Follow(IWalkableCreature creature)
         {
-            if (!CanSee(creature.Location))
+            if (!CanSee(creature.Location, 9, 9))
             {
                 OnCreatureDisappear(creature);
                 return;
@@ -159,20 +158,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
             HasFollowPath = true;
             TryUpdatePath(directions);
         }
-
-
         public virtual bool TryWalkTo(params Direction[] directions)
         {
-            lock (_enqueueWalkLock)
+
+            if (!WalkingQueue.IsEmpty)
             {
-                if (!WalkingQueue.IsEmpty)
-                {
-                    WalkingQueue.Clear();
-                }
-                foreach (var direction in directions)
-                {
-                    WalkingQueue.Enqueue(direction);
-                }
+                WalkingQueue.Clear();
+            }
+            foreach (var direction in directions)
+            {
+                WalkingQueue.Enqueue(direction);
             }
 
             OnStartedWalking?.Invoke(this);

@@ -8,7 +8,7 @@ using System;
 
 namespace NeoServer.Game.Creatures.Spells
 {
-    public abstract class Spell<T> : ISpell where T : Spell<T>
+    public abstract class BaseSpell: ISpell
     {
         public virtual string Name { get; set; }
         public abstract EffectT Effect { get; }
@@ -17,10 +17,27 @@ namespace NeoServer.Game.Creatures.Spells
         public ushort MinLevel { get; set; }
         public uint Cooldown { get; set; }
 
-        private static readonly Lazy<T> Lazy = new Lazy<T>(() => Activator.CreateInstance(typeof(T), true) as T);
-        public static T Instance => Lazy.Value;
+        public static event InvokeSpell OnSpellInvoked;
 
         public abstract void OnCast(ICombatActor actor);
+
+        public bool InvokeOn(ICombatActor actor, ICombatActor onCreature, out InvalidOperation error)
+        {
+            if (!CanBeUsedBy(actor, out error)) return false;
+            if (actor is IPlayer player)
+            {
+                player.ConsumeMana(Mana);
+            }
+
+            if (!onCreature.HasCondition(ConditionType)) OnCast(onCreature);
+
+            AddCondition(onCreature);
+
+            if (actor is IPlayer) AddCooldown(actor);
+
+            OnSpellInvoked?.Invoke(onCreature, this);
+            return true;
+        }
         public bool Invoke(ICombatActor actor, out InvalidOperation error)
         {
             if (!CanBeUsedBy(actor, out error)) return false;
@@ -35,6 +52,7 @@ namespace NeoServer.Game.Creatures.Spells
 
             if (actor is IPlayer) AddCooldown(actor);
 
+            OnSpellInvoked?.Invoke(actor, this);
             return true;
         }
         public bool CanBeUsedBy(ICombatActor actor, out InvalidOperation error)
@@ -83,5 +101,10 @@ namespace NeoServer.Game.Creatures.Spells
         }
         private void AddCooldown(ICombatActor actor) => actor.StartSpellCooldown(this);
     }
-
+    public abstract class Spell<T> : BaseSpell where T : ISpell
+    {
+     
+        private static readonly Lazy<T> Lazy = new Lazy<T>(() => (T)Activator.CreateInstance(typeof(T), true));
+        public static T Instance => Lazy.Value;
+    }
 }

@@ -15,9 +15,9 @@ namespace NeoServer.Game.Contracts.World
         ITile FromTile { get; set; }
         ITile ToTile { get; set; }
 
-        Result<TileOperationResult> AddThing(ref IMoveableThing thing, IWalkableTile tile);
+        Result<TileOperationResult> AddThing(ref IThing thing, IWalkableTile tile);
         Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile fromTile, IWalkableTile toTile, byte amount = 1);
-        void RemoveThing(ref IMoveableThing thing, IWalkableTile tile, byte amount = 1);
+        void RemoveThing(ref IThing thing, IWalkableTile tile, byte amount = 1);
     }
     public interface ICylinderSpectator
     {

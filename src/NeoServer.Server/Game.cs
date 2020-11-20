@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Server.Instances;
 using NeoServer.Server.Tasks.Contracts;
 
 namespace NeoServer.Server
@@ -28,6 +29,7 @@ namespace NeoServer.Server
         public IMap Map { get; }
 
         public GameCreatureManager CreatureManager { get; }
+        public DecayableItemManager DecayableItemManager { get; }
 
         /// <summary>
         /// Dispatcher instance
@@ -42,13 +44,14 @@ namespace NeoServer.Server
         public IScheduler Scheduler { get; }
 
         public Game(IMap map,
-            IDispatcher dispatcher, IScheduler scheduler, GameCreatureManager creatureManager)
+            IDispatcher dispatcher, IScheduler scheduler, GameCreatureManager creatureManager, DecayableItemManager decayableBag)
         {
 
             Map = map;
             Dispatcher = dispatcher;
             Scheduler = scheduler;
             CreatureManager = creatureManager;
+            DecayableItemManager = decayableBag;
         }
 
         /// <summary>

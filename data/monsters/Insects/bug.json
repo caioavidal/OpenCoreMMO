@@ -23,58 +23,53 @@
       "defense": "0"
     },
     "flags": {
-      "flag": [
-        {
+       
           "summonable": "1"
-        },
-        {
+        ,
+        
           "attackable": "1"
-        },
-        {
+        ,
+        
           "hostile": "1"
-        },
-        {
+        ,
+        
           "illusionable": "1"
-        },
-        {
+        ,
+        
           "convinceable": "1"
-        },
-        {
+        ,
+        
           "pushable": "1"
-        },
-        {
+        ,
+        
           "canpushitems": "0"
-        },
-        {
+        ,
+        
           "canpushcreatures": "0"
-        },
-        {
+        ,
+        
           "targetdistance": "1"
-        },
-        {
+        ,
+        
           "staticattack": "90"
-        },
-        {
+        ,
+        
           "runonhealth": "0"
-        }
-      ]
+        
+      
     },
-    "attacks": {
-      "attack": {
+    "attacks": [{
+      
         "name": "melee",
         "interval": "2000",
         "skill": "20",
         "attack": "15"
       }
-    },
-    "defenses": {
+    ],
+    
+    "defense": {
       "armor": "2",
       "defense": "3"
-    },
-    "elements": {
-      "element": {
-        "firePercent": "-10"
-      }
     },
     "loot": {
       "item": [
@@ -91,5 +86,5 @@
       ],
       "#comment": []
     }
-  }
+	}
 }

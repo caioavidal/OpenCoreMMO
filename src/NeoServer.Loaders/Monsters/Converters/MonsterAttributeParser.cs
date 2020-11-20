@@ -18,6 +18,14 @@ namespace NeoServer.Loaders.Monsters.Converters
                 "fire" => DamageType.Fire,
                 "manadrain" => DamageType.ManaDrain,
                 "firearea" => DamageType.Fire,
+                "poison" => DamageType.Earth,
+                "earth" => DamageType.Earth,
+                "bleed"=> DamageType.Physical,
+                "drown"=> DamageType.Drown,
+                "ice" => DamageType.Ice,
+                "holy" => DamageType.Holy,
+                "death"=>DamageType.Death,
+                "lifedrain"=> DamageType.AbsorbPercentPhysical,
                 _ => DamageType.Melee
             };
         }
@@ -27,6 +35,7 @@ namespace NeoServer.Loaders.Monsters.Converters
             {
                 "blueshimmer" => EffectT.GlitterBlue,
                 "redshimmer" => EffectT.GlitterRed,
+                "greenshimmer"=> EffectT.GlitterGreen,
                 _ => EffectT.None
             };
         }

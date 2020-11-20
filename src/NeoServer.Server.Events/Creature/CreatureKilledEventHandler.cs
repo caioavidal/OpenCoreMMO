@@ -25,11 +25,11 @@ namespace NeoServer.Server.Events.Creature
             {
                 var tile = creature.Tile;
 
-                var thing = creature as IMoveableThing;
+                var thing = creature as IThing;
 
                 map.RemoveThing(ref thing, tile);
 
-                var corpse = itemFactory.Create(creature.Corpse, creature.Location, null) as IMoveableThing;
+                var corpse = itemFactory.Create(creature.Corpse, creature.Location, null) as IThing;
                 map.AddItem(ref corpse, tile);
 
                 //send packets to killed player

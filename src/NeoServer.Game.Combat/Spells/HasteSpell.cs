@@ -9,6 +9,7 @@ namespace NeoServer.Game.Creatures.Spells
 {
     public class HasteSpell: Spell<HasteSpell>
     {
+        public override string Name => "Haste";
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 10000;
         public virtual ushort SpeedBoost => 200;

@@ -20,10 +20,10 @@ namespace NeoServer.Server.Handlers.Player
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var playerSay = new PlayerSayPacket(message);
-            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
-            {
-                game.Dispatcher.AddEvent(new Event(() => player.Say(playerSay.Message, playerSay.Talk)));
-            }
+            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            
+            game.Dispatcher.AddEvent(new Event(() => player.Say(playerSay.Message, playerSay.Talk)));
+            
         }
     }
 }

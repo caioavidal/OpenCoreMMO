@@ -13,10 +13,7 @@ namespace NeoServer.Server.Handlers.Player
         }
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            game.Dispatcher.AddEvent(new Event(() =>
-            {
-                connection.LastPingResponse = DateTime.Now.Ticks;
-            }));
+            game.Dispatcher.AddEvent(new Event(() => connection.LastPingResponse = DateTime.Now.Ticks));
         }
     }
 }

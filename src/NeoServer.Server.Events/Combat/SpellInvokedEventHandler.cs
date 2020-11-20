@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace NeoServer.Server.Events
 {
-    public class PlayerUsedSpellEventHandler
+    public class SpellInvokedEventHandler
     {
         private readonly Game game;
 
-        public PlayerUsedSpellEventHandler(Game game)
+        public SpellInvokedEventHandler(Game game)
         {
             this.game = game;
         }

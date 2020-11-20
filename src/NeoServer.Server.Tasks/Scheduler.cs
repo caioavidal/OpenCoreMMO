@@ -81,7 +81,7 @@ namespace NeoServer.Server.Tasks
             if (!EventIsCancelled(evt.EventId))
             {
                 activeEventIds.TryRemove(evt.EventId, out _);
-                dispatcher.AddEvent(evt, true); //send to dispatcher      
+                dispatcher.AddEvent(evt); //send to dispatcher      
             }
         }
 

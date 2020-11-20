@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Loaders.World;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -30,12 +31,11 @@ namespace NeoServer.Loaders.Monsters
                 yield return ConvertMonster(basePath, monsterFile);
             }
         }
-
         private static IMonsterType ConvertMonster(string basePath, IDictionary<string, string> monsterFile)
         {
             var json = File.ReadAllText(Path.Combine(basePath, monsterFile["file"]));
 
-            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; } });
+            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
 
             return MonsterConverter.Convert(monster);
         }

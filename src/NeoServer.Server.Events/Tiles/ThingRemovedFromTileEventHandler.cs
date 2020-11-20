@@ -36,12 +36,6 @@ namespace NeoServer.Server.Events
             {
                 var creature = spectator.Spectator;
 
-                if (creature is IMonster monster && thing is IPlayer target)
-                {
-                    monster.RemoveFromTargetList(target);
-                    continue;
-                }
-
                 if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
                 {
                     continue;
