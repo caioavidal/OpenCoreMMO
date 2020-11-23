@@ -14,7 +14,7 @@
 <a href="https://discord.gg/Kazq9z2">
   <img align="center" src="https://badgen.net/badge/icon/discord?icon=discord&label" />
 </a>
-<a href="https://github.com/fibula-mmo/fibula-server/stargazers">
+<a href="https://github.com/caioavidal/opencoremmo/stargazers">
   <img align="center" src="https://img.shields.io/github/stars/caioavidal/opencoremmo?label=stargazers&logoColor=yellow&style=social" />
   </a>
 </p>
