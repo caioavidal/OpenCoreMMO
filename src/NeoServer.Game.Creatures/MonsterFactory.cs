@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Model.Monsters;
-using NeoServer.Server.Events;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
 using System.Collections.Generic;

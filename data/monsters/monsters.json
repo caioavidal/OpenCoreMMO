@@ -3,6 +3,10 @@
 	{
 		"name": "Monster",
         "file": "monster.json"
+	},
+	{
+		"name": "Cyclops",
+        "file": "Giants/cyclops.json"
 	}
 
 ]

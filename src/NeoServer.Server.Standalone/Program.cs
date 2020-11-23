@@ -19,6 +19,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using NeoServer.Server.Standalone;
 
 Console.Title = "OpenCoreMMO Server";
 
@@ -32,6 +35,8 @@ var container = Container.CompositionRoot();
 container.Resolve<Database>().Connect();
 
 var logger = container.Resolve<Logger>();
+
+
 
 RSA.LoadPem();
 
@@ -80,5 +85,6 @@ static async Task StartListening(IContainer container, CancellationToken token)
         await Task.Delay(TimeSpan.FromSeconds(1), token);
     }
 }
+
 
 
