@@ -50,8 +50,6 @@ namespace NeoServer.Networking.Listeners
             args.Connection.OnCloseEvent -= OnConnectionClose;
             args.Connection.OnProcessEvent -= protocol.ProcessMessage;
             args.Connection.OnPostProcessEvent -= protocol.PostProcessMessage;
-
-            //  _connections.Remove(connection);
         }
 
         public void EndListening()
