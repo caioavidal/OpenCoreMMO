@@ -14,7 +14,9 @@
 <a href="https://discord.gg/Kazq9z2">
   <img align="center" src="https://badgen.net/badge/icon/discord?icon=discord&label" />
 </a>
-
+<a href="https://github.com/fibula-mmo/fibula-server/stargazers">
+  <img align="center" src="https://img.shields.io/github/stars/caioavidal/opencoremmo?label=stargazers&logoColor=yellow&style=social" />
+  </a>
 </p>
 
 > The OpenCoreMMO is a free and open-source MMORPG server emulator written in C#. It is based on the [forgottenserver](https://github.com/otland/forgottenserver) (OpenTibia)
