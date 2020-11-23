@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Enums.Creatures.Players
+﻿namespace NeoServer.Game.Common.Creatures.Players
 {
     public enum ConditionType : uint
     {

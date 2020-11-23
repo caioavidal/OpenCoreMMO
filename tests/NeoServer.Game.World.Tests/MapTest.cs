@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.World.Tests.TestData;
@@ -49,10 +49,10 @@ namespace NeoServer.Game.World.Tests
             var map = CreateMap(item);
 
             var thing = item as IThing;
-            map.RemoveThing(ref thing, map[100, 100, 7] as IWalkableTile);
+            map.RemoveThing(ref thing, map[100, 100, 7] as IDynamicTile);
 
-            Assert.Single((map[100, 100, 7] as IWalkableTile).DownItems);
-            Assert.Equal(1, (map[100, 100, 7] as IWalkableTile).DownItems.First().ClientId);
+            Assert.Single((map[100, 100, 7] as IDynamicTile).DownItems);
+            Assert.Equal(1, (map[100, 100, 7] as IDynamicTile).DownItems.First().ClientId);
         }
 
         [Fact]
@@ -61,17 +61,17 @@ namespace NeoServer.Game.World.Tests
             var item = ItemTestData.CreateMoveableItem(2);
 
             var sup = CreateMap(item);
-            var fromTile = sup[item.Location] as IWalkableTile;
+            var fromTile = sup[item.Location] as IDynamicTile;
 
             var thing = item as IMoveableThing;
 
-            var result = sup.TryMoveThing(ref thing, new Location(101, 100, 7));
+            var result = sup.TryMoveThing(thing, new Location(101, 100, 7));
 
             Assert.True(result);
             Assert.Equal(new Location(101, 100, 7), thing.Location);
 
             Assert.Collection(fromTile.DownItems, item => Assert.Equal(1, item.ClientId));
-            Assert.Collection((sup[thing.Location] as IWalkableTile).DownItems, downItem => Assert.Same(item, downItem),
+            Assert.Collection((sup[thing.Location] as IDynamicTile).DownItems, downItem => Assert.Same(item, downItem),
                 item => Assert.Equal(1, item.ClientId));
 
         }
@@ -82,17 +82,17 @@ namespace NeoServer.Game.World.Tests
             var item = ItemTestData.CreateMoveableItem(2);
 
             var sup = CreateMap(item);
-            var fromTile = sup[item.Location] as IWalkableTile;
+            var fromTile = sup[item.Location] as IDynamicTile;
 
             var thing = item as IMoveableThing;
 
-            var result = sup.TryMoveThing(ref thing, new Location(101, 100, 7));
+            var result = sup.TryMoveThing(thing, new Location(101, 100, 7));
 
             Assert.True(result);
             Assert.Equal(new Location(101, 100, 7), thing.Location);
 
             Assert.Collection(fromTile.DownItems, item => Assert.Equal(1, item.ClientId));
-            Assert.Collection((sup[thing.Location] as IWalkableTile).DownItems, downItem => Assert.Same(item, downItem),
+            Assert.Collection((sup[thing.Location] as IDynamicTile).DownItems, downItem => Assert.Same(item, downItem),
                 item => Assert.Equal(1, item.ClientId));
 
         }
@@ -103,17 +103,17 @@ namespace NeoServer.Game.World.Tests
             var item = ItemTestData.CreateMoveableItem(2);
 
             var sup = CreateMap(item);
-            var fromTile = sup[item.Location] as IWalkableTile;
+            var fromTile = sup[item.Location] as IDynamicTile;
 
             var thing = item as IMoveableThing;
 
-            var result = sup.TryMoveThing(ref thing, new Location(101, 100, 7));
+            var result = sup.TryMoveThing(thing, new Location(101, 100, 7));
 
             Assert.True(result);
             Assert.Equal(new Location(101, 100, 7), thing.Location);
 
             Assert.Collection(fromTile.DownItems, item => Assert.Equal(1, item.ClientId));
-            Assert.Collection((sup[thing.Location] as IWalkableTile).DownItems, downItem => Assert.Same(item, downItem),
+            Assert.Collection((sup[thing.Location] as IDynamicTile).DownItems, downItem => Assert.Same(item, downItem),
                 item => Assert.Equal(1, item.ClientId));
 
         }

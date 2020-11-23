@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
-using NeoServer.Game.Enums.Location.Structs.Helpers;
+using NeoServer.Game.Common.Location.Structs.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;

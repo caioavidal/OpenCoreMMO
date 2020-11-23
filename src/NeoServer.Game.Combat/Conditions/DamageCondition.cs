@@ -1,14 +1,13 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Model.Conditions;
-using NeoServer.Game.Enums.Combat.Structs;
-using NeoServer.Game.Enums.Creatures.Players;
-using NeoServer.Game.Enums.Creatures.Structs;
-using NeoServer.Game.Enums.Item;
+﻿using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Creatures.Structs;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
 
-namespace NeoServer.Game.Creatures
+namespace NeoServer.Game.Common.Conditions
 {
     public class DamageCondition : BaseCondition
     {

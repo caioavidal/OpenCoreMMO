@@ -1,9 +1,9 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;

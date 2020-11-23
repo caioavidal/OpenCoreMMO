@@ -1,8 +1,8 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.OTB.Enums;
@@ -32,7 +32,7 @@ namespace NeoServer.Loaders.World
         }
         public void Load()
         {
-            var fileStream = File.ReadAllBytes("./data/world/neoserver.otbm");
+            var fileStream = File.ReadAllBytes("./data/world/small.otbm");
 
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
 

@@ -1,10 +1,10 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.World.Map;
 using NeoServer.Server.Model.Players;
@@ -20,7 +20,7 @@ namespace NeoServer.Game.Items.Tests
         private Container CreateContainer(byte capacity = 6)
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, capacity);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
 
             return new Container(itemType, new Location(100, 100, 7));
         }
@@ -47,7 +47,7 @@ namespace NeoServer.Game.Items.Tests
         public void Constructor_Should_Create_Instance_With_Capacity_And_List_Items()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
 
             var sut = new Container(itemType, new Location(100, 100, 7));
 
@@ -66,7 +66,7 @@ namespace NeoServer.Game.Items.Tests
         public void SetParent_Should_Modify_Parent_Property()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
 
             var parentContainer = new Container(itemType, new Location(100, 100, 7));
             var sut = new Container(itemType, new Location(100, 100, 7));
@@ -84,18 +84,18 @@ namespace NeoServer.Game.Items.Tests
         public void IsApplicable_Returns_True_When_ItemType_Is_Container()
         {
             ItemType type = new ItemType();
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Type, "container");
+            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "container");
 
             Assert.True(Container.IsApplicable(type));
 
             type = new ItemType();
-            type.SetGroup((byte)Enums.ItemGroup.GroundContainer);
+            type.SetGroup((byte)Common.ItemGroup.GroundContainer);
 
             Assert.True(Container.IsApplicable(type));
 
             type = new ItemType();
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Type, "container");
-            type.SetGroup((byte)Enums.ItemGroup.GroundContainer);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "container");
+            type.SetGroup((byte)Common.ItemGroup.GroundContainer);
 
             Assert.True(Container.IsApplicable(type));
 

@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Server.Contracts.Network
 {

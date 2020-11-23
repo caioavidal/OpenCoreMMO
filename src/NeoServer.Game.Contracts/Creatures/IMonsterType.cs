@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 

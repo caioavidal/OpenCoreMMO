@@ -23,8 +23,6 @@
     <ProjectReference Include="..\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
-    <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Tasks.Contracts.csproj" />
-    <ProjectReference Include="..\NeoServer.Game.Model\NeoServer.Game.Model.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\NeoServer.OTBM\NeoServer.OTBM.csproj" />
     <ProjectReference Include="..\NeoServer.Loaders\NeoServer.Loaders.csproj" />

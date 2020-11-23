@@ -3,8 +3,8 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -47,7 +47,7 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public void RemoveThing(ref IThing thing, IWalkableTile tile, byte amount = 1)
+        public void RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1)
         {
             FromTile = tile;
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
@@ -69,7 +69,7 @@ namespace NeoServer.Game.World.Map
             tile.RemoveThing(ref thing, amount);
 
         }
-        public Result<TileOperationResult> AddThing(ref IThing thing, IWalkableTile tile)
+        public Result<TileOperationResult> AddThing(IThing thing, IDynamicTile tile)
         {
             ToTile = tile;
             var result = tile.AddThing(ref thing);
@@ -93,7 +93,7 @@ namespace NeoServer.Game.World.Map
             return result;
         }
 
-        public Result<TileOperationResult> MoveThing(ref IMoveableThing thing, IWalkableTile fromTile, IWalkableTile toTile, byte amount = 1)
+        public Result<TileOperationResult> MoveThing(IMoveableThing thing, IDynamicTile fromTile, IDynamicTile toTile, byte amount = 1)
         {
             ToTile = toTile;
             FromTile = fromTile;

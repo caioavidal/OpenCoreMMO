@@ -1,4 +1,4 @@
-﻿using NeoServer.Server.Tasks.Contracts;
+﻿using NeoServer.Server.Contracts.Tasks;
 using System;
 using System.Threading;
 using System.Threading.Channels;

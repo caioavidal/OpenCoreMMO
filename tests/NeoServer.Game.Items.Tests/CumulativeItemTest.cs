@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
 using Xunit;
 
@@ -92,7 +92,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(100);
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, weight);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, weight);
 
             var sup = new CumulativeItem(type, new Location(100, 100, 7), amount);
             Assert.Equal(totalWeight, sup.Weight);

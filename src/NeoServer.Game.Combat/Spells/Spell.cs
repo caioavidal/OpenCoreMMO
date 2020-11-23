@@ -1,10 +1,11 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
+using NeoServer.Game.Common.Conditions;
 
 namespace NeoServer.Game.Creatures.Spells
 {

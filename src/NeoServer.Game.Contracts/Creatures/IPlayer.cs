@@ -1,11 +1,11 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Enums.Talks;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
+using NeoServer.Game.Common.Talks;
 using System.Collections.Generic;
 
 namespace NeoServer.Server.Model.Players.Contracts
@@ -34,8 +34,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         float CarryStrength { get; }
 
         IDictionary<SkillType, ISkill> Skills { get; }
-
-        bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
 
         Location LocationInFront { get; }
@@ -44,7 +42,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte SecureMode { get; }
 
         bool InFight { get; }
-        bool CanLogout { get; }
         IPlayerContainerList Containers { get; }
 
         event CancelWalk OnCancelledWalk;
@@ -55,6 +52,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         ushort Mana { get; }
         ushort MaxMana { get; }
         SkillType SkillInUse { get; }
+        bool CannotLogout { get; }
 
         //  IAction PendingAction { get; }
 

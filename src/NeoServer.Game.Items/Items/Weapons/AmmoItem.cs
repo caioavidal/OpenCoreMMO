@@ -1,10 +1,10 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -29,11 +29,11 @@ namespace NeoServer.Game.Items.Items
             //SkillBonus = skillBonus;
         }
 
-        public byte Range => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Range);
+        public byte Range => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Range);
 
-        public byte Attack => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Attack);
+        public byte Attack => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Attack);
 
-        public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.HitChance);
+        public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.HitChance);
         public AmmoType AmmoType => Metadata.AmmoType;
         public ShootType ShootType => Metadata.ShootType;
         public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();

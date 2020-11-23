@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -18,13 +18,13 @@ namespace NeoServer.Game.Items.Items
         public bool IsFull => SlotsUsed >= Capacity;
         public IThing Parent { get; private set; }
         public bool HasParent => Parent != null;
-        public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Capacity);
+        public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Capacity);
         public List<IItem> Items { get; }
         public IItem this[int index] => Items[index];
 
         public Container(IItemType type, Location location) : base(type, location)
         {
-            if (!type.Attributes.HasAttribute(Enums.ItemAttribute.Capacity))
+            if (!type.Attributes.HasAttribute(Common.ItemAttribute.Capacity))
             {
                 throw new ArgumentException("Capacity missing");
             }
@@ -55,8 +55,8 @@ namespace NeoServer.Game.Items.Items
 
         public void SetParent(IThing thing) => Parent = thing;
 
-        public static bool IsApplicable(IItemType type) => type.Group == Enums.ItemGroup.GroundContainer ||
-            type.Attributes.GetAttribute(Enums.ItemAttribute.Type)?.ToLower() == "container";
+        public static bool IsApplicable(IItemType type) => type.Group == Common.ItemGroup.GroundContainer ||
+            type.Attributes.GetAttribute(Common.ItemAttribute.Type)?.ToLower() == "container";
 
         public bool GetContainerAt(byte index, out IContainer container)
         {

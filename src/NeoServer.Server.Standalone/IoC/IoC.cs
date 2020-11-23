@@ -26,7 +26,7 @@ using NeoServer.Server.Instances;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Tasks;
-using NeoServer.Server.Tasks.Contracts;
+using NeoServer.Server.Contracts.Tasks;
 using Serilog;
 using System;
 using System.Reflection;

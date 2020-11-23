@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Location.Structs.Helpers;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Location.Structs.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;

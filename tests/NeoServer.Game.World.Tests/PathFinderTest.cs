@@ -1,6 +1,6 @@
 ﻿
 using NeoServer.Game.Contracts;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Map;
 using System;
 using System.Collections.Generic;

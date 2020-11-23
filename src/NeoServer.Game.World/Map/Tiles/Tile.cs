@@ -4,9 +4,9 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
-    public class Tile : BaseTile, IWalkableTile
+    public class Tile : BaseTile, IDynamicTile
     {
         public event AddThingToTileDel OnThingAddedToTile;
 
@@ -36,13 +36,10 @@ namespace NeoServer.Game.World.Map.Tiles
         public byte MovementPenalty { get; private set; }
 
         public ushort Ground { get; private set; }
-        //public ConcurrentStack<IItem> TopItems { get; private set; } = new ConcurrentStack<IItem>();
         public Stack<IItem> TopItems { get; private set; }
 
         public Stack<IItem> DownItems { get; private set; }
         public Dictionary<uint, IWalkableCreature> Creatures { get; private set; } = new Dictionary<uint, IWalkableCreature>();
-        //private List<uint> creatures = new List<uint>();
-
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
@@ -99,22 +96,22 @@ namespace NeoServer.Game.World.Map.Tiles
             return null;
         }
 
-        public override bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
+        public override bool TryGetStackPositionOfThing(IPlayer observer, IThing thing, out byte stackPosition)
         {
             stackPosition = default;
 
             if (thing is IItem item)
             {
-                return TryGetStackPositionOfItem(player, item, out stackPosition);
+                return TryGetStackPositionOfItem(observer, item, out stackPosition);
             }
             else if (thing is ICreature creature)
             {
-                return TryGetStackPositionOfCreature(player, creature, out stackPosition);
+                return TryGetStackPositionOfCreature(observer, creature, out stackPosition);
             }
 
             return false;
         }
-        public bool TryGetStackPositionOfItem(IPlayer player, IItem item, out byte stackPosition)
+        private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
         {
             stackPosition = default;
 
@@ -150,7 +147,6 @@ namespace NeoServer.Game.World.Map.Tiles
                         return false;
                     }
                 }
-
             }
             else
             {
@@ -164,7 +160,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var creature in Creatures)
             {
-                if (player.CanSee(creature.Value))
+                if (observer.CanSee(creature.Value))
                 {
                     if (++n >= 10)
                     {
@@ -193,7 +189,7 @@ namespace NeoServer.Game.World.Map.Tiles
             //throw new Exception("Thing not found in tile.");
         }
 
-        public bool TryGetStackPositionOfCreature(IPlayer player, ICreature creature, out byte stackPosition)
+        private bool TryGetStackPositionOfCreature(IPlayer observer, ICreature creature, out byte stackPosition)
         {
             stackPosition = default;
 
@@ -223,7 +219,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 {
                     return true;
                 }
-                else if (player.CanSee(creature))
+                else if (observer.CanSee(creature))
                 {
                     if (++stackPosition >= 10)
                     {
@@ -375,7 +371,6 @@ namespace NeoServer.Game.World.Map.Tiles
         public Result<TileOperationResult> AddThing(ref IThing thing)
         {
             var operations = AddThingToTile(thing);
-
             return new Result<TileOperationResult>(operations);
         }
         public Result<TileOperationResult> AddThing(ref IMoveableThing thing)

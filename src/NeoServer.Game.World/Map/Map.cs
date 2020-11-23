@@ -4,11 +4,11 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Combat.Structs;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.World.Map;
@@ -20,16 +20,16 @@ namespace NeoServer.Game.World.Map
 {
     public class Map : IMap
     {
-        
+
         const int MAP_MAX_LAYERS = 16;
 
         public event PlaceCreatureOnMap OnCreatureAddedOnMap;
         public event RemoveThingFromTile OnThingRemovedFromTile;
         public event AddThingToTile OnThingAddedToTile;
         public event UpdateThingOnTile OnThingUpdatedOnTile;
-        public event MoveCreatureOnFloor OnThingMoved;
+        public event MoveCreatureOnFloor OnCreatureMoved;
         public event FailedMoveThing OnThingMovedFailed;
-
+        public event MoveItem OnItemMoved;
         private readonly World world;
         public Map(World world)
         {
@@ -52,7 +52,7 @@ namespace NeoServer.Game.World.Map
 
         public ITile this[ushort x, ushort y, byte z] => this[new Location(x, y, z)];
 
-        public bool TryMoveThing(ref IMoveableThing thing, Location toLocation)
+        public bool TryMoveThing(IMoveableThing thing, Location toLocation)
         {
             if (this[thing.Location] is IStaticTile)
             {
@@ -66,32 +66,37 @@ namespace NeoServer.Game.World.Map
                 return false;
             }
 
-            var fromTile = this[thing.Location] as IWalkableTile;
-            var toTile = this[toLocation] as IWalkableTile;
-
-            SwapCreatureBetweenSectors(thing, toLocation);
+            var fromTile = this[thing.Location] as IDynamicTile;
+            var toTile = this[toLocation] as IDynamicTile;
 
             var cylinder = new Cylinder(this);
 
-            var result = cylinder.MoveThing(ref thing, fromTile, toTile);
+            var result = cylinder.MoveThing(thing, fromTile, toTile);
             if (!result.Success)
             {
                 return false;
             }
 
-            foreach (var spectator in cylinder.TileSpectators)
+            if (thing is IItem item)
             {
-                if (spectator.Spectator is IMonster monsterSpectator && thing is IPlayer playerWalking)
-                {
-                    monsterSpectator.SetAsEnemy(playerWalking);
-                }
-                if (spectator.Spectator is IPlayer playerSpectator && thing is IMonster monsterWalking)
-                {
-                    monsterWalking.SetAsEnemy(playerSpectator);
-                }
+                OnItemMoved?.Invoke(item, cylinder);
             }
-
-            OnThingMoved?.Invoke((IWalkableCreature)thing, cylinder);
+            if (thing is IWalkableCreature creature)
+            {
+                SwapCreatureBetweenSectors(creature, toLocation);
+                foreach (var spectator in cylinder.TileSpectators)
+                {
+                    if (spectator.Spectator is IMonster monsterSpectator && thing is IPlayer playerWalking)
+                    {
+                        monsterSpectator.SetAsEnemy(playerWalking);
+                    }
+                    if (spectator.Spectator is IPlayer playerSpectator && thing is IMonster monsterWalking)
+                    {
+                        monsterWalking.SetAsEnemy(playerSpectator);
+                    }
+                }
+                OnCreatureMoved?.Invoke(creature, cylinder);
+            }
 
             var tileDestination = GetTileDestination(toTile);
 
@@ -100,21 +105,18 @@ namespace NeoServer.Game.World.Map
                 return true;
             }
 
-            return TryMoveThing(ref thing, tileDestination.Location);
+            return TryMoveThing(thing, tileDestination.Location);
         }
 
-        private void SwapCreatureBetweenSectors(IMoveableThing thing, Location toLocation)
+        private void SwapCreatureBetweenSectors(ICreature creature, Location toLocation)
         {
-            if (thing is ICreature creature)
-            {
-                var oldSector = world.GetSector(thing.Location.X, thing.Location.Y);
-                var newSector = world.GetSector(toLocation.X, toLocation.Y);
+            var oldSector = world.GetSector(creature.Location.X, creature.Location.Y);
+            var newSector = world.GetSector(toLocation.X, toLocation.Y);
 
-                if (oldSector != newSector)
-                {
-                    oldSector.RemoveCreature(creature);
-                    newSector.AddCreature(creature);
-                }
+            if (oldSector != newSector)
+            {
+                oldSector.RemoveCreature(creature);
+                newSector.AddCreature(creature);
             }
         }
 
@@ -185,7 +187,7 @@ namespace NeoServer.Game.World.Map
                 return false;
             }
 
-            if (!(tile is IWalkableTile walkableTile))
+            if (!(tile is IDynamicTile walkableTile))
             {
                 return false;
             }
@@ -196,9 +198,9 @@ namespace NeoServer.Game.World.Map
             return true;
         }
 
-        private ITile GetTileDestination(IWalkableTile tile)
+        public ITile GetTileDestination(IDynamicTile tile)
         {
-            Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) => tile is IWalkableTile walkable ? walkable.FloorDirection == direction : false;
+            Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) => tile is IDynamicTile walkable ? walkable.FloorDirection == direction : false;
 
             var x = tile.Location.X;
             var y = tile.Location.Y;
@@ -293,18 +295,18 @@ namespace NeoServer.Game.World.Map
 
             return tile;
         }
-        public void RemoveThing(ref IThing thing, IWalkableTile tile, byte amount = 1)
+        public void RemoveThing(ref IThing thing, IDynamicTile tile, byte amount = 1)
         {
             Cylinder cylinder = new Cylinder(this);
 
-            cylinder.RemoveThing(ref thing, tile, amount);
+            cylinder.RemoveThing(thing, tile, amount);
 
             OnThingRemovedFromTile?.Invoke(thing, cylinder);
         }
-        public void AddItem(ref IThing thing, IWalkableTile tile, byte amount = 1)
+        public void AddItem(ref IThing thing, IDynamicTile tile, byte amount = 1)
         {
             var cylinder = new Cylinder(this);
-            var result = cylinder.AddThing(ref thing, tile);
+            var result = cylinder.AddThing(thing, tile);
 
             foreach (var operation in result.Value.Operations)
             {
@@ -449,7 +451,7 @@ namespace NeoServer.Game.World.Map
                         {
                             tempBytes.AddRange(immutableTile.Raw);
                         }
-                        else if (tile is IWalkableTile mutableTile)
+                        else if (tile is IDynamicTile mutableTile)
                         {
                             tempBytes.AddRange(mutableTile.GetRaw(thing as IPlayer));
                         }
@@ -515,13 +517,13 @@ namespace NeoServer.Game.World.Map
         {
             var thing = creature as IThing;
 
-            if (this[creature.Location] is IWalkableTile tile)
+            if (this[creature.Location] is IDynamicTile tile)
             {
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
 
                 var cylinder = new Cylinder(this);
-                cylinder.AddThing(ref thing, tile);
+                cylinder.AddThing(thing, tile);
 
                 if (creature is IPlayer player)
                 {
@@ -545,7 +547,7 @@ namespace NeoServer.Game.World.Map
             foreach (var coordinates in area)
             {
                 var tile = this[coordinates.Location];
-                if (tile is IWalkableTile walkableTile)
+                if (tile is IDynamicTile walkableTile)
                 {
                     foreach (var target in walkableTile.Creatures.Values)
                     {
@@ -560,13 +562,11 @@ namespace NeoServer.Game.World.Map
 
         public void MoveCreature(IWalkableCreature creature)
         {
-            var thing = creature as IMoveableThing;
-
             if (creature.TryGetNextStep(out var direction))
             {
-                var toTile = GetNextTile(thing.Location, direction);
+                var toTile = GetNextTile(creature.Location, direction);
 
-                if (toTile is null || !TryMoveThing(ref thing, toTile.Location))
+                if (toTile is null || !TryMoveThing(creature, toTile.Location))
                 {
                     if (creature is IPlayer player) player.CancelWalk();
                 }
@@ -578,7 +578,7 @@ namespace NeoServer.Game.World.Map
                 return;
             }
         }
-        public void CreateBloodPool(ILiquid pool, IWalkableTile tile)
+        public void CreateBloodPool(ILiquid pool, IDynamicTile tile)
         {
             if (tile?.TopItems != null && tile.TopItems.TryPeek(out var topItem) && topItem is ILiquid && topItem is IThing topItemThing)
             {

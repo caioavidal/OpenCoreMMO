@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NeoServer.Game.Enums.Location.Structs
+namespace NeoServer.Game.Common.Location.Structs
 {
     public struct TileOperationResult
     {

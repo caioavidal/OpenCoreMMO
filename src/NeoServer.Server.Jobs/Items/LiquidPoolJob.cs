@@ -13,7 +13,7 @@ namespace NeoServer.Server.Jobs.Creatures
             if (!(item is ILiquid liquid)) return;
             if (item.Expired)
             {
-                var tile = game.Map[(item as IItem).Location] as IWalkableTile;
+                var tile = game.Map[(item as IItem).Location] as IDynamicTile;
                 if (item.Decay())
                 {
                     game.Map.CreateBloodPool(liquid, tile);

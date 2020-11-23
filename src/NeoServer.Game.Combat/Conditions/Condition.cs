@@ -1,7 +1,6 @@
-﻿using NeoServer.Game.Creatures.Model.Conditions;
-using NeoServer.Game.Enums.Creatures.Players;
+﻿using NeoServer.Game.Common.Creatures.Players;
 
-namespace NeoServer.Game.Creatures
+namespace NeoServer.Game.Common.Conditions
 {
     public class Condition : BaseCondition
     {

@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -13,12 +13,12 @@ namespace NeoServer.Game.Items.Items
     {
         public Necklace(IItemType type, Location location) : base(type, location)
         {
-            Charges = Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Charges);
-            Duration = Metadata.Attributes.GetAttribute<ushort>(Enums.ItemAttribute.Duration);
+            Charges = Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Charges);
+            Duration = Metadata.Attributes.GetAttribute<ushort>(Common.ItemAttribute.Duration);
         }
 
         public byte Charges { get; private set; }
-        public byte Defense => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Armor);
+        public byte Defense => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Armor);
         public Dictionary<DamageType, byte> DamageProtection => Metadata.Attributes.DamageProtection;
 
         public bool Expired => Duration <= 0 && Charges <= 0;

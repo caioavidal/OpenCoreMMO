@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Tasks\NeoServer.Server.Tasks.csproj" />
     <ProjectReference Include="..\NeoServer.Server\NeoServer.Server.csproj" />

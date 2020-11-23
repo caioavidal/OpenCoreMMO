@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
 {
     public delegate void AddThingToTileDel(IThing thing, ITile tile);
 
-    public interface IWalkableTile : ITile
+    public interface IDynamicTile : ITile
     {
         ushort Ground { get; }
         Stack<IItem> TopItems { get; }

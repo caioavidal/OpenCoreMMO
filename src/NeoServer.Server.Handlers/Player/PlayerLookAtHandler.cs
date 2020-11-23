@@ -19,7 +19,7 @@ namespace NeoServer.Server.Handlers.Player
         {
             var lookAtPacket = new LookAtPacket(message);
 
-            if (game.Map[lookAtPacket.Location] is IWalkableTile tile)
+            if (game.Map[lookAtPacket.Location] is IDynamicTile tile)
             {
                 var thingId = tile.GetThingByStackPosition(lookAtPacket.StackPosition);
                 Console.WriteLine(thingId);

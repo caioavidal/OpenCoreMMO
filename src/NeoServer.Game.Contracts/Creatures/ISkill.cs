@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Enums.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
