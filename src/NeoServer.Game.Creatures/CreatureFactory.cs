@@ -36,6 +36,7 @@ namespace NeoServer.Game.Creatures
         //factories
         private readonly IPlayerFactory _playerFactory;
         private readonly IMonsterFactory _monsterFactory;
+        private readonly IItemFactory itemFactory;
         //private readonly IPathFinder _pathFinder;
 
         public CreatureFactory(
@@ -47,7 +48,7 @@ namespace NeoServer.Game.Creatures
             IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map,
             CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler,
             CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler,
-            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, CreatureSayEventHandler creatureSayEventHandler, ILiquidPoolFactory liquidPoolFactory)
+            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, CreatureSayEventHandler creatureSayEventHandler, ILiquidPoolFactory liquidPoolFactory, IItemFactory itemFactory)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -66,6 +67,7 @@ namespace NeoServer.Game.Creatures
             _creatureChangedSpeedEventHandler = creatureChangedSpeedEventHandler;
             _creatureSayEventHandler = creatureSayEventHandler;
             _liquidPoolFactory = liquidPoolFactory;
+            this.itemFactory = itemFactory;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -99,6 +101,7 @@ namespace NeoServer.Game.Creatures
         {
             creature.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
             creature.OnKilled += _creatureKilledEventHandler.Execute;
+            creature.OnKilled += AttachDeathEvent;
             //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
@@ -153,6 +156,12 @@ namespace NeoServer.Game.Creatures
             var pool = _liquidPoolFactory.Create(victim.Location, liquidColor);
 
             _map.CreateBloodPool(pool, victim.Tile);
+        }
+
+        private void AttachDeathEvent(ICreature creature)
+        {
+            var corpse = itemFactory.Create(creature.Corpse, creature.Location, null);
+            _map.ReplaceThing(creature, corpse);
         }
     }
 }

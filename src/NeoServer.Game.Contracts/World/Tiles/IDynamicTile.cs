@@ -28,12 +28,11 @@ namespace NeoServer.Game.Contracts.World.Tiles
 
         event AddThingToTileDel OnThingAddedToTile;
 
-        Result<TileOperationResult> AddThing(ref IMoveableThing thing);
         byte[] GetRaw(IPlayer playerRequesting = null);
         uint GetThingByStackPosition(byte stackPosition);
         ICreature GetTopVisibleCreature(ICreature creature);
         bool HasBlockPathFinding { get; }
-        IThing RemoveThing(ref IThing thing, byte count = 1);
-        Result<TileOperationResult> AddThing(ref IThing thing);
+        IThing RemoveThing(IThing thing, byte count = 1);
+        Result<TileOperationResult> AddThing(IThing thing);
     }
 }

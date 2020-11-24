@@ -33,6 +33,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using NeoServer.Game.Common;
+using NeoServer.Game.World.Map.Operations;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -89,6 +90,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
+            
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();

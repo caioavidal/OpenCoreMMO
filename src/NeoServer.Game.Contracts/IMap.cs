@@ -40,7 +40,7 @@ namespace NeoServer.Game.Contracts
         void RemoveThing(ref IThing thing, IDynamicTile tile, byte amount = 1);
         IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, byte width, byte height, int verticalOffset, ref int skip);
         IEnumerable<ICreature> GetPlayersAtPositionZone(Location location);
-        void AddItem(ref IThing thing, IDynamicTile tile, byte amount = 1);
+        void AddItem(IThing thing, IDynamicTile tile, byte amount = 1);
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
         HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
@@ -48,6 +48,7 @@ namespace NeoServer.Game.Contracts
         void MoveCreature(IWalkableCreature creature);
         void CreateBloodPool(ILiquid liquid, IDynamicTile tile);
         ITile GetTileDestination(IDynamicTile tile);
-        bool TryMoveThing(IMoveableThing thing, Location toLocation);
+        bool TryMoveThing(IMoveableThing thing, Location toLocation, byte amount =1);
+        void ReplaceThing(IThing thingToRemove, IThing thingToAdd, byte amount = 1);
     }
 }

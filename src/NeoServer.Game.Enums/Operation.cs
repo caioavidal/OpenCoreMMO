@@ -5,6 +5,7 @@
         Added,
         Updated,
         Removed,
+        Moved,
         None
     }
 }

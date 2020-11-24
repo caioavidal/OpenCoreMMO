@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
@@ -25,8 +26,6 @@ namespace NeoServer.Server.Events.Tiles
             cylinder.TileSpectators.ThrowIfNull();
             item.ThrowIfNull();
 
-            var tile = cylinder.ToTile;
-            tile.ThrowIfNull();
 
             var spectators = cylinder.TileSpectators;
 
@@ -36,13 +35,16 @@ namespace NeoServer.Server.Events.Tiles
                 {
                     continue;
                 }
-                if (!(spectator.Spectator is IPlayer))
+             
+                if (item is ICumulativeItem cumulative && cumulative.Amount > 0)
                 {
-                    continue;
+                    connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(cylinder.FromTile.Location, spectator.FromStackPosition, cumulative));
+                }
+                else
+                {
+                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(cylinder.FromTile, spectator.FromStackPosition));
                 }
 
-
-                connection.OutgoingPackets.Enqueue(new RemoveTileItemPacket(cylinder.FromTile.Location, spectator.ToStackPosition, item));
                 connection.OutgoingPackets.Enqueue(new AddTileItemPacket(item, spectator.ToStackPosition));
 
                 connection.Send();

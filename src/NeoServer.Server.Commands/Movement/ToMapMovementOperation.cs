@@ -17,30 +17,22 @@ namespace NeoServer.Server.Commands.Movement
     {
         public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
-            if (!(map[itemThrow.ToLocation] is IDynamicTile toTile)) return;
+            if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             
             if (itemThrow.FromLocation.Type == LocationType.Ground)
             {
-                var fromTile = map[itemThrow.FromLocation];
-                if (fromTile is null) return;
+                if (map[itemThrow.FromLocation] is not IDynamicTile tile) return;
 
-                if (!(fromTile is IDynamicTile tile)) return;
-
-                var thing = tile.TopItemOnStack as IThing;
-
-                if (thing is null || !(thing is IMoveableThing)) return;
+                if (tile.TopItemOnStack is not IMoveableThing thing) return;
 
                 if (!itemThrow.FromLocation.IsNextTo(player.Location))
                 {
                     player.WalkTo(itemThrow.FromLocation);
                 }
 
-                //if(thing is IItem item) map.TryMoveItem(item, toTile.Location);
-                //if (thing is ICreature creature) map.TryMoveCreature(creature, toTile.Location);
-
+                map.TryMoveThing(thing, itemThrow.ToLocation, itemThrow.Count);
             }
         }
-
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) => itemThrowPacket.ToLocation.Type == LocationType.Ground;
     }
 }

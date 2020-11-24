@@ -53,7 +53,7 @@ namespace NeoServer.Server.Commands.Movement
             if (result.Value != null)
             {
                 var returnedThing = result.Value as IThing;
-                map.AddItem(ref returnedThing, tile, amount);
+                map.AddItem(returnedThing, tile, amount);
             }
         }
 

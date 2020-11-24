@@ -388,7 +388,7 @@ namespace NeoServer.Server.Model.Players
             if (!Inventory.BackpackSlot.TryAddItem(item).Success)
             {
                 var thing = item as IThing;
-                Tile.AddThing(ref thing);
+                Tile.AddThing(thing);
             }
             return item;
         }

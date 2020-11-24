@@ -61,17 +61,6 @@ namespace NeoServer.Networking.Packets
             }
 
             AddBytes(item.GetRaw().ToArray());
-
-            //AddUInt16(item.ClientId);
-
-            //if (item.IsCumulative)
-            //{
-            //    AddByte((item as ICumulativeItem).Amount);
-            //}
-            //else if (item is ILiquidItem liquidItem)
-            //{
-            //    AddByte((byte)liquidItem.LiquidColor);
-            //}
         }
 
         /// <summary>
