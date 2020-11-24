@@ -113,7 +113,7 @@ namespace NeoServer.Game.World.Tests
             var sut = CreateTile(item);
 
             var thing = (IThing)item;
-            sut.RemoveThing(ref thing);
+            sut.RemoveThing(thing);
 
             Assert.Equal(2, sut.DownItems.Count);
             Assert.Single(sut.TopItems);
@@ -128,7 +128,7 @@ namespace NeoServer.Game.World.Tests
             var sut = CreateTile(item2, item);
 
             var thing = (IThing)item;
-            sut.RemoveThing(ref thing, amountToRemove);
+            sut.RemoveThing(thing, amountToRemove);
 
             Assert.Equal(topItemId, sut.DownItems.First().ClientId);
             Assert.Equal(remainingAmount, (sut.DownItems.First() as ICumulativeItem).Amount);
@@ -141,13 +141,32 @@ namespace NeoServer.Game.World.Tests
             var sut = CreateTile(item);
 
             var item2 = ItemTestData.CreateThrowableDistanceItem(500, 3) as IMoveableThing;
-            sut.AddThing(ref item2);
+            sut.AddThing(item2);
 
             Assert.Equal(3, sut.DownItems.Count);
             Assert.Single(sut.TopItems);
 
             Assert.Equal(500, sut.DownItems.First().ClientId);
             Assert.Equal(8, (sut.DownItems.First() as ICumulativeItem).Amount);
+        }
+        [Fact]
+        public void AddThing_When_Cumulative_On_Top_Join_If_Same_Type_And_Creates_New_Item_When_Overflows()
+        {
+            var item = ItemTestData.CreateThrowableDistanceItem(500, 60);
+            var sut = CreateTile(item);
+
+            var item2 = ItemTestData.CreateThrowableDistanceItem(500, 100) as IMoveableThing;
+            sut.AddThing(item2);
+
+            Assert.Equal(4, sut.DownItems.Count);
+            Assert.Single(sut.TopItems);
+
+            Assert.Equal(500, sut.DownItems.First().ClientId);
+            Assert.Equal(60, (sut.DownItems.First() as ICumulativeItem).Amount);
+
+            Assert.Equal(500, sut.DownItems.Skip(1).Take(1).First().ClientId);
+            Assert.Equal(100, (sut.DownItems.Skip(1).Take(1).First() as ICumulativeItem).Amount);
+
         }
 
         [Theory]

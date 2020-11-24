@@ -7,6 +7,7 @@ namespace NeoServer.Game.Items.Items
     {
         public MoveableItem(IItemType type, Location location) : base(type)
         {
+            Location = location;
         }
         public float Weight => Metadata.Weight;
 
