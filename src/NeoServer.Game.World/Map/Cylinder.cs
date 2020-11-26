@@ -19,7 +19,7 @@ namespace NeoServer.Game.World.Map
         private static IMap _map;
         public static void Setup(IMap map) => _map = map;
 
-        public static ICylinder RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1)
+        public static Result<ITileOperationResult> RemoveThing(IThing thing, IDynamicTile tile, byte amount, out ICylinder cylinder)
         {
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
 
@@ -37,11 +37,11 @@ namespace NeoServer.Game.World.Map
                 tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, 0);
             }
 
-            var removedThing = tile.RemoveThing(thing, amount);
-            return new Cylinder(removedThing, tile, tile, Operation.Removed, tileSpectators);
-
+            var result = tile.RemoveThing(thing, amount, out var removedThing);
+            cylinder = new Cylinder(removedThing, tile, tile, Operation.Removed, tileSpectators);
+            return result;
         }
-        public static Result<TileOperationResult> AddThing(IThing thing, IDynamicTile tile, out ICylinder cylinder)
+        public static Result<ITileOperationResult> AddThing(IThing thing, IDynamicTile tile, out ICylinder cylinder)
         {
             var result = tile.AddThing(thing);
 
@@ -71,17 +71,19 @@ namespace NeoServer.Game.World.Map
             return result;
         }
 
-        public static Result<TileOperationResult> MoveThing(IMoveableThing thing, IDynamicTile fromTile, IDynamicTile toTile, byte amount, out ICylinder cylinder)
+        public static Result<ITileOperationResult> MoveThing(IMoveableThing thing, IDynamicTile fromTile, IDynamicTile toTile, byte amount, out ICylinder cylinder)
         {
             amount = amount == 0 ? 1 : amount;
 
             cylinder = null;
 
-            if (thing is ICreature && toTile.HasCreature) return new Result<TileOperationResult>(InvalidOperation.NotPossible);
+            if (thing is ICreature && toTile.HasCreature) return new Result<ITileOperationResult>(InvalidOperation.NotPossible);
 
-            var removeCylinder = RemoveThing(thing, fromTile, amount);
+            var removeResult = RemoveThing(thing, fromTile, amount, out var removeCylinder);
 
-            var result = AddThing(removeCylinder.Thing, toTile, out ICylinder addCylinder);
+            if (removeResult.Success is false) return removeResult;
+
+            var result = AddThing(removeCylinder.Thing, toTile, out var addCylinder);
 
             if (result.Success is false)
             {
@@ -106,6 +108,11 @@ namespace NeoServer.Game.World.Map
                 }
             }
 
+            foreach (var operation in removeResult.Value.Operations)
+            {
+                result.Value.Operations?.Add(operation);
+            }
+            
             cylinder = new Cylinder(thing, fromTile, toTile, Operation.Moved, spectators.ToArray());
             return result;
         }

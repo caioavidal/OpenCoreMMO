@@ -70,14 +70,13 @@ namespace NeoServer.Game.World.Map
                 var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
                 if (result.Success is false) return false;
 
-                OnThingRemovedFromTile?.Invoke(thing, cylinder);
-
                 foreach (var operation in result.Value.Operations)
                 {
-                    switch (operation)
+                    switch (operation.Item2)
                     {
-                        case Operation.Added: OnThingAddedToTile?.Invoke(toTile.TopItemOnStack, cylinder); break;
-                        case Operation.Updated: OnThingUpdatedOnTile?.Invoke(toTile.TopItemOnStack, cylinder); break;
+                        case Operation.Removed: OnThingRemovedFromTile?.Invoke(operation.Item1, cylinder); break;
+                        case Operation.Added: OnThingAddedToTile?.Invoke(operation.Item1, cylinder); break;
+                        case Operation.Updated: OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder); break;
                         default: break;
                     }
                 }
@@ -302,9 +301,14 @@ namespace NeoServer.Game.World.Map
         public void RemoveThing(ref IThing thing, IDynamicTile tile, byte amount = 1)
         {
 
-            var cylinder = CylinderOperation.RemoveThing(thing, tile, amount);
+            var result = CylinderOperation.RemoveThing(thing, tile, amount, out var cylinder);
+            if (result.Success is false) return; 
 
-            OnThingRemovedFromTile?.Invoke(thing, cylinder);
+            foreach (var operation in result.Value.Operations)
+            {
+                if(operation.Item2 == Operation.Removed) OnThingRemovedFromTile?.Invoke(operation.Item1, cylinder);
+                if (operation.Item2 == Operation.Updated) OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder);
+            }
         }
         public void AddItem(IThing thing, IDynamicTile tile, byte amount = 1)
         {
@@ -312,10 +316,10 @@ namespace NeoServer.Game.World.Map
 
             foreach (var operation in result.Value.Operations)
             {
-                switch (operation)
+                switch (operation.Item2)
                 {
-                    case Operation.Added: OnThingAddedToTile?.Invoke(thing, cylinder); break;
-                    case Operation.Updated: OnThingUpdatedOnTile?.Invoke(tile.TopItemOnStack, cylinder); break;
+                    case Operation.Added: OnThingAddedToTile?.Invoke(operation.Item1, cylinder); break;
+                    case Operation.Updated: OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder); break;
                     default: break;
                 }
             }

@@ -113,7 +113,7 @@ namespace NeoServer.Game.World.Tests
             var sut = CreateTile(item);
 
             var thing = (IThing)item;
-            sut.RemoveThing(thing);
+            sut.RemoveThing(thing, 1, out var removedThing);
 
             Assert.Equal(2, sut.DownItems.Count);
             Assert.Single(sut.TopItems);
@@ -128,7 +128,7 @@ namespace NeoServer.Game.World.Tests
             var sut = CreateTile(item2, item);
 
             var thing = (IThing)item;
-            sut.RemoveThing(thing, amountToRemove);
+            sut.RemoveThing(thing, amountToRemove, out var removedThing);
 
             Assert.Equal(topItemId, sut.DownItems.First().ClientId);
             Assert.Equal(remainingAmount, (sut.DownItems.First() as ICumulativeItem).Amount);

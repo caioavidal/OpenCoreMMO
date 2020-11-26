@@ -17,7 +17,7 @@ namespace NeoServer.Game.World.Map.Operations
             if (Map[thingToRemove.Location] is not IDynamicTile tile) return new(null, null);
 
 
-            var removeCylinder = CylinderOperation.RemoveThing(thingToRemove, tile, amount);
+            var result = CylinderOperation.RemoveThing(thingToRemove, tile, amount, out var removeCylinder);
             CylinderOperation.AddThing(thingToCreate, tile, out ICylinder cylinder);
 
 

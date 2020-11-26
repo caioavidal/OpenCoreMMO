@@ -289,7 +289,7 @@ namespace NeoServer.Game.World.Map.Tiles
             }
         }
 
-        private TileOperationResult AddThingToTile(IThing thing)
+        private ITileOperationResult AddThingToTile(IThing thing)
         {
             var operations = new TileOperationResult();
 
@@ -297,10 +297,10 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 if (HasCreature)
                 {
-                    operations.Add(Operation.None);
                     return operations;
                 }
                 Creatures.TryAdd(creature.CreatureId, creature);
+                operations.Add(Operation.Added, creature);
                 creature.Tile = this;
             }
             else if (thing is IItem item)
@@ -314,12 +314,12 @@ namespace NeoServer.Game.World.Map.Tiles
                     if (TopItems.TryPeek(out var topItem) && topItem.ClientId == item.ClientId)
                     {
                         topItem = item;
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
                     }
                     else
                     {
                         TopItems.Push(item);
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
                     }
                 }
                 else
@@ -329,7 +329,7 @@ namespace NeoServer.Game.World.Map.Tiles
                     if (!DownItems.TryPeek(out topStackItem))
                     {
                         DownItems.Push(item);
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
 
                     }
                     else if (item is ICumulativeItem cumulative &&
@@ -337,19 +337,19 @@ namespace NeoServer.Game.World.Map.Tiles
                         topStackItem.ClientId == cumulative.ClientId &&
                         topCumulative.TryJoin(ref cumulative))
                     {
-                        operations.Add(Operation.Updated);
+                        operations.Add(Operation.Updated, topCumulative);
 
                         if (cumulative is not null)
                         {
                             DownItems.Push(cumulative);
-                            operations.Add(Operation.Added);
+                            operations.Add(Operation.Added, cumulative);
 
                         }
                     }
                     else
                     {
                         DownItems.Push(item);
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
 
                     }
                 }
@@ -359,16 +359,13 @@ namespace NeoServer.Game.World.Map.Tiles
             return operations;
         }
 
-        public Result<TileOperationResult> AddThing(IThing thing)
+        public Result<ITileOperationResult> AddThing(IThing thing)
         {
             var operations = AddThingToTile(thing);
-            if (!operations.HasNoneOperation)
-            {
-                thing.Location = Location;
-            }
-            return new Result<TileOperationResult>(operations);
+            if(operations.HasAnyOperation) thing.Location = Location;
+            return new Result<ITileOperationResult>(operations);
         }
-    
+
         /// <summary>
         /// Get the top item on DownItems's stack
         /// </summary>
@@ -406,26 +403,30 @@ namespace NeoServer.Game.World.Map.Tiles
                 FloorDirection = item.FloorDirection;
                 TopItems.Push(item);
             }
-          
+
             foreach (var item in items)
             {
                 AddThing(item);
             }
         }
-        public IThing RemoveThing(IThing thing, byte amount = 1)
+        public Result<ITileOperationResult> RemoveThing(IThing thing, byte amount, out IThing removedThing)
         {
+            amount = amount == 0 ? 1 : amount;
+            var operations = new TileOperationResult();
 
-            IThing removedThing = null;
+            removedThing = null;
             var itemToRemove = thing as IItem;
 
             if (thing is ICreature c)
             {
                 Creatures.Remove(c.CreatureId, out var creature);
+                operations.Add(Operation.Removed, creature);
                 removedThing = creature;
             }
             else if (itemToRemove.IsAlwaysOnTop)
             {
                 TopItems.TryPop(out var item);
+                operations.Add(Operation.Removed, item);
                 removedThing = item;
             }
             else
@@ -439,18 +440,24 @@ namespace NeoServer.Game.World.Map.Tiles
                         if (topCumulative.Amount == 0)
                         {
                             DownItems.TryPop(out var item);
+                            operations.Add(Operation.Removed, item);
+                        }
+                        else
+                        {
+                            operations.Add(Operation.Updated, topCumulative);
                         }
                         removedThing = topCumulative.Clone(amount);
                     }
                     else
                     {
                         DownItems.TryPop(out var item);
+                        operations.Add(Operation.Removed, item);
                         removedThing = item;
                     }
                 }
             }
             SetCacheAsExpired();
-            return removedThing;
+            return new Result<ITileOperationResult>(operations);
         }
         private void SetCacheAsExpired() => cache = null;
 
@@ -482,7 +489,7 @@ namespace NeoServer.Game.World.Map.Tiles
                     {
                         break;
                     }
-                    
+
                     var raw = item.GetRaw();
                     raw.CopyTo(stream.Slice(countBytes, raw.Length));
 

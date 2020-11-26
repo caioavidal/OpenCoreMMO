@@ -79,7 +79,7 @@ namespace NeoServer.Game.Items.Items
             if (totalAmount <= 100)
             {
                 Amount = (byte)totalAmount;
-                item = null; //item to join does not exist anymore
+                item = null; 
                 return true;
             }
 
