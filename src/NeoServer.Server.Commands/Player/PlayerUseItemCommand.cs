@@ -26,13 +26,13 @@ namespace NeoServer.Server.Commands.Player
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
                 
-                if (!(game.Map[useItemPacket.Location] is IDynamicTile tile)) return;
+                //if (!(game.Map[useItemPacket.Location] is IDynamicTile tile)) return;
 
-                var toTile = game.Map.GetTileDestination(tile);
-                if (toTile is null) return;
+                //var toTile = game.Map.GetTileDestination(tile);
+                //if (toTile is null) return;
 
-                var thing = player as IMoveableThing;
-                game.Map.TryMoveThing(thing, toTile.Location);
+                //var thing = player as IMoveableThing;
+                //game.Map.TryMoveThing(thing, toTile.Location);
 
             }
             if (useItemPacket.Location.Type == LocationType.Ground || useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)

@@ -19,9 +19,11 @@ namespace NeoServer.Server.Commands.Movement
         public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
+            //todo check if tile reached max stack count
 
             FromGround(player, map, itemThrow);
             FromInventory(player, map, itemThrow);
+            FromContainer(player, map, itemThrow);
         }
 
         private static void FromGround(IPlayer player, IMap map, ItemThrowPacket itemThrow)
@@ -46,9 +48,19 @@ namespace NeoServer.Server.Commands.Movement
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             if (player.Inventory[itemThrow.FromLocation.Slot] is not IPickupable item) return;
 
-            //todo check if tile reached max stack count
             if (player.Inventory.RemoveItemFromSlot(itemThrow.FromLocation.Slot, itemThrow.Count, out var removedItem) is false) return;
 
+            map.AddItem(removedItem, toTile);
+        }
+        private static void FromContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+        {
+            if (itemThrow.FromLocation.Type is not LocationType.Container) return;
+            if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
+
+            var container = player.Containers[itemThrow.FromLocation.ContainerId];
+            if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
+
+            var removedItem = container.RemoveItem((byte)itemThrow.FromLocation.ContainerSlot, itemThrow.Count);
             map.AddItem(removedItem, toTile);
         }
 

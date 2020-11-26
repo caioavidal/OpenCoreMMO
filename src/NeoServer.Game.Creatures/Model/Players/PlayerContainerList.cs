@@ -51,7 +51,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             else if (location.Type == LocationType.Container)
             {
                 var parentContainer = openedContainers[location.ContainerId]?.Container;
-                parentContainer.GetContainerAt((byte)location.ContainerPosition, out var container);
+                parentContainer.GetContainerAt((byte)location.ContainerSlot, out var container);
                 playerContainer = new PlayerContainer(container, player);
             }
 
@@ -92,7 +92,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             var fromContainer = openedContainers[fromLocation.ContainerId];
             var toContainer = openedContainers[toLocation.ContainerId];
 
-            var item = fromContainer.Container[fromLocation.ContainerPosition];
+            var item = fromContainer.Container[fromLocation.ContainerSlot];
 
             if (item == toContainer.Container)
             {
@@ -103,23 +103,23 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 if (item is ICumulativeItem)
                 {
-                    fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition, amount);
+                    fromContainer.Container.MoveItem((byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot, amount);
                     return;
                 }
 
-                fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition);
+                fromContainer.Container.MoveItem((byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
                 return;
             }
 
             if (item is ICumulativeItem)
             {
-                var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerPosition, amount) as ICumulativeItem;
-                toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerPosition);
+                var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot, amount) as ICumulativeItem;
+                toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerSlot);
             }
             else
             {
-                fromContainer.Container.RemoveItem((byte)fromLocation.ContainerPosition);
-                toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerPosition);
+                fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot);
+                toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerSlot);
             }
 
             if (item is IContainer container)
