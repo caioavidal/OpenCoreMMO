@@ -152,6 +152,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return true;
         }
 
+
         public void SetAsEnemy(ICombatActor creature)
         {
             if (!CanSee(creature.Location, 9, 9))
@@ -323,6 +324,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override void OnDeath()
         {
+            Targets?.Clear();
             StopDefending();
             base.OnDeath();
         }

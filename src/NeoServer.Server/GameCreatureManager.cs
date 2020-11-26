@@ -58,6 +58,7 @@ namespace NeoServer.Server
         /// <param name="monster"></param>
         public void AddKilledMonsters(IMonster monster)
         {
+            creatureInstances.TryRemove(monster.CreatureId);
             creatureInstances.AddKilledMonsters(monster);
         }
 

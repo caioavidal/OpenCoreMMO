@@ -17,7 +17,7 @@ namespace NeoServer.Server.Commands.Movement
 
             var fromContainerId = itemThrowPacket.FromLocation.ContainerId;
             var toContainerId = itemThrowPacket.ToLocation.ContainerId;
-            var itemIndex = itemThrowPacket.FromLocation.ContainerPosition;
+            var itemIndex = itemThrowPacket.FromLocation.ContainerSlot;
 
             var sameIds = fromContainerId == toContainerId;
             var sameContainers = player.Containers[fromContainerId][itemIndex] == player.Containers[toContainerId];

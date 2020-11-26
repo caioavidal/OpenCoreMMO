@@ -8,6 +8,7 @@
         ICumulativeItem Clone(byte amount);
         void Reduce(byte amount);
         void Increase(byte amount);
+        ICumulativeItem Split(byte amount);
 
         new float Weight { get; }
         byte AmountToComplete { get; }

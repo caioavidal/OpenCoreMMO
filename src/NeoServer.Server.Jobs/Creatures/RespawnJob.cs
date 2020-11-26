@@ -5,7 +5,7 @@ namespace NeoServer.Server.Jobs.Creatures
 {
     public class RespawnJob
     {
-        private const int INTERVAL = 20000;
+        private const int INTERVAL = 10000;
         private static long _lastRespawn = 0;
         public static void Execute(SpawnManager spawnManager)
         {

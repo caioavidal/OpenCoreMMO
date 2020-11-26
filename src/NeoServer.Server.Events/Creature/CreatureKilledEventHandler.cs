@@ -21,21 +21,19 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(ICombatActor creature)
         {
-            //game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
-            //{
-            //    var tile = creature.Tile;
+            game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
+            {
+                var tile = creature.Tile;
 
-            //    var thing = creature as IThing;
+                var thing = creature as IThing;
 
-            //    //send packets to killed player
-            //    //if (creature is IPlayer killedPlayer && game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
-            //    //{
-            //    //    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, 1));
-            //    //    connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)corpse, 1));
-            //    //    connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
-            //    //    connection.Send();
-            //    //}
-            //}));
+                //send packets to killed player
+                if (creature is IPlayer killedPlayer && game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
+                {
+                    connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
+                    connection.Send();
+                }
+            }));
 
             if (creature is IMonster monster)
             {

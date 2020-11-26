@@ -6,6 +6,7 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
+    public delegate void RemoveItemFromSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
     public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
     public delegate void FailAddItemToSlot(InvalidOperation invalidOperation);
     public interface IInventory
@@ -27,7 +28,9 @@ namespace NeoServer.Game.Contracts.Creatures
 
         event AddItemToSlot OnItemAddedToSlot;
         event FailAddItemToSlot OnFailedToAddToSlot;
+        event RemoveItemFromSlot OnItemRemovedFromSlot;
 
         Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
+        bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
     }
 }

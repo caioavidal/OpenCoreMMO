@@ -7,6 +7,7 @@ namespace NeoServer.Game.Items.Parsers
         public static ShootType Parse(string shootType) =>
             shootType switch
             {
+                "arrow" => ShootType.Arrow,
                 "bolt" => ShootType.Bolt,
                 "eartharrow" => ShootType.EarthArrow,
                 "poisonarrow" => ShootType.PoisonArrow,

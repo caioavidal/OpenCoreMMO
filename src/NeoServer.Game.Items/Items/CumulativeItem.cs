@@ -55,6 +55,16 @@ namespace NeoServer.Game.Items.Items
             Amount -= amount;
         }
 
+        /// <summary>
+        /// Split item in two parts
+        /// </summary>
+        /// <param name="amount">Amount to be reduced</param>
+        public ICumulativeItem Split(byte amount)
+        {
+            Reduce(amount);
+            return Clone(amount);
+        }
+
         public void Increase(byte amount) => Amount = (byte)(amount + Amount > 100 ? 100 : amount + Amount);
        
 

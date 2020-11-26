@@ -310,7 +310,7 @@ namespace NeoServer.Game.World.Map
                 if (operation.Item2 == Operation.Updated) OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder);
             }
         }
-        public void AddItem(IThing thing, IDynamicTile tile, byte amount = 1)
+        public void AddItem(IThing thing, IDynamicTile tile)
         {
             var result = CylinderOperation.AddThing(thing, tile, out ICylinder cylinder);
 
@@ -585,7 +585,7 @@ namespace NeoServer.Game.World.Map
             if (pool is null) return;
 
             var poolThing = pool as IThing;
-            AddItem(poolThing, tile, 1);
+            AddItem(poolThing, tile);
 
         }
     }

@@ -313,7 +313,6 @@ namespace NeoServer.Game.World.Map.Tiles
 
                     if (TopItems.TryPeek(out var topItem) && topItem.ClientId == item.ClientId)
                     {
-                        topItem = item;
                         operations.Add(Operation.Added, item);
                     }
                     else
@@ -343,7 +342,6 @@ namespace NeoServer.Game.World.Map.Tiles
                         {
                             DownItems.Push(cumulative);
                             operations.Add(Operation.Added, cumulative);
-
                         }
                     }
                     else

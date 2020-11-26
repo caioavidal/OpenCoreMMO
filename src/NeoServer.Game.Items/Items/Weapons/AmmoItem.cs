@@ -37,6 +37,7 @@ namespace NeoServer.Game.Items.Items
         public AmmoType AmmoType => Metadata.AmmoType;
         public ShootType ShootType => Metadata.ShootType;
         public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
+        public bool HasElementalDamage => ElementalDamage is not null;
 
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 

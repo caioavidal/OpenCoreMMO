@@ -239,23 +239,27 @@ namespace NeoServer.Game.Items.Items
         {
             var item = Items[slotIndex];
 
-            IItem newItem = null;
+            IItem removedItem = null;
 
             if (item is ICumulativeItem cumulative)
             {
                 var amountToReduce = Math.Min(cumulative.Amount, amount);
                 cumulative.Reduce(Math.Min(cumulative.Amount, amount));
-                newItem = cumulative.Clone(amountToReduce);
+                removedItem = cumulative.Clone(amountToReduce);
 
                 if (cumulative.Amount == 0)
                 {
                     RemoveItem(slotIndex);
-                    return newItem;
+                    return removedItem;
                 }
             }
-
+            else
+            {
+                removedItem = RemoveItem(slotIndex);
+            }
             OnItemUpdated?.Invoke(slotIndex, item, (sbyte)-amount);
-            return newItem;
+
+            return removedItem;
         }
     }
 }
