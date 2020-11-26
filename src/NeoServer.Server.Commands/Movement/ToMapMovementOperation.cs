@@ -20,6 +20,7 @@ namespace NeoServer.Server.Commands.Movement
         {
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             //todo check if tile reached max stack count
+            //todo check max throw distance
 
             FromGround(player, map, itemThrow);
             FromInventory(player, map, itemThrow);
