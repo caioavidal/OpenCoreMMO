@@ -298,7 +298,7 @@ namespace NeoServer.Game.World.Map
 
             return tile;
         }
-        public void RemoveThing(ref IThing thing, IDynamicTile tile, byte amount = 1)
+        public void RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1)
         {
 
             var result = CylinderOperation.RemoveThing(thing, tile, amount, out var cylinder);
@@ -579,7 +579,7 @@ namespace NeoServer.Game.World.Map
         {
             if (tile?.TopItems != null && tile.TopItems.TryPeek(out var topItem) && topItem is ILiquid && topItem is IThing topItemThing)
             {
-                RemoveThing(ref topItemThing, tile, 1);
+                RemoveThing(topItemThing, tile, 1);
             }
 
             if (pool is null) return;

@@ -37,7 +37,7 @@ namespace NeoServer.Game.Contracts
         bool ArePlayersAround(Location location);
         void AddCreature(ICreature creature);
         ITile GetNextTile(Location fromLocation, Direction direction);
-        void RemoveThing(ref IThing thing, IDynamicTile tile, byte amount = 1);
+        void RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1);
         IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, byte width, byte height, int verticalOffset, ref int skip);
         IEnumerable<ICreature> GetPlayersAtPositionZone(Location location);
         void AddItem(IThing thing, IDynamicTile tile);

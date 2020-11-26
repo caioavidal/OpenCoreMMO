@@ -34,7 +34,7 @@ namespace NeoServer.Game.World.Map
                     tile.TryGetStackPositionOfThing(player, thing, out stackPosition);
                 }
 
-                tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, 0);
+                tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);
             }
 
             var result = tile.RemoveThing(thing, amount, out var removedThing);

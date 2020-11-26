@@ -38,6 +38,10 @@ namespace NeoServer.Server.Commands.Player
             {
                 ContainerToInventoryMovementOperation.Execute(player, itemThrow);
             }
+            if (MapToContainerMovementOperation.IsApplicable(itemThrow))
+            {
+                MapToContainerMovementOperation.Execute(player, game.Map, itemThrow);
+            }
         }
 
     }
