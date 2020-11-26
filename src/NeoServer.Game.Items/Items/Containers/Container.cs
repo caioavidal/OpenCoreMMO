@@ -257,7 +257,6 @@ namespace NeoServer.Game.Items.Items
             {
                 removedItem = RemoveItem(slotIndex);
             }
-            OnItemUpdated?.Invoke(slotIndex, item, (sbyte)-amount);
 
             return removedItem;
         }
