@@ -37,3 +37,7 @@ steps:
   inputs:
     command: 'test'
     projects: '$(solution)'
+
+- script: |
+    bash <(curl -s https://codecov.io/bash)
+  displayName: 'Upload to codecov.io'
