@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -22,6 +23,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void CloseContainer(byte containerId);
         void GoBackContainer(byte containerId);
         void MoveItemBetweenContainers(Location fromLocation, Location toLocation, byte count = 1);
-        void OpenContainerAt(Location location, byte containerLevel);
+        void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null);
     }
 }

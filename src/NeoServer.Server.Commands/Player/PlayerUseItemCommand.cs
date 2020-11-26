@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Players;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -25,18 +26,16 @@ namespace NeoServer.Server.Commands.Player
         {
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
-                
-                //if (!(game.Map[useItemPacket.Location] is IDynamicTile tile)) return;
-
-                //var toTile = game.Map.GetTileDestination(tile);
-                //if (toTile is null) return;
-
-                //var thing = player as IMoveableThing;
-                //game.Map.TryMoveThing(thing, toTile.Location);
-
+                if (game.Map[useItemPacket.Location] is not IDynamicTile tile) return;
+                if(tile.TopItemOnStack is IContainer container)
+                {
+                    player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
+                    return;
+                }
             }
-            if (useItemPacket.Location.Type == LocationType.Ground || useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)
+            else if (useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)
             {
+                
                 player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index);
             }
         }

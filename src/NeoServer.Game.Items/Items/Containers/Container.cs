@@ -186,7 +186,7 @@ namespace NeoServer.Game.Items.Items
 
             return AddItem(item, slot);
         }
-
+       
         public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1)
         {
             var item = RemoveItem(fromSlotIndex, amount) as ICumulativeItem;
@@ -257,7 +257,6 @@ namespace NeoServer.Game.Items.Items
             {
                 removedItem = RemoveItem(slotIndex);
             }
-            OnItemUpdated?.Invoke(slotIndex, item, (sbyte)-amount);
 
             return removedItem;
         }

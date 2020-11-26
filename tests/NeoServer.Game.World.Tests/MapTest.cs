@@ -49,7 +49,7 @@ namespace NeoServer.Game.World.Tests
             var map = CreateMap(item);
 
             var thing = item as IThing;
-            map.RemoveThing(ref thing, map[100, 100, 7] as IDynamicTile);
+            map.RemoveThing(thing, map[100, 100, 7] as IDynamicTile);
 
             Assert.Single((map[100, 100, 7] as IDynamicTile).DownItems);
             Assert.Equal(1, (map[100, 100, 7] as IDynamicTile).DownItems.First().ClientId);
