@@ -39,11 +39,17 @@ namespace NeoServer.Game.Creatures.Model.Players
                 OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
             }
         }
-        public void OpenContainerAt(Location location, byte containerLevel)
+
+      
+        public void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null)
         {
             PlayerContainer playerContainer = null;
 
-            if (location.Slot == Slot.Backpack)
+            if(location.Type == LocationType.Ground)
+            {
+                playerContainer = new PlayerContainer(containerToOpen, player);
+            }
+            else if (location.Slot == Slot.Backpack)
             {
                 playerContainer = new PlayerContainer(player.Inventory.BackpackSlot, player);
 
@@ -66,7 +72,6 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
             return;
-
         }
 
         private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
@@ -136,7 +141,5 @@ namespace NeoServer.Game.Creatures.Model.Players
                 OnClosedContainer?.Invoke(player, containerId);
             }
         }
-
     }
-
 }
