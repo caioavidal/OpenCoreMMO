@@ -14,6 +14,8 @@ namespace NeoServer.Server.Model.Players
     {
 
         public event AddItemToSlot OnItemAddedToSlot;
+        public event RemoveItemFromSlot OnItemRemovedFromSlot;
+
         public event FailAddItemToSlot OnFailedToAddToSlot;
         private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
 
@@ -137,6 +139,26 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
+        public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
+        {
+            removedItem = null;
+
+            if (amount == 0) return false;
+            if (Inventory[slot].Item1 is not IPickupable item) return false;
+            if (item is null) return false;
+
+            if (item is ICumulativeItem cumulative && amount < cumulative.Amount)
+            {
+                removedItem = cumulative.Split(amount);
+            }
+            else
+            {
+                Inventory.Remove(slot);
+                removedItem = item;
+            }
+            OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
+            return true;
+        }
         public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
             bool canCarry = CanCarryItem(item, slot);

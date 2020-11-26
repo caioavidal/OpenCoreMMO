@@ -40,7 +40,7 @@ namespace NeoServer.Game.Contracts
         void RemoveThing(ref IThing thing, IDynamicTile tile, byte amount = 1);
         IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, byte width, byte height, int verticalOffset, ref int skip);
         IEnumerable<ICreature> GetPlayersAtPositionZone(Location location);
-        void AddItem(IThing thing, IDynamicTile tile, byte amount = 1);
+        void AddItem(IThing thing, IDynamicTile tile);
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         bool CanWalkTo(Location location, out ITile tile);
         HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
