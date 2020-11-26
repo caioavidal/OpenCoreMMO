@@ -19,8 +19,6 @@ namespace NeoServer.Server.Commands.Movement
             if (result.Success is false) return;
 
             container.RemoveItem((byte)itemThrow.FromLocation.ContainerSlot, itemThrow.Count);
-            container.TryAddItem(result.Value);
-
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

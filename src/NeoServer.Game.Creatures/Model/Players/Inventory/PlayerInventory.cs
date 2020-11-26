@@ -138,7 +138,7 @@ namespace NeoServer.Server.Model.Players
                 return sum;
             }
         }
-
+    
         public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
         {
             removedItem = null;
