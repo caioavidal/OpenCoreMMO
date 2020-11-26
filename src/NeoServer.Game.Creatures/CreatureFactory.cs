@@ -162,6 +162,7 @@ namespace NeoServer.Game.Creatures
         {
             var corpse = itemFactory.Create(creature.Corpse, creature.Location, null);
             _map.ReplaceThing(creature, corpse);
+            
         }
     }
 }
