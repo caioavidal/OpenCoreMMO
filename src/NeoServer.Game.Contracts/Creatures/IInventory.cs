@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.Creatures

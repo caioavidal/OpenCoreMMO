@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -18,7 +18,7 @@ namespace NeoServer.Game.Items.Items
         public Dictionary<DamageType, byte> DamageProtection => Metadata.Attributes.DamageProtection;
 
         private bool inUse;
-        public byte Defense => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Armor);
+        public byte Defense => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Armor);
         public Span<byte> GetRaw()
         {
             Span<byte> cache = stackalloc byte[2];
@@ -39,7 +39,7 @@ namespace NeoServer.Game.Items.Items
 
         public ImmutableHashSet<VocationType> AllowedVocations => new HashSet<VocationType>().ToImmutableHashSet();
 
-        public static bool IsApplicable(IItemType type) => type.BodyPosition == Enums.Players.Slot.Ring;
+        public static bool IsApplicable(IItemType type) => type.BodyPosition == Common.Players.Slot.Ring;
 
     }
 }

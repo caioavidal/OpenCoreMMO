@@ -1,10 +1,12 @@
-﻿using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Contracts.Items
 {
     public interface IMoveableThing : IThing
     {
-        IMoveableThing Clone();
-        void SetNewLocation(Location location);
+        void SetNewLocation(Location location)
+        {
+            Location = location;
+        }
     }
 }

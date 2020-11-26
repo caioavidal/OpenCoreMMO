@@ -1,8 +1,8 @@
 ﻿
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Players;
 using NeoServer.Game.Items.Parsers;
 using System;
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ namespace NeoServer.Game.Items
         public string Article { get; private set; }
         public string Plural { get; private set; }
 
-        public float Weight => Attributes.GetAttribute<float>(Enums.ItemAttribute.Weight) / 100;
+        public float Weight => Attributes.GetAttribute<float>(Common.ItemAttribute.Weight) / 100;
 
         void ThrowIfLocked()
         {

@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using Xunit;
 
 namespace NeoServer.Game.Model.Tests.Structs

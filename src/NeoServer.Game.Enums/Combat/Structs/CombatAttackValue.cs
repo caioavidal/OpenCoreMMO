@@ -1,10 +1,10 @@
-﻿using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Game.Enums.Combat.Structs
+namespace NeoServer.Game.Common.Combat.Structs
 {
     public ref struct CombatAttackValue
     {

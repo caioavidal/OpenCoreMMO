@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -25,7 +25,7 @@ namespace NeoServer.Game.Items.Items
 
         public new float Weight { get; private set; }
 
-        public static new bool IsApplicable(IItemType type) => (type.Group == Enums.ItemGroup.GroundContainer ||
-            type.Attributes.GetAttribute(Enums.ItemAttribute.Type)?.ToLower() == "container") && type.HasFlag(Enums.ItemFlag.Pickupable);
+        public static new bool IsApplicable(IItemType type) => (type.Group == Common.ItemGroup.GroundContainer ||
+            type.Attributes.GetAttribute(Common.ItemAttribute.Type)?.ToLower() == "container") && type.HasFlag(Common.ItemFlag.Pickupable);
     }
 }

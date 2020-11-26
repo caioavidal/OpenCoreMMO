@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +12,7 @@ namespace NeoServer.Game.Items.Items
         public CumulativeItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
         {
             Amount = 1;
-            if (attributes != null && attributes.TryGetValue(Enums.ItemAttribute.Count, out var amount))
+            if (attributes != null && attributes.TryGetValue(Common.ItemAttribute.Count, out var amount))
             {
                 Amount = Math.Min((byte)100, (byte)amount);
             }
@@ -36,7 +36,7 @@ namespace NeoServer.Game.Items.Items
 
             return cache.ToArray();
         }
-        public static bool IsApplicable(IItemType type) => type.Flags.Contains(Enums.ItemFlag.Stackable);
+        public static bool IsApplicable(IItemType type) => type.Flags.Contains(Common.ItemFlag.Stackable);
 
         public ICumulativeItem Clone(byte amount)
         {
@@ -79,7 +79,7 @@ namespace NeoServer.Game.Items.Items
             if (totalAmount <= 100)
             {
                 Amount = (byte)totalAmount;
-                item = null; //item to join does not exist anymore
+                item = null; 
                 return true;
             }
 

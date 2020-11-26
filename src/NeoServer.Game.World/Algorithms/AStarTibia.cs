@@ -2,8 +2,8 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -200,7 +200,7 @@ namespace NeoServer.Game.World.Map
 
                     var cost = n.GetMapWalkCost(pos);
 
-                    if (tile is IWalkableTile walkableTile)
+                    if (tile is IDynamicTile walkableTile)
                     {
                         cost += n.GetTileWalkCost(creature, walkableTile);
                     }
@@ -494,7 +494,7 @@ namespace NeoServer.Game.World.Map
             return 10;
         }
 
-        public int GetTileWalkCost(ICreature creature, IWalkableTile tile)
+        public int GetTileWalkCost(ICreature creature, IDynamicTile tile)
         {
             int cost = 0;
 

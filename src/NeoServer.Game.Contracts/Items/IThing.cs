@@ -1,13 +1,13 @@
-﻿using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Contracts.Items
 {
     public interface IThing
     {
-        Location Location { get; }
+        Location Location { get; set; }
 
         string Name { get; }
-        string InspectionText { get; }
-        string CloseInspectionText { get; }
+        string InspectionText => $"{Name}";
+        string CloseInspectionText => InspectionText;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeoServer.Game.Enums.Location.Structs.Helpers
+namespace NeoServer.Game.Common.Location.Structs.Helpers
 {
     public sealed class DuplicateComparer : IComparer<int>
     {

@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests

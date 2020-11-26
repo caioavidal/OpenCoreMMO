@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using System;
 using System.Collections.Generic;
 

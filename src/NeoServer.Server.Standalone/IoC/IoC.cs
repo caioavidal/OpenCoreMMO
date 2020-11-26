@@ -26,10 +26,14 @@ using NeoServer.Server.Instances;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Tasks;
-using NeoServer.Server.Tasks.Contracts;
+using NeoServer.Server.Contracts.Tasks;
 using Serilog;
 using System;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using NeoServer.Game.Common;
+using NeoServer.Game.World.Map.Operations;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -57,7 +61,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Game>().SingleInstance();
             builder.RegisterType<GameCreatureManager>().SingleInstance();
             builder.RegisterType<DecayableItemManager>().SingleInstance();
-            
+
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
             builder.RegisterType<SpawnManager>().SingleInstance();
 
@@ -72,11 +76,8 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterEvents(builder);
 
             RegisterIncomingPacketFactory(builder);
-
-            RegisterItemFactory(builder);
-            //RegisterNewItemFactory(builder);
-
             RegisterPlayerFactory(builder);
+            LoadConfigurations(builder);
 
             //world
             builder.RegisterType<World>().SingleInstance();
@@ -89,6 +90,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
+            
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
@@ -121,7 +123,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(assembly);
 
         }
-      
+
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
         {
@@ -153,7 +155,7 @@ namespace NeoServer.Server.Standalone.IoC
                     Console.WriteLine($"Incoming Packet not handled: {packet}");
                     return null;
                 }
-               // Console.WriteLine($"Incoming Packet: {packet}");
+                // Console.WriteLine($"Incoming Packet: {packet}");
 
                 if (c.TryResolve(handlerType, out object instance))
                 {
@@ -163,27 +165,23 @@ namespace NeoServer.Server.Standalone.IoC
             });
         }
 
-        private static void RegisterItemFactory(ContainerBuilder builder)
+        static void LoadConfigurations(ContainerBuilder containerBuilder)
         {
-            //builder.Register((c, p) =>
-            //{
-            //    var typeId = p.TypedAs<ushort>();
+            var builder = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            //    return ItemFactory.Create(typeId);
-            //});
+            IConfigurationRoot configuration = builder.Build();
+
+            ServerConfiguration serverConfiguration = new(0, null, null, null);
+            GameConfiguration gameConfiguration = new();
+
+            configuration.GetSection("server").Bind(serverConfiguration);
+            configuration.GetSection("game").Bind(gameConfiguration);
+
+            containerBuilder.RegisterInstance(serverConfiguration).SingleInstance();
+            containerBuilder.RegisterInstance(gameConfiguration).SingleInstance();
+
         }
-
-        //private static void RegisterNewItemFactory(ContainerBuilder builder)
-        //{
-        //    builder.Register((c, p) =>
-        //    {
-        //        var typeId = p.TypedAs<ushort>();
-        //        var location = p.TypedAs<Location>();
-        //        var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
-
-        //        return ItemFactory.Create(typeId, location, attributes);
-        //    });
-        //}
-
     }
 }

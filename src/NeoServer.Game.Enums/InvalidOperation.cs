@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Enums
+﻿namespace NeoServer.Game.Common
 {
     public enum InvalidOperation
     {

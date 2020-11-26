@@ -1,7 +1,7 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
 

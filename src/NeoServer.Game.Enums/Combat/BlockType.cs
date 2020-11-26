@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Enums.Combat
+﻿namespace NeoServer.Game.Common.Combat
 {
     public enum BlockType
     {

@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -9,9 +9,7 @@ namespace NeoServer.Game.Items.Items
         {
             Metadata = metadata;
         }
-
-        public abstract Location Location { get; }
-
         public IItemType Metadata { get; }
+        public Location Location { get; set; }
     }
 }

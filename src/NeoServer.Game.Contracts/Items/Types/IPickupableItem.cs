@@ -2,6 +2,6 @@
 {
     public interface IPickupable : IMoveableThing, IItem
     {
-        float Weight => Metadata.Attributes.GetAttribute<float>(Enums.ItemAttribute.Weight);
+        float Weight => Metadata.Attributes.GetAttribute<float>(Common.ItemAttribute.Weight);
     }
 }

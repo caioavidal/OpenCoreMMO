@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Creatures.Players;
+﻿using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

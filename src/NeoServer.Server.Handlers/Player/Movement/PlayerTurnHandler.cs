@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Common.Location;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Model.Players.Contracts;

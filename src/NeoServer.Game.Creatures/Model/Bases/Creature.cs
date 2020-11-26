@@ -2,12 +2,11 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Creatures.Players;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Talks;
-using NeoServer.Game.Model;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace NeoServer.Game.Creatures.Model
 {
 
-    public abstract class Creature : MoveableThing, IEquatable<Creature>, ICreature
+    public abstract class Creature : IEquatable<Creature>, ICreature
     {
         public event RemoveCreature OnCreatureRemoved;
         public event GainExperience OnGainedExperience;
@@ -45,15 +44,13 @@ namespace NeoServer.Game.Creatures.Model
             };
             Hostiles = new HashSet<uint>();
             Friendly = new HashSet<uint>();
-            
+
         }
 
-
+        //public Location Location { get; set; }
         public uint HealthPoints { get; protected set; }
         public uint MaxHealthpoints { get; protected set; }
         public new string Name => CreatureType.Name;
-        public override string InspectionText => $"{Name}";
-        public override string CloseInspectionText => InspectionText;
         public uint CreatureId { get; }
         public ushort Corpse => CreatureType.Look[LookType.Corpse];
         public virtual BloodType Blood => BloodType.Blood;
@@ -106,7 +103,6 @@ namespace NeoServer.Game.Creatures.Model
         {
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
-
         public void SetAsRemoved() => IsRemoved = true;
         public bool CanSee(Location pos, int viewPortX, int viewPortY)
         {
@@ -165,7 +161,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public byte Shield { get; protected set; } // TODO: implement.
         public bool IsHealthHidden { get; protected set; }
-
+        public Location Location { get; set; }
 
         public void SetDirection(Direction direction) => Direction = direction;
 

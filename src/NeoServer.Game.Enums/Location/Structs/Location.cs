@@ -1,8 +1,8 @@
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common.Players;
 using System;
 using System.Buffers;
 
-namespace NeoServer.Game.Enums.Location.Structs
+namespace NeoServer.Game.Common.Location.Structs
 {
     public struct Location : IEquatable<Location>
     {

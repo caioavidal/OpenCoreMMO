@@ -13,7 +13,7 @@ Licensed under the MIT license.
 See LICENSE file in the project root for full license information.
 */
 
-namespace NeoServer.Game.Enums.Location
+namespace NeoServer.Game.Common.Location
 {
     /// <summary>
     /// A* algorithm states while searching for the goal.

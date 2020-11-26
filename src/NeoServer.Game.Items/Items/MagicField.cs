@@ -1,10 +1,10 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
 {
-    public readonly struct MagicField : IItem, IMagicField
+    public struct MagicField : IItem, IMagicField
     {
         public MagicField(IItemType type, Location location)
         {
@@ -12,7 +12,7 @@ namespace NeoServer.Game.Items.Items
             Location = location;
         }
 
-        public Location Location { get; }
+        public Location Location { get; set; }
 
         public MagicFieldType Type => ParseFieldType(Metadata.Attributes.GetAttribute(ItemAttribute.Field));
 

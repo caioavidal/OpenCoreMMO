@@ -8,7 +8,7 @@ namespace NeoServer.Game.Creatures.Calculations
 {
     public class WalkCalculation
     {
-        public static long CalculateEventStepTicks(IWalkableTile tile, long lastStep, uint lastStepCost, int speed)
+        public static long CalculateEventStepTicks(IDynamicTile tile, long lastStep, uint lastStepCost, int speed)
         {
             var firstStep = lastStep == 0;
 
@@ -30,7 +30,7 @@ namespace NeoServer.Game.Creatures.Calculations
             return stepTick;
         }
 
-        private static int GetWalkDelay(IWalkableTile tile, long lastStep, uint lastStepCost, int speed)
+        private static int GetWalkDelay(IDynamicTile tile, long lastStep, uint lastStepCost, int speed)
         {
             if (lastStep == 0)
             {
@@ -43,7 +43,7 @@ namespace NeoServer.Game.Creatures.Calculations
             return (int)(stepDuration - (timeTicks - TimeSpan.FromTicks(lastStep).Milliseconds));
         }
 
-        private static long GetStepDuration(IWalkableTile tile, int stepSpeed)
+        private static long GetStepDuration(IDynamicTile tile, int stepSpeed)
         {
             int calculatedStepSpeed;
             int groundSpeed;

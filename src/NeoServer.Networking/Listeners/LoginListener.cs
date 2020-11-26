@@ -4,9 +4,6 @@ namespace NeoServer.Networking.Listeners
 {
     public class LoginListener : Listener
     {
-        public LoginListener(LoginProtocol protocol) : base(7171, protocol)
-        {
-
-        }
+        public LoginListener(LoginProtocol protocol) : base(7171, protocol) { }
     }
 }

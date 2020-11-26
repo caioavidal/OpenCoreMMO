@@ -3,7 +3,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -13,7 +13,7 @@ namespace NeoServer.Server.Commands.Movement
     {
         public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
-            var tile = map[itemThrow.FromLocation] as IWalkableTile;
+            var tile = map[itemThrow.FromLocation] as IDynamicTile;
             var amount = itemThrow.Count;
             if ((tile.DownItems.TryPeek(out var item) && item.IsPickupable) == false)
             {
@@ -53,7 +53,7 @@ namespace NeoServer.Server.Commands.Movement
             if (result.Value != null)
             {
                 var returnedThing = result.Value as IThing;
-                map.AddItem(ref returnedThing, tile, amount);
+                map.AddItem(returnedThing, tile, amount);
             }
         }
 

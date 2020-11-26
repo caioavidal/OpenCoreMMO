@@ -1,19 +1,20 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Monsters;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Loaders.Monsters.Converters;
 using System.Collections.Immutable;
+using NeoServer.Game.Common;
 
 namespace NeoServer.Loaders.Monsters
 {
     public class MonsterConverter
     {
-        public static IMonsterType Convert(MonsterData monsterData)
+        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration)
         {
             var data = monsterData.Monster;
             var monster = new MonsterType()
@@ -24,7 +25,7 @@ namespace NeoServer.Loaders.Monsters
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defense = ushort.Parse(data.Defense.Defense),
-                Experience = data.Experience,
+                Experience = (uint)(data.Experience * configuration.ExperienceRate),
                 Race = ParseRace(data.Race)
             };
 

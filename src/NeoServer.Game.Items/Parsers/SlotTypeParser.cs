@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Enums.Players;
+﻿using NeoServer.Game.Common.Players;
 
 namespace NeoServer.Game.Items.Parsers
 {

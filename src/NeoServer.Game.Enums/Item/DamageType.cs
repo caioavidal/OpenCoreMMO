@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Enums.Item
+﻿namespace NeoServer.Game.Common.Item
 {
     public enum DamageType : byte
     {

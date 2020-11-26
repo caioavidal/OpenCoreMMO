@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Location.Structs.Helpers;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Location.Structs.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public byte[] Raw { get; }
 
         public Location Location { get; }
+        public FloorChangeDirection FloorDirection { get; private set; }
 
         public byte[] GetRaw(IItem[] items)
         {
@@ -39,8 +41,12 @@ namespace NeoServer.Game.World.Map.Tiles
 
                 if (item.IsAlwaysOnTop)
                 {
-                    top1.AddRange(BitConverter.GetBytes(item.ClientId));
+                    if (item.FloorDirection != default)
+                    {
+                        FloorDirection = item.FloorDirection;
+                    }
 
+                    top1.AddRange(BitConverter.GetBytes(item.ClientId));
                 }
                 else
                 {

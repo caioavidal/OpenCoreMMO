@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Enums.Talks;
+﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;

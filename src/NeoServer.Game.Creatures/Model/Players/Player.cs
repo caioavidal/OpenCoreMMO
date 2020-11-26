@@ -7,13 +7,13 @@ using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Spells;
-using NeoServer.Game.Enums.Combat.Structs;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Enums.Talks;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -45,7 +45,7 @@ namespace NeoServer.Server.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
 
-            SetNewLocation(location);
+            Location = location;
 
             Containers = new PlayerContainerList(this);
 
@@ -155,31 +155,9 @@ namespace NeoServer.Server.Model.Players
             base.GainExperience(exp);
         }
 
-        public override string InspectionText => Name;
-
-        public override string CloseInspectionText => InspectionText;
         public byte AccessLevel { get; set; } // TODO: implement.
 
         public bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
-
-        public bool CanLogout
-        {
-            get
-            {
-                //todo inconnection validation
-
-                if (Tile?.CannotLogout ?? false)
-                {
-                    return false;
-                }
-                if (Tile?.ProtectionZone ?? false)
-                {
-                    return true;
-                }
-
-                return !CannotLogout;
-            }
-        }
 
         public Location LocationInFront
         {
@@ -410,7 +388,7 @@ namespace NeoServer.Server.Model.Players
             if (!Inventory.BackpackSlot.TryAddItem(item).Success)
             {
                 var thing = item as IThing;
-                Tile.AddThing(ref thing);
+                Tile.AddThing(thing);
             }
             return item;
         }

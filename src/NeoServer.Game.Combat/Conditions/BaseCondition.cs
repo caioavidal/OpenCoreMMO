@@ -1,11 +1,9 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Creatures.Players;
+﻿using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Contracts.Creatures;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-namespace NeoServer.Game.Creatures.Model.Conditions
+namespace NeoServer.Game.Common.Conditions
 {
     public abstract class BaseCondition : ICondition
     {

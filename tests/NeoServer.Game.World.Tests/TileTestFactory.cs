@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
 using System.Collections.Generic;
