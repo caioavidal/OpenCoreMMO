@@ -159,6 +159,8 @@ namespace NeoServer.Server.Model.Players
             OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
             return true;
         }
+
+      
         public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
             bool canCarry = CanCarryItem(item, slot);
@@ -278,7 +280,7 @@ namespace NeoServer.Server.Model.Players
             return canCarry;
         }
 
-        private Result<bool> CanAddItemToSlot(Slot slot, IItem item)
+        public Result<bool> CanAddItemToSlot(Slot slot, IItem item)
         {
             var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
 

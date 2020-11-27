@@ -14,11 +14,16 @@ namespace NeoServer.Server.Commands.Movement
 
             if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
 
+            if (player.Inventory.CanAddItemToSlot(itemThrow.ToLocation.Slot, item).Success is false) return;
 
-            var result = player.Inventory.TryAddItemToSlot(itemThrow.ToLocation.Slot, item);
-            if (result.Success is false) return;
+            var removedItem = container.RemoveItem((byte)itemThrow.FromLocation.ContainerSlot, itemThrow.Count) as IPickupable;
 
-            container.RemoveItem((byte)itemThrow.FromLocation.ContainerSlot, itemThrow.Count);
+            var result = player.Inventory.TryAddItemToSlot(itemThrow.ToLocation.Slot, removedItem);
+
+            if (result.Success is false || result.Value is not IPickupable returnedItem) return;
+
+            container.TryAddItem(returnedItem);
+
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>
