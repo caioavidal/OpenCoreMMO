@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
+using NeoServer.Server.Commands.Movement.ToInventory;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Player
@@ -23,29 +24,31 @@ namespace NeoServer.Server.Commands.Player
             if (ContainerToContainerMovementOperation.IsApplicable(itemThrow))
             {
                 ContainerToContainerMovementOperation.Execute(player, itemThrow);
-                return;
             }
-            if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
+            else if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
             {
                 MapToInventoryMovementOperation.Execute(player, game.Map, itemThrow);
             }
-            if (ToMapMovementOperation.IsApplicable(itemThrow))
+            else if (ToMapMovementOperation.IsApplicable(itemThrow))
             {
                 ToMapMovementOperation.Execute(player, game.Map, itemThrow);
             }
-            if (InventoryToContainerMovementOperation.IsApplicable(itemThrow))
+            else if (InventoryToContainerMovementOperation.IsApplicable(itemThrow))
             {
                 InventoryToContainerMovementOperation.Execute(player, itemThrow);
             }
-            if (ContainerToInventoryMovementOperation.IsApplicable(itemThrow))
+            else if (ContainerToInventoryMovementOperation.IsApplicable(itemThrow))
             {
                 ContainerToInventoryMovementOperation.Execute(player, itemThrow);
             }
-            if (MapToContainerMovementOperation.IsApplicable(itemThrow))
+            else if (MapToContainerMovementOperation.IsApplicable(itemThrow))
             {
                 MapToContainerMovementOperation.Execute(player, game.Map, itemThrow);
             }
+            else if (InventoryToInventoryOperation.IsApplicable(itemThrow))
+            {
+                InventoryToInventoryOperation.Execute(player, itemThrow);
+            }
         }
-
     }
 }
