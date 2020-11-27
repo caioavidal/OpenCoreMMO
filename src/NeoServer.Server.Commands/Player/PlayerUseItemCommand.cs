@@ -35,7 +35,6 @@ namespace NeoServer.Server.Commands.Player
             }
             else if (useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)
             {
-                
                 player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index);
             }
         }

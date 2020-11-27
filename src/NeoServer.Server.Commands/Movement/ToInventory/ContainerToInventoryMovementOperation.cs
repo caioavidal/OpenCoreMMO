@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
@@ -23,7 +22,6 @@ namespace NeoServer.Server.Commands.Movement
             if (result.Success is false || result.Value is not IPickupable returnedItem) return;
 
             container.TryAddItem(returnedItem);
-
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

@@ -50,6 +50,5 @@ namespace NeoServer.Server.Commands.Player
                 InventoryToInventoryOperation.Execute(player, itemThrow);
             }
         }
-
     }
 }
