@@ -30,12 +30,13 @@ namespace NeoServer.Game.World.Map.Tiles
         private byte[] cache;
 
         public Location Location { get; }
-        public ushort StepSpeed { get; private set; }
+        public ushort StepSpeed => Ground.StepSpeed;
+
 
         public FloorChangeDirection FloorDirection { get; private set; }
-        public byte MovementPenalty { get; private set; }
+        public byte MovementPenalty => Ground.MovementPenalty;
 
-        public ushort Ground { get; private set; }
+        public IGround Ground { get; private set; }
         public Stack<IItem> TopItems { get; private set; }
 
         public Stack<IItem> DownItems { get; private set; }
@@ -44,6 +45,10 @@ namespace NeoServer.Game.World.Map.Tiles
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
         public bool HasCreature => Creatures.Count > 0;
+        /// <summary>
+        /// Get the top item on DownItems's stack
+        /// </summary>
+        public override IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out IItem item) ? item : TopItems is not null && TopItems.TryPeek(out item) ? item : Ground;
 
         public IMagicField MagicField
         {
@@ -122,11 +127,11 @@ namespace NeoServer.Game.World.Map.Tiles
             }
 
 
-            if (Ground == id)
+            if (Ground.ClientId == id)
             {
                 return true;
             }
-            if (Ground != 0)
+            if (Ground.ClientId != 0)
             {
                 ++stackPosition;
             }
@@ -194,7 +199,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 throw new ArgumentNullException(nameof(id));
             }
 
-            if (Ground != 0)
+            if (Ground.ClientId != 0)
             {
                 stackPosition++;
             }
@@ -229,7 +234,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             if (stackPosition == 0)
             {
-                return Ground;
+                return Ground.ClientId ;
             }
             var n = 0;
 
@@ -364,10 +369,7 @@ namespace NeoServer.Game.World.Map.Tiles
             return new Result<ITileOperationResult>(operations);
         }
 
-        /// <summary>
-        /// Get the top item on DownItems's stack
-        /// </summary>
-        public IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out IItem item) ? item : null;
+
 
         private byte flags;
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
@@ -385,9 +387,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (ground != null)
             {
-                StepSpeed = ground.StepSpeed;
-                MovementPenalty = ground.MovementPenalty;
-                Ground = ground.ClientId;
+                Ground = ground;
                 FloorDirection = ground.Metadata.Attributes.GetFloorChangeDirection();
             }
 
@@ -473,7 +473,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (Ground != default)
             {
-                BitConverter.GetBytes(Ground).AsSpan().CopyTo(stream);
+                BitConverter.GetBytes(Ground.ClientId).AsSpan().CopyTo(stream);
 
                 countThings++;
                 countBytes += 2;
