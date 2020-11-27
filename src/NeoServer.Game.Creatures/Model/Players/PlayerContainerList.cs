@@ -138,7 +138,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (openedContainers.Remove(containerId, out var playerContainer))
             {
                 playerContainer.DetachContainerEvents();
-                OnClosedContainer?.Invoke(player, containerId);
+                OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
             }
         }
     }

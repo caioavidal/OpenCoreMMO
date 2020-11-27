@@ -69,9 +69,7 @@ namespace NeoServer.Data.RavenDB
 
             using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
             {
-                return await Session.Query<AccountModel>()
-            .FirstOrDefaultAsync(a => a.AccountName == account &&
-                a.Password == password);
+                return await Session.Query<AccountModel>().FirstOrDefaultAsync(a => a.AccountName == account && a.Password == password);
             }
 
         }

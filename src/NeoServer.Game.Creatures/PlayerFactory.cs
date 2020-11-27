@@ -67,6 +67,7 @@ namespace NeoServer.Game.Creatures
         public IPlayer Create(IPlayerModel player)
         {
             var newPlayer = new Player(
+                (uint)player.Id,
                 player.CharacterName,
                 player.ChaseMode,
                 player.Capacity,

@@ -28,12 +28,13 @@ namespace NeoServer.Server.Model.Players
 {
     public class Player : CombatActor, IPlayer
     {
-        public Player(string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
+        public Player(uint id, string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location, PathFinder pathFinder)
              : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
         {
+            Id = id; 
             CharacterName = characterName;
             ChaseMode = chaseMode;
             CarryStrength = capacity;
@@ -247,7 +248,7 @@ namespace NeoServer.Server.Model.Players
                 return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
             }
         }
-
+        public uint Id { get; }
         public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
         public override ushort ArmorRating => Inventory.TotalArmor;
@@ -269,6 +270,8 @@ namespace NeoServer.Server.Model.Players
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
 
         const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
+        
+
         public uint ChooseToRemoveFromKnownSet()
         {
             // if the buffer is full we need to choose a vitim.
