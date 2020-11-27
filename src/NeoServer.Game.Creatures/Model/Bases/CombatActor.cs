@@ -219,7 +219,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-        public void SetAsInFight()
+        public virtual void SetAsInFight()
         {
             if (HasCondition(ConditionType.InFight, out var condition))
             {

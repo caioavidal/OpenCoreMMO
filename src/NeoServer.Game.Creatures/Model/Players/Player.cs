@@ -258,9 +258,9 @@ namespace NeoServer.Server.Model.Players
 
         public byte SecureMode { get; private set; }
         public float CarryStrength { get; }
-
+        public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
-
+        
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -299,6 +299,12 @@ namespace NeoServer.Server.Model.Players
         {
             TogglePacifiedCondition(fromTile, toTile);
             base.OnMoved(fromTile, toTile);
+        }
+
+        public override void SetAsInFight()
+        {
+            if (IsPacified) return;
+            base.SetAsInFight();
         }
 
         private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
