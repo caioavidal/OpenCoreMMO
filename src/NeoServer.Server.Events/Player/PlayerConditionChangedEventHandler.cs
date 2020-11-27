@@ -48,6 +48,7 @@ namespace NeoServer.Server.Events.Player
                 ConditionType.Freezing => ConditionIcon.Freezing,
                 ConditionType.Manashield => ConditionIcon.Manashield,
                 ConditionType.Drown => ConditionIcon.Drowning,
+                ConditionType.Pacified => ConditionIcon.Pigeon,
                 _ => ConditionIcon.None
             };
         }

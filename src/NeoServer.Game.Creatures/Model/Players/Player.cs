@@ -19,6 +19,10 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Conditions;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -114,7 +118,7 @@ namespace NeoServer.Server.Model.Players
                 }
                 return 0;
             }
-         
+
         }
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
@@ -291,6 +295,23 @@ namespace NeoServer.Server.Model.Players
 
         public void ChangeOutfit(IOutfit outfit) => Outfit = outfit;
 
+        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
+        {
+            TogglePacifiedCondition(fromTile, toTile);
+            base.OnMoved(fromTile, toTile);
+        }
+
+        private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
+        {
+            if (fromTile.ProtectionZone is false && toTile.ProtectionZone is true)
+            {
+                RemoveCondition(ConditionType.InFight);
+                AddCondition(new Condition(ConditionType.Pacified, 0));
+            }
+
+            if (fromTile.ProtectionZone is true && toTile.ProtectionZone is false) RemoveCondition(ConditionType.Pacified);
+        }
+
         public override bool TryWalkTo(params Direction[] directions)
         {
             ResetIdleTime();
@@ -366,7 +387,7 @@ namespace NeoServer.Server.Model.Players
                 }
 
                 Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
-               // OnUsedSpell?.Invoke(this, spell); //todo remove this event
+                                                           // OnUsedSpell?.Invoke(this, spell); //todo remove this event
             }
             base.Say(message, talkType);
         }

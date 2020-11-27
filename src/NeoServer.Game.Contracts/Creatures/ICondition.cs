@@ -9,8 +9,6 @@ namespace NeoServer.Game.Contracts.Creatures
         ConditionIcon Icons { get; }
         ConditionType Type { get; }
 
-        ConditionSlot ConditionSlot { get; }
-
         long EndTime { get; }
         void End();
 

@@ -75,7 +75,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             //todo check monster creature.cpp 1367
             return stepDuration;
         }
-        public void Moved(ITile fromTile, ITile toTile)
+        public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
         {
             LastStep = DateTime.Now.TimeOfDay.TotalMilliseconds;
 

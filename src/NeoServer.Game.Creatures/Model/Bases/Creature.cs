@@ -183,6 +183,11 @@ namespace NeoServer.Game.Creatures.Model
             Conditions.Remove(condition.Type);
             OnRemovedCondition?.Invoke(this, condition);
         }
+        public void RemoveCondition(ConditionType type)
+        {
+            if(Conditions.Remove(type, out var condition) is false) return;
+            OnRemovedCondition?.Invoke(this, condition);
+        }
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
         public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
 
