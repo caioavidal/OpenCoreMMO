@@ -7,6 +7,7 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Items.Items.Containers;
 
 namespace NeoServer.Game.Items
 {
@@ -45,6 +46,11 @@ namespace NeoServer.Game.Items
             if (DistanceWeapon.IsApplicable(itemType))
             {
                 return new DistanceWeapon(itemType, location);
+            }
+
+            if (Depot.IsApplicable(itemType))
+            {
+                return new Depot(itemType, location);
             }
 
             if (PickupableContainer.IsApplicable(itemType))

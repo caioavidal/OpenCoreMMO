@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.World;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -26,7 +27,7 @@ namespace NeoServer.Server.Commands.Player
         {
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
-                if (game.Map[useItemPacket.Location] is not IDynamicTile tile) return;
+                if (game.Map[useItemPacket.Location] is not ITile tile) return;
                 if(tile.TopItemOnStack is IContainer container)
                 {
                     player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);

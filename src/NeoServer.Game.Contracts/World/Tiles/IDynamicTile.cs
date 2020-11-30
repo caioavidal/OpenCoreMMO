@@ -13,7 +13,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
 
     public interface IDynamicTile : ITile
     {
-        ushort Ground { get; }
+        IGround Ground { get; }
         Stack<IItem> TopItems { get; }
         Stack<IItem> DownItems { get; }
         Dictionary<uint, IWalkableCreature> Creatures { get; }

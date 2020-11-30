@@ -36,7 +36,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);
         void IncreaseSpeed(ushort speed);
-        void Moved(ITile fromTile, ITile toTile);
+        void OnMoved(IDynamicTile fromTile, IDynamicTile toTile);
         void Follow(IWalkableCreature creature);
         void StopFollowing();
         void StopWalking();

@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Server.Model.Players
 {

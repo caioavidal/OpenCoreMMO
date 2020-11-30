@@ -13,7 +13,7 @@ namespace NeoServer.Server.Handlers.Authentication
             _repository = repository;
         }
 
-        public async override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var account = new AccountLoginPacket(message);
 
@@ -31,7 +31,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            var foundedAccount = await _repository.Get(account.Account,
+            var foundedAccount = _repository.Get(account.Account,
             account.Password);
 
             if (foundedAccount == null)

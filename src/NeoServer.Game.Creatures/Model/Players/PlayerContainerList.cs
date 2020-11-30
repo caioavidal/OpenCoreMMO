@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
@@ -16,12 +17,47 @@ namespace NeoServer.Game.Creatures.Model.Players
         public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
         public AddItemOnOpenedContainer AddItemAction { get; set; }
         public UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
+        public MoveOpenedContainer MoveOpenedContainer { get; private set; }
 
+        public bool HasAnyDepotOpened
+        {
+            get
+            {
+                foreach (var container in openedContainers.Values)
+                {
+                    if (container.Container.Root is IDepot) return true;
+                }
+                return false;
+            }
+        }
         private readonly IPlayer player;
         public PlayerContainerList(IPlayer player)
         {
             this.player = player;
+            MoveOpenedContainer += CloseDistantContainer;
+        }
 
+        public void CloseDistantContainer(byte containerId, IContainer container)
+        {
+            if (openedContainers.Count == 0) return;
+           
+                var containerLocation = container.Root?.Location;
+
+                if (containerLocation is null) return;
+
+                if (containerLocation.Value.Type == LocationType.Ground &&
+                    containerLocation.Value.IsNextTo(player.Location) is false)
+                {
+                    CloseContainer(containerId);
+                }    
+        }
+        public void CloseDistantContainers()
+        {
+            if (openedContainers.Count == 0) return; 
+            foreach (var container in openedContainers.Values)
+            {
+                CloseDistantContainer(container.Id, container.Container);
+            }
         }
 
         public IContainer this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
@@ -40,12 +76,11 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
-      
         public void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null)
         {
             PlayerContainer playerContainer = null;
 
-            if(location.Type == LocationType.Ground)
+            if (location.Type == LocationType.Ground)
             {
                 playerContainer = new PlayerContainer(containerToOpen, player);
             }
@@ -88,7 +123,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 openedContainers.TryAdd(playerContainer.Id, playerContainer);
             }
 
-            playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction);
+            playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction, MoveOpenedContainer);
             playerContainer.AttachContainerEvent();
         }
 
@@ -138,7 +173,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (openedContainers.Remove(containerId, out var playerContainer))
             {
                 playerContainer.DetachContainerEvents();
-                OnClosedContainer?.Invoke(player, containerId);
+                OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
             }
         }
     }

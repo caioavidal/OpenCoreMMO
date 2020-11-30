@@ -15,6 +15,6 @@ namespace NeoServer.Game.World.Map.Tiles
             Operations.Add((thing,operation));
         }
 
-        public bool HasAnyOperation => Operations.Any();
+        public bool HasAnyOperation => Operations?.Any() ?? false;
     }
 }

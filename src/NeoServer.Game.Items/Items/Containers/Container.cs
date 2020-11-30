@@ -14,14 +14,35 @@ namespace NeoServer.Game.Items.Items
         public event RemoveItem OnItemRemoved;
         public event AddItem OnItemAdded;
         public event UpdateItem OnItemUpdated;
+        public event Move OnContainerMoved;
         public byte SlotsUsed { get; private set; }
         public bool IsFull => SlotsUsed >= Capacity;
+        
         public IThing Parent { get; private set; }
         public bool HasParent => Parent != null;
         public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Capacity);
         public List<IItem> Items { get; }
         public IItem this[int index] => Items[index];
+        public bool HasItems => SlotsUsed > 0;
+        public IThing Root
+        {
+            get
+            {
+                IThing root = this;
+                while (root is IContainer container && container.Parent is not null)
+                {
+                    root = container.Parent;
+                }
 
+                return root;
+            }
+        }
+
+        public override void OnMoved()
+        {
+            OnContainerMoved?.Invoke(this);
+        }
+       
         public Container(IItemType type, Location location) : base(type, location)
         {
             if (!type.Attributes.HasAttribute(Common.ItemAttribute.Capacity))
@@ -150,9 +171,6 @@ namespace NeoServer.Game.Items.Items
             if (item is IContainer container)
             {
                 container.SetParent(this);
-                container.OnItemUpdated += OnItemUpdated;
-                container.OnItemAdded += OnItemAdded;
-                container.OnItemRemoved += OnItemRemoved;
             }
 
             OnItemAdded?.Invoke(item);
@@ -174,11 +192,10 @@ namespace NeoServer.Game.Items.Items
             }
             return result;
         }
-        public Result TryAddItem(IItem item, byte? slot = null) => TryAddItem(item, slot ?? (byte)(Capacity - 1));
-        public Result TryAddItem(IItem item, byte slot)
+        public virtual Result TryAddItem(IItem item, byte? slot = null) => TryAddItem(item, slot ?? (byte)(Capacity - 1));
+        public virtual Result TryAddItem(IItem item, byte slot)
         {
             var itemOnSlot = Items.ElementAtOrDefault(slot);
-
             if (itemOnSlot is IContainer container)
             {
                 return AddItemToChild(item, container);
@@ -186,7 +203,7 @@ namespace NeoServer.Game.Items.Items
 
             return AddItem(item, slot);
         }
-       
+
         public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1)
         {
             var item = RemoveItem(fromSlotIndex, amount) as ICumulativeItem;
@@ -201,7 +218,9 @@ namespace NeoServer.Game.Items.Items
             {
                 AddItemToFront(item);
             }
+
         }
+        
         public Result MoveItem(byte fromSlotIndex, byte toSlotIndex)
         {
             if (GetContainerAt(toSlotIndex, out var container))
@@ -225,9 +244,6 @@ namespace NeoServer.Game.Items.Items
             if (item is IContainer container)
             {
                 container.SetParent(null);
-                container.OnItemUpdated -= OnItemUpdated;
-                container.OnItemAdded -= OnItemAdded;
-                container.OnItemRemoved -= OnItemRemoved;
             }
 
             SlotsUsed--;
@@ -259,6 +275,34 @@ namespace NeoServer.Game.Items.Items
             }
 
             return removedItem;
+        }
+
+        public void Clear()
+        {
+            SetParent(null);
+
+            foreach (var item in Items)
+            {
+                if (item is IContainer container)
+                {
+                    DetachEvents(container);
+                    container.Clear();
+                }
+            }
+
+            Items.Clear();
+            SlotsUsed = 0;
+        }
+
+        private void DetachEvents(IContainer container)
+        {
+            container.OnItemUpdated -= OnItemUpdated;
+            container.OnItemAdded -= OnItemAdded;
+            container.OnItemRemoved -= OnItemRemoved;
+
+            OnItemRemoved = null;
+            OnItemAdded = null;
+            OnItemUpdated = null;
         }
     }
 }

@@ -80,6 +80,7 @@ namespace NeoServer.Game.World.Map
                         default: break;
                     }
                 }
+
             }
 
             if (thing is IWalkableCreature creature)
@@ -102,12 +103,16 @@ namespace NeoServer.Game.World.Map
                 OnCreatureMoved?.Invoke(creature, cylinder);
             }
 
+            thing.OnMoved();
+
+
             var tileDestination = GetTileDestination(toTile);
 
             if (tileDestination == toTile)
             {
                 return true;
             }
+
 
             return TryMoveThing(thing, tileDestination.Location);
         }
@@ -561,12 +566,15 @@ namespace NeoServer.Game.World.Map
         {
             if (creature.TryGetNextStep(out var direction))
             {
-                var toTile = GetNextTile(creature.Location, direction);
+                var fromTile = creature.Tile;
 
-                if (toTile is null || !TryMoveThing(creature, toTile.Location))
+                if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveThing(creature, toTile.Location))
                 {
                     if (creature is IPlayer player) player.CancelWalk();
+                    return;
                 }
+
+                creature.OnMoved(fromTile, toTile);
             }
 
             if (creature.IsRemoved)

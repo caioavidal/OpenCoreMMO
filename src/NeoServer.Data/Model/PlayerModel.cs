@@ -12,7 +12,7 @@ namespace NeoServer.Server.Model.Players
 
     public class PlayerModel : IPlayerModel
     {
-        public int Id { get; }
+        public int Id { get; set; }
         public string CharacterName { get; set; }
 
         public IAccountModel Account { get; set; }

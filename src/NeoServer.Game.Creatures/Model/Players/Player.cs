@@ -19,17 +19,22 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Conditions;
 
 namespace NeoServer.Server.Model.Players
 {
     public class Player : CombatActor, IPlayer
     {
-        public Player(string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
+        public Player(uint id, string characterName, ChaseMode chaseMode, float capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location, PathFinder pathFinder)
              : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
         {
+            Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
             CarryStrength = capacity;
@@ -84,7 +89,7 @@ namespace NeoServer.Server.Model.Players
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
 
         public IPlayerContainerList Containers { get; }
-
+        public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }
         public Dictionary<string, bool> VipList { get; }
 
@@ -114,7 +119,7 @@ namespace NeoServer.Server.Model.Players
                 }
                 return 0;
             }
-         
+
         }
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
@@ -243,7 +248,7 @@ namespace NeoServer.Server.Model.Players
                 return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
             }
         }
-
+        public uint Id { get; }
         public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
         public override ushort ArmorRating => Inventory.TotalArmor;
@@ -254,7 +259,7 @@ namespace NeoServer.Server.Model.Players
 
         public byte SecureMode { get; private set; }
         public float CarryStrength { get; }
-
+        public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
@@ -265,6 +270,8 @@ namespace NeoServer.Server.Model.Players
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
 
         const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
+
+
         public uint ChooseToRemoveFromKnownSet()
         {
             // if the buffer is full we need to choose a vitim.
@@ -290,6 +297,31 @@ namespace NeoServer.Server.Model.Players
         }
 
         public void ChangeOutfit(IOutfit outfit) => Outfit = outfit;
+
+        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
+        {
+            TogglePacifiedCondition(fromTile, toTile);
+            Containers.CloseDistantContainers();
+            base.OnMoved(fromTile, toTile);
+        }
+    
+
+        public override void SetAsInFight()
+        {
+            if (IsPacified) return;
+            base.SetAsInFight();
+        }
+
+        private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
+        {
+            if (fromTile.ProtectionZone is false && toTile.ProtectionZone is true)
+            {
+                RemoveCondition(ConditionType.InFight);
+                AddCondition(new Condition(ConditionType.Pacified, 0));
+            }
+
+            if (fromTile.ProtectionZone is true && toTile.ProtectionZone is false) RemoveCondition(ConditionType.Pacified);
+        }
 
         public override bool TryWalkTo(params Direction[] directions)
         {
@@ -366,7 +398,7 @@ namespace NeoServer.Server.Model.Players
                 }
 
                 Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
-               // OnUsedSpell?.Invoke(this, spell); //todo remove this event
+                                                           // OnUsedSpell?.Invoke(this, spell); //todo remove this event
             }
             base.Say(message, talkType);
         }

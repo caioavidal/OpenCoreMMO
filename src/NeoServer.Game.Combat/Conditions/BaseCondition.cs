@@ -25,38 +25,18 @@ namespace NeoServer.Game.Common.Conditions
 
         public void End()
         {
+            if (IsPersistent) return;
+
             OnEnd?.Invoke();
         }
 
-        public bool IsPersistent
-        {
-            get
-            {
-                //todo
-                //if (Ticks == -1)
-                //{
-                //    return false;
-                //}
-                //if (!(ConditionSlot == ConditionSlot.Default ||
-                //    ConditionSlot == ConditionSlot.Combat ||
-                //    Type == ConditionType.Muted))
-                //{
-                //    return false;
-                //}
-
-                return true;
-            }
-        }
-
-        public ConditionSlot ConditionSlot => throw new NotImplementedException();
-
+        public bool IsPersistent => Duration == 0;
         public virtual bool Start(ICreature creature)
         {
-           
             EndTime = DateTime.Now.Ticks + Duration;
 
             return true;
         }
-        public virtual bool HasExpired => EndTime < DateTime.Now.Ticks;
+        public virtual bool HasExpired => IsPersistent is false && EndTime < DateTime.Now.Ticks;
     }
 }

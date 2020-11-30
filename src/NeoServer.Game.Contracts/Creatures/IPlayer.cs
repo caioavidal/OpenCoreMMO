@@ -7,11 +7,12 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
-    public delegate void ClosedContainer(IPlayer player, byte containerId);
+    public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
     public delegate void ReduceMana(IPlayer player);
     public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
@@ -53,6 +54,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         ushort MaxMana { get; }
         SkillType SkillInUse { get; }
         bool CannotLogout { get; }
+        uint Id { get; }
+        bool HasDepotOpened { get; }
 
         //  IAction PendingAction { get; }
 

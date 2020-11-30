@@ -34,6 +34,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using NeoServer.Game.Common;
 using NeoServer.Game.World.Map.Operations;
+using NeoServer.Data.Repositories;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -52,6 +53,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<Database>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
+            builder.RegisterType<PlayerDepotRepository>().As<IPlayerDepotRepository>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();

@@ -10,7 +10,9 @@ namespace NeoServer.Game.World.Map.Tiles
 {
     public abstract class BaseTile : ITile
     {
-        public Location Location { get; }
+        public Location Location { get; protected set; }
+
+        public abstract IItem TopItemOnStack { get; }
 
         public abstract bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition);
     }

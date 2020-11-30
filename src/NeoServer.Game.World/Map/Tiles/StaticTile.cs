@@ -13,28 +13,31 @@ namespace NeoServer.Game.World.Map.Tiles
     {
         public StaticTile(Coordinate coordinate, params IItem[] items)
         {
-            Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte) coordinate.Z);
+            Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
             Raw = null;
             Raw = GetRaw(items);
         }
 
         public byte[] Raw { get; }
 
-        public Location Location { get; }
         public FloorChangeDirection FloorDirection { get; private set; }
-
+        //public IItem[] TopItems { get; private set; }
+        //public IItem[] DownItems { get; private set; }
+        //public IGround Ground { get; private set; }
+        private IItem _topItemOnStack;
+        public override IItem TopItemOnStack => _topItemOnStack;
         public byte[] GetRaw(IItem[] items)
         {
 
             var ground = new List<byte>();
             var top1 = new List<byte>();
-            var downItems = new List<byte>();
+            var downRawItems = new List<byte>();
 
             foreach (var item in items)
             {
-                if (item is IGround)
+                if (item is IGround groundItem)
                 {
-
+                    _topItemOnStack = groundItem;
                     ground.AddRange(BitConverter.GetBytes(item.ClientId));
                     continue;
                 }
@@ -46,16 +49,18 @@ namespace NeoServer.Game.World.Map.Tiles
                         FloorDirection = item.FloorDirection;
                     }
 
+                    _topItemOnStack = item;
                     top1.AddRange(BitConverter.GetBytes(item.ClientId));
                 }
                 else
                 {
-                    downItems.AddRange(BitConverter.GetBytes(item.ClientId));
-
+                    _topItemOnStack = item;
+                    downRawItems.AddRange(BitConverter.GetBytes(item.ClientId));
                 }
             }
 
-            return ground.Concat(top1).Concat(downItems).ToArray();
+         
+            return ground.Concat(top1).Concat(downRawItems).ToArray();
 
         }
 

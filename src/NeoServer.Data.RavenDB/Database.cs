@@ -18,7 +18,7 @@ namespace NeoServer.Data.RavenDB
             store.Initialize();
         }
 
-        public IAsyncDocumentSession OpenAsyncSession()
+        public IDocumentSession OpenSession()
         {
             SessionOptions options = new SessionOptions
             {
@@ -26,7 +26,7 @@ namespace NeoServer.Data.RavenDB
                 Database = "neoserver",
                 TransactionMode = TransactionMode.ClusterWide
             };
-            return store.OpenAsyncSession(options);
+            return store.OpenSession(options);
         }
     }
 }
