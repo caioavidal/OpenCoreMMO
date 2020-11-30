@@ -454,6 +454,7 @@ namespace NeoServer.Game.World.Map.Tiles
                     }
                 }
             }
+
             SetCacheAsExpired();
             return new Result<ITileOperationResult>(operations);
         }

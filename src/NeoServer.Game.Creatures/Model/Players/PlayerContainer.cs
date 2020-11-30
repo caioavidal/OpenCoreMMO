@@ -22,6 +22,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         public RemoveItemFromOpenedContainer RemoveItem { get; private set; }
         public AddItemOnOpenedContainer AddItem { get; private set; }
         public UpdateItemOnOpenedContainer UpdateItem { get; private set; }
+        public MoveOpenedContainer MoveOpenedContainer { get; private set; }
+
         private bool eventsAttached;
 
         public void ItemAdded(IItem item)
@@ -36,8 +38,13 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             UpdateItem?.Invoke(Player, Id, slotIndex, item, amount);
         }
+        public void ContainerMoved(IContainer container)
+        {
+            MoveOpenedContainer?.Invoke(Id, container);
+        }
 
-        public void AttachActions(RemoveItemFromOpenedContainer removeItemAction, AddItemOnOpenedContainer addItemAction, UpdateItemOnOpenedContainer updateItemAction)
+
+        public void AttachActions(RemoveItemFromOpenedContainer removeItemAction, AddItemOnOpenedContainer addItemAction, UpdateItemOnOpenedContainer updateItemAction, MoveOpenedContainer moveOpenedContainer)
         {
             if (RemoveItem == null)
             {
@@ -51,6 +58,14 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 UpdateItem += updateItemAction;
             }
+            if (UpdateItem == null)
+            {
+                UpdateItem += updateItemAction;
+            }
+            if (MoveOpenedContainer is null)
+            {
+                MoveOpenedContainer += moveOpenedContainer;
+            }
         }
 
         public void AttachContainerEvent()
@@ -59,10 +74,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 return;
             }
-            DetachContainerEvents();
+
             Container.OnItemAdded += ItemAdded;
             Container.OnItemRemoved += ItemRemoved;
             Container.OnItemUpdated += ItemUpdated;
+            Container.OnContainerMoved += ContainerMoved;            
+
             eventsAttached = true;
         }
         internal void DetachContainerEvents()
@@ -70,6 +87,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Container.OnItemRemoved -= ItemRemoved;
             Container.OnItemAdded -= ItemAdded;
             Container.OnItemUpdated -= ItemUpdated;
+            Container.OnContainerMoved -= ContainerMoved;
         }
 
         public bool Equals(PlayerContainer obj)

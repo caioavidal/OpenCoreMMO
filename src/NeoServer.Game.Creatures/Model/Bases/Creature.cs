@@ -214,6 +214,10 @@ namespace NeoServer.Game.Creatures.Model
            return this == other;
         }
 
+        public void OnMoved()
+        {
+        }
+
         public static bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         public static bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;
     }

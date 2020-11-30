@@ -14,8 +14,7 @@ namespace NeoServer.Game.Items.Items
         public event RemoveItem OnItemRemoved;
         public event AddItem OnItemAdded;
         public event UpdateItem OnItemUpdated;
-        public event DeleteContainer OnDeleted;
-
+        public event Move OnContainerMoved;
         public byte SlotsUsed { get; private set; }
         public bool IsFull => SlotsUsed >= Capacity;
         
@@ -39,11 +38,11 @@ namespace NeoServer.Game.Items.Items
             }
         }
 
-        public void Deleted()
+        public override void OnMoved()
         {
-            OnDeleted?.Invoke(this);
+            OnContainerMoved?.Invoke(this);
         }
-
+       
         public Container(IItemType type, Location location) : base(type, location)
         {
             if (!type.Attributes.HasAttribute(Common.ItemAttribute.Capacity))

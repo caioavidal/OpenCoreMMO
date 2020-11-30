@@ -7,7 +7,7 @@ namespace NeoServer.Game.Contracts.Items.Types
     public delegate void AddItem(IItem item);
     public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
     public delegate void DeleteContainer(IContainer container);
-
+    public delegate void Move(IContainer container);
 
     public interface IContainer : IItem, IInventoryItem
     {
@@ -25,6 +25,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         event RemoveItem OnItemRemoved;
         event AddItem OnItemAdded;
         event UpdateItem OnItemUpdated;
+        event Move OnContainerMoved;
 
         bool GetContainerAt(byte index, out IContainer container);
         Result MoveItem(byte fromSlotIndex, byte toSlotIndex);

@@ -16,5 +16,7 @@ namespace NeoServer.Game.Items.Items
             var clone = (IMoveableThing)MemberwiseClone();
             return clone;
         }
+
+        public virtual void OnMoved() { }
     }
 }

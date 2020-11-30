@@ -301,8 +301,10 @@ namespace NeoServer.Server.Model.Players
         public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
         {
             TogglePacifiedCondition(fromTile, toTile);
+            Containers.CloseDistantContainers();
             base.OnMoved(fromTile, toTile);
         }
+    
 
         public override void SetAsInFight()
         {

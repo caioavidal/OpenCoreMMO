@@ -27,7 +27,6 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IPlayer player, byte containerId, IContainer container)
         {
-
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
                 connection.OutgoingPackets.Enqueue(new CloseContainerPacket(containerId));
