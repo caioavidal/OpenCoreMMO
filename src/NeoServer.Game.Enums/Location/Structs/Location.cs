@@ -20,6 +20,11 @@ namespace NeoServer.Game.Common.Location.Structs
             Y = (ushort)coordinate.Y;
             Z = (byte)coordinate.Z;
         }
+        public Location(Slot slot) : this()
+        {
+            X = 0xFFFF;
+            Y = (byte)slot;
+        }
 
         public ushort X { get; set; }
 
@@ -31,6 +36,7 @@ namespace NeoServer.Game.Common.Location.Structs
         public bool IsSurface => Z == 7;
 
         public int GetOffSetZ(Location location) => Z - location.Z;
+
 
         public LocationType Type
         {
@@ -231,13 +237,13 @@ namespace NeoServer.Game.Common.Location.Structs
                 var pool = ArrayPool<Location>.Shared;
                 var locations = pool.Rent(8);
 
-                locations[0] = (Translate() +  new Coordinate(-1, 0, 0)).Location;
-                locations[1] = (Translate() +  new Coordinate(0, 1, 0)).Location;
-                locations[2] = (Translate() +  new Coordinate(1, 0, 0)).Location;
-                locations[3] = (Translate() +  new Coordinate(0, -1, 0)).Location;
-                locations[4] = (Translate() +  new Coordinate(-1, -1, 0)).Location;
-                locations[5] = (Translate() +  new Coordinate(1, -1, 0)).Location;
-                locations[6] = (Translate() +  new Coordinate(1, 1, 0)).Location;
+                locations[0] = (Translate() + new Coordinate(-1, 0, 0)).Location;
+                locations[1] = (Translate() + new Coordinate(0, 1, 0)).Location;
+                locations[2] = (Translate() + new Coordinate(1, 0, 0)).Location;
+                locations[3] = (Translate() + new Coordinate(0, -1, 0)).Location;
+                locations[4] = (Translate() + new Coordinate(-1, -1, 0)).Location;
+                locations[5] = (Translate() + new Coordinate(1, -1, 0)).Location;
+                locations[6] = (Translate() + new Coordinate(1, 1, 0)).Location;
                 locations[7] = (Translate() + new Coordinate(-1, 1, 0)).Location;
 
                 pool.Return(locations);
@@ -245,7 +251,7 @@ namespace NeoServer.Game.Common.Location.Structs
                 return locations[0..8];
             }
         }
-    
+
         /// <summary>
         /// Check whether location is 1 sqm next to dest
         /// </summary>

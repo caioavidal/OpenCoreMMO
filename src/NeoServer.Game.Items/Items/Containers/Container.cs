@@ -17,7 +17,7 @@ namespace NeoServer.Game.Items.Items
         public event Move OnContainerMoved;
         public byte SlotsUsed { get; private set; }
         public bool IsFull => SlotsUsed >= Capacity;
-        
+
         public IThing Parent { get; private set; }
         public bool HasParent => Parent != null;
         public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Capacity);
@@ -42,7 +42,7 @@ namespace NeoServer.Game.Items.Items
         {
             OnContainerMoved?.Invoke(this);
         }
-       
+
         public Container(IItemType type, Location location) : base(type, location)
         {
             if (!type.Attributes.HasAttribute(Common.ItemAttribute.Capacity))
@@ -74,7 +74,12 @@ namespace NeoServer.Game.Items.Items
             }
         }
 
-        public void SetParent(IThing thing) => Parent = thing;
+        public void SetParent(IThing thing)
+        {
+            Parent = thing;
+            if (Parent is IPlayer player) Location = new Location(Common.Players.Slot.Backpack);
+
+        }
 
         public static bool IsApplicable(IItemType type) => type.Group == Common.ItemGroup.GroundContainer ||
             type.Attributes.GetAttribute(Common.ItemAttribute.Type)?.ToLower() == "container";
@@ -220,7 +225,7 @@ namespace NeoServer.Game.Items.Items
             }
 
         }
-        
+
         public Result MoveItem(byte fromSlotIndex, byte toSlotIndex)
         {
             if (GetContainerAt(toSlotIndex, out var container))

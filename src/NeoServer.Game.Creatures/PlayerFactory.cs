@@ -132,11 +132,7 @@ namespace NeoServer.Game.Creatures
 
                 if (slot.Key == Slot.Backpack)
                 {
-                    if (!(createdItem is IContainer container))
-                    {
-                        continue;
-                    }
-
+                    if (createdItem is not IContainer container) continue;
                     BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
                 }
 

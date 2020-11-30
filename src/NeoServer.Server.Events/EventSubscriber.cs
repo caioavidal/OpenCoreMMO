@@ -1,9 +1,7 @@
 ﻿using Autofac;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Spells;
-using NeoServer.Server.Events.Tiles;
 
 namespace NeoServer.Server.Events
 {
@@ -25,7 +23,6 @@ namespace NeoServer.Server.Events
             map.OnCreatureAddedOnMap += (creature, cylinder) => container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
             map.OnThingRemovedFromTile += container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
             map.OnCreatureMoved += container.Resolve<CreatureMovedOnFloorEventHandler>().Execute;
-            map.OnItemMoved += container.Resolve<ItemMovedToTileEventHandler>().Execute;
             map.OnThingMovedFailed += container.Resolve<InvalidOperationEventHandler>().Execute;
             map.OnThingAddedToTile += container.Resolve<ThingAddedToTileEventHandler>().Execute;
             map.OnThingUpdatedOnTile += container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;

@@ -30,7 +30,6 @@ namespace NeoServer.Game.World.Map
         public event UpdateThingOnTile OnThingUpdatedOnTile;
         public event MoveCreatureOnFloor OnCreatureMoved;
         public event FailedMoveThing OnThingMovedFailed;
-        public event MoveItem OnItemMoved;
         private readonly World world;
 
         public Map(World world)
@@ -314,6 +313,8 @@ namespace NeoServer.Game.World.Map
                 if(operation.Item2 == Operation.Removed) OnThingRemovedFromTile?.Invoke(operation.Item1, cylinder);
                 if (operation.Item2 == Operation.Updated) OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder);
             }
+
+            if (thing is IMoveableThing moveable) moveable.OnMoved();
         }
         public void AddItem(IThing thing, IDynamicTile tile)
         {
@@ -328,6 +329,8 @@ namespace NeoServer.Game.World.Map
                     default: break;
                 }
             }
+
+            if (thing is IMoveableThing moveable) moveable.OnMoved();
         }
 
         public IEnumerable<ICreature> GetPlayersAtPositionZone(Location location)

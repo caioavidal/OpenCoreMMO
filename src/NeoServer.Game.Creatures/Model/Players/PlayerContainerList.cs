@@ -40,20 +40,23 @@ namespace NeoServer.Game.Creatures.Model.Players
         public void CloseDistantContainer(byte containerId, IContainer container)
         {
             if (openedContainers.Count == 0) return;
-           
-                var containerLocation = container.Root?.Location;
 
-                if (containerLocation is null) return;
+            var containerLocation = container.Root?.Location;
 
-                if (containerLocation.Value.Type == LocationType.Ground &&
-                    containerLocation.Value.IsNextTo(player.Location) is false)
-                {
-                    CloseContainer(containerId);
-                }    
+            if (containerLocation is null) return;
+
+            if (containerLocation.Value.Type == LocationType.Ground &&
+                containerLocation.Value.IsNextTo(player.Location) is false)
+            {
+                CloseContainer(containerId);
+                return;
+            }
+
+            if (container.Root is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
         }
         public void CloseDistantContainers()
         {
-            if (openedContainers.Count == 0) return; 
+            if (openedContainers.Count == 0) return;
             foreach (var container in openedContainers.Values)
             {
                 CloseDistantContainer(container.Id, container.Container);
