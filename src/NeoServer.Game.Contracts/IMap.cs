@@ -17,7 +17,6 @@ namespace NeoServer.Game.Contracts
     public delegate void MoveCreatureOnFloor(IWalkableCreature creature, ICylinder cylinder);
     public delegate void AddThingToTile(Items.IThing thing, ICylinder cylinder);
     public delegate void UpdateThingOnTile(Items.IThing thing, ICylinder cylinder);
-    public delegate void MoveItem(IItem item, ICylinder cylinder);
 
     public delegate void FailedMoveThing(Items.IThing thing, InvalidOperation error);
     public interface IMap
@@ -31,7 +30,6 @@ namespace NeoServer.Game.Contracts
         event FailedMoveThing OnThingMovedFailed;
         event AddThingToTile OnThingAddedToTile;
         event UpdateThingOnTile OnThingUpdatedOnTile;
-        event MoveItem OnItemMoved;
 
         IList<byte> GetDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
         bool ArePlayersAround(Location location);

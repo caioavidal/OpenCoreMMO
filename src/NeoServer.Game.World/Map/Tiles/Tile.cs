@@ -366,6 +366,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             var operations = AddThingToTile(thing);
             if(operations.HasAnyOperation) thing.Location = Location;
+            if (thing is IContainer container) container.SetParent(null);
             return new Result<ITileOperationResult>(operations);
         }
 

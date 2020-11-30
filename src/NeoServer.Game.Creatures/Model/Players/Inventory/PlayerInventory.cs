@@ -119,8 +119,12 @@ namespace NeoServer.Server.Model.Players
             }
 
             Owner = owner;
+            Inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
 
-            Inventory = inventory ?? new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+            foreach (var item in inventory)
+            {
+                TryAddItemToSlot(item.Key, item.Value.Item1);
+            }
         }
 
         public IItem this[Slot slot] => !Inventory.ContainsKey(slot) ? null : Inventory[slot].Item1;
