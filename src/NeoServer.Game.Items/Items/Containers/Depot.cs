@@ -14,12 +14,7 @@ namespace NeoServer.Game.Items.Items.Containers
     {
         public Depot(IItemType type, Location location) : base(type, location)
         {
-            if(ItemTypeData.InMemory.TryGetValue(2594, out var itemType) is false) return;
-            if (itemType is null) return;
-
-            TryAddItem(new Container(itemType, location));
         }
-
         public static new bool IsApplicable(IItemType type) =>type.Attributes.GetAttribute(Common.ItemAttribute.Type) == "depot";
     }
 }

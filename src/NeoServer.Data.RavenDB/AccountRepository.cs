@@ -4,6 +4,7 @@ using NeoServer.Server.Contracts.Repositories;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -49,12 +50,12 @@ namespace NeoServer.Data.RavenDB
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public async Task<AccountModel> FirstOrDefaultAsync(Expression<Func<AccountModel, bool>> filter)
+        public AccountModel FirstOrDefault(Expression<Func<AccountModel, bool>> filter)
         {
 
-            using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
+            using (IDocumentSession Session = Database.OpenSession())
             {
-                return await Session.Query<AccountModel>().FirstOrDefaultAsync(filter);
+                return Session.Query<AccountModel>().FirstOrDefault(filter);
             }
 
         }
@@ -64,12 +65,12 @@ namespace NeoServer.Data.RavenDB
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public async Task<IAccountModel> Get(string account, string password)
+        public IAccountModel Get(string account, string password)
         {
 
-            using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
+            using (IDocumentSession Session = Database.OpenSession())
             {
-                return await Session.Query<AccountModel>().FirstOrDefaultAsync(a => a.AccountName == account && a.Password == password);
+                return Session.Query<AccountModel>().FirstOrDefault(a => a.AccountName == account && a.Password == password);
             }
 
         }

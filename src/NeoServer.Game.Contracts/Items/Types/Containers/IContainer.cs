@@ -6,8 +6,9 @@ namespace NeoServer.Game.Contracts.Items.Types
     public delegate void RemoveItem(byte slotIndex, IItem item);
     public delegate void AddItem(IItem item);
     public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
+    public delegate void DeleteContainer(IContainer container);
 
-   
+
     public interface IContainer : IItem, IInventoryItem
     {
         IItem this[int index] { get; }
@@ -18,6 +19,8 @@ namespace NeoServer.Game.Contracts.Items.Types
         byte SlotsUsed { get; }
         IThing Parent { get; }
         bool IsFull { get; }
+        bool HasItems { get; }
+        IThing Root { get; }
 
         event RemoveItem OnItemRemoved;
         event AddItem OnItemAdded;
@@ -31,6 +34,6 @@ namespace NeoServer.Game.Contracts.Items.Types
         void SetParent(IThing thing);
         Result TryAddItem(IItem item, byte slot);
         Result TryAddItem(IItem item, byte? slot = null);
-
+        void Clear();
     }
 }

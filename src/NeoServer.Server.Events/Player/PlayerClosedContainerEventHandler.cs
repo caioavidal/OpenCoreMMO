@@ -34,15 +34,16 @@ namespace NeoServer.Server.Events
                 connection.Send();
             }
 
-            if (container is IDepot)
+            if (container.Root is IDepot depot && player.HasDepotOpened is false)
             {
-                var items = new List<IItemModel>(container.Items.Count);
+                var items = new List<IItemModel>(depot.Items.Count);
 
-                foreach (var item in container.Items)
+                foreach (var item in depot.Items)
                 {
                     items.Add(ItemModelParser.ToModel(item));
                 }
                 playerDepotRepository.Save(new PlayerDepotModel(player.Id, items));
+                depot.Clear();
             }
         }
     }

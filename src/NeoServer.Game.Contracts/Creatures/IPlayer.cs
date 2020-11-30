@@ -55,6 +55,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         SkillType SkillInUse { get; }
         bool CannotLogout { get; }
         uint Id { get; }
+        bool HasDepotOpened { get; }
 
         //  IAction PendingAction { get; }
 

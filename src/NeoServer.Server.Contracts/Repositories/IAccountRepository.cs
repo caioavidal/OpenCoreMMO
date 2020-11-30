@@ -8,8 +8,8 @@ namespace NeoServer.Server.Contracts.Repositories
 {
     public interface IAccountRepository
     {
-        Task<IAccountModel> Get(string account, string password);
-        Task<AccountModel> FirstOrDefaultAsync(Expression<Func<AccountModel, bool>> filter);
+        IAccountModel Get(string account, string password);
+        AccountModel FirstOrDefault(Expression<Func<AccountModel, bool>> filter);
         void Create(IAccountModel account);
     }
 }

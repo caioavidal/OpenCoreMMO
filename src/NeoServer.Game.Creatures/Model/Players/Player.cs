@@ -34,7 +34,7 @@ namespace NeoServer.Server.Model.Players
             Location location, PathFinder pathFinder)
              : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
         {
-            Id = id; 
+            Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
             CarryStrength = capacity;
@@ -89,7 +89,7 @@ namespace NeoServer.Server.Model.Players
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
 
         public IPlayerContainerList Containers { get; }
-
+        public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }
         public Dictionary<string, bool> VipList { get; }
 
@@ -261,7 +261,7 @@ namespace NeoServer.Server.Model.Players
         public float CarryStrength { get; }
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
-        
+
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -270,7 +270,7 @@ namespace NeoServer.Server.Model.Players
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
 
         const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
-        
+
 
         public uint ChooseToRemoveFromKnownSet()
         {

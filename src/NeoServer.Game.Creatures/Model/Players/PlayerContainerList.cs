@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
@@ -16,7 +17,17 @@ namespace NeoServer.Game.Creatures.Model.Players
         public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
         public AddItemOnOpenedContainer AddItemAction { get; set; }
         public UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
-
+        public bool HasAnyDepotOpened
+        {
+            get
+            {
+                foreach (var container in openedContainers.Values)
+                {
+                    if (container.Container.Root is IDepot) return true;
+                }
+                return false;
+            }
+        }
         private readonly IPlayer player;
         public PlayerContainerList(IPlayer player)
         {
@@ -40,12 +51,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
-      
+
         public void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null)
         {
             PlayerContainer playerContainer = null;
 
-            if(location.Type == LocationType.Ground)
+            if (location.Type == LocationType.Ground)
             {
                 playerContainer = new PlayerContainer(containerToOpen, player);
             }

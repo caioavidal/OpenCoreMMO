@@ -7,6 +7,7 @@ using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Creatures.Tests
 {

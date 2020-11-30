@@ -59,6 +59,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 return;
             }
+            DetachContainerEvents();
             Container.OnItemAdded += ItemAdded;
             Container.OnItemRemoved += ItemRemoved;
             Container.OnItemUpdated += ItemUpdated;
@@ -66,7 +67,6 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
         internal void DetachContainerEvents()
         {
-
             Container.OnItemRemoved -= ItemRemoved;
             Container.OnItemAdded -= ItemAdded;
             Container.OnItemUpdated -= ItemUpdated;

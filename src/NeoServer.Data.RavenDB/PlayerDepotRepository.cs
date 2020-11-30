@@ -14,19 +14,23 @@ namespace NeoServer.Data.RavenDB
     {
         public PlayerDepotRepository(Database database) : base(database) { }
 
-        public async Task<PlayerDepotModel> Get(uint playerId)
+        public PlayerDepotModel Get(uint playerId)
         {
-            using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
+            using (IDocumentSession Session = Database.OpenSession())
             {
-                return await Session.Query<PlayerDepotModel>().FirstOrDefaultAsync(a => a.PlayerId == playerId);
+                return Session.Query<PlayerDepotModel>().FirstOrDefault(a => a.PlayerId == playerId);
             }
         }
-        public async void Save(PlayerDepotModel model)
+        public void Save(PlayerDepotModel model)
         {
-            using (IAsyncDocumentSession Session = Database.OpenAsyncSession())
+
+            using (IDocumentSession Session = Database.OpenSession())
             {
-                await Session.StoreAsync(model);
-                await Session.SaveChangesAsync();
+                var record = Get(model.PlayerId);
+                if(record is not null) model.Id = record.Id;
+
+                Session.Store(model);
+                Session.SaveChanges();
             }
         }
     }

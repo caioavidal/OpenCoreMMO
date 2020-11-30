@@ -16,6 +16,7 @@ namespace NeoServer.Game.Contracts.Creatures
         RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
         AddItemOnOpenedContainer AddItemAction { get; set; }
         UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
+        bool HasAnyDepotOpened { get; }
 
         event ClosedContainer OnClosedContainer;
         event OpenedContainer OnOpenedContainer;

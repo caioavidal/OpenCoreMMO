@@ -9,7 +9,7 @@ namespace NeoServer.Data.Repositories
 {
     public interface IPlayerDepotRepository
     {
-        Task<PlayerDepotModel> Get(uint playerId);
+        PlayerDepotModel Get(uint playerId);
         void Save(PlayerDepotModel model);
     }
 }
