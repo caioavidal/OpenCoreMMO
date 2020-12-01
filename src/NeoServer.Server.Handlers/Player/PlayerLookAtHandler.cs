@@ -23,9 +23,20 @@ namespace NeoServer.Server.Handlers.Player
 
             if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player))
             {
-                if (game.Map[lookAtPacket.Location] is not ITile tile) return;
-
-                game.Dispatcher.AddEvent(new Event(() => player.LookAt(tile)));
+                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Ground)
+                {
+                    if (game.Map[lookAtPacket.Location] is not ITile tile) return;
+                    
+                    game.Dispatcher.AddEvent(new Event(() => player.LookAt(tile)));
+                }
+                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Container)
+                {
+                    game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.ContainerId, lookAtPacket.Location.ContainerSlot)));
+                }
+                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Slot)
+                {
+                    game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.Slot)));
+                }
             }
         }
     }

@@ -121,5 +121,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool Logout();
         ushort CalculateAttackPower(float attackRate, ushort attack);
         void LookAt(ITile tile);
+        void LookAt(byte containerId, sbyte containerSlot);
+        void LookAt(Slot slot);
     }
 }

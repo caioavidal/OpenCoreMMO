@@ -437,7 +437,17 @@ namespace NeoServer.Server.Model.Players
             var isClose = Location.IsNextTo(tile.Location);
             OnLookedAt?.Invoke(this, tile.TopItemOnStack, isClose);
         }
-        
+        public void LookAt(byte containerId, sbyte containerSlot)
+        {
+            if(Containers[containerId][containerSlot] is not IThing thing) return;
+            OnLookedAt?.Invoke(this, thing, true);
+        }
+        public void LookAt(Slot slot)
+        {
+            if (Inventory[slot] is not IThing thing) return;
+            OnLookedAt?.Invoke(this, thing, true);
+        }
+
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
         {
             return damage; //todo
