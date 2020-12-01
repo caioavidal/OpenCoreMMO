@@ -29,5 +29,6 @@ namespace NeoServer.Game.Contracts.Creatures
         IIntervalChance VoiceConfig { get; set; }
         ImmutableDictionary<DamageType, sbyte> Immunities { get; set; }
         Race Race { get; set; }
+        ILoot Loot { get; set; }
     }
 }

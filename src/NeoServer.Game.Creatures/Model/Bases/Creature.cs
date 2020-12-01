@@ -11,6 +11,7 @@ using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -52,7 +53,8 @@ namespace NeoServer.Game.Creatures.Model
         public uint MaxHealthpoints { get; protected set; }
         public new string Name => CreatureType.Name;
         public uint CreatureId { get; }
-        public ushort Corpse => CreatureType.Look[LookType.Corpse];
+        public ushort CorpseType => CreatureType.Look[LookType.Corpse];
+        public IContainer Corpse { get; set; }
         public virtual BloodType Blood => BloodType.Blood;
         public abstract IOutfit Outfit { get; protected set; }
         public Direction Direction { get; protected set; }

@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Talks;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -30,7 +31,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool CanSeeInvisible { get; }
         Direction ClientSafeDirection { get; }
         IDictionary<ConditionType, ICondition> Conditions { get; set; }
-        ushort Corpse { get; }
+        ushort CorpseType { get; }
         uint CreatureId { get; }
         Direction Direction { get; }
         uint Flags { get; }
@@ -46,6 +47,7 @@ namespace NeoServer.Game.Contracts.Creatures
         uint HealthPoints { get; }
         uint MaxHealthpoints { get; }
         bool IsHealthHidden { get; }
+        IContainer Corpse { get; set; }
 
         event RemoveCreature OnCreatureRemoved;
         event GainExperience OnGainedExperience;

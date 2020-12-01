@@ -13,6 +13,8 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Common;
 
 namespace NeoServer.Game.Creatures
 {
@@ -74,7 +76,8 @@ namespace NeoServer.Game.Creatures
             var monster = _monsterFactory.Create(name, spawn);
             AttachCombatActorEvents(monster);
             AttachWalkableEvents(monster);
-            return AttachEvents(monster) as IMonster;
+            AttachEvents(monster);
+            return monster;
 
         }
         public IPlayer CreatePlayer(IPlayerModel playerModel)
@@ -102,7 +105,6 @@ namespace NeoServer.Game.Creatures
             creature.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
             creature.OnKilled += _creatureKilledEventHandler.Execute;
             creature.OnKilled += AttachDeathEvent;
-            //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
             creature.OnPropagateAttack += _map.PropagateAttack;
@@ -120,7 +122,6 @@ namespace NeoServer.Game.Creatures
             creature.OnDamaged -= _creatureReceiveDamageEventHandler.Execute;
             //creature.OnKilled -= _creatureKilledEventHandler.Execute;
             creature.OnKilled -= DetachEvents;
-            //creature.OnWasBorn += _creatureWasBornEventHandler.Execute;
             creature.OnBlockedAttack -= _creatureBlockedAttackEventHandler.Execute;
             creature.OnTurnedToDirection -= _creatureTurnToDirectionEventHandler.Execute;
             creature.OnPropagateAttack -= _map.PropagateAttack;
@@ -160,9 +161,11 @@ namespace NeoServer.Game.Creatures
 
         private void AttachDeathEvent(ICreature creature)
         {
-            var corpse = itemFactory.Create(creature.Corpse, creature.Location, null);
-            _map.ReplaceThing(creature, corpse);
-            
+            if(itemFactory.Create(creature.CorpseType, creature.Location, null) is not IContainer corpse) return;
+            creature.Corpse = corpse;
+            _map.ReplaceThing(creature, creature.Corpse);
         }
+
+     
     }
 }
