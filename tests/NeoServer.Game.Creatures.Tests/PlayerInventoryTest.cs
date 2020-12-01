@@ -334,7 +334,7 @@ namespace NeoServer.Game.Creatures.Tests
         [Theory]
         [MemberData(nameof(SlotJoinItemsData))]
 
-        public void AddItemToSlot_When_Slot_Has_Cumulative_Item_Join_Item(Slot slot, ICumulativeItem item, ICumulativeItem newItem, ICumulativeItem resultItem)
+        public void AddItemToSlot_When_Slot_Has_Cumulative_Item_Join_Item(Slot slot, ICumulative item, ICumulative newItem, ICumulative resultItem)
         {
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
@@ -345,7 +345,7 @@ namespace NeoServer.Game.Creatures.Tests
             sut.TryAddItemToSlot(slot, newItem);
 
             Assert.Equal(sut[slot], item);
-            Assert.Equal((sut[slot] as CumulativeItem).Amount, resultItem.Amount);
+            Assert.Equal((sut[slot] as Cumulative).Amount, resultItem.Amount);
         }
 
         [Fact]
@@ -360,7 +360,7 @@ namespace NeoServer.Game.Creatures.Tests
 
             result = sut.TryAddItemToSlot(Slot.Ammo, ItemTestData.CreateAmmoItem(100, 80));
 
-            Assert.Equal(30, (result.Value as ICumulativeItem).Amount);
+            Assert.Equal(30, (result.Value as ICumulative).Amount);
         }
 
         [Theory]

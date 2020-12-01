@@ -115,6 +115,7 @@ namespace NeoServer.Game.Creatures
             creature.OnKilled += DetachEvents;
             creature.OnDamaged += AttachDamageLiquidPoolEvent;
             creature.OnKilled += AttachDeathLiquidPoolEvent;
+            
             return creature;
         }
         private void DetachEvents(ICombatActor creature)

@@ -11,7 +11,7 @@ using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class AmmoItem : CumulativeItem, IAmmoItem
+    public class AmmoItem : Cumulative, IAmmoItem
     {
         public AmmoItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
         {

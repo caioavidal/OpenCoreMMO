@@ -18,11 +18,13 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
         private readonly MonsterDefendEventHandler _monsterDefendEventHandler;
+        private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
         private readonly IItemFactory itemFactory;
         private readonly IPathFinder _pathFinder;
 
+
         public MonsterFactory(IMonsterDataManager monsterManager,
-            CreatureWasBornEventHandler creatureWasBornEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler, MonsterDefendEventHandler monsterDefendEventHandler, IItemFactory itemFactory)
+            CreatureWasBornEventHandler creatureWasBornEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler, MonsterDefendEventHandler monsterDefendEventHandler, IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
@@ -30,6 +32,7 @@ namespace NeoServer.Game.Creatures
             _creatureAttackEventHandler = creatureAttackEventHandler;
             _monsterDefendEventHandler = monsterDefendEventHandler;
             this.itemFactory = itemFactory;
+            this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
@@ -43,33 +46,9 @@ namespace NeoServer.Game.Creatures
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttackEnemy += _creatureAttackEventHandler.Execute;
             monster.OnDefende += _monsterDefendEventHandler.Execute;
-            monster.OnDropLoot += AttachLootEvent;
-
+            monster.OnDropLoot += creatureDroppedLootEventHandler.Execute;
             return monster;
         }
-        public void AttachLootEvent(ICombatActor creature, ILoot loot)
-        {
-            if (creature is not IMonster monster) return;
 
-            CreateLootItems(loot.Items, monster.Location, monster.Corpse);
-        }
-
-        public void CreateLootItems(ILootItem[] items, Location location, IContainer container)
-        {
-            var attributes = new Dictionary<ItemAttribute, IConvertible>();
-
-            foreach (var item in items)
-            {
-                if (item.Amount > 1) attributes.TryAdd(ItemAttribute.Count, item.Amount);
-
-                var itemToDrop = itemFactory.Create(item.ItemId, location, attributes);
-
-                if (itemToDrop is IContainer && item.Items?.Length == 0) continue;
-
-                if (itemToDrop is IContainer c && item.Items?.Length > 0) CreateLootItems(item.Items, location, c);
-
-                container?.TryAddItem(itemToDrop);
-            }
-        }
     }
 }

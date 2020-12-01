@@ -336,8 +336,8 @@ namespace NeoServer.Game.World.Map.Tiles
                         operations.Add(Operation.Added, item);
 
                     }
-                    else if (item is ICumulativeItem cumulative &&
-                        topStackItem is ICumulativeItem topCumulative &&
+                    else if (item is ICumulative cumulative &&
+                        topStackItem is ICumulative topCumulative &&
                         topStackItem.ClientId == cumulative.ClientId &&
                         topCumulative.TryJoin(ref cumulative))
                     {
@@ -432,7 +432,7 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 if (DownItems.TryPeek(out var topStackItem))
                 {
-                    if (thing is ICumulativeItem && topStackItem is ICumulativeItem topCumulative)
+                    if (thing is ICumulative && topStackItem is ICumulative topCumulative)
                     {
                         topCumulative.Reduce(amount);
 

@@ -1,14 +1,14 @@
 ﻿namespace NeoServer.Game.Contracts.Items.Types
 {
-    public interface ICumulativeItem : IPickupable
+    public interface ICumulative : IPickupable
     {
         public byte Amount { get; set; }
-        bool TryJoin(ref ICumulativeItem item);
+        bool TryJoin(ref ICumulative item);
         float CalculateWeight(byte amount);
-        ICumulativeItem Clone(byte amount);
+        ICumulative Clone(byte amount);
         void Reduce(byte amount);
         void Increase(byte amount);
-        ICumulativeItem Split(byte amount);
+        ICumulative Split(byte amount);
 
         new float Weight { get; }
         byte AmountToComplete { get; }

@@ -1,11 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 {
@@ -16,7 +13,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 
             return Drop( Items);
         }
-
+        
         public ILootItem[] Drop(ILootItem[] items)
         {
             var random = ServerRandom.Random.Next(minValue: 1, maxValue: 100_000) / LootRate;
@@ -51,5 +48,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
             }
             return drop.ToArray();
         }
+
+        
     }
 }

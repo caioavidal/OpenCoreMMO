@@ -144,7 +144,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (fromContainer.Id == toContainer.Id)
             {
-                if (item is ICumulativeItem)
+                if (item is ICumulative)
                 {
                     fromContainer.Container.MoveItem((byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot, amount);
                     return;
@@ -154,9 +154,9 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            if (item is ICumulativeItem)
+            if (item is ICumulative)
             {
-                var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot, amount) as ICumulativeItem;
+                var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot, amount) as ICumulative;
                 toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerSlot);
             }
             else

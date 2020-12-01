@@ -18,7 +18,7 @@ namespace NeoServer.Server.Commands.Movement
 
             var itemToAdd = item;
 
-            if(item is ICumulativeItem cumulative && cumulative.Amount < itemThrow.Count) 
+            if(item is ICumulative cumulative && cumulative.Amount < itemThrow.Count) 
             {
                 itemToAdd = cumulative.Clone(itemThrow.Count);
             }

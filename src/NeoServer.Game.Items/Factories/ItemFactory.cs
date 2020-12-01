@@ -77,7 +77,7 @@ namespace NeoServer.Game.Items
             {
                 return new Wand(itemType, location);
             }
-            if (CumulativeItem.IsApplicable(itemType))
+            if (Cumulative.IsApplicable(itemType))
             {
                 if (ThrowableDistanceWeapon.IsApplicable(itemType))
                 {
@@ -87,7 +87,7 @@ namespace NeoServer.Game.Items
                 {
                     return new AmmoItem(itemType, location, attributes);
                 }
-                return new CumulativeItem(itemType, location, attributes);
+                return new Cumulative(itemType, location, attributes);
             }
             if (LiquidPoolItem.IsApplicable(itemType))
             {

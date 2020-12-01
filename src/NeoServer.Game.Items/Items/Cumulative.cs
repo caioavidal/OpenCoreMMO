@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class CumulativeItem : MoveableItem, ICumulativeItem, IItem
+    public class Cumulative : MoveableItem, ICumulative, IItem
     {
-        public CumulativeItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
+        public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
         {
             Amount = 1;
             if (attributes != null && attributes.TryGetValue(Common.ItemAttribute.Count, out var amount))
@@ -17,7 +17,7 @@ namespace NeoServer.Game.Items.Items
                 Amount = Math.Min((byte)100, (byte)amount);
             }
         }
-        public CumulativeItem(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
+        public Cumulative(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
 
         public byte Amount { get; set; }
 
@@ -38,9 +38,9 @@ namespace NeoServer.Game.Items.Items
         }
         public static bool IsApplicable(IItemType type) => type.Flags.Contains(Common.ItemFlag.Stackable);
 
-        public ICumulativeItem Clone(byte amount)
+        public ICumulative Clone(byte amount)
         {
-            var clone = (ICumulativeItem)MemberwiseClone();
+            var clone = (ICumulative)MemberwiseClone();
             clone.Amount = amount;
             return clone;
         }
@@ -59,46 +59,36 @@ namespace NeoServer.Game.Items.Items
         /// Split item in two parts
         /// </summary>
         /// <param name="amount">Amount to be reduced</param>
-        public ICumulativeItem Split(byte amount)
+        public ICumulative Split(byte amount)
         {
             Reduce(amount);
             return Clone(amount);
         }
 
         public void Increase(byte amount) => Amount = (byte)(amount + Amount > 100 ? 100 : amount + Amount);
-       
+
 
         public byte AmountToComplete => (byte)(100 - Amount);
 
-        public bool TryJoin(ref ICumulativeItem item)
+        public bool TryJoin(ref ICumulative item)
         {
-
-            if (item?.Metadata?.ClientId == null)
-            {
-
-                return false;
-            }
-
-            if (item.Metadata.ClientId != Metadata.ClientId)
-            {
-                return false;
-            }
-
+            if (item?.Metadata?.ClientId is null) return false;
+            if (item.Metadata.ClientId != Metadata.ClientId) return false;
+            
             var totalAmount = Amount + item.Amount;
 
             if (totalAmount <= 100)
             {
                 Amount = (byte)totalAmount;
-                item = null; 
+                item = null;
                 return true;
             }
-
             Amount = 100;
 
             item.Amount = (byte)(totalAmount - Amount);
 
             return true;
-
         }
+        public override string ToString() => $"{Amount} {Metadata.Name}";
     }
 }
