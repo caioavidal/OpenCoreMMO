@@ -310,6 +310,8 @@ namespace NeoServer.Game.Items.Items
         public override string ToString()
         {
             var content = GetStringContent();
+            if (string.IsNullOrWhiteSpace(content)) return "nothing";
+
             return content.Remove(content.Length - 2, 2);
         }
 
