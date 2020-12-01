@@ -106,7 +106,6 @@ namespace NeoServer.Game.Creatures
             newPlayer.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
             newPlayer.Inventory.OnItemRemovedFromSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
 
-
             newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
             newPlayer.OnStoppedAttack += creatureStopedAttackEventHandler.Execute;
             newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;

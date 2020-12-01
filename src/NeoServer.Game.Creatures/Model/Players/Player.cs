@@ -309,6 +309,14 @@ namespace NeoServer.Server.Model.Players
         public override void SetAsInFight()
         {
             if (IsPacified) return;
+
+            if (HasCondition(ConditionType.InFight, out var condition))
+            {
+                condition.Start(this);
+                return;
+            }
+            AddCondition(new Condition(ConditionType.InFight, 60000));
+
             base.SetAsInFight();
         }
 

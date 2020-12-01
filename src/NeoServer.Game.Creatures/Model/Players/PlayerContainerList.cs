@@ -96,6 +96,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 var parentContainer = openedContainers[location.ContainerId]?.Container;
                 parentContainer.GetContainerAt((byte)location.ContainerSlot, out var container);
+                if (container is not IContainer) return;
                 playerContainer = new PlayerContainer(container, player);
             }
 

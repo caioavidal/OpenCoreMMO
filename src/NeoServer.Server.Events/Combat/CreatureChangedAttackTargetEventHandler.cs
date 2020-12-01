@@ -30,9 +30,7 @@ namespace NeoServer.Server.Events.Combat
             if (actor.Attacking)
             {
                 game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
-                
                 result = actor.Attack(creature);
-
             }
             else
             {

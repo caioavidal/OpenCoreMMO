@@ -221,12 +221,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual void SetAsInFight()
         {
-            if (HasCondition(ConditionType.InFight, out var condition))
-            {
-                condition.Start(this);
-                return;
-            }
-            AddCondition(new Condition(ConditionType.InFight, 60000));
+          
         }
     }
 }

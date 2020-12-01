@@ -4,7 +4,7 @@
     "nameDescription": "a troll",
     "race": "blood",
     "experience": "20",
-    "speed": "400",
+    "speed": "126",
     "manacost": "290",
     "health": {
       "now": "50",
@@ -23,51 +23,50 @@
       "defense": "0"
     },
     "flags": {
-      "flag": [
-        {
+        
           "summonable": "1"
-        },
-        {
+        ,
+        
           "attackable": "1"
-        },
-        {
+        ,
+        
           "hostile": "1"
-        },
-        {
+        ,
+        
           "illusionable": "1"
-        },
-        {
+        ,
+        
           "convinceable": "1"
-        },
-        {
+        ,
+        
           "pushable": "1"
-        },
-        {
+        ,
+        
           "canpushitems": "0"
-        },
-        {
+        ,
+        
           "canpushcreatures": "0"
-        },
-        {
+        ,
+        
           "targetdistance": "1"
-        },
-        {
+        ,
+        
           "staticattack": "90"
-        },
-        {
+        ,
+        
           "runonhealth": "15"
-        }
-      ]
+        
+     
     },
-    "attacks": {
-      "attack": {
+    "attacks": [{
+    
         "name": "melee",
         "interval": "1500",
         "skill": "20",
         "attack": "16"
-      }
-    },
-    "defenses": {
+      
+    }],
+    "defense": {
       "armor": "6",
       "defense": "8"
     },
