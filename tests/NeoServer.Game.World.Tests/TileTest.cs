@@ -97,9 +97,9 @@ namespace NeoServer.Game.World.Tests
 
             Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item.ClientId));
 
-            Assert.Collection(tile.DownItems, item => { Assert.Equal(downItemsExpected[5].ClientId, item.ClientId); Assert.Equal((downItemsExpected[5] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
-                                              item => { Assert.Equal(downItemsExpected[4].ClientId, item.ClientId); Assert.Equal((downItemsExpected[4] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
-                                              item => { Assert.Equal(downItemsExpected[3].ClientId, item.ClientId); Assert.Equal((downItemsExpected[3] as ICumulativeItem).Amount, (item as ICumulativeItem).Amount); },
+            Assert.Collection(tile.DownItems, item => { Assert.Equal(downItemsExpected[5].ClientId, item.ClientId); Assert.Equal((downItemsExpected[5] as ICumulative).Amount, (item as ICumulative).Amount); },
+                                              item => { Assert.Equal(downItemsExpected[4].ClientId, item.ClientId); Assert.Equal((downItemsExpected[4] as ICumulative).Amount, (item as ICumulative).Amount); },
+                                              item => { Assert.Equal(downItemsExpected[3].ClientId, item.ClientId); Assert.Equal((downItemsExpected[3] as ICumulative).Amount, (item as ICumulative).Amount); },
                                               item => Assert.Equal(downItemsExpected[2].ClientId, item.ClientId),
                                               item => Assert.Equal(downItemsExpected[1].ClientId, item.ClientId),
                                               item => Assert.Equal(downItemsExpected[0].ClientId, item.ClientId));
@@ -122,7 +122,7 @@ namespace NeoServer.Game.World.Tests
         }
         [Theory]
         [ClassData(typeof(RemoveThingTileTestData))]
-        public void RemoveThing_Removes_CumulativeItem_From_Stack(ICumulativeItem item, byte amountToRemove, ushort topItemId, byte remainingAmount)
+        public void RemoveThing_Removes_CumulativeItem_From_Stack(ICumulative item, byte amountToRemove, ushort topItemId, byte remainingAmount)
         {
             var item2 = ItemTestData.CreateCumulativeItem(400, 32);
             var sut = CreateTile(item2, item);
@@ -131,7 +131,7 @@ namespace NeoServer.Game.World.Tests
             sut.RemoveThing(thing, amountToRemove, out var removedThing);
 
             Assert.Equal(topItemId, sut.DownItems.First().ClientId);
-            Assert.Equal(remainingAmount, (sut.DownItems.First() as ICumulativeItem).Amount);
+            Assert.Equal(remainingAmount, (sut.DownItems.First() as ICumulative).Amount);
         }
 
         [Fact]
@@ -147,7 +147,7 @@ namespace NeoServer.Game.World.Tests
             Assert.Single(sut.TopItems);
 
             Assert.Equal(500, sut.DownItems.First().ClientId);
-            Assert.Equal(8, (sut.DownItems.First() as ICumulativeItem).Amount);
+            Assert.Equal(8, (sut.DownItems.First() as ICumulative).Amount);
         }
         [Fact]
         public void AddThing_When_Cumulative_On_Top_Join_If_Same_Type_And_Creates_New_Item_When_Overflows()
@@ -162,10 +162,10 @@ namespace NeoServer.Game.World.Tests
             Assert.Single(sut.TopItems);
 
             Assert.Equal(500, sut.DownItems.First().ClientId);
-            Assert.Equal(60, (sut.DownItems.First() as ICumulativeItem).Amount);
+            Assert.Equal(60, (sut.DownItems.First() as ICumulative).Amount);
 
             Assert.Equal(500, sut.DownItems.Skip(1).Take(1).First().ClientId);
-            Assert.Equal(100, (sut.DownItems.Skip(1).Take(1).First() as ICumulativeItem).Amount);
+            Assert.Equal(100, (sut.DownItems.Skip(1).Take(1).First() as ICumulative).Amount);
 
         }
 

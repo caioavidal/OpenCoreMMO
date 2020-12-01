@@ -16,6 +16,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Creatures.Model.Monsters.Loots;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
@@ -23,6 +24,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
     {
         public event Born OnWasBorn;
         public event Defende OnDefende;
+        public event DropLoot OnDropLoot;
 
         public Monster(IMonsterType type, PathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
         {
@@ -325,8 +327,16 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override void OnDeath()
         {
             Targets?.Clear();
+
             StopDefending();
             base.OnDeath();
+
+            DropLoot();
+        }
+        public void DropLoot()
+        {
+            var loot = Metadata.Loot?.Drop();
+            OnDropLoot?.Invoke(this, new Loot(loot));
         }
         public ushort Defend()
         {

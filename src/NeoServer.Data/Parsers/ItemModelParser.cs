@@ -18,7 +18,7 @@ namespace NeoServer.Data.Parsers
             var itemModel = new ItemModel()
             {
                 ServerId = item.Metadata.TypeId,
-                Amount = item is ICumulativeItem cumulative ? cumulative.Amount : 1
+                Amount = item is ICumulative cumulative ? cumulative.Amount : 1
             };
 
             if (item is IContainer container)

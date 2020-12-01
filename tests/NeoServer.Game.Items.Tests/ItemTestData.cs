@@ -33,14 +33,14 @@ namespace NeoServer.Game.Items.Tests
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
 
-        public static ICumulativeItem CreateCumulativeItem(ushort id, byte amount)
+        public static ICumulative CreateCumulativeItem(ushort id, byte amount)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 100);
 
-            return new CumulativeItem(type, new Location(100, 100, 7), amount);
+            return new Cumulative(type, new Location(100, 100, 7), amount);
         }
 
         public static Item CreateRegularItem(ushort id)

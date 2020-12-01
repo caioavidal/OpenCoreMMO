@@ -28,5 +28,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public IIntervalChance VoiceConfig { get; set; }
         public string[] Voices { get; set; }
         public ImmutableDictionary<DamageType, sbyte> Immunities { get; set; }
+        public ILoot Loot { get; set; }
     }
 }

@@ -43,6 +43,8 @@ namespace NeoServer.Loaders.Monsters
 
             monster.Defenses = MonsterDefenseConverter.Convert(data);
 
+            monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate);
+
             foreach (var flag in data.Flags)
             {
                 var creatureFlag = ParseCreatureFlag(flag.Key);

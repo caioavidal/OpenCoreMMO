@@ -152,7 +152,7 @@ namespace NeoServer.Server.Model.Players
             if (Inventory[slot].Item1 is not IPickupable item) return false;
             if (item is null) return false;
 
-            if (item is ICumulativeItem cumulative && amount < cumulative.Amount)
+            if (item is ICumulative cumulative && amount < cumulative.Amount)
             {
                 removedItem = cumulative.Split(amount);
             }
@@ -202,7 +202,7 @@ namespace NeoServer.Server.Model.Players
             {
                 Tuple<IPickupable, ushort> itemToSwap = null;
 
-                if (item is ICumulativeItem cumulative)
+                if (item is ICumulative cumulative)
                 {
                     if (NeedToSwap(cumulative, slot))
                     {
@@ -210,7 +210,7 @@ namespace NeoServer.Server.Model.Players
                     }
                     else
                     {
-                        (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref cumulative);
+                        (Inventory[slot].Item1 as ICumulative).TryJoin(ref cumulative);
                         if (cumulative?.Amount > 0)
                         {
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
@@ -248,7 +248,7 @@ namespace NeoServer.Server.Model.Players
 
             var itemOnSlot = Inventory[slotDestination].Item1;
 
-            if (itemToAdd is ICumulativeItem cumulative && itemOnSlot.ClientId == cumulative.ClientId)
+            if (itemToAdd is ICumulative cumulative && itemOnSlot.ClientId == cumulative.ClientId)
             {
                 //will join
                 return false;
@@ -275,7 +275,7 @@ namespace NeoServer.Server.Model.Players
 
             float weight = item.Weight;
 
-            if (item is ICumulativeItem cumulative && slot == Slot.Ammo)
+            if (item is ICumulative cumulative && slot == Slot.Ammo)
             {
                 byte amountToAdd = cumulative.Amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : cumulative.Amount;
                 weight = cumulative.CalculateWeight(amountToAdd);

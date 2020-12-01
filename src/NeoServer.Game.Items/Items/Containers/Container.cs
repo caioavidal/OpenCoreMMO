@@ -6,6 +6,7 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -104,17 +105,17 @@ namespace NeoServer.Game.Items.Items
                 throw new ArgumentOutOfRangeException("Slot is bigger than capacity");
             }
 
-            if (item is ICumulativeItem == false)
+            if (item is ICumulative == false)
             {
                 return AddItemToFront(item);
 
             }
 
-            var cumulativeItem = item as ICumulativeItem;
+            var cumulativeItem = item as ICumulative;
 
             int itemToJoinSlot = GetSlotOfFirstItemNotFully(cumulativeItem);
 
-            if (itemToJoinSlot >= 0 && item is ICumulativeItem cumulative)
+            if (itemToJoinSlot >= 0 && item is ICumulative cumulative)
             {
                 //adding to a slot with a different item type
 
@@ -124,13 +125,13 @@ namespace NeoServer.Game.Items.Items
             return AddItemToFront(item);
         }
 
-        private int GetSlotOfFirstItemNotFully(ICumulativeItem? cumulativeItem)
+        private int GetSlotOfFirstItemNotFully(ICumulative? cumulativeItem)
         {
             var itemToJoinSlot = -1;
             for (int slotIndex = 0; slotIndex < SlotsUsed; slotIndex++)
             {
                 var itemOnSlot = Items[slotIndex];
-                if (itemOnSlot.ClientId == cumulativeItem?.ClientId && (itemOnSlot as ICumulativeItem)?.Amount < 100)
+                if (itemOnSlot.ClientId == cumulativeItem?.ClientId && (itemOnSlot as ICumulative)?.Amount < 100)
                 {
                     itemToJoinSlot = slotIndex;
                     break;
@@ -140,12 +141,12 @@ namespace NeoServer.Game.Items.Items
             return itemToJoinSlot;
         }
 
-        private Result TryJoinCumulativeItems(ICumulativeItem item, byte itemToJoinSlot)
+        private Result TryJoinCumulativeItems(ICumulative item, byte itemToJoinSlot)
         {
 
             var amountToAdd = item.Amount;
 
-            var itemToUpdate = Items[itemToJoinSlot] as ICumulativeItem;
+            var itemToUpdate = Items[itemToJoinSlot] as ICumulative;
 
             if (itemToUpdate.Amount == 100)
             {
@@ -211,7 +212,7 @@ namespace NeoServer.Game.Items.Items
 
         public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1)
         {
-            var item = RemoveItem(fromSlotIndex, amount) as ICumulativeItem;
+            var item = RemoveItem(fromSlotIndex, amount) as ICumulative;
 
             var itemOnSlot = Items.ElementAtOrDefault(toSlotIndex);
 
@@ -262,7 +263,7 @@ namespace NeoServer.Game.Items.Items
 
             IItem removedItem = null;
 
-            if (item is ICumulativeItem cumulative)
+            if (item is ICumulative cumulative)
             {
                 var amountToReduce = Math.Min(cumulative.Amount, amount);
                 cumulative.Reduce(Math.Min(cumulative.Amount, amount));
@@ -304,10 +305,35 @@ namespace NeoServer.Game.Items.Items
             container.OnItemUpdated -= OnItemUpdated;
             container.OnItemAdded -= OnItemAdded;
             container.OnItemRemoved -= OnItemRemoved;
+        }
 
-            OnItemRemoved = null;
-            OnItemAdded = null;
-            OnItemUpdated = null;
+        public override string ToString()
+        {
+            var content = GetStringContent();
+            if (string.IsNullOrWhiteSpace(content)) return "nothing";
+
+            return content.Remove(content.Length - 2, 2);
+        }
+
+        private string GetStringContent()
+        {
+            var stringBuilder = new StringBuilder();
+
+            foreach (var item in Items)
+            {
+                if (item is ICumulative cumulative) stringBuilder.Append(cumulative.ToString());
+                else stringBuilder.Append($"{item.Name}");
+
+                stringBuilder.Append(", ");
+
+                if (item is IContainer container)
+                {
+                    stringBuilder.Append(container.ToString());
+                    stringBuilder.Append(", ");
+                }
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

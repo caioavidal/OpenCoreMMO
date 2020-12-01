@@ -27,7 +27,7 @@ namespace NeoServer.Server.Commands.Movement
 
             var thing = item as IMoveableThing;
 
-            var clonedItem = thing is ICumulativeItem cumulative ? cumulative.Clone(amount) : thing;
+            var clonedItem = thing is ICumulative cumulative ? cumulative.Clone(amount) : thing;
 
             var result = player.Inventory.TryAddItemToSlot(itemThrow.ToLocation.Slot, clonedItem as IPickupable);
 
@@ -40,9 +40,9 @@ namespace NeoServer.Server.Commands.Movement
 
             var thingToRemove = thing as IThing;
 
-            if (result.Value?.ClientId == item.ClientId && thing is ICumulativeItem)
+            if (result.Value?.ClientId == item.ClientId && thing is ICumulative)
             {
-                amountToRemove = (byte)(amount - (result.Value as ICumulativeItem).Amount);
+                amountToRemove = (byte)(amount - (result.Value as ICumulative).Amount);
                 map.RemoveThing(thingToRemove, tile, amountToRemove);
 
                 return;

@@ -11,6 +11,7 @@ namespace NeoServer.Game.Contracts.Creatures
     {
         event Born OnWasBorn;
         event Defende OnDefende;
+        event DropLoot OnDropLoot;
 
         void Reborn();
 

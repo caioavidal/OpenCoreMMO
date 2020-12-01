@@ -30,7 +30,7 @@ namespace NeoServer.Server.Commands.Movement
 
             IItem itemToAdd = item;
 
-            if(item is ICumulativeItem cumulative)
+            if(item is ICumulative cumulative)
             {
                 itemToAdd = cumulative.Clone(itemThrow.Count);
             }

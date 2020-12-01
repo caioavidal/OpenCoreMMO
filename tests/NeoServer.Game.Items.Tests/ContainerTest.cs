@@ -25,13 +25,13 @@ namespace NeoServer.Game.Items.Tests
             return new Container(itemType, new Location(100, 100, 7));
         }
 
-        private ICumulativeItem CreateCumulativeItem(ushort id, byte amount)
+        private ICumulative CreateCumulativeItem(ushort id, byte amount)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
 
-            return new CumulativeItem(type, new Location(100, 100, 7), amount);
+            return new Cumulative(type, new Location(100, 100, 7), amount);
         }
 
         private Item CreateRegularItem(ushort id)
@@ -208,8 +208,8 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item);
 
             Assert.Equal(item, sut[0]);
-            Assert.Equal(40, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[0] as ICumulativeItem).ClientId);
+            Assert.Equal(40, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).ClientId);
 
             //adding another item
 
@@ -217,7 +217,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item2);
 
             Assert.Equal(item2, sut[0]);
-            Assert.Equal(60, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(60, (sut[0] as ICumulative).Amount);
 
             //adding a regular item
             var item3 = CreateRegularItem(567);
@@ -240,8 +240,8 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item);
 
             Assert.Equal(item, sut[0]);
-            Assert.Equal(40, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[0] as ICumulativeItem).ClientId);
+            Assert.Equal(40, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).ClientId);
 
             //adding same item again
 
@@ -249,7 +249,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(sameItemType);
 
             Assert.Equal(item, sut[0]);
-            Assert.Equal(80, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(80, (sut[0] as ICumulative).Amount);
 
             //adding same item again. This time will exceed the amount of 100
 
@@ -257,7 +257,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(sameItemType2);
 
             Assert.Equal(sameItemType2, sut[0]);
-            Assert.Equal(20, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(20, (sut[0] as ICumulative).Amount);
 
             //adding same item again. must add to the item with amount of 20
 
@@ -265,7 +265,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(sameItemType3);
 
             Assert.Equal(sameItemType2, sut[0]);
-            Assert.Equal(60, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(60, (sut[0] as ICumulative).Amount);
         }
 
         [Fact]
@@ -280,24 +280,24 @@ namespace NeoServer.Game.Items.Tests
             sut.RemoveItem(1, 60);
             sut.RemoveItem(3, 77);
 
-            Assert.Equal(100, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(40, (sut[1] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[2] as ICumulativeItem).Amount);
-            Assert.Equal(23, (sut[3] as ICumulativeItem).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).Amount);
+            Assert.Equal(40, (sut[1] as ICumulative).Amount);
+            Assert.Equal(100, (sut[2] as ICumulative).Amount);
+            Assert.Equal(23, (sut[3] as ICumulative).Amount);
 
             var item = CreateCumulativeItem(200, 100);
             sut.TryAddItem(item);
 
-            Assert.Equal(40, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[1] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[2] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[3] as ICumulativeItem).Amount);
-            Assert.Equal(23, (sut[4] as ICumulativeItem).Amount);
+            Assert.Equal(40, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[1] as ICumulative).Amount);
+            Assert.Equal(100, (sut[2] as ICumulative).Amount);
+            Assert.Equal(100, (sut[3] as ICumulative).Amount);
+            Assert.Equal(23, (sut[4] as ICumulative).Amount);
 
             sut.TryAddItem(CreateCumulativeItem(200, 60));
             sut.TryAddItem(CreateCumulativeItem(200, 10));
-            Assert.Equal(100, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(33, (sut[4] as ICumulativeItem).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).Amount);
+            Assert.Equal(33, (sut[4] as ICumulative).Amount);
         }
 
         [Fact]
@@ -313,11 +313,11 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item2);
 
             Assert.Equal(item, sut[1]);
-            Assert.Equal(40, (sut[1] as ICumulativeItem).Amount);
+            Assert.Equal(40, (sut[1] as ICumulative).Amount);
             Assert.Equal(100, sut[1].ClientId);
 
             Assert.Equal(item2, sut[0]);
-            Assert.Equal(26, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(26, (sut[0] as ICumulative).Amount);
             Assert.Equal(200, sut[0].ClientId);
         }
         [Fact]
@@ -351,8 +351,8 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
 
-            Assert.Equal(100, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[1] as ICumulativeItem).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[1] as ICumulative).Amount);
 
             Assert.True(sut.IsFull);
         }
@@ -407,8 +407,8 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(item, sut[0]);
 
-            Assert.Equal(34, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(23, (removedItem as ICumulativeItem).Amount);
+            Assert.Equal(34, (sut[0] as ICumulative).Amount);
+            Assert.Equal(23, (removedItem as ICumulative).Amount);
 
             Assert.NotSame(item, removedItem);
             Assert.Equal(item.ClientId, removedItem.ClientId);
@@ -428,7 +428,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(1, sut.SlotsUsed);
 
             Assert.Equal(100, (sut[0].ClientId));
-            Assert.Equal(63, (removedItem as ICumulativeItem).Amount);
+            Assert.Equal(63, (removedItem as ICumulative).Amount);
 
             Assert.NotSame(item, removedItem);
             Assert.Equal(item.ClientId, removedItem.ClientId);

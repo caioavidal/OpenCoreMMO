@@ -121,7 +121,7 @@ namespace NeoServer.Loaders.Monsters
             public string Chance { get; set; }
 
             [JsonProperty("item")]
-            public List<Item2> Item { get; set; }
+            public List<ItemData> Item { get; set; }
         }
 
         public class Loot

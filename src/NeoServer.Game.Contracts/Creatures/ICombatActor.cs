@@ -18,6 +18,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void UseSpell(ICreature creature, ISpell spell);
     public delegate void ChangeVisibility(ICombatActor actor);
     public delegate void OnPropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
+    public delegate void DropLoot(ICombatActor actor, ILoot loot);
     public interface ICombatActor : IWalkableCreature
     {
         event Attack OnAttackEnemy;

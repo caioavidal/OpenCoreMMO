@@ -16,13 +16,13 @@ namespace NeoServer.Game.World.Tests.TestData
         public class Data
         {
             public IMap Map { get; set; }
-            public ICumulativeItem Item { get; set; }
+            public ICumulative Item { get; set; }
             public byte Amount { get; set; }
             public Location ToLocation { get; set; }
             public List<IItem> ExpectedFromTileDowmItems { get; set; }
             public List<IItem> ExpectedToTileDowmItems { get; set; }
 
-            public Data(ICumulativeItem item, byte amount, Location toLocation, List<IItem> expectedFromTileDowmItems, List<IItem> expectedToTileDowmItems)
+            public Data(ICumulative item, byte amount, Location toLocation, List<IItem> expectedFromTileDowmItems, List<IItem> expectedToTileDowmItems)
             {
                 Map = CreateMap(item);
                 Item = item;
