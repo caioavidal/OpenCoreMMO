@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 {
-    public record Loot(ILootItem[] Items): ILoot
+    public record Loot(ILootItem[] Items, decimal LootRate = 1): ILoot
     {
         public virtual ILootItem[] Drop()
         {
@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 
         public ILootItem[] Drop(ILootItem[] items)
         {
-            var random = ServerRandom.Random.Next(minValue: 1, maxValue: 100_000);
+            var random = ServerRandom.Random.Next(minValue: 1, maxValue: 100_000) / LootRate;
 
             var drop = new List<ILootItem>(Items.Length);
 

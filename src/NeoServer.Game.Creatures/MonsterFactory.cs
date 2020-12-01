@@ -1,6 +1,8 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Server.Events.Combat;
@@ -49,19 +51,27 @@ namespace NeoServer.Game.Creatures
         {
             if (creature is not IMonster monster) return;
 
+            CreateLootItems(loot.Items, monster.Location, monster.Corpse);   
+        }
 
-            foreach (var item in loot.Items)
+        public void CreateLootItems(ILootItem[] items, Location location, IContainer container)
+        {
+            var attributes = new Dictionary<ItemAttribute, IConvertible>();
+
+            foreach (var item in items)
             {
-                var attributes = new Dictionary<ItemAttribute, IConvertible>();
-
                 if (item.Amount > 1)
                 {
                     attributes.TryAdd(ItemAttribute.Count, item.Amount);
                 }
+                var itemToDrop = itemFactory.Create(item.ItemId, location, attributes);
 
-                var itemToDrop = itemFactory.Create(item.ItemId, monster.Location, attributes);
-
-                monster.Corpse?.TryAddItem(itemToDrop);
+                if(itemToDrop is IContainer c && item.Items?.Length > 0)
+                {
+                    CreateLootItems(item.Items, location, c);
+                }
+                
+                container?.TryAddItem(itemToDrop);
             }
         }
 

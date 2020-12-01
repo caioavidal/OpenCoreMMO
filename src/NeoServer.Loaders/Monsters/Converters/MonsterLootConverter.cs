@@ -12,7 +12,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 {
     public class MonsterLootConverter
     {
-        public static ILoot Convert(MonsterMetadata data)
+        public static ILoot Convert(MonsterMetadata data, decimal lootRate)
         {
             if (data.Loot is null) return null;
 
@@ -23,7 +23,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 items.Add(ConvertToLootItem(item));
             }
 
-            return new Game.Creatures.Model.Monsters.Loots.Loot(items.ToArray());
+            return new Game.Creatures.Model.Monsters.Loots.Loot(items.ToArray(), lootRate);
         }
 
         private static ILootItem ConvertToLootItem(ItemData item)
