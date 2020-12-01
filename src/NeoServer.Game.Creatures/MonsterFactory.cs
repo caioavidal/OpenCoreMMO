@@ -51,7 +51,7 @@ namespace NeoServer.Game.Creatures
         {
             if (creature is not IMonster monster) return;
 
-            CreateLootItems(loot.Items, monster.Location, monster.Corpse);   
+            CreateLootItems(loot.Items, monster.Location, monster.Corpse);
         }
 
         public void CreateLootItems(ILootItem[] items, Location location, IContainer container)
@@ -60,20 +60,16 @@ namespace NeoServer.Game.Creatures
 
             foreach (var item in items)
             {
-                if (item.Amount > 1)
-                {
-                    attributes.TryAdd(ItemAttribute.Count, item.Amount);
-                }
+                if (item.Amount > 1) attributes.TryAdd(ItemAttribute.Count, item.Amount);
+
                 var itemToDrop = itemFactory.Create(item.ItemId, location, attributes);
 
-                if(itemToDrop is IContainer c && item.Items?.Length > 0)
-                {
-                    CreateLootItems(item.Items, location, c);
-                }
-                
+                if (itemToDrop is IContainer && item.Items?.Length == 0) continue;
+
+                if (itemToDrop is IContainer c && item.Items?.Length > 0) CreateLootItems(item.Items, location, c);
+
                 container?.TryAddItem(itemToDrop);
             }
         }
-
     }
 }
