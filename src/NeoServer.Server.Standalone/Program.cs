@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using NeoServer.Data;
 using NeoServer.Data.Model;
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts.Creatures;
@@ -27,6 +28,7 @@ using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -47,6 +49,34 @@ namespace NeoServer.Server.Standalone
 
             var container = Container.CompositionRoot();
             container.Resolve<Database>().Connect();
+
+            var context = container.Resolve<NeoContext>();
+
+            var blog = new Blog
+            {
+                BlogId = 0,
+                Url = "0"
+            };
+
+            var post = new Post
+            {
+                BlogId = 0,
+                Conteudo = "post 0 content",
+                PostId = 0,
+                Titulo = "post 0 title"
+            };
+
+            context.Blogs.Add(blog);
+
+            context.SaveChanges();
+
+            var blogs = context.Blogs.AsQueryable().ToList();
+
+            context.Posts.Add(post);
+
+            context.SaveChanges();
+
+            var posts = context.Posts.AsQueryable().ToList();
 
             var logger = container.Resolve<Logger>();
 

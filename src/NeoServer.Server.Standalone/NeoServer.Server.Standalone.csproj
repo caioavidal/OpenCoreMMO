@@ -9,12 +9,17 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Data.InMemoryDB\NeoServer.Data.InMemoryDB.csproj" />
     <ProjectReference Include="..\NeoServer.Data.RavenDB\NeoServer.Data.RavenDB.csproj" />
+    <ProjectReference Include="..\NeoServer.Data\NeoServer.Data.csproj" />
     <ProjectReference Include="..\NeoServer.Networking\NeoServer.Networking.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj" />
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />

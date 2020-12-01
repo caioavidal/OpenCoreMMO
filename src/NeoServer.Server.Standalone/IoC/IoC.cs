@@ -1,4 +1,7 @@
 ﻿using Autofac;
+using Microsoft.EntityFrameworkCore;
+using NeoServer.Data;
+using NeoServer.Data.InMemoryDB.Extensions;
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -57,7 +60,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<Game>().SingleInstance();
             builder.RegisterType<GameCreatureManager>().SingleInstance();
             builder.RegisterType<DecayableItemManager>().SingleInstance();
-            
+
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
             builder.RegisterType<SpawnManager>().SingleInstance();
 
@@ -105,6 +108,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameCreatureJob>().SingleInstance();
             builder.RegisterType<GameItemJob>().SingleInstance();
 
+            //Database
+            RegisterContext<NeoContext>(builder);
+
             return builder.Build();
         }
 
@@ -121,7 +127,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(assembly);
 
         }
-      
+
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
         {
@@ -153,7 +159,7 @@ namespace NeoServer.Server.Standalone.IoC
                     Console.WriteLine($"Incoming Packet not handled: {packet}");
                     return null;
                 }
-               // Console.WriteLine($"Incoming Packet: {packet}");
+                // Console.WriteLine($"Incoming Packet: {packet}");
 
                 if (c.TryResolve(handlerType, out object instance))
                 {
@@ -185,5 +191,14 @@ namespace NeoServer.Server.Standalone.IoC
         //    });
         //}
 
+        private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
+        {
+            builder.RegisterType<TContext>()
+                   .WithParameter("options", DbContextFactory.GetInstance().UseInMemory("Neo"))
+                   //.WithParameter("options", DbContextFactory.GetInstance().UseMongo(""))
+                   //.WithParameter("options", DbContextFactory.GetInstance().UseSQL(""))
+                   //.WithParameter("options", DbContextFactory.GetInstance().UseMySQL(""))
+                   .InstancePerLifetimeScope();
+        }
     }
 }
