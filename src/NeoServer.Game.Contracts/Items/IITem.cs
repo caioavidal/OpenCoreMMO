@@ -9,6 +9,7 @@ namespace NeoServer.Game.Contracts.Items
         IItemType Metadata { get; }
         string IThing.Name => Metadata.Name;
         string IThing.InspectionText => $"{Metadata.Article} {Metadata.Name}";
+
         string Plural => Metadata.Plural;
 
         ushort ClientId => Metadata.ClientId;
