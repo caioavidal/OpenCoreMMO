@@ -63,8 +63,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void Reborn()
         {
+            Damages.Clear();
             ResetHealthPoints();
             Location = Spawn.Location;
+            State = MonsterState.Sleeping;
             OnWasBorn?.Invoke(this, Spawn.Location);
         }
 
@@ -157,6 +159,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SetAsEnemy(ICombatActor creature)
         {
+            if (IsDead) return;
             if (!CanSee(creature.Location, 9, 9))
             {
                 RemoveFromTargetList(creature);

@@ -12,7 +12,7 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
-        public void Execute(ICreature actor)
+        public void Execute(ICombatActor actor)
         {
             if (game.CreatureManager.GetPlayerConnection(actor.CreatureId, out IConnection connection))
             {

@@ -14,7 +14,7 @@ namespace NeoServer.Server.Events.Combat
         }
         public void Execute(ICombatActor actor, uint oldTarget, uint newTarget)
         {
-            
+
             if (actor.AttackEvent != 0)
             {
                 return;
@@ -29,10 +29,10 @@ namespace NeoServer.Server.Events.Combat
             var result = false;
             if (actor.Attacking)
             {
-                if (game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature) && creature is ICombatActor enemy)
-                {
-                    result = actor.Attack(enemy);
-                }
+                game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
+                
+                result = actor.Attack(creature);
+
             }
             else
             {
