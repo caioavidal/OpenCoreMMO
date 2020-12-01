@@ -189,6 +189,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             containerBuilder.RegisterInstance(serverConfiguration).SingleInstance();
             containerBuilder.RegisterInstance(gameConfiguration).SingleInstance();
+        }
 
         private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
         {

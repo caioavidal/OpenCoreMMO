@@ -37,37 +37,35 @@ var cancellationToken = cancellationTokenSource.Token;
 var container = Container.CompositionRoot();
 container.Resolve<Database>().Connect();
 
-            var context = container.Resolve<NeoContext>();
+var context = container.Resolve<NeoContext>();
 
-            var blog = new Blog
-            {
-                BlogId = 0,
-                Url = "0"
-            };
+var blog = new Blog
+{
+    BlogId = 0,
+    Url = "0"
+};
 
-            var post = new Post
-            {
-                BlogId = 0,
-                Conteudo = "post 0 content",
-                PostId = 0,
-                Titulo = "post 0 title"
-            };
+var post = new Post
+{
+    BlogId = 0,
+    Conteudo = "post 0 content",
+    PostId = 0,
+    Titulo = "post 0 title"
+};
 
-            context.Blogs.Add(blog);
+context.Blogs.Add(blog);
 
-            context.SaveChanges();
+context.SaveChanges();
 
-            var blogs = context.Blogs.AsQueryable().ToList();
+var blogs = context.Blogs.AsQueryable().ToList();
 
-            context.Posts.Add(post);
+context.Posts.Add(post);
 
-            context.SaveChanges();
+context.SaveChanges();
 
-            var posts = context.Posts.AsQueryable().ToList();
+var posts = context.Posts.AsQueryable().ToList();
 
-            var logger = container.Resolve<Logger>();
-
-
+var logger = container.Resolve<Logger>();
 
 RSA.LoadPem();
 
