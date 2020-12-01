@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
+using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Tasks;
-using NeoServer.Server.Tasks.Contracts;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Channels;

@@ -24,7 +24,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddString(container.Name);
             message.AddByte(container.Capacity);
 
-            message.AddByte(container.HasParent ? (byte)0x01 : (byte)0x00);
+            message.AddByte(container.HasParent ? 0x01 : 0x00);
 
             message.AddByte(Math.Min((byte)0xFF, container.SlotsUsed));
 

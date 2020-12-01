@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Security;
@@ -61,17 +61,6 @@ namespace NeoServer.Networking.Packets
             }
 
             AddBytes(item.GetRaw().ToArray());
-
-            //AddUInt16(item.ClientId);
-
-            //if (item.IsCumulative)
-            //{
-            //    AddByte((item as ICumulativeItem).Amount);
-            //}
-            //else if (item is ILiquidItem liquidItem)
-            //{
-            //    AddByte((byte)liquidItem.LiquidColor);
-            //}
         }
 
         /// <summary>

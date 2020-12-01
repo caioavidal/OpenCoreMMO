@@ -19,7 +19,7 @@ namespace NeoServer.Server.Events
         private readonly Game game;
 
         public ThingRemovedFromTileEventHandler(IMap map, Game game)
-        {   
+        {
             this.game = game;
         }
         public void Execute(IThing thing, ICylinder cylinder)
@@ -41,7 +41,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if(!(creature is IPlayer player))
+                if (!(creature is IPlayer player))
                 {
                     continue;
                 }
@@ -58,14 +58,7 @@ namespace NeoServer.Server.Events
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
                 }
 
-                if (thing is ICumulativeItem cumulative && cumulative.Amount > 0)
-                {
-                    connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(tile.Location, stackPosition, cumulative));
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));
-                }
+                connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));
 
                 connection.Send();
             }

@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Disassemblers;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums;
+using NeoServer.Game.Common;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Model.Players.Contracts;
 

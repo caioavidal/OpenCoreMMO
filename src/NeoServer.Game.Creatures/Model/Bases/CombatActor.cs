@@ -3,12 +3,13 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Effects.Explosion;
-using NeoServer.Game.Enums.Combat;
-using NeoServer.Game.Enums.Combat.Structs;
-using NeoServer.Game.Enums.Creatures.Players;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Combat;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
 using System.Linq;
+using NeoServer.Game.Common.Conditions;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -218,7 +219,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-        public void SetAsInFight()
+        public virtual void SetAsInFight()
         {
             if (HasCondition(ConditionType.InFight, out var condition))
             {

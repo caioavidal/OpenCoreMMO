@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Enums.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 

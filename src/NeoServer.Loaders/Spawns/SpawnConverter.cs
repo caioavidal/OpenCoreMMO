@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Enums.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Spawns;
 using System.Linq;
 

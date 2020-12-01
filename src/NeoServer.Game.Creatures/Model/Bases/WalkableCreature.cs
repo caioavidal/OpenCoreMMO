@@ -2,15 +2,11 @@
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Model;
-using NeoServer.Game.World.Map.Tiles;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -36,7 +32,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
         public uint EventWalk { get; set; }
-        public IWalkableTile Tile { get; set; }
+        public IDynamicTile Tile { get; set; }
         public ushort Speed { get; protected set; }
         public uint Following { get; private set; }
         public bool IsFollowing => Following > 0;
@@ -79,7 +75,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             //todo check monster creature.cpp 1367
             return stepDuration;
         }
-        public override void Moved(ITile fromTile, ITile toTile)
+        public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
         {
             LastStep = DateTime.Now.TimeOfDay.TotalMilliseconds;
 
@@ -157,6 +153,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
             HasFollowPath = true;
             TryUpdatePath(directions);
+        }
+
+        public virtual bool WalkTo(Location location)
+        {
+            StopWalking();
+            if (FindPathToDestination(this, location, PathSearchParams, out var directions))
+            {
+                return TryWalkTo(directions);
+            }
+            return false;
         }
         public virtual bool TryWalkTo(params Direction[] directions)
         {

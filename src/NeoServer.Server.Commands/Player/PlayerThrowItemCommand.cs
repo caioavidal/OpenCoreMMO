@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
+using NeoServer.Server.Commands.Movement.ToInventory;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Player
@@ -23,14 +24,31 @@ namespace NeoServer.Server.Commands.Player
             if (ContainerToContainerMovementOperation.IsApplicable(itemThrow))
             {
                 ContainerToContainerMovementOperation.Execute(player, itemThrow);
-                return;
             }
-            if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
+            else if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
             {
-                //MapToContainerMovementOperation.Execute(player, game.Map, )
                 MapToInventoryMovementOperation.Execute(player, game.Map, itemThrow);
             }
+            else if (ToMapMovementOperation.IsApplicable(itemThrow))
+            {
+                ToMapMovementOperation.Execute(player, game.Map, itemThrow);
+            }
+            else if (InventoryToContainerMovementOperation.IsApplicable(itemThrow))
+            {
+                InventoryToContainerMovementOperation.Execute(player, itemThrow);
+            }
+            else if (ContainerToInventoryMovementOperation.IsApplicable(itemThrow))
+            {
+                ContainerToInventoryMovementOperation.Execute(player, itemThrow);
+            }
+            else if (MapToContainerMovementOperation.IsApplicable(itemThrow))
+            {
+                MapToContainerMovementOperation.Execute(player, game.Map, itemThrow);
+            }
+            else if (InventoryToInventoryOperation.IsApplicable(itemThrow))
+            {
+                InventoryToInventoryOperation.Execute(player, itemThrow);
+            }
         }
-
     }
 }

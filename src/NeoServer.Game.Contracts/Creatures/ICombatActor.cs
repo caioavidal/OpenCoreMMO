@@ -2,9 +2,9 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Combat;
-using NeoServer.Game.Enums.Combat.Structs;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Combat;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
@@ -18,6 +18,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void UseSpell(ICreature creature, ISpell spell);
     public delegate void ChangeVisibility(ICombatActor actor);
     public delegate void OnPropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
+    public delegate void DropLoot(ICombatActor actor, ILoot loot);
     public interface ICombatActor : IWalkableCreature
     {
         event Attack OnAttackEnemy;

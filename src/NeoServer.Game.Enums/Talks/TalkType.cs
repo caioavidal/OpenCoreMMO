@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Enums.Talks
+﻿namespace NeoServer.Game.Common.Talks
 {
     public enum TalkType: byte
     {

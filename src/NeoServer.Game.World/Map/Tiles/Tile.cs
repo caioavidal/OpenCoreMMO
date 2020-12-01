@@ -4,9 +4,9 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
-    public class Tile : BaseTile, IWalkableTile
+    public class Tile : BaseTile, IDynamicTile
     {
         public event AddThingToTileDel OnThingAddedToTile;
 
@@ -30,23 +30,25 @@ namespace NeoServer.Game.World.Map.Tiles
         private byte[] cache;
 
         public Location Location { get; }
-        public ushort StepSpeed { get; private set; }
+        public ushort StepSpeed => Ground.StepSpeed;
+
 
         public FloorChangeDirection FloorDirection { get; private set; }
-        public byte MovementPenalty { get; private set; }
+        public byte MovementPenalty => Ground.MovementPenalty;
 
-        public ushort Ground { get; private set; }
-        //public ConcurrentStack<IItem> TopItems { get; private set; } = new ConcurrentStack<IItem>();
+        public IGround Ground { get; private set; }
         public Stack<IItem> TopItems { get; private set; }
 
         public Stack<IItem> DownItems { get; private set; }
         public Dictionary<uint, IWalkableCreature> Creatures { get; private set; } = new Dictionary<uint, IWalkableCreature>();
-        //private List<uint> creatures = new List<uint>();
-
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
         public bool HasCreature => Creatures.Count > 0;
+        /// <summary>
+        /// Get the top item on DownItems's stack
+        /// </summary>
+        public override IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out IItem item) ? item : TopItems is not null && TopItems.TryPeek(out item) ? item : Ground;
 
         public IMagicField MagicField
         {
@@ -99,24 +101,24 @@ namespace NeoServer.Game.World.Map.Tiles
             return null;
         }
 
-        public override bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)
+        public override bool TryGetStackPositionOfThing(IPlayer observer, IThing thing, out byte stackPosition)
         {
             stackPosition = default;
 
             if (thing is IItem item)
             {
-                return TryGetStackPositionOfItem(player, item, out stackPosition);
+                return TryGetStackPositionOfItem(observer, item, out stackPosition);
             }
             else if (thing is ICreature creature)
             {
-                return TryGetStackPositionOfCreature(player, creature, out stackPosition);
+                return TryGetStackPositionOfCreature(observer, creature, out stackPosition);
             }
 
             return false;
         }
-        public bool TryGetStackPositionOfItem(IPlayer player, IItem item, out byte stackPosition)
+        private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
         {
-            stackPosition = default;
+            stackPosition = 0;
 
             var id = item.ClientId;
             if (id == default)
@@ -124,16 +126,14 @@ namespace NeoServer.Game.World.Map.Tiles
                 throw new ArgumentNullException(nameof(id));
             }
 
-            byte n = 0;
 
-            if (Ground == id)
+            if (Ground.ClientId == id)
             {
-                stackPosition = 0;
                 return true;
             }
-            if (Ground != 0)
+            if (Ground.ClientId != 0)
             {
-                ++n;
+                ++stackPosition;
             }
 
             if (item.IsAlwaysOnTop)
@@ -142,21 +142,19 @@ namespace NeoServer.Game.World.Map.Tiles
                 {
                     if (id == topItem.ClientId)
                     {
-                        stackPosition = n;
                         return true;
                     }
-                    else if (++n == 10)
+                    else if (++stackPosition == 10)
                     {
                         return false;
                     }
                 }
-
             }
             else
             {
 
-                n += (byte)(TopItems?.Count ?? 0);
-                if (n >= 10)
+                stackPosition += (byte)(TopItems?.Count ?? 0);
+                if (stackPosition >= 10)
                 {
                     return false;
                 }
@@ -164,25 +162,24 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var creature in Creatures)
             {
-                if (player.CanSee(creature.Value))
+                if (observer.CanSee(creature.Value))
                 {
-                    if (++n >= 10)
+                    if (++stackPosition >= 10)
                     {
                         return false;
                     }
                 }
             }
 
-            if (!item.IsAlwaysOnTop)
+            if (!item.IsAlwaysOnTop && DownItems is not null)
             {
                 foreach (var downItem in DownItems)
                 {
                     if (id == downItem.ClientId)
                     {
-                        stackPosition = n;
                         return true;
                     }
-                    else if (++n >= 10)
+                    else if (++stackPosition >= 10)
                     {
                         return false;
                     }
@@ -190,10 +187,9 @@ namespace NeoServer.Game.World.Map.Tiles
             }
 
             return false;
-            //throw new Exception("Thing not found in tile.");
         }
 
-        public bool TryGetStackPositionOfCreature(IPlayer player, ICreature creature, out byte stackPosition)
+        private bool TryGetStackPositionOfCreature(IPlayer observer, ICreature creature, out byte stackPosition)
         {
             stackPosition = default;
 
@@ -203,7 +199,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 throw new ArgumentNullException(nameof(id));
             }
 
-            if (Ground != 0)
+            if (Ground.ClientId != 0)
             {
                 stackPosition++;
             }
@@ -219,11 +215,11 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var c in Creatures.Values?.Reverse())
             {
-                if (c.CreatureId == creature.CreatureId)
+                if (c == creature)
                 {
                     return true;
                 }
-                else if (player.CanSee(creature))
+                else if (observer.CanSee(creature))
                 {
                     if (++stackPosition >= 10)
                     {
@@ -238,7 +234,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             if (stackPosition == 0)
             {
-                return Ground;
+                return Ground.ClientId ;
             }
             var n = 0;
 
@@ -298,7 +294,7 @@ namespace NeoServer.Game.World.Map.Tiles
             }
         }
 
-        private TileOperationResult AddThingToTile(IThing thing)
+        private ITileOperationResult AddThingToTile(IThing thing)
         {
             var operations = new TileOperationResult();
 
@@ -306,14 +302,10 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 if (HasCreature)
                 {
-                    operations.Add(Operation.None);
                     return operations;
                 }
-                if (Creatures.TryAdd(creature.CreatureId, creature))
-                {
-                 //   creatures.Add(creature.CreatureId);
-                }
-
+                Creatures.TryAdd(creature.CreatureId, creature);
+                operations.Add(Operation.Added, creature);
                 creature.Tile = this;
             }
             else if (thing is IItem item)
@@ -326,13 +318,12 @@ namespace NeoServer.Game.World.Map.Tiles
 
                     if (TopItems.TryPeek(out var topItem) && topItem.ClientId == item.ClientId)
                     {
-                        topItem = item;
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
                     }
                     else
                     {
                         TopItems.Push(item);
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
                     }
                 }
                 else
@@ -342,27 +333,26 @@ namespace NeoServer.Game.World.Map.Tiles
                     if (!DownItems.TryPeek(out topStackItem))
                     {
                         DownItems.Push(item);
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
 
                     }
-                    else if (item is ICumulativeItem cumulative &&
-                        topStackItem is ICumulativeItem topCumulative &&
+                    else if (item is ICumulative cumulative &&
+                        topStackItem is ICumulative topCumulative &&
                         topStackItem.ClientId == cumulative.ClientId &&
                         topCumulative.TryJoin(ref cumulative))
                     {
-                        operations.Add(Operation.Updated);
+                        operations.Add(Operation.Updated, topCumulative);
 
-                        if (cumulative != null)
+                        if (cumulative is not null)
                         {
                             DownItems.Push(cumulative);
-                            operations.Add(Operation.Added);
-
+                            operations.Add(Operation.Added, cumulative);
                         }
                     }
                     else
                     {
                         DownItems.Push(item);
-                        operations.Add(Operation.Added);
+                        operations.Add(Operation.Added, item);
 
                     }
                 }
@@ -372,28 +362,15 @@ namespace NeoServer.Game.World.Map.Tiles
             return operations;
         }
 
-        public Result<TileOperationResult> AddThing(ref IThing thing)
+        public Result<ITileOperationResult> AddThing(IThing thing)
         {
             var operations = AddThingToTile(thing);
-
-            return new Result<TileOperationResult>(operations);
-        }
-        public Result<TileOperationResult> AddThing(ref IMoveableThing thing)
-        {
-            var operations = AddThingToTile(thing);
-
-            if (!operations.HasNoneOperation)
-            {
-                thing.SetNewLocation(Location);
-            }
-
-            return new Result<TileOperationResult>(operations);
+            if(operations.HasAnyOperation) thing.Location = Location;
+            if (thing is IContainer container) container.SetParent(null);
+            return new Result<ITileOperationResult>(operations);
         }
 
-        /// <summary>
-        /// Get the top item on DownItems's stack
-        /// </summary>
-        public IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out IItem item) ? item : null;
+
 
         private byte flags;
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
@@ -411,72 +388,76 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (ground != null)
             {
-                StepSpeed = ground.StepSpeed;
-                MovementPenalty = ground.MovementPenalty;
-                Ground = ground.ClientId;
+                Ground = ground;
+                FloorDirection = ground.Metadata.Attributes.GetFloorChangeDirection();
             }
 
-            for (int i = 0; i < topItems.Length; i++)
+            foreach (var item in topItems)
             {
-                if (topItems[i].FloorDirection != default)
+                if (item.FloorDirection != default)
                 {
-                    FloorDirection = topItems[i].FloorDirection;
+                    FloorDirection = item.FloorDirection;
                 }
 
-                FloorDirection = topItems[i].FloorDirection;
-                TopItems.Push(topItems[i]);
+                FloorDirection = item.FloorDirection;
+                TopItems.Push(item);
             }
 
             foreach (var item in items)
             {
-                AddThingToTile(item);
+                AddThing(item);
             }
         }
-        public IThing RemoveThing(ref IThing thing, byte amount = 1)
+        public Result<ITileOperationResult> RemoveThing(IThing thing, byte amount, out IThing removedThing)
         {
+            amount = amount == 0 ? 1 : amount;
+            var operations = new TileOperationResult();
 
-            IThing removedThing = null;
+            removedThing = null;
             var itemToRemove = thing as IItem;
 
             if (thing is ICreature c)
             {
-                if (Creatures.Remove(c.CreatureId, out var creature))
-                {
-                   // creatures.Remove(c.CreatureId);
-                }
+                Creatures.Remove(c.CreatureId, out var creature);
+                operations.Add(Operation.Removed, creature);
                 removedThing = creature;
             }
             else if (itemToRemove.IsAlwaysOnTop)
             {
                 TopItems.TryPop(out var item);
+                operations.Add(Operation.Removed, item);
                 removedThing = item;
             }
             else
             {
-                IItem topStackItem;
-                if (DownItems.TryPeek(out topStackItem))
+                if (DownItems.TryPeek(out var topStackItem))
                 {
-                    if (thing is ICumulativeItem cumulative &&
-                   topStackItem is ICumulativeItem topCumulative)
+                    if (thing is ICumulative && topStackItem is ICumulative topCumulative)
                     {
                         topCumulative.Reduce(amount);
 
                         if (topCumulative.Amount == 0)
                         {
                             DownItems.TryPop(out var item);
+                            operations.Add(Operation.Removed, item);
+                        }
+                        else
+                        {
+                            operations.Add(Operation.Updated, topCumulative);
                         }
                         removedThing = topCumulative.Clone(amount);
-
                     }
                     else
                     {
                         DownItems.TryPop(out var item);
+                        operations.Add(Operation.Removed, item);
                         removedThing = item;
                     }
                 }
             }
+
             SetCacheAsExpired();
-            return removedThing;
+            return new Result<ITileOperationResult>(operations);
         }
         private void SetCacheAsExpired() => cache = null;
 
@@ -494,7 +475,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (Ground != default)
             {
-                BitConverter.GetBytes(Ground).AsSpan().CopyTo(stream);
+                BitConverter.GetBytes(Ground.ClientId).AsSpan().CopyTo(stream);
 
                 countThings++;
                 countBytes += 2;
@@ -502,12 +483,13 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (TopItems != null)
             {
-                foreach (var item in TopItems)
+                foreach (var item in TopItems.Reverse()) //todo: remove reverse
                 {
                     if (countThings == 9)
                     {
                         break;
                     }
+
                     var raw = item.GetRaw();
                     raw.CopyTo(stream.Slice(countBytes, raw.Length));
 

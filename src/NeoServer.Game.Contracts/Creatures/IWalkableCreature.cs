@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
@@ -22,7 +22,7 @@ namespace NeoServer.Game.Contracts.Creatures
         double LastStep { get; }
         ushort Speed { get; }
         int StepDelayMilliseconds { get; }
-        IWalkableTile Tile { get; set; }
+        IDynamicTile Tile { get; set; }
         ConcurrentQueue<Direction> WalkingQueue { get; }
         bool FollowCreature { get; }
         uint FollowEvent { get; set; }
@@ -36,7 +36,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);
         void IncreaseSpeed(ushort speed);
-        void Moved(ITile fromTile, ITile toTile);
+        void OnMoved(IDynamicTile fromTile, IDynamicTile toTile);
         void Follow(IWalkableCreature creature);
         void StopFollowing();
         void StopWalking();
@@ -46,5 +46,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void TurnTo(Direction direction);
         void UpdateLastStepInfo(bool wasDiagonal = true);
         void StartFollowing(IWalkableCreature creature, FindPathParams fpp);
+        bool WalkTo(Location location);
     }
 }

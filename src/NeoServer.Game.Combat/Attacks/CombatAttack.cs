@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums.Combat.Structs;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Server.Helpers;
 using System;
 

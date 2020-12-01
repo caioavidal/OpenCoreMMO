@@ -1,11 +1,12 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
+    public delegate void RemoveItemFromSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
     public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
     public delegate void FailAddItemToSlot(InvalidOperation invalidOperation);
     public interface IInventory
@@ -27,7 +28,10 @@ namespace NeoServer.Game.Contracts.Creatures
 
         event AddItemToSlot OnItemAddedToSlot;
         event FailAddItemToSlot OnFailedToAddToSlot;
+        event RemoveItemFromSlot OnItemRemovedFromSlot;
 
         Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
+        bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
+        Result<bool> CanAddItemToSlot(Slot slot, IItem item);
     }
 }

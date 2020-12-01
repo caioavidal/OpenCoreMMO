@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeoServer.Game.Enums.Creatures.Structs
+namespace NeoServer.Game.Common.Creatures.Structs
 {
     public struct CooldownTime
     {

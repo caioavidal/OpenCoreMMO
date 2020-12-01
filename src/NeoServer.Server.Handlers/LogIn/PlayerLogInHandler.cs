@@ -3,6 +3,7 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Repositories;
+using NeoServer.Server.Standalone;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Authentication
@@ -10,17 +11,18 @@ namespace NeoServer.Server.Handlers.Authentication
     public class PlayerLogInHandler : PacketHandler
     {
         private readonly IAccountRepository repository;
-
+        private readonly ServerConfiguration serverConfiguration;
         private readonly Game game;
 
         public PlayerLogInHandler(IAccountRepository repository,
-         Game game)
+         Game game, ServerConfiguration serverConfiguration)
         {
             this.repository = repository;
             this.game = game;
+            this.serverConfiguration = serverConfiguration;
         }
 
-        public async override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             if (game.State == GameState.Stopped)
             {
@@ -37,7 +39,7 @@ namespace NeoServer.Server.Handlers.Authentication
 
             //todo: ip ban validation
 
-            var accountRecord = await repository.FirstOrDefaultAsync(a => a.AccountName == packet.Account && a.Password == packet.Password);
+            var accountRecord = repository.FirstOrDefault(a => a.AccountName == packet.Account && a.Password == packet.Password);
 
             if (accountRecord == null)
             {
@@ -46,7 +48,6 @@ namespace NeoServer.Server.Handlers.Authentication
             }
 
             game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection).Execute));
-
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)
@@ -58,9 +59,9 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            if (ServerConfiguration.Version != packet.Version)
+            if (serverConfiguration.Version != packet.Version)
             {
-                connection.Send(new GameServerDisconnectPacket($"Only clients with protocol {ServerConfiguration.Version} allowed!"));
+                connection.Send(new GameServerDisconnectPacket($"Only clients with protocol {serverConfiguration.Version} allowed!"));
                 return;
             }
 

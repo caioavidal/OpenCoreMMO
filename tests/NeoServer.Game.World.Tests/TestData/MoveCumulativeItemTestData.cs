@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
 using System.Collections;
@@ -16,13 +16,13 @@ namespace NeoServer.Game.World.Tests.TestData
         public class Data
         {
             public IMap Map { get; set; }
-            public ICumulativeItem Item { get; set; }
+            public ICumulative Item { get; set; }
             public byte Amount { get; set; }
             public Location ToLocation { get; set; }
             public List<IItem> ExpectedFromTileDowmItems { get; set; }
             public List<IItem> ExpectedToTileDowmItems { get; set; }
 
-            public Data(ICumulativeItem item, byte amount, Location toLocation, List<IItem> expectedFromTileDowmItems, List<IItem> expectedToTileDowmItems)
+            public Data(ICumulative item, byte amount, Location toLocation, List<IItem> expectedFromTileDowmItems, List<IItem> expectedToTileDowmItems)
             {
                 Map = CreateMap(item);
                 Item = item;

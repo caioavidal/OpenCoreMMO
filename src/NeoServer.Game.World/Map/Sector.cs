@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
 using System;

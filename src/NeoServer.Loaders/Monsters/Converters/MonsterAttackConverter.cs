@@ -2,8 +2,8 @@
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Creatures.Combat.Attacks;
-using NeoServer.Game.Enums.Creatures.Players;
-using NeoServer.Game.Enums.Item;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Item;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
 using System;

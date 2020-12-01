@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Enums.Creatures.Structs;
+using NeoServer.Game.Common.Creatures.Structs;
 using System;
 using System.Collections.Generic;
 

@@ -1,10 +1,10 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.World.Map;
 using NeoServer.Server.Model.Players;
@@ -20,18 +20,18 @@ namespace NeoServer.Game.Items.Tests
         private Container CreateContainer(byte capacity = 6)
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, capacity);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
 
             return new Container(itemType, new Location(100, 100, 7));
         }
 
-        private ICumulativeItem CreateCumulativeItem(ushort id, byte amount)
+        private ICumulative CreateCumulativeItem(ushort id, byte amount)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
 
-            return new CumulativeItem(type, new Location(100, 100, 7), amount);
+            return new Cumulative(type, new Location(100, 100, 7), amount);
         }
 
         private Item CreateRegularItem(ushort id)
@@ -47,7 +47,7 @@ namespace NeoServer.Game.Items.Tests
         public void Constructor_Should_Create_Instance_With_Capacity_And_List_Items()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
 
             var sut = new Container(itemType, new Location(100, 100, 7));
 
@@ -66,7 +66,7 @@ namespace NeoServer.Game.Items.Tests
         public void SetParent_Should_Modify_Parent_Property()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Enums.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
 
             var parentContainer = new Container(itemType, new Location(100, 100, 7));
             var sut = new Container(itemType, new Location(100, 100, 7));
@@ -84,18 +84,18 @@ namespace NeoServer.Game.Items.Tests
         public void IsApplicable_Returns_True_When_ItemType_Is_Container()
         {
             ItemType type = new ItemType();
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Type, "container");
+            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "container");
 
             Assert.True(Container.IsApplicable(type));
 
             type = new ItemType();
-            type.SetGroup((byte)Enums.ItemGroup.GroundContainer);
+            type.SetGroup((byte)Common.ItemGroup.GroundContainer);
 
             Assert.True(Container.IsApplicable(type));
 
             type = new ItemType();
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Type, "container");
-            type.SetGroup((byte)Enums.ItemGroup.GroundContainer);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "container");
+            type.SetGroup((byte)Common.ItemGroup.GroundContainer);
 
             Assert.True(Container.IsApplicable(type));
 
@@ -208,8 +208,8 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item);
 
             Assert.Equal(item, sut[0]);
-            Assert.Equal(40, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[0] as ICumulativeItem).ClientId);
+            Assert.Equal(40, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).ClientId);
 
             //adding another item
 
@@ -217,7 +217,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item2);
 
             Assert.Equal(item2, sut[0]);
-            Assert.Equal(60, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(60, (sut[0] as ICumulative).Amount);
 
             //adding a regular item
             var item3 = CreateRegularItem(567);
@@ -240,8 +240,8 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item);
 
             Assert.Equal(item, sut[0]);
-            Assert.Equal(40, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[0] as ICumulativeItem).ClientId);
+            Assert.Equal(40, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).ClientId);
 
             //adding same item again
 
@@ -249,7 +249,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(sameItemType);
 
             Assert.Equal(item, sut[0]);
-            Assert.Equal(80, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(80, (sut[0] as ICumulative).Amount);
 
             //adding same item again. This time will exceed the amount of 100
 
@@ -257,7 +257,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(sameItemType2);
 
             Assert.Equal(sameItemType2, sut[0]);
-            Assert.Equal(20, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(20, (sut[0] as ICumulative).Amount);
 
             //adding same item again. must add to the item with amount of 20
 
@@ -265,7 +265,7 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(sameItemType3);
 
             Assert.Equal(sameItemType2, sut[0]);
-            Assert.Equal(60, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(60, (sut[0] as ICumulative).Amount);
         }
 
         [Fact]
@@ -280,24 +280,24 @@ namespace NeoServer.Game.Items.Tests
             sut.RemoveItem(1, 60);
             sut.RemoveItem(3, 77);
 
-            Assert.Equal(100, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(40, (sut[1] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[2] as ICumulativeItem).Amount);
-            Assert.Equal(23, (sut[3] as ICumulativeItem).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).Amount);
+            Assert.Equal(40, (sut[1] as ICumulative).Amount);
+            Assert.Equal(100, (sut[2] as ICumulative).Amount);
+            Assert.Equal(23, (sut[3] as ICumulative).Amount);
 
             var item = CreateCumulativeItem(200, 100);
             sut.TryAddItem(item);
 
-            Assert.Equal(40, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[1] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[2] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[3] as ICumulativeItem).Amount);
-            Assert.Equal(23, (sut[4] as ICumulativeItem).Amount);
+            Assert.Equal(40, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[1] as ICumulative).Amount);
+            Assert.Equal(100, (sut[2] as ICumulative).Amount);
+            Assert.Equal(100, (sut[3] as ICumulative).Amount);
+            Assert.Equal(23, (sut[4] as ICumulative).Amount);
 
             sut.TryAddItem(CreateCumulativeItem(200, 60));
             sut.TryAddItem(CreateCumulativeItem(200, 10));
-            Assert.Equal(100, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(33, (sut[4] as ICumulativeItem).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).Amount);
+            Assert.Equal(33, (sut[4] as ICumulative).Amount);
         }
 
         [Fact]
@@ -313,11 +313,11 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(item2);
 
             Assert.Equal(item, sut[1]);
-            Assert.Equal(40, (sut[1] as ICumulativeItem).Amount);
+            Assert.Equal(40, (sut[1] as ICumulative).Amount);
             Assert.Equal(100, sut[1].ClientId);
 
             Assert.Equal(item2, sut[0]);
-            Assert.Equal(26, (sut[0] as ICumulativeItem).Amount);
+            Assert.Equal(26, (sut[0] as ICumulative).Amount);
             Assert.Equal(200, sut[0].ClientId);
         }
         [Fact]
@@ -351,8 +351,8 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
 
-            Assert.Equal(100, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(100, (sut[1] as ICumulativeItem).Amount);
+            Assert.Equal(100, (sut[0] as ICumulative).Amount);
+            Assert.Equal(100, (sut[1] as ICumulative).Amount);
 
             Assert.True(sut.IsFull);
         }
@@ -407,8 +407,8 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(item, sut[0]);
 
-            Assert.Equal(34, (sut[0] as ICumulativeItem).Amount);
-            Assert.Equal(23, (removedItem as ICumulativeItem).Amount);
+            Assert.Equal(34, (sut[0] as ICumulative).Amount);
+            Assert.Equal(23, (removedItem as ICumulative).Amount);
 
             Assert.NotSame(item, removedItem);
             Assert.Equal(item.ClientId, removedItem.ClientId);
@@ -428,7 +428,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(1, sut.SlotsUsed);
 
             Assert.Equal(100, (sut[0].ClientId));
-            Assert.Equal(63, (removedItem as ICumulativeItem).Amount);
+            Assert.Equal(63, (removedItem as ICumulative).Amount);
 
             Assert.NotSame(item, removedItem);
             Assert.Equal(item.ClientId, removedItem.ClientId);
@@ -437,7 +437,7 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void IsEquiped_When_Parent_Is_Player_Returns_True()
         {
-            var player = new Player("PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+            var player = new Player(1,"PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
              soulPoints: 100, maxSoulPoints: 100, skills: new Dictionary<SkillType, ISkill>
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
@@ -473,7 +473,7 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void IsEquiped_When_Moved_To_Another_Container_Where_Parent_Is_Null_Returns_False()
         {
-            var player = new Player("PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+            var player = new Player(1,"PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
              soulPoints: 100, maxSoulPoints: 100, skills: new Dictionary<SkillType, ISkill>
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }

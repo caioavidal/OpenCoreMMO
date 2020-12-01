@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Data\NeoServer.Data.csproj" />
-    <ProjectReference Include="..\NeoServer.Server.Schedulers.Contracts\NeoServer.Server.Tasks.Contracts.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

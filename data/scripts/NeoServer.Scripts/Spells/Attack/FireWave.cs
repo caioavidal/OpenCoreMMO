@@ -1,7 +1,7 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Spells;
-using NeoServer.Game.Enums.Creatures.Players;
+using NeoServer.Game.Common.Creatures.Players;
 using System;
 using System.Collections.Generic;
 using System.Text;

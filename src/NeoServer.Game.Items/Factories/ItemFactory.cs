@@ -1,12 +1,13 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
 using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Items.Items.Containers;
 
 namespace NeoServer.Game.Items
 {
@@ -47,6 +48,11 @@ namespace NeoServer.Game.Items
                 return new DistanceWeapon(itemType, location);
             }
 
+            if (Depot.IsApplicable(itemType))
+            {
+                return new Depot(itemType, location);
+            }
+
             if (PickupableContainer.IsApplicable(itemType))
             {
                 return new PickupableContainer(itemType, location);
@@ -71,7 +77,7 @@ namespace NeoServer.Game.Items
             {
                 return new Wand(itemType, location);
             }
-            if (CumulativeItem.IsApplicable(itemType))
+            if (Cumulative.IsApplicable(itemType))
             {
                 if (ThrowableDistanceWeapon.IsApplicable(itemType))
                 {
@@ -81,7 +87,7 @@ namespace NeoServer.Game.Items
                 {
                     return new AmmoItem(itemType, location, attributes);
                 }
-                return new CumulativeItem(itemType, location, attributes);
+                return new Cumulative(itemType, location, attributes);
             }
             if (LiquidPoolItem.IsApplicable(itemType))
             {

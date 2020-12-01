@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Server.Instances;
-using NeoServer.Server.Tasks.Contracts;
+using NeoServer.Server.Contracts.Tasks;
 
 namespace NeoServer.Server
 {

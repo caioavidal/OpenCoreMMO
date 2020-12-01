@@ -1,10 +1,10 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Enums.Combat.Structs;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
@@ -16,9 +16,9 @@ namespace NeoServer.Game.Items.Items
         {
         }
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
-        public byte Range => Metadata.Attributes.GetAttribute<byte>(Enums.ItemAttribute.Range);
+        public byte Range => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Range);
 
-        public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Enums.ItemAttribute.WeaponType) == "wand";
+        public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Common.ItemAttribute.WeaponType) == "wand";
 
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {

@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Creatures.Players;
+﻿using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -8,8 +8,6 @@ namespace NeoServer.Game.Contracts.Creatures
         bool Start(ICreature creature);
         ConditionIcon Icons { get; }
         ConditionType Type { get; }
-
-        ConditionSlot ConditionSlot { get; }
 
         long EndTime { get; }
         void End();

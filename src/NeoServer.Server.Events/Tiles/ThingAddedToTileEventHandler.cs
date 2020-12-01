@@ -37,15 +37,6 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                //if (thing is ICumulativeItem cumulative && cumulative.Amount > 0)
-                //{
-                //    connection.OutgoingPackets.Enqueue(new AddTileItemPacket(cumulative, fromStackPosition));
-                //}
-                //else
-                //{
-                //    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, fromStackPosition));
-                //}
-
                 connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)thing, spectator.ToStackPosition));
 
                 connection.Send();

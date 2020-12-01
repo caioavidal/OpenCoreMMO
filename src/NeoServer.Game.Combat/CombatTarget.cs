@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Combat
 {

@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -11,6 +11,7 @@ namespace NeoServer.Game.Contracts.Creatures
     {
         event Born OnWasBorn;
         event Defende OnDefende;
+        event DropLoot OnDropLoot;
 
         void Reborn();
 

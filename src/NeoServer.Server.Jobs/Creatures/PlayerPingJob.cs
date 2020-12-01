@@ -46,7 +46,7 @@ namespace NeoServer.Server.Jobs
 
             var noPongTime = TimeSpan.FromTicks(now - connection.LastPingResponse).TotalMilliseconds;
 
-            if (noPongTime >= CONNECTION_LOST_INTERVAL && player.CanLogout && connection.LastPingResponse > 0)
+            if (noPongTime >= CONNECTION_LOST_INTERVAL && !player.CannotLogout && connection.LastPingResponse > 0)
             {
                 new PlayerLogOutCommand(player, game, true).Execute();
             }

@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Enums.Item;
+﻿using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Contracts.Items
 {

@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
 using Xunit;
 
@@ -13,11 +13,11 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(100);
 
-            var sut = new CumulativeItem(type, new Location(100, 100, 7), 50);
+            var sut = new Cumulative(type, new Location(100, 100, 7), 50);
 
             var type2 = new ItemType();
             type.SetClientId(102);
-            ICumulativeItem itemToJoin = new CumulativeItem(type2, new Location(100, 100, 7), 40);
+            ICumulative itemToJoin = new Cumulative(type2, new Location(100, 100, 7), 40);
 
             var result = sut.TryJoin(ref itemToJoin);
 
@@ -31,9 +31,9 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(100);
 
-            var sut = new CumulativeItem(type, new Location(100, 100, 7), 50);
+            var sut = new Cumulative(type, new Location(100, 100, 7), 50);
 
-            ICumulativeItem itemToJoin = new CumulativeItem(type, new Location(100, 100, 7), 40);
+            ICumulative itemToJoin = new Cumulative(type, new Location(100, 100, 7), 40);
             sut.TryJoin(ref itemToJoin);
 
             Assert.Null(itemToJoin);
@@ -45,9 +45,9 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(100);
 
-            var sup = new CumulativeItem(type, new Location(100, 100, 7), 50);
+            var sup = new Cumulative(type, new Location(100, 100, 7), 50);
 
-            ICumulativeItem itemToJoin = new CumulativeItem(type, new Location(100, 100, 7), 70);
+            ICumulative itemToJoin = new Cumulative(type, new Location(100, 100, 7), 70);
             sup.TryJoin(ref itemToJoin);
 
             Assert.Equal(20, itemToJoin.Amount);
@@ -59,9 +59,9 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(100);
 
-            var sup = new CumulativeItem(type, new Location(100, 100, 7), 50);
+            var sup = new Cumulative(type, new Location(100, 100, 7), 50);
 
-            ICumulativeItem itemToJoin = new CumulativeItem(type, new Location(100, 100, 7), 100);
+            ICumulative itemToJoin = new Cumulative(type, new Location(100, 100, 7), 100);
             sup.TryJoin(ref itemToJoin);
 
             Assert.Equal(50, itemToJoin.Amount);
@@ -73,9 +73,9 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(100);
 
-            var sup = new CumulativeItem(type, new Location(100, 100, 7), 100);
+            var sup = new Cumulative(type, new Location(100, 100, 7), 100);
 
-            ICumulativeItem itemToJoin = new CumulativeItem(type, new Location(100, 100, 7), 100);
+            ICumulative itemToJoin = new Cumulative(type, new Location(100, 100, 7), 100);
             sup.TryJoin(ref itemToJoin);
 
             Assert.Equal(100, itemToJoin.Amount);
@@ -92,9 +92,9 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(100);
-            type.Attributes.SetAttribute(Enums.ItemAttribute.Weight, weight);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, weight);
 
-            var sup = new CumulativeItem(type, new Location(100, 100, 7), amount);
+            var sup = new Cumulative(type, new Location(100, 100, 7), amount);
             Assert.Equal(totalWeight, sup.Weight);
 
         }

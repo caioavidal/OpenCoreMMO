@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location;
 using System;
 using System.Collections.Generic;
 using System.IO;

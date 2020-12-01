@@ -2,11 +2,12 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -14,6 +15,8 @@ namespace NeoServer.Server.Model.Players
     {
 
         public event AddItemToSlot OnItemAddedToSlot;
+        public event RemoveItemFromSlot OnItemRemovedFromSlot;
+
         public event FailAddItemToSlot OnFailedToAddToSlot;
         private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
 
@@ -116,8 +119,12 @@ namespace NeoServer.Server.Model.Players
             }
 
             Owner = owner;
+            Inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
 
-            Inventory = inventory ?? new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+            foreach (var item in inventory)
+            {
+                TryAddItemToSlot(item.Key, item.Value.Item1);
+            }
         }
 
         public IItem this[Slot slot] => !Inventory.ContainsKey(slot) ? null : Inventory[slot].Item1;
@@ -136,7 +143,29 @@ namespace NeoServer.Server.Model.Players
                 return sum;
             }
         }
+    
+        public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
+        {
+            removedItem = null;
 
+            if (amount == 0) return false;
+            if (Inventory[slot].Item1 is not IPickupable item) return false;
+            if (item is null) return false;
+
+            if (item is ICumulative cumulative && amount < cumulative.Amount)
+            {
+                removedItem = cumulative.Split(amount);
+            }
+            else
+            {
+                Inventory.Remove(slot);
+                removedItem = item;
+            }
+            OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
+            return true;
+        }
+
+      
         public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
             bool canCarry = CanCarryItem(item, slot);
@@ -173,7 +202,7 @@ namespace NeoServer.Server.Model.Players
             {
                 Tuple<IPickupable, ushort> itemToSwap = null;
 
-                if (item is ICumulativeItem cumulative)
+                if (item is ICumulative cumulative)
                 {
                     if (NeedToSwap(cumulative, slot))
                     {
@@ -181,7 +210,7 @@ namespace NeoServer.Server.Model.Players
                     }
                     else
                     {
-                        (Inventory[slot].Item1 as ICumulativeItem).TryJoin(ref cumulative);
+                        (Inventory[slot].Item1 as ICumulative).TryJoin(ref cumulative);
                         if (cumulative?.Amount > 0)
                         {
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
@@ -219,7 +248,7 @@ namespace NeoServer.Server.Model.Players
 
             var itemOnSlot = Inventory[slotDestination].Item1;
 
-            if (itemToAdd is ICumulativeItem cumulative && itemOnSlot.ClientId == cumulative.ClientId)
+            if (itemToAdd is ICumulative cumulative && itemOnSlot.ClientId == cumulative.ClientId)
             {
                 //will join
                 return false;
@@ -246,7 +275,7 @@ namespace NeoServer.Server.Model.Players
 
             float weight = item.Weight;
 
-            if (item is ICumulativeItem cumulative && slot == Slot.Ammo)
+            if (item is ICumulative cumulative && slot == Slot.Ammo)
             {
                 byte amountToAdd = cumulative.Amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : cumulative.Amount;
                 weight = cumulative.CalculateWeight(amountToAdd);
@@ -256,7 +285,7 @@ namespace NeoServer.Server.Model.Players
             return canCarry;
         }
 
-        private Result<bool> CanAddItemToSlot(Slot slot, IItem item)
+        public Result<bool> CanAddItemToSlot(Slot slot, IItem item)
         {
             var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
 

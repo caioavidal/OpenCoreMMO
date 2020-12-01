@@ -2,9 +2,9 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Server.Events;
 using NeoServer.Server.Events.Player;
 using NeoServer.Server.Model.Players;
@@ -67,6 +67,7 @@ namespace NeoServer.Game.Creatures
         public IPlayer Create(IPlayerModel player)
         {
             var newPlayer = new Player(
+                (uint)player.Id,
                 player.CharacterName,
                 player.ChaseMode,
                 player.Capacity,
@@ -103,6 +104,8 @@ namespace NeoServer.Game.Creatures
                 contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId, slotIndex, item);
 
             newPlayer.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+            newPlayer.Inventory.OnItemRemovedFromSlot += (inventory, item, slot, amount) => itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+
 
             newPlayer.Inventory.OnFailedToAddToSlot += (error) => invalidOperationEventHandler?.Execute(newPlayer, error);
             newPlayer.OnStoppedAttack += (actor) => creatureStopedAttackEventHandler?.Execute(newPlayer);
@@ -129,11 +132,7 @@ namespace NeoServer.Game.Creatures
 
                 if (slot.Key == Slot.Backpack)
                 {
-                    if (!(createdItem is IContainer container))
-                    {
-                        continue;
-                    }
-
+                    if (createdItem is not IContainer container) continue;
                     BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
                 }
 

@@ -15,13 +15,7 @@
 	<spawn centerx="1024" centery="1017" centerz="7" radius="1">
 		<monster name="Cyclops" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
-	<spawn centerx="1009" centery="1018" centerz="7" radius="1">
-		<monster name="Orc Spearman" x="0" y="0" z="7" spawntime="60" />
-	</spawn>
 	<spawn centerx="1029" centery="1018" centerz="7" radius="1">
-		<monster name="Orc Spearman" x="0" y="0" z="7" spawntime="60" />
-	</spawn>
-	<spawn centerx="1013" centery="1019" centerz="7" radius="1">
 		<monster name="Orc Spearman" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1016" centery="1019" centerz="7" radius="1">
@@ -34,12 +28,6 @@
 		<monster name="Orc Spearman" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1031" centery="1019" centerz="7" radius="1">
-		<monster name="Orc Spearman" x="0" y="0" z="7" spawntime="60" />
-	</spawn>
-	<spawn centerx="1011" centery="1021" centerz="7" radius="1">
-		<monster name="Orc Spearman" x="0" y="0" z="7" spawntime="60" />
-	</spawn>
-	<spawn centerx="1016" centery="1021" centerz="7" radius="1">
 		<monster name="Orc Spearman" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1026" centery="1021" centerz="7" radius="1">

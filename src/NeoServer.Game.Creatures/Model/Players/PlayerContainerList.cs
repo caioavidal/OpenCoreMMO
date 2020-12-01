@@ -1,11 +1,12 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
@@ -16,12 +17,50 @@ namespace NeoServer.Game.Creatures.Model.Players
         public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
         public AddItemOnOpenedContainer AddItemAction { get; set; }
         public UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
+        public MoveOpenedContainer MoveOpenedContainer { get; private set; }
 
+        public bool HasAnyDepotOpened
+        {
+            get
+            {
+                foreach (var container in openedContainers.Values)
+                {
+                    if (container.Container.Root is IDepot) return true;
+                }
+                return false;
+            }
+        }
         private readonly IPlayer player;
         public PlayerContainerList(IPlayer player)
         {
             this.player = player;
+            MoveOpenedContainer += CloseDistantContainer;
+        }
 
+        public void CloseDistantContainer(byte containerId, IContainer container)
+        {
+            if (openedContainers.Count == 0) return;
+
+            var containerLocation = container.Root?.Location;
+
+            if (containerLocation is null) return;
+
+            if (containerLocation.Value.Type == LocationType.Ground &&
+                containerLocation.Value.IsNextTo(player.Location) is false)
+            {
+                CloseContainer(containerId);
+                return;
+            }
+
+            if (container.Root is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
+        }
+        public void CloseDistantContainers()
+        {
+            if (openedContainers.Count == 0) return;
+            foreach (var container in openedContainers.Values)
+            {
+                CloseDistantContainer(container.Id, container.Container);
+            }
         }
 
         public IContainer this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
@@ -39,11 +78,16 @@ namespace NeoServer.Game.Creatures.Model.Players
                 OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
             }
         }
-        public void OpenContainerAt(Location location, byte containerLevel)
+
+        public void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null)
         {
             PlayerContainer playerContainer = null;
 
-            if (location.Slot == Slot.Backpack)
+            if (location.Type == LocationType.Ground)
+            {
+                playerContainer = new PlayerContainer(containerToOpen, player);
+            }
+            else if (location.Slot == Slot.Backpack)
             {
                 playerContainer = new PlayerContainer(player.Inventory.BackpackSlot, player);
 
@@ -51,7 +95,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             else if (location.Type == LocationType.Container)
             {
                 var parentContainer = openedContainers[location.ContainerId]?.Container;
-                parentContainer.GetContainerAt((byte)location.ContainerPosition, out var container);
+                parentContainer.GetContainerAt((byte)location.ContainerSlot, out var container);
                 playerContainer = new PlayerContainer(container, player);
             }
 
@@ -66,7 +110,6 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
             return;
-
         }
 
         private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
@@ -83,7 +126,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 openedContainers.TryAdd(playerContainer.Id, playerContainer);
             }
 
-            playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction);
+            playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction, MoveOpenedContainer);
             playerContainer.AttachContainerEvent();
         }
 
@@ -92,7 +135,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             var fromContainer = openedContainers[fromLocation.ContainerId];
             var toContainer = openedContainers[toLocation.ContainerId];
 
-            var item = fromContainer.Container[fromLocation.ContainerPosition];
+            var item = fromContainer.Container[fromLocation.ContainerSlot];
 
             if (item == toContainer.Container)
             {
@@ -101,25 +144,25 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (fromContainer.Id == toContainer.Id)
             {
-                if (item is ICumulativeItem)
+                if (item is ICumulative)
                 {
-                    fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition, amount);
+                    fromContainer.Container.MoveItem((byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot, amount);
                     return;
                 }
 
-                fromContainer.Container.MoveItem((byte)fromLocation.ContainerPosition, (byte)toLocation.ContainerPosition);
+                fromContainer.Container.MoveItem((byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
                 return;
             }
 
-            if (item is ICumulativeItem)
+            if (item is ICumulative)
             {
-                var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerPosition, amount) as ICumulativeItem;
-                toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerPosition);
+                var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot, amount) as ICumulative;
+                toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerSlot);
             }
             else
             {
-                fromContainer.Container.RemoveItem((byte)fromLocation.ContainerPosition);
-                toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerPosition);
+                fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot);
+                toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerSlot);
             }
 
             if (item is IContainer container)
@@ -133,10 +176,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (openedContainers.Remove(containerId, out var playerContainer))
             {
                 playerContainer.DetachContainerEvents();
-                OnClosedContainer?.Invoke(player, containerId);
+                OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
             }
         }
-
     }
-
 }

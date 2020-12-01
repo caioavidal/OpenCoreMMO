@@ -1,9 +1,9 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Game.World.Map;
 using NeoServer.Server.Model.Players;
 using System;
@@ -22,7 +22,7 @@ namespace NeoServer.Game.Creatures.Tests
         [InlineData(94, 94, false)]
         public void CanMoveThing_Given_Distance_Bigger_Than_11_Returns_False(ushort toX, ushort toY, bool expected)
         {
-            var sut = new Player("PlayerA", ChaseMode.Stand, 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+            var sut = new Player(1,"PlayerA", ChaseMode.Stand, 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
                 soulPoints: 100, maxSoulPoints: 100, skills: new Dictionary<SkillType, ISkill>
                 {
                     { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }

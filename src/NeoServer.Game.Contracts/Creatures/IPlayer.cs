@@ -1,17 +1,18 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Players;
-using NeoServer.Game.Enums.Talks;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
+using NeoServer.Game.Common.Talks;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
-    public delegate void ClosedContainer(IPlayer player, byte containerId);
+    public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
     public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
     public delegate void ReduceMana(IPlayer player);
     public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
@@ -34,8 +35,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         float CarryStrength { get; }
 
         IDictionary<SkillType, ISkill> Skills { get; }
-
-        bool CannotLogout { get; }
         ushort StaminaMinutes { get; }
 
         Location LocationInFront { get; }
@@ -44,7 +43,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte SecureMode { get; }
 
         bool InFight { get; }
-        bool CanLogout { get; }
         IPlayerContainerList Containers { get; }
 
         event CancelWalk OnCancelledWalk;
@@ -55,6 +53,9 @@ namespace NeoServer.Server.Model.Players.Contracts
         ushort Mana { get; }
         ushort MaxMana { get; }
         SkillType SkillInUse { get; }
+        bool CannotLogout { get; }
+        uint Id { get; }
+        bool HasDepotOpened { get; }
 
         //  IAction PendingAction { get; }
 

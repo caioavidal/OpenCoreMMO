@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Item;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -58,6 +58,7 @@ namespace NeoServer.Server
         /// <param name="monster"></param>
         public void AddKilledMonsters(IMonster monster)
         {
+            creatureInstances.TryRemove(monster.CreatureId);
             creatureInstances.AddKilledMonsters(monster);
         }
 
@@ -111,7 +112,7 @@ namespace NeoServer.Server
 
             if (creature is IWalkableCreature walkableCreature)
             {
-                map.RemoveThing(ref thing, walkableCreature.Tile);
+                map.RemoveThing(thing, walkableCreature.Tile);
             }
 
             creatureInstances.TryRemove(creature.CreatureId);

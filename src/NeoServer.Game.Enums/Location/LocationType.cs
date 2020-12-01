@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Enums.Location
+﻿namespace NeoServer.Game.Common.Location
 {
     public enum LocationType : byte
     {

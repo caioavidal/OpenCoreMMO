@@ -1,4 +1,4 @@
-using NeoServer.Server.Tasks.Contracts;
+using NeoServer.Server.Contracts.Tasks;
 
 namespace NeoServer.Server.Contracts.Commands
 {

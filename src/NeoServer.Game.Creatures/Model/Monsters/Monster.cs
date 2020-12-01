@@ -6,16 +6,17 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.Enums.Combat.Structs;
-using NeoServer.Game.Enums.Creatures;
-using NeoServer.Game.Enums.Location;
-using NeoServer.Game.Enums.Location.Structs;
-using NeoServer.Game.Enums.Talks;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Creatures.Model.Monsters.Loots;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
@@ -23,6 +24,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
     {
         public event Born OnWasBorn;
         public event Defende OnDefende;
+        public event DropLoot OnDropLoot;
 
         public Monster(IMonsterType type, PathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
         {
@@ -62,7 +64,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void Reborn()
         {
             ResetHealthPoints();
-            SetNewLocation(Spawn.Location);
+            Location = Spawn.Location;
             OnWasBorn?.Invoke(this, Spawn.Location);
         }
 
@@ -151,6 +153,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             return true;
         }
+
 
         public void SetAsEnemy(ICombatActor creature)
         {
@@ -323,8 +326,17 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override void OnDeath()
         {
+            Targets?.Clear();
+
             StopDefending();
             base.OnDeath();
+
+            DropLoot();
+        }
+        public void DropLoot()
+        {
+            var loot = Metadata.Loot?.Drop();
+            OnDropLoot?.Invoke(this, new Loot(loot));
         }
         public ushort Defend()
         {

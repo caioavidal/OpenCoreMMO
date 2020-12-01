@@ -27,16 +27,9 @@ namespace NeoServer.Server.Events.Creature
 
                 var thing = creature as IThing;
 
-                map.RemoveThing(ref thing, tile);
-
-                var corpse = itemFactory.Create(creature.Corpse, creature.Location, null) as IThing;
-                map.AddItem(ref corpse, tile);
-
                 //send packets to killed player
                 if (creature is IPlayer killedPlayer && game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
                 {
-                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, 1));
-                    connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)corpse, 1));
                     connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
                     connection.Send();
                 }

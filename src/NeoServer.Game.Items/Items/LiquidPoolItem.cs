@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Enums;
-using NeoServer.Game.Enums.Item;
-using NeoServer.Game.Enums.Location.Structs;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace NeoServer.Game.Items.Items
         public bool IsLiquidSource => Metadata.Flags.Contains(ItemFlag.LiquidSource);
         public bool IsLiquidContainer => Metadata.Group == ItemGroup.ITEM_GROUP_FLUID;
         public LiquidColor LiquidColor { get; }
-        public Location Location { get; }
+        public Location Location { get; set; }
 
         public IItemType Metadata { get; private set; }
         public ushort ClientId => Metadata.ClientId;

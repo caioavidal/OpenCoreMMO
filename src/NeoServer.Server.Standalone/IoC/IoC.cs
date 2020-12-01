@@ -29,10 +29,15 @@ using NeoServer.Server.Instances;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Tasks;
-using NeoServer.Server.Tasks.Contracts;
+using NeoServer.Server.Contracts.Tasks;
 using Serilog;
 using System;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using NeoServer.Game.Common;
+using NeoServer.Game.World.Map.Operations;
+using NeoServer.Data.Repositories;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -51,6 +56,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<Database>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
+            builder.RegisterType<PlayerDepotRepository>().As<IPlayerDepotRepository>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();
@@ -75,11 +81,8 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterEvents(builder);
 
             RegisterIncomingPacketFactory(builder);
-
-            RegisterItemFactory(builder);
-            //RegisterNewItemFactory(builder);
-
             RegisterPlayerFactory(builder);
+            LoadConfigurations(builder);
 
             //world
             builder.RegisterType<World>().SingleInstance();
@@ -92,6 +95,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
+            
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
@@ -169,27 +173,22 @@ namespace NeoServer.Server.Standalone.IoC
             });
         }
 
-        private static void RegisterItemFactory(ContainerBuilder builder)
+        static void LoadConfigurations(ContainerBuilder containerBuilder)
         {
-            //builder.Register((c, p) =>
-            //{
-            //    var typeId = p.TypedAs<ushort>();
+            var builder = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            //    return ItemFactory.Create(typeId);
-            //});
-        }
+            IConfigurationRoot configuration = builder.Build();
 
-        //private static void RegisterNewItemFactory(ContainerBuilder builder)
-        //{
-        //    builder.Register((c, p) =>
-        //    {
-        //        var typeId = p.TypedAs<ushort>();
-        //        var location = p.TypedAs<Location>();
-        //        var attributes = p.TypedAs<IDictionary<ItemAttribute, IConvertible>>();
+            ServerConfiguration serverConfiguration = new(0, null, null, null);
+            GameConfiguration gameConfiguration = new();
 
-        //        return ItemFactory.Create(typeId, location, attributes);
-        //    });
-        //}
+            configuration.GetSection("server").Bind(serverConfiguration);
+            configuration.GetSection("game").Bind(gameConfiguration);
+
+            containerBuilder.RegisterInstance(serverConfiguration).SingleInstance();
+            containerBuilder.RegisterInstance(gameConfiguration).SingleInstance();
 
         private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
         {
