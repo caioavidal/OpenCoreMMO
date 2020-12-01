@@ -40,6 +40,7 @@ namespace NeoServer.Game.Contracts.Items
         Slot BodyPosition { get; }
         float Weight { get; }
         ushort TransformTo { get; }
+        string Plural { get; }
 
         void SetName(string value);
         void SetDescription(string value);

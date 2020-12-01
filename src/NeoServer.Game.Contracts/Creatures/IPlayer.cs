@@ -8,16 +8,20 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
     public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
-    public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
+    public delegate void OpenedContainer(IPlayer player, byte containerId, IContainer container);
     public delegate void ReduceMana(IPlayer player);
     public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
     public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
     public delegate void OperationFail(uint id, string message);
+    public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
+
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -48,6 +52,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event CancelWalk OnCancelledWalk;
         event CannotUseSpell OnCannotUseSpell;
         event OperationFail OnOperationFailed;
+        event LookAt OnLookedAt;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -115,5 +120,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool HasEnoughLevel(ushort level);
         bool Logout();
         ushort CalculateAttackPower(float attackRate, ushort attack);
+        void LookAt(ITile tile);
     }
 }

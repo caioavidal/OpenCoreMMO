@@ -71,7 +71,7 @@ namespace NeoServer.Server.Model.Players
 
         public event ReduceMana OnManaReduced;
         public event CannotUseSpell OnCannotUseSpell;
-
+        public event LookAt OnLookedAt;
         public event UseSpell OnUsedSpell;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -432,7 +432,12 @@ namespace NeoServer.Server.Model.Players
             }
             return item;
         }
-
+        public void LookAt(ITile tile)
+        {
+            var isClose = Location.IsNextTo(tile.Location);
+            OnLookedAt?.Invoke(this, tile.TopItemOnStack, isClose);
+        }
+        
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
         {
             return damage; //todo
