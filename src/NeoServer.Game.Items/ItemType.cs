@@ -29,7 +29,7 @@ namespace NeoServer.Game.Items
         public ISet<ItemFlag> Flags { get; }
 
         public IItemAttributeList Attributes { get; }
-
+        public IItemRequirement[] Requirements { get; private set; }
         public bool Locked { get; private set; }
 
         public ushort ClientId { get; private set; }
@@ -143,6 +143,11 @@ namespace NeoServer.Game.Items
             Name = name;
         }
 
+        public void SetRequirements(IItemRequirement[] requirements)
+        {
+            ThrowIfLocked();
+            Requirements = requirements;
+        }
         public void SetFlag(ItemFlag flag)
         {
             ThrowIfLocked();

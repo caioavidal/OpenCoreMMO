@@ -61,6 +61,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool CannotLogout { get; }
         uint Id { get; }
         bool HasDepotOpened { get; }
+        VocationType Vocation { get;  }
 
         //  IAction PendingAction { get; }
 

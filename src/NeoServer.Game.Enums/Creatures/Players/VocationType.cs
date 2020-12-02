@@ -5,6 +5,8 @@ namespace NeoServer.Game.Common.Players
         Knight = 1,
         Sorcerer = 2,
         Druid = 3,
-        Paladin = 4
+        Paladin = 4,
+        Noob = 5,
+        All = 6
     }
 }

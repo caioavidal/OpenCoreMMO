@@ -14,6 +14,6 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
 
         private string DefenseText => ArmorValue > 0 ? $"(Arm:{ArmorValue})" : $"(Def:{DefenseValue})";
         
-        string IThing.InspectionText => $"{LookText} {DefenseText}";
+        string IThing.InspectionText => $"{LookText} {DefenseText}{RequirementText}";
     }
 }

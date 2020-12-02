@@ -28,7 +28,7 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
                 return $"({stringBuilder})";
             }
         }
-        string IItem.LookText => $"{Metadata.Article} {Metadata.Name} {AttributesText}";
+        string IItem.LookText => $"{Metadata.Article} {Metadata.Name} {AttributesText}{RequirementText}";
         string IThing.InspectionText => $"{LookText}";
 
     }

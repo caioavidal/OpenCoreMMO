@@ -1,9 +1,3 @@
-// <copyright file="IItemType.cs" company="2Dudes">
-// Copyright (c) 2018 2Dudes. All rights reserved.
-// Licensed under the MIT license.
-// See LICENSE file in the project root for full license information.
-// </copyright>
-
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Players;
@@ -41,6 +35,7 @@ namespace NeoServer.Game.Contracts.Items
         float Weight { get; }
         ushort TransformTo { get; }
         string Plural { get; }
+        IItemRequirement[] Requirements { get; }
 
         void SetName(string value);
         void LockChanges();
@@ -48,5 +43,6 @@ namespace NeoServer.Game.Contracts.Items
         void SetLight(LightBlock lightBlock);
         void SetWareId(ushort wareId);
         bool HasFlag(ItemFlag flag);
+        void SetRequirements(IItemRequirement[] requirements);
     }
 }

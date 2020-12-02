@@ -59617,6 +59617,14 @@
        "id": "8851",
        "article": "a",
        "name": "royal crossbow",
+	   "requirements":[{
+			"vocation": "All",
+			"minLevel": 130
+	   },
+	   {
+			"vocation": "Knight",
+			"minLevel": 130
+	   }],
        "attributes": [
           {
              "key": "weight",

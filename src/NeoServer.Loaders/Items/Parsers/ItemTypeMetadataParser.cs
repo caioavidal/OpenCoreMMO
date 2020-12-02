@@ -1,6 +1,7 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.OTB.Parsers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Loaders.Items
 {
@@ -36,6 +37,10 @@ namespace NeoServer.Loaders.Items
 
             itemType.SetName(metadata.Name);
             itemType.SetArticle(metadata.Article);
+
+            
+            itemType.SetRequirements(metadata.ItemRequirements);
+
             itemType.SetPlural(metadata.Plural);
 
             if (metadata.Attributes == null)
