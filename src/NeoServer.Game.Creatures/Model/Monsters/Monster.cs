@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Combat;
-using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
@@ -25,7 +24,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public event Born OnWasBorn;
         public event Defende OnDefende;
         public event DropLoot OnDropLoot;
-
         public Monster(IMonsterType type, PathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
         {
             type.ThrowIfNull();
@@ -63,8 +61,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void Reborn()
         {
+            Damages.Clear();
             ResetHealthPoints();
             Location = Spawn.Location;
+            State = MonsterState.Sleeping;
             OnWasBorn?.Invoke(this, Spawn.Location);
         }
 
@@ -157,6 +157,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SetAsEnemy(ICombatActor creature)
         {
+            if (IsDead) return;
             if (!CanSee(creature.Location, 9, 9))
             {
                 RemoveFromTargetList(creature);

@@ -118,9 +118,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
 
-        public bool Attack(ICombatActor enemy)
+        public bool Attack(ICreature creature)
         {
-            if (enemy.IsDead || IsDead)
+            if (creature is not ICombatActor enemy || enemy.IsDead || IsDead)
             {
                 StopAttack();
                 return false;
@@ -221,12 +221,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual void SetAsInFight()
         {
-            if (HasCondition(ConditionType.InFight, out var condition))
-            {
-                condition.Start(this);
-                return;
-            }
-            AddCondition(new Condition(ConditionType.InFight, 60000));
+          
         }
     }
 }

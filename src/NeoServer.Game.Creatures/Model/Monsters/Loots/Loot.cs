@@ -10,7 +10,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
     {
         public virtual ILootItem[] Drop()
         {
-
             return Drop( Items);
         }
         
@@ -22,11 +21,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 
             foreach (var item in items)
             {
-                if (item.Chance < random)
-                {
-                    continue;
-                    
-                }
+                if (item.Chance < random) continue;
+
                 var itemToDrop = item;
 
                 ILootItem [] childrenItems = null;

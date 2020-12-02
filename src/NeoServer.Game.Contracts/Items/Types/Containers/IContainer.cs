@@ -36,5 +36,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         Result TryAddItem(IItem item, byte slot);
         Result TryAddItem(IItem item, byte? slot = null);
         void Clear();
+
+        string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
     }
 }

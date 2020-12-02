@@ -71,7 +71,7 @@ namespace NeoServer.Server.Model.Players
 
         public event ReduceMana OnManaReduced;
         public event CannotUseSpell OnCannotUseSpell;
-
+        public event LookAt OnLookedAt;
         public event UseSpell OnUsedSpell;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -262,6 +262,8 @@ namespace NeoServer.Server.Model.Players
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
 
+        public string Guild { get; }
+
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -309,6 +311,14 @@ namespace NeoServer.Server.Model.Players
         public override void SetAsInFight()
         {
             if (IsPacified) return;
+
+            if (HasCondition(ConditionType.InFight, out var condition))
+            {
+                condition.Start(this);
+                return;
+            }
+            AddCondition(new Condition(ConditionType.InFight, 60000));
+
             base.SetAsInFight();
         }
 
@@ -424,6 +434,24 @@ namespace NeoServer.Server.Model.Players
             }
             return item;
         }
+        public void LookAt(ITile tile)
+        {
+            var isClose = Location.IsNextTo(tile.Location);
+            if (tile.TopCreatureOnStack is null && tile.TopItemOnStack is null) return;
+
+            IThing thing = tile.TopCreatureOnStack is null ? tile.TopItemOnStack : tile.TopCreatureOnStack;
+            OnLookedAt?.Invoke(this, thing, isClose); 
+        }
+        public void LookAt(byte containerId, sbyte containerSlot)
+        {
+            if(Containers[containerId][containerSlot] is not IThing thing) return;
+            OnLookedAt?.Invoke(this, thing, true);
+        }
+        public void LookAt(Slot slot)
+        {
+            if (Inventory[slot] is not IThing thing) return;
+            OnLookedAt?.Invoke(this, thing, true);
+        }
 
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
         {
@@ -449,6 +477,8 @@ namespace NeoServer.Server.Model.Players
             if (!Inventory.HasShield) return false;
             return base.CanBlock(damage);
         }
+
+        
     }
 }
 

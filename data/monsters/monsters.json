@@ -7,6 +7,10 @@
 	{
 		"name": "Cyclops",
         "file": "Giants/cyclops.json"
+	},
+	{
+		"name": "Troll",
+        "file": "Trolls/troll.json"
 	}
 
 ]

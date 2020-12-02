@@ -7,15 +7,11 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Events.Creature
 {
     public class CreatureDroppedLootEventHandler
     {
-
         private readonly Game game;
         private readonly IItemFactory itemFactory;
         public CreatureDroppedLootEventHandler(Game game, IItemFactory itemFactory)

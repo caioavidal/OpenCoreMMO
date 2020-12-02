@@ -67,7 +67,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <param name="damage"></param>
         /// <returns>Returns true when damage was bigger than 0</returns>
         bool ReceiveAttack(ICombatActor enemy, CombatDamage damage);
-        bool Attack(ICombatActor enemy);
+        bool Attack(ICreature creature);
         void SetAsInFight();
         void PropagateAttack(Coordinate[] area, CombatDamage damage);
     }

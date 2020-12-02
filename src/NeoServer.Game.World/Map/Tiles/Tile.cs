@@ -32,6 +32,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public Location Location { get; }
         public ushort StepSpeed => Ground.StepSpeed;
 
+        public override ICreature TopCreatureOnStack => Creatures.FirstOrDefault().Value;
 
         public FloorChangeDirection FloorDirection { get; private set; }
         public byte MovementPenalty => Ground.MovementPenalty;

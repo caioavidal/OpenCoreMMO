@@ -6,6 +6,7 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
@@ -26,6 +27,8 @@ namespace NeoServer.Game.World.Map.Tiles
         //public IGround Ground { get; private set; }
         private IItem _topItemOnStack;
         public override IItem TopItemOnStack => _topItemOnStack;
+        public override ICreature TopCreatureOnStack => null;
+
         public byte[] GetRaw(IItem[] items)
         {
 

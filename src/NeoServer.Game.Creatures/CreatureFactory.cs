@@ -120,6 +120,8 @@ namespace NeoServer.Game.Creatures
         }
         private void DetachEvents(ICombatActor creature)
         {
+            if (creature is IMonster monster && !monster.IsSummon) return;
+
             creature.OnDamaged -= _creatureReceiveDamageEventHandler.Execute;
             //creature.OnKilled -= _creatureKilledEventHandler.Execute;
             creature.OnKilled -= DetachEvents;

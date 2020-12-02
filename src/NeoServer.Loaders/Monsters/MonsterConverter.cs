@@ -53,8 +53,6 @@ namespace NeoServer.Loaders.Monsters
 
             return monster;
         }
-
-
         private static CreatureFlagAttribute ParseCreatureFlag(string flag)
         {
             return flag switch

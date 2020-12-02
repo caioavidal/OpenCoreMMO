@@ -22,8 +22,6 @@ namespace NeoServer.Game.Items.Items
 
         public ushort Attack => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
 
-        public byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
-
         public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
 
         public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);

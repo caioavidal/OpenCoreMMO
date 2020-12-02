@@ -34,24 +34,7 @@ namespace NeoServer.Server.Events.Combat
                 {
                     continue;
                 }
-                //if (attack is IAreaAttack areaAttack)
-                //{
-                //    foreach (var coordinate in areaAttack.AffectedArea)
-                //    {
-                //        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, damageEffect));
-                //    }
-                //}
-                //else
-                //{
-                //    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
-                //}
-
-                //if (attack is IDistanceCombatAttack distanceAttack)
-                //{
-                //    var effect = (byte)distanceAttack.ShootType;
-                //    connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
-                //}
-
+            
                 if (attack.Missed)
                 {
                     SendMissedAttack(creature, victim, attack, connection);

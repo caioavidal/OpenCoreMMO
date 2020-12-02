@@ -9,8 +9,13 @@
         void Reduce(byte amount);
         void Increase(byte amount);
         ICumulative Split(byte amount);
-
+        bool HasMany => Amount > 1;
         new float Weight { get; }
         byte AmountToComplete { get; }
+        string IItem.LookText => HasMany ? $"{Amount} {Plural ?? $"{Name}s"}" : $"{Metadata.Article} {Name}";
+        string IThing.InspectionText => LookText;
+        string Subject => HasMany ? "They weigh" : "It weighs";
+        string IThing.CloseInspectionText => $"{InspectionText}.\n{Subject} {Weight} oz";
+
     }
 }
