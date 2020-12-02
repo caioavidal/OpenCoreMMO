@@ -15,9 +15,7 @@ namespace NeoServer.Game.Items.Items
 
     public class DistanceWeapon : MoveableItem, IDistanceWeaponItem
     {
-        public DistanceWeapon(IItemType type, Location location) : base(type, location)
-        {
-        }
+        public DistanceWeapon(IItemType type, Location location) : base(type, location) { }
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
         public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Attack);

@@ -15,7 +15,7 @@ using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class ThrowableDistanceWeapon : Cumulative, IDistanceWeaponItem
+    public class ThrowableDistanceWeapon : Cumulative, IThrowableDistanceWeaponItem
     {
         public ThrowableDistanceWeapon(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes) { }
         public ThrowableDistanceWeapon(IItemType type, Location location, byte amount) : base(type, location, amount) { }

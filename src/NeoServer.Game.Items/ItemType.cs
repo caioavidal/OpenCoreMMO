@@ -24,7 +24,7 @@ namespace NeoServer.Game.Items
         /// <summary>
         /// Item's description
         /// </summary>
-        public string Description { get; private set; }
+        public string Description => Attributes.GetAttribute(ItemAttribute.Description);
 
         public ISet<ItemFlag> Flags { get; }
 
@@ -102,7 +102,6 @@ namespace NeoServer.Game.Items
         {
             TypeId = 0;
             Name = string.Empty;
-            Description = string.Empty;
             Flags = new HashSet<ItemFlag>();
             Attributes = new ItemAttributeList();
             Locked = false;
@@ -142,13 +141,6 @@ namespace NeoServer.Game.Items
             ThrowIfLocked();
 
             Name = name;
-        }
-
-        public void SetDescription(string description)
-        {
-            ThrowIfLocked();
-
-            Description = description.Trim('"');
         }
 
         public void SetFlag(ItemFlag flag)

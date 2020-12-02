@@ -8,8 +8,8 @@ namespace NeoServer.Game.Contracts.Items
     {
         IItemType Metadata { get; }
         string IThing.Name => Metadata.Name;
-        string IThing.InspectionText => $"{Metadata.Article} {Metadata.Name}";
-
+        protected string LookText => $"{Metadata.Article} {Metadata.Name}";
+        string IThing.InspectionText => $"{LookText}";
         string Plural => Metadata.Plural;
 
         ushort ClientId => Metadata.ClientId;

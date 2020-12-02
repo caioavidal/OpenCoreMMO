@@ -43,7 +43,6 @@ namespace NeoServer.Game.Contracts.Items
         string Plural { get; }
 
         void SetName(string value);
-        void SetDescription(string value);
         void LockChanges();
         void SetSpeed(ushort speed);
         void SetLight(LightBlock lightBlock);
