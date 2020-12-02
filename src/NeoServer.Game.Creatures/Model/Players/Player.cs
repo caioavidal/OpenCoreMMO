@@ -262,6 +262,8 @@ namespace NeoServer.Server.Model.Players
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
 
+        public string Guild { get; }
+
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -435,7 +437,10 @@ namespace NeoServer.Server.Model.Players
         public void LookAt(ITile tile)
         {
             var isClose = Location.IsNextTo(tile.Location);
-            OnLookedAt?.Invoke(this, tile.TopItemOnStack, isClose);
+            if (tile.TopCreatureOnStack is null && tile.TopItemOnStack is null) return;
+
+            IThing thing = tile.TopCreatureOnStack is null ? tile.TopItemOnStack : tile.TopCreatureOnStack;
+            OnLookedAt?.Invoke(this, thing, isClose); 
         }
         public void LookAt(byte containerId, sbyte containerSlot)
         {
@@ -472,6 +477,8 @@ namespace NeoServer.Server.Model.Players
             if (!Inventory.HasShield) return false;
             return base.CanBlock(damage);
         }
+
+        
     }
 }
 

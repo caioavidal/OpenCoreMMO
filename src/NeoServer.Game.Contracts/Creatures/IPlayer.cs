@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
@@ -37,7 +38,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
 
         float CarryStrength { get; }
-
+        public string Guild { get; }
         IDictionary<SkillType, ISkill> Skills { get; }
         ushort StaminaMinutes { get; }
 
@@ -124,5 +125,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void LookAt(ITile tile);
         void LookAt(byte containerId, sbyte containerSlot);
         void LookAt(Slot slot);
+        string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(Vocation).ToLower()}{GuildText}";
+        private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
     }
 }
