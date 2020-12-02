@@ -193,11 +193,24 @@ namespace NeoServer.Server.Standalone.IoC
 
         private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
         {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
+            
+            DatabaseConfiguration2 config = new(null, DatabaseType.INMEMORY);
+            configuration.GetSection("database").Bind(config);
+
+            DbContextOptions<NeoContext> options = config.active switch
+            {
+                DatabaseType.INMEMORY => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.INMEMORY]),
+                DatabaseType.MONGODB => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MONGODB]),
+                DatabaseType.MYSQL => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MYSQL]),
+                DatabaseType.MSSQL => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MSSQL]),
+                _ => throw new ArgumentException("Invalid active database!"),
+            };
+
             builder.RegisterType<TContext>()
-                   .WithParameter("options", DbContextFactory.GetInstance().UseInMemory("Neo"))
-                   //.WithParameter("options", DbContextFactory.GetInstance().UseMongo(""))
-                   //.WithParameter("options", DbContextFactory.GetInstance().UseSQL(""))
-                   //.WithParameter("options", DbContextFactory.GetInstance().UseMySQL(""))
+                   .WithParameter("options", options)
                    .InstancePerLifetimeScope();
         }
     }

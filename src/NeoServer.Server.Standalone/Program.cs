@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using NeoServer.Data;
-using NeoServer.Data.Model;
 using NeoServer.Data.RavenDB;
 using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
@@ -22,9 +21,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using NeoServer.Server.Standalone;
 
 Console.Title = "OpenCoreMMO Server";
 
