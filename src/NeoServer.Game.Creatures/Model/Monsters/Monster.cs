@@ -74,7 +74,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return attack;
         }
 
-        public byte TargetDistance => Metadata.Flags[CreatureFlagAttribute.TargetDistance];
+        public byte TargetDistance => (byte)Metadata.Flags[CreatureFlagAttribute.TargetDistance];
         public bool KeepDistance => TargetDistance > 1;
 
         public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
@@ -373,7 +373,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
                 if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) continue;
 
-                attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out combat);
+                attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat);
+                if (attack.CombatAttack is null) Console.WriteLine($"Combat attack not found for monster: {Name}");
             }
 
             TurnTo(Location.DirectionTo(enemy.Location));

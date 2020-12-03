@@ -1,164 +1,169 @@
 {
-  "monster": {
-    "name": "Troll Champion",
-    "nameDescription": "a troll champion",
-    "race": "blood",
-    "experience": "30",
-    "speed": "120",
-    "manacost": "340",
-    "health": {
-      "now": "75",
-      "max": "75"
-    },
-    "look": {
-      "type": "281",
-      "corpse": "7926"
-    },
-    "targetchange": {
+  "name": "Troll Champion",
+  "nameDescription": "a troll champion",
+  "race": "blood",
+  "experience": 30,
+  "speed": 120,
+  "manaCost": 340,
+  "health": {
+    "max": 75,
+    "now": 75
+  },
+  "look": {
+    "type": 281,
+    "corpse": 7926
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "runonhealth": 20
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "0"
+      "skill": "25",
+      "attack": "20"
+    }
+  ],
+  "defense": {
+    "armor": 6,
+    "defense": 8
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 22,
+    "holyPercent": 11,
+    "earthPercent": -3,
+    "deathPercent": -4
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 12,
+      "chance": 24250,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2544,
+      "countmax": 5,
+      "chance": 2000,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "20"
-        }
-      ]
+    {
+      "id": 2643,
+      "countmax": 1,
+      "chance": 15250,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "25",
-        "attack": "20"
-      }
+    {
+      "id": 2666,
+      "countmax": 1,
+      "chance": 11500,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "6",
-      "defense": "8"
-    },
-    "elements": {
-      "element": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "energyPercent": "22"
+          "id": 2389,
+          "countmax": 1,
+          "chance": 27000,
+          "items": [],
+          "name": null
         },
         {
-          "holyPercent": "11"
+          "id": 2448,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
         },
         {
-          "earthPercent": "-3"
+          "id": 2512,
+          "countmax": 1,
+          "chance": 20000,
+          "items": [],
+          "name": null
         },
         {
-          "deathPercent": "-4"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Meee maity!"
+          "id": 2380,
+          "countmax": 1,
+          "chance": 20000,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Grrrr"
+          "id": 2461,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Whaaaz up!?"
+          "id": 2120,
+          "countmax": 1,
+          "chance": 9000,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Gruntz!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "12",
-          "chance": "24250"
-        },
-        {
-          "id": "2544",
-          "countmax": "5",
-          "chance": "2000"
-        },
-        {
-          "id": "2643",
-          "chance": "15250"
-        },
-        {
-          "id": "2666",
-          "chance": "11500"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2389",
-              "chance": "27000"
-            },
-            {
-              "id": "2448",
-              "chance": "5000"
-            },
-            {
-              "id": "2512",
-              "chance": "20000"
-            },
-            {
-              "id": "2380",
-              "chance": "20000"
-            },
-            {
-              "id": "2461",
-              "chance": "10000"
-            },
-            {
-              "id": "2120",
-              "chance": "9000"
-            },
-            {
-              "id": "2170",
-              "chance": "100"
-            }
-          ]
+          "id": 2170,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Meee maity!",
+        "yell": false
+      },
+      {
+        "sentence": "Grrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Whaaaz up!?",
+        "yell": false
+      },
+      {
+        "sentence": "Gruntz!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

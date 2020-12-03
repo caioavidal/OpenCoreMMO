@@ -1,193 +1,190 @@
 {
-  "monster": {
-    "name": "Quara Mantassin",
-    "nameDescription": "a quara mantassin",
-    "race": "blood",
-    "experience": "400",
-    "speed": "260",
-    "manacost": "480",
-    "health": {
-      "now": "800",
-      "max": "800"
-    },
-    "look": {
-      "type": "72",
-      "corpse": "6064"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+  "name": "Quara Mantassin",
+  "nameDescription": "a quara mantassin",
+  "race": "blood",
+  "experience": 400,
+  "speed": 260,
+  "manaCost": 480,
+  "health": {
+    "max": 800,
+    "now": 800
+  },
+  "look": {
+    "type": 72,
+    "corpse": 6064
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 80,
+    "targetdistance": 1,
+    "runonhealth": 40,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-138"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "20",
+      "duration": "3000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "40"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-138"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "400",
+      "duration": "5000",
+      "attributes": [
         {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "20",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "400",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "energyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "ice": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Zuerk Pachak!"
-        },
-        {
-          "sentence": "Shrrrr"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small sapphire",
-          "chance": "1000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "29",
-          "chance": "50000"
-        },
-        {
-          "name": "stealth ring",
-          "chance": "960"
-        },
-        {
-          "name": "two handed sword",
-          "chance": "1010"
-        },
-        {
-          "name": "halberd",
-          "chance": "5000"
-        },
-        {
-          "name": "strange helmet",
-          "chance": "100"
-        },
-        {
-          "name": "cape",
-          "chance": "1050"
-        },
-        {
-          "name": "blue robe",
-          "chance": "50"
-        },
-        {
-          "name": "shrimp",
-          "countmax": "5",
-          "chance": "5000"
-        },
-        {
-          "name": "fish fin",
-          "chance": "630"
-        },
-        {
-          "name": "mantassin tail",
-          "chance": "11600"
+          "areaEffect": "redshimmer"
         }
       ]
     }
+  ],
+  "elements": {
+    "earthPercent": -10,
+    "energyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 29,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1010,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "strange helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1050,
+      "items": [],
+      "name": "cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": "blue robe"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 5000,
+      "items": [],
+      "name": "shrimp"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 630,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11600,
+      "items": [],
+      "name": "mantassin tail"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Zuerk Pachak!",
+        "yell": false
+      },
+      {
+        "sentence": "Shrrrr",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "drown": 1,
+    "fire": 1,
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

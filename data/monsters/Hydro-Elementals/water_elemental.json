@@ -1,247 +1,250 @@
 {
-  "monster": {
-    "name": "Water Elemental",
-    "nameDescription": "a water elemental",
-    "race": "undead",
-    "experience": "650",
-    "speed": "220",
-    "health": {
-      "now": "550",
-      "max": "550"
+  "name": "Water Elemental",
+  "nameDescription": "a water elemental",
+  "race": "undead",
+  "experience": 650,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 550,
+    "now": 550
+  },
+  "look": {
+    "type": 286,
+    "corpse": 10499
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-160",
+      "poison": "60"
     },
-    "look": {
-      "type": "286",
-      "corpse": "10499"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "range": "7",
+      "radius": "2",
+      "min": "-125",
+      "max": "-235",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
+          "areaEffect": "bluebubble"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "-88",
+      "max": "-150",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-160",
-          "poison": "60"
-        },
-        {
-          "name": "drown",
-          "interval": "2000",
-          "chance": "10",
-          "target": "1",
-          "range": "7",
-          "radius": "2",
-          "min": "-125",
-          "max": "-235",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bluebubble"
-          }
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "-88",
-          "max": "-150",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "smallice"
-          }
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "radius": "5",
-          "min": "-225",
-          "max": "-260",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
+          "shootEffect": "smallice"
         }
       ]
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "radius": "5",
+      "min": "-225",
+      "max": "-260",
+      "attributes": [
         {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "5",
-          "min": "50",
-          "max": "80",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "300",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "poison"
         }
       ]
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "35"
-        },
-        {
-          "holyPercent": "50"
-        },
-        {
-          "deathPercent": "50"
-        },
-        {
-          "energyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "lifedrain": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small diamond",
-          "chance": "1000"
-        },
-        {
-          "name": "small sapphire",
-          "chance": "1000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "small emerald",
-          "countmax": "2",
-          "chance": "1000"
-        },
-        {
-          "name": "platinum coin",
-          "chance": "10000"
-        },
-        {
-          "name": "energy ring",
-          "chance": "950"
-        },
-        {
-          "name": "life ring",
-          "chance": "930"
-        },
-        {
-          "id": "2667",
-          "chance": "20000"
-        },
-        {
-          "name": "rainbow trout",
-          "chance": "940"
-        },
-        {
-          "name": "green perch",
-          "chance": "1050"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "10000"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "10000"
-        },
-        {
-          "id": "7632",
-          "chance": "800"
-        },
-        {
-          "id": "7633",
-          "chance": "800"
-        },
-        {
-          "name": "leviathan's amulet",
-          "chance": "260"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "50",
+      "max": "80",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 35,
+    "holyPercent": 50,
+    "deathPercent": 50,
+    "energyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 1000,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 950,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 940,
+      "items": [],
+      "name": "rainbow trout"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1050,
+      "items": [],
+      "name": "green perch"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 7632,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7633,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 260,
+      "items": [],
+      "name": "leviathan's amulet"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "drown": 1,
+    "fire": 1,
+    "ice": 1,
+    "earth": 1,
+    "lifedrain": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

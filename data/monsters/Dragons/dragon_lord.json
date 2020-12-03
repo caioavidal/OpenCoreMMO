@@ -1,256 +1,278 @@
 {
-  "monster": {
-    "name": "Dragon Lord",
-    "nameDescription": "a dragon lord",
-    "race": "blood",
-    "experience": "2100",
-    "speed": "200",
-    "health": {
-      "now": "1900",
-      "max": "1900"
+  "name": "Dragon Lord",
+  "nameDescription": "a dragon lord",
+  "race": "blood",
+  "experience": 2100,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 1900,
+    "now": 1900
+  },
+  "look": {
+    "type": 39,
+    "corpse": 5984
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 300
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-230"
     },
-    "look": {
-      "type": "39",
-      "corpse": "5984"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-100",
+      "max": "-200",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "fire"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "300"
+          "areaEffect": "firearea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-230"
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "min": "-100",
-          "max": "-200",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        },
-        {
-          "name": "firefield",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "15",
-          "length": "8",
-          "spread": "3",
-          "min": "-150",
-          "max": "-230",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "firearea"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "57",
-        "max": "93",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "80"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "fire": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "firefield",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "attributes": [
         {
-          "sentence": "ZCHHHHH",
-          "yell": "1"
-        },
-        {
-          "sentence": "YOU WILL BURN!",
-          "yell": "1"
+          "shootEffect": "fire"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "3",
+      "min": "-150",
+      "max": "-230",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "245",
-          "chance": "95000"
-        },
-        {
-          "name": "dragon ham",
-          "countmax": "5",
-          "chance": "80000"
-        },
-        {
-          "name": "green mushroom",
-          "chance": "12000"
-        },
-        {
-          "name": "royal spear",
-          "countmax": "3",
-          "chance": "9000"
-        },
-        {
-          "id": "1976",
-          "chance": "9000"
-        },
-        {
-          "name": "power bolt",
-          "countmax": "7",
-          "chance": "6700"
-        },
-        {
-          "name": "energy ring",
-          "chance": "5250"
-        },
-        {
-          "name": "small sapphire",
-          "chance": "5300"
-        },
-        {
-          "name": "golden mug",
-          "chance": "3190"
-        },
-        {
-          "name": "red dragon scale",
-          "chance": "1920"
-        },
-        {
-          "name": "red dragon leather",
-          "chance": "1040"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "970"
-        },
-        {
-          "name": "life crystal",
-          "chance": "680"
-        },
-        {
-          "name": "strange helmet",
-          "chance": "360"
-        },
-        {
-          "name": "fire sword",
-          "chance": "290"
-        },
-        {
-          "name": "tower shield",
-          "chance": "250"
-        },
-        {
-          "name": "royal helmet",
-          "chance": "280"
-        },
-        {
-          "name": "dragon scale mail",
-          "chance": "170"
-        },
-        {
-          "name": "dragon slayer",
-          "chance": "110"
-        },
-        {
-          "name": "dragon lord trophy",
-          "chance": "90"
+          "areaEffect": "firearea"
         }
-      ]/* book (gemmed) */
+      ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "57",
+      "max": "93",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 80,
+    "energyPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 245,
+      "chance": 95000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 80000,
+      "items": [],
+      "name": "dragon ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12000,
+      "items": [],
+      "name": "green mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 9000,
+      "items": [],
+      "name": "royal spear"
+    },
+    {
+      "id": 1976,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 6700,
+      "items": [],
+      "name": "power bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5250,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5300,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3190,
+      "items": [],
+      "name": "golden mug"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1920,
+      "items": [],
+      "name": "red dragon scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1040,
+      "items": [],
+      "name": "red dragon leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 970,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 680,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 360,
+      "items": [],
+      "name": "strange helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 290,
+      "items": [],
+      "name": "fire sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 250,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": "royal helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 170,
+      "items": [],
+      "name": "dragon scale mail"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "dragon slayer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "dragon lord trophy"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "ZCHHHHH",
+        "yell": false
+      },
+      {
+        "sentence": "YOU WILL BURN!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

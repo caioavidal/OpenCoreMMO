@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Location;
-using NeoServer.Server.Commands.Player;
+﻿using NeoServer.Game.Common.Location;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Model.Players.Contracts;
@@ -26,7 +24,6 @@ namespace NeoServer.Server.Handlers.Players
                 game.Dispatcher.AddEvent(new Event(() => player.TryWalkTo(direction)));
             }
         }
-
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)
         {
             var direction = Direction.North;

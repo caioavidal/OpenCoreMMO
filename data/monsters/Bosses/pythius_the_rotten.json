@@ -1,240 +1,204 @@
 {
-  "monster": {
-    "name": "Pythius The Rotten",
-    "nameDescription": "Pythius the rotten",
-    "race": "undead",
-    "experience": "7000",
-    "speed": "350",
-    "health": {
-      "now": "9500",
-      "max": "9500"
+  "name": "Pythius The Rotten",
+  "nameDescription": "Pythius the rotten",
+  "race": "undead",
+  "experience": 7000,
+  "speed": 350,
+  "manaCost": 0,
+  "health": {
+    "max": 9500,
+    "now": 9500
+  },
+  "look": {
+    "type": 231,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1950",
+      "min": "0",
+      "max": "-210"
     },
-    "look": {
-      "type": "231",
-      "corpse": "7349"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "chance": "16",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "0",
+      "max": "-795",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "fire"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "redspark"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "physical",
+      "interval": "2800",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-400",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "1950",
-          "min": "0",
-          "max": "-210"
+          "shootEffect": "suddendeath"
         },
         {
-          "name": "melee",
-          "interval": "2000",
-          "chance": "16",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "min": "0",
-          "max": "-795",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "redspark"
-            }
-          ]
-        },
-        {
-          "name": "physical",
-          "interval": "2800",
-          "chance": "15",
-          "range": "7",
-          "min": "0",
-          "max": "-400",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "17",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "min": "-55",
-          "max": "-155",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "2500",
-          "chance": "14",
-          "length": "8",
-          "spread": "3",
-          "min": "-333",
-          "max": "-413",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "18",
-          "length": "7",
-          "spread": "0",
-          "min": "-165",
-          "max": "-200",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redspark"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "2500",
-          "chance": "22",
-          "range": "8",
-          "min": "-85",
-          "max": "-110",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "ice"
-          }
-        },
-        {
-          "name": "drowncondition",
-          "interval": "1000",
-          "chance": "45",
-          "length": "8",
-          "spread": "3",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poff"
-          }
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "defenses": {
-      "armor": "40",
-      "defense": "45"
-    },
-    "elements": {
-      "element": {
-        "holyPercent": "-20"
-      }
-    },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "17",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-55",
+      "max": "-155",
+      "attributes": [
         {
-          "death": "1"
+          "shootEffect": "poison"
         },
         {
-          "earth": "1"
-        },
-        {
-          "energy": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "poison"
         }
       ]
     },
-    "summons": {
-      "maxSummons": "3",
-      "summon": {
-        "name": "Undead Gladiator",
-        "interval": "1000",
-        "chance": "10"
-      }
+    {
+      "name": "earth",
+      "interval": "2500",
+      "chance": "14",
+      "length": "8",
+      "spread": "3",
+      "min": "-333",
+      "max": "-413",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "18",
+      "length": "7",
+      "spread": "0",
+      "min": "-165",
+      "max": "-200",
+      "attributes": [
         {
-          "sentence": "YOU'LL NEVER GET MY TREASURE!",
-          "yell": "1"
-        },
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2500",
+      "chance": "22",
+      "range": "8",
+      "min": "-85",
+      "max": "-110",
+      "attributes": [
         {
-          "sentence": "MINIONS, MEET YOUR NEW BROTHER!",
-          "yell": "1"
-        },
+          "shootEffect": "ice"
+        }
+      ]
+    },
+    {
+      "name": "drowncondition",
+      "interval": "1000",
+      "chance": "45",
+      "length": "8",
+      "spread": "3",
+      "attributes": [
         {
-          "sentence": "YOU WILL REGRET THAT YOU ARE BORN!",
-          "yell": "1"
-        },
-        {
-          "sentence": "YOU MADE A HUGE WASTE!",
-          "yell": "1"
-        },
-        {
-          "sentence": "I SENSE LIFE",
-          "yell": "1"
+          "areaEffect": "poff"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 45
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": -20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "YOU'LL NEVER GET MY TREASURE!",
+        "yell": false
+      },
+      {
+        "sentence": "MINIONS, MEET YOUR NEW BROTHER!",
+        "yell": false
+      },
+      {
+        "sentence": "YOU WILL REGRET THAT YOU ARE BORN!",
+        "yell": false
+      },
+      {
+        "sentence": "YOU MADE A HUGE WASTE!",
+        "yell": false
+      },
+      {
+        "sentence": "I SENSE LIFE",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "energy": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Undead Gladiator",
+        "interval": 1000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

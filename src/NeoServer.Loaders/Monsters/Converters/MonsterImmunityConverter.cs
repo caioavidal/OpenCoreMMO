@@ -8,7 +8,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 {
     public class MonsterImmunityConverter
     {
-        public static IDictionary<DamageType, sbyte> Convert(MonsterData.MonsterMetadata data)
+        public static IDictionary<DamageType, sbyte> Convert(MonsterData data)
         {
             if(data.Elements is null) return new Dictionary<DamageType, sbyte>(0);
 

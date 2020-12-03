@@ -1,262 +1,264 @@
 {
-  "monster": {
-    "name": "Koshei The Deathless",
-    "nameDescription": "Koshei the Deathless",
-    "race": "undead",
-    "experience": "0",
-    "speed": "390",
-    "health": {
-      "now": "3000",
-      "max": "3000"
+  "name": "Koshei The Deathless",
+  "nameDescription": "Koshei the Deathless",
+  "race": "undead",
+  "experience": 0,
+  "speed": 390,
+  "manaCost": 0,
+  "health": {
+    "max": 3000,
+    "now": 3000
+  },
+  "look": {
+    "type": 99,
+    "corpse": 6028
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-170",
+      "poison": "300"
     },
-    "look": {
-      "type": "99",
-      "head": "95",
-      "body": "116",
-      "legs": "119",
-      "feet": "115",
-      "corpse": "6028"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "3000",
+      "chance": "9",
+      "range": "1",
+      "min": "-60",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "11",
+      "radius": "3",
+      "target": "0",
+      "min": "-70",
+      "max": "-135",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-170",
-          "poison": "300"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "3000",
-          "chance": "9",
-          "range": "1",
-          "min": "-60",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "11",
-          "radius": "3",
-          "target": "0",
-          "min": "-70",
-          "max": "-135",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "9",
-          "length": "8",
-          "spread": "0",
-          "min": "-50",
-          "max": "-140",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "mortarea"
-          }
-        },
-        {
-          "name": "cursecondition",
-          "interval": "3000",
-          "chance": "15",
-          "range": "1",
-          "min": "-54",
-          "max": "-54"
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "speedchange": "-900",
-          "duration": "30000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "30",
-        "min": "150",
-        "max": "300",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "9",
+      "length": "8",
+      "spread": "0",
+      "min": "-50",
+      "max": "-140",
+      "attributes": [
         {
-          "energyPercent": "80"
-        },
-        {
-          "holyPercent": "-15"
-        },
-        {
-          "firePercent": "-10"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
+    {
+      "name": "cursecondition",
+      "interval": "3000",
+      "chance": "15",
+      "range": "1",
+      "min": "-54",
+      "max": "-54"
     },
-    "summons": {
-      "maxSummons": "1",
-      "summon": {
-        "name": "bonebeast",
-        "interval": "1000",
-        "chance": "16",
-        "max": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "speedchange": "-900",
+      "duration": "30000",
+      "attributes": [
         {
-          "sentence": "Your pain will be beyond imagination!"
-        },
-        {
-          "sentence": "You can't defeat me! I will ressurect and take your soul!"
-        },
-        {
-          "sentence": "Death is my ally!"
-        },
-        {
-          "sentence": "Welcome to my domain, visitor!"
-        },
-        {
-          "sentence": "You will be my toy on the other side!"
-        },
-        {
-          "sentence": "What a disgusting smell of life!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "100000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "12",
-          "chance": "80000"
-        },
-        {
-          "name": "stealth ring",
-          "chance": "888"
-        },
-        {
-          "name": "platinum amulet",
-          "chance": "1666"
-        },
-        {
-          "id": "2175",
-          "chance": "10000"
-        },
-        {
-          "name": "gold ring",
-          "chance": "900"
-        },
-        {
-          "name": "dirty cape",
-          "chance": "10000"
-        },
-        {
-          "id": "2401",
-          "chance": "10000"
-        },
-        {
-          "name": "castle shield",
-          "chance": "588"
-        },
-        {
-          "name": "blue robe",
-          "chance": "709"
-        },
-        {
-          "name": "lich staff",
-          "chance": "1000"
-        },
-        {
-          "name": "lightning boots",
-          "chance": "688"
+          "areaEffect": "redshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "30",
+      "min": "150",
+      "max": "300",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 80,
+    "holyPercent": -15,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 12,
+      "chance": 80000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 888,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1666,
+      "items": [],
+      "name": "platinum amulet"
+    },
+    {
+      "id": 2175,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 900,
+      "items": [],
+      "name": "gold ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "dirty cape"
+    },
+    {
+      "id": 2401,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 588,
+      "items": [],
+      "name": "castle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 709,
+      "items": [],
+      "name": "blue robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "lich staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 688,
+      "items": [],
+      "name": "lightning boots"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Your pain will be beyond imagination!",
+        "yell": false
+      },
+      {
+        "sentence": "You can't defeat me! I will ressurect and take your soul!",
+        "yell": false
+      },
+      {
+        "sentence": "Death is my ally!",
+        "yell": false
+      },
+      {
+        "sentence": "Welcome to my domain, visitor!",
+        "yell": false
+      },
+      {
+        "sentence": "You will be my toy on the other side!",
+        "yell": false
+      },
+      {
+        "sentence": "What a disgusting smell of life!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "bonebeast",
+        "interval": 1000,
+        "chance": 16,
+        "max": 1
+      }
+    ]
   }
 }

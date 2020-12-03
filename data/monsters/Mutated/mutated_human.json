@@ -1,256 +1,253 @@
 {
-  "monster": {
-    "name": "Mutated Human",
-    "nameDescription": "a mutated human",
-    "race": "blood",
-    "experience": "150",
-    "speed": "200",
-    "health": {
-      "now": "240",
-      "max": "240"
+  "name": "Mutated Human",
+  "nameDescription": "a mutated human",
+  "race": "blood",
+  "experience": 150,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 240,
+    "now": 240
+  },
+  "look": {
+    "type": 323,
+    "corpse": 9107
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-90",
+      "poison": "60"
     },
-    "look": {
-      "type": "323",
-      "corpse": "9107"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "length": "3",
+      "spread": "1",
+      "target": "0",
+      "min": "-50",
+      "max": "-60",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "poison"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "length": "1",
+      "spread": "0",
+      "min": "-190",
+      "max": "-280",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-90",
-          "poison": "60"
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "15",
-          "length": "3",
-          "spread": "1",
-          "target": "0",
-          "min": "-50",
-          "max": "-60",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "20",
-          "target": "1",
-          "length": "1",
-          "spread": "0",
-          "min": "-190",
-          "max": "-280",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "greenspark"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "target": "1",
-          "range": "7",
-          "speedchange": "-600",
-          "duration": "30000",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "explosion"
-            },
-            {
-              "key": "areaEffect",
-              "value": "stun"
-            }
-          ]
+          "areaeffect": "greenspark"
         }
       ]
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "speed",
-        "interval": "2000",
-        "chance": "15",
-        "speedchange": "220",
-        "duration": "5000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "greenbubble"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "20"
-        },
-        {
-          "holyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "speed",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "target": "1",
+      "range": "7",
+      "speedchange": "-600",
+      "duration": "30000",
+      "attributes": [
         {
-          "sentence": "Take that creature off my back!! I can fell it!"
+          "areaEffect": "explosion"
         },
         {
-          "sentence": "HEEEEEEEELP!"
-        },
-        {
-          "sentence": "You will be the next infected one... GRAAAAAAAAARRR!"
-        },
-        {
-          "sentence": "Science... is a curse."
-        },
-        {
-          "sentence": "Run as fast as you can."
-        },
-        {
-          "sentence": "Oh by the gods! What is this... aaaaaargh!"
+          "areaEffect": "stun"
         }
       ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "80",
-          "chance": "44000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "50",
-          "chance": "44000"
-        },
-        {
-          "name": "strange talisman",
-          "chance": "4980"
-        },
-        {
-          "name": "silver amulet",
-          "chance": "70"
-        },
-        {
-          "name": "fishbone",
-          "chance": "10050"
-        },
-        {
-          "id": "2376",
-          "chance": "5030"
-        },
-        {
-          "name": "scale armor",
-          "chance": "8080"
-        },
-        {
-          "id": "2696",
-          "chance": "8000"
-        },
-        {
-          "name": "fern",
-          "chance": "420"
-        },
-        {
-          "name": "worm",
-          "countmax": "2",
-          "chance": "7110"
-        },
-        {
-          "name": "peanut",
-          "chance": "580"
-        },
-        {
-          "id": "9808",
-          "chance": "190"
-        },
-        {
-          "name": "mutated flesh",
-          "chance": "19940"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "220",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 80,
+      "chance": 44000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 44000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4980,
+      "items": [],
+      "name": "strange talisman"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "silver amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10050,
+      "items": [],
+      "name": "fishbone"
+    },
+    {
+      "id": 2376,
+      "countmax": 1,
+      "chance": 5030,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8080,
+      "items": [],
+      "name": "scale armor"
+    },
+    {
+      "id": 2696,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "fern"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 7110,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 580,
+      "items": [],
+      "name": "peanut"
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 190,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 19940,
+      "items": [],
+      "name": "mutated flesh"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Take that creature off my back!! I can fell it!",
+        "yell": false
+      },
+      {
+        "sentence": "HEEEEEEEELP!",
+        "yell": false
+      },
+      {
+        "sentence": "You will be the next infected one... GRAAAAAAAAARRR!",
+        "yell": false
+      },
+      {
+        "sentence": "Science... is a curse.",
+        "yell": false
+      },
+      {
+        "sentence": "Run as fast as you can.",
+        "yell": false
+      },
+      {
+        "sentence": "Oh by the gods! What is this... aaaaaargh!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "lifedrain": 1,
+    "drunk": 1,
+    "drown": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

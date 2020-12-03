@@ -1,122 +1,100 @@
 {
-  "monster": {
-    "name": "Spirit of Fire",
-    "nameDescription": "a spirit of fire",
-    "race": "blood",
-    "experience": "950",
-    "speed": "220",
-    "health": {
-      "now": "2210",
-      "max": "2210"
+  "name": "Spirit of Fire",
+  "nameDescription": "a spirit of fire",
+  "race": "blood",
+  "experience": 950,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 2210,
+    "now": 2210
+  },
+  "look": {
+    "type": 242,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300"
     },
-    "look": {
-      "type": "242",
-      "corpse": "7349"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "firefield",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "shootEffect": "fire"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "20",
+      "range": "7",
+      "min": "-650",
+      "max": "-315",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-300"
-        },
-        {
-          "name": "firefield",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "20",
-          "range": "7",
-          "min": "-650",
-          "max": "-315",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
+          "shootEffect": "fire"
         }
       ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "6",
-      "voice": {
-        "sentence": "Feel the heat."
-      }
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 6,
+    "sentences": [
+      {
+        "sentence": "Feel the heat.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

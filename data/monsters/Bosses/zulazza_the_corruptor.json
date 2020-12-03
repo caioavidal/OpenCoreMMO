@@ -1,278 +1,310 @@
 {
-  "monster": {
-    "name": "Zulazza the Corruptor",
-    "nameDescription": "Zulazza The Corruptor",
-    "race": "blood",
-    "experience": "9800",
-    "speed": "290",
-    "health": {
-      "now": "28000",
-      "max": "28000"
-    },
-    "look": {
-      "type": "334",
-      "corpse": "11107"
-    },
-    "targetchange": {
+  "name": "Zulazza the Corruptor",
+  "nameDescription": "Zulazza The Corruptor",
+  "race": "blood",
+  "experience": 9800,
+  "speed": 290,
+  "manaCost": 0,
+  "health": {
+    "max": 28000,
+    "now": 28000
+  },
+  "look": {
+    "type": 334,
+    "corpse": 11107
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 1500
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "10"
+      "min": "0",
+      "max": "-2100"
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "1500"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-2100"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "40",
-          "length": "8",
-          "spread": "0",
-          "min": "-500",
-          "max": "-800",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "mortarea"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "30",
-          "radius": "3",
-          "target": "0",
-          "min": "-300",
-          "max": "-800",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "25",
-          "range": "7",
-          "target": "1",
-          "min": "-50",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "speedchange": "-500",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "96",
-      "defense": "119",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "20",
-        "min": "2000",
-        "max": "3000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "20"
-        },
-        {
-          "holyPercent": "20"
-        },
-        {
-          "deathPercent": "30"
-        },
-        {
-          "earthPercent": "70"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "energy": "1"
-        }
-      ]
-    },
-    "voices": {
+    {
+      "name": "physical",
       "interval": "2000",
-      "chance": "10",
-      "voice": [
+      "chance": "40",
+      "length": "8",
+      "spread": "0",
+      "min": "-500",
+      "max": "-800",
+      "attributes": [
         {
-          "sentence": "I'm Zulazza, and you won't forget me that fazzt."
-        },
-        {
-          "sentence": "Oh, HE will take revenge on zzizz azzault when you zztep in front of HIZZ fazze!"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "30",
+      "radius": "3",
+      "target": "0",
+      "min": "-300",
+      "max": "-800",
+      "attributes": [
         {
-          "name": "emerald bangle",
-          "chance": "10500"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "49650"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "30",
-          "chance": "41325"
-        },
-        {
-          "name": "violet gem",
-          "chance": "25500"
-        },
-        {
-          "name": "yellow gem",
-          "chance": "15500"
-        },
-        {
-          "name": "green gem",
-          "chance": "20500"
-        },
-        {
-          "name": "red gem",
-          "chance": "10500"
-        },
-        {
-          "name": "blue gem",
-          "chance": "30500"
-        },
-        {
-          "name": "mastermind shield",
-          "chance": "5500"
-        },
-        {
-          "name": "guardian shield",
-          "chance": "5500"
-        },
-        {
-          "name": "tower shield",
-          "chance": "15500"
-        },
-        {
-          "name": "soul orb",
-          "countmax": "4",
-          "chance": "19250"
-        },
-        {
-          "name": "viper star",
-          "countmax": "67",
-          "chance": "8100"
-        },
-        {
-          "name": "mastermind potion",
-          "chance": "10500"
-        },
-        {
-          "name": "great mana potion",
-          "chance": "20500"
-        },
-        {
-          "name": "great health potion",
-          "chance": "30500"
-        },
-        {
-          "id": "7632",
-          "countmax": "2",
-          "chance": "28000"
-        },
-        {
-          "name": "ultimate health potion",
-          "chance": "10500"
-        },
-        {
-          "name": "earthborn titan armor",
-          "chance": "5500"
-        },
-        {
-          "name": "paladin armor",
-          "chance": "5500"
-        },
-        {
-          "id": "9808",
-          "chance": "50500"
-        },
-        {
-          "name": "gold ingot",
-          "countmax": "4",
-          "chance": "33000"
-        },
-        {
-          "name": "dragon scale boots",
-          "chance": "5500"
+          "areaEffect": "poison"
         }
-      ],
-      "#comment": []
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "25",
+      "range": "7",
+      "target": "1",
+      "min": "-50",
+      "max": "-130",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "speedchange": "-500",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 96,
+    "defense": 119
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "2000",
+      "max": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "holyPercent": 20,
+    "deathPercent": 30,
+    "earthPercent": 70
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": "emerald bangle"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 49650,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 41325,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25500,
+      "items": [],
+      "name": "violet gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15500,
+      "items": [],
+      "name": "yellow gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20500,
+      "items": [],
+      "name": "green gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": "red gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 30500,
+      "items": [],
+      "name": "blue gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "mastermind shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15500,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 19250,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 67,
+      "chance": 8100,
+      "items": [],
+      "name": "viper star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": "mastermind potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20500,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 30500,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 7632,
+      "countmax": 2,
+      "chance": 28000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "earthborn titan armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "paladin armor"
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 50500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 33000,
+      "items": [],
+      "name": "gold ingot"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "dragon scale boots"
+    }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I'm Zulazza, and you won't forget me that fazzt.",
+        "yell": false
+      },
+      {
+        "sentence": "Oh, HE will take revenge on zzizz azzault when you zztep in front of HIZZ fazze!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "energy": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -9,8 +9,8 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
 {
     public class HealCombatDefense : BaseCombatDefense
     {
-        public ushort Min { get; set; }
-        public ushort Max { get; set; }
+        public int Min { get; set; }
+        public int Max { get; set; }
 
         public override void Defende(ICombatActor actor)
         {

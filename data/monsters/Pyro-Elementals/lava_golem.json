@@ -1,314 +1,358 @@
 {
-  "monster": {
-    "name": "Lava Golem",
-    "nameDescription": "a lava golem",
-    "race": "fire",
-    "experience": "6200",
-    "speed": "290",
-    "health": {
-      "now": "9000",
-      "max": "9000"
+  "name": "Lava Golem",
+  "nameDescription": "a lava golem",
+  "race": "fire",
+  "experience": 6200,
+  "speed": 290,
+  "manaCost": 0,
+  "health": {
+    "max": 9000,
+    "now": 9000
+  },
+  "look": {
+    "type": 491,
+    "corpse": 17333
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-400"
     },
-    "look": {
-      "type": "491",
-      "corpse": "17333"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "0",
+      "min": "-350",
+      "max": "-700",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
+          "areaEffect": "fireattack"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-400"
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "15",
-          "length": "8",
-          "spread": "0",
-          "min": "-350",
-          "max": "-700",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "fireattack"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "0",
-          "min": "-600",
-          "max": "-1300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "mortarea"
-          }
-        },
-        {
-          "name": "lava golem soulfire",
-          "interval": "2000",
-          "chance": "15"
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "4",
-          "target": "1",
-          "min": "-220",
-          "max": "-350",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "firearea"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "target": "0",
-          "length": "5",
-          "spread": "3",
-          "speedchange": "-800",
-          "duration": "30000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowspark"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "30",
-          "target": "0",
-          "radius": "3",
-          "min": "-280",
-          "max": "-350",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "fire"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "60",
-      "defense": "60"
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "-5"
-        },
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "energyPercent": "5"
-        },
-        {
-          "deathPercent": "5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "manadrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": {
-        "sentence": "Grrrrunt"
-      }
+      "length": "8",
+      "spread": "0",
+      "min": "-600",
+      "max": "-1300",
+      "attributes": [
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "lava golem soulfire",
+      "interval": "2000",
+      "chance": "15"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "1",
+      "min": "-220",
+      "max": "-350",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "199",
-          "chance": "100000"
-        },
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "3",
+      "speedchange": "-800",
+      "duration": "30000",
+      "attributes": [
         {
-          "name": "platinum coin",
-          "countmax": "11",
-          "chance": "100000"
-        },
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "30",
+      "target": "0",
+      "radius": "3",
+      "min": "-280",
+      "max": "-350",
+      "attributes": [
         {
-          "name": "yellow gem",
-          "chance": "6480"
-        },
-        {
-          "name": "red gem",
-          "chance": "1180"
-        },
-        {
-          "name": "wand of inferno",
-          "chance": "2950"
-        },
-        {
-          "name": "fire sword",
-          "chance": "1710"
-        },
-        {
-          "name": "fire axe",
-          "chance": "1560"
-        },
-        {
-          "name": "crown shield",
-          "chance": "1180"
-        },
-        {
-          "name": "iron ore",
-          "chance": "11570"
-        },
-        {
-          "name": "white piece of cloth",
-          "chance": "4810"
-        },
-        {
-          "name": "red piece of cloth",
-          "chance": "3530"
-        },
-        {
-          "name": "yellow piece of cloth",
-          "chance": "7230"
-        },
-        {
-          "name": "strong health potion",
-          "countmax": "2",
-          "chance": "18830"
-        },
-        {
-          "name": "strong mana potion",
-          "countmax": "2",
-          "chance": "18150"
-        },
-        {
-          "name": "great mana potion",
-          "countmax": "2",
-          "chance": "16030"
-        },
-        {
-          "name": "mana potion",
-          "countmax": "2",
-          "chance": "20720"
-        },
-        {
-          "name": "magma amulet",
-          "chance": "2900"
-        },
-        {
-          "name": "magma boots",
-          "chance": "2650"
-        },
-        {
-          "name": "magma coat",
-          "chance": "430"
-        },
-        {
-          "name": "ultimate health potion",
-          "chance": "15390"
-        },
-        {
-          "name": "spellbook of mind control",
-          "chance": "450"
-        },
-        {
-          "name": "fiery heart",
-          "chance": "13510"
-        },
-        {
-          "name": "wand of everblazing",
-          "chance": "1390"
-        },
-        {
-          "name": "violet crystal shard",
-          "chance": "6200"
-        },
-        {
-          "name": "green crystal splinter",
-          "countmax": "2",
-          "chance": "13990"
-        },
-        {
-          "name": "red crystal fragment",
-          "chance": "10990"
-        },
-        {
-          "name": "magma clump",
-          "countmax": "2",
-          "chance": "15370"
-        },
-        {
-          "name": "blazing bone",
-          "chance": "15200"
-        },
-        {
-          "name": "prismatic bolt",
-          "countmax": "5",
-          "chance": "12580"
+          "areaEffect": "fire"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 60,
+    "defense": 60
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": -5,
+    "physicalPercent": 5,
+    "energyPercent": 5,
+    "deathPercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 199,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 11,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6480,
+      "items": [],
+      "name": "yellow gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1180,
+      "items": [],
+      "name": "red gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2950,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1710,
+      "items": [],
+      "name": "fire sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1560,
+      "items": [],
+      "name": "fire axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1180,
+      "items": [],
+      "name": "crown shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11570,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4810,
+      "items": [],
+      "name": "white piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3530,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7230,
+      "items": [],
+      "name": "yellow piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 18830,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 18150,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 16030,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 20720,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2900,
+      "items": [],
+      "name": "magma amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2650,
+      "items": [],
+      "name": "magma boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "magma coat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15390,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "spellbook of mind control"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13510,
+      "items": [],
+      "name": "fiery heart"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1390,
+      "items": [],
+      "name": "wand of everblazing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6200,
+      "items": [],
+      "name": "violet crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 13990,
+      "items": [],
+      "name": "green crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10990,
+      "items": [],
+      "name": "red crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 15370,
+      "items": [],
+      "name": "magma clump"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15200,
+      "items": [],
+      "name": "blazing bone"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 12580,
+      "items": [],
+      "name": "prismatic bolt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrrunt",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

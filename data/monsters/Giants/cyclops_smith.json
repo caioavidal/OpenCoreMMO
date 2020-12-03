@@ -1,202 +1,209 @@
 {
-  "monster": {
-    "name": "Cyclops Smith",
-    "nameDescription": "a cyclops smith",
-    "race": "blood",
-    "experience": "255",
-    "speed": "210",
-    "manacost": "695",
-    "health": {
-      "now": "435",
-      "max": "435"
+  "name": "Cyclops Smith",
+  "nameDescription": "a cyclops smith",
+  "race": "blood",
+  "experience": 255,
+  "speed": 210,
+  "manaCost": 695,
+  "health": {
+    "max": 435,
+    "now": 435
+  },
+  "look": {
+    "type": 277,
+    "corpse": 7740
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-150"
     },
-    "look": {
-      "type": "277",
-      "corpse": "7740"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-150"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "min": "0",
-          "max": "-70",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "whirlwindclub"
-          }
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "duration": "4000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "whirlwindclub"
-            },
-            {
-              "key": "areaEffect",
-              "value": "stun"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "firePercent": "10"
-        },
-        {
-          "holyPercent": "1"
-        },
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "physical",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "min": "0",
+      "max": "-70",
+      "attributes": [
         {
-          "sentence": "Outis emoi g' onoma."
-        },
-        {
-          "sentence": "Whack da humy!"
-        },
-        {
-          "sentence": "Ai humy phary ty kaynon"
+          "shootEffect": "whirlwindclub"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "4000",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "70",
-          "chance": "82920"
+          "shootEffect": "whirlwindclub"
         },
         {
-          "name": "club ring",
-          "chance": "90"
-        },
-        {
-          "name": "battle axe",
-          "chance": "5450"
-        },
-        {
-          "name": "double axe",
-          "chance": "880"
-        },
-        {
-          "name": "battle hammer",
-          "chance": "5200"
-        },
-        {
-          "name": "heavy machete",
-          "chance": "2000"
-        },
-        {
-          "name": "dark helmet",
-          "chance": "200"
-        },
-        {
-          "name": "plate shield",
-          "chance": "2000"
-        },
-        {
-          "name": "battle shield",
-          "chance": "6190"
-        },
-        {
-          "name": "meat",
-          "chance": "49950"
-        },
-        {
-          "id": "7398",
-          "chance": "140"
-        },
-        {
-          "name": "spiked squelcher",
-          "chance": "150"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "390"
-        },
-        {
-          "name": "cyclops toe",
-          "chance": "10280"
+          "areaEffect": "stun"
         }
-      ]/* cyclops trophy */
+      ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "firePercent": 10,
+    "holyPercent": 1,
+    "earthPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 82920,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "club ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5450,
+      "items": [],
+      "name": "battle axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 880,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5200,
+      "items": [],
+      "name": "battle hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "heavy machete"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "dark helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "plate shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6190,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 49950,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 7398,
+      "countmax": 1,
+      "chance": 140,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 390,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10280,
+      "items": [],
+      "name": "cyclops toe"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Outis emoi g' onoma.",
+        "yell": false
+      },
+      {
+        "sentence": "Whack da humy!",
+        "yell": false
+      },
+      {
+        "sentence": "Ai humy phary ty kaynon",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

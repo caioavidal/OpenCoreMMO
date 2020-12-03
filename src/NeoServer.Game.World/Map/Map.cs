@@ -84,10 +84,16 @@ namespace NeoServer.Game.World.Map
 
             if (thing is IWalkableCreature creature)
             {
-                var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
-                if (result.Success is false) return false;
-
                 SwapCreatureBetweenSectors(creature, toLocation);
+
+                var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
+                if (result.Success is false)
+                {
+                    RollbackSwapCreatureBetweenSectors(creature, toLocation);
+
+                    return false;
+                }
+
                 foreach (var spectator in cylinder.TileSpectators)
                 {
                     if (spectator.Spectator is IMonster monsterSpectator && thing is IPlayer playerWalking)
@@ -102,16 +108,12 @@ namespace NeoServer.Game.World.Map
                 OnCreatureMoved?.Invoke(creature, cylinder);
             }
 
-            thing.OnMoved();
-
-
             var tileDestination = GetTileDestination(toTile);
 
             if (tileDestination == toTile)
             {
                 return true;
             }
-
 
             return TryMoveThing(thing, tileDestination.Location);
         }
@@ -125,6 +127,17 @@ namespace NeoServer.Game.World.Map
             {
                 oldSector.RemoveCreature(creature);
                 newSector.AddCreature(creature);
+            }
+        }
+        private void RollbackSwapCreatureBetweenSectors(ICreature creature, Location toLocation)
+        {
+            var oldSector = world.GetSector(creature.Location.X, creature.Location.Y);
+            var newSector = world.GetSector(toLocation.X, toLocation.Y);
+
+            if (oldSector != newSector)
+            {
+                newSector.RemoveCreature(creature);
+                oldSector.AddCreature(creature);
             }
         }
 

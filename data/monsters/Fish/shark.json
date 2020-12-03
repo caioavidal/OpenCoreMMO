@@ -1,149 +1,134 @@
 {
-  "monster": {
-    "name": "Shark",
-    "nameDescription": "a shark",
-    "race": "blood",
-    "experience": "700",
-    "speed": "230",
-    "health": {
-      "now": "1200",
-      "max": "1200"
-    },
-    "look": {
-      "type": "453",
-      "corpse": "15287"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "canwalkonenergy": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-175"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "1"
-        },
-        {
-          "firePercent": "1"
-        },
-        {
-          "icePercent": "1"
-        },
-        {
-          "energyPercent": "-5"
-        },
-        {
-          "earthPercent": "20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "drown": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Rarr chomp chomp!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small sapphire",
-          "chance": "1222"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "38",
-          "chance": "40000"
-        },
-        {
-          "id": "2667",
-          "countmax": "4",
-          "chance": "25000"
-        },
-        {
-          "name": "fish fin",
-          "chance": "161"
-        },
-        {
-          "id": "7632",
-          "chance": "550"
-        },
-        {
-          "name": "eye of a deepling",
-          "chance": "1270"
-        },
-        {
-          "name": "deepling scales",
-          "chance": "9090"
-        }
-      ],
-      "#comment": []
+  "name": "Shark",
+  "nameDescription": "a shark",
+  "race": "blood",
+  "experience": 700,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1200,
+    "now": 1200
+  },
+  "look": {
+    "type": 453,
+    "corpse": 15287
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 0,
+    "staticattack": 90,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-175"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 1,
+    "firePercent": 1,
+    "icePercent": 1,
+    "energyPercent": -5,
+    "earthPercent": 20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1222,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 38,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2667,
+      "countmax": 4,
+      "chance": 25000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 161,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 7632,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1270,
+      "items": [],
+      "name": "eye of a deepling"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9090,
+      "items": [],
+      "name": "deepling scales"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Rarr chomp chomp!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

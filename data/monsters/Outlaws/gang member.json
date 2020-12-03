@@ -1,151 +1,153 @@
 {
-  "monster": {
-    "name": "Gang Member",
-    "nameDescription": "a gang member",
-    "race": "blood",
-    "experience": "70",
-    "speed": "220",
-    "manacost": "420",
-    "health": {
-      "now": "295",
-      "max": "295"
-    },
-    "look": {
-      "type": "151",
-      "head": "114",
-      "body": "19",
-      "legs": "42",
-      "feet": "20",
-      "corpse": "3058"
-    },
-    "targetchange": {
+  "name": "Gang Member",
+  "nameDescription": "a gang member",
+  "race": "blood",
+  "experience": 70,
+  "speed": 220,
+  "manaCost": 420,
+  "health": {
+    "max": 295,
+    "now": 295
+  },
+  "look": {
+    "type": 151,
+    "corpse": 3058
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 45
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "0"
+      "skill": "60",
+      "attack": "20"
+    }
+  ],
+  "defense": {
+    "armor": 14,
+    "defense": 16
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 23,
+      "chance": 22500,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2666,
+      "countmax": 1,
+      "chance": 20450,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "45"
-        }
-      ]
+    {
+      "id": 2389,
+      "countmax": 1,
+      "chance": 20500,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "60",
-        "attack": "20"
-      }
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "14",
-      "defense": "16"
+    {
+      "id": 2649,
+      "countmax": 1,
+      "chance": 2270,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": {
-        "deathPercent": "-10"
-      }
+    {
+      "id": 2468,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
+    {
+      "id": 1980,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "sentence": "This is our territory!"
+          "id": 2689,
+          "countmax": 1,
+          "chance": 7500,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Help me guys!"
+          "id": 2050,
+          "countmax": 1,
+          "chance": 3500,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "I don't like the way you look!"
-        },
-        {
-          "sentence": "You're wearing the wrong colours!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "23",
-          "chance": "22500"
-        },
-        {
-          "id": "2666",
-          "chance": "20450"
-        },
-        {
-          "id": "2389",
-          "chance": "20500"
-        },
-        {
-          "id": "2050",
-          "chance": "3500"
-        },
-        {
-          "id": "2649",
-          "chance": "2270"
-        },
-        {
-          "id": "2468",
-          "chance": "9000"
-        },
-        {
-          "id": "1980",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2689",
-              "chance": "7500"
-            },
-            {
-              "id": "2050",
-              "chance": "3500"
-            },
-            {
-              "id": "2209",
-              "chance": "1000"
-            }
-          ]
+          "id": 2209,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "This is our territory!",
+        "yell": false
+      },
+      {
+        "sentence": "Help me guys!",
+        "yell": false
+      },
+      {
+        "sentence": "I don't like the way you look!",
+        "yell": false
+      },
+      {
+        "sentence": "You're wearing the wrong colours!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -166,7 +166,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public virtual bool TryWalkTo(params Direction[] directions)
         {
-
             if (!WalkingQueue.IsEmpty)
             {
                 WalkingQueue.Clear();
@@ -210,7 +209,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
 
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);
-
         public void ChangeSpeed(int newSpeed)
         {
             Speed = (ushort)newSpeed;

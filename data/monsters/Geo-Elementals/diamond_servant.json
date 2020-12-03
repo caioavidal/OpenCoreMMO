@@ -1,245 +1,256 @@
 {
-  "monster": {
-    "name": "Diamond Servant",
-    "nameDescription": "a diamond servant",
-    "race": "energy",
-    "experience": "700",
-    "speed": "210",
-    "health": {
-      "now": "1000",
-      "max": "1000"
+  "name": "Diamond Servant",
+  "nameDescription": "a diamond servant",
+  "race": "energy",
+  "experience": 700,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 1000,
+    "now": 1000
+  },
+  "look": {
+    "type": 397,
+    "corpse": 13485
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 100,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
     },
-    "look": {
-      "type": "397",
-      "corpse": "13485"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "3",
+      "target": "0",
+      "min": "-80",
+      "max": "-120",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "100"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "yellowenergy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "length": "5",
+      "spread": "2",
+      "min": "-125",
+      "max": "-170",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100"
+          "shootEffect": "energy"
         },
         {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "20",
-          "radius": "3",
-          "target": "0",
-          "min": "-80",
-          "max": "-120",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowenergy"
-          }
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "length": "5",
-          "spread": "2",
-          "min": "-125",
-          "max": "-170",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "target": "1",
-          "duration": "3000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "death"
-            },
-            {
-              "key": "areaEffect",
-              "value": "stun"
-            }
-          ]
+          "areaEffect": "energy"
         }
       ]
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "80"
-        },
-        {
-          "firePercent": "10"
-        },
-        {
-          "icePercent": "-5"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "energy": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "drunk",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "target": "1",
+      "duration": "3000",
+      "attributes": [
         {
-          "sentence": "Error. LOAD 'PROGRAM',8,1"
+          "shootEffect": "death"
         },
         {
-          "sentence": "Remain. Obedient."
+          "areaEffect": "stun"
         }
       ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "44000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "79",
-          "chance": "50000"
-        },
-        {
-          "name": "yellow gem",
-          "chance": "550"
-        },
-        {
-          "name": "might ring",
-          "chance": "940"
-        },
-        {
-          "name": "life crystal",
-          "chance": "9150"
-        },
-        {
-          "name": "wand of cosmic energy",
-          "chance": "530"
-        },
-        {
-          "name": "soul orb",
-          "chance": "45000"
-        },
-        {
-          "name": "bonebreaker",
-          "chance": "10"
-        },
-        {
-          "name": "mastermind potion",
-          "chance": "400"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "5790"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "5980"
-        },
-        {
-          "name": "lightning pendant",
-          "chance": "710"
-        },
-        {
-          "name": "crystalline armor",
-          "chance": "20"
-        },
-        {
-          "name": "gear wheel",
-          "chance": "5000"
-        },
-        {
-          "id": "9976",
-          "chance": "5320"
-        },
-        {
-          "name": "shockwave amulet",
-          "chance": "110"
-        },
-        {
-          "name": "gear crystal",
-          "chance": "5000"
-        },
-        {
-          "name": "slime mould",
-          "chance": "480"
-        }
-      ]/* crystal pedestal */
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 80,
+    "firePercent": 10,
+    "icePercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 44000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 79,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": "yellow gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 940,
+      "items": [],
+      "name": "might ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9150,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 530,
+      "items": [],
+      "name": "wand of cosmic energy"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 45000,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10,
+      "items": [],
+      "name": "bonebreaker"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": "mastermind potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5790,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5980,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 710,
+      "items": [],
+      "name": "lightning pendant"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20,
+      "items": [],
+      "name": "crystalline armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "gear wheel"
+    },
+    {
+      "id": 9976,
+      "countmax": 1,
+      "chance": 5320,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "shockwave amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "gear crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 480,
+      "items": [],
+      "name": "slime mould"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Error. LOAD 'PROGRAM',8,1",
+        "yell": false
+      },
+      {
+        "sentence": "Remain. Obedient.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

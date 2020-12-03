@@ -11,7 +11,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 {
     public class MonsterDefenseConverter
     {
-        public static ICombatDefense[] Convert(MonsterData.MonsterMetadata data)
+        public static ICombatDefense[] Convert(MonsterData data)
         {
             if (data.Defenses is null) return new ICombatDefense[0];
 
@@ -34,8 +34,8 @@ namespace NeoServer.Loaders.Monsters.Converters
                     {
                         Chance = chance,
                         Interval = interval,
-                        Min = (ushort)Math.Abs(min),
-                        Max = (ushort)Math.Abs(max),
+                        Min = (int)Math.Abs(min),
+                        Max = (int)Math.Abs(max),
                         Effect = MonsterAttributeParser.ParseAreaEffect(attributes?.FirstOrDefault(a => a?.Value<string>("key") == "areaEffect")?.Value<string>("value"))
                     });
                 }

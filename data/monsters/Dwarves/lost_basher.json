@@ -1,299 +1,343 @@
 {
-  "monster": {
-    "name": "Lost Basher",
-    "nameDescription": "a lost basher",
-    "race": "blood",
-    "experience": "1800",
-    "speed": "250",
-    "health": {
-      "now": "2600",
-      "max": "2600"
+  "name": "Lost Basher",
+  "nameDescription": "a lost basher",
+  "race": "blood",
+  "experience": 1800,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 2600,
+    "now": 2600
+  },
+  "look": {
+    "type": 538,
+    "corpse": 19963
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-351"
     },
-    "look": {
-      "type": "538",
-      "corpse": "19963"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "radius": "3",
+      "min": "0",
+      "max": "-220",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "whirlwindaxe"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "explosionarea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "radius": "4",
+      "duration": "6000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-351"
+          "shootEffect": "whirlwindclub"
         },
         {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "radius": "3",
-          "min": "0",
-          "max": "-220",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "whirlwindaxe"
-            },
-            {
-              "key": "areaEffect",
-              "value": "explosionarea"
-            }
-          ]
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "15",
-          "target": "1",
-          "radius": "4",
-          "duration": "6000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "whirlwindclub"
-            },
-            {
-              "key": "areaEffect",
-              "value": "rednote"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "radius": "2",
-          "speedchange": "-650",
-          "duration": "15000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "energy"
-          }
+          "areaEffect": "rednote"
         }
       ]
     },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "250",
-        "max": "500",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "radius": "2",
+      "speedchange": "-650",
+      "duration": "15000",
+      "attributes": [
         {
-          "deathPercent": "1"
-        },
-        {
-          "icePercent": "1"
-        },
-        {
-          "energyPercent": "15"
-        },
-        {
-          "firePercent": "40"
+          "areaEffect": "energy"
         }
       ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Yhouuuu!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "piggy bank",
-          "chance": "4450"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "60000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "2",
-          "chance": "70000"
-        },
-        {
-          "name": "dwarven ring (hard drinking)",
-          "chance": "2560"
-        },
-        {
-          "name": "fire axe",
-          "chance": "310"
-        },
-        {
-          "name": "war axe",
-          "chance": "120"
-        },
-        {
-          "name": "knight legs",
-          "chance": "310"
-        },
-        {
-          "name": "black shield",
-          "chance": "3710"
-        },
-        {
-          "name": "brown mushroom",
-          "countmax": "2",
-          "chance": "15170"
-        },
-        {
-          "name": "iron ore",
-          "chance": "5280"
-        },
-        {
-          "name": "chaos mace",
-          "chance": "160"
-        },
-        {
-          "name": "spiked squelcher",
-          "chance": "420"
-        },
-        {
-          "name": "great mana potion",
-          "chance": "11240"
-        },
-        {
-          "name": "fiery knight axe",
-          "chance": "1200"
-        },
-        {
-          "name": "terra boots",
-          "chance": "780"
-        },
-        {
-          "name": "ultimate health potion",
-          "chance": "10250"
-        },
-        {
-          "name": "small topaz",
-          "chance": "10200"
-        },
-        {
-          "id": "13757",
-          "chance": "21130"
-        },
-        {
-          "name": "blue crystal shard",
-          "chance": "840"
-        },
-        {
-          "name": "lost basher's spike",
-          "chance": "17260"
-        },
-        {
-          "name": "lost basher's spike",
-          "chance": "14380"
-        },
-        {
-          "name": "bloody dwarven beard",
-          "chance": "1730"
-        },
-        {
-          "name": "pair of iron fists",
-          "chance": "1410"
-        },
-        {
-          "name": "buckle",
-          "chance": "10930"
-        },
-        {
-          "name": "bonecarving knife",
-          "chance": "7320"
-        },
-        {
-          "name": "leather harness",
-          "chance": "12500"
-        },
-        {
-          "name": "mad froth",
-          "chance": "11870"
-        },
-        {
-          "name": "basalt fetish",
-          "chance": "8800"
-        },
-        {
-          "name": "basalt figurine",
-          "chance": "9470"
-        }
-      ]/* Coal */
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "250",
+      "max": "500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 1,
+    "icePercent": 1,
+    "energyPercent": 15,
+    "firePercent": 40
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4450,
+      "items": [],
+      "name": "piggy bank"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 70000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2560,
+      "items": [],
+      "name": "dwarven ring (hard drinking)"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "fire axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "war axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "knight legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3710,
+      "items": [],
+      "name": "black shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 15170,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5280,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 160,
+      "items": [],
+      "name": "chaos mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11240,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "fiery knight axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 780,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10250,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10200,
+      "items": [],
+      "name": "small topaz"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 21130,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 840,
+      "items": [],
+      "name": "blue crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17260,
+      "items": [],
+      "name": "lost basher's spike"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14380,
+      "items": [],
+      "name": "lost basher's spike"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1730,
+      "items": [],
+      "name": "bloody dwarven beard"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1410,
+      "items": [],
+      "name": "pair of iron fists"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10930,
+      "items": [],
+      "name": "buckle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7320,
+      "items": [],
+      "name": "bonecarving knife"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "leather harness"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11870,
+      "items": [],
+      "name": "mad froth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8800,
+      "items": [],
+      "name": "basalt fetish"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9470,
+      "items": [],
+      "name": "basalt figurine"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Yhouuuu!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

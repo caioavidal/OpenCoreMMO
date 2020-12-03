@@ -1,264 +1,265 @@
 {
-  "monster": {
-    "name": "Adept of the Cult",
-    "nameDescription": "an adept of the cult",
-    "race": "blood",
-    "experience": "400",
-    "speed": "215",
-    "health": {
-      "now": "430",
-      "max": "430"
+  "name": "Adept of the Cult",
+  "nameDescription": "an adept of the cult",
+  "race": "blood",
+  "experience": 400,
+  "speed": 215,
+  "manaCost": 0,
+  "health": {
+    "max": 430,
+    "now": 430
+  },
+  "look": {
+    "type": 194,
+    "corpse": 20311
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 4,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-90",
+      "poison": "2"
     },
-    "look": {
-      "type": "194",
-      "head": "114",
-      "body": "94",
-      "legs": "94",
-      "feet": "57",
-      "corpse": "20311"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "-70",
+      "max": "-150",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "poison"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-90",
-          "poison": "2"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "target": "1",
-          "min": "-70",
-          "max": "-150",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "duration": "4000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "holy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "holydamage"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "3000",
-          "chance": "20",
-          "min": "45",
-          "max": "60",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "10",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowbubble"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "30"
-        },
-        {
-          "earthPercent": "40"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "energyPercent": "-5"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "summons": {
-      "maxSummons": "2",
-      "summon": {
-        "name": "Ghoul",
-        "interval": "2000",
-        "chance": "10"
-      }
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "drunk",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "duration": "4000",
+      "attributes": [
         {
-          "sentence": "Feel the power of the cult!"
+          "shootEffect": "holy"
         },
         {
-          "sentence": "Praise the voodoo!"
-        },
+          "areaEffect": "holydamage"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "3000",
+      "chance": "20",
+      "min": "45",
+      "max": "60",
+      "attributes": [
         {
-          "sentence": "Power to the cult!"
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "3000",
+      "attributes": [
         {
-          "id": "1962",
-          "chance": "940"
-        },
-        {
-          "name": "small ruby",
-          "chance": "320"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "60",
-          "chance": "65520"
-        },
-        {
-          "id": "2169",
-          "chance": "420"
-        },
-        {
-          "name": "silver amulet",
-          "chance": "1020"
-        },
-        {
-          "name": "hailstorm rod",
-          "chance": "220"
-        },
-        {
-          "name": "clerical mace",
-          "chance": "1260"
-        },
-        {
-          "name": "red robe",
-          "chance": "80"
-        },
-        {
-          "name": "pirate voodoo doll",
-          "chance": "1730"
-        },
-        {
-          "id": "6089",
-          "chance": "700"
-        },
-        {
-          "name": "lunar staff",
-          "chance": "120"
-        },
-        {
-          "name": "amber staff",
-          "chance": "680"
-        },
-        {
-          "name": "cultish robe",
-          "chance": "10080"
-        },
-        {
-          "name": "cultish symbol",
-          "chance": "90"
-        },
-        {
-          "name": "rope belt",
-          "chance": "10000"
-        },
-        {
-          "name": "broken key ring",
-          "chance": "120"
+          "areaEffect": "yellowbubble"
         }
-      ],
-      "#comment": []
+      ]
     }
+  ],
+  "elements": {
+    "holyPercent": 30,
+    "earthPercent": 40,
+    "icePercent": 20,
+    "energyPercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 1962,
+      "countmax": 1,
+      "chance": 940,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 320,
+      "items": [],
+      "name": "small ruby"
+    },
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 65520,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2169,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1020,
+      "items": [],
+      "name": "silver amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 220,
+      "items": [],
+      "name": "hailstorm rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1260,
+      "items": [],
+      "name": "clerical mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "red robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1730,
+      "items": [],
+      "name": "pirate voodoo doll"
+    },
+    {
+      "id": 6089,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "lunar staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 680,
+      "items": [],
+      "name": "amber staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10080,
+      "items": [],
+      "name": "cultish robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "cultish symbol"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "rope belt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "broken key ring"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel the power of the cult!",
+        "yell": false
+      },
+      {
+        "sentence": "Praise the voodoo!",
+        "yell": false
+      },
+      {
+        "sentence": "Power to the cult!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Ghoul",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

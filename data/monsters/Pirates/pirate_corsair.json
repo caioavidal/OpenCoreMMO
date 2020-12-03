@@ -1,217 +1,231 @@
 {
-  "monster": {
-    "name": "Pirate Corsair",
-    "nameDescription": "a pirate corsair",
-    "race": "blood",
-    "experience": "350",
-    "speed": "250",
-    "manacost": "775",
-    "health": {
-      "now": "675",
-      "max": "675"
+  "name": "Pirate Corsair",
+  "nameDescription": "a pirate corsair",
+  "race": "blood",
+  "experience": 350,
+  "speed": 250,
+  "manaCost": 775,
+  "health": {
+    "max": 675,
+    "now": 675
+  },
+  "look": {
+    "type": 98,
+    "corpse": 20475
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 40,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-170"
     },
-    "look": {
-      "type": "98",
-      "corpse": "20475"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "15"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "0",
+      "max": "-150",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "40"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "shootEffect": "throwingstar"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-170"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "0",
-          "max": "-150",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "throwingstar"
-          }
-        },
-        {
-          "name": "pirate corsair skill reducer",
-          "interval": "2000",
-          "chance": "5"
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "35"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "20"
-        },
-        {
-          "holyPercent": "10"
-        },
-        {
-          "deathPercent": "-5"
-        },
-        {
-          "icePercent": "-5"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Give up!"
-        },
-        {
-          "sentence": "Hiyaa!"
-        },
-        {
-          "sentence": "Plundeeeeer!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "piggy bank",
-          "chance": "150"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "88",
-          "chance": "50000"
-        },
-        {
-          "id": "2376",
-          "chance": "3000"
-        },
-        {
-          "name": "sabre",
-          "chance": "10000"
-        },
-        {
-          "name": "throwing star",
-          "countmax": "12",
-          "chance": "8400"
-        },
-        {
-          "name": "dark armor",
-          "chance": "1650"
-        },
-        {
-          "name": "dark shield",
-          "chance": "1000"
-        },
-        {
-          "name": "pirate boots",
-          "chance": "220"
-        },
-        {
-          "name": "rum flask",
-          "chance": "130"
-        },
-        {
-          "id": "5813",
-          "chance": "130"
-        },
-        {
-          "name": "pirate backpack",
-          "chance": "930"
-        },
-        {
-          "name": "pirate hat",
-          "chance": "1150"
-        },
-        {
-          "name": "hook",
-          "chance": "600"
-        },
-        {
-          "name": "eye patch",
-          "chance": "500"
-        },
-        {
-          "name": "peg leg",
-          "chance": "600"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "820"
-        },
-        {
-          "name": "compass",
-          "chance": "11050"
-        },
-        {
-          "name": "compass",
-          "chance": "11020"
-        }
-      ],
-      "#comment": []
+    {
+      "name": "pirate corsair skill reducer",
+      "interval": "2000",
+      "chance": "5"
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "holyPercent": 10,
+    "deathPercent": -5,
+    "icePercent": -5,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "piggy bank"
+    },
+    {
+      "id": 0,
+      "countmax": 88,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2376,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "sabre"
+    },
+    {
+      "id": 0,
+      "countmax": 12,
+      "chance": 8400,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1650,
+      "items": [],
+      "name": "dark armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "dark shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 220,
+      "items": [],
+      "name": "pirate boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "rum flask"
+    },
+    {
+      "id": 5813,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "pirate backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1150,
+      "items": [],
+      "name": "pirate hat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": "hook"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "eye patch"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": "peg leg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 820,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11050,
+      "items": [],
+      "name": "compass"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11020,
+      "items": [],
+      "name": "compass"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Give up!",
+        "yell": false
+      },
+      {
+        "sentence": "Hiyaa!",
+        "yell": false
+      },
+      {
+        "sentence": "Plundeeeeer!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,233 +1,243 @@
 {
-  "monster": {
-    "name": "Mutated Bat",
-    "nameDescription": "a mutated bat",
-    "race": "blood",
-    "experience": "615",
-    "speed": "210",
-    "health": {
-      "now": "900",
-      "max": "900"
+  "name": "Mutated Bat",
+  "nameDescription": "a mutated bat",
+  "race": "blood",
+  "experience": 615,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 900,
+    "now": 900
+  },
+  "look": {
+    "type": 307,
+    "corpse": 9829
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 300,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-168",
+      "poison": "120"
     },
-    "look": {
-      "type": "307",
-      "corpse": "9829"
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-70",
+      "max": "-180",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
     },
-    "targetchange": {
-      "interval": "4000",
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "radius": "6",
+      "min": "-30",
+      "max": "-90",
+      "attributes": [
+        {
+          "areaEffect": "whitenote"
+        }
+      ]
+    },
+    {
+      "name": "mutated bat curse",
+      "interval": "2000",
       "chance": "10"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "length": "4",
+      "spread": "3",
+      "min": "-190",
+      "max": "-240",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "300"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaeffect": "poison"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-168",
-          "poison": "120"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "min": "-70",
-          "max": "-180",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "drown",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "radius": "6",
-          "min": "-30",
-          "max": "-90",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "whitenote"
-          }
-        },
-        {
-          "name": "mutated bat curse",
-          "interval": "2000",
-          "chance": "10"
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "length": "4",
-          "spread": "3",
-          "min": "-190",
-          "max": "-240",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "80",
-        "max": "95",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "firePercent": "-10"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Shriiiiiek"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "black pearl",
-          "countmax": "3",
-          "chance": "720"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "50",
-          "chance": "53000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "70",
-          "chance": "40000"
-        },
-        {
-          "name": "small amethyst",
-          "countmax": "2",
-          "chance": "500"
-        },
-        {
-          "name": "energy ring",
-          "chance": "990"
-        },
-        {
-          "name": "battle shield",
-          "chance": "7760"
-        },
-        {
-          "name": "black shield",
-          "chance": "70"
-        },
-        {
-          "name": "star herb",
-          "chance": "7260"
-        },
-        {
-          "name": "star herb",
-          "chance": "5060"
-        },
-        {
-          "name": "bat wing",
-          "countmax": "2",
-          "chance": "4900"
-        },
-        {
-          "name": "mercenary sword",
-          "chance": "110"
-        },
-        {
-          "id": "9808",
-          "chance": "12530"
-        },
-        {
-          "id": "9809",
-          "countmax": "2",
-          "chance": "12530"
-        },
-        {
-          "name": "batwing hat",
-          "chance": "80"
-        },
-        {
-          "name": "mutated bat ear",
-          "chance": "4900"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "80",
+      "max": "95",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 720,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 53000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 500,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 990,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7760,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "black shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7260,
+      "items": [],
+      "name": "star herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5060,
+      "items": [],
+      "name": "star herb"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 4900,
+      "items": [],
+      "name": "bat wing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "mercenary sword"
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 12530,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 9809,
+      "countmax": 2,
+      "chance": 12530,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "batwing hat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4900,
+      "items": [],
+      "name": "mutated bat ear"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Shriiiiiek",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "drown": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

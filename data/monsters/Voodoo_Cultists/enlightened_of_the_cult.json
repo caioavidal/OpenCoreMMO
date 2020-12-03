@@ -1,300 +1,311 @@
 {
-  "monster": {
-    "name": "Enlightened of the Cult",
-    "nameDescription": "an enlightened of the cult",
-    "race": "blood",
-    "experience": "500",
-    "speed": "210",
-    "health": {
-      "now": "700",
-      "max": "700"
+  "name": "Enlightened of the Cult",
+  "nameDescription": "an enlightened of the cult",
+  "race": "blood",
+  "experience": 500,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 700,
+    "now": 700
+  },
+  "look": {
+    "type": 193,
+    "corpse": 20391
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 50,
+    "targetdistance": 4,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100",
+      "poison": "4"
     },
-    "look": {
-      "type": "193",
-      "corpse": "20391"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "25",
+      "range": "1",
+      "radius": "1",
+      "target": "1",
+      "min": "-70",
+      "max": "-185",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "holy"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "holyarea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100",
-          "poison": "4"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "25",
-          "range": "1",
-          "radius": "1",
-          "target": "1",
-          "min": "-70",
-          "max": "-185",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "holy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "holyarea"
-            }
-          ]
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "target": "1",
-          "duration": "5000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "holy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "holydamage"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "target": "1",
-          "speedchange": "-360",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "25",
-          "min": "60",
-          "max": "90",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "15",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowbubble"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "20"
-        },
-        {
-          "icePercent": "5"
-        },
-        {
-          "physicalPercent": "10"
-        },
-        {
-          "energyPercent": "-5"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "2",
-      "summon": [
-        {
-          "name": "Crypt Shambler",
-          "interval": "2000",
-          "chance": "10"
-        },
-        {
-          "name": "Ghost",
-          "interval": "2000",
-          "chance": "10"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "drunk",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "target": "1",
+      "duration": "5000",
+      "attributes": [
         {
-          "sentence": "Praise to my master Urgith!"
+          "shootEffect": "holy"
         },
         {
-          "sentence": "You will rise as my servant!"
-        },
-        {
-          "sentence": "Praise to my masters! Long live the triangle!"
-        },
-        {
-          "sentence": "You will die in the name of the triangle!"
+          "areaEffect": "holydamage"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "speedchange": "-360",
+      "duration": "6000",
+      "attributes": [
         {
-          "id": "1962",
-          "chance": "910"
-        },
-        {
-          "name": "piggy bank",
-          "chance": "130"
-        },
-        {
-          "name": "small sapphire",
-          "chance": "550"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "70",
-          "chance": "64550"
-        },
-        {
-          "name": "energy ring",
-          "chance": "450"
-        },
-        {
-          "name": "platinum amulet",
-          "chance": "200"
-        },
-        {
-          "name": "wand of inferno",
-          "chance": "180"
-        },
-        {
-          "name": "protection amulet",
-          "chance": "790"
-        },
-        {
-          "name": "skull staff",
-          "chance": "350"
-        },
-        {
-          "name": "blue robe",
-          "chance": "40"
-        },
-        {
-          "name": "enigmatic voodoo skull",
-          "chance": "130"
-        },
-        {
-          "name": "jewelled backpack",
-          "chance": "100"
-        },
-        {
-          "name": "pirate voodoo doll",
-          "chance": "430"
-        },
-        {
-          "id": "6090",
-          "chance": "490"
-        },
-        {
-          "name": "amber staff",
-          "chance": "100"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "740"
-        },
-        {
-          "name": "cultish mask",
-          "chance": "10250"
-        },
-        {
-          "name": "cultish symbol",
-          "chance": "890"
-        },
-        {
-          "name": "broken key ring",
-          "chance": "100"
+          "areaEffect": "redshimmer"
         }
-      ],
-      "#comment": []
+      ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "25",
+      "min": "60",
+      "max": "90",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "yellowbubble"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 20,
+    "icePercent": 5,
+    "physicalPercent": 10,
+    "energyPercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 1962,
+      "countmax": 1,
+      "chance": 910,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "piggy bank"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 64550,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "platinum amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 790,
+      "items": [],
+      "name": "protection amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 350,
+      "items": [],
+      "name": "skull staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": "blue robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "enigmatic voodoo skull"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "jewelled backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "pirate voodoo doll"
+    },
+    {
+      "id": 6090,
+      "countmax": 1,
+      "chance": 490,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "amber staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 740,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10250,
+      "items": [],
+      "name": "cultish mask"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "cultish symbol"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "broken key ring"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Praise to my master Urgith!",
+        "yell": false
+      },
+      {
+        "sentence": "You will rise as my servant!",
+        "yell": false
+      },
+      {
+        "sentence": "Praise to my masters! Long live the triangle!",
+        "yell": false
+      },
+      {
+        "sentence": "You will die in the name of the triangle!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Crypt Shambler",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      },
+      {
+        "name": "Ghost",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

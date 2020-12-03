@@ -1,165 +1,156 @@
 {
-  "monster": {
-    "name": "Demon Skeleton",
-    "nameDescription": "a demon skeleton",
-    "race": "undead",
-    "experience": "240",
-    "speed": "230",
-    "manacost": "620",
-    "health": {
-      "now": "400",
-      "max": "400"
+  "name": "Demon Skeleton",
+  "nameDescription": "a demon skeleton",
+  "race": "undead",
+  "experience": 240,
+  "speed": 230,
+  "manaCost": 620,
+  "health": {
+    "max": 400,
+    "now": 400
+  },
+  "look": {
+    "type": 37,
+    "corpse": 5963
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "64",
+      "attack": "50"
     },
-    "look": {
-      "type": "37",
-      "corpse": "5963"
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "range": "1",
+      "min": "-30",
+      "max": "-50"
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 100,
+    "deathPercent": 100,
+    "earthPercent": 100,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 50,
+      "chance": 18500,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 52750,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2399,
+      "countmax": 3,
+      "chance": 3000,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
+    {
+      "id": 2417,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "64",
-          "attack": "50"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "10",
-          "range": "1",
-          "min": "-30",
-          "max": "-50"
-        }
-      ]
+    {
+      "id": 2459,
+      "countmax": 1,
+      "chance": 2650,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
+    {
+      "id": 2513,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "firePercent": "100"
+          "id": 2194,
+          "countmax": 1,
+          "chance": 400,
+          "items": [],
+          "name": null
         },
         {
-          "deathPercent": "100"
+          "id": 7620,
+          "countmax": 1,
+          "chance": 900,
+          "items": [],
+          "name": null
         },
         {
-          "earthPercent": "100"
+          "id": 2178,
+          "countmax": 1,
+          "chance": 250,
+          "items": [],
+          "name": null
         },
         {
-          "holyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "drunk": "0"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "50",
-          "chance": "18500"
-        },
-        {
-          "id": "2050",
-          "chance": "52750"
-        },
-        {
-          "id": "2399",
-          "countmax": "3",
-          "chance": "3000"
-        },
-        {
-          "id": "2417",
-          "chance": "3000"
-        },
-        {
-          "id": "2459",
-          "chance": "2650"
-        },
-        {
-          "id": "2513",
-          "chance": "1000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2194",
-              "chance": "400"
-            },
-            {
-              "id": "7620",
-              "chance": "900"
-            },
-            {
-              "id": "2178",
-              "chance": "250"
-            },
-            {
-              "id": "2515",
-              "chance": "50"
-            }
-          ]
+          "id": 2515,
+          "countmax": 1,
+          "chance": 50,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

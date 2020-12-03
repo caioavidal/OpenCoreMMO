@@ -1,132 +1,116 @@
 {
-  "monster": {
-    "name": "Insectoid Worker",
-    "nameDescription": "an insectoid worker",
-    "race": "venom",
-    "experience": "650",
-    "speed": "200",
-    "health": {
-      "now": "950",
-      "max": "950"
-    },
-    "look": {
-      "type": "403",
-      "corpse": "13514"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-163",
-        "poison": "160"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "energyPercent": "-5"
-        },
-        {
-          "icePercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "100000"
-        },
-        {
-          "name": "small emerald",
-          "chance": "2880"
-        },
-        {
-          "name": "epee",
-          "chance": "560"
-        },
-        {
-          "name": "health potion",
-          "chance": "5090"
-        },
-        {
-          "name": "compound eye",
-          "chance": "15380"
-        },
-        {
-          "id": "15622",
-          "chance": "14990"
-        }
-      ]/* dung ball */
+  "name": "Insectoid Worker",
+  "nameDescription": "an insectoid worker",
+  "race": "venom",
+  "experience": 650,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 950,
+    "now": 950
+  },
+  "look": {
+    "type": 403,
+    "corpse": 13514
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-163",
+      "poison": "160"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 5,
+    "firePercent": -10,
+    "energyPercent": -5,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2880,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "epee"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5090,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15380,
+      "items": [],
+      "name": "compound eye"
+    },
+    {
+      "id": 15622,
+      "countmax": 1,
+      "chance": 14990,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

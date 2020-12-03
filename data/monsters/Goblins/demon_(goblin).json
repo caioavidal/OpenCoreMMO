@@ -1,155 +1,165 @@
 {
-  "monster": {
-    "name": "Demon",
-    "nameDescription": "a demon",
-    "race": "blood",
-    "experience": "25",
-    "speed": "150",
-    "health": {
-      "now": "50",
-      "max": "50"
+  "name": "Demon",
+  "nameDescription": "a demon",
+  "race": "blood",
+  "experience": 25,
+  "speed": 150,
+  "manaCost": 0,
+  "health": {
+    "max": 50,
+    "now": 50
+  },
+  "look": {
+    "type": 35,
+    "corpse": 5995
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 40,
+    "runonhealth": 15
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-10"
     },
-    "look": {
-      "type": "35",
-      "corpse": "5995"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "0",
+      "max": "-25",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "40"
-        },
-        {
-          "runonhealth": "15"
+          "shootEffect": "smallstone"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-10"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "min": "0",
-          "max": "-25",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "smallstone"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "holyPercent": "1"
-        },
-        {
-          "earthPercent": "-12"
-        },
-        {
-          "deathPercent": "-10"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small stone",
-          "countmax": "3",
-          "chance": "15290"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "9",
-          "chance": "50320"
-        },
-        {
-          "id": "2230",
-          "chance": "1130"
-        },
-        {
-          "name": "mouldy cheese",
-          "chance": "1000"
-        },
-        {
-          "name": "dagger",
-          "chance": "1800"
-        },
-        {
-          "name": "short sword",
-          "chance": "8870"
-        },
-        {
-          "name": "bone club",
-          "chance": "4900"
-        },
-        {
-          "name": "leather helmet",
-          "chance": "1940"
-        },
-        {
-          "name": "leather armor",
-          "chance": "2510"
-        },
-        {
-          "name": "small axe",
-          "chance": "9700"
-        },
-        {
-          "id": "2667",
-          "chance": "12750"
-        },
-        {
-          "name": "goblin ear",
-          "chance": "910"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "holyPercent": 1,
+    "earthPercent": -12,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 15290,
+      "items": [],
+      "name": "small stone"
+    },
+    {
+      "id": 0,
+      "countmax": 9,
+      "chance": 50320,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 1130,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "mouldy cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1800,
+      "items": [],
+      "name": "dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8870,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4900,
+      "items": [],
+      "name": "bone club"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1940,
+      "items": [],
+      "name": "leather helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2510,
+      "items": [],
+      "name": "leather armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9700,
+      "items": [],
+      "name": "small axe"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 12750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 910,
+      "items": [],
+      "name": "goblin ear"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

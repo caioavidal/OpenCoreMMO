@@ -1,147 +1,140 @@
 {
-  "monster": {
-    "name": "Troll Legionnaire",
-    "nameDescription": "a troll legionnaire",
-    "race": "blood",
-    "experience": "140",
-    "speed": "190",
-    "health": {
-      "now": "210",
-      "max": "210"
-    },
-    "look": {
-      "type": "53",
-      "corpse": "5998"
-    },
-    "targetchange": {
+  "name": "Troll Legionnaire",
+  "nameDescription": "a troll legionnaire",
+  "race": "blood",
+  "experience": 140,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 210,
+    "now": 210
+  },
+  "look": {
+    "type": 53,
+    "corpse": 5998
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 30
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5"
+      "min": "0",
+      "max": "-35"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "18",
+      "target": "1",
+      "range": "6",
+      "min": "0",
+      "max": "-130",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "30"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-35"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "18",
-          "target": "1",
-          "range": "6",
-          "min": "0",
-          "max": "-130",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "throwingstar"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "7",
-      "defense": "9",
-      "defense": [
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "18",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "28",
-          "min": "17",
-          "max": "25",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "9",
-      "voice": [
-        {
-          "sentence": "Attack!"
-        },
-        {
-          "sentence": "Graaaaar!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "155",
-          "chance": "92000"
-        },
-        {
-          "name": "stealth ring",
-          "chance": "560"
-        },
-        {
-          "name": "throwing star",
-          "countmax": "10",
-          "chance": "28000"
-        },
-        {
-          "name": "frosty ear of a troll",
-          "chance": "5120"
+          "shootEffect": "throwingstar"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 7,
+    "defense": 9
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "18",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "28",
+      "min": "17",
+      "max": "25",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 155,
+      "chance": 92000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 28000,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5120,
+      "items": [],
+      "name": "frosty ear of a troll"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 9,
+    "sentences": [
+      {
+        "sentence": "Attack!",
+        "yell": false
+      },
+      {
+        "sentence": "Graaaaar!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

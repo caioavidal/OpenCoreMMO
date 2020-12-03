@@ -1,216 +1,211 @@
 {
-  "monster": {
-    "name": "Giant Spider",
-    "nameDescription": "a giant spider",
-    "race": "venom",
-    "experience": "900",
-    "speed": "280",
-    "manacost": "0",
-    "health": {
-      "now": "1300",
-      "max": "1300"
+  "name": "Giant Spider",
+  "nameDescription": "a giant spider",
+  "race": "venom",
+  "experience": 900,
+  "speed": 280,
+  "manaCost": 0,
+  "health": {
+    "max": 1300,
+    "now": 1300
+  },
+  "look": {
+    "type": 38,
+    "corpse": 5977
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "50",
+      "attack": "100"
     },
-    "look": {
-      "type": "38",
-      "corpse": "5977"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "poisonfield",
+      "interval": "1000",
+      "chance": "17",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "poison"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "6",
+      "speedchange": "310",
+      "duration": "20000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "50",
-          "attack": "100"
-        },
-        {
-          "name": "poisonfield",
-          "interval": "1000",
-          "chance": "17",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 100,
+    "energyPercent": 20,
+    "icePercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2478,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": {
-        "name": "speed",
-        "interval": "1000",
-        "chance": "6",
-        "speedchange": "310",
-        "duration": "20000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
+    {
+      "id": 2148,
+      "countmax": 57,
+      "chance": 23000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "100"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
+    {
+      "id": 2148,
+      "countmax": 28,
+      "chance": 23000,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "0"
-        },
-        {
-          "paralyze": "0"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
+    {
+      "id": 2148,
+      "countmax": 30,
+      "chance": 23000,
+      "items": [],
+      "name": null
     },
-    "summons": {
-      "maxSummons": "2",
-      "summon": {
-        "name": "Poison Spider",
-        "interval": "1000",
-        "chance": "30",
-        "max": "2"
-      }
+    {
+      "id": 2477,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2463,
+      "countmax": 1,
+      "chance": 8600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2545,
+      "countmax": 12,
+      "chance": 7500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 5879,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2457,
+      "countmax": 1,
+      "chance": 5300,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2478",
-          "chance": "9000"
+          "id": 7588,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "57",
-          "chance": "23000"
+          "id": 2169,
+          "countmax": 1,
+          "chance": 1375,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "28",
-          "chance": "23000"
+          "id": 2476,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "30",
-          "chance": "23000"
+          "id": 7901,
+          "countmax": 1,
+          "chance": 250,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2477",
-          "chance": "600"
-        },
-        {
-          "id": "2463",
-          "chance": "8600"
-        },
-        {
-          "id": "2545",
-          "countmax": "12",
-          "chance": "7500"
-        },
-        {
-          "id": "5879",
-          "chance": "2000"
-        },
-        {
-          "id": "2457",
-          "chance": "5300"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "7588",
-              "chance": "1000"
-            },
-            {
-              "id": "2169",
-              "chance": "1375"
-            },
-            {
-              "id": "2476",
-              "chance": "500"
-            },
-            {
-              "id": "7901",
-              "chance": "250"
-            },
-            {
-              "id": "2171",
-              "chance": "400"
-            }
-          ]
+          "id": 2171,
+          "countmax": 1,
+          "chance": 400,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Poison Spider",
+        "interval": 1000,
+        "chance": 30,
+        "max": 2
+      }
+    ]
   }
 }

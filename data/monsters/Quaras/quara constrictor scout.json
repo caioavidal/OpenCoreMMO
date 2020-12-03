@@ -1,156 +1,133 @@
 {
-  "monster": {
-    "name": "Quara Constrictor Scout",
-    "nameDescription": "a quara constrictor scout",
-    "race": "undead",
-    "experience": "250",
-    "speed": "290",
-    "manacost": "670",
-    "health": {
-      "now": "450",
-      "max": "450"
+  "name": "Quara Constrictor Scout",
+  "nameDescription": "a quara constrictor scout",
+  "race": "undead",
+  "experience": 250,
+  "speed": 290,
+  "manaCost": 670,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 46,
+    "corpse": 6065
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "55",
+      "attack": "40"
     },
-    "look": {
-      "type": "46",
-      "corpse": "6065"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "13",
+      "radius": "3",
+      "target": "0",
+      "min": "-50",
+      "max": "-90",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -10,
+    "physicalPercent": -5
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 20,
+      "chance": 34000,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "55",
-          "attack": "40"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "13",
-          "radius": "3",
-          "target": "0",
-          "min": "-50",
-          "max": "-90",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
+    {
+      "id": 2397,
+      "countmax": 1,
+      "chance": 4600,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
+    {
+      "id": 2460,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "physicalPercent": "-5"
-        }
-      ]
+    {
+      "id": 2465,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "fire": "1"
+          "id": 2150,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
         },
         {
-          "lifedrain": "0"
-        },
-        {
-          "paralyze": "0"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "invisible": "0"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "20",
-          "chance": "34000"
-        },
-        {
-          "id": "2397",
-          "chance": "4600"
-        },
-        {
-          "id": "2460",
-          "chance": "7500"
-        },
-        {
-          "id": "2465",
-          "chance": "7500"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2150",
-              "chance": "1000"
-            },
-            {
-              "id": "5895",
-              "chance": "2000"
-            }
-          ]
+          "id": 5895,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

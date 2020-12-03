@@ -1,210 +1,206 @@
 {
-  "monster": {
-    "name": "Zombie",
-    "nameDescription": "a zombie",
-    "race": "undead",
-    "experience": "280",
-    "speed": "180",
-    "health": {
-      "now": "500",
-      "max": "500"
+  "name": "Zombie",
+  "nameDescription": "a zombie",
+  "race": "undead",
+  "experience": 280,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 500,
+    "now": 500
+  },
+  "look": {
+    "type": 311,
+    "corpse": 9875
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-130"
     },
-    "look": {
-      "type": "311",
-      "corpse": "9875"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-130"
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "target": "1",
-          "range": "1",
-          "min": "-14",
-          "max": "-23"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "target": "1",
-          "range": "7",
-          "min": "-15",
-          "max": "-24",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "15",
-          "target": "1",
-          "range": "1",
-          "min": "-30",
-          "max": "-49",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallclouds"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": {
-        "firePercent": "50"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "energy": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "manadrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "target": "1",
+      "range": "1",
+      "min": "-14",
+      "max": "-23"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "range": "7",
+      "min": "-15",
+      "max": "-24",
+      "attributes": [
         {
-          "sentence": "Mst.... klll...."
-        },
-        {
-          "sentence": "Whrrrr... ssss.... mmm.... grrrrl"
-        },
-        {
-          "sentence": "Dnnnt... cmmm... clsrrr...."
-        },
-        {
-          "sentence": "Httt.... hmnnsss..."
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "range": "1",
+      "min": "-30",
+      "max": "-49",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "65",
-          "chance": "82000"
-        },
-        {
-          "name": "life ring (faster regeneration)",
-          "chance": "1000"
-        },
-        {
-          "name": "halberd",
-          "chance": "3750"
-        },
-        {
-          "name": "mace",
-          "chance": "7250"
-        },
-        {
-          "name": "battle hammer",
-          "chance": "7000"
-        },
-        {
-          "name": "steel helmet",
-          "chance": "4600"
-        },
-        {
-          "name": "brass helmet",
-          "chance": "9400"
-        },
-        {
-          "name": "simple dress",
-          "chance": "560"
-        },
-        {
-          "name": "mana potion",
-          "chance": "740"
-        },
-        {
-          "id": "9808",
-          "chance": "5680"
-        },
-        {
-          "name": "half-eaten brain",
-          "chance": "10000"
+          "areaEffect": "smallclouds"
         }
-      ]/* rusty armor (common) */
+      ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 50
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 82000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "life ring (faster regeneration)"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3750,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7250,
+      "items": [],
+      "name": "mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": "battle hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4600,
+      "items": [],
+      "name": "steel helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9400,
+      "items": [],
+      "name": "brass helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "simple dress"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 740,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 5680,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "half-eaten brain"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Mst.... klll....",
+        "yell": false
+      },
+      {
+        "sentence": "Whrrrr... ssss.... mmm.... grrrrl",
+        "yell": false
+      },
+      {
+        "sentence": "Dnnnt... cmmm... clsrrr....",
+        "yell": false
+      },
+      {
+        "sentence": "Httt.... hmnnsss...",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "energy": 1,
+    "ice": 1,
+    "earth": 1,
+    "drown": 1,
+    "drunk": 1,
+    "lifedrain": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

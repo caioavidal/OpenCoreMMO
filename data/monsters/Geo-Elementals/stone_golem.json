@@ -1,164 +1,159 @@
 {
-  "monster": {
-    "name": "Stone Golem",
-    "nameDescription": "a stone golem",
-    "race": "undead",
-    "experience": "160",
-    "speed": "180",
-    "manacost": "590",
-    "health": {
-      "now": "270",
-      "max": "270"
-    },
-    "look": {
-      "type": "67",
-      "corpse": "6005"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-110"
-      }
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "20"
-        },
-        {
-          "firePercent": "20"
-        },
-        {
-          "energyPercent": "15"
-        },
-        {
-          "deathPercent": "20"
-        },
-        {
-          "icePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "earth": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small stone",
-          "countmax": "4",
-          "chance": "13890"
-        },
-        {
-          "id": "2124",
-          "chance": "120"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "40",
-          "chance": "90000"
-        },
-        {
-          "name": "red gem",
-          "chance": "30"
-        },
-        {
-          "name": "club ring",
-          "chance": "5070"
-        },
-        {
-          "name": "carlin sword",
-          "chance": "2500"
-        },
-        {
-          "name": "iron ore",
-          "chance": "1980"
-        },
-        {
-          "name": "ancient stone",
-          "chance": "1020"
-        },
-        {
-          "name": "shiny stone",
-          "chance": "760"
-        },
-        {
-          "name": "sulphurous stone",
-          "chance": "10370"
-        },
-        {
-          "name": "piece of marble rock",
-          "chance": "380"
-        },
-        {
-          "id": "13757",
-          "chance": "550"
-        }
-      ],
-      "#comment": []
+  "name": "Stone Golem",
+  "nameDescription": "a stone golem",
+  "race": "undead",
+  "experience": 160,
+  "speed": 180,
+  "manaCost": 590,
+  "health": {
+    "max": 270,
+    "now": 270
+  },
+  "look": {
+    "type": 67,
+    "corpse": 6005
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 20,
+    "firePercent": 20,
+    "energyPercent": 15,
+    "deathPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 13890,
+      "items": [],
+      "name": "small stone"
+    },
+    {
+      "id": 2124,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 90000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 30,
+      "items": [],
+      "name": "red gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5070,
+      "items": [],
+      "name": "club ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "carlin sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1980,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1020,
+      "items": [],
+      "name": "ancient stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 760,
+      "items": [],
+      "name": "shiny stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10370,
+      "items": [],
+      "name": "sulphurous stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "piece of marble rock"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "drown": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

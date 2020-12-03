@@ -1,258 +1,261 @@
 {
-  "monster": {
-    "name": "Vampire",
-    "nameDescription": "a vampire",
-    "race": "blood",
-    "experience": "305",
-    "speed": "220",
-    "manacost": "0",
-    "health": {
-      "now": "450",
-      "max": "450"
+  "name": "Vampire",
+  "nameDescription": "a vampire",
+  "race": "blood",
+  "experience": 305,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 68,
+    "corpse": 6006
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "50",
+      "attack": "50"
     },
-    "look": {
-      "type": "68",
-      "corpse": "6006"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "range": "1",
+      "min": "-55",
+      "max": "-105",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "12",
+      "radius": "6",
+      "target": "0",
+      "speedchange": "-600",
+      "duration": "60000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "50",
-          "attack": "50"
-        },
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 17,
+    "defense": 23
+  },
+  "defenses": [
+    {
+      "name": "outfit",
+      "interval": "1500",
+      "chance": "60",
+      "monster": "bat",
+      "duration": "6000",
+      "attributes": [
         {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "20",
-          "range": "1",
-          "min": "-55",
-          "max": "-105",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "12",
-          "radius": "6",
-          "target": "0",
-          "speedchange": "-600",
-          "duration": "60000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "defenses": {
-      "armor": "17",
-      "defense": "23",
-      "defense": [
+    {
+      "name": "outfit",
+      "interval": "1500",
+      "chance": "50",
+      "monster": "vampire",
+      "duration": "6000",
+      "attributes": [
         {
-          "name": "outfit",
-          "interval": "1500",
-          "chance": "60",
-          "monster": "bat",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "outfit",
-          "interval": "1500",
-          "chance": "50",
-          "monster": "vampire",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "1500",
-          "chance": "120",
-          "range": "7",
-          "speedchange": "300",
-          "duration": "30000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "elements": {
-      "element": [
+    {
+      "name": "speed",
+      "interval": "1500",
+      "chance": "120",
+      "range": "7",
+      "speedchange": "300",
+      "duration": "30000",
+      "attributes": [
         {
-          "deathPercent": "100"
-        },
-        {
-          "earthPercent": "100"
-        },
-        {
-          "physicalPercent": "15"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "holyPercent": "-25"
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 100,
+    "earthPercent": 100,
+    "physicalPercent": 15,
+    "firePercent": -10,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 20,
+      "chance": 6111,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
+    {
+      "id": 2144,
+      "countmax": 1,
+      "chance": 1620,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "100",
-      "voice": [
-        {
-          "sentence": "BLOOD!",
-          "yell": "1"
-        },
-        {
-          "sentence": "Let me kiss your neck."
-        },
-        {
-          "sentence": "I smell warm blood."
-        },
-        {
-          "sentence": "I call you, my bats! Come!"
-        }
-      ]
+    {
+      "id": 2032,
+      "countmax": 1,
+      "chance": 10300,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2172,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2127,
+      "countmax": 1,
+      "chance": 140,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "20",
-          "chance": "6111"
+          "id": 2747,
+          "countmax": 1,
+          "chance": 17500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2144",
-          "chance": "1620"
+          "id": 2396,
+          "countmax": 1,
+          "chance": 300,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2032",
-          "chance": "10300"
+          "id": 2412,
+          "countmax": 1,
+          "chance": 15000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2172",
-          "chance": "50"
+          "id": 2649,
+          "countmax": 1,
+          "chance": 7850,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2127",
-          "chance": "140"
+          "id": 2229,
+          "countmax": 1,
+          "chance": 11500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2747",
-              "chance": "17500"
-            },
-            {
-              "id": "2396",
-              "chance": "300"
-            },
-            {
-              "id": "2412",
-              "chance": "15000"
-            },
-            {
-              "id": "2649",
-              "chance": "7850"
-            },
-            {
-              "id": "2229",
-              "chance": "11500"
-            },
-            {
-              "id": "2383",
-              "chance": "1222"
-            },
-            {
-              "id": "2479",
-              "chance": "140"
-            },
-            {
-              "id": "7588",
-              "chance": "150"
-            },
-            {
-              "id": "2534",
-              "chance": "300"
-            }
-          ]
+          "id": 2383,
+          "countmax": 1,
+          "chance": 1222,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2479,
+          "countmax": 1,
+          "chance": 140,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7588,
+          "countmax": 1,
+          "chance": 150,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2534,
+          "countmax": 1,
+          "chance": 300,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 100,
+    "sentences": [
+      {
+        "sentence": "BLOOD!",
+        "yell": false
+      },
+      {
+        "sentence": "Let me kiss your neck.",
+        "yell": false
+      },
+      {
+        "sentence": "I smell warm blood.",
+        "yell": false
+      },
+      {
+        "sentence": "I call you, my bats! Come!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,161 +1,144 @@
 {
-  "monster": {
-    "name": "Filth Toad",
-    "nameDescription": "a filth toad",
-    "race": "blood",
-    "experience": "90",
-    "speed": "210",
-    "health": {
-      "now": "185",
-      "max": "185"
+  "name": "Filth Toad",
+  "nameDescription": "a filth toad",
+  "race": "blood",
+  "experience": 90,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 185,
+    "now": 185
+  },
+  "look": {
+    "type": 222,
+    "corpse": 6077
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-30",
+      "poison": "20"
     },
-    "look": {
-      "type": "222",
-      "corpse": "6077"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "-8",
+      "max": "-17",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "10"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "greenbubble"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-30",
-          "poison": "20"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "-8",
-          "max": "-17",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenbubble"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "speed",
-        "interval": "2000",
-        "chance": "15",
-        "speedchange": "200",
-        "duration": "5000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "20"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Ribbit, ribbit!"
-        },
-        {
-          "sentence": "Ribbit!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "21",
-          "chance": "75000"
-        },
-        {
-          "name": "two handed sword",
-          "chance": "500"
-        },
-        {
-          "name": "mace",
-          "chance": "2000"
-        },
-        {
-          "id": "2667",
-          "chance": "22000"
-        },
-        {
-          "name": "poisonous slime",
-          "chance": "3000"
-        }
-      ]/* fish */
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "200",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 20,
+    "icePercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 21,
+      "chance": 75000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "mace"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 22000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "poisonous slime"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ribbit, ribbit!",
+        "yell": false
+      },
+      {
+        "sentence": "Ribbit!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

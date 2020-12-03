@@ -1,137 +1,117 @@
 {
-  "monster": {
-    "name": "Elephant",
-    "nameDescription": "a elephant",
-    "race": "blood",
-    "experience": "160",
-    "speed": "240",
-    "manacost": "500",
-    "health": {
-      "now": "320",
-      "max": "320"
+  "name": "Elephant",
+  "nameDescription": "a elephant",
+  "race": "blood",
+  "experience": 160,
+  "speed": 240,
+  "manaCost": 500,
+  "health": {
+    "max": 320,
+    "now": 320
+  },
+  "look": {
+    "type": 211,
+    "corpse": 6052
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "50"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 16
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 15,
+    "icePercent": 20,
+    "firePercent": 20,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2671,
+      "countmax": 4,
+      "chance": 15000,
+      "items": [],
+      "name": null
     },
-    "look": {
-      "type": "211",
-      "corpse": "6052"
+    {
+      "id": 2666,
+      "countmax": 3,
+      "chance": 30000,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "summonable": "1"
+          "id": 3956,
+          "countmax": 2,
+          "chance": 3500,
+          "items": [],
+          "name": null
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "30",
-        "attack": "50"
-      }
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "16"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "15"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "20"
-        },
-        {
-          "energyPercent": "-10"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Hooooot-Toooooot!"
-        },
-        {
-          "sentence": "Tooooot."
-        },
-        {
-          "sentence": "Troooooot!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2671",
-          "countmax": "4",
-          "chance": "15000"
-        },
-        {
-          "id": "2666",
-          "countmax": "3",
-          "chance": "30000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "3956",
-              "countmax": "2",
-              "chance": "3500"
-            },
-            {
-              "id": "3973",
-              "chance": "200"
-            }
-          ]
+          "id": 3973,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hooooot-Toooooot!",
+        "yell": false
+      },
+      {
+        "sentence": "Tooooot.",
+        "yell": false
+      },
+      {
+        "sentence": "Troooooot!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

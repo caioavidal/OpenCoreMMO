@@ -1,222 +1,237 @@
 {
-  "monster": {
-    "name": "Vulcongra",
-    "nameDescription": "Vulcongra",
-    "race": "fire",
-    "experience": "1100",
-    "speed": "230",
-    "health": {
-      "now": "1600",
-      "max": "1600"
+  "name": "Vulcongra",
+  "nameDescription": "Vulcongra",
+  "race": "fire",
+  "experience": 1100,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1600,
+    "now": 1600
+  },
+  "look": {
+    "type": 509,
+    "corpse": 18476
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 220,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-235"
     },
-    "look": {
-      "type": "509",
-      "corpse": "18476"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "220"
-        },
-        {
-          "canwalkonenergy": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-235"
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "0",
-          "min": "-195",
-          "max": "-340",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "explosion"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "min": "-100",
-          "max": "-200",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "vulcongra soulfire",
-          "interval": "3000",
-          "chance": "100"
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "35"
-    },
-    "elements": {
-      "element": [
-        {
-          "deathPercent": "5"
-        },
-        {
-          "icePercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "fire",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "length": "8",
+      "spread": "0",
+      "min": "-195",
+      "max": "-340",
+      "attributes": [
         {
-          "sentence": "Fuchah! Fuchah!"
-        },
-        {
-          "sentence": "Fuchah!"
-        },
-        {
-          "sentence": "Yag! Yag! Yag!"
+          "areaEffect": "explosion"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-100",
+      "max": "-200",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "7",
-          "chance": "50000"
-        },
-        {
-          "name": "platinum coin",
-          "chance": "14780"
-        },
-        {
-          "name": "wand of inferno",
-          "chance": "1000"
-        },
-        {
-          "name": "sword ring",
-          "chance": "2920"
-        },
-        {
-          "name": "fire sword",
-          "chance": "260"
-        },
-        {
-          "name": "banana",
-          "countmax": "10",
-          "chance": "10420"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "7100"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "7100"
-        },
-        {
-          "name": "magma amulet",
-          "chance": "970"
-        },
-        {
-          "name": "magma coat",
-          "chance": "140"
-        },
-        {
-          "name": "fiery heart",
-          "chance": "9380"
-        },
-        {
-          "id": "13757",
-          "chance": "940"
-        },
-        {
-          "name": "brown crystal splinter",
-          "chance": "4850"
-        },
-        {
-          "name": "red crystal fragment",
-          "chance": "2280"
-        },
-        {
-          "name": "magma clump",
-          "chance": "12440"
-        },
-        {
-          "name": "blazing bone",
-          "chance": "8030"
+          "shootEffect": "fire"
         }
-      ]/* coal */
+      ]
+    },
+    {
+      "name": "vulcongra soulfire",
+      "interval": "3000",
+      "chance": "100"
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": 5,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14780,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2920,
+      "items": [],
+      "name": "sword ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 260,
+      "items": [],
+      "name": "fire sword"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 10420,
+      "items": [],
+      "name": "banana"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7100,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7100,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 970,
+      "items": [],
+      "name": "magma amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 140,
+      "items": [],
+      "name": "magma coat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9380,
+      "items": [],
+      "name": "fiery heart"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 940,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4850,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2280,
+      "items": [],
+      "name": "red crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12440,
+      "items": [],
+      "name": "magma clump"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8030,
+      "items": [],
+      "name": "blazing bone"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Fuchah! Fuchah!",
+        "yell": false
+      },
+      {
+        "sentence": "Fuchah!",
+        "yell": false
+      },
+      {
+        "sentence": "Yag! Yag! Yag!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,88 +1,71 @@
 {
-  "monster": {
-    "name": "Silver Rabbit",
-    "nameDescription": "a silver rabbit",
-    "race": "blood",
-    "experience": "0",
-    "speed": "215",
-    "manacost": "220",
-    "health": {
-      "now": "15",
-      "max": "15"
+  "name": "Silver Rabbit",
+  "nameDescription": "a silver rabbit",
+  "race": "blood",
+  "experience": 0,
+  "speed": 215,
+  "manaCost": 220,
+  "health": {
+    "max": 15,
+    "now": 15
+  },
+  "look": {
+    "type": 262,
+    "corpse": 7338
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 0,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 6,
+    "runonhealth": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 6,
+    "defense": 7
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 2666,
+      "countmax": 2,
+      "chance": 25000,
+      "items": [],
+      "name": null
     },
-    "look": {
-      "type": "262",
-      "head": "69",
-      "body": "66",
-      "legs": "69",
-      "feet": "66",
-      "corpse": "7338"
-    },
-    "targetchange": {
-      "interval": "2000",
-      "chance": "5"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "6"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "6",
-      "defense": "7"
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2666",
-          "countmax": "2",
-          "chance": "25000"
-        },
-        {
-          "id": "2684",
-          "chance": "12500"
-        }
-      ],
-      "#comment": []
+    {
+      "id": 2684,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

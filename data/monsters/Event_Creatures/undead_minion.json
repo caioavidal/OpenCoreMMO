@@ -1,136 +1,131 @@
 {
-  "monster": {
-    "name": "Undead Minion",
-    "nameDescription": "Undead Minion",
-    "race": "undead",
-    "experience": "550",
-    "speed": "230",
-    "manacost": "620",
-    "health": {
-      "now": "850",
-      "max": "850"
+  "name": "Undead Minion",
+  "nameDescription": "Undead Minion",
+  "race": "undead",
+  "experience": 550,
+  "speed": 230,
+  "manaCost": 620,
+  "health": {
+    "max": 850,
+    "now": 850
+  },
+  "look": {
+    "type": 37,
+    "corpse": 5963
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1000",
+      "min": "0",
+      "max": "-248"
     },
-    "look": {
-      "type": "37",
-      "corpse": "5963"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "1"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "13",
+      "radius": "4",
+      "target": "0",
+      "min": "-100",
+      "max": "-160",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "mortarea"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "1000",
-          "min": "0",
-          "max": "-248"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "13",
-          "radius": "4",
-          "target": "0",
-          "min": "-100",
-          "max": "-160",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "mortarea"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "drunk": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "40",
-          "chance": "100000"
-        },
-        {
-          "name": "blank rune",
-          "chance": "10000"
-        },
-        {
-          "name": "battle hammer",
-          "chance": "5000"
-        },
-        {
-          "name": "battle shield",
-          "chance": "1000"
-        },
-        {
-          "name": "guardian shield",
-          "chance": "5000"
-        },
-        {
-          "id": "6570",
-          "chance": "5538"
-        },
-        {
-          "id": "6571",
-          "chance": "1538"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "blank rune"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "battle hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 6570,
+      "countmax": 1,
+      "chance": 5538,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6571,
+      "countmax": 1,
+      "chance": 1538,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "earth": 1,
+    "lifedrain": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

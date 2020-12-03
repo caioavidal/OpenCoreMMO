@@ -1,173 +1,133 @@
 {
-  "monster": {
-    "name": "Massive Water Elemental",
-    "nameDescription": "a massive water elemental",
-    "race": "undead",
-    "experience": "800",
-    "speed": "500",
-    "manacost": "0",
-    "health": {
-      "now": "1250",
-      "max": "1250"
+  "name": "Massive Water Elemental",
+  "nameDescription": "a massive water elemental",
+  "race": "undead",
+  "experience": 800,
+  "speed": 500,
+  "manaCost": 0,
+  "health": {
+    "max": 1250,
+    "now": 1250
+  },
+  "look": {
+    "type": 11,
+    "corpse": 10499
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "40",
+      "attack": "80"
     },
-    "look": {
-      "type": "11",
-      "corpse": "10499",
-      "corpseAid": "102"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "50",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "min": "-255",
+      "max": "-440",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "bluebubble"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "poison",
+      "interval": "1000",
+      "chance": "30",
+      "range": "7",
+      "min": "-220",
+      "max": "-340",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "40",
-          "attack": "80"
+          "shootEffect": "poison"
         },
         {
-          "name": "poison",
-          "interval": "2000",
-          "chance": "50",
-          "range": "7",
-          "radius": "6",
-          "target": "0",
-          "min": "-255",
-          "max": "-440",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bluebubble"
-          }
-        },
-        {
-          "name": "poison",
-          "interval": "1000",
-          "chance": "30",
-          "range": "7",
-          "min": "-220",
-          "max": "-340",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        },
-        {
-          "name": "poison",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "radius": "6",
-          "target": "0",
-          "min": "-335",
-          "max": "-450",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
+          "areaEffect": "poison"
         }
       ]
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "22",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "17",
-        "min": "30",
-        "max": "50",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "min": "-335",
+      "max": "-450",
+      "attributes": [
         {
-          "firePercent": "100"
-        },
-        {
-          "earthPercent": "100"
-        },
-        {
-          "icePercent": "100"
-        },
-        {
-          "physicalPercent": "95"
-        },
-        {
-          "holyPercent": "50"
-        },
-        {
-          "deathPercent": "50"
-        },
-        {
-          "energyPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "drown": "1"
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 22
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "17",
+      "min": "30",
+      "max": "50",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 100,
+    "earthPercent": 100,
+    "icePercent": 100,
+    "physicalPercent": 95,
+    "holyPercent": 50,
+    "deathPercent": 50,
+    "energyPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

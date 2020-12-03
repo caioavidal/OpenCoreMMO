@@ -20,7 +20,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public IDictionary<LookType, ushort> Look { get; set; }
         public IIntervalChance TargetChance { get; set; }
         public CombatStrategy CombatStrategy { get; set; }
-        public IDictionary<CreatureFlagAttribute, byte> Flags { get; set; } = new Dictionary<CreatureFlagAttribute, byte>();
+        public IDictionary<CreatureFlagAttribute, ushort> Flags { get; set; } = new Dictionary<CreatureFlagAttribute, ushort>();
         public IMonsterCombatAttack[] Attacks { get; set; }
         public ushort Armor { get; set; }
         public ushort Defense { get; set; }

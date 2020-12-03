@@ -1,152 +1,147 @@
 {
-  "monster": {
-    "name": "Orc Warrior",
-    "nameDescription": "an orc warrior",
-    "race": "blood",
-    "experience": "50",
-    "speed": "190",
-    "manacost": "360",
-    "health": {
-      "now": "125",
-      "max": "125"
-    },
-    "look": {
-      "type": "7",
-      "corpse": "5979"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "11"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-60"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "30"
-        },
-        {
-          "holyPercent": "10"
-        },
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "deathPercent": "-10"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Grow truk grrrr."
-        },
-        {
-          "sentence": "Trak grrrr brik."
-        },
-        {
-          "sentence": "Alk!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "15",
-          "chance": "65000"
-        },
-        {
-          "name": "poison dagger",
-          "chance": "120"
-        },
-        {
-          "name": "chain armor",
-          "chance": "7360"
-        },
-        {
-          "name": "copper shield",
-          "chance": "560"
-        },
-        {
-          "name": "meat",
-          "chance": "15000"
-        },
-        {
-          "name": "orc tooth",
-          "chance": "700"
-        },
-        {
-          "name": "broken helmet",
-          "chance": "10800"
-        },
-        {
-          "name": "orc leather",
-          "chance": "4000"
-        },
-        {
-          "name": "skull belt",
-          "chance": "980"
-        }
-      ]
+  "name": "Orc Warrior",
+  "nameDescription": "an orc warrior",
+  "race": "blood",
+  "experience": 50,
+  "speed": 190,
+  "manaCost": 360,
+  "health": {
+    "max": 125,
+    "now": 125
+  },
+  "look": {
+    "type": 7,
+    "corpse": 5979
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 11,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-60"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 30,
+    "holyPercent": 10,
+    "earthPercent": -10,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 65000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "poison dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7360,
+      "items": [],
+      "name": "chain armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "copper shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": "orc tooth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10800,
+      "items": [],
+      "name": "broken helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "orc leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 980,
+      "items": [],
+      "name": "skull belt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grow truk grrrr.",
+        "yell": false
+      },
+      {
+        "sentence": "Trak grrrr brik.",
+        "yell": false
+      },
+      {
+        "sentence": "Alk!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

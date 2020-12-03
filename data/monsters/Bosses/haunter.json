@@ -1,144 +1,126 @@
 {
-  "monster": {
-    "name": "Haunter",
-    "nameDescription": "Haunter",
-    "race": "blood",
-    "experience": "4000",
-    "speed": "270",
-    "health": {
-      "now": "8500",
-      "max": "8500"
-    },
-    "look": {
-      "type": "320",
-      "corpse": "9915"
-    },
-    "targetchange": {
+  "name": "Haunter",
+  "nameDescription": "Haunter",
+  "race": "blood",
+  "experience": 4000,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 8500,
+    "now": 8500
+  },
+  "look": {
+    "type": 320,
+    "corpse": 9915
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "9"
+      "min": "0",
+      "max": "-150"
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-150"
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "16",
-          "radius": "3",
-          "target": "0",
-          "min": "0",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "energy"
-          }
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "16",
-          "range": "7",
-          "target": "1",
-          "start": "13",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "20",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "16",
-          "min": "100",
-          "max": "155",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "16",
-          "speedchange": "360",
-          "duration": "80000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": {
-        "deathPercent": "10"
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
+    {
+      "name": "energy",
       "interval": "2000",
-      "chance": "9",
-      "voice": {
-        "sentence": "Surrender and I'll end it quick!"
-      }
+      "chance": "16",
+      "radius": "3",
+      "target": "0",
+      "min": "0",
+      "max": "-130",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "16",
+      "range": "7",
+      "target": "1",
+      "start": "13",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "16",
+      "min": "100",
+      "max": "155",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "16",
+      "speedchange": "360",
+      "duration": "80000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 9,
+    "sentences": [
+      {
+        "sentence": "Surrender and I'll end it quick!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,133 +1,106 @@
 {
-  "monster": {
-    "name": "Massive Fire Elemental",
-    "nameDescription": "a massive fire elemental",
-    "race": "fire",
-    "experience": "950",
-    "speed": "260",
-    "manacost": "0",
-    "health": {
-      "now": "1800",
-      "max": "1800"
-    },
-    "look": {
-      "type": "242",
-      "corpse": "1492"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
+  "name": "Massive Fire Elemental",
+  "nameDescription": "a massive fire elemental",
+  "race": "fire",
+  "experience": 950,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 1800,
+    "now": 1800
+  },
+  "look": {
+    "type": 242,
+    "corpse": 1492
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "40",
       "attack": "100",
-      "defense": "0"
+      "fire": "200"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "firefield",
+      "interval": "2000",
+      "chance": "16",
+      "range": "7",
+      "radius": "3",
+      "target": "1",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "fire"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "40",
-          "attack": "100",
-          "fire": "200"
-        },
-        {
-          "name": "firefield",
-          "interval": "2000",
-          "chance": "16",
-          "range": "7",
-          "radius": "3",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "13",
-          "length": "7",
-          "spread": "3",
-          "min": "-200",
-          "max": "-700"
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "11",
-          "radius": "3",
-          "target": "0",
-          "min": "-60",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "firearea"
-          }
-        }
-      ]
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "13",
+      "length": "7",
+      "spread": "3",
+      "min": "-200",
+      "max": "-700"
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": {
-        "icePercent": "-25"
-      }
-    },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "11",
+      "radius": "3",
+      "target": "0",
+      "min": "-60",
+      "max": "-250",
+      "attributes": [
         {
-          "fire": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "firearea"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": -25
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

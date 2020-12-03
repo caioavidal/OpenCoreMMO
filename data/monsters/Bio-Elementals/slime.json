@@ -1,100 +1,74 @@
 {
-  "monster": {
-    "name": "Slime",
-    "nameDescription": "a slime",
-    "race": "venom",
-    "experience": "160",
-    "speed": "120",
-    "manacost": "0",
-    "health": {
-      "now": "150",
-      "max": "150"
-    },
-    "look": {
-      "type": "19",
-      "corpse": "1496"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "45",
-        "attack": "40"
-      }
-    },
-    "defenses": {
-      "armor": "3",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "100"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "energyPercent": "-10"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "3",
-      "summon": {
-        "name": "Slime Summon",
-        "interval": "1000",
-        "chance": "10",
-        "max": "3"
-      }
+  "name": "Slime",
+  "nameDescription": "a slime",
+  "race": "venom",
+  "experience": 160,
+  "speed": 120,
+  "manaCost": 0,
+  "health": {
+    "max": 150,
+    "now": 150
+  },
+  "look": {
+    "type": 19,
+    "corpse": 1496
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "45",
+      "attack": "40"
     }
+  ],
+  "defense": {
+    "armor": 3,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 100,
+    "icePercent": 20,
+    "firePercent": -10,
+    "energyPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Slime Summon",
+        "interval": 1000,
+        "chance": 10,
+        "max": 3
+      }
+    ]
   }
 }

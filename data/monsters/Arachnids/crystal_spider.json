@@ -1,259 +1,273 @@
 {
-  "monster": {
-    "name": "Crystal Spider",
-    "nameDescription": "a crystal spider",
-    "race": "undead",
-    "experience": "900",
-    "speed": "220",
-    "health": {
-      "now": "1250",
-      "max": "1250"
+  "name": "Crystal Spider",
+  "nameDescription": "a crystal spider",
+  "race": "undead",
+  "experience": 900,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 1250,
+    "now": 1250
+  },
+  "look": {
+    "type": 263,
+    "corpse": 7344
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 80,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250",
+      "poison": "160"
     },
-    "look": {
-      "type": "263",
-      "corpse": "7344"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "15"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "speedchange": "-800",
+      "duration": "15000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
+          "areaEffect": "poff"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-50",
+      "max": "-100",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-250",
-          "poison": "160"
+          "shootEffect": "ice"
         },
         {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "radius": "6",
-          "target": "0",
-          "speedchange": "-800",
-          "duration": "15000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poff"
-          }
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "min": "-50",
-          "max": "-100",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "ice"
-            },
-            {
-              "key": "areaEffect",
-              "value": "icearea"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "target": "1",
-          "speedchange": "-600",
-          "duration": "10000",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "snowball"
-          }
+          "areaEffect": "icearea"
         }
       ]
     },
-    "defenses": {
-      "armor": "40",
-      "defense": "40",
-      "defense": {
-        "name": "speed",
-        "interval": "2000",
-        "chance": "15",
-        "speedchange": "250",
-        "duration": "5000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "speedchange": "-600",
+      "duration": "10000",
+      "attributes": [
         {
-          "earthPercent": "20"
-        },
-        {
-          "energyPercent": "-20"
+          "shootEffect": "snowball"
         }
       ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Screeech!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2124",
-          "chance": "1560"
-        },
-        {
-          "name": "crystal necklace",
-          "chance": "1730"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "92",
-          "chance": "50000"
-        },
-        {
-          "id": "2169",
-          "chance": "1587"
-        },
-        {
-          "name": "platinum amulet",
-          "chance": "120"
-        },
-        {
-          "name": "steel helmet",
-          "chance": "4545"
-        },
-        {
-          "name": "plate armor",
-          "chance": "10000"
-        },
-        {
-          "name": "plate armor",
-          "chance": "5263"
-        },
-        {
-          "name": "knight armor",
-          "chance": "540"
-        },
-        {
-          "name": "knight legs",
-          "chance": "690"
-        },
-        {
-          "name": "jewelled backpack",
-          "chance": "70"
-        },
-        {
-          "name": "spider silk",
-          "chance": "1950"
-        },
-        {
-          "name": "shard",
-          "chance": "750"
-        },
-        {
-          "name": "sniper arrow",
-          "countmax": "6",
-          "chance": "6250"
-        },
-        {
-          "name": "sapphire hammer",
-          "chance": "130"
-        },
-        {
-          "name": "crystal sword",
-          "chance": "2564"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "14810"
-        },
-        {
-          "name": "glacier mask",
-          "chance": "650"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 40
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "250",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 20,
+    "energyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 2124,
+      "countmax": 1,
+      "chance": 1560,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1730,
+      "items": [],
+      "name": "crystal necklace"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 92,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2169,
+      "countmax": 1,
+      "chance": 1587,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "platinum amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4545,
+      "items": [],
+      "name": "steel helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5263,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 540,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 690,
+      "items": [],
+      "name": "knight legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "jewelled backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1950,
+      "items": [],
+      "name": "spider silk"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 750,
+      "items": [],
+      "name": "shard"
+    },
+    {
+      "id": 0,
+      "countmax": 6,
+      "chance": 6250,
+      "items": [],
+      "name": "sniper arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "sapphire hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2564,
+      "items": [],
+      "name": "crystal sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14810,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 650,
+      "items": [],
+      "name": "glacier mask"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Screeech!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "ice": 1,
+    "paralyze": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,236 +1,228 @@
 {
-  "monster": {
-    "name": "Energy Elemental",
-    "nameDescription": "an energy elemental",
-    "race": "energy",
-    "experience": "550",
-    "speed": "200",
-    "health": {
-      "now": "500",
-      "max": "500"
+  "name": "Energy Elemental",
+  "nameDescription": "an energy elemental",
+  "race": "energy",
+  "experience": 550,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 500,
+    "now": 500
+  },
+  "look": {
+    "type": 293,
+    "corpse": 8966
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "staticattack": 85,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-175"
     },
-    "look": {
-      "type": "293",
-      "corpse": "8966"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "2",
+      "target": "1",
+      "min": "-125",
+      "max": "-252",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "energy"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "energy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-100",
+      "max": "-130",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-175"
+          "shootEffect": "energyball"
         },
         {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "2",
-          "target": "1",
-          "min": "-125",
-          "max": "-252",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "min": "-100",
-          "max": "-130",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energyball"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-        {
-          "name": "energy elemental electrify",
-          "interval": "2000",
-          "chance": "20"
+          "areaEffect": "energy"
         }
       ]
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "90",
-        "max": "150",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "30"
-        },
-        {
-          "holyPercent": "10"
-        },
-        {
-          "deathPercent": "5"
-        },
-        {
-          "earthPercent": "-15"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "energy": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2124",
-          "chance": "2000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "70",
-          "chance": "50000"
-        },
-        {
-          "name": "small amethyst",
-          "countmax": "2",
-          "chance": "5000"
-        },
-        {
-          "name": "energy ring",
-          "chance": "892"
-        },
-        {
-          "name": "silver amulet",
-          "chance": "1020"
-        },
-        {
-          "name": "wand of cosmic energy",
-          "chance": "636"
-        },
-        {
-          "name": "throwing star",
-          "countmax": "5",
-          "chance": "9900"
-        },
-        {
-          "name": "obsidian lance",
-          "chance": "3571"
-        },
-        {
-          "name": "guardian shield",
-          "chance": "243"
-        },
-        {
-          "name": "crystal sword",
-          "chance": "5882"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "7692"
-        },
-        {
-          "name": "mana potion",
-          "chance": "11711"
-        },
-        {
-          "name": "flash arrow",
-          "countmax": "10",
-          "chance": "10000"
-        }
-      ]/* crystal ring */
+    {
+      "name": "energy elemental electrify",
+      "interval": "2000",
+      "chance": "20"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "90",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 30,
+    "holyPercent": 10,
+    "deathPercent": 5,
+    "earthPercent": -15
+  },
+  "loot": [
+    {
+      "id": 2124,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 892,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1020,
+      "items": [],
+      "name": "silver amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 636,
+      "items": [],
+      "name": "wand of cosmic energy"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 9900,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3571,
+      "items": [],
+      "name": "obsidian lance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 243,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5882,
+      "items": [],
+      "name": "crystal sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7692,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11711,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 10000,
+      "items": [],
+      "name": "flash arrow"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "energy": 1,
+    "ice": 1,
+    "lifedrain": 1,
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

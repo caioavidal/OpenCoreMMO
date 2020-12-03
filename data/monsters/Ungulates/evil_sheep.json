@@ -1,131 +1,99 @@
 {
-  "monster": {
-    "name": "Evil Sheep",
-    "nameDescription": "an evil sheep",
-    "race": "blood",
-    "experience": "240",
-    "speed": "250",
-    "health": {
-      "now": "350",
-      "max": "350"
-    },
-    "look": {
-      "type": "14",
-      "corpse": "5991"
-    },
-    "targetchange": {
+  "name": "Evil Sheep",
+  "nameDescription": "an evil sheep",
+  "race": "blood",
+  "experience": 240,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 350,
+    "now": 350
+  },
+  "look": {
+    "type": 14,
+    "corpse": 5991
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "20"
+      "min": "0",
+      "max": "-90"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "4000",
+      "chance": "30",
+      "target": "1",
+      "range": "7",
+      "min": "0",
+      "max": "-50",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "20"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "shootEffect": "snowball"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-90"
-        },
-        {
-          "name": "physical",
-          "interval": "4000",
-          "chance": "30",
-          "target": "1",
-          "range": "7",
-          "min": "0",
-          "max": "-50",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "snowball"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "35"
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "-10"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "physicalPercent": "20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Grrrr"
-      }
-    },
-    "loot": {
-      "item": {
-        "name": "gold coin",
-        "countmax": "50",
-        "chance": "50000"
-      }
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": -10,
+    "icePercent": 20,
+    "physicalPercent": 20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrr",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

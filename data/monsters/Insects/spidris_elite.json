@@ -1,153 +1,172 @@
 {
-  "monster": {
-    "name": "Spidris Elite",
-    "nameDescription": "Spidris Elite",
-    "race": "venom",
-    "experience": "4000",
-    "speed": "260",
-    "health": {
-      "now": "5000",
-      "max": "5000"
-    },
-    "look": {
-      "type": "457",
-      "corpse": "15296"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-349"
-      }
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30"
-    },
-    "elements": {
-      "element": {
-        "holyPercent": "-10"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small ruby",
-          "countmax": "5",
-          "chance": "23280"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "6",
-          "chance": "45000"
-        },
-        {
-          "name": "violet gem",
-          "chance": "1120"
-        },
-        {
-          "id": "6300",
-          "chance": "4480"
-        },
-        {
-          "name": "titan axe",
-          "chance": "1440"
-        },
-        {
-          "name": "great mana potion",
-          "countmax": "2",
-          "chance": "20400"
-        },
-        {
-          "id": "7632",
-          "chance": "3040"
-        },
-        {
-          "name": "ultimate health potion",
-          "countmax": "2",
-          "chance": "9250"
-        },
-        {
-          "name": "spidris mandible",
-          "chance": "27440"
-        },
-        {
-          "name": "compound eye",
-          "chance": "13210"
-        },
-        {
-          "name": "calopteryx cape",
-          "chance": "1280"
-        },
-        {
-          "name": "carapace shield",
-          "chance": "1170"
-        },
-        {
-          "name": "hive scythe",
-          "chance": "1390"
-        }
-      ],
-      "#comment": []
+  "name": "Spidris Elite",
+  "nameDescription": "Spidris Elite",
+  "race": "venom",
+  "experience": 4000,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 5000,
+    "now": 5000
+  },
+  "look": {
+    "type": 457,
+    "corpse": 15296
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-349"
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 23280,
+      "items": [],
+      "name": "small ruby"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 6,
+      "chance": 45000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1120,
+      "items": [],
+      "name": "violet gem"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 4480,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1440,
+      "items": [],
+      "name": "titan axe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 20400,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 7632,
+      "countmax": 1,
+      "chance": 3040,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 9250,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 27440,
+      "items": [],
+      "name": "spidris mandible"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13210,
+      "items": [],
+      "name": "compound eye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1280,
+      "items": [],
+      "name": "calopteryx cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1170,
+      "items": [],
+      "name": "carapace shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1390,
+      "items": [],
+      "name": "hive scythe"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

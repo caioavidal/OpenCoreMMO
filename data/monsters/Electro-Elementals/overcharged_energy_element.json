@@ -1,187 +1,175 @@
 {
-  "monster": {
-    "name": "Overcharged Energy Element",
-    "nameDescription": "an orvercharged energy element",
-    "race": "undead",
-    "experience": "1300",
-    "speed": "300",
-    "health": {
-      "now": "1700",
-      "max": "1700"
+  "name": "Overcharged Energy Element",
+  "nameDescription": "an orvercharged energy element",
+  "race": "undead",
+  "experience": 1300,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 1700,
+    "now": 1700
+  },
+  "look": {
+    "type": 290,
+    "corpse": 8966
+  },
+  "targetChange": {
+    "interval": 20000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 85,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-200"
     },
-    "look": {
-      "type": "290",
-      "corpse": "8966"
-    },
-    "targetchange": {
-      "interval": "20000",
-      "chance": "15"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "11",
+      "target": "0",
+      "radius": "4",
+      "min": "0",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "energy"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "1"
+          "areaEffect": "purpleenergy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "12",
+      "range": "3",
+      "target": "1",
+      "min": "0",
+      "max": "-300",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-200"
-        },
-        {
-          "name": "energy",
-          "interval": "1000",
-          "chance": "11",
-          "target": "0",
-          "radius": "4",
-          "min": "0",
-          "max": "-250",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "purpleenergy"
-            }
-          ]
-        },
-        {
-          "name": "energy",
-          "interval": "1000",
-          "chance": "12",
-          "range": "3",
-          "target": "1",
-          "min": "0",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "purpleenergy"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "12",
-          "radius": "4",
-          "target": "0",
-          "min": "0",
-          "max": "-200",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poff"
-          }
+          "areaEffect": "purpleenergy"
         }
       ]
     },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "90",
-        "max": "150",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "earthPercent": "-20"
-      }
-    },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "12",
+      "radius": "4",
+      "target": "0",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
         {
-          "ice": "1"
-        },
-        {
-          "energy": "1"
-        },
-        {
-          "fire": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "BZZZZZZZZZZ"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "56",
-          "chance": "50000"
-        },
-        {
-          "name": "small amethyst",
-          "countmax": "2",
-          "chance": "10000"
-        },
-        {
-          "name": "berserk potion",
-          "chance": "2173"
-        },
-        {
-          "name": "great health potion",
-          "chance": "10000"
-        },
-        {
-          "name": "energy soil",
-          "chance": "14285"
+          "areaEffect": "poff"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "90",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 56,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 10000,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2173,
+      "items": [],
+      "name": "berserk potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "energy soil"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BZZZZZZZZZZ",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "energy": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

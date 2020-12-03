@@ -1,221 +1,206 @@
 {
-  "monster": {
-    "name": "Shadow Pupil",
-    "nameDescription": "a shadow pupil",
-    "race": "blood",
-    "experience": "410",
-    "speed": "210",
-    "health": {
-      "now": "450",
-      "max": "450"
+  "name": "Shadow Pupil",
+  "nameDescription": "a shadow pupil",
+  "race": "blood",
+  "experience": 410,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 551,
+    "corpse": 21254
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-70",
+      "poison": "90"
     },
-    "look": {
-      "type": "551",
-      "corpse": "21254"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "-60",
+      "max": "-80",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "suddendeath"
         },
         {
-          "attackable": "1"
+          "areaEffect": "smallclouds"
         },
         {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "radius": "3",
+      "min": "-30",
+      "max": "-60",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-70",
-          "poison": "90"
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "target": "1",
-          "min": "-60",
-          "max": "-80",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "smallclouds"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "radius": "3",
-          "min": "-30",
-          "max": "-60",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "mortarea"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "5"
-        },
-        {
-          "icePercent": "5"
-        },
-        {
-          "deathPercent": "5"
-        },
-        {
-          "physicalPercent": "-5"
-        },
-        {
-          "firePercent": "-5"
-        },
-        {
-          "holyPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "drown": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "4",
-      "summon": [
-        {
-          "name": "Skeleton",
-          "interval": "2000",
-          "chance": "10"
-        },
-        {
-          "name": "Ghost",
-          "interval": "2000",
-          "chance": "5"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "When I'm finished with you, you'll be a shadow of your former self."
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "64",
-          "chance": "100000"
-        },
-        {
-          "name": "boots of haste",
-          "chance": "60"
-        },
-        {
-          "name": "clerical mace",
-          "chance": "290"
-        },
-        {
-          "name": "mystic turban",
-          "chance": "580"
-        },
-        {
-          "name": "brown mushroom",
-          "chance": "5170"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "470"
-        },
-        {
-          "name": "spellbook of enlightenment",
-          "chance": "290"
-        },
-        {
-          "name": "book of necromantic rituals",
-          "chance": "6920"
-        },
-        {
-          "name": "horoscope",
-          "chance": "15000"
-        },
-        {
-          "name": "incantation notes",
-          "chance": "9130"
-        },
-        {
-          "name": "pieces of magic chalk",
-          "chance": "4300"
+          "areaEffect": "mortarea"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 5,
+    "icePercent": 5,
+    "deathPercent": 5,
+    "physicalPercent": -5,
+    "firePercent": -5,
+    "holyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 64,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 290,
+      "items": [],
+      "name": "clerical mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 580,
+      "items": [],
+      "name": "mystic turban"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5170,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 470,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 290,
+      "items": [],
+      "name": "spellbook of enlightenment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6920,
+      "items": [],
+      "name": "book of necromantic rituals"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": "horoscope"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9130,
+      "items": [],
+      "name": "incantation notes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4300,
+      "items": [],
+      "name": "pieces of magic chalk"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "When I'm finished with you, you'll be a shadow of your former self.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "earth": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Skeleton",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      },
+      {
+        "name": "Ghost",
+        "interval": 2000,
+        "chance": 5,
+        "max": 0
+      }
+    ]
   }
 }

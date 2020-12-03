@@ -1,132 +1,100 @@
 {
-  "monster": {
-    "name": "Fire Elemental",
-    "nameDescription": "a fire elemental",
-    "race": "fire",
-    "experience": "220",
-    "speed": "200",
-    "manacost": "690",
-    "health": {
-      "now": "280",
-      "max": "280"
+  "name": "Fire Elemental",
+  "nameDescription": "a fire elemental",
+  "race": "fire",
+  "experience": 220,
+  "speed": 200,
+  "manaCost": 690,
+  "health": {
+    "max": 280,
+    "now": 280
+  },
+  "look": {
+    "type": 49,
+    "corpse": 1492
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "50"
     },
-    "look": {
-      "type": "49",
-      "corpse": "1492"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "radius": "2",
+      "target": "1",
+      "min": "-55",
+      "max": "-155",
+      "attributes": [
         {
-          "summonable": "1"
+          "shootEffect": "fire"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "firearea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "firefield",
+      "interval": "1000",
+      "chance": "34",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "30",
-          "attack": "50"
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "25",
-          "range": "7",
-          "radius": "2",
-          "target": "1",
-          "min": "-55",
-          "max": "-155",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        },
-        {
-          "name": "firefield",
-          "interval": "1000",
-          "chance": "34",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "18",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "100"
-        },
-        {
-          "deathPercent": "100"
-        },
-        {
-          "icePercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
+          "shootEffect": "fire"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 18,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 100,
+    "deathPercent": 100,
+    "icePercent": -25
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

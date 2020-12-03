@@ -1,139 +1,137 @@
 {
-  "monster": {
-    "name": "Grave Guard",
-    "nameDescription": "a grave guard",
-    "race": "undead",
-    "experience": "485",
-    "speed": "200",
-    "health": {
-      "now": "720",
-      "max": "720"
+  "name": "Grave Guard",
+  "nameDescription": "a grave guard",
+  "race": "undead",
+  "experience": 485,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 720,
+    "now": 720
+  },
+  "look": {
+    "type": 234,
+    "corpse": 13975
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-147"
     },
-    "look": {
-      "type": "234",
-      "corpse": "13975"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "5",
+      "target": "0",
+      "radius": "1",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
+          "areaEffect": "bluenote"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-147"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "5",
-          "target": "0",
-          "radius": "1",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bluenote"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "fire": "1"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "30",
-          "chance": "50000"
-        },
-        {
-          "name": "scarab coin",
-          "chance": "4166"
-        },
-        {
-          "name": "daramian waraxe",
-          "chance": "1170"
-        },
-        {
-          "name": "grave flower",
-          "chance": "70000"
-        },
-        {
-          "id": "6300",
-          "chance": "1754"
-        },
-        {
-          "name": "health potion",
-          "chance": "20000"
-        },
-        {
-          "name": "mana potion",
-          "chance": "20000"
-        }
-      ]/* death ring */
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4166,
+      "items": [],
+      "name": "scarab coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1170,
+      "items": [],
+      "name": "daramian waraxe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70000,
+      "items": [],
+      "name": "grave flower"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 1754,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": "mana potion"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

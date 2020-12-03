@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NeoServer.Server.Standalone;
 
 namespace NeoServer.Loaders.World
 {
@@ -22,17 +23,19 @@ namespace NeoServer.Loaders.World
         private Game.World.World world;
         private readonly Logger logger;
         private readonly IItemFactory itemFactory;
+        private readonly ServerConfiguration serverConfiguration;
 
-        public WorldLoader(Game.World.World world, Logger logger, IItemFactory itemFactory)
+        public WorldLoader(Game.World.World world, Logger logger, IItemFactory itemFactory, ServerConfiguration serverConfiguration)
         {
             //this.itemFactory = itemFactory;
             this.world = world;
             this.logger = logger;
             this.itemFactory = itemFactory;
+            this.serverConfiguration = serverConfiguration;
         }
         public void Load()
         {
-            var fileStream = File.ReadAllBytes("./data/world/small.otbm");
+            var fileStream = File.ReadAllBytes($"./data/world/{serverConfiguration.OTBM}");
 
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
 

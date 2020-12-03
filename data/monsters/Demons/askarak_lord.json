@@ -1,248 +1,253 @@
 {
-  "monster": {
-    "name": "Askarak Lord",
-    "nameDescription": "an askarak lord",
-    "race": "venom",
-    "experience": "1200",
-    "speed": "230",
-    "health": {
-      "now": "2100",
-      "max": "2100"
+  "name": "Askarak Lord",
+  "nameDescription": "an askarak lord",
+  "race": "venom",
+  "experience": 1200,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 2100,
+    "now": 2100
+  },
+  "look": {
+    "type": 410,
+    "corpse": 13956
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-186"
     },
-    "look": {
-      "type": "410",
-      "corpse": "13956"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "min": "-40",
+      "max": "-80",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "length": "4",
+      "spread": "3",
+      "min": "-95",
+      "max": "-180",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-186"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "radius": "6",
-          "target": "0",
-          "min": "-40",
-          "max": "-80",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenbubble"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "length": "4",
-          "spread": "3",
-          "min": "-95",
-          "max": "-180",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenbubble"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "target": "0",
-          "length": "4",
-          "spread": "0",
-          "min": "-130",
-          "max": "-180",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenbubble"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "1",
-          "target": "1",
-          "speedchange": "-650",
-          "duration": "15000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "120",
-        "max": "160",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "50"
-        },
-        {
-          "icePercent": "50"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "earth",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "target": "0",
+      "length": "4",
+      "spread": "0",
+      "min": "-130",
+      "max": "-180",
+      "attributes": [
         {
-          "sentence": "WE RULE!"
-        },
-        {
-          "sentence": "RED IS MAD"
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "1",
+      "target": "1",
+      "speedchange": "-650",
+      "duration": "15000",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "50000"
-        },
-        {
-          "name": "small emerald",
-          "countmax": "5",
-          "chance": "5882"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "2",
-          "chance": "35333"
-        },
-        {
-          "name": "energy ring",
-          "chance": "606"
-        },
-        {
-          "name": "brown mushroom",
-          "countmax": "5",
-          "chance": "5263"
-        },
-        {
-          "name": "magic sulphur",
-          "chance": "620"
-        },
-        {
-          "name": "assassin star",
-          "countmax": "5",
-          "chance": "70"
-        },
-        {
-          "name": "dreaded cleaver",
-          "chance": "30"
-        },
-        {
-          "name": "mastermind potion",
-          "chance": "750"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "6250"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "7692"
-        },
-        {
-          "name": "terra mantle",
-          "chance": "70"
-        },
-        {
-          "name": "springsprout rod",
-          "chance": "1010"
+          "areaEffect": "redshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "120",
+      "max": "160",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 50,
+    "icePercent": 50,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 5882,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 35333,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 606,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 5263,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 620,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 70,
+      "items": [],
+      "name": "assassin star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 30,
+      "items": [],
+      "name": "dreaded cleaver"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 750,
+      "items": [],
+      "name": "mastermind potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6250,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7692,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "terra mantle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1010,
+      "items": [],
+      "name": "springsprout rod"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "WE RULE!",
+        "yell": false
+      },
+      {
+        "sentence": "RED IS MAD",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,92 +1,66 @@
 {
-  "monster": {
-    "name": "Modified Gnarlhound",
-    "nameDescription": "a modified gnarlhound",
-    "race": "blood",
-    "experience": "0",
-    "speed": "150",
-    "health": {
-      "now": "1500",
-      "max": "1500"
-    },
-    "look": {
-      "type": "515",
-      "corpse": "13528"
-    },
-    "targetchange": {
-      "interval": "2000",
-      "chance": "20"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "25"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "energy": "1"
-        },
-        {
-          "physical": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "holy": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "fire": "1"
-        }
-      ]
-    }
+  "name": "Modified Gnarlhound",
+  "nameDescription": "a modified gnarlhound",
+  "race": "blood",
+  "experience": 0,
+  "speed": 150,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 515,
+    "corpse": 13528
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 25,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "energy": 1,
+    "physical": 1,
+    "death": 1,
+    "holy": 1,
+    "invisible": 1,
+    "ice": 1,
+    "earth": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

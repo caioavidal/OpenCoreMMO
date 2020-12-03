@@ -1,92 +1,81 @@
 {
-  "monster": {
-    "name": "Squirrel",
-    "nameDescription": "a squirrel",
-    "race": "blood",
-    "experience": "0",
-    "speed": "490",
-    "manacost": "220",
-    "health": {
-      "now": "20",
-      "max": "20"
-    },
-    "look": {
-      "type": "274",
-      "corpse": "7628"
-    },
-    "targetchange": {
+  "name": "Squirrel",
+  "nameDescription": "a squirrel",
+  "race": "blood",
+  "experience": 0,
+  "speed": 490,
+  "manaCost": 220,
+  "health": {
+    "max": 20,
+    "now": 20
+  },
+  "look": {
+    "type": 274,
+    "corpse": 7628
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "runonhealth": 20
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "0"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "20"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "0",
-        "attack": "0"
-      }
-    },
-    "defenses": {
-      "armor": "1",
-      "defense": "2"
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Chchch"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "7909",
-          "chance": "2000"
-        },
-        {
-          "id": "7910",
-          "chance": "2500"
-        }
-      ],
-      "#comment": []
+      "skill": "0",
+      "attack": "0"
     }
+  ],
+  "defense": {
+    "armor": 1,
+    "defense": 2
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 7909,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7910,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Chchch",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

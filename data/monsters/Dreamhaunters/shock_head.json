@@ -1,211 +1,188 @@
 {
-  "monster": {
-    "name": "Shock Head",
-    "nameDescription": "a shock head",
-    "race": "blood",
-    "experience": "2300",
-    "speed": "250",
-    "health": {
-      "now": "4200",
-      "max": "4200"
+  "name": "Shock Head",
+  "nameDescription": "a shock head",
+  "race": "blood",
+  "experience": 2300,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 4200,
+    "now": 4200
+  },
+  "look": {
+    "type": 579,
+    "corpse": 22392
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-798"
     },
-    "look": {
-      "type": "579",
-      "corpse": "22392"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "length": "5",
+      "spread": "2",
+      "target": "1",
+      "min": "-200",
+      "max": "-300",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "blacksmoke"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "3",
+      "target": "1",
+      "speedchange": "-800",
+      "duration": "7500",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-798"
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "15",
-          "length": "5",
-          "spread": "2",
-          "target": "1",
-          "min": "-200",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blacksmoke"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "length": "8",
-          "spread": "3",
-          "target": "1",
-          "speedchange": "-800",
-          "duration": "7500",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "purpleenergy"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "radius": "4",
-          "target": "1",
-          "min": "0",
-          "max": "-350",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "earth"
-            },
-            {
-              "key": "areaEffect",
-              "value": "stones"
-            }
-          ]
-        },
-        {
-          "name": "shock head skill reducer 1",
-          "range": "5",
-          "interval": "2000",
-          "chance": "5"
-        },
-        {
-          "name": "shock head skill reducer 2",
-          "interval": "2000",
-          "chance": "5"
+          "areaEffect": "purpleenergy"
         }
       ]
     },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "250",
-        "max": "350",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "insects"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "4",
+      "target": "1",
+      "min": "0",
+      "max": "-350",
+      "attributes": [
         {
-          "physicalPercent": "-5"
+          "shootEffect": "earth"
         },
         {
-          "deathPercent": "30"
-        },
-        {
-          "energyPercent": "30"
-        },
-        {
-          "icePercent": "5"
+          "areaEffect": "stones"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
+    {
+      "name": "shock head skill reducer 1",
+      "range": "5",
+      "interval": "2000",
+      "chance": "5"
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
+    {
+      "name": "shock head skill reducer 2",
+      "interval": "2000",
+      "chance": "5"
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "250",
+      "max": "350",
+      "attributes": [
         {
-          "sentence": "<brrzz>"
-        },
-        {
-          "sentence": "Thun... Thun... THUNDER!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small sapphire",
-          "chance": "5000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "43000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "87",
-          "chance": "50000"
-        },
-        {
-          "name": "royal helmet",
-          "chance": "270"
-        },
-        {
-          "name": "goosebump leather",
-          "chance": "10000"
+          "areaEffect": "insects"
         }
       ]
     }
+  ],
+  "elements": {
+    "physicalPercent": -5,
+    "deathPercent": 30,
+    "energyPercent": 30,
+    "icePercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 43000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 87,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 270,
+      "items": [],
+      "name": "royal helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "goosebump leather"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "<brrzz>",
+        "yell": false
+      },
+      {
+        "sentence": "Thun... Thun... THUNDER!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "fire": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,200 +1,196 @@
 {
-  "monster": {
-    "name": "Mutated Tiger",
-    "nameDescription": "a mutated tiger",
-    "race": "blood",
-    "experience": "750",
-    "speed": "240",
-    "health": {
-      "now": "1100",
-      "max": "1100"
+  "name": "Mutated Tiger",
+  "nameDescription": "a mutated tiger",
+  "race": "blood",
+  "experience": 750,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1100,
+    "now": 1100
+  },
+  "look": {
+    "type": 318,
+    "corpse": 9913
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 100
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-150"
     },
-    "look": {
-      "type": "318",
-      "corpse": "9913"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "length": "5",
+      "spread": "3",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "100"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-150"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "length": "5",
-          "spread": "3",
-          "min": "0",
-          "max": "-200",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowspark"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25",
-      "defense": [
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "10",
-          "duration": "2000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "10",
-          "min": "150",
-          "max": "300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "20"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "deathPercent": "-5"
-        },
-        {
-          "earthPercent": "80"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "GRAAARRRRRR"
-        },
-        {
-          "sentence": "CHHHHHHHHHHH"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "5",
-          "chance": "50000"
-        },
-        {
-          "name": "life ring",
-          "chance": "5580"
-        },
-        {
-          "name": "guardian shield",
-          "chance": "380"
-        },
-        {
-          "name": "meat",
-          "countmax": "2",
-          "chance": "29500"
-        },
-        {
-          "name": "angelic axe",
-          "chance": "440"
-        },
-        {
-          "name": "glorious axe",
-          "chance": "870"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "6000"
-        },
-        {
-          "name": "silky tapestry",
-          "chance": "730"
-        },
-        {
-          "name": "striped fur",
-          "chance": "20130"
-        },
-        {
-          "name": "sabretooth",
-          "chance": "10600"
+          "areaEffect": "yellowspark"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "150",
+      "max": "300",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 20,
+    "energyPercent": 20,
+    "icePercent": 20,
+    "deathPercent": -5,
+    "earthPercent": 80
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5580,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 29500,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 440,
+      "items": [],
+      "name": "angelic axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 870,
+      "items": [],
+      "name": "glorious axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": "silky tapestry"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20130,
+      "items": [],
+      "name": "striped fur"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10600,
+      "items": [],
+      "name": "sabretooth"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "GRAAARRRRRR",
+        "yell": false
+      },
+      {
+        "sentence": "CHHHHHHHHHHH",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,145 +1,120 @@
 {
-  "monster": {
-    "name": "Terramite",
-    "nameDescription": "a terramite",
-    "race": "venom",
-    "experience": "160",
-    "speed": "200",
-    "manacost": "505",
-    "health": {
-      "now": "365",
-      "max": "365"
+  "name": "Terramite",
+  "nameDescription": "a terramite",
+  "race": "venom",
+  "experience": 160,
+  "speed": 200,
+  "manaCost": 505,
+  "health": {
+    "max": 365,
+    "now": 365
+  },
+  "look": {
+    "type": 346,
+    "corpse": 11347
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
     },
-    "look": {
-      "type": "346",
-      "corpse": "11347"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-5",
+      "max": "-16",
+      "attributes": [
         {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "min": "-5",
-          "max": "-16",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "earthPercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "energyPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Zrp zrp!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "45",
-          "chance": "97520"
-        },
-        {
-          "name": "terramite shell",
-          "chance": "7730"
-        },
-        {
-          "name": "terramite eggs",
-          "countmax": "3",
-          "chance": "4680"
-        },
-        {
-          "name": "terramite legs",
-          "chance": "14880"
+          "shootEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 5,
+    "earthPercent": 20,
+    "firePercent": -10,
+    "energyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 97520,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7730,
+      "items": [],
+      "name": "terramite shell"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 4680,
+      "items": [],
+      "name": "terramite eggs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14880,
+      "items": [],
+      "name": "terramite legs"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Zrp zrp!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

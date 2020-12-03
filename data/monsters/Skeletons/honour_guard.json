@@ -1,151 +1,142 @@
 {
-  "monster": {
-    "name": "Honour Guard",
-    "nameDescription": "an honour guard",
-    "race": "undead",
-    "experience": "55",
-    "speed": "180",
-    "health": {
-      "now": "85",
-      "max": "85"
+  "name": "Honour Guard",
+  "nameDescription": "an honour guard",
+  "race": "undead",
+  "experience": 55,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 85,
+    "now": 85
+  },
+  "look": {
+    "type": 298,
+    "corpse": 2843
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-40"
     },
-    "look": {
-      "type": "298",
-      "corpse": "2843"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "min": "-5",
+      "max": "-13",
+      "attributes": [
         {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-40"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "range": "1",
-          "min": "-5",
-          "max": "-13",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": {
-        "holyPercent": "5"
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "death": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Horestis curse upon you!"
-        },
-        {
-          "sentence": "Vengeance!"
-        },
-        {
-          "sentence": "Thy punishment is at hand!"
-        },
-        {
-          "sentence": "For the pharao!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "15",
-          "chance": "50000"
-        },
-        {
-          "name": "scarab coin",
-          "chance": "2600"
-        },
-        {
-          "name": "mace",
-          "chance": "3760"
-        },
-        {
-          "id": "2419",
-          "chance": "1640"
-        },
-        {
-          "name": "brown mushroom",
-          "countmax": "2",
-          "chance": "6120"
-        },
-        {
-          "name": "pelvis bone",
-          "chance": "8700"
-        }
-      ]/* scimitar */
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2600,
+      "items": [],
+      "name": "scarab coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3760,
+      "items": [],
+      "name": "mace"
+    },
+    {
+      "id": 2419,
+      "countmax": 1,
+      "chance": 1640,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 6120,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8700,
+      "items": [],
+      "name": "pelvis bone"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Horestis curse upon you!",
+        "yell": false
+      },
+      {
+        "sentence": "Vengeance!",
+        "yell": false
+      },
+      {
+        "sentence": "Thy punishment is at hand!",
+        "yell": false
+      },
+      {
+        "sentence": "For the pharao!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

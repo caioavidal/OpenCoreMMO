@@ -1,193 +1,168 @@
 {
-  "monster": {
-    "name": "The Dark Dancer",
-    "nameDescription": "the dark dancer",
-    "race": "blood",
-    "experience": "435",
-    "speed": "170",
-    "manacost": "0",
-    "health": {
-      "now": "855",
-      "max": "855"
+  "name": "The Dark Dancer",
+  "nameDescription": "the dark dancer",
+  "race": "blood",
+  "experience": 435,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 855,
+    "now": 855
+  },
+  "look": {
+    "type": 58,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "skill": "20",
+      "attack": "30"
     },
-    "look": {
-      "type": "58",
-      "corpse": "7349"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "70",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "min": "-60",
+      "max": "-95",
+      "attributes": [
         {
-          "summonable": "0"
+          "areaEffect": "mortarea"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
+          "shootEffect": "suddendeath"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "physical",
+      "interval": "6000",
+      "chance": "90",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "min": "-60",
+      "max": "-95",
+      "attributes": [
         {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "skill": "20",
-          "attack": "30"
+          "areaEffect": "mortarea"
         },
         {
-          "name": "physical",
-          "interval": "3000",
-          "chance": "70",
-          "radius": "1",
-          "target": "1",
-          "range": "5",
-          "min": "-60",
-          "max": "-95",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            },
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            }
-          ]
-        },
-        {
-          "name": "physical",
-          "interval": "6000",
-          "chance": "90",
-          "radius": "1",
-          "target": "1",
-          "range": "5",
-          "min": "-60",
-          "max": "-95",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            },
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "3500",
-          "chance": "35",
-          "radius": "1",
-          "target": "1",
-          "range": "5",
-          "duration": "10000",
-          "speed": "-400",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "4000",
-          "chance": "30",
-          "radius": "1",
-          "target": "1",
-          "range": "5",
-          "min": "-2",
-          "max": "-110",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "shootEffect": "suddendeath"
         }
       ]
     },
-    "defenses": {
-      "armor": "11",
-      "defense": "12",
-      "defense": [
+    {
+      "name": "speed",
+      "interval": "3500",
+      "chance": "35",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "duration": "10000",
+      "speed": "-400",
+      "attributes": [
         {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "45",
-          "min": "75",
-          "max": "135",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "3000",
-          "chance": "50",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "elements": {
-      "element": [
+    {
+      "name": "manadrain",
+      "interval": "4000",
+      "chance": "30",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "min": "-2",
+      "max": "-110",
+      "attributes": [
         {
-          "firePercent": "40"
-        },
-        {
-          "deathPercent": "22"
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "3",
-      "summon": {
-        "name": "Ghoul",
-        "interval": "2000",
-        "chance": "20"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "5",
-      "voice": {
-        "sentence": "I hope you like my voice!"
-      }
     }
+  ],
+  "defense": {
+    "armor": 11,
+    "defense": 12
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "45",
+      "min": "75",
+      "max": "135",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "3000",
+      "chance": "50",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 40,
+    "deathPercent": 22
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I hope you like my voice!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Ghoul",
+        "interval": 2000,
+        "chance": 20,
+        "max": 0
+      }
+    ]
   }
 }

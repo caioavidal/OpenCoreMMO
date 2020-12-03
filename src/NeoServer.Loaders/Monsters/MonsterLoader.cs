@@ -1,10 +1,11 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Loaders.World;
 using Newtonsoft.Json;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace NeoServer.Loaders.Monsters
 {
@@ -12,18 +13,22 @@ namespace NeoServer.Loaders.Monsters
     {
         private readonly IMonsterDataManager _monsterManager;
         private readonly GameConfiguration gameConfiguration;
-        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration)
+        private readonly Logger logger;
+        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, Logger logger)
         {
             _monsterManager = monsterManager;
             this.gameConfiguration = gameConfiguration;
+            this.logger = logger;
         }
         public void Load()
         {
-            var monsters = GetMonsterDataList();
+            var monsters = GetMonsterDataList().ToList();
             _monsterManager.Load(monsters);
+
+            logger.Information($"{monsters.Count()} monsters loaded!");
         }
 
-        private IEnumerable<IMonsterType> GetMonsterDataList()
+        private IEnumerable<(string,IMonsterType)> GetMonsterDataList()
         {
             var basePath = "./data/monsters";
             var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));
@@ -31,7 +36,7 @@ namespace NeoServer.Loaders.Monsters
 
             foreach (var monsterFile in monstersPath)
             {
-                yield return ConvertMonster(basePath, monsterFile);
+                yield return (monsterFile["name"], ConvertMonster(basePath, monsterFile));
             }
         }
         private IMonsterType ConvertMonster(string basePath, IDictionary<string, string> monsterFile)

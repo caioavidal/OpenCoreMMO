@@ -1,131 +1,111 @@
 {
-  "monster": {
-    "name": "The Masked Marauder",
-    "nameDescription": "The Masked Marauder",
-    "race": "blood",
-    "experience": "3500",
-    "speed": "250",
-    "health": {
-      "now": "7320",
-      "max": "7320"
+  "name": "The Masked Marauder",
+  "nameDescription": "The Masked Marauder",
+  "race": "blood",
+  "experience": 3500,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 7320,
+    "now": 7320
+  },
+  "look": {
+    "type": 234,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-640"
     },
-    "look": {
-      "type": "234",
-      "corpse": "7349"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "40",
+      "min": "-38",
+      "max": "-150",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-640"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "40",
-          "min": "-38",
-          "max": "-150",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "throwingknife"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "50",
-        "min": "75",
-        "max": "125",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "-15"
-        },
-        {
-          "energyPercent": "30"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Didn't you leave your house door open?"
-        },
-        {
-          "sentence": "Oops, your shoelaces are open!"
-        },
-        {
-          "sentence": "Look! It's Ferumbras behind you!"
-        },
-        {
-          "sentence": "Stop! I give up!"
+          "shootEffect": "throwingknife"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "50",
+      "min": "75",
+      "max": "125",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": -15,
+    "energyPercent": 30
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Didn't you leave your house door open?",
+        "yell": false
+      },
+      {
+        "sentence": "Oops, your shoelaces are open!",
+        "yell": false
+      },
+      {
+        "sentence": "Look! It's Ferumbras behind you!",
+        "yell": false
+      },
+      {
+        "sentence": "Stop! I give up!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,136 +1,119 @@
 {
-  "monster": {
-    "name": "Terrified Elephant",
-    "nameDescription": "a terrified elephant",
-    "race": "blood",
-    "experience": "160",
-    "speed": "220",
-    "manacost": "500",
-    "health": {
-      "now": "320",
-      "max": "320"
-    },
-    "look": {
-      "type": "211",
-      "corpse": "6052"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-100"
-      }
-    },
-    "defenses": {
-      "defense": {
-        "name": "speed",
-        "interval": "2000",
-        "chance": "15",
-        "speedchange": "800",
-        "duration": "5000"
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "25"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "energyPercent": "-10"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Hooooot-Toooooot!"
-        },
-        {
-          "sentence": "Tooooot!"
-        },
-        {
-          "sentence": "Trooooot!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "meat",
-          "countmax": "4",
-          "chance": "40000"
-        },
-        {
-          "name": "ham",
-          "countmax": "9",
-          "chance": "27000"
-        },
-        {
-          "name": "tusk",
-          "countmax": "2",
-          "chance": "8510"
-        },
-        {
-          "name": "tusk shield",
-          "chance": "80"
-        }
-      ]
+  "name": "Terrified Elephant",
+  "nameDescription": "a terrified elephant",
+  "race": "blood",
+  "experience": 160,
+  "speed": 220,
+  "manaCost": 500,
+  "health": {
+    "max": 320,
+    "now": 320
+  },
+  "look": {
+    "type": 211,
+    "corpse": 6052
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
     }
+  ],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "800",
+      "duration": "5000"
+    }
+  ],
+  "elements": {
+    "physicalPercent": 25,
+    "icePercent": 20,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 40000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 9,
+      "chance": 27000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 8510,
+      "items": [],
+      "name": "tusk"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "tusk shield"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hooooot-Toooooot!",
+        "yell": false
+      },
+      {
+        "sentence": "Tooooot!",
+        "yell": false
+      },
+      {
+        "sentence": "Trooooot!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

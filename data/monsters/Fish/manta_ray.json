@@ -1,143 +1,113 @@
 {
-  "monster": {
-    "name": "Manta Ray",
-    "nameDescription": "a manta ray",
-    "race": "blood",
-    "experience": "125",
-    "speed": "200",
-    "health": {
-      "now": "680",
-      "max": "680"
+  "name": "Manta Ray",
+  "nameDescription": "a manta ray",
+  "race": "blood",
+  "experience": 125,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 680,
+    "now": 680
+  },
+  "look": {
+    "type": 449,
+    "corpse": 15276
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-99",
+      "poison": "120"
     },
-    "look": {
-      "type": "449",
-      "corpse": "15276"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-99",
-          "poison": "120"
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "min": "-15",
-          "max": "-75",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "10",
-          "length": "4",
-          "spread": "0",
-          "target": "0",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "energy"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "-1"
-        },
-        {
-          "physicalPercent": "-1"
-        },
-        {
-          "energyPercent": "1"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "drown": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "energy",
+      "interval": "2000",
       "chance": "10",
-      "voice": {
-        "sentence": "Flap flap flap!"
-      }
+      "range": "7",
+      "min": "-15",
+      "max": "-75",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "energy"
+        }
+      ]
     },
-    "loot": {
-      "item": {
-        "name": "gold coin",
-        "countmax": "38",
-        "chance": "50000"
-      }
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "10",
+      "length": "4",
+      "spread": "0",
+      "target": "0",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": -1,
+    "physicalPercent": -1,
+    "energyPercent": 1
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 38,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Flap flap flap!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "fire": 1,
+    "invisible": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

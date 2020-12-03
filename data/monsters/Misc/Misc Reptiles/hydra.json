@@ -1,266 +1,280 @@
 {
-  "monster": {
-    "name": "Hydra",
-    "nameDescription": "a hydra",
-    "race": "blood",
-    "experience": "2100",
-    "speed": "250",
-    "health": {
-      "now": "2350",
-      "max": "2350"
+  "name": "Hydra",
+  "nameDescription": "a hydra",
+  "race": "blood",
+  "experience": 2100,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 2350,
+    "now": 2350
+  },
+  "look": {
+    "type": 121,
+    "corpse": 6048
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 300
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-270"
     },
-    "look": {
-      "type": "121",
-      "corpse": "6048"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "25",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "speedchange": "-700",
+      "duration": "15000",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "300"
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-270"
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "25",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "speedchange": "-700",
-          "duration": "15000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenbubble"
-            }
-          ]
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "3",
-          "min": "-100",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bluebubble"
-          }
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "10",
-          "target": "1",
-          "min": "-80",
-          "max": "-155",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "smallice"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "3",
-          "min": "-66",
-          "max": "-320",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "carniphila"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "25",
-        "min": "260",
-        "max": "407",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "50"
-        },
-        {
-          "holyPercent": "30"
-        },
-        {
-          "physicalPercent": "-5"
-        },
-        {
-          "energyPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "ice",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "length": "8",
+      "spread": "3",
+      "min": "-100",
+      "max": "-250",
+      "attributes": [
         {
-          "sentence": "FCHHHHH"
-        },
-        {
-          "sentence": "HISSSS"
+          "areaEffect": "bluebubble"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "min": "-80",
+      "max": "-155",
+      "attributes": [
         {
-          "name": "small sapphire",
-          "chance": "5000"
-        },
+          "shootEffect": "smallice"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "3",
+      "min": "-66",
+      "max": "-320",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "34000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "34000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "46",
-          "chance": "20000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "3",
-          "chance": "48000"
-        },
-        {
-          "name": "life crystal",
-          "chance": "570"
-        },
-        {
-          "name": "boots of haste",
-          "chance": "130"
-        },
-        {
-          "name": "stone skin amulet",
-          "chance": "900"
-        },
-        {
-          "name": "ring of healing",
-          "chance": "1190"
-        },
-        {
-          "name": "warrior helmet",
-          "chance": "890"
-        },
-        {
-          "name": "knight armor",
-          "chance": "1000"
-        },
-        {
-          "name": "royal helmet",
-          "chance": "210"
-        },
-        {
-          "name": "medusa shield",
-          "chance": "270"
-        },
-        {
-          "name": "ham",
-          "countmax": "4",
-          "chance": "60000"
-        },
-        {
-          "name": "hydra egg",
-          "chance": "930"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "380"
-        },
-        {
-          "name": "cucumber",
-          "chance": "4780"
-        },
-        {
-          "name": "hydra head",
-          "chance": "10120"
+          "areaEffect": "carniphila"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "25",
+      "min": "260",
+      "max": "407",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 50,
+    "holyPercent": 30,
+    "physicalPercent": -5,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 34000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 34000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 46,
+      "chance": 20000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 48000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 570,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 900,
+      "items": [],
+      "name": "stone skin amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1190,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "warrior helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 210,
+      "items": [],
+      "name": "royal helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 270,
+      "items": [],
+      "name": "medusa shield"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 60000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "hydra egg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4780,
+      "items": [],
+      "name": "cucumber"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10120,
+      "items": [],
+      "name": "hydra head"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "FCHHHHH",
+        "yell": false
+      },
+      {
+        "sentence": "HISSSS",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

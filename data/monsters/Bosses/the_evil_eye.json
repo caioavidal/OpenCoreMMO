@@ -1,278 +1,278 @@
 {
-  "monster": {
-    "name": "The Evil Eye",
-    "nameDescription": "The Evil Eye",
-    "race": "blood",
-    "experience": "750",
-    "speed": "240",
-    "health": {
-      "now": "1200",
-      "max": "1200"
+  "name": "The Evil Eye",
+  "nameDescription": "The Evil Eye",
+  "race": "blood",
+  "experience": 750,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1200,
+    "now": 1200
+  },
+  "look": {
+    "type": 210,
+    "corpse": 6037
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 3,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-90"
     },
-    "look": {
-      "type": "210",
-      "corpse": "6037"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "min": "-60",
+      "max": "-130",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "3"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "energy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "13",
+      "range": "7",
+      "min": "-85",
+      "max": "-115",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-90"
-        },
-        {
-          "name": "energy",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "min": "-60",
-          "max": "-130",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "energy"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "13",
-          "range": "7",
-          "min": "-85",
-          "max": "-115",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "17",
-          "range": "7",
-          "min": "-135",
-          "max": "-175",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "min": "-40",
-          "max": "-120",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "12",
-          "range": "7",
-          "min": "-110",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "10",
-          "range": "7",
-          "speedchange": "-850",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "8",
-          "length": "8",
-          "spread": "3",
-          "min": "-35",
-          "max": "-85",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenbubble"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "6",
-          "length": "8",
-          "spread": "3",
-          "min": "-75",
-          "max": "-85",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "1000",
-          "chance": "9",
-          "length": "8",
-          "spread": "3",
-          "min": "-150",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bluebubble"
-          }
+          "shootEffect": "fire"
         }
       ]
     },
-    "defenses": {
-      "armor": "19",
-      "defense": "23",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "9",
-        "min": "1",
-        "max": "219",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "holyPercent": "-20"
-      }
-    },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "17",
+      "range": "7",
+      "min": "-135",
+      "max": "-175",
+      "attributes": [
         {
-          "earth": "1"
+          "shootEffect": "suddendeath"
         },
         {
-          "invisible": "1"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "summons": {
-      "maxSummons": "5",
-      "summon": [
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "min": "-40",
+      "max": "-120",
+      "attributes": [
         {
-          "name": "demon skeleton",
-          "interval": "1000",
-          "chance": "13",
-          "max": "5"
-        },
-        {
-          "name": "ghost",
-          "interval": "1000",
-          "chance": "12",
-          "max": "4"
+          "shootEffect": "poison"
         }
       ]
     },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "min": "-110",
+      "max": "-130",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
       "chance": "10",
-      "voice": {
-        "sentence": "Inferior creatures, bow before my power!"
-      }
+      "range": "7",
+      "speedchange": "-850",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "8",
+      "length": "8",
+      "spread": "3",
+      "min": "-35",
+      "max": "-85",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "45",
-          "chance": "100000"
-        },
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "6",
+      "length": "8",
+      "spread": "3",
+      "min": "-75",
+      "max": "-85",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "80000"
-        },
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "1000",
+      "chance": "9",
+      "length": "8",
+      "spread": "3",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
         {
-          "name": "war hammer",
-          "chance": "1333"
-        },
-        {
-          "name": "clerical mace",
-          "chance": "5000"
-        },
-        {
-          "name": "crystal mace",
-          "chance": "1000"
-        },
-        {
-          "name": "djinn blade",
-          "chance": "800"
-        },
-        {
-          "name": "worm",
-          "countmax": "10",
-          "chance": "50000"
-        },
-        {
-          "name": "bonelord eye",
-          "chance": "5000"
+          "areaEffect": "bluebubble"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 19,
+    "defense": 23
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "9",
+      "min": "1",
+      "max": "219",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 80000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1333,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "clerical mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "crystal mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "djinn blade"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 50000,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "bonelord eye"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Inferior creatures, bow before my power!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 5,
+    "summons": [
+      {
+        "name": "demon skeleton",
+        "interval": 1000,
+        "chance": 13,
+        "max": 5
+      },
+      {
+        "name": "ghost",
+        "interval": 1000,
+        "chance": 12,
+        "max": 4
+      }
+    ]
   }
 }

@@ -1,106 +1,66 @@
 {
-  "monster": {
-    "name": "Butterfly",
-    "nameDescription": "a butterfly",
-    "race": "venom",
-    "experience": "0",
-    "speed": "300",
-    "manacost": "0",
-    "health": {
-      "now": "2",
-      "max": "2"
-    },
-    "look": {
-      "type": "228",
-      "corpse": "4313"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "20"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "6"
-        },
-        {
-          "runonhealth": "2"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "5",
-        "attack": "0"
-      }
-    },
-    "defenses": {
-      "armor": "0",
-      "defense": "4"
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "physical": "0"
-        },
-        {
-          "energy": "0"
-        },
-        {
-          "fire": "0"
-        },
-        {
-          "poison": "1"
-        },
-        {
-          "lifedrain": "0"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "outfit": "0"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "0"
-        }
-      ]
+  "name": "Butterfly",
+  "nameDescription": "a butterfly",
+  "race": "venom",
+  "experience": 0,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 2,
+    "now": 2
+  },
+  "look": {
+    "type": 228,
+    "corpse": 4313
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 6,
+    "runonhealth": 2
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "5",
+      "attack": "0"
     }
+  ],
+  "defense": {
+    "armor": 0,
+    "defense": 4
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "poison": 1,
+    "paralyze": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }
