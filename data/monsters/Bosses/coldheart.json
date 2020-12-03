@@ -1,104 +1,82 @@
 {
-  "monster": {
-    "name": "Coldheart",
-    "nameDescription": "Coldheart",
-    "race": "undead",
-    "experience": "3500",
-    "speed": "195",
-    "health": {
-      "now": "7000",
-      "max": "7000"
-    },
-    "look": {
-      "type": "261",
-      "corpse": "7282"
-    },
-    "targetchange": {
+  "name": "Coldheart",
+  "nameDescription": "Coldheart",
+  "race": "undead",
+  "experience": 3500,
+  "speed": 195,
+  "manaCost": 0,
+  "health": {
+    "max": 7000,
+    "now": 7000
+  },
+  "look": {
+    "type": 261,
+    "corpse": 7282
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "9"
+      "min": "0",
+      "max": "-220"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "25",
+      "length": "8",
+      "spread": "0",
+      "min": "0",
+      "max": "-710",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-220"
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "25",
-          "length": "8",
-          "spread": "0",
-          "min": "0",
-          "max": "-710",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "icearea"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "26"
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "fire": "1"
+          "areaEffect": "icearea"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 26
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "ice": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,175 +1,179 @@
 {
-  "monster": {
-    "name": "Orc Marauder",
-    "nameDescription": "an orc marauder",
-    "race": "blood",
-    "experience": "205",
-    "speed": "210",
-    "health": {
-      "now": "235",
-      "max": "235"
+  "name": "Orc Marauder",
+  "nameDescription": "an orc marauder",
+  "race": "blood",
+  "experience": 205,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 235,
+    "now": 235
+  },
+  "look": {
+    "type": 342,
+    "corpse": 11251
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 490,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
     },
-    "look": {
-      "type": "342",
-      "corpse": "11251"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "50",
+      "range": "7",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "490"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "50",
-          "range": "7",
-          "min": "0",
-          "max": "-100",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "onyxarrow"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25",
-      "defense": {
-        "name": "speed",
-        "interval": "2000",
-        "chance": "15",
-        "speedchange": "350",
-        "duration": "5000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "5"
-        },
-        {
-          "earthPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Grrrrrr"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "55000"
-        },
-        {
-          "name": "obsidian lance",
-          "chance": "1110"
-        },
-        {
-          "name": "orcish axe",
-          "chance": "1320"
-        },
-        {
-          "name": "crossbow",
-          "chance": "440"
-        },
-        {
-          "name": "bow",
-          "chance": "5210"
-        },
-        {
-          "name": "meat",
-          "chance": "24600"
-        },
-        {
-          "name": "silkweaver bow",
-          "chance": "70"
-        },
-        {
-          "name": "orc tooth",
-          "chance": "3890"
-        },
-        {
-          "name": "shaggy tail",
-          "chance": "10090"
-        },
-        {
-          "name": "broken crossbow",
-          "chance": "4830"
-        },
-        {
-          "name": "orc leather",
-          "chance": "3800"
+          "shootEffect": "onyxarrow"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "350",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 5,
+    "earthPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 55000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1110,
+      "items": [],
+      "name": "obsidian lance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1320,
+      "items": [],
+      "name": "orcish axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 440,
+      "items": [],
+      "name": "crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5210,
+      "items": [],
+      "name": "bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 24600,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "silkweaver bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3890,
+      "items": [],
+      "name": "orc tooth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10090,
+      "items": [],
+      "name": "shaggy tail"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4830,
+      "items": [],
+      "name": "broken crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3800,
+      "items": [],
+      "name": "orc leather"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrrrr",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

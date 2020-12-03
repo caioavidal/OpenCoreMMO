@@ -1,100 +1,75 @@
 {
-  "monster": {
-    "name": "Achad",
-    "nameDescription": "achad",
-    "race": "blood",
-    "experience": "70",
-    "speed": "185",
-    "manacost": "0",
-    "health": {
-      "now": "185",
-      "max": "185"
-    },
-    "look": {
-      "type": "146",
-      "head": "93",
-      "body": "93",
-      "legs": "57",
-      "feet": "97",
-      "addons": "3",
-      "corpse": "7349"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "1"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "55"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "30",
-        "attack": "40"
-      }
-    },
-    "elements": {
-      "element": {
-        "firePercent": "10"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "You won't pass me."
-        },
-        {
-          "sentence": "I have travelled far to fight here."
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "19"
+  "name": "Achad",
+  "nameDescription": "achad",
+  "race": "blood",
+  "experience": 70,
+  "speed": 185,
+  "manaCost": 0,
+  "health": {
+    "max": 185,
+    "now": 185
+  },
+  "look": {
+    "type": 146,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "runonhealth": 55
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "40"
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 19
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You won't pass me.",
+        "yell": false
+      },
+      {
+        "sentence": "I have travelled far to fight here.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

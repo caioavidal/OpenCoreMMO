@@ -1,80 +1,65 @@
 {
-  "monster": {
-    "name": "Fire Horse",
-    "nameDescription": "a fire horse",
-    "race": "blood",
-    "experience": "0",
-    "speed": "220",
-    "manacost": "260",
-    "health": {
-      "now": "75",
-      "max": "75"
-    },
-    "look": {
-      "type": "429",
-      "corpse": "0"
-    },
-    "targetchange": {
+  "name": "Fire Horse",
+  "nameDescription": "a fire horse",
+  "race": "blood",
+  "experience": 0,
+  "speed": 220,
+  "manaCost": 260,
+  "health": {
+    "max": 75,
+    "now": 75
+  },
+  "look": {
+    "type": 429,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 25,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "20"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "25"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-2"
-      }
-    },
-    "defenses": {
-      "armor": "2",
-      "defense": "2"
+      "min": "0",
+      "max": "-2"
     }
+  ],
+  "defense": {
+    "armor": 2,
+    "defense": 2
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

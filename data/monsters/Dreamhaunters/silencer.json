@@ -1,252 +1,254 @@
 {
-  "monster": {
-    "name": "Silencer",
-    "nameDescription": "a silencer",
-    "race": "blood",
-    "experience": "5100",
-    "speed": "230",
-    "health": {
-      "now": "5400",
-      "max": "5400"
+  "name": "Silencer",
+  "nameDescription": "a silencer",
+  "race": "blood",
+  "experience": 5100,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 5400,
+    "now": 5400
+  },
+  "look": {
+    "type": 585,
+    "corpse": 22489
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-315",
+      "poison": "600"
     },
-    "look": {
-      "type": "585",
-      "corpse": "22489"
+    {
+      "name": "silencer skill reducer",
+      "range": "3",
+      "interval": "2000",
+      "chance": "10"
     },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "5"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "1",
+      "min": "-40",
+      "max": "-150",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "onyxarrow"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-315",
-          "poison": "600"
-        },
-        {
-          "name": "silencer skill reducer",
-          "range": "3",
-          "interval": "2000",
-          "chance": "10"
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "4",
-          "target": "1",
-          "min": "-40",
-          "max": "-150",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "onyxarrow"
-            },
-            {
-              "key": "areaEffect",
-              "value": "redshimmer"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": [
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "450",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "10",
-          "min": "220",
-          "max": "425",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "deathPercent": "70"
-        },
-        {
-          "firePercent": "30"
-        },
-        {
-          "energyPercent": "15"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "holyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Prrrroooaaaah!!! PRROAAAH!!"
-        },
-        {
-          "sentence": "PRRRROOOOOAAAAAHHHH!!!"
-        },
-        {
-          "sentence": "HUUUSSSSSSSSH!!"
-        },
-        {
-          "sentence": "Hussssssh!!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "100000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "8",
-          "chance": "100000"
-        },
-        {
-          "name": "stealth ring",
-          "chance": "1200"
-        },
-        {
-          "name": "boots of haste",
-          "chance": "360"
-        },
-        {
-          "name": "dark shield",
-          "chance": "2000"
-        },
-        {
-          "name": "assassin star",
-          "countmax": "10",
-          "chance": "7600"
-        },
-        {
-          "name": "diamond sceptre",
-          "chance": "960"
-        },
-        {
-          "name": "haunted blade",
-          "chance": "2000"
-        },
-        {
-          "name": "titan axe",
-          "chance": "2200"
-        },
-        {
-          "name": "shadow sceptre",
-          "chance": "640"
-        },
-        {
-          "name": "glorious axe",
-          "chance": "2400"
-        },
-        {
-          "name": "terra legs",
-          "chance": "960"
-        },
-        {
-          "name": "terra boots",
-          "chance": "480"
-        },
-        {
-          "name": "cluster of solace",
-          "chance": "560"
-        },
-        {
-          "name": "silencer claws",
-          "chance": "17000"
-        },
-        {
-          "name": "silencer resonating chamber",
-          "chance": "8410"
+          "areaEffect": "redshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "450",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "220",
+      "max": "425",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 5,
+    "deathPercent": 70,
+    "firePercent": 30,
+    "energyPercent": 15,
+    "icePercent": 10,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 360,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "dark shield"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 7600,
+      "items": [],
+      "name": "assassin star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "diamond sceptre"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "haunted blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2200,
+      "items": [],
+      "name": "titan axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 640,
+      "items": [],
+      "name": "shadow sceptre"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2400,
+      "items": [],
+      "name": "glorious axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "terra legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 480,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "cluster of solace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17000,
+      "items": [],
+      "name": "silencer claws"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8410,
+      "items": [],
+      "name": "silencer resonating chamber"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Prrrroooaaaah!!! PRROAAAH!!",
+        "yell": false
+      },
+      {
+        "sentence": "PRRRROOOOOAAAAAHHHH!!!",
+        "yell": false
+      },
+      {
+        "sentence": "HUUUSSSSSSSSH!!",
+        "yell": false
+      },
+      {
+        "sentence": "Hussssssh!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

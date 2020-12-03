@@ -1,175 +1,174 @@
 {
-  "monster": {
-    "name": "Lizard Sentinel",
-    "nameDescription": "a lizard sentinel",
-    "race": "blood",
-    "experience": "110",
-    "speed": "180",
-    "manacost": "560",
-    "health": {
-      "now": "265",
-      "max": "265"
+  "name": "Lizard Sentinel",
+  "nameDescription": "a lizard sentinel",
+  "race": "blood",
+  "experience": 110,
+  "speed": 180,
+  "manaCost": 560,
+  "health": {
+    "max": 265,
+    "now": 265
+  },
+  "look": {
+    "type": 114,
+    "corpse": 6040
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-45"
     },
-    "look": {
-      "type": "114",
-      "corpse": "6040"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "0",
+      "max": "-70",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "10"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-45"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "30",
-          "range": "7",
-          "min": "0",
-          "max": "-70",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "spear"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "10"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Tssss!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small diamond",
-          "chance": "190"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "80",
-          "chance": "89000"
-        },
-        {
-          "name": "halberd",
-          "chance": "510"
-        },
-        {
-          "name": "spear",
-          "countmax": "3",
-          "chance": "8750"
-        },
-        {
-          "name": "obsidian lance",
-          "chance": "1120"
-        },
-        {
-          "name": "chain armor",
-          "chance": "8560"
-        },
-        {
-          "name": "scale armor",
-          "chance": "7730"
-        },
-        {
-          "name": "hunting spear",
-          "chance": "4700"
-        },
-        {
-          "name": "sentinel shield",
-          "chance": "320"
-        },
-        {
-          "name": "lizard leather",
-          "chance": "990"
-        },
-        {
-          "name": "lizard scale",
-          "chance": "960"
-        },
-        {
-          "name": "health potion",
-          "chance": "590"
+          "shootEffect": "spear"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 10,
+    "icePercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 190,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 80,
+      "chance": 89000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 8750,
+      "items": [],
+      "name": "spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1120,
+      "items": [],
+      "name": "obsidian lance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8560,
+      "items": [],
+      "name": "chain armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7730,
+      "items": [],
+      "name": "scale armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4700,
+      "items": [],
+      "name": "hunting spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 320,
+      "items": [],
+      "name": "sentinel shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 990,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 590,
+      "items": [],
+      "name": "health potion"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Tssss!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

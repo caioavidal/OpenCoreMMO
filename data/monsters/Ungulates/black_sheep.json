@@ -1,97 +1,80 @@
 {
-  "monster": {
-    "name": "Black Sheep",
-    "namedescription": "a black sheep",
-    "race": "blood",
-    "experience": "0",
-    "speed": "116",
-    "manacost": "250",
-    "health": {
-      "now": "20",
-      "max": "20"
+  "name": "Black Sheep",
+  "nameDescription": null,
+  "race": "blood",
+  "experience": 0,
+  "speed": 116,
+  "manaCost": 250,
+  "health": {
+    "max": 20,
+    "now": 20
+  },
+  "look": {
+    "type": 13,
+    "corpse": 5994
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 1,
+    "defense": 1
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 55380,
+      "items": [],
+      "name": "meat"
     },
-    "look": {
-      "type": "13",
-      "corpse": "5994"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "20"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "20"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "1",
-      "defense": "1"
-    },
-    "elements": {
-      "element": {
-        "firePercent": "-5"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Maeh"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "meat",
-          "countmax": "5",
-          "chance": "55380"
-        },
-        {
-          "name": "black wool",
-          "chance": "620"
-        }
-      ]
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 620,
+      "items": [],
+      "name": "black wool"
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Maeh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

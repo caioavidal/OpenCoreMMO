@@ -1,235 +1,225 @@
 {
-  "monster": {
-    "name": "Bog Raider",
-    "nameDescription": "a bog raider",
-    "race": "venom",
-    "experience": "800",
-    "speed": "240",
-    "health": {
-      "now": "1300",
-      "max": "1300"
+  "name": "Bog Raider",
+  "nameDescription": "a bog raider",
+  "race": "venom",
+  "experience": 800,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1300,
+    "now": 1300
+  },
+  "look": {
+    "type": 299,
+    "corpse": 8951
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 60,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-183",
+      "poison": "80"
     },
-    "look": {
-      "type": "299",
-      "corpse": "8951"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "60"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-183",
-          "poison": "80"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "10",
-          "min": "-90",
-          "max": "-140",
-          "range": "7",
-          "target": "1",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "radius": "3",
-          "target": "0",
-          "min": "-100",
-          "max": "-175",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bubbles"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "min": "-96",
-          "max": "-110",
-          "range": "7",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "smallearth"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "speedchange": "-600",
-          "duration": "15000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallplants"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "65",
-        "max": "95",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "earthPercent": "30"
-        },
-        {
-          "icePercent": "-5"
-        },
-        {
-          "physicalPercent": "-20"
-        },
-        {
-          "holyPercent": "-5"
-        },
-        {
-          "deathPercent": "5"
-        },
-        {
-          "firePercent": "85"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "lifedrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "min": "-90",
+      "max": "-140",
+      "range": "7",
+      "target": "1",
+      "attributes": [
         {
-          "sentence": "Tchhh!"
-        },
-        {
-          "sentence": "Slurp!"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "3",
+      "target": "0",
+      "min": "-100",
+      "max": "-175",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50750"
-        },
+          "areaEffect": "bubbles"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "min": "-96",
+      "max": "-110",
+      "range": "7",
+      "target": "1",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "5",
-          "chance": "50750"
-        },
+          "shootEffect": "smallearth"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "speedchange": "-600",
+      "duration": "15000",
+      "attributes": [
         {
-          "name": "plate legs",
-          "chance": "2040"
-        },
-        {
-          "name": "great health potion",
-          "chance": "2000"
-        },
-        {
-          "name": "great spirit potion",
-          "chance": "2008"
-        },
-        {
-          "name": "ultimate health potion",
-          "chance": "740"
-        },
-        {
-          "name": "belted cape",
-          "chance": "590"
-        },
-        {
-          "name": "paladin armor",
-          "chance": "110"
-        },
-        {
-          "name": "springsprout rod",
-          "chance": "1030"
-        },
-        {
-          "name": "boggy dreads",
-          "chance": "9870"
+          "areaEffect": "smallplants"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "65",
+      "max": "95",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -10,
+    "earthPercent": 30,
+    "icePercent": -5,
+    "physicalPercent": -20,
+    "holyPercent": -5,
+    "deathPercent": 5,
+    "firePercent": 85
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50750,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 50750,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2040,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2008,
+      "items": [],
+      "name": "great spirit potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 740,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 590,
+      "items": [],
+      "name": "belted cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "paladin armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1030,
+      "items": [],
+      "name": "springsprout rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9870,
+      "items": [],
+      "name": "boggy dreads"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Tchhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Slurp!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

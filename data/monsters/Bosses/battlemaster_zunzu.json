@@ -1,177 +1,177 @@
 {
-  "monster": {
-    "name": "Battlemaster Zunzu",
-    "nameDescription": "Battlemaster Zunzu",
-    "race": "blood",
-    "experience": "2500",
-    "speed": "420",
-    "health": {
-      "now": "4000",
-      "max": "4000"
+  "name": "Battlemaster Zunzu",
+  "nameDescription": "Battlemaster Zunzu",
+  "race": "blood",
+  "experience": 2500,
+  "speed": 420,
+  "manaCost": 0,
+  "health": {
+    "max": 4000,
+    "now": 4000
+  },
+  "look": {
+    "type": 343,
+    "corpse": 11281
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 150
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300"
     },
-    "look": {
-      "type": "343",
-      "corpse": "11281"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "25",
+      "range": "1",
+      "radius": "1",
+      "target": "1",
+      "min": "-115",
+      "max": "-350",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "150"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-300"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "25",
-          "range": "1",
-          "radius": "1",
-          "target": "1",
-          "min": "-115",
-          "max": "-350",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "45",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "18",
-        "min": "200",
-        "max": "400",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "15"
-        },
-        {
-          "deathPercent": "10"
-        },
-        {
-          "firePercent": "25"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "15"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "platinum coin",
-          "countmax": "3",
-          "chance": "26800"
-        },
-        {
-          "name": "lizard leather",
-          "chance": "1825"
-        },
-        {
-          "name": "lizard scale",
-          "chance": "800"
-        },
-        {
-          "name": "strong health potion",
-          "countmax": "2",
-          "chance": "2875"
-        },
-        {
-          "name": "great health potion",
-          "countmax": "2",
-          "chance": "2775"
-        },
-        {
-          "name": "red lantern",
-          "chance": "100000"
-        },
-        {
-          "name": "Zaoan armor",
-          "chance": "1050"
-        },
-        {
-          "name": "Zaoan shoes",
-          "chance": "3150"
-        },
-        {
-          "name": "Zaoan legs",
-          "chance": "2625"
-        },
-        {
-          "name": "zaogun flag",
-          "chance": "11250"
-        },
-        {
-          "name": "zaogun shoulderplates",
-          "chance": "100000"
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "18",
+      "min": "200",
+      "max": "400",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 15,
+    "deathPercent": 10,
+    "firePercent": 25,
+    "energyPercent": 20,
+    "icePercent": 15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 26800,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1825,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2875,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2775,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "red lantern"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1050,
+      "items": [],
+      "name": "Zaoan armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3150,
+      "items": [],
+      "name": "Zaoan shoes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2625,
+      "items": [],
+      "name": "Zaoan legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11250,
+      "items": [],
+      "name": "zaogun flag"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "zaogun shoulderplates"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

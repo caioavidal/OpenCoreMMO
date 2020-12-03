@@ -1,177 +1,197 @@
 {
-  "monster": {
-    "name": "Frost Giant",
-    "nameDescription": "a frost giant",
-    "race": "blood",
-    "experience": "150",
-    "speed": "195",
-    "manacost": "490",
-    "health": {
-      "now": "270",
-      "max": "270"
-    },
-    "look": {
-      "type": "257",
-      "corpse": "7330"
-    },
-    "targetchange": {
+  "name": "Frost Giant",
+  "nameDescription": "a frost giant",
+  "race": "blood",
+  "experience": 150,
+  "speed": 195,
+  "manaCost": 490,
+  "health": {
+    "max": 270,
+    "now": 270
+  },
+  "look": {
+    "type": 257,
+    "corpse": 7330
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5"
+      "skill": "45",
+      "attack": "40"
+    }
+  ],
+  "defense": {
+    "armor": 22,
+    "defense": 23
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 100
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 30,
+      "chance": 100000,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2666,
+      "countmax": 2,
+      "chance": 33333,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
+    {
+      "id": 2671,
+      "countmax": 1,
+      "chance": 33333,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "45",
-        "attack": "40"
-      }
+    {
+      "id": 2406,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "22",
-      "defense": "23"
+    {
+      "id": 7441,
+      "countmax": 1,
+      "chance": 3444,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": {
-        "icePercent": "100"
-      }
+    {
+      "id": 2510,
+      "countmax": 1,
+      "chance": 5333,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "2000",
-      "chance": "5",
-      "voice": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "sentence": "Hmm Humansoup"
+          "id": 2513,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Stand still ya tasy snack!"
+          "id": 2381,
+          "countmax": 1,
+          "chance": 1955,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Joh Thun!"
+          "id": 7460,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Brore Smode!"
+          "id": 2490,
+          "countmax": 1,
+          "chance": 2777,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Horre Sjan Flan!"
+          "id": 2129,
+          "countmax": 1,
+          "chance": 1666,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Forle Bramma!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "30",
-          "chance": "100000"
+          "id": 7618,
+          "countmax": 1,
+          "chance": 1666,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2666",
-          "countmax": "2",
-          "chance": "33333"
+          "id": 7290,
+          "countmax": 1,
+          "chance": 1666,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2671",
-          "chance": "33333"
-        },
-        {
-          "id": "2406",
-          "chance": "25000"
-        },
-        {
-          "id": "7441",
-          "chance": "3444"
-        },
-        {
-          "id": "2510",
-          "chance": "5333"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2513",
-              "chance": "2500"
-            },
-            {
-              "id": "2381",
-              "chance": "1955"
-            },
-            {
-              "id": "7460",
-              "chance": "2500"
-            },
-            {
-              "id": "2490",
-              "chance": "2777"
-            },
-            {
-              "id": "2129",
-              "chance": "1666"
-            },
-            {
-              "id": "7618",
-              "chance": "1666"
-            },
-            {
-              "id": "7290",
-              "chance": "1666"
-            },
-            {
-              "id": "2209",
-              "chance": "2055"
-            }
-          ]
+          "id": 2209,
+          "countmax": 1,
+          "chance": 2055,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Hmm Humansoup",
+        "yell": false
+      },
+      {
+        "sentence": "Stand still ya tasy snack!",
+        "yell": false
+      },
+      {
+        "sentence": "Joh Thun!",
+        "yell": false
+      },
+      {
+        "sentence": "Brore Smode!",
+        "yell": false
+      },
+      {
+        "sentence": "Horre Sjan Flan!",
+        "yell": false
+      },
+      {
+        "sentence": "Forle Bramma!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

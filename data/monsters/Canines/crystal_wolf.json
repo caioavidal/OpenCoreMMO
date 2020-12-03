@@ -1,189 +1,174 @@
 {
-  "monster": {
-    "name": "Crystal Wolf",
-    "nameDescription": "a crystal wolf",
-    "race": "undead",
-    "experience": "275",
-    "speed": "200",
-    "health": {
-      "now": "750",
-      "max": "750"
+  "name": "Crystal Wolf",
+  "nameDescription": "a crystal wolf",
+  "race": "undead",
+  "experience": 275,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 750,
+    "now": 750
+  },
+  "look": {
+    "type": 391,
+    "corpse": 13584
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-80"
     },
-    "look": {
-      "type": "391",
-      "corpse": "13584"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "length": "3",
+      "spread": "2",
+      "min": "-60",
+      "max": "-130",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "20"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "stones"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "15",
+      "range": "6",
+      "radius": "3",
+      "target": "1",
+      "min": "-80",
+      "max": "-150",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-80"
+          "shootEffect": "smallice"
         },
         {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "length": "3",
-          "spread": "2",
-          "min": "-60",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "stones"
-          }
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "15",
-          "range": "6",
-          "radius": "3",
-          "target": "1",
-          "min": "-80",
-          "max": "-150",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "smallice"
-            },
-            {
-              "key": "areaEffect",
-              "value": "giantice"
-            }
-          ]
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "min": "-25",
-          "max": "-80"
+          "areaEffect": "giantice"
         }
       ]
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "5",
-        "min": "15",
-        "max": "55",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "ice": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "manadrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "min": "-25",
+      "max": "-80"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "15",
+      "max": "55",
+      "attributes": [
         {
-          "sentence": "Raaarrr!"
-        },
-        {
-          "sentence": "Aaaauuuuuooooooo!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "52",
-          "chance": "56000"
-        },
-        {
-          "name": "hailstorm rod",
-          "chance": "7400"
-        },
-        {
-          "name": "meat",
-          "countmax": "4",
-          "chance": "52000"
-        },
-        {
-          "name": "wolf paw",
-          "chance": "3700"
-        },
-        {
-          "name": "shiver arrow",
-          "countmax": "10",
-          "chance": "11000"
-        },
-        {
-          "name": "crystalline armor",
-          "chance": "3700"
+          "areaEffect": "blueshimmer"
         }
       ]
     }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 52,
+      "chance": 56000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7400,
+      "items": [],
+      "name": "hailstorm rod"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 52000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3700,
+      "items": [],
+      "name": "wolf paw"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 11000,
+      "items": [],
+      "name": "shiver arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3700,
+      "items": [],
+      "name": "crystalline armor"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Raaarrr!",
+        "yell": false
+      },
+      {
+        "sentence": "Aaaauuuuuooooooo!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

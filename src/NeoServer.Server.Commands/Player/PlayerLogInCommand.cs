@@ -2,6 +2,7 @@ using NeoServer.Data.Model;
 using NeoServer.Game.Contracts;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NeoServer.Server.Commands
 {
@@ -21,7 +22,7 @@ namespace NeoServer.Server.Commands
             this.connection = connection;
         }
 
-        public override async void Execute()
+        public override void Execute()
         {
             var playerRecord = account.Players.FirstOrDefault(p => p.CharacterName == characterName);
 

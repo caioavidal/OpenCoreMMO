@@ -1,188 +1,185 @@
 {
-  "monster": {
-    "name": "Elder Mummy",
-    "nameDescription": "an elder mummy",
-    "race": "undead",
-    "experience": "560",
-    "speed": "180",
-    "health": {
-      "now": "850",
-      "max": "850"
+  "name": "Elder Mummy",
+  "nameDescription": "an elder mummy",
+  "race": "undead",
+  "experience": 560,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 850,
+    "now": 850
+  },
+  "look": {
+    "type": 65,
+    "corpse": 6004
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-120",
+      "poison": "3"
     },
-    "look": {
-      "type": "65",
-      "head": "20",
-      "body": "30",
-      "legs": "40",
-      "feet": "50",
-      "corpse": "6004"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "range": "1",
+      "min": "0",
+      "max": "-130",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "speedchange": "-300",
+      "duration": "15000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-120",
-          "poison": "3"
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "20",
-          "target": "1",
-          "range": "1",
-          "min": "0",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "mortarea"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "speedchange": "-300",
-          "duration": "15000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30"
-    },
-    "elements": {
-      "element": {
-        "icePercent": "20"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2124",
-          "chance": "1650"
-        },
-        {
-          "name": "silver brooch",
-          "chance": "4000"
-        },
-        {
-          "name": "black pearl",
-          "chance": "1340"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "160",
-          "chance": "87000"
-        },
-        {
-          "name": "scarab coin",
-          "countmax": "3",
-          "chance": "10000"
-        },
-        {
-          "name": "strange talisman",
-          "chance": "4500"
-        },
-        {
-          "id": "2162",
-          "chance": "6000"
-        },
-        {
-          "name": "poison dagger",
-          "chance": "380"
-        },
-        {
-          "name": "worm",
-          "countmax": "3",
-          "chance": "20000"
-        },
-        {
-          "name": "gauze bandage",
-          "chance": "10000"
-        },
-        {
-          "name": "flask of embalming fluid",
-          "chance": "12600"
-        },
-        {
-          "id": "13472",
-          "chance": "2400"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 20
+  },
+  "loot": [
+    {
+      "id": 2124,
+      "countmax": 1,
+      "chance": 1650,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "silver brooch"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1340,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 160,
+      "chance": 87000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "scarab coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "strange talisman"
+    },
+    {
+      "id": 2162,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "poison dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 20000,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "gauze bandage"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12600,
+      "items": [],
+      "name": "flask of embalming fluid"
+    },
+    {
+      "id": 13472,
+      "countmax": 1,
+      "chance": 2400,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "death": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

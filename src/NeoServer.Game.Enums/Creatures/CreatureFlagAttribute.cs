@@ -14,5 +14,6 @@
         StaticAttack,
         RunOnHealth,
         None,
+        LightColor,
     }
 }

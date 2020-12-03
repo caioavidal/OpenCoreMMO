@@ -1,201 +1,192 @@
 {
-  "monster": {
-    "name": "Overcharged Energy Elemental",
-    "nameDescription": "an orvercharged energy elemental",
-    "race": "undead",
-    "experience": "1300",
-    "speed": "300",
-    "manacost": "0",
-    "health": {
-      "now": "1700",
-      "max": "1700"
+  "name": "Overcharged Energy Elemental",
+  "nameDescription": "an orvercharged energy elemental",
+  "race": "undead",
+  "experience": 1300,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 1700,
+    "now": 1700
+  },
+  "look": {
+    "type": 290,
+    "corpse": 8966
+  },
+  "targetChange": {
+    "interval": 20000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 85,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "40",
+      "attack": "80"
     },
-    "look": {
-      "type": "290",
-      "corpse": "8966"
-    },
-    "targetchange": {
-      "interval": "20000",
-      "chance": "15"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "11",
+      "target": "0",
+      "radius": "4",
+      "min": "0",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "energy"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "1"
+          "areaEffect": "purpleenergy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "12",
+      "range": "3",
+      "target": "1",
+      "min": "0",
+      "max": "-300",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "40",
-          "attack": "80"
-        },
-        {
-          "name": "energy",
-          "interval": "1000",
-          "chance": "11",
-          "target": "0",
-          "radius": "4",
-          "min": "0",
-          "max": "-250",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "purpleenergy"
-            }
-          ]
-        },
-        {
-          "name": "energy",
-          "interval": "1000",
-          "chance": "12",
-          "range": "3",
-          "target": "1",
-          "min": "0",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "purpleenergy"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "12",
-          "radius": "4",
-          "target": "0",
-          "min": "0",
-          "max": "-200",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poff"
-          }
+          "areaEffect": "purpleenergy"
         }
       ]
     },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "90",
-        "max": "150",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "physicalPercent": "25"
-      }
-    },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "12",
+      "radius": "4",
+      "target": "0",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
         {
-          "ice": "1"
-        },
-        {
-          "energy": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "poff"
         }
       ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "90",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 25
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 41000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2148,
+      "countmax": 60,
+      "chance": 41000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7439,
+      "countmax": 1,
+      "chance": 1250,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 8303,
+      "countmax": 1,
+      "chance": 20750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "70",
-          "chance": "41000"
+          "id": 7591,
+          "countmax": 1,
+          "chance": 12000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "60",
-          "chance": "41000"
+          "id": 2150,
+          "countmax": 2,
+          "chance": 4000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "7439",
-          "chance": "1250"
+          "id": 2214,
+          "countmax": 1,
+          "chance": 4500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "8303",
-          "chance": "20750"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "7591",
-              "chance": "12000"
-            },
-            {
-              "id": "2150",
-              "countmax": "2",
-              "chance": "4000"
-            },
-            {
-              "id": "2214",
-              "chance": "4500"
-            },
-            {
-              "id": "8920",
-              "chance": "650"
-            }
-          ]
+          "id": 8920,
+          "countmax": 1,
+          "chance": 650,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "ice": 1,
+    "energy": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

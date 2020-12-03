@@ -1,107 +1,79 @@
 {
-  "monster": {
-    "name": "Mushroom Sniffer",
-    "nameDescription": "a mushroom sniffer",
-    "race": "blood",
-    "experience": "0",
-    "speed": "120",
-    "health": {
-      "now": "250",
-      "max": "250"
-    },
-    "look": {
-      "type": "60",
-      "corpse": "2935"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "25"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "90"
-        },
-        {
-          "icePercent": "90"
-        },
-        {
-          "energyPercent": "90"
-        },
-        {
-          "firePercent": "90"
-        },
-        {
-          "deathPercent": "90"
-        },
-        {
-          "holyPercent": "90"
-        },
-        {
-          "physicalPercent": "90"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Sniff"
-        },
-        {
-          "sentence": "Oink"
-        },
-        {
-          "sentence": "Oink oink"
-        }
-      ]
-    }
+  "name": "Mushroom Sniffer",
+  "nameDescription": "a mushroom sniffer",
+  "race": "blood",
+  "experience": 0,
+  "speed": 120,
+  "manaCost": 0,
+  "health": {
+    "max": 250,
+    "now": 250
+  },
+  "look": {
+    "type": 60,
+    "corpse": 2935
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 25,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 90,
+    "icePercent": 90,
+    "energyPercent": 90,
+    "firePercent": 90,
+    "deathPercent": 90,
+    "holyPercent": 90,
+    "physicalPercent": 90
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Sniff",
+        "yell": false
+      },
+      {
+        "sentence": "Oink",
+        "yell": false
+      },
+      {
+        "sentence": "Oink oink",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,163 +1,159 @@
 {
-  "monster": {
-    "name": "Quara Predator Scout",
-    "nameDescription": "a quara predator scout",
-    "race": "blood",
-    "experience": "400",
-    "speed": "250",
-    "health": {
-      "now": "890",
-      "max": "890"
-    },
-    "look": {
-      "type": "20",
-      "corpse": "6067"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-193"
-      }
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30"
-    },
-    "elements": {
-      "element": {
-        "energyPercent": "-10"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "ice": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Gnarrr!"
-        },
-        {
-          "sentence": "Tcharrr!"
-        },
-        {
-          "sentence": "Rrrah!"
-        },
-        {
-          "sentence": "Rraaar!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small diamond",
-          "countmax": "2",
-          "chance": "5520"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "60",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "69",
-          "chance": "48000"
-        },
-        {
-          "name": "two handed sword",
-          "chance": "2320"
-        },
-        {
-          "name": "double axe",
-          "chance": "5800"
-        },
-        {
-          "name": "scale armor",
-          "chance": "8000"
-        },
-        {
-          "name": "shrimp",
-          "countmax": "5",
-          "chance": "4700"
-        },
-        {
-          "name": "fish fin",
-          "chance": "980"
-        },
-        {
-          "name": "northwind rod",
-          "chance": "800"
-        },
-        {
-          "name": "quara bone",
-          "chance": "10150"
-        }
-      ]
+  "name": "Quara Predator Scout",
+  "nameDescription": "a quara predator scout",
+  "race": "blood",
+  "experience": 400,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 890,
+    "now": 890
+  },
+  "look": {
+    "type": 20,
+    "corpse": 6067
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-193"
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5520,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 69,
+      "chance": 48000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2320,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5800,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "scale armor"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 4700,
+      "items": [],
+      "name": "shrimp"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 980,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "northwind rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10150,
+      "items": [],
+      "name": "quara bone"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Gnarrr!",
+        "yell": false
+      },
+      {
+        "sentence": "Tcharrr!",
+        "yell": false
+      },
+      {
+        "sentence": "Rrrah!",
+        "yell": false
+      },
+      {
+        "sentence": "Rraaar!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "fire": 1,
+    "lifedrain": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

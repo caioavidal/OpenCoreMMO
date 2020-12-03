@@ -1,136 +1,111 @@
 {
-  "monster": {
-    "name": "Madareth",
-    "nameDescription": "madareth",
-    "race": "fire",
-    "experience": "10000",
-    "speed": "380",
-    "manacost": "0",
-    "health": {
-      "now": "55000",
-      "max": "55000"
+  "name": "Madareth",
+  "nameDescription": "madareth",
+  "race": "fire",
+  "experience": 10000,
+  "speed": 380,
+  "manaCost": 0,
+  "health": {
+    "max": 55000,
+    "now": 55000
+  },
+  "look": {
+    "type": 12,
+    "corpse": 6068
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 48,
+    "defense": 46
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 15,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": null
     },
-    "look": {
-      "type": "12",
-      "head": "77",
-      "body": "116",
-      "legs": "82",
-      "feet": "79",
-      "corpse": "6068"
+    {
+      "id": 2514,
+      "countmax": 1,
+      "chance": 12650,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
+    {
+      "id": 2214,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "summonable": "0"
+          "id": 2520,
+          "countmax": 1,
+          "chance": 7650,
+          "items": [],
+          "name": null
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": null,
-    "defenses": {
-      "armor": "48",
-      "defense": "46"
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "15"
-        },
-        {
-          "deathPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "energy": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "3000",
-      "chance": "5",
-      "voice": {
-        "sentence": "I am going to play with yourself!",
-        "yell": "1"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "100",
-          "chance": "100000"
-        },
-        {
-          "id": "2514",
-          "chance": "12650"
-        },
-        {
-          "id": "2214",
-          "chance": "8000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2520",
-              "chance": "7650"
-            },
-            {
-              "id": "2145",
-              "chance": "5800"
-            }
-          ]
+          "id": 2145,
+          "countmax": 1,
+          "chance": 5800,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 3000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I am going to play with yourself!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "fire": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

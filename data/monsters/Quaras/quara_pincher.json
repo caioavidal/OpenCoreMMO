@@ -1,197 +1,192 @@
 {
-  "monster": {
-    "name": "Quara Pincher",
-    "nameDescription": "a quara pincher",
-    "race": "blood",
-    "experience": "1200",
-    "speed": "210",
-    "health": {
-      "now": "1800",
-      "max": "1800"
+  "name": "Quara Pincher",
+  "nameDescription": "a quara pincher",
+  "race": "blood",
+  "experience": 1200,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 1800,
+    "now": 1800
+  },
+  "look": {
+    "type": 77,
+    "corpse": 6063
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-342"
     },
-    "look": {
-      "type": "77",
-      "corpse": "6063"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "1",
+      "speedchange": "-600",
+      "duration": "3000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-342"
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "20",
-          "range": "1",
-          "speedchange": "-600",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "50",
-      "defense": "50"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "energyPercent": "-25"
-        },
-        {
-          "physicalPercent": "10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "ice": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Clank clank!"
-        },
-        {
-          "sentence": "Clap!"
-        },
-        {
-          "sentence": "Crrrk! Crrrk!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small ruby",
-          "countmax": "2",
-          "chance": "7761"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "49",
-          "chance": "50000"
-        },
-        {
-          "name": "platinum coin",
-          "chance": "40000"
-        },
-        {
-          "name": "halberd",
-          "chance": "6861"
-        },
-        {
-          "name": "warrior helmet",
-          "chance": "1350"
-        },
-        {
-          "name": "crown armor",
-          "chance": "350"
-        },
-        {
-          "name": "shrimp",
-          "countmax": "5",
-          "chance": "5245"
-        },
-        {
-          "name": "fish fin",
-          "chance": "1600"
-        },
-        {
-          "name": "great health potion",
-          "chance": "10630"
-        },
-        {
-          "name": "glacier robe",
-          "chance": "140"
-        },
-        {
-          "name": "quara pincers",
-          "chance": "14285"
-        },
-        {
-          "name": "giant shrimp",
-          "chance": "80"
+          "areaEffect": "redshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 50
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": -10,
+    "energyPercent": -25,
+    "physicalPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 7761,
+      "items": [],
+      "name": "small ruby"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 49,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6861,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1350,
+      "items": [],
+      "name": "warrior helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 350,
+      "items": [],
+      "name": "crown armor"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 5245,
+      "items": [],
+      "name": "shrimp"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1600,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10630,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 140,
+      "items": [],
+      "name": "glacier robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "quara pincers"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "giant shrimp"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Clank clank!",
+        "yell": false
+      },
+      {
+        "sentence": "Clap!",
+        "yell": false
+      },
+      {
+        "sentence": "Crrrk! Crrrk!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "invisible": 1,
+    "drown": 1,
+    "fire": 1,
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

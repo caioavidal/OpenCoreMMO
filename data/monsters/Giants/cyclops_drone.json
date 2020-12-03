@@ -1,178 +1,178 @@
 {
-  "monster": {
-    "name": "Cyclops Drone",
-    "nameDescription": "a cyclops drone",
-    "race": "blood",
-    "experience": "200",
-    "speed": "205",
-    "manacost": "525",
-    "health": {
-      "now": "325",
-      "max": "325"
+  "name": "Cyclops Drone",
+  "nameDescription": "a cyclops drone",
+  "race": "blood",
+  "experience": 200,
+  "speed": 205,
+  "manaCost": 525,
+  "health": {
+    "max": 325,
+    "now": 325
+  },
+  "look": {
+    "type": 280,
+    "corpse": 7847
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-105"
     },
-    "look": {
-      "type": "280",
-      "corpse": "7847"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "35",
+      "range": "7",
+      "min": "0",
+      "max": "-80",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "shootEffect": "largerock"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-105"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "35",
-          "range": "7",
-          "min": "0",
-          "max": "-80",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "largerock"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "10"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "holyPercent": "1"
-        },
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Fee! Fie! Foe! Fum!"
-        },
-        {
-          "sentence": "Luttl pest!"
-        },
-        {
-          "sentence": "Me makking you pulp!"
-        },
-        {
-          "sentence": "Humy tasy! Hum hum!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "30",
-          "chance": "82000"
-        },
-        {
-          "name": "club ring",
-          "chance": "90"
-        },
-        {
-          "name": "halberd",
-          "chance": "680"
-        },
-        {
-          "name": "short sword",
-          "chance": "8000"
-        },
-        {
-          "name": "dark helmet",
-          "chance": "190"
-        },
-        {
-          "name": "plate shield",
-          "chance": "2000"
-        },
-        {
-          "name": "battle shield",
-          "chance": "1600"
-        },
-        {
-          "name": "meat",
-          "countmax": "2",
-          "chance": "50430"
-        },
-        {
-          "id": "7398",
-          "chance": "120"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "520"
-        },
-        {
-          "name": "cyclops toe",
-          "chance": "6750"
-        }
-      ]/* cyclops trophy */
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 10,
+    "icePercent": 20,
+    "holyPercent": 1,
+    "earthPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 82000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "club ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 680,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 190,
+      "items": [],
+      "name": "dark helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "plate shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1600,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 50430,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 7398,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6750,
+      "items": [],
+      "name": "cyclops toe"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Fee! Fie! Foe! Fum!",
+        "yell": false
+      },
+      {
+        "sentence": "Luttl pest!",
+        "yell": false
+      },
+      {
+        "sentence": "Me makking you pulp!",
+        "yell": false
+      },
+      {
+        "sentence": "Humy tasy! Hum hum!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

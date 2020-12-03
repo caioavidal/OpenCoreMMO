@@ -1,131 +1,102 @@
 {
-  "monster": {
-    "name": "Glitterscale",
-    "nameDescription": "Glitterscale",
-    "race": "blood",
-    "experience": "700",
-    "speed": "180",
-    "health": {
-      "now": "1000",
-      "max": "1000"
-    },
-    "look": {
-      "type": "34",
-      "corpse": "5973"
-    },
-    "targetchange": {
+  "name": "Glitterscale",
+  "nameDescription": "Glitterscale",
+  "race": "blood",
+  "experience": 700,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 1000,
+    "now": 1000
+  },
+  "look": {
+    "type": 34,
+    "corpse": 5973
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 300
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "10"
+      "min": "0",
+      "max": "-120"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "8",
+      "length": "8",
+      "spread": "3",
+      "min": "-90",
+      "max": "-180",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "300"
+          "areaEffect": "firearea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-70",
+      "max": "-120",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-120"
+          "shootEffect": "fire"
         },
         {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "8",
-          "length": "8",
-          "spread": "3",
-          "min": "-90",
-          "max": "-180",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "firearea"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "12",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "min": "-70",
-          "max": "-120",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "18"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "80"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "firearea"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 18
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 80,
+    "energyPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

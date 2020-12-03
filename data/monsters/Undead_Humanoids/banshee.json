@@ -1,278 +1,313 @@
 {
-  "monster": {
-    "name": "Banshee",
-    "nameDescription": "a banshee",
-    "race": "undead",
-    "experience": "900",
-    "speed": "200",
-    "health": {
-      "now": "1000",
-      "max": "1000"
+  "name": "Banshee",
+  "nameDescription": "a banshee",
+  "race": "undead",
+  "experience": 900,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 1000,
+    "now": 1000
+  },
+  "look": {
+    "type": 78,
+    "corpse": 6019
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 500,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100",
+      "poison": "3"
     },
-    "look": {
-      "type": "78",
-      "corpse": "6019"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "0",
+      "min": "-100",
+      "max": "-200",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "500"
-        },
-        {
-          "canwalkonenergy": "0"
+          "areaEffect": "rednote"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "5",
+      "range": "1",
+      "target": "1",
+      "radius": "1",
+      "min": "-55",
+      "max": "-350",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100",
-          "poison": "3"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "4",
-          "target": "0",
-          "min": "-100",
-          "max": "-200",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "rednote"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "5",
-          "range": "1",
-          "target": "1",
-          "radius": "1",
-          "min": "-55",
-          "max": "-350",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallclouds"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "speedchange": "-300",
-          "duration": "15000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "smallclouds"
         }
       ]
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "25",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "120",
-        "max": "190",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "holyPercent": "-25"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "speed",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "speedchange": "-300",
+      "duration": "15000",
+      "attributes": [
         {
-          "sentence": "Dance for me your dance of death!"
-        },
-        {
-          "sentence": "Let the music play!"
-        },
-        {
-          "sentence": "I will mourn your death!"
-        },
-        {
-          "sentence": "Are you ready to rock?"
-        },
-        {
-          "sentence": "Feel my gentle kiss of death."
-        },
-        {
-          "sentence": "That's what I call easy listening!"
-        },
-        {
-          "sentence": "IIIIEEEeeeeeehhhHHHH!",
-          "yell": "1"
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "candlestick",
-          "chance": "70000"
-        },
-        {
-          "name": "wedding ring",
-          "chance": "460"
-        },
-        {
-          "id": "2124",
-          "chance": "60"
-        },
-        {
-          "name": "silver brooch",
-          "chance": "1250"
-        },
-        {
-          "name": "white pearl",
-          "chance": "1010"
-        },
-        {
-          "name": "black pearl",
-          "chance": "2030"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "80",
-          "chance": "30000"
-        },
-        {
-          "name": "silver amulet",
-          "chance": "8700"
-        },
-        {
-          "id": "2175",
-          "chance": "520"
-        },
-        {
-          "name": "life crystal",
-          "chance": "70"
-        },
-        {
-          "name": "stone skin amulet",
-          "chance": "820"
-        },
-        {
-          "name": "ring of healing",
-          "chance": "730"
-        },
-        {
-          "id": "2372",
-          "chance": "910"
-        },
-        {
-          "name": "poison dagger",
-          "chance": "1350"
-        },
-        {
-          "name": "red robe",
-          "chance": "150"
-        },
-        {
-          "name": "blue robe",
-          "chance": "700"
-        },
-        {
-          "name": "simple dress",
-          "chance": "6050"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "680"
-        },
-        {
-          "name": "terra mantle",
-          "chance": "340"
-        },
-        {
-          "name": "petrified scream",
-          "chance": "4150"
-        },
-        {
-          "name": "hair of a banshee",
-          "chance": "4810"
-        },
-        {
-          "name": "sweet smelling bait",
-          "chance": "40"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "120",
+      "max": "190",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70000,
+      "items": [],
+      "name": "candlestick"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 460,
+      "items": [],
+      "name": "wedding ring"
+    },
+    {
+      "id": 2124,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1250,
+      "items": [],
+      "name": "silver brooch"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1010,
+      "items": [],
+      "name": "white pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2030,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 80,
+      "chance": 30000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8700,
+      "items": [],
+      "name": "silver amulet"
+    },
+    {
+      "id": 2175,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 820,
+      "items": [],
+      "name": "stone skin amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 2372,
+      "countmax": 1,
+      "chance": 910,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1350,
+      "items": [],
+      "name": "poison dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "red robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": "blue robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6050,
+      "items": [],
+      "name": "simple dress"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 680,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 340,
+      "items": [],
+      "name": "terra mantle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4150,
+      "items": [],
+      "name": "petrified scream"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4810,
+      "items": [],
+      "name": "hair of a banshee"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": "sweet smelling bait"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Dance for me your dance of death!",
+        "yell": false
+      },
+      {
+        "sentence": "Let the music play!",
+        "yell": false
+      },
+      {
+        "sentence": "I will mourn your death!",
+        "yell": false
+      },
+      {
+        "sentence": "Are you ready to rock?",
+        "yell": false
+      },
+      {
+        "sentence": "Feel my gentle kiss of death.",
+        "yell": false
+      },
+      {
+        "sentence": "That's what I call easy listening!",
+        "yell": false
+      },
+      {
+        "sentence": "IIIIEEEeeeeeehhhHHHH!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "fire": 1,
+    "earth": 1,
+    "drown": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

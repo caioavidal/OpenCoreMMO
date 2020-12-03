@@ -1,189 +1,179 @@
 {
-  "monster": {
-    "name": "Pirate Ghost",
-    "nameDescription": "a pirate ghost",
-    "race": "undead",
-    "experience": "250",
-    "speed": "170",
-    "health": {
-      "now": "275",
-      "max": "275"
+  "name": "Pirate Ghost",
+  "nameDescription": "a pirate ghost",
+  "race": "undead",
+  "experience": 250,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 275,
+    "now": 275
+  },
+  "look": {
+    "type": 196,
+    "corpse": 5566
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100",
+      "poison": "40"
     },
-    "look": {
-      "type": "196",
-      "corpse": "5566"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "1",
+      "target": "0",
+      "min": "-40",
+      "max": "-80",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100",
-          "poison": "40"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "1",
-          "target": "0",
-          "min": "-40",
-          "max": "-80",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "3",
-          "target": "1",
-          "min": "-50",
-          "max": "-65",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "rednote"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "5",
-        "min": "40",
-        "max": "70",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "holyPercent": "-25"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "physical": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "earth": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "death",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "radius": "3",
+      "target": "1",
+      "min": "-50",
+      "max": "-65",
+      "attributes": [
         {
-          "sentence": "Yooh Ho Hooh Ho!"
-        },
-        {
-          "sentence": "Hell is waiting for You!"
-        },
-        {
-          "sentence": "It's alive!"
-        },
-        {
-          "sentence": "The curse! Aww the curse!"
-        },
-        {
-          "sentence": "You will not get my treasure!"
+          "areaEffect": "rednote"
         }
       ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "1951",
-          "chance": "910"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "67",
-          "chance": "48000"
-        },
-        {
-          "name": "stealth ring",
-          "chance": "650"
-        },
-        {
-          "name": "spike sword",
-          "chance": "130"
-        },
-        {
-          "name": "red robe",
-          "chance": "130"
-        },
-        {
-          "name": "tattered piece of robe",
-          "chance": "4300"
-        }
-      ]/* parchment */
     }
+  ],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "40",
+      "max": "70",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 1951,
+      "countmax": 1,
+      "chance": 910,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 67,
+      "chance": 48000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 650,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "spike sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "red robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4300,
+      "items": [],
+      "name": "tattered piece of robe"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Yooh Ho Hooh Ho!",
+        "yell": false
+      },
+      {
+        "sentence": "Hell is waiting for You!",
+        "yell": false
+      },
+      {
+        "sentence": "It's alive!",
+        "yell": false
+      },
+      {
+        "sentence": "The curse! Aww the curse!",
+        "yell": false
+      },
+      {
+        "sentence": "You will not get my treasure!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "lifedrain": 1,
+    "physical": 1,
+    "death": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

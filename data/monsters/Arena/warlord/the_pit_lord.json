@@ -1,142 +1,119 @@
 {
-  "monster": {
-    "name": "The Pit Lord",
-    "nameDescription": "The Pit Lord",
-    "race": "blood",
-    "experience": "2500",
-    "speed": "270",
-    "health": {
-      "now": "5270",
-      "max": "5270"
-    },
-    "look": {
-      "type": "55",
-      "corpse": "7349"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-380"
-        },
-        {
-          "name": "physical",
-          "interval": "7500",
-          "chance": "100",
-          "min": "-100",
-          "max": "-250",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "largerock"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "46",
-      "defense": "44",
-      "defense": [
-        {
-          "name": "speed",
-          "interval": "5000",
-          "chance": "100",
-          "duration": "2500",
-          "speedchange": "500",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "6000",
-          "chance": "65",
-          "min": "20",
-          "max": "50",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "35"
-        },
-        {
-          "icePercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "The Pit Lord",
+  "nameDescription": "The Pit Lord",
+  "race": "blood",
+  "experience": 2500,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 5270,
+    "now": 5270
+  },
+  "look": {
+    "type": 55,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5",
-      "voice": [
+      "min": "0",
+      "max": "-380"
+    },
+    {
+      "name": "physical",
+      "interval": "7500",
+      "chance": "100",
+      "min": "-100",
+      "max": "-250",
+      "attributes": [
         {
-          "sentence": "I'LL GET YOU ALL!",
-          "yell": "1"
-        },
-        {
-          "sentence": "I won't let you escape!"
-        },
-        {
-          "sentence": "I'll crush you beneath my feet!"
+          "shootEffect": "largerock"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 46,
+    "defense": 44
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "5000",
+      "chance": "100",
+      "duration": "2500",
+      "speedchange": "500",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "6000",
+      "chance": "65",
+      "min": "20",
+      "max": "50",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 35,
+    "icePercent": -20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I'LL GET YOU ALL!",
+        "yell": false
+      },
+      {
+        "sentence": "I won't let you escape!",
+        "yell": false
+      },
+      {
+        "sentence": "I'll crush you beneath my feet!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

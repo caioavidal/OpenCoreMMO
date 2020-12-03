@@ -19,9 +19,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using NeoServer.Server.Standalone;
 
 Console.Title = "OpenCoreMMO Server";
 

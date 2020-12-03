@@ -1,177 +1,140 @@
 {
-  "monster": {
-    "name": "Mercury Blob",
-    "nameDescription": "a mercury blob",
-    "race": "undead",
-    "experience": "180",
-    "speed": "180",
-    "health": {
-      "now": "150",
-      "max": "150"
+  "name": "Mercury Blob",
+  "nameDescription": "a mercury blob",
+  "race": "undead",
+  "experience": 180,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 150,
+    "now": 150
+  },
+  "look": {
+    "type": 316,
+    "corpse": 9961
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-75"
     },
-    "look": {
-      "type": "316",
-      "corpse": "9961"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-75"
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "target": "1",
-          "duration": "3000",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "stun"
-            },
-            {
-              "key": "shootEffect",
-              "value": "holy"
-            }
-          ]
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "target": "1",
-          "min": "-10",
-          "max": "-30",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            },
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "5",
-        "min": "20",
-        "max": "30",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "death": "1"
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "10"
-        },
-        {
-          "earthPercent": "65"
-        },
-        {
-          "icePercent": "15"
-        },
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "holyPercent": "65"
-        },
-        {
-          "lifedrainPercent": "80"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "3",
-      "summon": {
-        "name": "Mercury Blob",
-        "interval": "2000",
-        "chance": "10"
-      }
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "drunk",
+      "interval": "2000",
       "chance": "10",
-      "voice": {
-        "sentence": "Crackle"
-      }
+      "range": "7",
+      "target": "1",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "stun"
+        },
+        {
+          "shootEffect": "holy"
+        }
+      ]
     },
-    "loot": {
-      "item": {
-        "name": "glob of mercury",
-        "chance": "17966"
-      }
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "-10",
+      "max": "-30",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        },
+        {
+          "shootEffect": "energy"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "20",
+      "max": "30",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 10,
+    "earthPercent": 65,
+    "icePercent": 15,
+    "physicalPercent": 5,
+    "holyPercent": 65,
+    "lifedrainPercent": 80
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17966,
+      "items": [],
+      "name": "glob of mercury"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Crackle",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Mercury Blob",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

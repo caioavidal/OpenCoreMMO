@@ -1,161 +1,122 @@
 {
-  "monster": {
-    "name": "Monstor",
-    "nameDescription": "Monstor",
-    "race": "blood",
-    "experience": "575",
-    "speed": "350",
-    "health": {
-      "now": "960",
-      "max": "960"
+  "name": "Monstor",
+  "nameDescription": "Monstor",
+  "race": "blood",
+  "experience": 575,
+  "speed": 350,
+  "manaCost": 0,
+  "health": {
+    "max": 960,
+    "now": 960
+  },
+  "look": {
+    "type": 244,
+    "corpse": 10322
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1200",
+      "min": "0",
+      "max": "-167"
     },
-    "look": {
-      "type": "244",
-      "corpse": "10322"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "30",
+      "length": "6",
+      "spread": "0",
+      "min": "-66",
+      "max": "-85",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "1200",
-          "min": "0",
-          "max": "-167"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "30",
-          "length": "6",
-          "spread": "0",
-          "min": "-66",
-          "max": "-85",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "30",
-        "min": "90",
-        "max": "200",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "fire"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "20"
-        },
-        {
-          "firePercent": "50"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "earthPercent": "30"
-        },
-        {
-          "energyPercent": "-7"
-        },
-        {
-          "holyPercent": "-3"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "3",
-      "summon": {
-        "name": "Acid Blob",
-        "interval": "4000",
-        "chance": "40",
-        "max": "3"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "NO ARMY ME STOPPING! GRARR!"
-        },
-        {
-          "sentence": "ME DESTROY CITY! GROAR!"
-        },
-        {
-          "sentence": "WHARR! MUST ... KIDNAP WOMEN!"
+          "areaEffect": "greenshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "30",
+      "min": "90",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "fire"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 20,
+    "firePercent": 50,
+    "icePercent": 10,
+    "earthPercent": 30,
+    "energyPercent": -7,
+    "holyPercent": -3
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "NO ARMY ME STOPPING! GRARR!",
+        "yell": false
+      },
+      {
+        "sentence": "ME DESTROY CITY! GROAR!",
+        "yell": false
+      },
+      {
+        "sentence": "WHARR! MUST ... KIDNAP WOMEN!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Acid Blob",
+        "interval": 4000,
+        "chance": 40,
+        "max": 3
+      }
+    ]
   }
 }

@@ -1,132 +1,135 @@
 {
-  "monster": {
-    "name": "Dwarf Miner",
-    "nameDescription": "a dwarf miner",
-    "race": "blood",
-    "experience": "60",
-    "speed": "210",
-    "manacost": "420",
-    "health": {
-      "now": "120",
-      "max": "120"
-    },
-    "look": {
-      "type": "160",
-      "head": "77",
-      "body": "101",
-      "legs": "97",
-      "feet": "115",
-      "corpse": "6007"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-26"
-      }
-    },
-    "defenses": {
-      "armor": "7",
-      "defense": "10"
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Work, work!"
-        },
-        {
-          "sentence": "Intruders in the mines!"
-        },
-        {
-          "sentence": "Mine, all mine!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "10",
-          "chance": "33333"
-        },
-        {
-          "name": "dwarven ring",
-          "chance": "793"
-        },
-        {
-          "name": "axe",
-          "chance": "14285"
-        },
-        {
-          "name": "studded armor",
-          "chance": "6666"
-        },
-        {
-          "name": "pick",
-          "chance": "11111"
-        },
-        {
-          "name": "leather legs",
-          "chance": "9090"
-        },
-        {
-          "name": "meat",
-          "chance": "3846"
-        },
-        {
-          "name": "iron ore",
-          "chance": "793"
-        }
-      ]
+  "name": "Dwarf Miner",
+  "nameDescription": "a dwarf miner",
+  "race": "blood",
+  "experience": 60,
+  "speed": 210,
+  "manaCost": 420,
+  "health": {
+    "max": 120,
+    "now": 120
+  },
+  "look": {
+    "type": 160,
+    "corpse": 6007
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-26"
     }
+  ],
+  "defense": {
+    "armor": 7,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 33333,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 793,
+      "items": [],
+      "name": "dwarven ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6666,
+      "items": [],
+      "name": "studded armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11111,
+      "items": [],
+      "name": "pick"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9090,
+      "items": [],
+      "name": "leather legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3846,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 793,
+      "items": [],
+      "name": "iron ore"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Work, work!",
+        "yell": false
+      },
+      {
+        "sentence": "Intruders in the mines!",
+        "yell": false
+      },
+      {
+        "sentence": "Mine, all mine!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

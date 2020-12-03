@@ -1,305 +1,339 @@
 {
-  "monster": {
-    "name": "Lost Soul",
-    "nameDescription": "a lost soul",
-    "race": "undead",
-    "experience": "4000",
-    "speed": "250",
-    "manacost": "0",
-    "health": {
-      "now": "5800",
-      "max": "5800"
+  "name": "Lost Soul",
+  "nameDescription": "a lost soul",
+  "race": "undead",
+  "experience": 4000,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 5800,
+    "now": 5800
+  },
+  "look": {
+    "type": 232,
+    "corpse": 6310
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "60",
+      "attack": "120"
     },
-    "look": {
-      "type": "232",
-      "corpse": "6310"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "20",
+      "range": "7",
+      "radius": "4",
+      "target": "0",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "burstarrow"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "1",
+      "target": "1",
+      "speedchange": "-400",
+      "duration": "30000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "60",
-          "attack": "120"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "20",
-          "range": "7",
-          "radius": "4",
-          "target": "0",
-          "min": "-150",
-          "max": "-250",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "burstarrow"
-            },
-            {
-              "key": "areaEffect",
-              "value": "redshimmer"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "20",
-          "range": "1",
-          "target": "1",
-          "speedchange": "-400",
-          "duration": "30000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "20",
-          "range": "7",
-          "radius": "7",
-          "target": "0",
-          "min": "-100",
-          "max": "-220",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowbubble"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "35",
-      "defense": {
-        "name": "speed",
-        "interval": "1000",
-        "chance": "35",
-        "speedchange": "370",
-        "duration": "30000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "20",
+      "range": "7",
+      "radius": "7",
+      "target": "0",
+      "min": "-100",
+      "max": "-220",
+      "attributes": [
         {
-          "firePercent": "100"
-        },
-        {
-          "deathPercent": "100"
-        },
-        {
-          "earthPercent": "100"
-        },
-        {
-          "icePercent": "50"
-        },
-        {
-          "energyPercent": "30"
-        },
-        {
-          "holyPercent": "-20"
+          "areaEffect": "yellowbubble"
         }
       ]
-    },
-    "immunities": {
-      "immunity": [
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "35",
+      "speedchange": "370",
+      "duration": "30000",
+      "attributes": [
         {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "firePercent": 100,
+    "deathPercent": 100,
+    "earthPercent": 100,
+    "icePercent": 50,
+    "energyPercent": 30,
+    "holyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 40000,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "30",
-      "voice": [
-        {
-          "sentence": "Forgive Meeeee!"
-        },
-        {
-          "sentence": "Mouuuurn meeee!"
-        }
-      ]
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 40000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2148,
+      "countmax": 80,
+      "chance": 40000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 40000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2260,
+      "countmax": 1,
+      "chance": 25250,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6500,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7590,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2463,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2152,
+      "countmax": 3,
+      "chance": 4500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2227,
+      "countmax": 2,
+      "chance": 25000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2483,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "90",
-          "chance": "40000"
+          "id": 9808,
+          "countmax": 1,
+          "chance": 7000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "90",
-          "chance": "40000"
+          "id": 5806,
+          "countmax": 1,
+          "chance": 4500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "80",
-          "chance": "40000"
+          "id": 2457,
+          "countmax": 1,
+          "chance": 10500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "70",
-          "chance": "40000"
+          "id": 2133,
+          "countmax": 1,
+          "chance": 1500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2050",
-          "chance": "20000"
+          "id": 5944,
+          "countmax": 1,
+          "chance": 4500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2260",
-          "chance": "25250"
+          "id": 2197,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2230",
-          "chance": "3000"
+          "id": 7413,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "6500",
-          "chance": "7500"
+          "id": 6300,
+          "countmax": 1,
+          "chance": 750,
+          "items": [],
+          "name": null
         },
         {
-          "id": "7590",
-          "chance": "7500"
+          "id": 6526,
+          "countmax": 1,
+          "chance": 900,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2463",
-          "chance": "3000"
+          "id": 5801,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2152",
-          "countmax": "3",
-          "chance": "4500"
+          "id": 2436,
+          "countmax": 1,
+          "chance": 650,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2227",
-          "countmax": "2",
-          "chance": "25000"
+          "id": 2173,
+          "countmax": 1,
+          "chance": 50,
+          "items": [],
+          "name": null
         },
         {
-          "id": "9808",
-          "chance": "7000"
-        },
-        {
-          "id": "2483",
-          "chance": "10500"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "9808",
-              "chance": "7000"
-            },
-            {
-              "id": "5806",
-              "chance": "4500"
-            },
-            {
-              "id": "2457",
-              "chance": "10500"
-            },
-            {
-              "id": "2133",
-              "chance": "1500"
-            },
-            {
-              "id": "5944",
-              "chance": "4500"
-            },
-            {
-              "id": "2197",
-              "chance": "2000"
-            },
-            {
-              "id": "7413",
-              "chance": "2500"
-            },
-            {
-              "id": "6300",
-              "chance": "750"
-            },
-            {
-              "id": "6526",
-              "chance": "900"
-            },
-            {
-              "id": "5801",
-              "chance": "500"
-            },
-            {
-              "id": "2436",
-              "chance": "650"
-            },
-            {
-              "id": "2173",
-              "chance": "50"
-            },
-            {
-              "id": "8903",
-              "chance": "100"
-            }
-          ]
+          "id": 8903,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 30,
+    "sentences": [
+      {
+        "sentence": "Forgive Meeeee!",
+        "yell": false
+      },
+      {
+        "sentence": "Mouuuurn meeee!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

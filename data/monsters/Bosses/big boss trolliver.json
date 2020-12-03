@@ -1,111 +1,95 @@
 {
-  "monster": {
-    "name": "Big Boss Trolliver",
-    "nameDescription": "big boss trolliver",
-    "race": "blood",
-    "experience": "105",
-    "speed": "140",
-    "health": {
-      "now": "150",
-      "max": "150"
-    },
-    "look": {
-      "type": "281",
-      "corpse": "7926"
-    },
-    "targetchange": {
+  "name": "Big Boss Trolliver",
+  "nameDescription": "big boss trolliver",
+  "race": "blood",
+  "experience": 105,
+  "speed": 140,
+  "manaCost": 0,
+  "health": {
+    "max": 150,
+    "now": 150
+  },
+  "look": {
+    "type": 281,
+    "corpse": 7926
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "runonhealth": 20
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "0"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "20"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "35",
-        "attack": "40"
-      }
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "12"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "22"
-        },
-        {
-          "holyPercent": "11"
-        },
-        {
-          "earthPercent": "-3"
-        },
-        {
-          "deathPercent": "-4"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "57",
-          "chance": "6000"
-        },
-        {
-          "id": "2666",
-          "countmax": "3",
-          "chance": "1500"
-        },
-        {
-          "id": "2389",
-          "countmax": "2",
-          "chance": "2000"
-        },
-        {
-          "id": "2448",
-          "chance": "5000"
-        }
-      ],
-      "#comment": []
+      "skill": "35",
+      "attack": "40"
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 12
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 22,
+    "holyPercent": 11,
+    "earthPercent": -3,
+    "deathPercent": -4
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 57,
+      "chance": 6000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2666,
+      "countmax": 3,
+      "chance": 1500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2389,
+      "countmax": 2,
+      "chance": 2000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2448,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,217 +1,200 @@
 {
-  "monster": {
-    "name": "Dark Magician",
-    "nameDescription": "a dark magician",
-    "race": "blood",
-    "experience": "185",
-    "speed": "220",
-    "manacost": "0",
-    "health": {
-      "now": "325",
-      "max": "325"
+  "name": "Dark Magician",
+  "nameDescription": "a dark magician",
+  "race": "blood",
+  "experience": 185,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 325,
+    "now": 325
+  },
+  "look": {
+    "type": 133,
+    "corpse": 6080
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 800
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "20"
     },
-    "look": {
-      "type": "133",
-      "head": "116",
-      "body": "95",
-      "legs": "50",
-      "feet": "132",
-      "addons": "2",
-      "corpse": "6080"
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "35",
+      "range": "7",
+      "min": "-5",
+      "max": "-38",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
     },
-    "targetchange": {
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "25",
+      "length": "8",
+      "spread": "0",
+      "min": "0",
+      "max": "-27",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "60",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
       "interval": "5000",
-      "chance": "30"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+      "chance": "50",
+      "duration": "5000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "800"
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "firePercent": 10,
+    "earthPercent": 8,
+    "energyPercent": 8,
+    "icePercent": 8,
+    "holyPercent": 5,
+    "deathPercent": -6
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 80,
+      "chance": 25500,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "30",
-          "attack": "20"
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "35",
-          "range": "7",
-          "min": "-5",
-          "max": "-38",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "25",
-          "length": "8",
-          "spread": "0",
-          "min": "0",
-          "max": "-27",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "energy"
-          }
-        }
-      ]
+    {
+      "id": 7620,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "20",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "25",
-          "min": "60",
-          "max": "100",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "5000",
-          "chance": "50",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
+    {
+      "id": 7618,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "10"
-        },
-        {
-          "earthPercent": "8"
-        },
-        {
-          "energyPercent": "8"
-        },
-        {
-          "icePercent": "8"
-        },
-        {
-          "holyPercent": "5"
-        },
-        {
-          "deathPercent": "-6"
-        }
-      ]
+    {
+      "id": 7588,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
+    {
+      "id": 2260,
+      "countmax": 1,
+      "chance": 9250,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "sentence": "Feel the power of my runes!"
+          "id": 7589,
+          "countmax": 1,
+          "chance": 2750,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Killing you is getting expensive!"
+          "id": 7761,
+          "countmax": 1,
+          "chance": 650,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "My secrets are mine alone!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "80",
-          "chance": "25500"
-        },
-        {
-          "id": "7620",
-          "chance": "12500"
-        },
-        {
-          "id": "7618",
-          "chance": "13000"
-        },
-        {
-          "id": "7588",
-          "chance": "3000"
-        },
-        {
-          "id": "2260",
-          "chance": "9250"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "7589",
-              "chance": "2750"
-            },
-            {
-              "id": "7761",
-              "chance": "650"
-            },
-            {
-              "id": "2188",
-              "chance": "200"
-            }
-          ]
+          "id": 2188,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel the power of my runes!",
+        "yell": false
+      },
+      {
+        "sentence": "Killing you is getting expensive!",
+        "yell": false
+      },
+      {
+        "sentence": "My secrets are mine alone!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

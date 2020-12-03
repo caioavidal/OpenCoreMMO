@@ -1,152 +1,134 @@
 {
-  "monster": {
-    "name": "Spit Nettle",
-    "nameDescription": "a spit nettle",
-    "race": "venom",
-    "experience": "20",
-    "speed": "0",
-    "manacost": "0",
-    "health": {
-      "now": "150",
-      "max": "150"
-    },
-    "look": {
-      "type": "221",
-      "corpse": "6062"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+  "name": "Spit Nettle",
+  "nameDescription": "a spit nettle",
+  "race": "venom",
+  "experience": 20,
+  "speed": 0,
+  "manaCost": 0,
+  "health": {
+    "max": 150,
+    "now": 150
+  },
+  "look": {
+    "type": 221,
+    "corpse": 6062
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 150
+  },
+  "attacks": [
+    {
+      "name": "poison",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "150"
+          "shootEffect": "poison"
         }
       ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "poison",
-        "interval": "1000",
-        "chance": "15",
-        "range": "7",
-        "radius": "1",
-        "target": "1",
-        "attribute": {
-          "key": "shootEffect",
-          "value": "poison"
-        }
-      }
-    },
-    "defenses": {
-      "armor": "12",
-      "defense": "13",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "13",
-        "min": "8",
-        "max": "16",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    }
+  ],
+  "defense": {
+    "armor": 12,
+    "defense": 13
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "13",
+      "min": "8",
+      "max": "16",
+      "attributes": [
         {
-          "earthPercent": "100"
-        },
-        {
-          "energyPercent": "100"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "firePercent": "-10"
+          "areaEffect": "blueshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 100,
+    "energyPercent": 100,
+    "icePercent": 10,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 5,
+      "chance": 12500,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
+    {
+      "id": 2804,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2802,
+      "countmax": 2,
+      "chance": 7500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 90000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "5",
-          "chance": "12500"
+          "id": 2802,
+          "countmax": 1,
+          "chance": 3000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2804",
-          "chance": "10000"
-        },
-        {
-          "id": "2802",
-          "countmax": "2",
-          "chance": "7500"
-        },
-        {
-          "id": "1987",
-          "chance": "90000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2802",
-              "chance": "3000"
-            },
-            {
-              "id": "2802",
-              "chance": "2500"
-            }
-          ]
+          "id": 2802,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

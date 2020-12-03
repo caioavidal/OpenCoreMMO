@@ -1,189 +1,192 @@
 {
-  "monster": {
-    "name": "Monk",
-    "nameDescription": "a monk",
-    "race": "blood",
-    "experience": "200",
-    "speed": "220",
-    "manacost": "600",
-    "health": {
-      "now": "240",
-      "max": "240"
-    },
-    "look": {
-      "type": "57",
-      "corpse": "6080"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+  "name": "Monk",
+  "nameDescription": "a monk",
+  "race": "blood",
+  "experience": 200,
+  "speed": 220,
+  "manaCost": 600,
+  "health": {
+    "max": 240,
+    "now": 240
+  },
+  "look": {
+    "type": 57,
+    "corpse": 6080
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "70"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 22
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "17",
+      "min": "30",
+      "max": "50",
+      "attributes": [
         {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "30",
-        "attack": "70"
-      }
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "22",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "17",
-          "min": "30",
-          "max": "50",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "10",
-          "speedchange": "300",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "50"
-        },
-        {
-          "deathPercent": "50"
-        },
-        {
-          "physicalPercent": "-15"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "speed",
+      "interval": "1000",
       "chance": "10",
-      "voice": [
+      "speedchange": "300",
+      "duration": "3000",
+      "attributes": [
         {
-          "sentence": "Repent Heretic!"
-        },
-        {
-          "sentence": "A prayer to the almighty one!"
-        },
-        {
-          "sentence": "I will punish the sinners!"
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 50,
+    "deathPercent": 50,
+    "physicalPercent": -15
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 20,
+      "chance": 24000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2689,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1949,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2044,
+      "countmax": 1,
+      "chance": 12000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2015,
+      "countmax": 1,
+      "chance": 6666,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2642,
+      "countmax": 1,
+      "chance": 6666,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2467,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2401,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "20",
-          "chance": "24000"
+          "id": 2177,
+          "countmax": 1,
+          "chance": 3000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2689",
-          "chance": "20000"
+          "id": 2193,
+          "countmax": 1,
+          "chance": 1500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "1949",
-          "chance": "18000"
-        },
-        {
-          "id": "2044",
-          "chance": "12000"
-        },
-        {
-          "id": "2015",
-          "chance": "6666"
-        },
-        {
-          "id": "2642",
-          "chance": "6666"
-        },
-        {
-          "id": "2467",
-          "chance": "4000"
-        },
-        {
-          "id": "2401",
-          "chance": "20000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2177",
-              "chance": "3000"
-            },
-            {
-              "id": "2193",
-              "chance": "1500"
-            },
-            {
-              "id": "2166",
-              "chance": "700"
-            }
-          ]
+          "id": 2166,
+          "countmax": 1,
+          "chance": 700,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Repent Heretic!",
+        "yell": false
+      },
+      {
+        "sentence": "A prayer to the almighty one!",
+        "yell": false
+      },
+      {
+        "sentence": "I will punish the sinners!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,164 +1,142 @@
 {
-  "monster": {
-    "name": "Tarantula",
-    "nameDescription": "a tarantula",
-    "race": "venom",
-    "experience": "120",
-    "speed": "280",
-    "manacost": "485",
-    "health": {
-      "now": "225",
-      "max": "225"
+  "name": "Tarantula",
+  "nameDescription": "a tarantula",
+  "race": "venom",
+  "experience": 120,
+  "speed": 280,
+  "manaCost": 485,
+  "health": {
+    "max": 225,
+    "now": 225
+  },
+  "look": {
+    "type": 219,
+    "corpse": 6060
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "45",
+      "poison": "2"
     },
-    "look": {
-      "type": "219",
-      "corpse": "6060"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "poisonfield",
+      "interval": "1000",
+      "chance": "20",
+      "range": "1",
+      "attributes": [
         {
-          "summonable": "1"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "poff"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 17
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "13",
+      "speedchange": "334",
+      "duration": "5000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "30",
-          "attack": "45",
-          "poison": "2"
-        },
-        {
-          "name": "poisonfield",
-          "interval": "1000",
-          "chance": "20",
-          "range": "1",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poff"
-            }
-          ]
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 100,
+    "energyPercent": 10,
+    "firePercent": -15,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2478,
+      "countmax": 1,
+      "chance": 3250,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "17",
-      "defense": {
-        "name": "speed",
-        "interval": "1000",
-        "chance": "13",
-        "speedchange": "334",
-        "duration": "5000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
+    {
+      "id": 2148,
+      "countmax": 40,
+      "chance": 23000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "100"
-        },
-        {
-          "energyPercent": "10"
-        },
-        {
-          "firePercent": "-15"
-        },
-        {
-          "icePercent": "-10"
-        }
-      ]
+    {
+      "id": 2510,
+      "countmax": 1,
+      "chance": 1800,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "outfit": "1"
+          "id": 2457,
+          "countmax": 1,
+          "chance": 1250,
+          "items": [],
+          "name": null
         },
         {
-          "drunk": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2478",
-          "chance": "3250"
-        },
-        {
-          "id": "2148",
-          "countmax": "40",
-          "chance": "23000"
-        },
-        {
-          "id": "2510",
-          "chance": "1800"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2457",
-              "chance": "1250"
-            },
-            {
-              "id": "2169",
-              "chance": "200"
-            }
-          ]
+          "id": 2169,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,71 +1,58 @@
 {
-  "monster": {
-    "name": "butterfly",
-    "namedescription": "a butterfly",
-    "race": "venom",
-    "experience": "0",
-    "speed": "230",
-    "health": {
-      "now": "2",
-      "max": "2"
-    },
-    "look": {
-      "type": "227",
-      "head": "20",
-      "body": "30",
-      "legs": "40",
-      "feet": "50",
-      "corpse": "4313"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "8"
-        },
-        {
-          "runonhealth": "2"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    }
+  "name": "butterfly",
+  "nameDescription": null,
+  "race": "venom",
+  "experience": 0,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 2,
+    "now": 2
+  },
+  "look": {
+    "type": 227,
+    "corpse": 4313
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 8,
+    "runonhealth": 2,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

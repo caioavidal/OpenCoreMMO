@@ -1,259 +1,285 @@
 {
-  "monster": {
-    "name": "The Horned Fox",
-    "nameDescription": "the Horned Fox",
-    "race": "blood",
-    "experience": "200",
-    "speed": "210",
-    "manacost": "0",
-    "health": {
-      "now": "265",
-      "max": "265"
+  "name": "The Horned Fox",
+  "nameDescription": "the Horned Fox",
+  "race": "blood",
+  "experience": 200,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 265,
+    "now": 265
+  },
+  "look": {
+    "type": 202,
+    "corpse": 5983
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "54",
+      "attack": "38"
     },
-    "look": {
-      "type": "202",
-      "corpse": "5983"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "70",
-      "defense": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "min": "-50",
+      "max": "-120",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "bolt"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "poisoncondition",
+      "interval": "1000",
+      "chance": "17",
+      "range": "7",
+      "min": "-50",
+      "max": "-120",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "54",
-          "attack": "38"
-        },
+          "shootEffect": "bolt"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 17,
+    "defense": 16
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "15",
+      "min": "25",
+      "max": "75",
+      "attributes": [
         {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "25",
-          "range": "7",
-          "min": "-50",
-          "max": "-120",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "bolt"
-          }
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "1000",
-          "chance": "17",
-          "range": "7",
-          "min": "-50",
-          "max": "-120",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "bolt"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "defenses": {
-      "armor": "17",
-      "defense": "16",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "15",
-          "min": "25",
-          "max": "75",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "1000",
-          "chance": "10",
-          "duration": "2000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "summons": {
-      "maxSummons": "6",
-      "summon": [
-        {
-          "name": "minotaur archer",
-          "interval": "1000",
-          "chance": "13",
-          "max": "2"
-        },
-        {
-          "name": "minotaur guard",
-          "interval": "1000",
-          "chance": "13",
-          "max": "2"
-        },
-        {
-          "name": "minotaur mage",
-          "interval": "1000",
-          "chance": "13",
-          "max": "2"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "invisible",
+      "interval": "1000",
       "chance": "10",
-      "voice": [
+      "duration": "2000",
+      "attributes": [
         {
-          "sentence": "You will never get me!"
-        },
-        {
-          "sentence": "I'll be back!"
-        },
-        {
-          "sentence": "Catch me, if you can!"
-        },
-        {
-          "sentence": "Help me, boys!"
+          "areaEffect": "blueshimmer"
         }
       ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 30,
+      "chance": 100000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2410,
+      "countmax": 2,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2419,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2510,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2647,
+      "countmax": 1,
+      "chance": 1818,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2413,
+      "countmax": 1,
+      "chance": 2857,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 3976,
+      "countmax": 10,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 5804,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "30",
-          "chance": "100000"
+          "id": 2189,
+          "countmax": 1,
+          "chance": 1333,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2410",
-          "countmax": "2",
-          "chance": "50000"
+          "id": 2207,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2419",
-          "chance": "10000"
+          "id": 2666,
+          "countmax": 2,
+          "chance": 33333,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2510",
-          "chance": "5000"
+          "id": 2379,
+          "countmax": 1,
+          "chance": 6666,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2667",
-          "countmax": "1",
-          "chance": "20000"
+          "id": 2475,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2647",
-          "chance": "1818"
+          "id": 2397,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2413",
-          "chance": "2857"
+          "id": 2652,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "3976",
-          "countmax": "10",
-          "chance": "50000"
+          "id": 2478,
+          "countmax": 1,
+          "chance": 2857,
+          "items": [],
+          "name": null
         },
         {
-          "id": "5804",
-          "chance": "100000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2189",
-              "chance": "1333"
-            },
-            {
-              "id": "2207",
-              "chance": "2000"
-            },
-            {
-              "id": "2666",
-              "countmax": "2",
-              "chance": "33333"
-            },
-            {
-              "id": "2379",
-              "chance": "6666"
-            },
-            {
-              "id": "2475",
-              "chance": "1000"
-            },
-            {
-              "id": "2397",
-              "chance": "10000"
-            },
-            {
-              "id": "2652",
-              "chance": "2500"
-            },
-            {
-              "id": "2478",
-              "chance": "2857"
-            },
-            {
-              "id": "2463",
-              "chance": "1818"
-            }
-          ]
+          "id": 2463,
+          "countmax": 1,
+          "chance": 1818,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You will never get me!",
+        "yell": false
+      },
+      {
+        "sentence": "I'll be back!",
+        "yell": false
+      },
+      {
+        "sentence": "Catch me, if you can!",
+        "yell": false
+      },
+      {
+        "sentence": "Help me, boys!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 6,
+    "summons": [
+      {
+        "name": "minotaur archer",
+        "interval": 1000,
+        "chance": 13,
+        "max": 2
+      },
+      {
+        "name": "minotaur guard",
+        "interval": 1000,
+        "chance": 13,
+        "max": 2
+      },
+      {
+        "name": "minotaur mage",
+        "interval": 1000,
+        "chance": 13,
+        "max": 2
+      }
+    ]
   }
 }

@@ -1,126 +1,113 @@
 {
-  "monster": {
-    "name": "starving wolf",
-    "nameDescription": "a starving wolf",
-    "race": "blood",
-    "experience": "65",
-    "speed": "170",
-    "health": {
-      "now": "85",
-      "max": "85"
-    },
-    "look": {
-      "type": "27",
-      "head": "20",
-      "body": "30",
-      "legs": "40",
-      "feet": "50",
-      "corpse": "5968"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "8"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-25"
-      }
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10",
-      "defense": {
-        "name": "effect",
-        "interval": "2000",
-        "chance": "10",
-        "radius": "1",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "yellowbubble"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "physicalPercent": "-30"
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Gaarrrrrr"
-        },
-        {
-          "sentence": "Gnoorrr"
-        },
-        {
-          "sentence": "Yoooohhuuuu!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "220",
-          "chance": "64730"
-        },
-        {
-          "name": "meat",
-          "countmax": "2",
-          "chance": "5300"
-        },
-        {
-          "name": "wolf paw",
-          "chance": "1430"
-        }
-      ]/* dirty fur */
+  "name": "starving wolf",
+  "nameDescription": "a starving wolf",
+  "race": "blood",
+  "experience": 65,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 85,
+    "now": 85
+  },
+  "look": {
+    "type": 27,
+    "corpse": 5968
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 8
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-25"
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [
+    {
+      "name": "effect",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "attributes": [
+        {
+          "areaEffect": "yellowbubble"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -30
+  },
+  "loot": [
+    {
+      "id": 220,
+      "countmax": 1,
+      "chance": 64730,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5300,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1430,
+      "items": [],
+      "name": "wolf paw"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Gaarrrrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Gnoorrr",
+        "yell": false
+      },
+      {
+        "sentence": "Yoooohhuuuu!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

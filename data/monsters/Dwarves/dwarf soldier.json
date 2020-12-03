@@ -1,182 +1,191 @@
 {
-  "monster": {
-    "name": "Dwarf Soldier",
-    "nameDescription": "a dwarf soldier",
-    "race": "blood",
-    "experience": "70",
-    "speed": "170",
-    "manacost": "360",
-    "health": {
-      "now": "135",
-      "max": "135"
+  "name": "Dwarf Soldier",
+  "nameDescription": "a dwarf soldier",
+  "race": "blood",
+  "experience": 70,
+  "speed": 170,
+  "manaCost": 360,
+  "health": {
+    "max": 135,
+    "now": 135
+  },
+  "look": {
+    "type": 71,
+    "corpse": 6014
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "60",
+      "attack": "20"
     },
-    "look": {
-      "type": "71",
-      "corpse": "6014"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "13",
+      "range": "7",
+      "min": "-20",
+      "max": "-40",
+      "attributes": [
         {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "bolt"
         }
       ]
+    }
+  ],
+  "defense": {
+    "armor": 9,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 75,
+    "firePercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 8,
+      "chance": 12000,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "60",
-          "attack": "20"
-        },
-        {
-          "name": "physical",
-          "interval": "3000",
-          "chance": "13",
-          "range": "7",
-          "min": "-20",
-          "max": "-40",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "bolt"
-          }
-        }
-      ]
+    {
+      "id": 2148,
+      "countmax": 7,
+      "chance": 12000,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "9",
-      "defense": "20"
+    {
+      "id": 2543,
+      "countmax": 7,
+      "chance": 20000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "75"
-        },
-        {
-          "firePercent": "-5"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
+    {
+      "id": 2787,
+      "countmax": 3,
+      "chance": 20000,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Hail Durin!"
-      }
+    {
+      "id": 2554,
+      "countmax": 1,
+      "chance": 11250,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2481,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2464,
+      "countmax": 1,
+      "chance": 8500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "8",
-          "chance": "12000"
+          "id": 7363,
+          "countmax": 3,
+          "chance": 1500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "7",
-          "chance": "12000"
+          "id": 2378,
+          "countmax": 1,
+          "chance": 3500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2543",
-          "countmax": "7",
-          "chance": "20000"
+          "id": 2455,
+          "countmax": 1,
+          "chance": 3400,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2787",
-          "countmax": "3",
-          "chance": "20000"
+          "id": 2525,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2554",
-          "chance": "11250"
+          "id": 2208,
+          "countmax": 1,
+          "chance": 360,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2481",
-          "chance": "10000"
+          "id": 5880,
+          "countmax": 1,
+          "chance": 300,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2464",
-          "chance": "8500"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "7363",
-              "countmax": "3",
-              "chance": "1500"
-            },
-            {
-              "id": "2378",
-              "chance": "3500"
-            },
-            {
-              "id": "2455",
-              "chance": "3400"
-            },
-            {
-              "id": "2525",
-              "chance": "2500"
-            },
-            {
-              "id": "2208",
-              "chance": "360"
-            },
-            {
-              "id": "5880",
-              "chance": "300"
-            },
-            {
-              "id": "2213",
-              "chance": "500"
-            }
-          ]
+          "id": 2213,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hail Durin!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

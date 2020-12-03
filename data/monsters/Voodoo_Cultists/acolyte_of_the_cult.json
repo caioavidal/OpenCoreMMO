@@ -1,244 +1,235 @@
 {
-  "monster": {
-    "name": "Acolyte of the Cult",
-    "nameDescription": "an acolyte of the cult",
-    "race": "blood",
-    "experience": "300",
-    "speed": "200",
-    "health": {
-      "now": "390",
-      "max": "390"
+  "name": "Acolyte of the Cult",
+  "nameDescription": "an acolyte of the cult",
+  "race": "blood",
+  "experience": 300,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 390,
+    "now": 390
+  },
+  "look": {
+    "type": 194,
+    "corpse": 20319
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 4,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100",
+      "poison": "2"
     },
-    "look": {
-      "type": "194",
-      "head": "114",
-      "body": "121",
-      "legs": "121",
-      "feet": "57",
-      "corpse": "20319"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-60",
+      "max": "-120",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "duration": "3000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100",
-          "poison": "2"
+          "shootEffect": "holy"
         },
         {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "min": "-60",
-          "max": "-120",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "redshimmer"
-            }
-          ]
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "duration": "3000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "holy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "holydamage"
-            }
-          ]
+          "areaEffect": "holydamage"
         }
       ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "40",
-        "max": "60",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "20"
-        },
-        {
-          "earthPercent": "20"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "physicalPercent": "-10"
-        },
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "summons": {
-      "maxSummons": "1",
-      "summon": {
-        "name": "Skeleton",
-        "interval": "2000",
-        "chance": "10"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Praise the voodoo!"
-        },
-        {
-          "sentence": "Power to the cult!"
-        },
-        {
-          "sentence": "Feel the power of the cult!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "1962",
-          "chance": "730"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "40",
-          "chance": "66940"
-        },
-        {
-          "name": "small emerald",
-          "chance": "550"
-        },
-        {
-          "name": "life ring",
-          "chance": "560"
-        },
-        {
-          "name": "terra rod",
-          "chance": "250"
-        },
-        {
-          "name": "dragon necklace",
-          "chance": "1050"
-        },
-        {
-          "name": "morning star",
-          "chance": "4990"
-        },
-        {
-          "name": "pirate voodoo doll",
-          "chance": "1060"
-        },
-        {
-          "id": "6088",
-          "chance": "480"
-        },
-        {
-          "name": "cultish robe",
-          "chance": "8070"
-        },
-        {
-          "name": "cultish symbol",
-          "chance": "40"
-        },
-        {
-          "name": "rope belt",
-          "chance": "10420"
-        },
-        {
-          "name": "broken key ring",
-          "chance": "60"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "40",
+      "max": "60",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 20,
+    "earthPercent": 20,
+    "icePercent": 20,
+    "physicalPercent": -10,
+    "energyPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 1962,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 66940,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 250,
+      "items": [],
+      "name": "terra rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1050,
+      "items": [],
+      "name": "dragon necklace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4990,
+      "items": [],
+      "name": "morning star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1060,
+      "items": [],
+      "name": "pirate voodoo doll"
+    },
+    {
+      "id": 6088,
+      "countmax": 1,
+      "chance": 480,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8070,
+      "items": [],
+      "name": "cultish robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": "cultish symbol"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10420,
+      "items": [],
+      "name": "rope belt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "broken key ring"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Praise the voodoo!",
+        "yell": false
+      },
+      {
+        "sentence": "Power to the cult!",
+        "yell": false
+      },
+      {
+        "sentence": "Feel the power of the cult!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "Skeleton",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

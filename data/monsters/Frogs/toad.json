@@ -1,150 +1,139 @@
 {
-  "monster": {
-    "name": "Toad",
-    "nameDescription": "a toad",
-    "race": "blood",
-    "experience": "60",
-    "speed": "240",
-    "manacost": "400",
-    "health": {
-      "now": "135",
-      "max": "135"
+  "name": "Toad",
+  "nameDescription": "a toad",
+  "race": "blood",
+  "experience": 60,
+  "speed": 240,
+  "manaCost": 400,
+  "health": {
+    "max": 135,
+    "now": 135
+  },
+  "look": {
+    "type": 222,
+    "corpse": 6077
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 20
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "15"
     },
-    "look": {
-      "type": "222",
-      "corpse": "6077"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "min": "-5",
+      "max": "-20",
+      "attributes": [
         {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "20"
+          "shootEffect": "poison"
         }
       ]
+    }
+  ],
+  "defense": {
+    "armor": 12,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 40,
+    "icePercent": 25,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 12,
+      "chance": 41000,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "30",
-          "attack": "15"
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "min": "-5",
-          "max": "-20",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        }
-      ]
+    {
+      "id": 2666,
+      "countmax": 2,
+      "chance": 10500,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "12",
-      "defense": "10"
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "40"
-        },
-        {
-          "icePercent": "25"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
+    {
+      "id": 2398,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "30",
-      "voice": [
-        {
-          "sentence": "Ribbit, ribbit!"
-        },
-        {
-          "sentence": "Ribbit!"
-        }
-      ]
+    {
+      "id": 2382,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "12",
-          "chance": "41000"
-        },
-        {
-          "id": "2666",
-          "countmax": "2",
-          "chance": "10500"
-        },
-        {
-          "id": "2667",
-          "chance": "25000"
-        },
-        {
-          "id": "2398",
-          "chance": "4500"
-        },
-        {
-          "id": "2382",
-          "chance": "7000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": {
-            "id": "2391",
-            "chance": "250"
-          }
+          "id": 2391,
+          "countmax": 1,
+          "chance": 250,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 30,
+    "sentences": [
+      {
+        "sentence": "Ribbit, ribbit!",
+        "yell": false
+      },
+      {
+        "sentence": "Ribbit!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

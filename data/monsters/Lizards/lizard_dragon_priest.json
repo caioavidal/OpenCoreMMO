@@ -1,244 +1,259 @@
 {
-  "monster": {
-    "name": "Lizard Dragon Priest",
-    "nameDescription": "a lizard dragon priest",
-    "race": "blood",
-    "experience": "1320",
-    "speed": "220",
-    "health": {
-      "now": "1450",
-      "max": "1450"
+  "name": "Lizard Dragon Priest",
+  "nameDescription": "a lizard dragon priest",
+  "race": "blood",
+  "experience": 1320,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 1450,
+    "now": 1450
+  },
+  "look": {
+    "type": 339,
+    "corpse": 11280
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 50,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-50"
     },
-    "look": {
-      "type": "339",
-      "corpse": "11280"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "range": "7",
+      "min": "-125",
+      "max": "-190",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "fire"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "50"
-        },
-        {
-          "canwalkonenergy": "0"
+          "areaEffect": "fireattack"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "range": "7",
+      "radius": "1",
+      "min": "-320",
+      "max": "-400",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-50"
+          "shootEffect": "poison"
         },
         {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "20",
-          "target": "1",
-          "range": "7",
-          "min": "-125",
-          "max": "-190",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "fireattack"
-            }
-          ]
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "15",
-          "target": "1",
-          "range": "7",
-          "radius": "1",
-          "min": "-320",
-          "max": "-400",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "30",
-          "min": "200",
-          "max": "300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "15",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": {
-        "firePercent": "45"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "2",
-      "summon": {
-        "name": "Dragon Hatchling",
-        "interval": "2000",
-        "chance": "20",
-        "max": "2"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "I ssssmell warm blood!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "5000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "88",
-          "chance": "4400"
-        },
-        {
-          "name": "small amethyst",
-          "countmax": "3",
-          "chance": "4900"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "2",
-          "chance": "4090"
-        },
-        {
-          "name": "yellow gem",
-          "chance": "1000"
-        },
-        {
-          "name": "life ring",
-          "chance": "770"
-        },
-        {
-          "name": "terra rod",
-          "chance": "1001"
-        },
-        {
-          "name": "wand of inferno",
-          "chance": "1480"
-        },
-        {
-          "name": "lizard leather",
-          "chance": "980"
-        },
-        {
-          "name": "lizard scale",
-          "chance": "1130"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "12110"
-        },
-        {
-          "name": "great mana potion",
-          "chance": "7940"
-        },
-        {
-          "name": "focus cape",
-          "chance": "660"
-        },
-        {
-          "name": "bunch of ripe rice",
-          "chance": "960"
-        },
-        {
-          "name": "Zaoan shoes",
-          "chance": "450"
-        },
-        {
-          "name": "Zaoan robe",
-          "chance": "300"
-        },
-        {
-          "name": "dragon priest's wandtip",
-          "chance": "9910"
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "30",
+      "min": "200",
+      "max": "300",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 45
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 5000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 88,
+      "chance": 4400,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 4900,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 4090,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "yellow gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 770,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1001,
+      "items": [],
+      "name": "terra rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1480,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 980,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1130,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12110,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7940,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 660,
+      "items": [],
+      "name": "focus cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "bunch of ripe rice"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "Zaoan shoes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": "Zaoan robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9910,
+      "items": [],
+      "name": "dragon priest's wandtip"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I ssssmell warm blood!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Dragon Hatchling",
+        "interval": 2000,
+        "chance": 20,
+        "max": 2
+      }
+    ]
   }
 }

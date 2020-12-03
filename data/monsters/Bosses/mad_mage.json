@@ -1,212 +1,202 @@
 {
-  "monster": {
-    "name": "mad mage",
-    "nameDescription": "a mad mage",
-    "race": "blood",
-    "experience": "1800",
-    "speed": "240",
-    "health": {
-      "now": "2500",
-      "max": "2500"
+  "name": "mad mage",
+  "nameDescription": "a mad mage",
+  "race": "blood",
+  "experience": 1800,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 2500,
+    "now": 2500
+  },
+  "look": {
+    "type": 394,
+    "corpse": 13603
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 1000
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-78"
     },
-    "look": {
-      "type": "394",
-      "corpse": "13603"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "30"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "target": "1",
+      "min": "-50",
+      "max": "-185",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "1000"
+          "shootEffect": "fire"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "manadrain",
+      "interval": "1400",
+      "chance": "24",
+      "range": "6",
+      "min": "-30",
+      "max": "-90",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-78"
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "12",
-          "range": "7",
-          "target": "1",
-          "min": "-50",
-          "max": "-185",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "1400",
-          "chance": "24",
-          "range": "6",
-          "min": "-30",
-          "max": "-90",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "ice"
-          }
-        },
-        {
-          "name": "firefield",
-          "interval": "1600",
-          "chance": "20",
-          "range": "7",
-          "radius": "2",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "energy",
-          "interval": "1900",
-          "chance": "18",
-          "length": "8",
-          "spread": "0",
-          "min": "-70",
-          "max": "-150",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bigclouds"
-          }
+          "shootEffect": "ice"
         }
       ]
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "25",
-        "min": "35",
-        "max": "80",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "firefield",
+      "interval": "1600",
+      "chance": "20",
+      "range": "7",
+      "radius": "2",
+      "target": "1",
+      "attributes": [
         {
-          "physicalPercent": "-20"
-        },
-        {
-          "holyPercent": "-10"
-        },
-        {
-          "earthPercent": "50"
+          "shootEffect": "fire"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "energy",
+      "interval": "1900",
+      "chance": "18",
+      "length": "8",
+      "spread": "0",
+      "min": "-70",
+      "max": "-150",
+      "attributes": [
         {
-          "energy": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "1",
-      "summon": {
-        "name": "stone golem",
-        "interval": "1000",
-        "chance": "10"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "66",
-          "chance": "100000"
-        },
-        {
-          "name": "gold coin",
-          "chance": "100000",
-          "countmax": "20"
-        },
-        {
-          "name": "dark mushroom",
-          "countmax": "5",
-          "chance": "5000"
-        },
-        {
-          "name": "red piece of cloth",
-          "chance": "800"
-        },
-        {
-          "name": "assassin star",
-          "chance": "2400",
-          "countmax": "4"
-        },
-        {
-          "name": "strong health potion",
-          "countmax": "5",
-          "chance": "1300"
-        },
-        {
-          "name": "strong mana potion",
-          "countmax": "2",
-          "chance": "1200"
-        },
-        {
-          "name": "lightning legs",
-          "chance": "800"
+          "areaEffect": "bigclouds"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "35",
+      "max": "80",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -20,
+    "holyPercent": -10,
+    "earthPercent": 50
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 66,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 20,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 5000,
+      "items": [],
+      "name": "dark mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 2400,
+      "items": [],
+      "name": "assassin star"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 1300,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 1200,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "lightning legs"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "energy": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "stone golem",
+        "interval": 1000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

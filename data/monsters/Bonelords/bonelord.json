@@ -1,270 +1,269 @@
 {
-  "monster": {
-    "name": "Bonelord",
-    "nameDescription": "a bonelord",
-    "race": "venom",
-    "experience": "170",
-    "speed": "150",
-    "health": {
-      "now": "260",
-      "max": "260"
+  "name": "Bonelord",
+  "nameDescription": "a bonelord",
+  "race": "venom",
+  "experience": 170,
+  "speed": 150,
+  "manaCost": 0,
+  "health": {
+    "max": 260,
+    "now": 260
+  },
+  "look": {
+    "type": 17,
+    "corpse": 5992
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-5"
     },
-    "look": {
-      "type": "17",
-      "corpse": "5992"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "min": "-15",
+      "max": "-45",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "shootEffect": "energy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "min": "-25",
+      "max": "-45",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-5"
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "min": "-15",
-          "max": "-45",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "energy"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "min": "-25",
-          "max": "-45",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "min": "-30",
-          "max": "-50",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            },
-            {
-              "key": "areaEffect",
-              "value": "smallclouds"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "min": "-5",
-          "max": "-45",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "min": "-5",
-          "max": "-50",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "death"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "min": "0",
-          "max": "-45",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "5",
-          "range": "7",
-          "min": "-5",
-          "max": "-35"
+          "shootEffect": "fire"
         }
       ]
     },
-    "defenses": {
-      "armor": "5",
-      "defense": "5"
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "min": "-30",
+      "max": "-50",
+      "attributes": [
         {
-          "icePercent": "20"
+          "shootEffect": "suddendeath"
         },
         {
-          "firePercent": "-10"
+          "areaEffect": "mortarea"
+        },
+        {
+          "areaEffect": "smallclouds"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "min": "-5",
+      "max": "-45",
+      "attributes": [
         {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "lifedrain": "1"
+          "shootEffect": "poison"
         }
       ]
     },
-    "summons": {
-      "maxSummons": "6",
-      "summon": {
-        "name": "Skeleton",
-        "interval": "2000",
-        "chance": "20",
-        "max": "6"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "min": "-5",
+      "max": "-50",
+      "attributes": [
         {
-          "sentence": "Eye for eye!"
-        },
-        {
-          "sentence": "Here's looking at you!"
-        },
-        {
-          "sentence": "Let me take a look at you!"
-        },
-        {
-          "sentence": "You've got the look!"
-        },
-        {
-          "sentence": "I've got to look!"
+          "shootEffect": "death"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "min": "0",
+      "max": "-45",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "48",
-          "chance": "99000"
-        },
-        {
-          "name": "longsword",
-          "chance": "9000"
-        },
-        {
-          "name": "morning star",
-          "chance": "7000"
-        },
-        {
-          "name": "small flask of eyedrops",
-          "chance": "5000"
-        },
-        {
-          "id": "2175",
-          "chance": "5000"
-        },
-        {
-          "name": "steel shield",
-          "chance": "4000"
-        },
-        {
-          "name": "two handed sword",
-          "chance": "3950"
-        },
-        {
-          "name": "bonelord eye",
-          "chance": "1000"
-        },
-        {
-          "name": "terra rod",
-          "chance": "510"
-        },
-        {
-          "name": "mana potion",
-          "chance": "300"
-        },
-        {
-          "name": "bonelord shield",
-          "chance": "110"
+          "areaEffect": "redshimmer"
         }
-      ]/* spellbook */
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "min": "-5",
+      "max": "-35"
     }
+  ],
+  "defense": {
+    "armor": 5,
+    "defense": 5
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 48,
+      "chance": 99000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": "longsword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": "morning star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "small flask of eyedrops"
+    },
+    {
+      "id": 2175,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "steel shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3950,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "bonelord eye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "terra rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "bonelord shield"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Eye for eye!",
+        "yell": false
+      },
+      {
+        "sentence": "Here's looking at you!",
+        "yell": false
+      },
+      {
+        "sentence": "Let me take a look at you!",
+        "yell": false
+      },
+      {
+        "sentence": "You've got the look!",
+        "yell": false
+      },
+      {
+        "sentence": "I've got to look!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "earth": 1,
+    "lifedrain": 1
+  },
+  "summon": {
+    "maxSummons": 6,
+    "summons": [
+      {
+        "name": "Skeleton",
+        "interval": 2000,
+        "chance": 20,
+        "max": 6
+      }
+    ]
   }
 }

@@ -1,0 +1,17 @@
+[
+{
+    "centerx": 1015,
+    "centery": 1020,
+    "centerz": 7,
+    "radius": 1,
+    "monsters": [
+      {
+        "name": "Poison Spider",
+        "x": 0,
+        "y": 0,
+        "z": 7,
+        "spawntime": 60
+      }
+    ]
+  }
+]

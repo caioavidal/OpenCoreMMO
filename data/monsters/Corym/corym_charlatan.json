@@ -1,162 +1,164 @@
 {
-  "monster": {
-    "name": "Corym Charlatan",
-    "nameDescription": "a corym charlatan",
-    "race": "blood",
-    "experience": "150",
-    "speed": "180",
-    "health": {
-      "now": "250",
-      "max": "250"
-    },
-    "look": {
-      "type": "532",
-      "body": "97",
-      "legs": "116",
-      "corpse": "19725"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-105"
-      }
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "20"
-        },
-        {
-          "deathPercent": "20"
-        },
-        {
-          "energyPercent": "25"
-        },
-        {
-          "holyPercent": "-20"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Mehehe!"
-        },
-        {
-          "sentence": "Beware! Me hexing you!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "35",
-          "chance": "50000"
-        },
-        {
-          "id": "2696",
-          "chance": "10000"
-        },
-        {
-          "name": "bola",
-          "chance": "7692"
-        },
-        {
-          "name": "spike shield",
-          "chance": "492"
-        },
-        {
-          "name": "ratana",
-          "chance": "909"
-        },
-        {
-          "name": "life preserver",
-          "chance": "854"
-        },
-        {
-          "name": "cheese cutter",
-          "chance": "5882"
-        },
-        {
-          "name": "cheesy figurine",
-          "chance": "518"
-        },
-        {
-          "name": "earflap",
-          "chance": "7142"
-        },
-        {
-          "name": "soft cheese",
-          "chance": "12500"
-        },
-        {
-          "name": "rat cheese",
-          "chance": "14285"
-        },
-        {
-          "name": "leather harness",
-          "chance": "537"
-        }
-      ]/* cheese */
+  "name": "Corym Charlatan",
+  "nameDescription": "a corym charlatan",
+  "race": "blood",
+  "experience": 150,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 250,
+    "now": 250
+  },
+  "look": {
+    "type": 532,
+    "corpse": 19725
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-105"
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "deathPercent": 20,
+    "energyPercent": 25,
+    "holyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 35,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2696,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7692,
+      "items": [],
+      "name": "bola"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 492,
+      "items": [],
+      "name": "spike shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 909,
+      "items": [],
+      "name": "ratana"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 854,
+      "items": [],
+      "name": "life preserver"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5882,
+      "items": [],
+      "name": "cheese cutter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 518,
+      "items": [],
+      "name": "cheesy figurine"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7142,
+      "items": [],
+      "name": "earflap"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "soft cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "rat cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 537,
+      "items": [],
+      "name": "leather harness"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Mehehe!",
+        "yell": false
+      },
+      {
+        "sentence": "Beware! Me hexing you!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

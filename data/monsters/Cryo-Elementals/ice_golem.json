@@ -1,225 +1,216 @@
 {
-  "monster": {
-    "name": "Ice Golem",
-    "nameDescription": "an ice golem",
-    "race": "undead",
-    "experience": "295",
-    "speed": "195",
-    "health": {
-      "now": "385",
-      "max": "385"
-    },
-    "look": {
-      "type": "261",
-      "corpse": "7282"
-    },
-    "targetchange": {
+  "name": "Ice Golem",
+  "nameDescription": "an ice golem",
+  "race": "undead",
+  "experience": 295,
+  "speed": 195,
+  "manaCost": 0,
+  "health": {
+    "max": 385,
+    "now": 385
+  },
+  "look": {
+    "type": 261,
+    "corpse": 7282
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5"
+      "min": "0",
+      "max": "-220"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "13",
+      "length": "8",
+      "spread": "0",
+      "speedchange": "-800",
+      "duration": "20000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "energy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "ice",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "min": "-50",
+      "max": "-85",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-220"
+          "shootEffect": "smallice"
         },
         {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "13",
-          "length": "8",
-          "spread": "0",
-          "speedchange": "-800",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "energy"
-          }
-        },
-        {
-          "name": "ice",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "min": "-50",
-          "max": "-85",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "smallice"
-            },
-            {
-              "key": "areaEffect",
-              "value": "iceattack"
-            }
-          ]
-        },
-        {
-          "name": "ice golem skill reducer",
-          "interval": "2000",
-          "chance": "10"
+          "areaEffect": "iceattack"
         }
       ]
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "26"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "25"
-        },
-        {
-          "energyPercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "holy": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "drunk": "1"
-        }
-      ]
-    },
-    "voices": {
+    {
+      "name": "ice golem skill reducer",
       "interval": "2000",
-      "chance": "5",
-      "voice": [
-        {
-          "sentence": "Chrrr."
-        },
-        {
-          "sentence": "Crrrrk."
-        },
-        {
-          "sentence": "Gnarr."
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "black pearl",
-          "chance": "1612"
-        },
-        {
-          "name": "small diamond",
-          "chance": "66"
-        },
-        {
-          "name": "small sapphire",
-          "chance": "578"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "3",
-          "chance": "50000"
-        },
-        {
-          "name": "ice rapier",
-          "chance": "400"
-        },
-        {
-          "name": "strange helmet",
-          "chance": "444"
-        },
-        {
-          "name": "shard",
-          "chance": "266"
-        },
-        {
-          "id": "7441",
-          "chance": "5000"
-        },
-        {
-          "name": "crystal sword",
-          "chance": "177"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "444"
-        },
-        {
-          "name": "glacier mask",
-          "chance": "111"
-        },
-        {
-          "name": "frosty heart",
-          "chance": "11111"
-        }
-      ]/* ice cube */
+      "chance": "10"
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 26
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 25,
+    "energyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1612,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 66,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 578,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": "ice rapier"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 444,
+      "items": [],
+      "name": "strange helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 266,
+      "items": [],
+      "name": "shard"
+    },
+    {
+      "id": 7441,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 177,
+      "items": [],
+      "name": "crystal sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 444,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 111,
+      "items": [],
+      "name": "glacier mask"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11111,
+      "items": [],
+      "name": "frosty heart"
+    }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Chrrr.",
+        "yell": false
+      },
+      {
+        "sentence": "Crrrrk.",
+        "yell": false
+      },
+      {
+        "sentence": "Gnarr.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "holy": 1,
+    "death": 1,
+    "fire": 1,
+    "ice": 1,
+    "invisible": 1,
+    "paralyze": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

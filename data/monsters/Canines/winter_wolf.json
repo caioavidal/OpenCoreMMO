@@ -1,119 +1,91 @@
 {
-  "monster": {
-    "name": "Winter Wolf",
-    "nameDescription": "a winter wolf",
-    "race": "blood",
-    "experience": "20",
-    "speed": "160",
-    "manacost": "260",
-    "health": {
-      "now": "30",
-      "max": "30"
-    },
-    "look": {
-      "type": "52",
-      "corpse": "5997"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-20"
-      }
-    },
-    "defenses": {
-      "armor": "5",
-      "defense": "5"
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "10"
-        },
-        {
-          "holyPercent": "5"
-        },
-        {
-          "energyPercent": "-5"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Yoooohhuuuuu!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "meat",
-          "countmax": "2",
-          "chance": "30000"
-        },
-        {
-          "name": "winter wolf fur",
-          "chance": "10000"
-        }
-      ]
+  "name": "Winter Wolf",
+  "nameDescription": "a winter wolf",
+  "race": "blood",
+  "experience": 20,
+  "speed": 160,
+  "manaCost": 260,
+  "health": {
+    "max": 30,
+    "now": 30
+  },
+  "look": {
+    "type": 52,
+    "corpse": 5997
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-20"
     }
+  ],
+  "defense": {
+    "armor": 5,
+    "defense": 5
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 20,
+    "firePercent": 10,
+    "holyPercent": 5,
+    "energyPercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 30000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "winter wolf fur"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Yoooohhuuuuu!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

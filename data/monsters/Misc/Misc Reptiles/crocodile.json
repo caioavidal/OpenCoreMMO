@@ -1,120 +1,100 @@
 {
-  "monster": {
-    "name": "Crocodile",
-    "nameDescription": "a crocodile",
-    "race": "blood",
-    "experience": "40",
-    "speed": "190",
-    "manacost": "350",
-    "health": {
-      "now": "105",
-      "max": "105"
-    },
-    "look": {
-      "type": "119",
-      "corpse": "6046"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "10"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-40"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "20"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "energyPercent": "-5"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "physicalPercent": "-5"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "10",
-          "chance": "50000"
-        },
-        {
-          "name": "ham",
-          "chance": "40000"
-        },
-        {
-          "name": "crocodile boots",
-          "chance": "100"
-        },
-        {
-          "name": "piece of crocodile leather",
-          "chance": "20180"
-        }
-      ]
+  "name": "Crocodile",
+  "nameDescription": "a crocodile",
+  "race": "blood",
+  "experience": 40,
+  "speed": 190,
+  "manaCost": 350,
+  "health": {
+    "max": 105,
+    "now": 105
+  },
+  "look": {
+    "type": 119,
+    "corpse": 6046
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-40"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "icePercent": 10,
+    "energyPercent": -5,
+    "firePercent": -10,
+    "physicalPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "crocodile boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20180,
+      "items": [],
+      "name": "piece of crocodile leather"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

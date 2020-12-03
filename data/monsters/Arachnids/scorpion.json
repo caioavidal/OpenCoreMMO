@@ -1,92 +1,68 @@
 {
-  "monster": {
-    "name": "Scorpion",
-    "nameDescription": "a scorpion",
-    "race": "venom",
-    "experience": "45",
-    "speed": "150",
-    "manacost": "310",
-    "health": {
-      "now": "45",
-      "max": "45"
-    },
-    "look": {
-      "type": "43",
-      "corpse": "5988"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "5"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "30",
-        "attack": "25",
-        "poison": "17"
-      }
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "5"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "100"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "icePercent": "-5"
-        }
-      ]
+  "name": "Scorpion",
+  "nameDescription": "a scorpion",
+  "race": "venom",
+  "experience": 45,
+  "speed": 150,
+  "manaCost": 310,
+  "health": {
+    "max": 45,
+    "now": 45
+  },
+  "look": {
+    "type": 43,
+    "corpse": 5988
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 5
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "25",
+      "poison": "17"
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 5
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 100,
+    "energyPercent": 20,
+    "firePercent": -10,
+    "icePercent": -5
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

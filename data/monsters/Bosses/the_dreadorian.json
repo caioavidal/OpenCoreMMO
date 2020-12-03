@@ -1,110 +1,84 @@
 {
-  "monster": {
-    "name": "The Dreadorian",
-    "nameDescription": "The Dreadorian",
-    "race": "blood",
-    "experience": "4000",
-    "speed": "250",
-    "health": {
-      "now": "9000",
-      "max": "9000"
-    },
-    "look": {
-      "type": "234",
-      "corpse": "6328"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+  "name": "The Dreadorian",
+  "nameDescription": "The Dreadorian",
+  "race": "blood",
+  "experience": 4000,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 9000,
+    "now": 9000
+  },
+  "look": {
+    "type": 234,
+    "corpse": 6328
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-370"
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "50",
+      "min": "100",
+      "max": "150",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-370"
-      }
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "50",
-        "min": "100",
-        "max": "150",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "90"
-        },
-        {
-          "energyPercent": "30"
-        },
-        {
-          "deathPercent": "10"
-        },
-        {
-          "icePercent": "-10"
-        },
-        {
-          "holyPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "fire": "1"
+          "areaEffect": "blueshimmer"
         }
       ]
     }
+  ],
+  "elements": {
+    "earthPercent": 90,
+    "energyPercent": 30,
+    "deathPercent": 10,
+    "icePercent": -10,
+    "holyPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "invisible": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

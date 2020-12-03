@@ -1,201 +1,194 @@
 {
-  "monster": {
-    "name": "Stonecracker",
-    "nameDescription": "Stonecracker",
-    "race": "blood",
-    "experience": "3500",
-    "speed": "280",
-    "health": {
-      "now": "6500",
-      "max": "6500"
+  "name": "Stonecracker",
+  "nameDescription": "Stonecracker",
+  "race": "blood",
+  "experience": 3500,
+  "speed": 280,
+  "manaCost": 0,
+  "health": {
+    "max": 6500,
+    "now": 6500
+  },
+  "look": {
+    "type": 55,
+    "corpse": 5999
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-500"
     },
-    "look": {
-      "type": "55",
-      "corpse": "5999"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "-200",
+      "max": "-280",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-500"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "-200",
-          "max": "-280",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "largerock"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "40",
-      "defense": "45",
-      "defense": [
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "speedchange": "360",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "10",
-          "min": "500",
-          "max": "600",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "85"
-        },
-        {
-          "holyPercent": "35"
-        },
-        {
-          "firePercent": "40"
-        },
-        {
-          "energyPercent": "15"
-        },
-        {
-          "physicalPercent": "15"
-        },
-        {
-          "icePercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "HUAHAHA!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "76225"
-        },
-        {
-          "name": "small amethyst",
-          "countmax": "2",
-          "chance": "7650"
-        },
-        {
-          "name": "double axe",
-          "chance": "7650"
-        },
-        {
-          "name": "crowbar",
-          "chance": "14800"
-        },
-        {
-          "name": "plate armor",
-          "chance": "7650"
-        },
-        {
-          "name": "dark armor",
-          "chance": "7650"
-        },
-        {
-          "name": "pick",
-          "chance": "14800"
-        },
-        {
-          "name": "meat",
-          "chance": "36200"
-        },
-        {
-          "name": "perfect behemoth fang",
-          "chance": "64800"
-        },
-        {
-          "name": "behemoth claw",
-          "chance": "50500"
-        },
-        {
-          "name": "assassin star",
-          "countmax": "2",
-          "chance": "11225"
+          "shootEffect": "largerock"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "speedchange": "360",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "500",
+      "max": "600",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 85,
+    "holyPercent": 35,
+    "firePercent": 40,
+    "energyPercent": 15,
+    "physicalPercent": 15,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 76225,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 7650,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7650,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14800,
+      "items": [],
+      "name": "crowbar"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7650,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7650,
+      "items": [],
+      "name": "dark armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14800,
+      "items": [],
+      "name": "pick"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 36200,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 64800,
+      "items": [],
+      "name": "perfect behemoth fang"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50500,
+      "items": [],
+      "name": "behemoth claw"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 11225,
+      "items": [],
+      "name": "assassin star"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "HUAHAHA!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

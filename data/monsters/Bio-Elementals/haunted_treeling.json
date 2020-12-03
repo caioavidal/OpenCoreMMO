@@ -1,239 +1,235 @@
 {
-  "monster": {
-    "name": "Haunted Treeling",
-    "nameDescription": "a haunted treeling",
-    "experience": "310",
-    "speed": "220",
-    "race": "undead",
-    "health": {
-      "now": "450",
-      "max": "450"
+  "name": "Haunted Treeling",
+  "nameDescription": "a haunted treeling",
+  "race": "undead",
+  "experience": 310,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 310,
+    "corpse": 9867
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 85,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-150"
     },
-    "look": {
-      "type": "310",
-      "corpse": "9867"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "5",
+      "min": "-30",
+      "max": "-100",
+      "radius": "4",
+      "target": "0",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "length": "5",
+      "spread": "0",
+      "duration": "15000",
+      "speedchange": "-700",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-150"
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "5",
-          "min": "-30",
-          "max": "-100",
-          "radius": "4",
-          "target": "0",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenbubble"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "length": "5",
-          "spread": "0",
-          "duration": "15000",
-          "speedchange": "-700",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallplants"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "radius": "1",
-          "min": "0",
-          "max": "-100",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "smallearth"
-            },
-            {
-              "key": "areaEffect",
-              "value": "carniphila"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "min": "-55",
-          "max": "-100",
-          "radius": "4",
-          "target": "1",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenspark"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "radius": "1",
-          "target": "0",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
+          "areaEffect": "smallplants"
         }
       ]
     },
-    "defenses": {
-      "armor": "20",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "radius": "1",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
         {
-          "firePercent": "-5"
+          "shootEffect": "smallearth"
         },
         {
-          "deathPercent": "1"
-        },
-        {
-          "icePercent": "15"
-        },
-        {
-          "holyPercent": "20"
+          "areaEffect": "carniphila"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "earth",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "min": "-55",
+      "max": "-100",
+      "radius": "4",
+      "target": "1",
+      "attributes": [
         {
-          "sentence": "Knarrrz"
-        },
-        {
-          "sentence": "Huuhuuhuuuhuuaarrr"
-        },
-        {
-          "sentence": "Knorrrrrr"
+          "areaEffect": "greenspark"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "target": "0",
+      "attributes": [
         {
-          "name": "small sapphire",
-          "chance": "585"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "95",
-          "chance": "60000"
-        },
-        {
-          "name": "dwarven ring",
-          "chance": "621"
-        },
-        {
-          "name": "white mushroom",
-          "countmax": "2",
-          "chance": "5263"
-        },
-        {
-          "name": "red mushroom",
-          "chance": "7142"
-        },
-        {
-          "name": "orange mushroom",
-          "chance": "1851"
-        },
-        {
-          "id": "4860",
-          "chance": "25000"
-        },
-        {
-          "name": "bullseye potion",
-          "chance": "80"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "900"
-        },
-        {
-          "name": "health potion",
-          "chance": "5000"
-        },
-        {
-          "name": "haunted piece of wood",
-          "chance": "5000"
+          "areaEffect": "poison"
         }
-      ]/* wooden trash */
+      ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": -5,
+    "deathPercent": 1,
+    "icePercent": 15,
+    "holyPercent": 20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 585,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 95,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 621,
+      "items": [],
+      "name": "dwarven ring"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5263,
+      "items": [],
+      "name": "white mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7142,
+      "items": [],
+      "name": "red mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1851,
+      "items": [],
+      "name": "orange mushroom"
+    },
+    {
+      "id": 4860,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "bullseye potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 900,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "haunted piece of wood"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Knarrrz",
+        "yell": false
+      },
+      {
+        "sentence": "Huuhuuhuuuhuuaarrr",
+        "yell": false
+      },
+      {
+        "sentence": "Knorrrrrr",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

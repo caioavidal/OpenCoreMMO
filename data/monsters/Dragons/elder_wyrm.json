@@ -1,265 +1,291 @@
 {
-  "monster": {
-    "name": "Elder Wyrm",
-    "nameDescription": "an elder wyrm",
-    "race": "blood",
-    "experience": "2500",
-    "speed": "260",
-    "health": {
-      "now": "2700",
-      "max": "2700"
+  "name": "Elder Wyrm",
+  "nameDescription": "an elder wyrm",
+  "race": "blood",
+  "experience": 2500,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 2700,
+    "now": 2700
+  },
+  "look": {
+    "type": 561,
+    "corpse": 21283
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 80,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 250
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-360"
     },
-    "look": {
-      "type": "561",
-      "corpse": "21283"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "15"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "1",
+      "min": "-90",
+      "max": "-150",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "250"
+          "areaEffect": "teleport"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "5",
+      "target": "0",
+      "min": "-140",
+      "max": "-250",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-360"
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "4",
-          "target": "1",
-          "min": "-90",
-          "max": "-150",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "teleport"
-          }
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "20",
-          "radius": "5",
-          "target": "0",
-          "min": "-140",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "purpleenergy"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "0",
-          "min": "0",
-          "max": "-180",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowspark"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "10",
-          "length": "5",
-          "spread": "2",
-          "target": "1",
-          "min": "-200",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blacksmoke"
-          }
+          "areaEffect": "purpleenergy"
         }
       ]
     },
-    "defenses": {
-      "armor": "45",
-      "defense": "45",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "100",
-        "max": "150",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "80"
-        },
-        {
-          "firePercent": "25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "energy": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "lifedrain": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "physical",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "length": "8",
+      "spread": "0",
+      "min": "0",
+      "max": "-180",
+      "attributes": [
         {
-          "sentence": "GRRR!"
-        },
-        {
-          "sentence": "GROOOOAAAAAAAAR!"
+          "areaEffect": "yellowspark"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "length": "5",
+      "spread": "2",
+      "target": "1",
+      "min": "-200",
+      "max": "-300",
+      "attributes": [
         {
-          "name": "small diamond",
-          "countmax": "5",
-          "chance": "4000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "174",
-          "chance": "100000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "3",
-          "chance": "25150"
-        },
-        {
-          "name": "crossbow",
-          "chance": "9690"
-        },
-        {
-          "name": "dragon ham",
-          "countmax": "2",
-          "chance": "32420"
-        },
-        {
-          "name": "soul orb",
-          "chance": "5980"
-        },
-        {
-          "name": "dragonbone staff",
-          "chance": "100"
-        },
-        {
-          "name": "shadow sceptre",
-          "chance": "310"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "17710"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "20930"
-        },
-        {
-          "name": "lightning pendant",
-          "chance": "520"
-        },
-        {
-          "name": "lightning boots",
-          "chance": "310"
-        },
-        {
-          "name": "lightning legs",
-          "chance": "930"
-        },
-        {
-          "name": "lightning robe",
-          "chance": "310"
-        },
-        {
-          "name": "composite hornbow",
-          "chance": "310"
-        },
-        {
-          "name": "focus cape",
-          "chance": "100"
-        },
-        {
-          "name": "wand of starstorm",
-          "chance": "410"
-        },
-        {
-          "name": "wand of draconia",
-          "chance": "2000"
-        },
-        {
-          "name": "shockwave amulet",
-          "chance": "100"
-        },
-        {
-          "name": "wyrm scale",
-          "chance": "15980"
+          "areaEffect": "blacksmoke"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "100",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 80,
+    "firePercent": 25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 4000,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 174,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 25150,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9690,
+      "items": [],
+      "name": "crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 32420,
+      "items": [],
+      "name": "dragon ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5980,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "dragonbone staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "shadow sceptre"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17710,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20930,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "lightning pendant"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "lightning boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "lightning legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "lightning robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "composite hornbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "focus cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 410,
+      "items": [],
+      "name": "wand of starstorm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "wand of draconia"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "shockwave amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15980,
+      "items": [],
+      "name": "wyrm scale"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "GRRR!",
+        "yell": false
+      },
+      {
+        "sentence": "GROOOOAAAAAAAAR!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "paralyze": 1,
+    "invisible": 1,
+    "lifedrain": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

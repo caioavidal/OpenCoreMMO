@@ -1,127 +1,126 @@
 {
-  "monster": {
-    "name": "Pirate Skeleton",
-    "nameDescription": "a pirate skeleton",
-    "race": "undead",
-    "experience": "85",
-    "speed": "180",
-    "health": {
-      "now": "190",
-      "max": "190"
-    },
-    "look": {
-      "type": "195",
-      "corpse": "6070"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "20"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-50"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": {
-        "holyPercent": "-25"
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "death": "1"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "25",
-          "chance": "48000"
-        },
-        {
-          "id": "2229",
-          "chance": "4460"
-        },
-        {
-          "id": "2230",
-          "chance": "4250"
-        },
-        {
-          "id": "2231",
-          "chance": "5140"
-        },
-        {
-          "id": "2376",
-          "chance": "550"
-        },
-        {
-          "name": "short sword",
-          "chance": "1003"
-        },
-        {
-          "name": "bone club",
-          "chance": "960"
-        },
-        {
-          "name": "spooky blue eye",
-          "chance": "4730"
-        }
-      ],
-      "#comment": []
+  "name": "Pirate Skeleton",
+  "nameDescription": "a pirate skeleton",
+  "race": "undead",
+  "experience": 85,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 190,
+    "now": 190
+  },
+  "look": {
+    "type": 195,
+    "corpse": 6070
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-50"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 25,
+      "chance": 48000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2229,
+      "countmax": 1,
+      "chance": 4460,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 4250,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2231,
+      "countmax": 1,
+      "chance": 5140,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2376,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1003,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "bone club"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4730,
+      "items": [],
+      "name": "spooky blue eye"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "death": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

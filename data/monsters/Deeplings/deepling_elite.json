@@ -1,187 +1,208 @@
 {
-  "monster": {
-    "name": "Deepling Elite",
-    "nameDescription": "a deepling elite",
-    "race": "blood",
-    "experience": "3000",
-    "speed": "210",
-    "health": {
-      "now": "3200",
-      "max": "3200"
+  "name": "Deepling Elite",
+  "nameDescription": "a deepling elite",
+  "race": "blood",
+  "experience": 3000,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 3200,
+    "now": 3200
+  },
+  "look": {
+    "type": 441,
+    "corpse": 15176
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-400"
     },
-    "look": {
-      "type": "441",
-      "corpse": "15176"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "0",
+      "max": "-225",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-400"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "target": "1",
-          "min": "0",
-          "max": "-225",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "largerock"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "150",
-        "max": "200",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "100000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "86",
-          "chance": "100000"
-        },
-        {
-          "name": "small emerald",
-          "countmax": "2",
-          "chance": "6290"
-        },
-        {
-          "name": "life ring",
-          "chance": "5360"
-        },
-        {
-          "name": "fish fin",
-          "chance": "2000"
-        },
-        {
-          "name": "great mana potion",
-          "chance": "24000"
-        },
-        {
-          "name": "great health potion",
-          "chance": "25000"
-        },
-        {
-          "name": "heavy trident",
-          "chance": "3380"
-        },
-        {
-          "name": "eye of a deepling",
-          "chance": "25000"
-        },
-        {
-          "name": "deepling warts",
-          "chance": "25000"
-        },
-        {
-          "name": "deeptags",
-          "chance": "21700"
-        },
-        {
-          "name": "warrior's axe",
-          "chance": "640"
-        },
-        {
-          "name": "deepling ridge",
-          "chance": "19000"
-        },
-        {
-          "name": "warrior's shield",
-          "chance": "1234"
-        },
-        {
-          "name": "deepling filet",
-          "chance": "25000"
-        },
-        {
-          "name": "vortex bolt",
-          "countmax": "5",
-          "chance": "24000"
+          "shootEffect": "largerock"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "150",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 86,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 6290,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5360,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 24000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3380,
+      "items": [],
+      "name": "heavy trident"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "eye of a deepling"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "deepling warts"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 21700,
+      "items": [],
+      "name": "deeptags"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 640,
+      "items": [],
+      "name": "warrior's axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 19000,
+      "items": [],
+      "name": "deepling ridge"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1234,
+      "items": [],
+      "name": "warrior's shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "deepling filet"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 24000,
+      "items": [],
+      "name": "vortex bolt"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

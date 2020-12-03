@@ -1,231 +1,242 @@
 {
-  "monster": {
-    "name": "Drillworm",
-    "nameDescription": "a drillworm",
-    "race": "venom",
-    "experience": "1100",
-    "speed": "240",
-    "health": {
-      "now": "1500",
-      "max": "1500"
+  "name": "Drillworm",
+  "nameDescription": "a drillworm",
+  "race": "venom",
+  "experience": 1100,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 527,
+    "corpse": 19705
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300",
+      "poison": "100"
     },
-    "look": {
-      "type": "527",
-      "corpse": "19705"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "20"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "0",
+      "target": "0",
+      "speedchange": "-600",
+      "duration": "15000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-300",
-          "poison": "100"
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "length": "8",
-          "spread": "0",
-          "target": "0",
-          "speedchange": "-600",
-          "duration": "15000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "0",
-          "min": "-150",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenspark"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "3",
-          "target": "1",
-          "min": "-100",
-          "max": "-150",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "35"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "15"
-        },
-        {
-          "icePercent": "16"
-        },
-        {
-          "holyPercent": "25"
-        },
-        {
-          "deathPercent": "15"
-        },
-        {
-          "firePercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "earth",
+      "interval": "2000",
       "chance": "10",
-      "voice": {
-        "sentence": "Knarrrk!"
-      }
-    },
-    "loot": {
-      "item": [
+      "length": "8",
+      "spread": "0",
+      "min": "-150",
+      "max": "-300",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "50",
-          "chance": "50000"
-        },
-        {
-          "name": "guardian shield",
-          "chance": "2240"
-        },
-        {
-          "name": "pick",
-          "chance": "5280"
-        },
-        {
-          "name": "worm",
-          "countmax": "5",
-          "chance": "4580"
-        },
-        {
-          "name": "iron ore",
-          "chance": "1750"
-        },
-        {
-          "name": "spiked squelcher",
-          "chance": "540"
-        },
-        {
-          "name": "terra amulet",
-          "chance": "2360"
-        },
-        {
-          "name": "lump of earth",
-          "chance": "15000"
-        },
-        {
-          "name": "clay lump",
-          "chance": "700"
-        },
-        {
-          "id": "13757",
-          "chance": "12130"
-        },
-        {
-          "name": "green crystal splinter",
-          "chance": "9780"
-        },
-        {
-          "name": "brown crystal splinter",
-          "chance": "9260"
-        },
-        {
-          "name": "blue crystal splinter",
-          "chance": "9610"
-        },
-        {
-          "name": "pulverized ore",
-          "chance": "5400"
-        },
-        {
-          "name": "vein of ore",
-          "chance": "7280"
-        },
-        {
-          "name": "drill bolt",
-          "countmax": "2",
-          "chance": "4870"
+          "areaEffect": "greenspark"
         }
-      ]/* Coal */
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "target": "1",
+      "min": "-100",
+      "max": "-150",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 15,
+    "icePercent": 16,
+    "holyPercent": 25,
+    "deathPercent": 15,
+    "firePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2240,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5280,
+      "items": [],
+      "name": "pick"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 4580,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1750,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 540,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2360,
+      "items": [],
+      "name": "terra amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": "lump of earth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": "clay lump"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 12130,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9780,
+      "items": [],
+      "name": "green crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9260,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9610,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5400,
+      "items": [],
+      "name": "pulverized ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7280,
+      "items": [],
+      "name": "vein of ore"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 4870,
+      "items": [],
+      "name": "drill bolt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Knarrrk!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

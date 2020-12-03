@@ -1,59 +1,55 @@
 {
-  "monster": {
-    "name": "Bog Frog",
-    "namedescription": "a bog frog",
-    "race": "blood",
-    "experience": "0",
-    "speed": "200",
-    "manacost": "305",
-    "health": {
-      "now": "25",
-      "max": "25"
-    },
-    "look": {
-      "type": "412",
-      "corpse": "6079"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "25"
-        }
-      ]
-    }
+  "name": "Bog Frog",
+  "nameDescription": null,
+  "race": "blood",
+  "experience": 0,
+  "speed": 200,
+  "manaCost": 305,
+  "health": {
+    "max": 25,
+    "now": 25
+  },
+  "look": {
+    "type": 412,
+    "corpse": 6079
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 25
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

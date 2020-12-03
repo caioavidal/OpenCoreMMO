@@ -1,122 +1,97 @@
 {
-  "monster": {
-    "name": "Polar Bear",
-    "nameDescription": "a polar bear",
-    "race": "blood",
-    "experience": "28",
-    "speed": "135",
-    "manacost": "315",
-    "health": {
-      "now": "85",
-      "max": "85"
-    },
-    "look": {
-      "type": "42",
-      "corpse": "5987"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "5"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-30"
-      }
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "1"
-        },
-        {
-          "deathPercent": "-10"
-        },
-        {
-          "energyPercent": "-1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "GROARRR!",
-        "yell": "1"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "meat",
-          "countmax": "4",
-          "chance": "5000"
-        },
-        {
-          "name": "ham",
-          "countmax": "2",
-          "chance": "50000"
-        },
-        {
-          "name": "polar bear paw",
-          "chance": "920"
-        }
-      ]
+  "name": "Polar Bear",
+  "nameDescription": "a polar bear",
+  "race": "blood",
+  "experience": 28,
+  "speed": 135,
+  "manaCost": 315,
+  "health": {
+    "max": 85,
+    "now": 85
+  },
+  "look": {
+    "type": 42,
+    "corpse": 5987
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 5,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-30"
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 20,
+    "firePercent": 1,
+    "deathPercent": -10,
+    "energyPercent": -1
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 5000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 50000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "polar bear paw"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "GROARRR!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,146 +1,127 @@
 {
-  "monster": {
-    "name": "Acid Blob",
-    "nameDescription": "an acid blob",
-    "race": "venom",
-    "experience": "250",
-    "speed": "180",
-    "health": {
-      "now": "250",
-      "max": "250"
+  "name": "Acid Blob",
+  "nameDescription": "an acid blob",
+  "race": "venom",
+  "experience": 250,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 250,
+    "now": 250
+  },
+  "look": {
+    "type": 314,
+    "corpse": 9962
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-80"
     },
-    "look": {
-      "type": "314",
-      "corpse": "9962"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "target": "0",
+      "chance": "30",
+      "radius": "4",
+      "min": "-10",
+      "max": "-20",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "greenspark"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "length": "5",
+      "spread": "0",
+      "min": "-40",
+      "max": "-60",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-80"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "target": "0",
-          "chance": "30",
-          "radius": "4",
-          "min": "-10",
-          "max": "-20",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenspark"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "length": "5",
-          "spread": "0",
-          "min": "-40",
-          "max": "-60",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenbubble"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "earth": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "3",
-      "summon": {
-        "name": "Acid Blob",
-        "interval": "2000",
-        "chance": "10"
-      }
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "earth",
+      "interval": "2000",
       "chance": "10",
-      "voice": {
-        "sentence": "Kzzchhh!"
-      }
-    },
-    "loot": {
-      "item": {
-        "name": "glob of acid slime",
-        "chance": "14285"
-      }
+      "range": "7",
+      "target": "1",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "glob of acid slime"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Kzzchhh!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Acid Blob",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

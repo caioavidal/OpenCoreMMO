@@ -1,306 +1,330 @@
 {
-  "monster": {
-    "name": "Humongous Fungus",
-    "nameDescription": "a humongous fungus",
-    "race": "blood",
-    "experience": "2600",
-    "speed": "270",
-    "health": {
-      "now": "3400",
-      "max": "3400"
+  "name": "Humongous Fungus",
+  "nameDescription": "a humongous fungus",
+  "race": "blood",
+  "experience": 2600,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 3400,
+    "now": 3400
+  },
+  "look": {
+    "type": 488,
+    "corpse": 18382
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-330"
     },
-    "look": {
-      "type": "488",
-      "corpse": "18382"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "15"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-180",
+      "max": "-350",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "smallearth"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "smallplants"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-330"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "min": "-180",
-          "max": "-350",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "smallearth"
-            },
-            {
-              "key": "areaEffect",
-              "value": "smallplants"
-            }
-          ]
-        },
-        {
-          "name": "poisonfield",
-          "interval": "2000",
-          "chance": "20",
-          "radius": "4",
-          "target": "0"
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "0",
-          "min": "-500",
-          "max": "-1000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenbubble"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "10",
-          "target": "0",
-          "length": "5",
-          "spread": "0",
-          "min": "-130",
-          "max": "-260",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "10",
-          "target": "0",
-          "radius": "3",
-          "range": "7",
-          "min": "-400",
-          "max": "-640",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenspark"
-          }
-        }
-      ]
+    {
+      "name": "poisonfield",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "4",
+      "target": "0"
     },
-    "defenses": {
-      "armor": "45",
-      "defense": "45",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "10",
-          "min": "225",
-          "max": "380",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "15",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "15"
-        },
-        {
-          "icePercent": "15"
-        },
-        {
-          "firePercent": "5"
-        },
-        {
-          "holyPercent": "5"
-        },
-        {
-          "deathPercent": "15"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
       "chance": "10",
-      "voice": {
-        "sentence": "Munch munch munch!"
-      }
+      "length": "8",
+      "spread": "0",
+      "min": "-500",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "0",
+      "min": "-130",
+      "max": "-260",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "60000"
-        },
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "3",
+      "range": "7",
+      "min": "-400",
+      "max": "-640",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "60000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "6",
-          "chance": "100000"
-        },
-        {
-          "name": "white piece of cloth",
-          "chance": "10000"
-        },
-        {
-          "name": "red piece of cloth",
-          "chance": "2941"
-        },
-        {
-          "name": "blue piece of cloth",
-          "chance": "4545"
-        },
-        {
-          "name": "brown piece of cloth",
-          "chance": "15285"
-        },
-        {
-          "name": "angelic axe",
-          "chance": "1265"
-        },
-        {
-          "name": "strong health potion",
-          "countmax": "2",
-          "chance": "5000"
-        },
-        {
-          "name": "strong mana potion",
-          "countmax": "2",
-          "chance": "5000"
-        },
-        {
-          "name": "great mana potion",
-          "countmax": "2",
-          "chance": "5000"
-        },
-        {
-          "name": "great health potion",
-          "countmax": "2",
-          "chance": "5000"
-        },
-        {
-          "name": "mana potion",
-          "countmax": "3",
-          "chance": "5000"
-        },
-        {
-          "name": "terra mantle",
-          "chance": "869"
-        },
-        {
-          "name": "terra legs",
-          "chance": "1123"
-        },
-        {
-          "name": "terra boots",
-          "chance": "1851"
-        },
-        {
-          "name": "terra amulet",
-          "chance": "2127"
-        },
-        {
-          "name": "mushroom backpack",
-          "chance": "20"
-        },
-        {
-          "name": "mushroom pie",
-          "countmax": "3",
-          "chance": "16666"
-        },
-        {
-          "name": "muck rod",
-          "chance": "680"
-        },
-        {
-          "name": "humongous chunk",
-          "chance": "10000"
-        },
-        {
-          "name": "drill bolt",
-          "countmax": "15",
-          "chance": "14285"
-        },
-        {
-          "name": "mycological bow",
-          "chance": "150"
+          "areaEffect": "greenspark"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "225",
+      "max": "380",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 15,
+    "icePercent": 15,
+    "firePercent": 5,
+    "holyPercent": 5,
+    "deathPercent": 15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 6,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "white piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2941,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4545,
+      "items": [],
+      "name": "blue piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15285,
+      "items": [],
+      "name": "brown piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1265,
+      "items": [],
+      "name": "angelic axe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5000,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 869,
+      "items": [],
+      "name": "terra mantle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1123,
+      "items": [],
+      "name": "terra legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1851,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2127,
+      "items": [],
+      "name": "terra amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20,
+      "items": [],
+      "name": "mushroom backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 16666,
+      "items": [],
+      "name": "mushroom pie"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 680,
+      "items": [],
+      "name": "muck rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "humongous chunk"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 14285,
+      "items": [],
+      "name": "drill bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "mycological bow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Munch munch munch!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

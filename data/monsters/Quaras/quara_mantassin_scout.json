@@ -1,147 +1,137 @@
 {
-  "monster": {
-    "name": "Quara Mantassin Scout",
-    "nameDescription": "a quara mantassin scout",
-    "race": "blood",
-    "experience": "100",
-    "speed": "220",
-    "manacost": "480",
-    "health": {
-      "now": "220",
-      "max": "220"
-    },
-    "look": {
-      "type": "72",
-      "corpse": "6064"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-110"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": {
-        "energyPercent": "-10"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "ice": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "lifedrain": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Zuerk Pachak!"
-        },
-        {
-          "sentence": "Shrrrr"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small sapphire",
-          "chance": "920"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "30",
-          "chance": "94000"
-        },
-        {
-          "name": "stealth ring",
-          "chance": "520"
-        },
-        {
-          "id": "2229",
-          "chance": "920"
-        },
-        {
-          "name": "two handed sword",
-          "chance": "580"
-        },
-        {
-          "name": "chain armor",
-          "chance": "4761"
-        },
-        {
-          "name": "fish fin",
-          "chance": "520"
-        },
-        {
-          "name": "mantassin tail",
-          "chance": "7780"
-        }
-      ]/* skull */
+  "name": "Quara Mantassin Scout",
+  "nameDescription": "a quara mantassin scout",
+  "race": "blood",
+  "experience": 100,
+  "speed": 220,
+  "manaCost": 480,
+  "health": {
+    "max": 220,
+    "now": 220
+  },
+  "look": {
+    "type": 72,
+    "corpse": 6064
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 94000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 2229,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 580,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4761,
+      "items": [],
+      "name": "chain armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7780,
+      "items": [],
+      "name": "mantassin tail"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Zuerk Pachak!",
+        "yell": false
+      },
+      {
+        "sentence": "Shrrrr",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "fire": 1,
+    "invisible": 1,
+    "lifedrain": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

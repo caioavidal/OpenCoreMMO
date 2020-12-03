@@ -1,261 +1,246 @@
 {
-  "monster": {
-    "name": "Earth Elemental",
-    "nameDescription": "an earth elemental",
-    "race": "undead",
-    "experience": "450",
-    "speed": "220",
-    "health": {
-      "now": "650",
-      "max": "650"
+  "name": "Earth Elemental",
+  "nameDescription": "an earth elemental",
+  "race": "undead",
+  "experience": 450,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 650,
+    "now": 650
+  },
+  "look": {
+    "type": 301,
+    "corpse": 8933
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 80,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 80,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
     },
-    "look": {
-      "type": "301",
-      "corpse": "8933"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "min": "-72",
+      "max": "-105",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "smallearth"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "80"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "2",
+      "target": "1",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-110"
+          "shootEffect": "largerock"
         },
         {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "target": "1",
-          "min": "-72",
-          "max": "-105",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "smallearth"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenbubble"
-            }
-          ]
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "2",
-          "target": "1",
-          "min": "0",
-          "max": "-100",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "largerock"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poff"
-            }
-          ]
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "20",
-          "length": "6",
-          "spread": "0",
-          "min": "-200",
-          "max": "-260",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bigplants"
-          }
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "10",
-          "target": "0",
-          "radius": "5",
-          "min": "-100",
-          "max": "-140",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "range": "5",
-          "target": "1",
-          "speedchange": "-330",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallplants"
-          }
+          "areaEffect": "poff"
         }
       ]
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "25",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "5",
-        "min": "60",
-        "max": "80",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "20",
+      "length": "6",
+      "spread": "0",
+      "min": "-200",
+      "max": "-260",
+      "attributes": [
         {
-          "deathPercent": "50"
-        },
-        {
-          "icePercent": "85"
-        },
-        {
-          "physicalPercent": "50"
-        },
-        {
-          "holyPercent": "50"
-        },
-        {
-          "firePercent": "-25"
+          "areaEffect": "bigplants"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "5",
+      "min": "-100",
+      "max": "-140",
+      "attributes": [
         {
-          "paralyze": "1"
+          "shootEffect": "poison"
         },
         {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "energy": "1"
+          "areaEffect": "poison"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "range": "5",
+      "target": "1",
+      "speedchange": "-330",
+      "duration": "5000",
+      "attributes": [
         {
-          "name": "small stone",
-          "countmax": "10",
-          "chance": "10000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "43000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "30",
-          "chance": "50000"
-        },
-        {
-          "name": "blank rune",
-          "chance": "10000"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "1910"
-        },
-        {
-          "name": "earth arrow",
-          "countmax": "30",
-          "chance": "20160"
-        },
-        {
-          "id": "9808",
-          "chance": "350"
-        },
-        {
-          "name": "small topaz",
-          "chance": "620"
-        },
-        {
-          "name": "lump of earth",
-          "chance": "20460"
-        },
-        {
-          "name": "clay lump",
-          "chance": "570"
-        },
-        {
-          "id": "13757",
-          "chance": "470"
+          "areaEffect": "smallplants"
         }
-      ],
-      "#comment": []
+      ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "60",
+      "max": "80",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 50,
+    "icePercent": 85,
+    "physicalPercent": 50,
+    "holyPercent": 50,
+    "firePercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 10000,
+      "items": [],
+      "name": "small stone"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 43000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "blank rune"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1910,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 20160,
+      "items": [],
+      "name": "earth arrow"
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 350,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 620,
+      "items": [],
+      "name": "small topaz"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20460,
+      "items": [],
+      "name": "lump of earth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 570,
+      "items": [],
+      "name": "clay lump"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 470,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "earth": 1,
+    "energy": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

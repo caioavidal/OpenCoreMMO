@@ -1,166 +1,135 @@
 {
-  "monster": {
-    "name": "Spite of the Emperor",
-    "nameDescription": "Spite of the Emperor",
-    "race": "undead",
-    "experience": "5600",
-    "speed": "410",
-    "health": {
-      "now": "8000",
-      "max": "8000"
+  "name": "Spite of the Emperor",
+  "nameDescription": "Spite of the Emperor",
+  "race": "undead",
+  "experience": 5600,
+  "speed": 410,
+  "manaCost": 0,
+  "health": {
+    "max": 8000,
+    "now": 8000
+  },
+  "look": {
+    "type": 351,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 366
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-374"
     },
-    "look": {
-      "type": "351",
-      "corpse": "0"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "17",
+      "length": "8",
+      "spread": "3",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "366"
+          "areaEffect": "bluebubble"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "10",
+      "range": "7",
+      "min": "0",
+      "max": "-500",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-374"
+          "shootEffect": "suddendeath"
         },
         {
-          "name": "physical",
-          "interval": "3000",
-          "chance": "17",
-          "length": "8",
-          "spread": "3",
-          "min": "-150",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bluebubble"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "3000",
-          "chance": "10",
-          "range": "7",
-          "min": "0",
-          "max": "-500",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "10",
-          "range": "7",
-          "speedchange": "-600",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "21",
-          "radius": "6",
-          "target": "0",
-          "min": "-200",
-          "max": "-450",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poff"
-          }
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "defenses": {
-      "armor": "45",
-      "defense": "35"
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "10",
+      "range": "7",
+      "speedchange": "-600",
+      "duration": "20000",
+      "attributes": [
         {
-          "icePercent": "50"
-        },
-        {
-          "firePercent": "10"
-        },
-        {
-          "physicalPercent": "-10"
-        },
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "holyPercent": "-15"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "21",
+      "radius": "6",
+      "target": "0",
+      "min": "-200",
+      "max": "-450",
+      "attributes": [
         {
-          "death": "1"
-        },
-        {
-          "earth": "1"
+          "areaEffect": "poff"
         }
       ]
-    },
-    "summons": {
-      "maxSummons": "2",
-      "summon": {
-        "name": "Draken Warmaster",
-        "interval": "2000",
-        "chance": "10",
-        "max": "2"
-      }
     }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 50,
+    "firePercent": 10,
+    "physicalPercent": -10,
+    "energyPercent": -10,
+    "holyPercent": -15
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Draken Warmaster",
+        "interval": 2000,
+        "chance": 10,
+        "max": 2
+      }
+    ]
   }
 }

@@ -1,112 +1,113 @@
 {
-  "monster": {
-    "name": "Ron the Ripper",
-    "nameDescription": "Ron the Ripper",
-    "race": "blood",
-    "experience": "500",
-    "speed": "240",
-    "health": {
-      "now": "1500",
-      "max": "1500"
-    },
-    "look": {
-      "type": "151",
-      "head": "95",
-      "body": "94",
-      "legs": "117",
-      "feet": "97",
-      "addons": "1",
-      "corpse": "20502"
-    },
-    "targetchange": {
-      "interval": "60000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "250"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-250"
-      }
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "50"
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "50",
-          "chance": "100000"
-        },
-        {
-          "name": "skull of Ratha",
-          "countmax": "2",
-          "chance": "100000"
-        },
-        {
-          "name": "dagger",
-          "chance": "8500"
-        },
-        {
-          "name": "double axe",
-          "chance": "1500"
-        },
-        {
-          "name": "plate armor",
-          "chance": "4000"
-        },
-        {
-          "name": "knight armor",
-          "chance": "1200"
-        },
-        {
-          "name": "Ron the Ripper's sabre",
-          "chance": "100000"
-        }
-      ]
+  "name": "Ron the Ripper",
+  "nameDescription": "Ron the Ripper",
+  "race": "blood",
+  "experience": 500,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 151,
+    "corpse": 20502
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 250
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250"
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 50
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 100000,
+      "items": [],
+      "name": "skull of Ratha"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8500,
+      "items": [],
+      "name": "dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "Ron the Ripper's sabre"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

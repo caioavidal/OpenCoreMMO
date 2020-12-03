@@ -1,206 +1,197 @@
 {
-  "monster": {
-    "name": "Diblis The Fair",
-    "nameDescription": "Diblis The Fair",
-    "race": "undead",
-    "experience": "1800",
-    "speed": "280",
-    "health": {
-      "now": "1500",
-      "max": "1500"
+  "name": "Diblis The Fair",
+  "nameDescription": "Diblis The Fair",
+  "race": "undead",
+  "experience": 1800,
+  "speed": 280,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 287,
+    "corpse": 8937
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-380"
     },
-    "look": {
-      "type": "287",
-      "corpse": "8937"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "death",
+      "interval": "1000",
+      "chance": "12",
+      "target": "1",
+      "min": "0",
+      "max": "-155",
+      "attributes": [
         {
-          "summonable": "0"
+          "areaEffect": "mortarea"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-380"
-        },
-        {
-          "name": "death",
-          "interval": "1000",
-          "chance": "12",
-          "target": "1",
-          "min": "0",
-          "max": "-155",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            },
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "12",
-          "min": "100",
-          "max": "235",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "3000",
-          "chance": "25",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "holyPercent": "-15"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "4",
-      "summon": {
-        "name": "Banshee",
-        "interval": "4500",
-        "chance": "50"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "I envy you to be slain by someone as beautiful as me."
-        },
-        {
-          "sentence": "I will drain your ugly corpses of the last drop of blood."
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "black pearl",
-          "chance": "8900",
-          "countmax": "2"
-        },
-        {
-          "name": "gold coin",
-          "chance": "100000",
-          "countmax": "99"
-        },
-        {
-          "name": "platinum coin",
-          "chance": "50000",
-          "countmax": "5"
-        },
-        {
-          "name": "ring of healing (faster regeneration)",
-          "chance": "14111"
-        },
-        {
-          "id": "2229",
-          "chance": "15000"
-        },
-        {
-          "name": "vampire shield",
-          "chance": "2100"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "1500"
-        },
-        {
-          "name": "spellbook of lost souls",
-          "chance": "300"
-        },
-        {
-          "name": "vampire lord token",
-          "chance": "100000"
-        },
-        {
-          "name": "scum bag",
-          "chance": "500"
+          "shootEffect": "suddendeath"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "12",
+      "min": "100",
+      "max": "235",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "3000",
+      "chance": "25",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -10,
+    "holyPercent": -15,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 8900,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 99,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 50000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14111,
+      "items": [],
+      "name": "ring of healing (faster regeneration)"
+    },
+    {
+      "id": 2229,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2100,
+      "items": [],
+      "name": "vampire shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": "spellbook of lost souls"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "vampire lord token"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "scum bag"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I envy you to be slain by someone as beautiful as me.",
+        "yell": false
+      },
+      {
+        "sentence": "I will drain your ugly corpses of the last drop of blood.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "death": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Banshee",
+        "interval": 4500,
+        "chance": 50,
+        "max": 0
+      }
+    ]
   }
 }

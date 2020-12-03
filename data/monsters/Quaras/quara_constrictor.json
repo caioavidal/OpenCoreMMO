@@ -1,199 +1,181 @@
 {
-  "monster": {
-    "name": "Quara Constrictor",
-    "nameDescription": "a quara constrictor",
-    "race": "blood",
-    "experience": "250",
-    "speed": "230",
-    "manacost": "670",
-    "health": {
-      "now": "450",
-      "max": "450"
+  "name": "Quara Constrictor",
+  "nameDescription": "a quara constrictor",
+  "race": "blood",
+  "experience": 250,
+  "speed": 230,
+  "manaCost": 670,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 46,
+    "corpse": 6065
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 30,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-150",
+      "poison": "20"
     },
-    "look": {
-      "type": "46",
-      "corpse": "6065"
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "3",
+      "target": "0",
+      "min": "-50",
+      "max": "-90",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
     },
-    "targetchange": {
-      "interval": "4000",
+    {
+      "name": "quara constrictor freeze",
+      "interval": "2000",
       "chance": "10"
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "30"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-150",
-          "poison": "20"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "10",
-          "radius": "3",
-          "target": "0",
-          "min": "-50",
-          "max": "-90",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blackspark"
-          }
-        },
-        {
-          "name": "quara constrictor freeze",
-          "interval": "2000",
-          "chance": "10"
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "4",
-          "min": "-40",
-          "max": "-70",
-          "target": "0",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "iceattack"
-          }
-        },
-        {
-          "name": "quara constrictor electrify",
-          "range": "1",
-          "interval": "2000",
-          "chance": "10"
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "energyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "ice": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "ice",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "radius": "4",
+      "min": "-40",
+      "max": "-70",
+      "target": "0",
+      "attributes": [
         {
-          "sentence": "Gaaahhh!"
-        },
-        {
-          "sentence": "Gluh! Gluh!"
-        },
-        {
-          "sentence": "Tssss!"
-        },
-        {
-          "sentence": "Boohaa!"
+          "areaEffect": "iceattack"
         }
       ]
     },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "87500"
-        },
-        {
-          "name": "small amethyst",
-          "chance": "2860"
-        },
-        {
-          "name": "longsword",
-          "chance": "7761"
-        },
-        {
-          "name": "brass armor",
-          "chance": "5000"
-        },
-        {
-          "name": "shrimp",
-          "countmax": "5",
-          "chance": "5000"
-        },
-        {
-          "name": "fish fin",
-          "chance": "430"
-        },
-        {
-          "name": "quara tentacle",
-          "chance": "14520"
-        }
-      ]
+    {
+      "name": "quara constrictor electrify",
+      "range": "1",
+      "interval": "2000",
+      "chance": "10"
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": -10,
+    "energyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 87500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2860,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7761,
+      "items": [],
+      "name": "longsword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "brass armor"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 5000,
+      "items": [],
+      "name": "shrimp"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14520,
+      "items": [],
+      "name": "quara tentacle"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Gaaahhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Gluh! Gluh!",
+        "yell": false
+      },
+      {
+        "sentence": "Tssss!",
+        "yell": false
+      },
+      {
+        "sentence": "Boohaa!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "paralyze": 1,
+    "drown": 1,
+    "fire": 1,
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

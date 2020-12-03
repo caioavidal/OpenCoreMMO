@@ -219,9 +219,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-        public virtual void SetAsInFight()
-        {
-          
-        }
+        public virtual void SetAsInFight() { }
     }
 }

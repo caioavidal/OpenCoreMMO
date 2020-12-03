@@ -1,276 +1,278 @@
 {
-  "monster": {
-    "name": "Dworc Voodoomaster",
-    "namedescription": "a dworc voodoomaster",
-    "race": "blood",
-    "experience": "55",
-    "speed": "190",
-    "health": {
-      "now": "80",
-      "max": "80"
+  "name": "Dworc Voodoomaster",
+  "nameDescription": null,
+  "race": "blood",
+  "experience": 55,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 80,
+    "now": 80
+  },
+  "look": {
+    "type": 214,
+    "corpse": 6055
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 80,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-20"
     },
-    "look": {
-      "type": "214",
-      "corpse": "6055"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "15"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-20"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "10",
-          "range": "1",
-          "min": "0",
-          "max": "-40",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "speedchange": "-800",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "attribute": [
-            {
-              "key": "shooteffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaeffect",
-              "value": "teleport"
-            }
-          ]
-        },
-        {
-          "name": "outfit",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "monster": "chicken",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "radius": "6",
-          "target": "0",
-          "min": "-6",
-          "max": "-18",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "greenbubble"
-          }
-        },
-        {
-          "name": "poisonfield",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "attribute": {
-            "key": "shooteffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "20",
-          "min": "3",
-          "max": "9",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "200",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "15",
-          "duration": "7000",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "30"
-        },
-        {
-          "firePercent": "-15"
-        },
-        {
-          "deathPercent": "-10"
-        },
-        {
-          "icePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "earth": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "lifedrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "1",
+      "min": "0",
+      "max": "-40",
+      "attributes": [
         {
-          "sentence": "Brak brrretz!"
-        },
-        {
-          "sentence": "Grow truk grrrrr."
-        },
-        {
-          "sentence": "Prek tars, dekklep zurk."
+          "areaeffect": "redshimmer"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "speedchange": "-800",
+      "duration": "5000",
+      "attributes": [
         {
-          "id": "2050",
-          "chance": "6000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "17",
-          "chance": "75000"
-        },
-        {
-          "name": "strange symbol",
-          "chance": "500"
-        },
-        {
-          "id": "2229",
-          "countmax": "3",
-          "chance": "1950"
-        },
-        {
-          "id": "2230",
-          "chance": "5800"
-        },
-        {
-          "id": "2231",
-          "chance": "3000"
-        },
-        {
-          "name": "poison dagger",
-          "chance": "1000"
-        },
-        {
-          "name": "leather armor",
-          "chance": "10000"
-        },
-        {
-          "id": "3955",
-          "chance": "130"
-        },
-        {
-          "name": "tribal mask",
-          "chance": "500"
-        },
-        {
-          "name": "health potion",
-          "chance": "600"
+          "areaeffect": "redshimmer"
         }
-      ],
-      "#comment": []
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "attributes": [
+        {
+          "shooteffect": "energy"
+        },
+        {
+          "areaeffect": "teleport"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "monster": "chicken",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaeffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "6",
+      "target": "0",
+      "min": "-6",
+      "max": "-18",
+      "attributes": [
+        {
+          "areaeffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "poisonfield",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
+        {
+          "shooteffect": "poison"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "3",
+      "max": "9",
+      "attributes": [
+        {
+          "areaeffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "200",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaeffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "7000",
+      "attributes": [
+        {
+          "areaeffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 30,
+    "firePercent": -15,
+    "deathPercent": -10,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 17,
+      "chance": 75000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "strange symbol"
+    },
+    {
+      "id": 2229,
+      "countmax": 3,
+      "chance": 1950,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 5800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2231,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "poison dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "leather armor"
+    },
+    {
+      "id": 3955,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "tribal mask"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": "health potion"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Brak brrretz!",
+        "yell": false
+      },
+      {
+        "sentence": "Grow truk grrrrr.",
+        "yell": false
+      },
+      {
+        "sentence": "Prek tars, dekklep zurk.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

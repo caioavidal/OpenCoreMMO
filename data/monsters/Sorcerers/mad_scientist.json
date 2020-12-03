@@ -1,260 +1,240 @@
 {
-  "monster": {
-    "name": "Mad Scientist",
-    "nameDescription": "a mad scientist",
-    "race": "blood",
-    "experience": "205",
-    "speed": "190",
-    "health": {
-      "now": "325",
-      "max": "325"
+  "name": "Mad Scientist",
+  "nameDescription": "a mad scientist",
+  "race": "blood",
+  "experience": 205,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 325,
+    "now": 325
+  },
+  "look": {
+    "type": 133,
+    "corpse": 20439
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-35"
     },
-    "look": {
-      "type": "133",
-      "head": "97",
-      "body": "0",
-      "legs": "38",
-      "feet": "97",
-      "addons": "1",
-      "corpse": "20439"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "3",
+      "target": "1",
+      "min": "-20",
+      "max": "-56",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "smallearth"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "poff"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "min": "-20",
+      "max": "-36",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-35"
+          "shootEffect": "poison"
         },
         {
-          "name": "drown",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "radius": "3",
-          "target": "1",
-          "min": "-20",
-          "max": "-56",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "smallearth"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poff"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "min": "-20",
-          "max": "-36",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "target": "1",
-          "duration": "2000",
-          "speedchange": "-300",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "smallplants"
-            }
-          ]
+          "areaEffect": "energy"
         }
       ]
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "10",
-        "max": "30",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "10"
-        },
-        {
-          "earthPercent": "20"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "holyPercent": "20"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "drown": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "speed",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "target": "1",
+      "duration": "2000",
+      "speedchange": "-300",
+      "attributes": [
         {
-          "sentence": "Die in the name of Science!"
+          "shootEffect": "poison"
         },
         {
-          "sentence": "You will regret interrupting my studies!"
-        },
-        {
-          "sentence": "Let me test this!"
-        },
-        {
-          "sentence": "I will study your corpse!"
+          "areaEffect": "smallplants"
         }
       ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "65",
-          "chance": "30000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "50",
-          "chance": "30000"
-        },
-        {
-          "id": "2162",
-          "chance": "2000"
-        },
-        {
-          "name": "life crystal",
-          "chance": "2000"
-        },
-        {
-          "name": "soulfire rune",
-          "chance": "6000"
-        },
-        {
-          "name": "cookie",
-          "countmax": "5",
-          "chance": "1200"
-        },
-        {
-          "name": "white mushroom",
-          "countmax": "3",
-          "chance": "8000"
-        },
-        {
-          "id": "6324",
-          "chance": "820"
-        },
-        {
-          "name": "mastermind potion",
-          "chance": "130"
-        },
-        {
-          "name": "health potion",
-          "chance": "19000"
-        },
-        {
-          "name": "mana potion",
-          "chance": "19000"
-        },
-        {
-          "name": "small enchanted amethyst",
-          "chance": "470"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "10",
+      "max": "30",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 10,
+    "earthPercent": 20,
+    "energyPercent": 20,
+    "icePercent": 10,
+    "holyPercent": 20,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 30000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 30000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2162,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "soulfire rune"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 1200,
+      "items": [],
+      "name": "cookie"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 8000,
+      "items": [],
+      "name": "white mushroom"
+    },
+    {
+      "id": 6324,
+      "countmax": 1,
+      "chance": 820,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "mastermind potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 19000,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 19000,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 470,
+      "items": [],
+      "name": "small enchanted amethyst"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Die in the name of Science!",
+        "yell": false
+      },
+      {
+        "sentence": "You will regret interrupting my studies!",
+        "yell": false
+      },
+      {
+        "sentence": "Let me test this!",
+        "yell": false
+      },
+      {
+        "sentence": "I will study your corpse!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

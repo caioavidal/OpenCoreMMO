@@ -1,213 +1,221 @@
 {
-  "monster": {
-    "name": "Dark Monk",
-    "nameDescription": "a dark monk",
-    "race": "blood",
-    "experience": "145",
-    "speed": "210",
-    "manacost": "480",
-    "health": {
-      "now": "190",
-      "max": "190"
+  "name": "Dark Monk",
+  "nameDescription": "a dark monk",
+  "race": "blood",
+  "experience": 145,
+  "speed": 210,
+  "manaCost": 480,
+  "health": {
+    "max": 190,
+    "now": 190
+  },
+  "look": {
+    "type": 225,
+    "corpse": 20371
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
     },
-    "look": {
-      "type": "225",
-      "corpse": "20371"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "min": "-20",
+      "max": "-50",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "range": "1",
-          "min": "-20",
-          "max": "-50",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "15",
-          "min": "25",
-          "max": "49",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "300",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "deathPercent": "40"
-        },
-        {
-          "holyPercent": "-10"
-        },
-        {
-          "physicalPercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "You are no match to us!"
-        },
-        {
-          "sentence": "This is where your path will end!"
-        },
-        {
-          "sentence": "Your end has come!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "1949",
-          "chance": "1790"
-        },
-        {
-          "name": "brown flask",
-          "chance": "380"
-        },
-        {
-          "id": "2044",
-          "chance": "550"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "18",
-          "chance": "14600"
-        },
-        {
-          "name": "power ring",
-          "chance": "120"
-        },
-        {
-          "name": "life crystal",
-          "chance": "990"
-        },
-        {
-          "name": "ankh",
-          "chance": "900"
-        },
-        {
-          "name": "sandals",
-          "chance": "890"
-        },
-        {
-          "name": "bread",
-          "chance": "20550"
-        },
-        {
-          "name": "mana potion",
-          "chance": "790"
-        },
-        {
-          "name": "book of prayers",
-          "chance": "1900"
-        },
-        {
-          "name": "dark rosary",
-          "chance": "10500"
-        },
-        {
-          "name": "rope belt",
-          "chance": "6666"
-        },
-        {
-          "name": "safety pin",
-          "chance": "990"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "25",
+      "max": "49",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 40,
+    "holyPercent": -10,
+    "physicalPercent": -20
+  },
+  "loot": [
+    {
+      "id": 1949,
+      "countmax": 1,
+      "chance": 1790,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "brown flask"
+    },
+    {
+      "id": 2044,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 18,
+      "chance": 14600,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "power ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 990,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 900,
+      "items": [],
+      "name": "ankh"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "sandals"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20550,
+      "items": [],
+      "name": "bread"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 790,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1900,
+      "items": [],
+      "name": "book of prayers"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": "dark rosary"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6666,
+      "items": [],
+      "name": "rope belt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 990,
+      "items": [],
+      "name": "safety pin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You are no match to us!",
+        "yell": false
+      },
+      {
+        "sentence": "This is where your path will end!",
+        "yell": false
+      },
+      {
+        "sentence": "Your end has come!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

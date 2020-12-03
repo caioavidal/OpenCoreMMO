@@ -1,234 +1,236 @@
 {
-  "monster": {
-    "name": "Deepling Guard",
-    "nameDescription": "a deepling guard",
-    "race": "blood",
-    "experience": "2100",
-    "speed": "220",
-    "health": {
-      "now": "1900",
-      "max": "1900"
+  "name": "Deepling Guard",
+  "nameDescription": "a deepling guard",
+  "race": "blood",
+  "experience": 2100,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 1900,
+    "now": 1900
+  },
+  "look": {
+    "type": 442,
+    "corpse": 15187
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 0,
+    "staticattack": 70,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-400"
     },
-    "look": {
-      "type": "442",
-      "corpse": "15187"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "staticattack": "70"
-        },
-        {
-          "runonhealth": "20"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "shootEffect": "whirlwindsword"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-100",
+      "max": "-150",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-400"
+          "shootEffect": "spear"
         },
         {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "target": "1",
-          "min": "0",
-          "max": "-200",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "whirlwindsword"
-          }
-        },
-        {
-          "name": "drown",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "min": "-100",
-          "max": "-150",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "spear"
-            },
-            {
-              "key": "areaEffect",
-              "value": "bluebubble"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "100",
-        "max": "200",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "-20"
-        },
-        {
-          "earthPercent": "-20"
-        },
-        {
-          "deathPercent": "10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "ice": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "QJELL NETA NA!!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small sapphire",
-          "countmax": "3",
-          "chance": "2890"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "100000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "100000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "2",
-          "chance": "70000"
-        },
-        {
-          "name": "great mana potion",
-          "countmax": "3",
-          "chance": "14285"
-        },
-        {
-          "name": "great health potion",
-          "countmax": "3",
-          "chance": "14285"
-        },
-        {
-          "name": "heavy trident",
-          "chance": "1694"
-        },
-        {
-          "name": "eye of a deepling",
-          "chance": "10000"
-        },
-        {
-          "name": "deepling guard belt buckle",
-          "chance": "12500"
-        },
-        {
-          "name": "deepling breaktime snack",
-          "chance": "16666"
-        },
-        {
-          "name": "guardian axe",
-          "chance": "925"
-        },
-        {
-          "name": "deepling claw",
-          "chance": "9090"
-        },
-        {
-          "name": "foxtail",
-          "chance": "10"
-        },
-        {
-          "name": "ornate crossbow",
-          "chance": "362"
-        },
-        {
-          "name": "deepling backpack",
-          "chance": "333"
-        },
-        {
-          "name": "deepling squelcher",
-          "chance": "751"
+          "areaEffect": "bluebubble"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "100",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -20,
+    "earthPercent": -20,
+    "deathPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 2890,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 70000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 14285,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 14285,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1694,
+      "items": [],
+      "name": "heavy trident"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "eye of a deepling"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "deepling guard belt buckle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 16666,
+      "items": [],
+      "name": "deepling breaktime snack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 925,
+      "items": [],
+      "name": "guardian axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9090,
+      "items": [],
+      "name": "deepling claw"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10,
+      "items": [],
+      "name": "foxtail"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 362,
+      "items": [],
+      "name": "ornate crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 333,
+      "items": [],
+      "name": "deepling backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 751,
+      "items": [],
+      "name": "deepling squelcher"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "QJELL NETA NA!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "drown": 1,
+    "fire": 1,
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

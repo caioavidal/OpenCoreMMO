@@ -1,187 +1,180 @@
 {
-  "monster": {
-    "name": "Crypt Shambler",
-    "nameDescription": "a crypt shambler",
-    "race": "undead",
-    "experience": "195",
-    "speed": "180",
-    "manacost": "0",
-    "health": {
-      "now": "330",
-      "max": "330"
+  "name": "Crypt Shambler",
+  "nameDescription": "a crypt shambler",
+  "race": "undead",
+  "experience": 195,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 330,
+    "now": 330
+  },
+  "look": {
+    "type": 100,
+    "corpse": 6029
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "60",
+      "attack": "40"
     },
-    "look": {
-      "type": "100",
-      "corpse": "6029"
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "13",
+      "range": "1",
+      "min": "-25",
+      "max": "-55"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": 100,
+    "earthPercent": 100,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 35,
+      "chance": 18000,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
+    {
+      "id": 2148,
+      "countmax": 20,
+      "chance": 18000,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
+    {
+      "id": 2541,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "60",
-          "attack": "40"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "13",
-          "range": "1",
-          "min": "-25",
-          "max": "-55"
-        }
-      ]
+    {
+      "id": 2450,
+      "countmax": 1,
+      "chance": 900,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "deathPercent": "100"
+          "id": 2459,
+          "countmax": 1,
+          "chance": 1700,
+          "items": [],
+          "name": null
         },
         {
-          "earthPercent": "100"
+          "id": 2227,
+          "countmax": 1,
+          "chance": 21500,
+          "items": [],
+          "name": null
         },
         {
-          "holyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
+          "id": 2145,
+          "countmax": 2,
+          "chance": 750,
+          "items": [],
+          "name": null
         },
         {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Uhhhhhhh!"
+          "id": 2399,
+          "countmax": 3,
+          "chance": 700,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Aaaaahhhh!"
+          "id": 2459,
+          "countmax": 1,
+          "chance": 1500,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Hoooohhh!"
-        },
-        {
-          "sentence": "Chhhhhhh!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "35",
-          "chance": "18000"
-        },
-        {
-          "id": "2148",
-          "countmax": "20",
-          "chance": "18000"
-        },
-        {
-          "id": "2230",
-          "chance": "50000"
-        },
-        {
-          "id": "2541",
-          "chance": "1200"
-        },
-        {
-          "id": "2450",
-          "chance": "900"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2459",
-              "chance": "1700"
-            },
-            {
-              "id": "2227",
-              "chance": "21500"
-            },
-            {
-              "id": "2145",
-              "countmax": "2",
-              "chance": "750"
-            },
-            {
-              "id": "2399",
-              "countmax": "3",
-              "chance": "700"
-            },
-            {
-              "id": "2459",
-              "chance": "1500"
-            },
-            {
-              "id": "3976",
-              "countmax": "10",
-              "chance": "50000"
-            }
-          ]
+          "id": 3976,
+          "countmax": 10,
+          "chance": 50000,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Uhhhhhhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Aaaaahhhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Hoooohhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Chhhhhhh!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }
