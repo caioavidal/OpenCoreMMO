@@ -64,7 +64,7 @@ namespace NeoServer.Game.World.Map
                     tile.TryGetStackPositionOfThing(player, thing, out stackPosition);
                 }
 
-                tileSpectators[index++] = new CylinderSpectator(spectator, 0, stackPosition);
+                tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);
             }
 
             cylinder = new Cylinder(thing, tile, tile, Operation.Added, tileSpectators);

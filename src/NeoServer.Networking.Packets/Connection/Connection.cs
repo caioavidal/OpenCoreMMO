@@ -250,7 +250,8 @@ namespace NeoServer.Networking
 
             while (OutgoingPackets.Any())
             {
-                OutgoingPackets.Dequeue().WriteToMessage(message);
+                var packet = OutgoingPackets.Dequeue();
+                packet.WriteToMessage(message);
             }
 
             message.AddLength();
