@@ -133,7 +133,7 @@ namespace NeoServer.Server.Model.Players
                 return 0;
             }
         }
-        public void ResetMana() => Mana = MaxMana;
+        public void ResetMana() => HealMana(MaxMana);
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
         public void IncreaseSkillCounter(SkillType skill, uint value)
         {

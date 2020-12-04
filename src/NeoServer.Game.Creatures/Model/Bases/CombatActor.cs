@@ -73,7 +73,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             blockCount++;
         }
-        public void ResetHealthPoints() => HealthPoints = MaxHealthPoints;
+        public void ResetHealthPoints() => Heal((ushort)MaxHealthPoints);
         
 
         public CombatDamage ReduceDamage(CombatDamage attack)
