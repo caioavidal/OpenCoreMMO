@@ -23,7 +23,7 @@ namespace NeoServer.Game.Creatures.Tests
         public void CanMoveThing_Given_Distance_Bigger_Than_11_Returns_False(ushort toX, ushort toY, bool expected)
         {
             var sut = new Player(1,"PlayerA", ChaseMode.Stand, 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-                soulPoints: 100, skills: new Dictionary<SkillType, ISkill>
+                soulPoints: 100, soulMax:100, skills: new Dictionary<SkillType, ISkill>
                 {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 

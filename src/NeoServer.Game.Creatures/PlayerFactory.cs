@@ -72,6 +72,12 @@ namespace NeoServer.Game.Creatures
         }
         public IPlayer Create(IPlayerModel player)
         {
+            if(!VocationStore.TryGetValue(player.Vocation, out var vocation))
+            {
+                throw new Exception("Player vocation not found");
+            }
+          
+
             var newPlayer = new Player(
                 (uint)player.Id,
                 player.CharacterName,
@@ -86,6 +92,7 @@ namespace NeoServer.Game.Creatures
                 player.MaxMana,
                 player.FightMode,
                 player.SoulPoints,
+                vocation.SoulMax,
                 ConvertToSkills(player),
                 player.StaminaMinutes,
                 player.Outfit,

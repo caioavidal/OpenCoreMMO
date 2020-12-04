@@ -30,7 +30,7 @@ namespace NeoServer.Server.Model.Players
     public class Player : CombatActor, IPlayer
     {
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
-            Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
+            Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location, PathFinder pathFinder)
              : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
@@ -46,7 +46,7 @@ namespace NeoServer.Server.Model.Players
             Mana = mana;
             MaxMana = maxMana;
             FightMode = fightMode;
-            MaxSoulPoints = Vocation.SoulMax;
+            MaxSoulPoints = soulMax;
             SoulPoints = soulPoints;
             Skills = skills;
             StaminaMinutes = staminaMinutes;

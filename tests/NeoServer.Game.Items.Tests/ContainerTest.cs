@@ -438,7 +438,7 @@ namespace NeoServer.Game.Items.Tests
         public void IsEquiped_When_Parent_Is_Player_Returns_True()
         {
             var player = new Player(id: 1,characterName:"PlayerA", chaseMode: ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, skills: new Dictionary<SkillType, ISkill>
+             soulPoints: 100, soulMax:100, skills: new Dictionary<SkillType, ISkill>
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0) }
 
@@ -474,7 +474,7 @@ namespace NeoServer.Game.Items.Tests
         public void IsEquiped_When_Moved_To_Another_Container_Where_Parent_Is_Null_Returns_False()
         {
             var player = new Player(1,"PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, skills: new Dictionary<SkillType, ISkill>
+             soulPoints: 100, soulMax:100, skills: new Dictionary<SkillType, ISkill>
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
