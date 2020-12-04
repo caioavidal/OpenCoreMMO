@@ -365,20 +365,26 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             combat = new CombatAttackType();
 
+            TurnTo(Location.DirectionTo(enemy.Location));
+
             if (!Attacks.Any()) return false;
+
+            var attacked = false;
 
             foreach (var attack in Attacks)
             {
                 if (!attack.Cooldown.Expired) continue;
 
-                if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) continue;
+                if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) 
+                    continue;
 
-                attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat);
                 if (attack.CombatAttack is null) Console.WriteLine($"Combat attack not found for monster: {Name}");
+
+                if (!(attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat) ?? false)) continue;
+                attacked = true;
             }
 
-            TurnTo(Location.DirectionTo(enemy.Location));
-            return true;
+            return attacked;
         }
 
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
