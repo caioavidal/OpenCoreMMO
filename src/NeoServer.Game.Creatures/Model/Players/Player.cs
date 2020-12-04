@@ -403,7 +403,7 @@ namespace NeoServer.Server.Model.Players
                 }
 
                 Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
-                                                           // OnUsedSpell?.Invoke(this, spell); //todo remove this event
+
             }
             base.Say(message, talkType);
         }

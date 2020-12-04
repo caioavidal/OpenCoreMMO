@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using System.Linq;
 using NeoServer.Game.Common.Conditions;
+using System;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
