@@ -81,7 +81,6 @@ namespace NeoServer.Game.Creatures
                 player.MaxMana,
                 player.FightMode,
                 player.SoulPoints,
-                player.MaxSoulPoints,
                 player.Skills,
                 player.StaminaMinutes,
                 player.Outfit,

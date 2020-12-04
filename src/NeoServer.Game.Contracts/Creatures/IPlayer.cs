@@ -35,7 +35,7 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         byte AccessLevel { get; } // TODO: implement.
 
-        byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
+        byte SoulPoints { get; }
 
         float CarryStrength { get; }
         public string Guild { get; }

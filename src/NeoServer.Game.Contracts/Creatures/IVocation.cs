@@ -27,7 +27,7 @@ namespace NeoServer.Game.Contracts.Creatures
         string ManaMultiplier { get; set; }
         string Name { get; set; }
         List<IVocationSkill> Skill { get; set; }
-        string SoulMax { get; set; }
+        byte SoulMax { get; set; }
         VocationType VocationType { get; }
     }
 

@@ -26,7 +26,7 @@ namespace NeoServer.Game.Creatures.Vocations
         public string ManaMultiplier { get; set; }
         public string AttackSpeed { get; set; }
         public ushort BaseSpeed { get; set; }
-        public string SoulMax { get; set; }
+        public byte SoulMax { get; set; }
         public string GainSoulTicks { get; set; }
         public string FromVoc { get; set; }
         public IVocationFormula Formula { get; set; }

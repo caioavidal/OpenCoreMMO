@@ -46,7 +46,6 @@ namespace NeoServer.Server.Standalone.IoC
             var builder = new ContainerBuilder();
 
             //server
-            builder.RegisterType<GameState>().SingleInstance();
 
             builder.RegisterInstance(new LoggerConfiguration()
                 .WriteTo.Console()

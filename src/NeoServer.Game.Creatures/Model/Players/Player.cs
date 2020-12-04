@@ -30,7 +30,7 @@ namespace NeoServer.Server.Model.Players
     public class Player : CombatActor, IPlayer
     {
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
-            Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
+            Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location, PathFinder pathFinder)
              : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
@@ -46,8 +46,8 @@ namespace NeoServer.Server.Model.Players
             Mana = mana;
             MaxMana = maxMana;
             FightMode = fightMode;
+            MaxSoulPoints = Vocation.SoulMax;
             SoulPoints = soulPoints;
-            MaxSoulPoints = maxSoulPoints;
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
@@ -86,7 +86,7 @@ namespace NeoServer.Server.Model.Players
             ChangeSpeed(Speed);
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
-       
+
         private uint IdleTime;
         public string CharacterName { get; private set; }
 
@@ -110,8 +110,15 @@ namespace NeoServer.Server.Model.Players
         public ushort Mana { get; private set; }
         public ushort MaxMana { get; private set; }
         public FightMode FightMode { get; private set; }
-        public byte SoulPoints { get; private set; }
-        public uint MaxSoulPoints { get; private set; }
+
+        private byte soulPoints;
+        public byte SoulPoints
+        {
+            get => soulPoints; 
+            private set => soulPoints = value > MaxSoulPoints ? MaxSoulPoints : value;
+        }
+
+        public byte MaxSoulPoints { get; private set; }
         public IInventory Inventory { get; set; }
 
         public ushort StaminaMinutes { get; private set; }
@@ -316,7 +323,7 @@ namespace NeoServer.Server.Model.Players
             Containers.CloseDistantContainers();
             base.OnMoved(fromTile, toTile);
         }
-    
+
 
         public override void SetAsInFight()
         {
@@ -450,11 +457,11 @@ namespace NeoServer.Server.Model.Players
             if (tile.TopCreatureOnStack is null && tile.TopItemOnStack is null) return;
 
             IThing thing = tile.TopCreatureOnStack is null ? tile.TopItemOnStack : tile.TopCreatureOnStack;
-            OnLookedAt?.Invoke(this, thing, isClose); 
+            OnLookedAt?.Invoke(this, thing, isClose);
         }
         public void LookAt(byte containerId, sbyte containerSlot)
         {
-            if(Containers[containerId][containerSlot] is not IThing thing) return;
+            if (Containers[containerId][containerSlot] is not IThing thing) return;
             OnLookedAt?.Invoke(this, thing, true);
         }
         public void LookAt(Slot slot)
