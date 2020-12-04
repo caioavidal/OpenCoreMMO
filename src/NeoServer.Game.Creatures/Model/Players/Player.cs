@@ -89,11 +89,7 @@ namespace NeoServer.Server.Model.Players
 
         private uint IdleTime;
         public string CharacterName { get; private set; }
-
-        public Account Account { get; private set; }
         public override IOutfit Outfit { get; protected set; }
-
-        public new uint Corpse => 4240;
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
         public override ushort Speed => (ushort)(220 + Level);
         public IPlayerContainerList Containers { get; }
@@ -114,7 +110,7 @@ namespace NeoServer.Server.Model.Players
         private byte soulPoints;
         public byte SoulPoints
         {
-            get => soulPoints; 
+            get => soulPoints;
             private set => soulPoints = value > MaxSoulPoints ? MaxSoulPoints : value;
         }
 
@@ -133,16 +129,9 @@ namespace NeoServer.Server.Model.Players
                 }
                 return 0;
             }
-
         }
         public void ResetMana() => Mana = MaxMana;
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
-
-        public bool IsMounted()
-        {
-            return false;
-        }
-
         public void IncreaseSkillCounter(SkillType skill, uint value)
         {
             if (!Skills.ContainsKey(skill)) return;
@@ -150,19 +139,7 @@ namespace NeoServer.Server.Model.Players
             Skills[skill].IncreaseCounter(value);
         }
 
-        public string GetDescription(bool isYourself)
-        {
-            if (isYourself)
-            {
-                return $"You are {VocationType}";
-            }
-            return "";
-        }
-
-        public void ResetIdleTime()
-        {
-            IdleTime = 0;
-        }
+        public void ResetIdleTime() => IdleTime = 0;
 
         public override void GainExperience(uint exp)
         {
@@ -218,7 +195,6 @@ namespace NeoServer.Server.Model.Players
                 }
             }
         }
-
         public float DamageFactor => FightMode switch
         {
             FightMode.Attack => 1,
@@ -255,14 +231,8 @@ namespace NeoServer.Server.Model.Players
         }
 
         public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
+        public override ushort AttackPower => (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
 
-        public override ushort AttackPower
-        {
-            get
-            {
-                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
-            }
-        }
         public uint Id { get; }
         public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
@@ -287,9 +257,7 @@ namespace NeoServer.Server.Model.Players
         public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
-
         const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
-
 
         public uint ChooseToRemoveFromKnownSet()
         {
@@ -374,10 +342,7 @@ namespace NeoServer.Server.Model.Players
 
         }
 
-        public void SetSecureMode(byte mode)
-        {
-            SecureMode = mode;
-        }
+        public void SetSecureMode(byte mode) => SecureMode = mode;
 
         public void CancelWalk()
         {
@@ -385,10 +350,7 @@ namespace NeoServer.Server.Model.Players
             OnCancelledWalk(this);
         }
 
-        public override int ShieldDefend(int attack)
-        {
-            return (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
-        }
+        public override int ShieldDefend(int attack) => (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
 
         public override int ArmorDefend(int damage)
         {
@@ -404,10 +366,8 @@ namespace NeoServer.Server.Model.Players
             }
             return damage;
         }
-        public void ReceiveManaAttack(ICreature enemy, ushort damage)
-        {
-            ConsumeMana(damage);
-        }
+        public void ReceiveManaAttack(ICreature enemy, ushort damage) => ConsumeMana(damage);
+        
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             combat = new CombatAttackType();
