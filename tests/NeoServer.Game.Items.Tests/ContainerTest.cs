@@ -437,12 +437,12 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void IsEquiped_When_Parent_Is_Player_Returns_True()
         {
-            var player = new Player(1,"PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, maxSoulPoints: 100, skills: new Dictionary<SkillType, ISkill>
+            var player = new Player(id: 1,characterName:"PlayerA", chaseMode: ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+             soulPoints: 100, skills: new Dictionary<SkillType, ISkill>
              {
-                    { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
+                    { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0) }
 
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
+             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, location: new Location(100, 100, 7), pathFinder: new World.Map.PathFinder(null).Find);
 
             var sut = CreateContainer(2);
             sut.TryAddItem(CreateRegularItem(100));
@@ -474,9 +474,9 @@ namespace NeoServer.Game.Items.Tests
         public void IsEquiped_When_Moved_To_Another_Container_Where_Parent_Is_Null_Returns_False()
         {
             var player = new Player(1,"PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, maxSoulPoints: 100, skills: new Dictionary<SkillType, ISkill>
+             soulPoints: 100, skills: new Dictionary<SkillType, ISkill>
              {
-                    { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
+                    { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
 

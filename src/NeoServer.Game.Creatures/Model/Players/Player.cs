@@ -353,7 +353,15 @@ namespace NeoServer.Server.Model.Players
             OnCancelledWalk(this);
         }
 
-        public override int ShieldDefend(int attack) => (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
+        public override int ShieldDefend(int attack)
+        {
+            var resultDamage = (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
+            if(resultDamage <= 0)
+            {
+                IncreaseSkillCounter(SkillType.Shielding, 1);
+            }
+            return resultDamage;
+        }
 
         public override int ArmorDefend(int damage)
         {
@@ -494,10 +502,6 @@ namespace NeoServer.Server.Model.Players
             Cooldowns.Start(CooldownType.ManaRecovery, Vocation.GainManaTicks * 1000);
             Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
         }
-        public override bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
-        {
-            IncreaseSkillCounter(SkillType.Shielding, 1);
-            return base.ReceiveAttack(enemy, damage);
-        }
+       
     }
 }
