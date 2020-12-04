@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface IPlayerModel
     {
         IAccountModel Account { get; set; }
-        float Capacity { get; set; }
+        uint Capacity { get; set; }
         string CharacterName { get; set; }
         ChaseMode ChaseMode { get; set; }
         FightMode FightMode { get; }

@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server;
+using NeoServer.Loaders.Vocations;
 
 Console.Title = "OpenCoreMMO Server";
 
@@ -46,6 +47,7 @@ container.Resolve<WorldLoader>().Load();
 container.Resolve<SpawnLoader>().Load();
 
 container.Resolve<MonsterLoader>().Load();
+container.Resolve<VocationLoader>().Load();
 //new SpellLoader().Load();
 container.Resolve<SpawnManager>().StartSpawn();
 

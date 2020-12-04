@@ -27,15 +27,17 @@ namespace NeoServer.Server.Jobs.Creatures
                 {
                     continue;
                 }
-                if (creature is IPlayer)
+                if (creature is IPlayer player)
                 {
-                    PlayerPingJob.Execute((IPlayer)creature, game);
+                    PlayerPingJob.Execute(player, game);
+                    PlayerRecoveryJob.Execute(player, game);
                 }
                 CreatureDefenseJob.Execute(creature as ICombatActor, game);
                 CreatureConditionJob.Execute(creature as ICombatActor);
                 CreatureTargetJob.Execute(creature as ICombatActor);
                 MonsterYellJob.Execute(creature as ICombatActor);
                 RespawnJob.Execute(spawnManager);
+
             }
 
         }

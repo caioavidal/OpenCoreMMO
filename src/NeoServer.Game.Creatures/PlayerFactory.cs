@@ -27,7 +27,7 @@ namespace NeoServer.Game.Creatures
         private readonly InvalidOperationEventHandler invalidOperationEventHandler;
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
-        private readonly PlayerManaReducedEventHandler _playerManaReducedEventHandler;
+        private readonly PlayerManaChangedEventHandler _playerManaReducedEventHandler;
         private readonly SpellInvokedEventHandler _playerUsedSpellEventHandler;
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
         private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
@@ -41,7 +41,7 @@ namespace NeoServer.Game.Creatures
             PlayerClosedContainerEventHandler playerClosedContainerEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler,
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
-            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaReducedEventHandler playerManaReducedEventHandler,
+            PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaChangedEventHandler playerManaReducedEventHandler,
             IPathFinder pathFinder, SpellInvokedEventHandler playerUsedSpellEventHandler,
             PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler,
             PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler, PlayerLookedAtEventHandler playerLookedAtEventHandler)
@@ -111,7 +111,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnStoppedAttack += creatureStopedAttackEventHandler.Execute;
             newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
-            newPlayer.OnManaReduced += _playerManaReducedEventHandler.Execute;
+            newPlayer.OnManaChanged += _playerManaReducedEventHandler.Execute;
             newPlayer.OnUsedSpell += _playerUsedSpellEventHandler.Execute;
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
             newPlayer.OnAddedCondition += _playerConditionChangedEventHandler.Execute;

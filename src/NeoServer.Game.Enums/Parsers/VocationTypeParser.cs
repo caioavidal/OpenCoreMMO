@@ -16,6 +16,11 @@ namespace NeoServer.Game.Common.Parsers
             "Sorcerer" => VocationType.Sorcerer,
             "Druid" => VocationType.Druid,
             "All" => VocationType.All,
+            "None" => VocationType.None,
+            "Master Sorcerer" => VocationType.MasterSorcerer,
+            "Elder Druid" => VocationType.ElderDruid,
+            "Royal Paladin" => VocationType.RoyalPaladin,
+            "Elite Knight" => VocationType.EliteKnight,
             _ => VocationType.All
         };
         public static string Parse(VocationType vocation) => vocation switch
@@ -24,8 +29,12 @@ namespace NeoServer.Game.Common.Parsers
             VocationType.Knight => "Knight",
             VocationType.Sorcerer => "Sorcerer",
             VocationType.Druid => "Druid",
+            VocationType.RoyalPaladin => "Royal Paladin",
+            VocationType.EliteKnight => "Elite Knight",
+            VocationType.MasterSorcerer => "Master Sorcerer",
+            VocationType.ElderDruid => "Elder Druid",
             VocationType.All => "All",
-            VocationType.Noob => "Noob",
+            VocationType.None => "",
             _ => "All"
         };
     }

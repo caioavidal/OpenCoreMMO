@@ -270,7 +270,7 @@ namespace NeoServer.Server.Model.Players
             {
                 var itemOnSlot = Inventory[slot].Item1;
 
-                return (TotalWeight - itemOnSlot.Weight + item.Weight) <= Owner.CarryStrength;
+                return (TotalWeight - itemOnSlot.Weight + item.Weight) <= Owner.TotalCapacity;
             }
 
             float weight = item.Weight;
@@ -281,7 +281,7 @@ namespace NeoServer.Server.Model.Players
                 weight = cumulative.CalculateWeight(amountToAdd);
             }
 
-            var canCarry = (TotalWeight + weight) <= Owner.CarryStrength;
+            var canCarry = (TotalWeight + weight) <= Owner.TotalCapacity;
             return canCarry;
         }
 

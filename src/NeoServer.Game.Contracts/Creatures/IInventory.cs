@@ -23,6 +23,7 @@ namespace NeoServer.Game.Contracts.Creatures
         Items.Types.IContainer BackpackSlot { get; }
         IWeapon Weapon { get; }
         bool HasShield { get; }
+        float TotalWeight { get; }
 
         IItem this[Slot slot] { get; }
 

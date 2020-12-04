@@ -33,8 +33,8 @@ namespace NeoServer.Game.Creatures.Model
             {
                 throw new ArgumentNullException(nameof(type.Name));
             }
-            MaxHealthpoints = type.MaxHealth;
-            HealthPoints = Math.Min(MaxHealthpoints, healthPoints == 0 ? MaxHealthpoints : healthPoints);
+            MaxHealthPoints = type.MaxHealth;
+            HealthPoints = Math.Min(MaxHealthPoints, healthPoints == 0 ? MaxHealthPoints : healthPoints);
 
             CreatureType = type;
 
@@ -45,17 +45,19 @@ namespace NeoServer.Game.Creatures.Model
             };
             Hostiles = new HashSet<uint>();
             Friendly = new HashSet<uint>();
+            MaxHealthPoints = type.MaxHealth;
 
         }
 
         //public Location Location { get; set; }
         public uint HealthPoints { get; protected set; }
-        public uint MaxHealthpoints { get; protected set; }
+        public uint MaxHealthPoints { get; protected set; }
         public new string Name => CreatureType.Name;
         public uint CreatureId { get; }
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
         public IContainer Corpse { get; set; }
         public virtual BloodType Blood => BloodType.Blood;
+        
         public abstract IOutfit Outfit { get; protected set; }
         public Direction Direction { get; protected set; }
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
@@ -90,7 +92,6 @@ namespace NeoServer.Game.Creatures.Model
         public HashSet<uint> Hostiles { get; }
 
         public HashSet<uint> Friendly { get; }
-
         public bool IsRemoved { get; private set; }
 
         public bool HasFlag(CreatureFlag flag)
