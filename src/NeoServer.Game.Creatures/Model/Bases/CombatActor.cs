@@ -172,7 +172,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void Heal(ushort increasing)
         {
-            if (HealthPoints <= 0) return;
+            if (increasing <= 0) return;
 
             if (HealthPoints == MaxHealthPoints) return;
 
