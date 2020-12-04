@@ -2,11 +2,15 @@ namespace NeoServer.Game.Common.Players
 {
     public enum VocationType : byte
     {
-        Knight = 1,
-        Sorcerer = 2,
-        Druid = 3,
-        Paladin = 4,
-        Noob = 5,
-        All = 6
+        None = 0,
+        Knight = 4,
+        Sorcerer = 1,
+        Druid = 2,
+        Paladin = 3,
+        MasterSorcerer = 5,
+        ElderDruid = 6,
+        RoyalPaladin = 7,
+        EliteKnight = 8,
+        All = 9
     }
 }

@@ -62,7 +62,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool CannotLogout { get; }
         uint Id { get; }
         bool HasDepotOpened { get; }
-        VocationType Vocation { get;  }
+        VocationType VocationType { get;  }
 
         //  IAction PendingAction { get; }
 
@@ -125,7 +125,15 @@ namespace NeoServer.Server.Model.Players.Contracts
         void LookAt(ITile tile);
         void LookAt(byte containerId, sbyte containerSlot);
         void LookAt(Slot slot);
-        string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(Vocation).ToLower()}{GuildText}";
+        /// <summary>
+        /// Health and mana recovery
+        /// </summary>
+        void Recover();
+
+        string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
+
+        uint TotalCapacity { get; }
+        bool Recovering { get; }
     }
 }

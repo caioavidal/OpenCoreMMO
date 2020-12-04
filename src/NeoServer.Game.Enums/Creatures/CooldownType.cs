@@ -13,6 +13,8 @@
         Spell,
         MoveAroundEnemy,
         TargetChange,
-        Yell
+        Yell,
+        HealthRecovery,
+        ManaRecovery
     }
 }

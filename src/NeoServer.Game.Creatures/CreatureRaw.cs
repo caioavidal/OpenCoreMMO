@@ -32,7 +32,7 @@ namespace NeoServer.Game.Creatures
                 cache.AddRange(creatureNameBytes);
             }
 
-            cache.Add((byte)Math.Min(100, creature.HealthPoints * 100 / creature.MaxHealthpoints));
+            cache.Add((byte)Math.Min(100, creature.HealthPoints * 100 / creature.MaxHealthPoints));
             cache.Add((byte)creature.ClientSafeDirection);
 
             if (playerRequesting.CanSee(creature))

@@ -17,17 +17,7 @@ namespace NeoServer.Game.Contracts.Items.Types
     {
         bool Pickupable => true;
         IItemRequirement[] Requirements => Metadata.Requirements;
-        bool CanWear(IPlayer player)
-        {
-            if (Requirements is null || Requirements.Length == 0) return true;
-
-            foreach (var requirement in Requirements)
-            {
-                if (requirement.Vocation == VocationType.All && requirement.MinLevel < player.Level) return true;
-                if (requirement.Vocation == player.Vocation && requirement.MinLevel < player.Level) return true;
-            }
-            return false;
-        }
+      
         ushort MinimumLevelRequired => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
         public ImmutableDictionary<SkillType, byte> SkillBonus => Metadata.Attributes.SkillBonus.ToImmutableDictionary();
         public WeaponType WeaponType => Metadata.WeaponType;

@@ -45,7 +45,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte Shield { get; }
         byte Skull { get; }
         uint HealthPoints { get; }
-        uint MaxHealthpoints { get; }
+        uint MaxHealthPoints { get; }
         bool IsHealthHidden { get; }
         IContainer Corpse { get; set; }
 

@@ -35,6 +35,7 @@ using System.IO;
 using NeoServer.Game.Common;
 using NeoServer.Game.World.Map.Operations;
 using NeoServer.Data.Repositories;
+using NeoServer.Loaders.Vocations;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -83,13 +84,14 @@ namespace NeoServer.Server.Standalone.IoC
 
             //world
             builder.RegisterType<World>().SingleInstance();
-            //builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
 
+            //loaders
             builder.RegisterType<ItemTypeLoader>().SingleInstance();
             builder.RegisterType<Loaders.World.WorldLoader>().SingleInstance();
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
-
+            builder.RegisterType<VocationLoader>().SingleInstance();
+            
             //builder.RegisterType<OTBMWorldLoader>();
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
             

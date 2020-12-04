@@ -24,7 +24,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
             else
             {
-                var result = (double)creature.HealthPoints / (int)Math.Max(creature.MaxHealthpoints, 1);
+                var result = (double)creature.HealthPoints / (int)Math.Max(creature.MaxHealthPoints, 1);
                 result = Math.Ceiling(result * 100);
 
                 message.AddByte((byte)result);

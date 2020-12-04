@@ -73,7 +73,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             blockCount++;
         }
-        public void ResetHealthPoints() => HealthPoints = MaxHealthpoints;
+        public void ResetHealthPoints() => HealthPoints = MaxHealthPoints;
+        
 
         public CombatDamage ReduceDamage(CombatDamage attack)
         {
@@ -173,7 +174,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             if (HealthPoints <= 0) return;
 
-            HealthPoints = HealthPoints + increasing >= MaxHealthpoints ? MaxHealthpoints : HealthPoints + increasing;
+            if (HealthPoints == MaxHealthPoints) return;
+
+            HealthPoints = HealthPoints + increasing >= MaxHealthPoints ? MaxHealthPoints : HealthPoints + increasing;
             OnHeal?.Invoke(this, increasing);
         }
 
