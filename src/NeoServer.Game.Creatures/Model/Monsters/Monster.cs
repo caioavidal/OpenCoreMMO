@@ -285,7 +285,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 SetState(MonsterState.InCombat);
             }
 
-            FollowCreature = true;
+            FollowCreature = Speed > 0;
 
             if (FollowCreature)
             {

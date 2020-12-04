@@ -221,7 +221,7 @@
       "name": "Knight",
       "description": "a knight",
       "gaincap": 25,
-      "gainhp": 15,
+      "gainhp": 10,
       "gainmana": 5,
 	  "gainHpAmount": 15,
       "gainManaAmount": 5,

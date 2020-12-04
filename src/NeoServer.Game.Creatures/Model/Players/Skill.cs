@@ -8,83 +8,59 @@ namespace NeoServer.Server.Model.Players
     public class Skill : ISkill
     {
         public event OnLevelAdvance OnAdvance;
+        public event OnIncreaseSkillPoints OnIncreaseSkillPoints;
+
         public SkillType Type { get; }
 
         public ushort Level { get; private set; }
 
-        public ushort MaxLevel { get; }
-
-        public ushort DefaultLevel { get; }
 
         public double Count { get; private set; }
 
-        public double Rate { get; }
+        public float Rate { get; }
 
         public double Target { get; }
 
-        public double BaseIncrease { get; }
+        public double BaseIncrease => SkillsRates[Type].Item1;
 
         public double Percentage => CalculatePercentage(Count);
 
 
-        //BaseIncrease and Rate
+        //BaseIncrease and skill offset
         private IDictionary<SkillType, Tuple<double, double>> SkillsRates = new Dictionary<SkillType, Tuple<double, double>>()
         {
-            {SkillType.Fist, new Tuple<double,double>(50,1.5) },
-            {SkillType.Club, new Tuple<double,double>(50,2.0) },
-            {SkillType.Sword, new Tuple<double,double>(50,2.0) },
-            {SkillType.Axe, new Tuple<double,double>(50,2.0) },
-            {SkillType.Distance, new Tuple<double,double>(30,2.0) },
-            {SkillType.Shielding, new Tuple<double,double>(100,1.5) },
-            {SkillType.Fishing, new Tuple<double,double>(20,1.1) },
-            {SkillType.Magic, new Tuple<double,double>(0,4) },
+            {SkillType.Fist, new Tuple<double,double>(50,10) },
+            {SkillType.Club, new Tuple<double,double>(50,10) },
+            {SkillType.Sword, new Tuple<double,double>(50,10) },
+            {SkillType.Axe, new Tuple<double,double>(50,10) },
+            {SkillType.Distance, new Tuple<double,double>(30,10) },
+            {SkillType.Shielding, new Tuple<double,double>(100,10) },
+            {SkillType.Fishing, new Tuple<double,double>(20,10) },
+            {SkillType.Magic, new Tuple<double,double>(1600,0) },
         };
 
-        public Skill(SkillType type, ushort defaultLevel, double rate, double baseIncrease, ushort level = 0, ushort maxLevel = 1, double count = 0)
+        public Skill(SkillType type, float rate, ushort level = 0, double count = 0)
         {
-            if (defaultLevel < 1)
-            {
-                throw new Exception($"{nameof(defaultLevel)} must be positive.");
-            }
-
-            if (maxLevel < 1)
-            {
-                throw new Exception($"{nameof(maxLevel)} must be positive.");
-            }
-
-            if (rate < 1)
+        
+            if (rate < 0)
             {
                 throw new Exception($"{nameof(rate)} must be positive.");
-            }
-
-            if (baseIncrease < 1)
-            {
-                throw new Exception($"{nameof(baseIncrease)} must be positive.");
             }
 
             if (count < 0)
             {
                 throw new Exception($"{nameof(count)} cannot be negative.");
             }
-
-            if (maxLevel < defaultLevel)
-            {
-                throw new Exception($"{nameof(maxLevel)} must be at least the same value as {nameof(defaultLevel)}.");
-            }
-
             Type = type;
-            DefaultLevel = defaultLevel;
-            MaxLevel = maxLevel;
-            Level = Math.Min(MaxLevel, level == 0 ? defaultLevel : level);
+            Level =  level;
             Rate = rate;
-            BaseIncrease = baseIncrease;
 
-            //Target = CalculateNextTarget(count);
-            //Percentage = CalculatePercentage(count);
             Count = count;
         }
 
         private double GetExpForLevel(int level) => ((50 * Math.Pow(level, 3)) / 3) - (100 * Math.Pow(level, 2)) + ((850 * level) / 3) - 200;
+        private double GetPointsForLevel(int skillLevel, float vocationRate) => SkillsRates[Type].Item1 * Math.Pow(vocationRate, skillLevel - SkillsRates[Type].Item2);
+
 
         private double CalculatePercentage(double count, double nextLevelCount) => Math.Min(100, (count * 100) / nextLevelCount);
         private double CalculatePercentage(double count)
@@ -107,15 +83,9 @@ namespace NeoServer.Server.Model.Players
             }
             else
             {
-
-                var baseIncrease = SkillsRates[Type].Item1;
-                var rate = SkillsRates[Type].Item2;
-
-                var nextSkillTries = baseIncrease * Math.Pow((rate), Level - 10);
-                return CalculatePercentage(count, nextSkillTries);
+                return CalculatePercentage(count, GetPointsForLevel(Level + 1, Rate));
             }
         }
-
         private double GetManaPercentage(double manaSpent)
         {
             var rate = SkillsRates[Type].Item2;
@@ -141,23 +111,44 @@ namespace NeoServer.Server.Model.Players
 
         public void IncreaseCounter(double value)
         {
-
             Count += value;
-            IncreaseLevel();
+            if (Type ==  SkillType.Level) IncreaseLevel();
+            else IncreaseSkillLevel();
         }
+     
 
         public void IncreaseLevel()
         {
+            if (Type != SkillType.Level) return;
+
             var oldLevel = Level;
             while (Count >= GetExpForLevel(Level + 1))
             {
                 Level++;
             }
 
-            if(oldLevel != Level)
+            if (oldLevel != Level)
             {
                 OnAdvance?.Invoke(Type, oldLevel, Level);
             }
+        }
+        public void IncreaseSkillLevel()
+        {
+            if (Type == SkillType.Level) return;
+
+            var oldLevel = Level;
+            while (Count >= GetPointsForLevel(Level + 1, Rate))
+            {
+                Count = 0;
+                Level++;
+            }
+
+            if (oldLevel != Level)
+            {
+                OnAdvance?.Invoke(Type, oldLevel, Level);
+            }
+
+            OnIncreaseSkillPoints?.Invoke(Type);
         }
     }
 }

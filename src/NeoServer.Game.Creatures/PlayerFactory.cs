@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Creatures.Vocations;
 
 namespace NeoServer.Game.Creatures
 {
@@ -34,6 +36,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
         private readonly PlayerOperationFailedEventHandler _playerOperationFailedEventHandler;
         private readonly PlayerLookedAtEventHandler playerLookedAtEventHandler;
+        private readonly PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler;
         private readonly IPathFinder _pathFinder;
 
         public PlayerFactory(IItemFactory itemFactory,
@@ -44,7 +47,8 @@ namespace NeoServer.Game.Creatures
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaChangedEventHandler playerManaReducedEventHandler,
             IPathFinder pathFinder, SpellInvokedEventHandler playerUsedSpellEventHandler,
             PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler,
-            PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler, PlayerLookedAtEventHandler playerLookedAtEventHandler)
+            PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler,
+            PlayerLookedAtEventHandler playerLookedAtEventHandler, PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -64,9 +68,16 @@ namespace NeoServer.Game.Creatures
             _playerLevelAdvancedEventHandler = playerLevelAdvancedEventHandler;
             _playerOperationFailedEventHandler = playerOperationFailedEventHandler;
             this.playerLookedAtEventHandler = playerLookedAtEventHandler;
+            this.playerGainedSkillPointsEventHandler = playerGainedSkillPointsEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
+            if(!VocationStore.TryGetValue(player.Vocation, out var vocation))
+            {
+                throw new Exception("Player vocation not found");
+            }
+          
+
             var newPlayer = new Player(
                 (uint)player.Id,
                 player.CharacterName,
@@ -81,8 +92,8 @@ namespace NeoServer.Game.Creatures
                 player.MaxMana,
                 player.FightMode,
                 player.SoulPoints,
-                player.MaxSoulPoints,
-                player.Skills,
+                vocation.SoulMax,
+                ConvertToSkills(player),
                 player.StaminaMinutes,
                 player.Outfit,
                 ConvertToInventory(player),
@@ -111,7 +122,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnStoppedAttack += creatureStopedAttackEventHandler.Execute;
             newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
-            newPlayer.OnManaChanged += _playerManaReducedEventHandler.Execute;
+            newPlayer.OnStatusChanged += _playerManaReducedEventHandler.Execute;
             newPlayer.OnUsedSpell += _playerUsedSpellEventHandler.Execute;
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
             newPlayer.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
@@ -119,7 +130,14 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnLevelAdvanced += _playerLevelAdvancedEventHandler.Execute;
             newPlayer.OnOperationFailed += _playerOperationFailedEventHandler.Execute;
             newPlayer.OnLookedAt += playerLookedAtEventHandler.Execute;
+            newPlayer.OnGainedSkillPoint += playerGainedSkillPointsEventHandler.Execute;
             return newPlayer;
+        }
+
+        private Dictionary<SkillType, ISkill> ConvertToSkills(IPlayerModel player)
+        {
+            VocationStore.TryGetValue(player.Vocation, out var vocation);
+            return player.Skills.ToDictionary(x => x.Key, x=> (ISkill) new Skill(x.Key, vocation.Skill.ContainsKey((byte)x.Key) ? vocation.Skill[(byte)x.Key] : 1, (ushort)x.Value.Level, x.Value.Count));
         }
         private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(IPlayerModel player)
         {

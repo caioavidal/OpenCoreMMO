@@ -22,12 +22,12 @@ namespace NeoServer.Game.Contracts.Creatures
         byte GainHpTicks { get; set; }
         ushort GainMana { get; set; }
         byte GainManaTicks { get; set; }
-        string GainSoulTicks { get; set; }
+        byte GainSoulTicks { get; set; }
         string Id { get; set; }
         string ManaMultiplier { get; set; }
         string Name { get; set; }
-        List<IVocationSkill> Skill { get; set; }
-        string SoulMax { get; set; }
+        public Dictionary<byte, float> Skill { get; set; }
+        byte SoulMax { get; set; }
         VocationType VocationType { get; }
     }
 

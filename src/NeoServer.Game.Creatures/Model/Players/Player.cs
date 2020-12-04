@@ -30,7 +30,7 @@ namespace NeoServer.Server.Model.Players
     public class Player : CombatActor, IPlayer
     {
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
-            Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, uint maxSoulPoints, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
+            Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location, PathFinder pathFinder)
              : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
@@ -46,8 +46,8 @@ namespace NeoServer.Server.Model.Players
             Mana = mana;
             MaxMana = maxMana;
             FightMode = fightMode;
+            MaxSoulPoints = soulMax;
             SoulPoints = soulPoints;
-            MaxSoulPoints = maxSoulPoints;
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
@@ -63,14 +63,17 @@ namespace NeoServer.Server.Model.Players
             foreach (var skill in Skills.Values)
             {
                 skill.OnAdvance += OnLevelAdvance;
+                skill.OnIncreaseSkillPoints += (skill) => OnGainedSkillPoint?.Invoke(this, skill);
             }
         }
 
         public event PlayerLevelAdvance OnLevelAdvanced;
+        public event PlayerGainSkillPoint OnGainedSkillPoint;
+
         public event OperationFail OnOperationFailed;
         public event CancelWalk OnCancelledWalk;
 
-        public event ReduceMana OnManaChanged;
+        public event ReduceMana OnStatusChanged;
         public event CannotUseSpell OnCannotUseSpell;
         public event LookAt OnLookedAt;
         public event UseSpell OnUsedSpell;
@@ -86,14 +89,10 @@ namespace NeoServer.Server.Model.Players
             ChangeSpeed(Speed);
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
-       
+
         private uint IdleTime;
         public string CharacterName { get; private set; }
-
-        public Account Account { get; private set; }
         public override IOutfit Outfit { get; protected set; }
-
-        public new uint Corpse => 4240;
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
         public override ushort Speed => (ushort)(220 + Level);
         public IPlayerContainerList Containers { get; }
@@ -110,8 +109,15 @@ namespace NeoServer.Server.Model.Players
         public ushort Mana { get; private set; }
         public ushort MaxMana { get; private set; }
         public FightMode FightMode { get; private set; }
-        public byte SoulPoints { get; private set; }
-        public uint MaxSoulPoints { get; private set; }
+
+        private byte soulPoints;
+        public byte SoulPoints
+        {
+            get => soulPoints;
+            private set => soulPoints = value > MaxSoulPoints ? MaxSoulPoints : value;
+        }
+
+        public byte MaxSoulPoints { get; private set; }
         public IInventory Inventory { get; set; }
 
         public ushort StaminaMinutes { get; private set; }
@@ -126,16 +132,9 @@ namespace NeoServer.Server.Model.Players
                 }
                 return 0;
             }
-
         }
-        public void ResetMana() => Mana = MaxMana;
+        public void ResetMana() => HealMana(MaxMana);
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
-
-        public bool IsMounted()
-        {
-            return false;
-        }
-
         public void IncreaseSkillCounter(SkillType skill, uint value)
         {
             if (!Skills.ContainsKey(skill)) return;
@@ -143,19 +142,7 @@ namespace NeoServer.Server.Model.Players
             Skills[skill].IncreaseCounter(value);
         }
 
-        public string GetDescription(bool isYourself)
-        {
-            if (isYourself)
-            {
-                return $"You are {VocationType}";
-            }
-            return "";
-        }
-
-        public void ResetIdleTime()
-        {
-            IdleTime = 0;
-        }
+        public void ResetIdleTime() => IdleTime = 0;
 
         public override void GainExperience(uint exp)
         {
@@ -211,7 +198,6 @@ namespace NeoServer.Server.Model.Players
                 }
             }
         }
-
         public float DamageFactor => FightMode switch
         {
             FightMode.Attack => 1,
@@ -248,14 +234,8 @@ namespace NeoServer.Server.Model.Players
         }
 
         public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
+        public override ushort AttackPower => (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
 
-        public override ushort AttackPower
-        {
-            get
-            {
-                return (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
-            }
-        }
         public uint Id { get; }
         public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
@@ -280,9 +260,7 @@ namespace NeoServer.Server.Model.Players
         public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
-
         const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
-
 
         public uint ChooseToRemoveFromKnownSet()
         {
@@ -316,7 +294,7 @@ namespace NeoServer.Server.Model.Players
             Containers.CloseDistantContainers();
             base.OnMoved(fromTile, toTile);
         }
-    
+
 
         public override void SetAsInFight()
         {
@@ -367,10 +345,7 @@ namespace NeoServer.Server.Model.Players
 
         }
 
-        public void SetSecureMode(byte mode)
-        {
-            SecureMode = mode;
-        }
+        public void SetSecureMode(byte mode) => SecureMode = mode;
 
         public void CancelWalk()
         {
@@ -380,7 +355,12 @@ namespace NeoServer.Server.Model.Players
 
         public override int ShieldDefend(int attack)
         {
-            return (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
+            var resultDamage = (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
+            if(resultDamage <= 0)
+            {
+                IncreaseSkillCounter(SkillType.Shielding, 1);
+            }
+            return resultDamage;
         }
 
         public override int ArmorDefend(int damage)
@@ -397,14 +377,19 @@ namespace NeoServer.Server.Model.Players
             }
             return damage;
         }
-        public void ReceiveManaAttack(ICreature enemy, ushort damage)
-        {
-            ConsumeMana(damage);
-        }
+        public void ReceiveManaAttack(ICreature enemy, ushort damage) => ConsumeMana(damage);
+        
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             combat = new CombatAttackType();
-            return Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
+            var canUse = Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
+
+            if (canUse)
+            {
+                IncreaseSkillCounter(SkillInUse, 1);
+            }
+
+            return canUse;
         }
 
         public override void Say(string message, TalkType talkType)
@@ -430,7 +415,7 @@ namespace NeoServer.Server.Model.Players
             if (!HasEnoughMana(mana)) return;
 
             Mana -= mana;
-            OnManaChanged?.Invoke(this);
+            OnStatusChanged?.Invoke(this);
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
 
@@ -450,11 +435,11 @@ namespace NeoServer.Server.Model.Players
             if (tile.TopCreatureOnStack is null && tile.TopItemOnStack is null) return;
 
             IThing thing = tile.TopCreatureOnStack is null ? tile.TopItemOnStack : tile.TopCreatureOnStack;
-            OnLookedAt?.Invoke(this, thing, isClose); 
+            OnLookedAt?.Invoke(this, thing, isClose);
         }
         public void LookAt(byte containerId, sbyte containerSlot)
         {
-            if(Containers[containerId][containerSlot] is not IThing thing) return;
+            if (Containers[containerId][containerSlot] is not IThing thing) return;
             OnLookedAt?.Invoke(this, thing, true);
         }
         public void LookAt(Slot slot)
@@ -489,22 +474,34 @@ namespace NeoServer.Server.Model.Players
         }
         public void HealMana(ushort increasing)
         {
-            if (Mana <= 0) return;
+            if (increasing <= 0) return;
 
             if (Mana == MaxMana) return;
 
             Mana = Mana + increasing >= MaxMana ? MaxMana : (ushort)(Mana + increasing);
-            OnManaChanged?.Invoke(this);
+            OnStatusChanged?.Invoke(this);
+        }
+        public void HealMana(byte increasing)
+        {
+            if (increasing <= 0) return;
+
+            if (SoulPoints == MaxSoulPoints) return;
+
+            SoulPoints += increasing;
+            OnStatusChanged?.Invoke(this);
         }
 
         public void Recover()
         {
             if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount);
             if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
+            if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealMana(1);
 
+            //todo: start these cooldowns when player logs in
             Cooldowns.Start(CooldownType.HealthRecovery, Vocation.GainHpTicks * 1000);
             Cooldowns.Start(CooldownType.ManaRecovery, Vocation.GainManaTicks * 1000);
+            Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
         }
+       
     }
 }
-
