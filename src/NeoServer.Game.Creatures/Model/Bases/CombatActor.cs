@@ -193,7 +193,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);
         public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
-        public bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
+        public virtual bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
             if (IsDead) return false;
 

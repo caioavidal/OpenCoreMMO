@@ -1,7 +1,5 @@
-﻿using BenchmarkDotNet.Disassemblers;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -15,7 +13,15 @@ namespace NeoServer.Server.Events
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
-                connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You advanced from level {fromLevel} to level {toLevel}.", TextMessageOutgoingType.MESSAGE_EVENT_ADVANCE));
+                if (SkillType.Level == type)
+                {
+                    connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You advanced from level {fromLevel} to level {toLevel}.", TextMessageOutgoingType.MESSAGE_EVENT_ADVANCE));
+                }
+                else
+                {
+                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(MessageParser.GetSkillAdvancedMessage(type, toLevel), TextMessageOutgoingType.MESSAGE_EVENT_ADVANCE));
+                }
+
                 connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
 
                 connection.Send();

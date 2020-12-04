@@ -30,7 +30,7 @@ namespace NeoServer.Game.Creatures.Vocations
         public byte GainSoulTicks { get; set; }
         public string FromVoc { get; set; }
         public IVocationFormula Formula { get; set; }
-        public List<IVocationSkill> Skill { get; set; }
+        public Dictionary<byte, float> Skill { get; set; }
         public VocationType VocationType => VocationTypeParser.Parse(Name);
     }
 

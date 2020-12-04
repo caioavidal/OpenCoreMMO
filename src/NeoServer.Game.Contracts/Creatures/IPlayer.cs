@@ -22,6 +22,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
     public delegate void OperationFail(uint id, string message);
     public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
+    public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
 
     public interface IPlayer : ICombatActor
     {
@@ -54,6 +55,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event CannotUseSpell OnCannotUseSpell;
         event OperationFail OnOperationFailed;
         event LookAt OnLookedAt;
+        event PlayerGainSkillPoint OnGainedSkillPoint;
 
         IInventory Inventory { get; }
         ushort Mana { get; }

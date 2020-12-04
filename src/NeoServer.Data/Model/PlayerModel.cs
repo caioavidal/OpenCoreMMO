@@ -29,7 +29,7 @@ namespace NeoServer.Server.Model.Players
         public FightMode FightMode { get; }
         public byte SoulPoints { get; set; }
         public byte MaxSoulPoints { get; set; }
-        public IDictionary<SkillType, ISkill> Skills { get; set; }
+        public IDictionary<SkillType, ISkillModel> Skills { get; set; }
 
         public IOutfit Outfit { get; set; }
 
@@ -45,6 +45,12 @@ namespace NeoServer.Server.Model.Players
         {
             return false;
         }
+    }
+
+    public class SkillModel: ISkillModel
+    {
+        public int Level { get; set; }
+        public int Count { get; set; }
     }
 
     public class ItemModel:IItemModel

@@ -63,10 +63,13 @@ namespace NeoServer.Server.Model.Players
             foreach (var skill in Skills.Values)
             {
                 skill.OnAdvance += OnLevelAdvance;
+                skill.OnIncreaseSkillPoints += (skill) => OnGainedSkillPoint?.Invoke(this, skill);
             }
         }
 
         public event PlayerLevelAdvance OnLevelAdvanced;
+        public event PlayerGainSkillPoint OnGainedSkillPoint;
+
         public event OperationFail OnOperationFailed;
         public event CancelWalk OnCancelledWalk;
 
@@ -371,7 +374,14 @@ namespace NeoServer.Server.Model.Players
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             combat = new CombatAttackType();
-            return Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
+            var canUse = Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
+
+            if (canUse)
+            {
+                IncreaseSkillCounter(SkillInUse, 1);
+            }
+
+            return canUse;
         }
 
         public override void Say(string message, TalkType talkType)
@@ -479,11 +489,15 @@ namespace NeoServer.Server.Model.Players
             if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
             if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealMana(1);
 
-            //start these cooldowns when player logs in
+            //todo: start these cooldowns when player logs in
             Cooldowns.Start(CooldownType.HealthRecovery, Vocation.GainHpTicks * 1000);
             Cooldowns.Start(CooldownType.ManaRecovery, Vocation.GainManaTicks * 1000);
             Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
-
+        }
+        public override bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
+        {
+            IncreaseSkillCounter(SkillType.Shielding, 1);
+            return base.ReceiveAttack(enemy, damage);
         }
     }
 }
