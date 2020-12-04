@@ -15,6 +15,7 @@
         TargetChange,
         Yell,
         HealthRecovery,
-        ManaRecovery
+        ManaRecovery,
+        SoulRecovery
     }
 }

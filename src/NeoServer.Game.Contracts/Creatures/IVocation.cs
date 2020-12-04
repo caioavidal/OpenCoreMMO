@@ -22,7 +22,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte GainHpTicks { get; set; }
         ushort GainMana { get; set; }
         byte GainManaTicks { get; set; }
-        string GainSoulTicks { get; set; }
+        byte GainSoulTicks { get; set; }
         string Id { get; set; }
         string ManaMultiplier { get; set; }
         string Name { get; set; }

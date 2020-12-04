@@ -70,7 +70,7 @@ namespace NeoServer.Server.Model.Players
         public event OperationFail OnOperationFailed;
         public event CancelWalk OnCancelledWalk;
 
-        public event ReduceMana OnManaChanged;
+        public event ReduceMana OnStatusChanged;
         public event CannotUseSpell OnCannotUseSpell;
         public event LookAt OnLookedAt;
         public event UseSpell OnUsedSpell;
@@ -397,7 +397,7 @@ namespace NeoServer.Server.Model.Players
             if (!HasEnoughMana(mana)) return;
 
             Mana -= mana;
-            OnManaChanged?.Invoke(this);
+            OnStatusChanged?.Invoke(this);
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
 
@@ -456,21 +456,34 @@ namespace NeoServer.Server.Model.Players
         }
         public void HealMana(ushort increasing)
         {
-            if (Mana <= 0) return;
+            if (increasing <= 0) return;
 
             if (Mana == MaxMana) return;
 
             Mana = Mana + increasing >= MaxMana ? MaxMana : (ushort)(Mana + increasing);
-            OnManaChanged?.Invoke(this);
+            OnStatusChanged?.Invoke(this);
+        }
+        public void HealMana(byte increasing)
+        {
+            if (increasing <= 0) return;
+
+            if (SoulPoints == MaxSoulPoints) return;
+
+            SoulPoints += increasing;
+            OnStatusChanged?.Invoke(this);
         }
 
         public void Recover()
         {
             if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount);
             if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
+            if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealMana(1);
 
+            //start these cooldowns when player logs in
             Cooldowns.Start(CooldownType.HealthRecovery, Vocation.GainHpTicks * 1000);
             Cooldowns.Start(CooldownType.ManaRecovery, Vocation.GainManaTicks * 1000);
+            Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
+
         }
     }
 }

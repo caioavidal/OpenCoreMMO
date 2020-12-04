@@ -110,7 +110,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnStoppedAttack += creatureStopedAttackEventHandler.Execute;
             newPlayer.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
-            newPlayer.OnManaChanged += _playerManaReducedEventHandler.Execute;
+            newPlayer.OnStatusChanged += _playerManaReducedEventHandler.Execute;
             newPlayer.OnUsedSpell += _playerUsedSpellEventHandler.Execute;
             newPlayer.OnCannotUseSpell += _playerCannotUseSpellEventHandler.Execute;
             newPlayer.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
