@@ -1,5 +1,6 @@
 ﻿using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
+using Serilog.Core;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace NeoServer.Loaders.Spawns
     {
         private readonly Game.World.World _world;
         private readonly ServerConfiguration serverConfiguration;
-        public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration)
+        private readonly Logger logger;
+        public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration, Logger logger)
         {
             _world = world;
             this.serverConfiguration = serverConfiguration;
+            this.logger = logger;
         }
         public void Load()
         {
@@ -22,6 +25,7 @@ namespace NeoServer.Loaders.Spawns
             var spawns = spawnData.Select(x => SpawnConverter.Convert(x)).ToList();
 
             _world.LoadSpawns(spawns);
+            logger.Information($"{spawns.Count} spawns loaded!");
         }
 
         private IEnumerable<SpawnData> GetSpawnData()
