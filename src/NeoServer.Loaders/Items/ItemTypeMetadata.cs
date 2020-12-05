@@ -17,6 +17,7 @@ namespace NeoServer.Loaders.Items
         public string Plural { get; set; }
         public string Editorsuffix { get; set; }
         public Requirement[] Requirements { get; set; }
+        public string[] Flags { get; set; }
 
         public IItemRequirement[] ItemRequirements
         {

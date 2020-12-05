@@ -395,12 +395,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in topItems)
             {
-                if (item.FloorDirection != default)
-                {
-                    FloorDirection = item.FloorDirection;
-                }
-
-                FloorDirection = item.FloorDirection;
+                FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
                 TopItems.Push(item);
             }
 

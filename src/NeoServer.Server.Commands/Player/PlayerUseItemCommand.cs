@@ -33,6 +33,10 @@ namespace NeoServer.Server.Commands.Player
                     player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
                     return;
                 }
+                if(tile.TopItemOnStack is IUseable useable)
+                {
+                    useable.Use(player, game.Map);
+                }
             }
             else if (useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)
             {

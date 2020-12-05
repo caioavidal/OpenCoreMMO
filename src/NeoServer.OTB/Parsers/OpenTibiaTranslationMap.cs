@@ -126,10 +126,26 @@ namespace NeoServer.OTB.Parsers
                 case "blocking": return ItemAttribute.Blocking;
                 case "allowdistread": return ItemAttribute.AllowDistRead;
                 case "minlevel": return ItemAttribute.MinimumLevel;
+                case "teleport": return ItemAttribute.TeleportDestination;
                 default:
                     success = false;
                     return ItemAttribute.AbsTeleportEffect; // Just return the first
             }
+        }
+
+        public static bool TranslateFlagName(string flagName, out ItemFlag flag)
+        {
+            flag = ItemFlag.Useable;
+            switch (flagName)
+            {
+                case "useable":
+                    flag = ItemFlag.Useable;
+                    break;
+                default:
+                    return false;
+            }
+
+            return true;
         }
 
         public static int TranslateMeeleWeaponTypeName(string typeName, out bool success)

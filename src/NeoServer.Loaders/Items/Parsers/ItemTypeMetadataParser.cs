@@ -43,11 +43,16 @@ namespace NeoServer.Loaders.Items
 
             itemType.SetPlural(metadata.Plural);
 
-            if (metadata.Attributes == null)
+            if (metadata.Flags is not null)
             {
-                return;
+                foreach (var flagName in metadata.Flags)
+                {
+                    if (!OpenTibiaTranslationMap.TranslateFlagName(flagName, out var flag)) continue;
+                    itemType.Flags.Add(flag);
+                }
             }
 
+            if (metadata.Attributes == null) return;
             foreach (var attribute in metadata.Attributes)
             {
                 var itemAttribute = OpenTibiaTranslationMap.TranslateAttributeName(attribute.Key, out bool success);

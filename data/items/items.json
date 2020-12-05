@@ -1761,7 +1761,12 @@
     {
        "id": "1386",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	   "attributes": [{
+          "key": "floorchange",
+          "value": "up"
+       }],
+	   "flags":["useable"]
     },
     {
        "id": "1387",
@@ -25932,7 +25937,11 @@
     {
        "id": "3678",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	     "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "3679",
@@ -58450,7 +58459,11 @@
     {
        "id": "8599",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	     "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "8600",
@@ -67841,7 +67854,11 @@
     {
        "id": "10035",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	     "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "10038",
