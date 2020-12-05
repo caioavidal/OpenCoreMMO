@@ -27,7 +27,13 @@ namespace NeoServer.Loaders.Spawns
         private IEnumerable<SpawnData> GetSpawnData()
         {
             var basePath = "./data/world/";
-            var jsonString = File.ReadAllText(Path.Combine(basePath, $"{serverConfiguration.OTBM.Replace(".otbm","-spawn")}.json"));
+
+            var spawnPath = Path.Combine(basePath, $"{serverConfiguration.OTBM.Replace(".otbm", "-spawn")}.json");
+            if (!File.Exists(spawnPath))
+            {
+                return new List<SpawnData>();
+            }
+            var jsonString = File.ReadAllText(spawnPath);
             var spawn = JsonConvert.DeserializeObject<IEnumerable<SpawnData>>(jsonString);
             return spawn;
         }
