@@ -12,7 +12,6 @@ namespace NeoServer.Loaders.Items
 {
     public class ItemTypeLoader
     {
-
         private readonly Logger logger;
         public ItemTypeLoader(Logger logger)
         {

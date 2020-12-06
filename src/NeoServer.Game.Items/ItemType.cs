@@ -29,6 +29,8 @@ namespace NeoServer.Game.Items
         public ISet<ItemFlag> Flags { get; }
 
         public IItemAttributeList Attributes { get; }
+        public IItemAttributeList OnUse { get; private set; }
+
         public IItemRequirement[] Requirements { get; private set; }
         public bool Locked { get; private set; }
 
@@ -147,6 +149,12 @@ namespace NeoServer.Game.Items
         {
             ThrowIfLocked();
             Requirements = requirements;
+        }
+        public void SetOnUse()
+        {
+            ThrowIfLocked();
+            if (OnUse is not null) return;
+            OnUse = new ItemAttributeList();
         }
         public void SetFlag(ItemFlag flag)
         {

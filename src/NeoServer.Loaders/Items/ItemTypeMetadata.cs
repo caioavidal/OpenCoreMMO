@@ -13,6 +13,8 @@ namespace NeoServer.Loaders.Items
         public ushort? Fromid { get; set; }
         public ushort? Toid { get; set; }
         public IEnumerable<Attribute> Attributes { get; set; }
+        public IEnumerable<Attribute> OnUse { get; set; }
+
         public string Article { get; set; }
         public string Plural { get; set; }
         public string Editorsuffix { get; set; }

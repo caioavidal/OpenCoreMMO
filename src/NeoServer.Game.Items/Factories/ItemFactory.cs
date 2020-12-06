@@ -8,6 +8,7 @@ using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.UsableItems;
 
 namespace NeoServer.Game.Items
 {
@@ -100,6 +101,14 @@ namespace NeoServer.Game.Items
             if (FloorChanger.IsApplicable(itemType))
             {
                 return new FloorChanger(itemType, location);
+            }
+            if (UseableOnItem.IsApplicable(itemType))
+            {
+                if (FloorChangerUsableItem.IsApplicable(itemType))
+                {
+                    return new FloorChangerUsableItem(itemType, location);
+                }
+                return new UseableOnItem(itemType, location);
             }
 
             return new Item(ItemTypeData.InMemory[typeId], location);

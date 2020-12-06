@@ -59,6 +59,14 @@ namespace NeoServer.Loaders.Items
 
                 itemType.Attributes.SetAttribute(itemAttribute, attribute.Value);
             }
+
+            if (metadata.OnUse == null) return;
+            foreach (var attribute in metadata.OnUse)
+            {
+                var itemAttribute = OpenTibiaTranslationMap.TranslateAttributeName(attribute.Key, out bool success);
+                itemType.SetOnUse();
+                itemType.OnUse.SetAttribute(itemAttribute, attribute.Value);
+            }
         }
     }
 }

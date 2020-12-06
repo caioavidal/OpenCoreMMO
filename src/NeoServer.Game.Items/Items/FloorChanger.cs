@@ -33,7 +33,7 @@ namespace NeoServer.Game.Items.Items
                 }
             }
         }
-        public static bool IsApplicable(IItemType type) => type.Attributes.HasAttribute(Common.ItemAttribute.FloorChange) || type.HasFlag(Common.ItemFlag.Useable);
+        public static bool IsApplicable(IItemType type) => type.Attributes.HasAttribute(Common.ItemAttribute.FloorChange) && type.HasFlag(Common.ItemFlag.Useable);
 
     
     }

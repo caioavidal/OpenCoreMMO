@@ -7609,6 +7609,15 @@
        "id": "2120",
        "article": "a",
        "name": "rope",
+	   "onuse":[{
+		  "key": "floorchange",
+		  "value":"up"
+	   },
+	   {
+		  "key":"useOn",
+		  "value":384
+	   }
+	   ],
        "attributes": [{
           "key": "weight",
           "value": "1800"
