@@ -4,7 +4,6 @@ namespace NeoServer.OTB.Parsers
 {
     public class OpenTibiaTranslationMap
     {
-
         public static ItemAttribute TranslateAttributeName(string attrName, out bool success)
         {
             success = true;
@@ -126,10 +125,28 @@ namespace NeoServer.OTB.Parsers
                 case "blocking": return ItemAttribute.Blocking;
                 case "allowdistread": return ItemAttribute.AllowDistRead;
                 case "minlevel": return ItemAttribute.MinimumLevel;
+                case "teleport": return ItemAttribute.UseOn;
+                case "useon": return ItemAttribute.UseOn;
+
                 default:
                     success = false;
                     return ItemAttribute.AbsTeleportEffect; // Just return the first
             }
+        }
+
+        public static bool TranslateFlagName(string flagName, out ItemFlag flag)
+        {
+            flag = ItemFlag.Useable;
+            switch (flagName)
+            {
+                case "useable":
+                    flag = ItemFlag.Useable;
+                    break;
+                default:
+                    return false;
+            }
+
+            return true;
         }
 
         public static int TranslateMeeleWeaponTypeName(string typeName, out bool success)

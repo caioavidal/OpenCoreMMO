@@ -8,6 +8,7 @@ using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.UsableItems;
 
 namespace NeoServer.Game.Items
 {
@@ -97,9 +98,19 @@ namespace NeoServer.Game.Items
             {
                 return new MagicField(itemType, location);
             }
+            if (FloorChanger.IsApplicable(itemType))
+            {
+                return new FloorChanger(itemType, location);
+            }
+            if (UseableOnItem.IsApplicable(itemType))
+            {
+                if (FloorChangerUsableItem.IsApplicable(itemType))
+                {
+                    return new FloorChangerUsableItem(itemType, location);
+                }
+                return new UseableOnItem(itemType, location);
+            }
 
-            //throw new NotImplementedException("Item not handled");
-            //return new BaseItem(itemType.Name, itemType.ClientId);
             return new Item(ItemTypeData.InMemory[typeId], location);
         }
     }

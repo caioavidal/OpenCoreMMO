@@ -36,6 +36,7 @@ namespace NeoServer.Game.Contracts.Items
         ushort TransformTo { get; }
         string Plural { get; }
         IItemRequirement[] Requirements { get; }
+        IItemAttributeList OnUse { get; }
 
         void SetName(string value);
         void LockChanges();
@@ -44,5 +45,6 @@ namespace NeoServer.Game.Contracts.Items
         void SetWareId(ushort wareId);
         bool HasFlag(ItemFlag flag);
         void SetRequirements(IItemRequirement[] requirements);
+        void SetOnUse();
     }
 }

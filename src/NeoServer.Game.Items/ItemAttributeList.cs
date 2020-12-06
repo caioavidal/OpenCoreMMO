@@ -73,6 +73,7 @@ namespace NeoServer.Game.Items
                     "west" => FloorChangeDirection.West,
                     "east" => FloorChangeDirection.East,
                     "eastalt" => FloorChangeDirection.EastAlternative,
+                    "up" => FloorChangeDirection.Up,
                     _ => FloorChangeDirection.None
                 };
             }
