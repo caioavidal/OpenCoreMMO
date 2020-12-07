@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creature
                 throw new InvalidOperationException("Monsters already loaded");
             }
 
-            _monsters = monsters.ToImmutableDictionary(x => x.Item1, v=> v.Item2);
+            _monsters = monsters.ToImmutableDictionary(x => x.Item1, v=> v.Item2, StringComparer.InvariantCultureIgnoreCase);
             _loaded = true;
         }
     }

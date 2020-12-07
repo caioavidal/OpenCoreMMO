@@ -28,6 +28,8 @@ namespace NeoServer.Game.World.Map
 
             directions = new Direction[0];
 
+            if (creature.Location.Z != target.Z) return false;
+
             if (fpp.OneStep)
             {
                 return FindStep(creature, target, fpp, out directions);

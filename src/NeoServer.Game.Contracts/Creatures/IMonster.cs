@@ -22,9 +22,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         ushort Defense { get; }
         MonsterState State { get; }
-
-        void SetState(MonsterState attacking);
-
         /// <summary>
         /// Select a target to attack
         /// </summary>
@@ -53,7 +50,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void Yell();
 
         uint Experience { get; }
-        bool HasAnyTarget { get; }
         bool CanReachAnyTarget { get; }
         bool IsInCombat { get; }
         bool Defending { get; }

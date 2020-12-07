@@ -234,17 +234,11 @@ namespace NeoServer.Server.Model.Players
         }
 
         public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
-        public override ushort AttackPower => (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
 
         public uint Id { get; }
         public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
         public override ushort ArmorRating => Inventory.TotalArmor;
-
-        public override ushort DefensePower => Inventory.TotalDefense;
-
-        public override byte AutoAttackRange => Math.Max((byte)1, Inventory.AttackRange);
-
         public byte SecureMode { get; private set; }
         public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);

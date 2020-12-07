@@ -93,21 +93,13 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return attack;
         }
 
-        public override ushort AttackPower => 0;
-
         public override ushort ArmorRating => Metadata.Armor;
-
-        public override byte AutoAttackRange => 0;
 
         public IMonsterType Metadata { get; }
         public override IOutfit Outfit { get; protected set; }
         public override ushort MinimumAttackPower => 0;
-
         public override bool UsingDistanceWeapon => TargetDistance > 1;
-
         public ISpawnPoint Spawn { get; }
-
-        public override ushort DefensePower => 30;
         public override BloodType Blood =>  Metadata.Race switch
         {
             Race.Bood => BloodType.Blood,
@@ -116,13 +108,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         };
 
         public ushort Defense => Metadata.Defense;
-
         public uint Experience => Metadata.Experience;
-
-        public bool HasAnyTarget => Targets.Count > 0;
-
-        public void SetState(MonsterState state) => State = state;
-
         private IDictionary<uint, CombatTarget> Targets = new Dictionary<uint, CombatTarget>(150);
 
         public void AddToTargetList(ICombatActor creature)
@@ -282,7 +268,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (target != null)
             {
-                SetState(MonsterState.InCombat);
+                State = MonsterState.InCombat;
             }
 
             FollowCreature = Speed > 0;

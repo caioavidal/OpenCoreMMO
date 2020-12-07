@@ -34,12 +34,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public decimal BaseAttackSpeed => 2000M;
         public decimal BaseDefenseSpeed { get; }
         public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
-        public abstract ushort AttackPower { get; }
         public abstract ushort ArmorRating { get; }
-        public abstract ushort DefensePower { get; }
         public uint AutoAttackTargetId { get; private set; }
         public bool Attacking => AutoAttackTargetId > 0;
-        public abstract byte AutoAttackRange { get; }
         public abstract ushort MinimumAttackPower { get; }
         public abstract bool UsingDistanceWeapon { get; }
         public uint AttackEvent { get; set; }
