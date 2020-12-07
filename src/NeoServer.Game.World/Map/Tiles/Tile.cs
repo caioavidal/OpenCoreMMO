@@ -128,11 +128,11 @@ namespace NeoServer.Game.World.Map.Tiles
             }
 
 
-            if (Ground.ClientId == id)
+            if (Ground?.ClientId == id)
             {
                 return true;
             }
-            if (Ground.ClientId != 0)
+            if (Ground?.ClientId != 0)
             {
                 ++stackPosition;
             }
@@ -200,7 +200,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 throw new ArgumentNullException(nameof(id));
             }
 
-            if (Ground.ClientId != 0)
+            if (Ground?.ClientId != 0)
             {
                 stackPosition++;
             }
@@ -235,7 +235,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             if (stackPosition == 0)
             {
-                return Ground.ClientId ;
+                return Ground.ClientId;
             }
             var n = 0;
 
@@ -295,11 +295,22 @@ namespace NeoServer.Game.World.Map.Tiles
             }
         }
 
+        private void SetGround(IGround ground)
+        {
+            Ground = ground;
+            FloorDirection = ground.FloorDirection;
+        }
+
         private ITileOperationResult AddThingToTile(IThing thing)
         {
             var operations = new TileOperationResult();
 
-            if (thing is IWalkableCreature creature)
+            if(thing is IGround ground && Ground is  null)
+            {
+                SetGround(ground);
+                operations.Add(Operation.Added, ground);
+            }
+            else if (thing is IWalkableCreature creature)
             {
                 if (HasCreature)
                 {
@@ -366,7 +377,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public Result<ITileOperationResult> AddThing(IThing thing)
         {
             var operations = AddThingToTile(thing);
-            if(operations.HasAnyOperation) thing.Location = Location;
+            if (operations.HasAnyOperation) thing.Location = Location;
             if (thing is IContainer container) container.SetParent(null);
             return new Result<ITileOperationResult>(operations);
         }
@@ -404,6 +415,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 AddThing(item);
             }
         }
+
         public Result<ITileOperationResult> RemoveThing(IThing thing, byte amount, out IThing removedThing)
         {
             amount = amount == 0 ? 1 : amount;
@@ -424,33 +436,37 @@ namespace NeoServer.Game.World.Map.Tiles
                 operations.Add(Operation.Removed, item);
                 removedThing = item;
             }
-            else
+            else if (DownItems is not null && DownItems.TryPeek(out var topStackItem))
             {
-                if (DownItems.TryPeek(out var topStackItem))
+                if (thing is ICumulative && topStackItem is ICumulative topCumulative)
                 {
-                    if (thing is ICumulative && topStackItem is ICumulative topCumulative)
-                    {
-                        topCumulative.Reduce(amount);
+                    topCumulative.Reduce(amount);
 
-                        if (topCumulative.Amount == 0)
-                        {
-                            DownItems.TryPop(out var item);
-                            operations.Add(Operation.Removed, item);
-                        }
-                        else
-                        {
-                            operations.Add(Operation.Updated, topCumulative);
-                        }
-                        removedThing = topCumulative.Clone(amount);
-                    }
-                    else
+                    if (topCumulative.Amount == 0)
                     {
                         DownItems.TryPop(out var item);
                         operations.Add(Operation.Removed, item);
-                        removedThing = item;
                     }
+                    else
+                    {
+                        operations.Add(Operation.Updated, topCumulative);
+                    }
+                    removedThing = topCumulative.Clone(amount);
+                }
+                else
+                {
+                    DownItems.TryPop(out var item);
+                    operations.Add(Operation.Removed, item);
+                    removedThing = item;
                 }
             }
+            else if(thing == Ground)
+            {
+                Ground = null;
+                operations.Add(Operation.Removed, thing);
+                removedThing = thing;
+            }
+
 
             SetCacheAsExpired();
             return new Result<ITileOperationResult>(operations);
