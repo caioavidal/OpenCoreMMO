@@ -118,27 +118,6 @@ namespace NeoServer.Game.World.Map
                 return true;
             }
 
-            //if (xDistance < fpp.MaxTargetDist && xDistance >= yDistance)
-            //{
-            //    var direction = startLocation.DirectionTo(target) == Direction.West ? Direction.East : Direction.West;
-            //    if (Map.CanGoToDirection(creature.Location, direction, tileEnterRule))
-            //    {
-            //        directions = new Direction[] { direction };
-            //        return true;
-            //    }
-            //    cannotGoOnXAxis = true;
-            //}
-
-            //if (yDistance < fpp.MaxTargetDist && (yDistance >= xDistance || cannotGoOnXAxis))
-            //{
-            //    var direction = startLocation.DirectionTo(target) == Direction.South ? Direction.North : Direction.South;
-            //    if (Map.CanGoToDirection(creature.Location, direction, tileEnterRule))
-            //    {
-            //        directions = new Direction[] { direction };
-            //        return true;
-            //    }
-            //}
-
             return true;
         }
     }
