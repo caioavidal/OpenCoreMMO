@@ -34,7 +34,12 @@ namespace NeoServer.Server.Jobs.Creatures
                 }
                 CreatureDefenseJob.Execute(creature as ICombatActor, game);
                 CreatureConditionJob.Execute(creature as ICombatActor);
-                CreatureTargetJob.Execute(creature as ICombatActor);
+
+                if(creature is IMonster monster)
+                {
+                    MonsterStateJob.Execute(monster);
+                }
+                
                 MonsterYellJob.Execute(creature as ICombatActor);
                 RespawnJob.Execute(spawnManager);
 

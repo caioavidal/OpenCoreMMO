@@ -16,15 +16,16 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Creatures.Model.Monsters.Loots;
+using NeoServer.Game.Creatures.Monsters;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
-    public class Monster : CombatActor, IMonster
+    public class Monster :  WalkableMonster, IMonster
     {
         public event Born OnWasBorn;
         public event Defende OnDefende;
         public event DropLoot OnDropLoot;
-        public Monster(IMonsterType type, PathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
+        public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
         {
             type.ThrowIfNull();
             spawn.ThrowIfNull();
@@ -114,33 +115,14 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void AddToTargetList(ICombatActor creature)
         {
             Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
-
-            if (!Attacking) SelectTargetToAttack();
         }
         public void RemoveFromTargetList(ICreature creature)
         {
             Targets.Remove(creature.CreatureId);
 
-            if (AutoAttackTargetId == creature.CreatureId)
-            {
-                StopAttack();
-            }
+            if (AutoAttackTargetId == creature.CreatureId) StopAttack();
         }
-        public bool LookForNewEnemy()
-        {
-            StopFollowing();
-            if (CanReachAnyTarget) return false;
-
-            int randomIndex = ServerRandom.Random.Next(minValue: 0, maxValue: 4);
-
-            var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
-
-            TryWalkTo(directions[randomIndex]);
-
-            return true;
-        }
-
-
+     
         public void SetAsEnemy(ICombatActor creature)
         {
             if (IsDead) return;
@@ -154,9 +136,17 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             AddToTargetList(creature);
         }
 
-        public bool CanReachAnyTarget { get; private set; } = false;
         public bool IsInCombat => State == MonsterState.InCombat;
         public bool IsSleeping => State == MonsterState.Sleeping;
+
+        public void ChangeState()
+        {
+            searchTarget();
+
+            if (Targets.Any() && !CanReachAnyTarget) State = MonsterState.LookingForEnemy;
+            else if (Targets.Any() && CanReachAnyTarget) State = MonsterState.InCombat;
+            else if (!Targets.Any()) State = MonsterState.Sleeping;
+        }
         public bool IsInPerfectPostionToCombat(CombatTarget target)
         {
             if (KeepDistance)
@@ -208,7 +198,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
-                if (FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, out var directions) == false)
+                if (PathAccess.FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
                     continue;
@@ -242,7 +232,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (!IsInPerfectPostionToCombat(combatTarget)) return;
 
-            if (FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, true), out var directions))
+            if (PathAccess.FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, true), out var directions))
             {
                 TryWalkTo(directions);
             }
@@ -250,26 +240,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SelectTargetToAttack()
         {
-            if (!Targets.Any())
-            {
-                Sleep();
-                return;
-            }
-
             if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
 
             var target = searchTarget();
 
-            if (target == null && !CanReachAnyTarget)
-            {
-                LookForNewEnemy();
-                return;
-            }
-
-            if (target != null)
-            {
-                State = MonsterState.InCombat;
-            }
+            if (target is null) return;
 
             FollowCreature = Speed > 0;
 
@@ -285,6 +260,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void Sleep()
         {
             State = MonsterState.Sleeping;
+
             StopAttack();
             StopFollowing();
         }

@@ -7,7 +7,7 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void Born(IMonster monster, Location location);
     public delegate void Defende(IMonster monster, ICombatDefense defense);
-    public interface IMonster : ICombatActor
+    public interface IMonster : IWalkableMonster, ICombatActor
     {
         event Born OnWasBorn;
         event Defende OnDefende;
@@ -48,6 +48,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Monster yells a sentence
         /// </summary>
         void Yell();
+        void ChangeState();
 
         uint Experience { get; }
         bool CanReachAnyTarget { get; }

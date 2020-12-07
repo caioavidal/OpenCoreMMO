@@ -618,7 +618,11 @@ namespace NeoServer.Game.World.Map
 
             var poolThing = pool as IThing;
             AddItem(poolThing, tile);
-
+        }
+        public bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule)
+        {
+            var tile = GetNextTile(location, direction);
+            return rule.CanEnter(tile);
         }
     }
 }

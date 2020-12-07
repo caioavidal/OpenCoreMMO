@@ -37,7 +37,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerOperationFailedEventHandler _playerOperationFailedEventHandler;
         private readonly PlayerLookedAtEventHandler playerLookedAtEventHandler;
         private readonly PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler;
-        private readonly IPathFinder _pathFinder;
+        private readonly CreaturePathAccess creaturePathAccess;
 
         public PlayerFactory(IItemFactory itemFactory,
              PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler,
@@ -45,10 +45,10 @@ namespace NeoServer.Game.Creatures
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler, ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler, CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler, PlayerManaChangedEventHandler playerManaReducedEventHandler,
-            IPathFinder pathFinder, SpellInvokedEventHandler playerUsedSpellEventHandler,
+            SpellInvokedEventHandler playerUsedSpellEventHandler,
             PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler,
             PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler,
-            PlayerLookedAtEventHandler playerLookedAtEventHandler, PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler)
+            PlayerLookedAtEventHandler playerLookedAtEventHandler, PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, CreaturePathAccess creaturePathAccess)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -61,7 +61,6 @@ namespace NeoServer.Game.Creatures
 
             _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
             _playerManaReducedEventHandler = playerManaReducedEventHandler;
-            _pathFinder = pathFinder;
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
             _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
             _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
@@ -69,6 +68,7 @@ namespace NeoServer.Game.Creatures
             _playerOperationFailedEventHandler = playerOperationFailedEventHandler;
             this.playerLookedAtEventHandler = playerLookedAtEventHandler;
             this.playerGainedSkillPointsEventHandler = playerGainedSkillPointsEventHandler;
+            this.creaturePathAccess = creaturePathAccess;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -77,7 +77,6 @@ namespace NeoServer.Game.Creatures
                 throw new Exception("Player vocation not found");
             }
           
-
             var newPlayer = new Player(
                 (uint)player.Id,
                 player.CharacterName,
@@ -99,7 +98,7 @@ namespace NeoServer.Game.Creatures
                 ConvertToInventory(player),
                 player.Speed,
                 player.Location,
-                _pathFinder.Find
+               creaturePathAccess
                 );
 
             newPlayer.OnCancelledWalk += playerWalkCancelledEventHandler.Execute;

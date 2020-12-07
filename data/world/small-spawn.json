@@ -1,14 +1,14 @@
 [
    {
-      "centerx": "1025",
-      "centery": "1032",
-      "centerz": "7",
+      "centerx": "1009",
+      "centery": "1026",
+      "centerz": "6",
       "radius": "1",
       "monsters": [{
-         "name": "Training Monk",
+         "name": "Cyclops",
          "x": "0",
          "y": "0",
-         "z": "7",
+         "z": "6",
          "spawntime": "10"
       }]
    }

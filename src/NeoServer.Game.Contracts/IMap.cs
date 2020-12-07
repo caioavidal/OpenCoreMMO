@@ -48,5 +48,6 @@ namespace NeoServer.Game.Contracts
         ITile GetTileDestination(IDynamicTile tile);
         bool TryMoveThing(IMoveableThing thing, Location toLocation, byte amount =1);
         void ReplaceThing(IThing thingToRemove, IThing thingToAdd, byte amount = 1);
+        bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
     }
 }
