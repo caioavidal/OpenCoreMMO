@@ -1,11 +1,11 @@
 [
    {
-      "centerx": "1025",
-      "centery": "1032",
-      "centerz": "7",
+      "centerx": "1023",
+      "centery": "1022",
+      "centerz": "6",
       "radius": "1",
       "monsters": [{
-         "name": "Training Monk",
+         "name": "Troll",
          "x": "0",
          "y": "0",
          "z": "7",

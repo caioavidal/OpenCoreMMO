@@ -7,7 +7,7 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void Born(IMonster monster, Location location);
     public delegate void Defende(IMonster monster, ICombatDefense defense);
-    public interface IMonster : ICombatActor
+    public interface IMonster : IWalkableMonster, ICombatActor
     {
         event Born OnWasBorn;
         event Defende OnDefende;
@@ -22,9 +22,6 @@ namespace NeoServer.Game.Contracts.Creatures
 
         ushort Defense { get; }
         MonsterState State { get; }
-
-        void SetState(MonsterState attacking);
-
         /// <summary>
         /// Select a target to attack
         /// </summary>
@@ -52,9 +49,20 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         void Yell();
 
+        /// <summary>
+        /// Changes monster's state based on targets and condition
+        /// </summary>
+        void ChangeState();
+        void Escape();
+
+        /// <summary>
+        /// Experience that monster can give
+        /// </summary>
         uint Experience { get; }
-        bool HasAnyTarget { get; }
         bool CanReachAnyTarget { get; }
+        /// <summary>
+        /// Returns true when monster is in combat
+        /// </summary>
         bool IsInCombat { get; }
         bool Defending { get; }
 

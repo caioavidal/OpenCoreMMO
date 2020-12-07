@@ -15,20 +15,19 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
         private readonly MonsterDefendEventHandler _monsterDefendEventHandler;
         private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
-        private readonly IItemFactory itemFactory;
-        private readonly IPathFinder _pathFinder;
+        private readonly IPathAccess pathAccess;
 
 
         public MonsterFactory(IMonsterDataManager monsterManager,
-            CreatureWasBornEventHandler creatureWasBornEventHandler, IPathFinder pathFinder, CreatureAttackEventHandler creatureAttackEventHandler, MonsterDefendEventHandler monsterDefendEventHandler, IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler)
+            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
+            MonsterDefendEventHandler monsterDefendEventHandler, IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreaturePathAccess creaturePathAccess)
         {
             _monsterManager = monsterManager;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
-            _pathFinder = pathFinder;
             _creatureAttackEventHandler = creatureAttackEventHandler;
             _monsterDefendEventHandler = monsterDefendEventHandler;
-            this.itemFactory = itemFactory;
             this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
+            pathAccess = creaturePathAccess;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
@@ -37,7 +36,7 @@ namespace NeoServer.Game.Creatures
             {
                 throw new KeyNotFoundException($"Given monster name: {name} is not loaded");
             }
-            var monster = new Monster(monsterType, _pathFinder.Find, spawn);
+            var monster = new Monster(monsterType, pathAccess, spawn);
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttackEnemy += _creatureAttackEventHandler.Execute;

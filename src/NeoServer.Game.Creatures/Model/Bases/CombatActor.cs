@@ -34,12 +34,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public decimal BaseAttackSpeed => 2000M;
         public decimal BaseDefenseSpeed { get; }
         public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
-        public abstract ushort AttackPower { get; }
         public abstract ushort ArmorRating { get; }
-        public abstract ushort DefensePower { get; }
         public uint AutoAttackTargetId { get; private set; }
         public bool Attacking => AutoAttackTargetId > 0;
-        public abstract byte AutoAttackRange { get; }
         public abstract ushort MinimumAttackPower { get; }
         public abstract bool UsingDistanceWeapon { get; }
         public uint AttackEvent { get; set; }
@@ -48,7 +45,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private byte blockCount = 0;
         private const byte BLOCK_LIMIT = 2;
 
-        protected CombatActor(ICreatureType type, PathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathFinder, outfit, healthPoints)
+        protected CombatActor(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
         {
         }
         public abstract int ShieldDefend(int attack);
@@ -113,6 +110,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StopAttack()
         {
+            if (!Attacking) return;
+
             AutoAttackTargetId = 0;
             OnStoppedAttack?.Invoke(this);
         }

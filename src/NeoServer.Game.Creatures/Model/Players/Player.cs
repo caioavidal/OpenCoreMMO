@@ -32,8 +32,8 @@ namespace NeoServer.Server.Model.Players
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
-            Location location, PathFinder pathFinder)
-             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
+            Location location, IPathAccess pathAccess)
+             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathAccess, outfit, healthPoints)
         {
             Id = id;
             CharacterName = characterName;
@@ -234,17 +234,11 @@ namespace NeoServer.Server.Model.Players
         }
 
         public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + (Level / 5));
-        public override ushort AttackPower => (ushort)(0.085f * DamageFactor * Inventory.TotalAttack * Skills[SkillInUse].Level + MinimumAttackPower);
 
         public uint Id { get; }
         public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
         public override ushort ArmorRating => Inventory.TotalArmor;
-
-        public override ushort DefensePower => Inventory.TotalDefense;
-
-        public override byte AutoAttackRange => Math.Max((byte)1, Inventory.AttackRange);
-
         public byte SecureMode { get; private set; }
         public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);

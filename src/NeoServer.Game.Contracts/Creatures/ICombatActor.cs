@@ -33,12 +33,9 @@ namespace NeoServer.Game.Contracts.Creatures
 
         ushort ArmorRating { get; }
         bool Attacking { get; }
-        ushort AttackPower { get; }
-        byte AutoAttackRange { get; }
         uint AutoAttackTargetId { get; }
         decimal BaseAttackSpeed { get; }
         decimal BaseDefenseSpeed { get; }
-        ushort DefensePower { get; }
 
         bool InFight { get; }
         bool IsDead { get; }

@@ -1,12 +1,10 @@
 using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Map.Tiles;
@@ -508,41 +506,7 @@ namespace NeoServer.Game.World.Map
         }
         public ITile GetNextTile(Location fromLocation, Direction direction)
         {
-            var toLocation = fromLocation;
-
-            switch (direction)
-            {
-                case Direction.East:
-                    toLocation.X += 1;
-                    break;
-                case Direction.West:
-                    toLocation.X -= 1;
-                    break;
-                case Direction.North:
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.South:
-                    toLocation.Y += 1;
-                    break;
-                case Direction.NorthEast:
-                    toLocation.X += 1;
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.NorthWest:
-                    toLocation.X -= 1;
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.SouthEast:
-                    toLocation.X += 1;
-                    toLocation.Y += 1;
-                    break;
-                case Direction.SouthWest:
-                    toLocation.X -= 1;
-                    toLocation.Y += 1;
-                    break;
-
-            }
-
+            var toLocation = fromLocation.GetNextLocation(direction);
             return this[toLocation];
         }
         public void AddCreature(ICreature creature)
@@ -620,7 +584,11 @@ namespace NeoServer.Game.World.Map
 
             var poolThing = pool as IThing;
             AddItem(poolThing, tile);
-
+        }
+        public bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule)
+        {
+            var tile = GetNextTile(location, direction);
+            return rule.CanEnter(tile);
         }
     }
 }
