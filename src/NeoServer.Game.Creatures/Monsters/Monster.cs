@@ -4,10 +4,8 @@ using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Server.Helpers;
@@ -20,7 +18,7 @@ using NeoServer.Game.Creatures.Monsters;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
-    public class Monster :  WalkableMonster, IMonster
+    public class Monster : WalkableMonster, IMonster
     {
         public event Born OnWasBorn;
         public event Defende OnDefende;
@@ -101,7 +99,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override ushort MinimumAttackPower => 0;
         public override bool UsingDistanceWeapon => TargetDistance > 1;
         public ISpawnPoint Spawn { get; }
-        public override BloodType Blood =>  Metadata.Race switch
+        public override BloodType Blood => Metadata.Race switch
         {
             Race.Bood => BloodType.Blood,
             Race.Venom => BloodType.Slime,
@@ -122,7 +120,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (AutoAttackTargetId == creature.CreatureId) StopAttack();
         }
-     
+
         public void SetAsEnemy(ICombatActor creature)
         {
             if (IsDead) return;
@@ -143,9 +141,24 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             searchTarget();
 
-            if (Targets.Any() && !CanReachAnyTarget) State = MonsterState.LookingForEnemy;
-            else if (Targets.Any() && CanReachAnyTarget) State = MonsterState.InCombat;
-            else if (!Targets.Any()) State = MonsterState.Sleeping;
+            if (Targets.Any() && !CanReachAnyTarget)
+            {
+                State = MonsterState.LookingForEnemy;
+                return;
+            }
+            if (Targets.Any() && CanReachAnyTarget)
+            {
+                if (Targets.Any() && Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) && runOnHealth >= HealthPoints)
+                {
+                    State = MonsterState.Running;
+                    return;
+                }
+
+                State = MonsterState.InCombat;
+                return;
+            }
+
+            if (!Targets.Any()) State = MonsterState.Sleeping;
         }
         public bool IsInPerfectPostionToCombat(CombatTarget target)
         {
@@ -198,7 +211,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
-                if (PathAccess.FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, out var directions) == false)
+                if (PathAccess.FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
                     continue;
@@ -222,6 +235,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return nearestCombat;
         }
 
+
         public void MoveAroundEnemy()
         {
             return;
@@ -232,7 +246,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (!IsInPerfectPostionToCombat(combatTarget)) return;
 
-            if (PathAccess.FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, true), out var directions))
+            if (PathAccess.FindPathToDestination(this, combatTarget.Creature.Location, new FindPathParams(HasFollowPath, true, true, KeepDistance, 12, 1, TargetDistance, true), CreatureEnterTileRule.Rule, out var directions))
             {
                 TryWalkTo(directions);
             }
@@ -263,6 +277,29 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             StopAttack();
             StopFollowing();
+        }
+        public void Escape()
+        {
+            StopFollowing();
+
+            ICreature escapeFrom = null;
+
+            if (Targets.TryGetValue(AutoAttackTargetId, out var creature)) escapeFrom = creature.Creature;
+            else
+            {
+                foreach (var target in Targets.Values)
+                {
+                    if (target.CanReachCreature)
+                    {
+                        escapeFrom = target.Creature;
+                        break;
+                    }
+                    escapeFrom = target.Creature;
+                }
+            }
+            if (escapeFrom is null) return;
+
+            Escape(escapeFrom.Location);
         }
 
         public void Yell()
@@ -337,7 +374,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             {
                 if (!attack.Cooldown.Expired) continue;
 
-                if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100)) 
+                if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100))
                     continue;
 
                 if (attack.CombatAttack is null) Console.WriteLine($"Combat attack not found for monster: {Name}");

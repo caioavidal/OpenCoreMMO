@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
+using NeoServer.Game.Creatures.Monsters;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -117,7 +118,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StopFollowing()
         {
-            if (IsFollowing) return;
+            if (!IsFollowing) return;
 
             Following = 0;
             HasFollowPath = false;
@@ -148,7 +149,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 OnCreatureDisappear(creature);
                 return;
             }
-            if (!PathAccess.FindPathToDestination(this, creature.Location, PathSearchParams, out var directions))
+            if (!PathAccess.FindPathToDestination(this, creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
             {
                 HasFollowPath = false;
                 return;
@@ -160,7 +161,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location)
         {
             StopWalking();
-            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, out var directions))
+            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
             {
                 return TryWalkTo(directions);
             }

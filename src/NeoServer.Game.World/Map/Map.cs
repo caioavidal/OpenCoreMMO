@@ -506,41 +506,7 @@ namespace NeoServer.Game.World.Map
         }
         public ITile GetNextTile(Location fromLocation, Direction direction)
         {
-            var toLocation = fromLocation;
-
-            switch (direction)
-            {
-                case Direction.East:
-                    toLocation.X += 1;
-                    break;
-                case Direction.West:
-                    toLocation.X -= 1;
-                    break;
-                case Direction.North:
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.South:
-                    toLocation.Y += 1;
-                    break;
-                case Direction.NorthEast:
-                    toLocation.X += 1;
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.NorthWest:
-                    toLocation.X -= 1;
-                    toLocation.Y -= 1;
-                    break;
-                case Direction.SouthEast:
-                    toLocation.X += 1;
-                    toLocation.Y += 1;
-                    break;
-                case Direction.SouthWest:
-                    toLocation.X -= 1;
-                    toLocation.Y += 1;
-                    break;
-
-            }
-
+            var toLocation = fromLocation.GetNextLocation(direction);
             return this[toLocation];
         }
         public void AddCreature(ICreature creature)

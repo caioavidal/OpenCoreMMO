@@ -10,7 +10,7 @@ using System.Text;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
-    public delegate bool PathFinder(IWalkableCreature creature, Location target, FindPathParams options, out Direction[] directions);
+    public delegate bool PathFinder(IWalkableCreature creature, Location target, FindPathParams options, ITileEnterRule tileEnterRule, out Direction[] directions);
     public delegate void StartFollow(IWalkableCreature creature, IWalkableCreature following, FindPathParams fpp);
     public delegate void ChangeSpeed(IWalkableCreature creature, ushort speed);
     public delegate bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Server.Helpers;
@@ -25,11 +26,22 @@ namespace NeoServer.Game.Creatures.Monsters
 
             var direction = directions[randomIndex];
 
-            if (PathAccess.CanGoToDirection?.Invoke(Location, direction, new MonsterEnterTileRule()) is false) return false;
+            if (PathAccess.CanGoToDirection?.Invoke(Location, direction, CreatureEnterTileRule.Rule) is false) return false;
 
             TryWalkTo(direction);
 
             return true;
+        }
+
+        public void Escape(Location fromLocation)
+        {
+            StopFollowing();
+
+            if (IsDead) return;
+            if (PathAccess.FindPathToDestination is null) return;
+            if (PathAccess.FindPathToDestination.Invoke(this, fromLocation, FindPathParams.EscapeParams, CreatureEnterTileRule.Rule, out var directions) is false) return;
+
+            TryWalkTo(directions);
         }
     }
 

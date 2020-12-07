@@ -12,7 +12,6 @@ namespace NeoServer.Server.Jobs.Creatures
         {
             if (monster.IsDead) return;
             
-
             monster.ChangeState();
 
             if (monster.State == MonsterState.LookingForEnemy)
@@ -32,6 +31,10 @@ namespace NeoServer.Server.Jobs.Creatures
             if (monster.State == MonsterState.Sleeping)
             {
                 monster.Sleep();
+            }
+            if(monster.State == MonsterState.Running)
+            {
+                monster.Escape();
             }
         }
     }

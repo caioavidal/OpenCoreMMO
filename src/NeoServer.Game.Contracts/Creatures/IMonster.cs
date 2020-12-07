@@ -53,6 +53,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Changes monster's state based on targets and condition
         /// </summary>
         void ChangeState();
+        void Escape();
 
         /// <summary>
         /// Experience that monster can give
