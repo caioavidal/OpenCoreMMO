@@ -48,10 +48,20 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Monster yells a sentence
         /// </summary>
         void Yell();
+
+        /// <summary>
+        /// Changes monster's state based on targets and condition
+        /// </summary>
         void ChangeState();
 
+        /// <summary>
+        /// Experience that monster can give
+        /// </summary>
         uint Experience { get; }
         bool CanReachAnyTarget { get; }
+        /// <summary>
+        /// Returns true when monster is in combat
+        /// </summary>
         bool IsInCombat { get; }
         bool Defending { get; }
 
