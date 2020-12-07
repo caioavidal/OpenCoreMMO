@@ -89,6 +89,9 @@ namespace NeoServer.Game.Items
             if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformDequipTo) ?? false)
                 return GetAttribute<ushort>(ItemAttribute.TransformDequipTo);
 
+            if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformTo) ?? false)
+                return GetAttribute<ushort>(ItemAttribute.TransformTo);
+
             return 0;
         }
 

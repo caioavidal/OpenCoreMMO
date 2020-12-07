@@ -108,6 +108,10 @@ namespace NeoServer.Game.Items
                 {
                     return new FloorChangerUsableItem(itemType, location);
                 }
+                if (TransformerUsableItem.IsApplicable(itemType))
+                {
+                    return new TransformerUsableItem(itemType, location, this); 
+                }
                 return new UseableOnItem(itemType, location);
             }
 

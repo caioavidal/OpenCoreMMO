@@ -45,6 +45,16 @@ namespace NeoServer.Game.World.Map
             var result = MapReplaceOperation.Replace(thingToRemove, thingToAdd, amount);
             OnThingRemovedFromTile?.Invoke(thingToRemove, result.Item1);
             OnThingAddedToTile?.Invoke(thingToAdd, result.Item2);
+
+            if (thingToAdd is IGround ground && this[thingToAdd.Location] is IDynamicTile tile && tile.HasCreature)
+            {
+                if (GetTileDestination(tile) is not IDynamicTile destination) return;
+                
+                foreach (var creature in tile.Creatures.Values)
+                {
+                    TryMoveThing(creature, destination.Location);
+                }
+            }
         }
 
         public ITile this[Location location] => world.TryGetTile(ref location, out ITile tile) ? tile : null;
@@ -319,11 +329,11 @@ namespace NeoServer.Game.World.Map
         {
 
             var result = CylinderOperation.RemoveThing(thing, tile, amount, out var cylinder);
-            if (result.Success is false) return; 
+            if (result.Success is false) return;
 
             foreach (var operation in result.Value.Operations)
             {
-                if(operation.Item2 == Operation.Removed) OnThingRemovedFromTile?.Invoke(operation.Item1, cylinder);
+                if (operation.Item2 == Operation.Removed) OnThingRemovedFromTile?.Invoke(operation.Item1, cylinder);
                 if (operation.Item2 == Operation.Updated) OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder);
             }
 

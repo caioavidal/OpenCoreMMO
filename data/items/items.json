@@ -442,7 +442,14 @@
     {
        "id": "468",
        "article": "a",
-       "name": "stone pile"
+       "name": "stone pile",
+	    "attributes": [
+          {
+			"key": "transformTo",
+			"value": "469"
+		  }
+		  ]
+
     },
     {
        "id": "469",
@@ -15809,6 +15816,15 @@
        "id": "2554",
        "article": "a",
        "name": "shovel",
+	   "onUse":[
+	   {
+		  "key": "transformTo",
+          "value": true
+	   },
+	   {
+		   "key": "useOn",
+          "value": 468
+	   }],
        "attributes": [{
           "key": "weight",
           "value": "3500"
