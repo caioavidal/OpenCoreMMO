@@ -330,7 +330,12 @@
     {
        "id": "430",
        "article": "a",
-       "name": "sewer grate"
+       "name": "sewer grate",
+	   "flags":["useable"],
+	    "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "431",

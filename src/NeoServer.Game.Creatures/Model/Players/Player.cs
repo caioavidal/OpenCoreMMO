@@ -94,7 +94,7 @@ namespace NeoServer.Server.Model.Players
         public string CharacterName { get; private set; }
         public override IOutfit Outfit { get; protected set; }
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
-        public override ushort Speed => (ushort)(220 + Level);
+        public override ushort Speed => (ushort)(109 + Level); //todo: remove hard code base speed
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }

@@ -17,10 +17,10 @@ namespace NeoServer.Game.World.Map
 
         public IMap Map { get; set; }
 
-        public bool Find(ICreature creature, Location target, out Direction[] directions)
+        public bool Find(ICreature creature, Location target, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
-            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), out directions);
+            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule,  out directions);
         }
 
         public bool Find(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
@@ -33,22 +33,22 @@ namespace NeoServer.Game.World.Map
 
             if (fpp.OneStep)
             {
-                return FindStep(creature, target, fpp, out directions);
+                return FindStep(creature, target, fpp, tileEnterRule, out directions);
             }
 
             if (fpp.MaxTargetDist > 1)
             {
                 if (!FindPathToKeepDistance(creature, target, fpp, tileEnterRule, out directions))
                 {
-                    return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
+                    return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
                 }
                 return true;
             }
 
-            return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
+            return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
         }
 
-        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             directions = new Direction[0];
 
@@ -60,7 +60,7 @@ namespace NeoServer.Game.World.Map
 
                 if (fpp.MaxTargetDist > 1 && (neighbour.GetSqmDistanceX(target) < fpp.MaxTargetDist && neighbour.GetSqmDistanceY(target) < fpp.MaxTargetDist)) continue;
 
-                if (Map.CanWalkTo(neighbour, out var tile))
+                if (tileEnterRule.CanEnter(Map[neighbour]))
                 {
                     directions = new Direction[1] { startLocation.DirectionTo(neighbour) };
                     return true;
