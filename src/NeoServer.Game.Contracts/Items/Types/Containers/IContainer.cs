@@ -16,7 +16,13 @@ namespace NeoServer.Game.Contracts.Items.Types
         /// Items on container
         /// </summary>
         List<IItem> Items { get; }
+        /// <summary>
+        /// Container's capacity. It indicates how many slots are available on container
+        /// </summary>
         byte Capacity { get; }
+        /// <summary>
+        /// Indicates if container has any parent
+        /// </summary>
         bool HasParent { get; }
         byte SlotsUsed { get; }
         IThing Parent { get; }

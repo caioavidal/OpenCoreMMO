@@ -37,7 +37,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual ushort Speed { get; protected set; }
         public uint Following { get; private set; }
         public bool IsFollowing => Following > 0;
-        public double LastStep { get; private set; }
         public ConcurrentQueue<Direction> WalkingQueue { get; } = new ConcurrentQueue<Direction>();
         public bool HasNextStep => WalkingQueue.Count > 0;
         public bool FollowCreature { get; protected set; }
@@ -50,45 +49,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 return new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
             }
         }
-        public void UpdateLastStepInfo(bool wasDiagonal = true)
-        {
-            var tilePenalty = Tile?.MovementPenalty;
-            var totalPenalty = (tilePenalty ?? 200) * (wasDiagonal ? 2 : 1);
 
-            Cooldowns.Start(CooldownType.Move, (int)(1000 * totalPenalty / (double)Math.Max(1, (int)Speed)));
-            lastStepCost = 1;
-        }
-
-        private int stepDelay
-        {
-            get
-            {
-                var stepDuration = CalculateStepDuration() * lastStepCost;
-                return (int)(stepDuration - (DateTime.Now.TimeOfDay.TotalMilliseconds - LastStep));
-            }
-        }
-        private int CalculateStepDuration()
-        {
-            var duration = Math.Floor((double)(1000 * Tile.StepSpeed / Speed));
-
-            var stepDuration = (int)Math.Ceiling(duration / 50) * 50;
-
-            //todo check monster creature.cpp 1367
-            return stepDuration;
-        }
         public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
         {
-            LastStep = DateTime.Now.TimeOfDay.TotalMilliseconds;
-
             lastStepCost = 1;
 
-            if (fromTile.Location.Z != toTile.Location.Z)
+            if (fromTile.Location.Z != toTile.Location.Z || fromTile.Location.IsDiagonalMovement(toTile.Location))
             {
                 lastStepCost = 2;
-            }
-            else if (fromTile.Location.IsDiagonalMovement(toTile.Location))
-            {
-                lastStepCost = 3;
             }
         }
         public void TurnTo(Direction direction)
@@ -100,19 +68,18 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             get
             {
-                if (stepDelay > 0)
-                {
-                    return stepDelay;
-                }
+                if (FirstStep)
+                    return 0;
 
-                return (int)(CalculateStepDuration() * lastStepCost);
+                return (int)((Tile.StepSpeed / (decimal)Speed) * 1000 * lastStepCost);
             }
         }
+
+        public bool FirstStep { get; private set; }
+
         public void StopWalking()
         {
             WalkingQueue.Clear(); // reset the actual queue
-            UpdateLastStepInfo();
-
             OnStoppedWalking?.Invoke(this);
         }
 
@@ -173,6 +140,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 WalkingQueue.Clear();
             }
+            FirstStep = true;
             foreach (var direction in directions)
             {
                 WalkingQueue.Enqueue(direction);
@@ -204,6 +172,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             if (WalkingQueue.TryDequeue(out direction))
             {
+                FirstStep = false;
                 Cooldowns.Start(CooldownType.Move, StepDelayMilliseconds);
                 return true;
             }

@@ -6,6 +6,9 @@ namespace NeoServer.Game.Contracts.Items
 {
     public interface IItem : IThing
     {
+        /// <summary>
+        /// Item metadata. Contains a lot of information about item
+        /// </summary>
         IItemType Metadata { get; }
         string IThing.Name => Metadata.Name;
         protected string LookText => $"{Metadata.Article} {Metadata.Name}";

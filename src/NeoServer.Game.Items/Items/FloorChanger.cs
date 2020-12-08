@@ -11,30 +11,33 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class FloorChanger: BaseItem, IUseable, IItem
+    public class FloorChanger : BaseItem, IUseable, IItem
     {
-        
+
         public FloorChanger(IItemType metadata, Location location) : base(metadata)
         {
             Location = location;
         }
         public void Use(IPlayer player, IMap map)
         {
-            if(Metadata.Attributes.GetAttribute(Common.ItemAttribute.FloorChange) == "up")
+            Location toLocation = Location.Zero;
+
+            var floorChange = Metadata.Attributes.GetAttribute(Common.ItemAttribute.FloorChange);
+
+            if (floorChange == "up") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z - 1));
+            if (floorChange == "down") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z + 1));
+
+            foreach (var neighbour in toLocation.Neighbours)
             {
-                var toLocation = new Location(Location.X, Location.Y, (byte)(Location.Z - 1));
-                foreach (var neighbour in toLocation.Neighbours)
+                if (map[neighbour] is IDynamicTile tile)
                 {
-                    if(map[neighbour] is IDynamicTile tile)
-                    {
-                        map.TryMoveThing(player, tile.Location);
-                        return;
-                    }
+                    map.TryMoveThing(player, tile.Location);
+                    return;
                 }
             }
         }
         public static bool IsApplicable(IItemType type) => type.Attributes.HasAttribute(Common.ItemAttribute.FloorChange) && type.HasFlag(Common.ItemFlag.Useable);
 
-    
+
     }
 }

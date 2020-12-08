@@ -26,6 +26,14 @@ namespace NeoServer.Game.Common.Location.Structs
             Y = (byte)slot;
         }
 
+        public void Update(ushort x, ushort y, byte z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
+
         public ushort X { get; set; }
 
         public ushort Y { get; set; }
@@ -294,6 +302,8 @@ namespace NeoServer.Game.Common.Location.Structs
                 return locations[0..8];
             }
         }
+
+        public static Location Zero => new Location(0, 0, 0);
 
         /// <summary>
         /// Check whether location is 1 sqm next to dest

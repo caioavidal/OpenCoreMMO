@@ -21,13 +21,13 @@ namespace NeoServer.Game.Contracts.Creatures
         uint Following { get; }
         bool HasNextStep { get; }
         bool IsFollowing { get; }
-        double LastStep { get; }
         ushort Speed { get; }
         int StepDelayMilliseconds { get; }
         IDynamicTile Tile { get; set; }
         ConcurrentQueue<Direction> WalkingQueue { get; }
         bool FollowCreature { get; }
         uint FollowEvent { get; set; }
+        bool FirstStep { get; }
 
         event StartWalk OnStartedWalking;
         event StopWalk OnStoppedWalking;
@@ -46,7 +46,6 @@ namespace NeoServer.Game.Contracts.Creatures
         bool TryUpdatePath(Direction[] newPath);
         bool TryWalkTo(params Direction[] directions);
         void TurnTo(Direction direction);
-        void UpdateLastStepInfo(bool wasDiagonal = true);
         void StartFollowing(IWalkableCreature creature, FindPathParams fpp);
         bool WalkTo(Location location);
     }
