@@ -74,6 +74,8 @@ namespace NeoServer.Game.Creatures
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
             var monster = _monsterFactory.Create(name, spawn);
+            if (monster is null) return null;
+
             AttachCombatActorEvents(monster);
             AttachWalkableEvents(monster);
             AttachEvents(monster);
