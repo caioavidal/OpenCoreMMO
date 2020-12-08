@@ -24600,6 +24600,10 @@
              "key": "weight",
              "value": "10000"
           },
+		  {
+             "key": "containersize",
+             "value": "10"
+          },
           {
              "key": "decayTo",
              "value": "0"

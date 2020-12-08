@@ -9,6 +9,7 @@ using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using NeoServer.Game.Creatures.Monsters;
 
 namespace NeoServer.Game.Creatures.Tests
 {
@@ -27,7 +28,8 @@ namespace NeoServer.Game.Creatures.Tests
                 {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
-                }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
+                }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7),
+                pathAccess: new CreaturePathAccess(new World.Map.PathFinder(null).Find, null));
 
             Assert.Equal(expected, sut.CanMoveThing(new Location(toX, toY, 7)));
         }

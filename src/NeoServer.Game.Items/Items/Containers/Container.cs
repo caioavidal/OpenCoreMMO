@@ -46,14 +46,8 @@ namespace NeoServer.Game.Items.Items
 
         public Container(IItemType type, Location location) : base(type, location)
         {
-            if (!type.Attributes.HasAttribute(Common.ItemAttribute.Capacity))
-            {
-                throw new ArgumentException("Capacity missing");
-            }
-
             Items = new List<IItem>(Capacity);
         }
-
         public bool IsEquiped
         {
             get
@@ -81,7 +75,6 @@ namespace NeoServer.Game.Items.Items
             if (Parent is IPlayer player) Location = new Location(Common.Players.Slot.Backpack);
 
         }
-
         public static bool IsApplicable(IItemType type) => type.Group == Common.ItemGroup.GroundContainer ||
             type.Attributes.GetAttribute(Common.ItemAttribute.Type)?.ToLower() == "container";
 

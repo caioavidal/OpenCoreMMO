@@ -6,7 +6,8 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public class CreatureEnterTileRule : ITileEnterRule
     {
-        public Func<ITile, bool> CanEnter => (tile) => tile is IDynamicTile dynamicTile && dynamicTile.FloorDirection == Common.Location.FloorChangeDirection.None && !dynamicTile.HasBlockPathFinding && !dynamicTile.HasCreature;
+        public Func<ITile, bool> CanEnter => (tile) => tile is IDynamicTile dynamicTile && dynamicTile.FloorDirection == Common.Location.FloorChangeDirection.None 
+        && !dynamicTile.HasBlockPathFinding && !dynamicTile.HasCreature && dynamicTile.Ground is not null;
 
         private static CreatureEnterTileRule rule;
         public static CreatureEnterTileRule Rule

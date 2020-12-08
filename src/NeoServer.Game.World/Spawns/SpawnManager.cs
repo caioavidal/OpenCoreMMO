@@ -51,6 +51,9 @@ namespace NeoServer.Game.World.Spawns
             foreach (var monsterToSpawn in _world.Spawns.SelectMany(x => x.Monsters).ToList())
             {
                 var monster = _creatureFactory.CreateMonster(monsterToSpawn.Name, monsterToSpawn.Spawn);
+
+                if (monster == null) continue;
+
                 monster.SetNewLocation(monsterToSpawn.Spawn.Location);
                 _map.AddCreature(monster);
 

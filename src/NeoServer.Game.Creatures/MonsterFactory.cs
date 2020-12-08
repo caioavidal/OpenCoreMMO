@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
+using System;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures
@@ -34,7 +35,8 @@ namespace NeoServer.Game.Creatures
             var result = _monsterManager.TryGetMonster(name, out IMonsterType monsterType);
             if (result == false)
             {
-                throw new KeyNotFoundException($"Given monster name: {name} is not loaded");
+                return null;
+                Console.WriteLine($"Given monster name: {name} is not loaded");
             }
             var monster = new Monster(monsterType, pathAccess, spawn);
 

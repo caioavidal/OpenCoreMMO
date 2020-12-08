@@ -4,6 +4,9 @@ namespace NeoServer.OTB.Parsers
 {
     public class OpenTibiaTranslationMap
     {
+        /// <summary>
+        /// Translate attribute name to enum
+        /// </summary>
         public static ItemAttribute TranslateAttributeName(string attrName, out bool success)
         {
             success = true;

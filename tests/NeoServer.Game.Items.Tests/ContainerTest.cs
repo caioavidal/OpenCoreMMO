@@ -11,6 +11,7 @@ using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using NeoServer.Game.Creatures;
 
 namespace NeoServer.Game.Items.Tests
 {
@@ -55,13 +56,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.NotNull(sut.Items);
             Assert.Empty(sut.Items);
         }
-        [Fact]
-        public void Constructor_Without_Capacity_Throws()
-        {
-            var itemType = new ItemType();
-            Assert.Throws<ArgumentException>(() => new Container(itemType, new Location(100, 100, 7)));
-        }
-
+      
         [Fact]
         public void SetParent_Should_Modify_Parent_Property()
         {
@@ -442,7 +437,7 @@ namespace NeoServer.Game.Items.Tests
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0) }
 
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, location: new Location(100, 100, 7), pathFinder: new World.Map.PathFinder(null).Find);
+             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, location: new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null, null));
 
             var sut = CreateContainer(2);
             sut.TryAddItem(CreateRegularItem(100));
@@ -478,7 +473,7 @@ namespace NeoServer.Game.Items.Tests
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
+             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null,null));
 
             var sut = CreateContainer(2);
 

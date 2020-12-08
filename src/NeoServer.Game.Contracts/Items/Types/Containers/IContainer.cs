@@ -12,7 +12,9 @@ namespace NeoServer.Game.Contracts.Items.Types
     public interface IContainer : IItem, IInventoryItem
     {
         IItem this[int index] { get; }
-
+        /// <summary>
+        /// Items on container
+        /// </summary>
         List<IItem> Items { get; }
         byte Capacity { get; }
         bool HasParent { get; }

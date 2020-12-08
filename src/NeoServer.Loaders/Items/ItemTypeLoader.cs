@@ -21,8 +21,7 @@ namespace NeoServer.Loaders.Items
         /// Loads the OTB and XML files into a collection of ItemType objects
         /// </summary>
         public void Load()
-        {
-
+        { 
             var basePath = "./data/items/";
             var itemTypes = LoadOTB(basePath);
 
