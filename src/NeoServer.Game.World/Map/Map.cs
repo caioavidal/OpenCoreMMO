@@ -205,26 +205,7 @@ namespace NeoServer.Game.World.Map
             }
             return true;
         }
-        public bool CanWalkTo(Location location, out ITile tile)
-        {
-
-            tile = this[location];
-
-            if (tile == null || tile is IStaticTile)
-            {
-                return false;
-            }
-
-            if (!(tile is IDynamicTile walkableTile))
-            {
-                return false;
-            }
-
-            if (walkableTile.HasCreature) return false;
-            if (walkableTile.HasBlockPathFinding) return false;
-
-            return true;
-        }
+    
 
         public ITile GetTileDestination(IDynamicTile tile)
         {

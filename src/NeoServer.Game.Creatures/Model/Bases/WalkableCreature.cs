@@ -140,7 +140,12 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 WalkingQueue.Clear();
             }
-            FirstStep = true;
+
+            if(directions.Length == 1 && Cooldowns.Expired(CooldownType.Move))
+            {
+                FirstStep = true;
+            }
+            
             foreach (var direction in directions)
             {
                 WalkingQueue.Enqueue(direction);
@@ -188,6 +193,5 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void IncreaseSpeed(ushort speed) => ChangeSpeed(speed + Speed);
         public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Speed - speedBoost);
-
     }
 }
