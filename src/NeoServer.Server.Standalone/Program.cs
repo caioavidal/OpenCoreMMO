@@ -68,7 +68,14 @@ container.Resolve<EventSubscriber>().AttachEvents();
 container.Resolve<Game>().Open();
 
 sw.Stop();
+
+logger.Information($"Running Garbage Collector");
+
+GC.Collect();
+GC.WaitForPendingFinalizers();
+
 logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");
+
 logger.Information($"Memory usage: {Math.Round((System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2)} MB");
 
 listeningTask.Wait(cancellationToken);

@@ -4,13 +4,11 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.World.Map
 {

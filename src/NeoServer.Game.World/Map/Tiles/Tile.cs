@@ -34,7 +34,9 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public override ICreature TopCreatureOnStack => Creatures.FirstOrDefault().Value;
 
-        public FloorChangeDirection FloorDirection { get; private set; }
+
+        public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
+
         public byte MovementPenalty => Ground.MovementPenalty;
 
         public IGround Ground { get; private set; }
@@ -305,7 +307,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             var operations = new TileOperationResult();
 
-            if(thing is IGround ground && Ground is  null)
+            if (thing is IGround ground && Ground is null)
             {
                 SetGround(ground);
                 operations.Add(Operation.Added, ground);
@@ -406,7 +408,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in topItems)
             {
-                FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
+                if(FloorDirection == FloorChangeDirection.None) FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
                 TopItems.Push(item);
             }
 
@@ -460,7 +462,7 @@ namespace NeoServer.Game.World.Map.Tiles
                     removedThing = item;
                 }
             }
-            else if(thing == Ground)
+            else if (thing == Ground)
             {
                 Ground = null;
                 operations.Add(Operation.Removed, thing);
