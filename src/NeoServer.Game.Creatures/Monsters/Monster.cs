@@ -23,6 +23,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public event Born OnWasBorn;
         public event Defende OnDefende;
         public event DropLoot OnDropLoot;
+        public event MonsterChangeState OnChangedState;
         public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
         {
             type.ThrowIfNull();
@@ -31,12 +32,24 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Metadata = type;
             Spawn = spawn;
             Damages = new ConcurrentDictionary<ICreature, ushort>();
-
+            State = MonsterState.Sleeping;
             OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
             OnKilled += (enemy) => GiveExperience();
+
         }
 
-        public MonsterState State { get; private set; } = MonsterState.Sleeping;
+        private MonsterState state;
+        public MonsterState State
+        {
+            get => state;
+            private set
+            {
+                var oldState = state;
+                if (state == value) return;
+                state = value;
+                OnChangedState?.Invoke(this, oldState, value);
+            }
+        }
 
         public ConcurrentDictionary<ICreature, ushort> Damages;
 
@@ -124,11 +137,15 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void SetAsEnemy(ICombatActor creature)
         {
             if (IsDead) return;
+
             if (!CanSee(creature.Location, 9, 9))
             {
                 RemoveFromTargetList(creature);
                 return;
             }
+
+            if (State == MonsterState.Sleeping)
+                State = MonsterState.Awake;
 
             creature.SetAsInFight();
             AddToTargetList(creature);
@@ -140,6 +157,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void ChangeState()
         {
             searchTarget();
+
+            if (!Targets.Any())
+            {
+                State = MonsterState.Sleeping;
+                return;
+            }
 
             if (Targets.Any() && !CanReachAnyTarget)
             {
