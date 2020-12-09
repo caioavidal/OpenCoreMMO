@@ -24,7 +24,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         protected IPathAccess PathAccess { get; }
 
         private uint lastStepCost = 1;
-
         protected WalkableCreature(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
             Speed = type.Speed;
@@ -42,13 +41,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool FollowCreature { get; protected set; }
         public uint FollowEvent { get; set; }
         public bool HasFollowPath { get; private set; }
-        public virtual FindPathParams PathSearchParams
-        {
-            get
-            {
-                return new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
-            }
-        }
+        public virtual FindPathParams PathSearchParams => new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
 
         public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
         {

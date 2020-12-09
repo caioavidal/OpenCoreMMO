@@ -8,9 +8,7 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public abstract class WalkableMonster : CombatActor, IWalkableMonster
     {
-        protected WalkableMonster(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
-        {
-        }
+        protected WalkableMonster(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints) { }
         public bool CanReachAnyTarget { get; protected set; } = false;
 
         public bool LookForNewEnemy()
@@ -44,5 +42,4 @@ namespace NeoServer.Game.Creatures.Monsters
             TryWalkTo(directions);
         }
     }
-
 }
