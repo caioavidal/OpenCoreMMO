@@ -22,7 +22,7 @@ namespace NeoServer.Loaders.Spawns
         {
             var spawnData = GetSpawnData();
 
-            var spawns = spawnData.Select(x => SpawnConverter.Convert(x)).ToList();
+            var spawns = spawnData.AsParallel().Select(x => SpawnConverter.Convert(x)).ToList();
 
             _world.LoadSpawns(spawns);
             logger.Information($"{spawns.Count} spawns loaded!");

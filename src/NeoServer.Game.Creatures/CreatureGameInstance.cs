@@ -10,15 +10,15 @@ namespace NeoServer.Game.Creature
 
     public class CreatureGameInstance : ICreatureGameInstance
     {
-        private readonly ConcurrentDictionary<uint, ICreature> _creatures;
+        private readonly Dictionary<uint, ICreature> _creatures;
 
-        private ConcurrentDictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
+        private Dictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
 
         public CreatureGameInstance()
         {
 
-            _creatures = new ConcurrentDictionary<uint, ICreature>();
-            _killedMonsters = new ConcurrentDictionary<uint, Tuple<IMonster, TimeSpan>>();
+            _creatures = new Dictionary<uint, ICreature>();
+            _killedMonsters = new Dictionary<uint, Tuple<IMonster, TimeSpan>>();
         }
 
         public void AddKilledMonsters(IMonster monster)
@@ -48,7 +48,7 @@ namespace NeoServer.Game.Creature
 
         public bool TryRemoveFromKilledMonsters(uint id)
         {
-            if (!_killedMonsters.TryRemove(id, out Tuple<IMonster, TimeSpan> creature))
+            if (!_killedMonsters.Remove(id, out Tuple<IMonster, TimeSpan> creature))
             {
                 // TODO: proper logging
                 Console.WriteLine($"WARNING: Failed to remove {creature.Item1.Name} from the killed monsters dictionary.");
@@ -59,10 +59,10 @@ namespace NeoServer.Game.Creature
 
         public bool TryRemove(uint id)
         {
-            if (!_creatures.TryRemove(id, out ICreature creature))
+            if (!_creatures.Remove(id, out ICreature creature))
             {
                 // TODO: proper logging
-                Console.WriteLine($"WARNING: Failed to remove {creature.Name} from the global dictionary.");
+               // Console.WriteLine($"WARNING: Failed to remove {creature.Name} from the global dictionary.");
                 return false;
             }
             return true;

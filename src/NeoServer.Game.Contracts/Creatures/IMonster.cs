@@ -7,11 +7,13 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void Born(IMonster monster, Location location);
     public delegate void Defende(IMonster monster, ICombatDefense defense);
+    public delegate void MonsterChangeState(IMonster monster,MonsterState fromState, MonsterState toState);
     public interface IMonster : IWalkableMonster, ICombatActor
     {
         event Born OnWasBorn;
         event Defende OnDefende;
         event DropLoot OnDropLoot;
+        event MonsterChangeState OnChangedState;
 
         void Reborn();
 

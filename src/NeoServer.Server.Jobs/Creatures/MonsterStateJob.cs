@@ -8,6 +8,8 @@ namespace NeoServer.Server.Jobs.Creatures
 {
     public class MonsterStateJob
     {
+        private const int INTERVAL = 1000;
+
         public static void Execute(IMonster monster)
         {
             if (monster.IsDead) return;

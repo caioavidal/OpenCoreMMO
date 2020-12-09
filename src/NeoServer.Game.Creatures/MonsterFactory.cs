@@ -4,6 +4,8 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
+using NeoServer.Server.Events.Creature.Monsters;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 
@@ -16,12 +18,15 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
         private readonly MonsterDefendEventHandler _monsterDefendEventHandler;
         private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
+        private readonly MonsterChangedStateEventHandler monsterChangedStateEventHandler;
         private readonly IPathAccess pathAccess;
+        private readonly Logger logger;
 
 
         public MonsterFactory(IMonsterDataManager monsterManager,
             CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
-            MonsterDefendEventHandler monsterDefendEventHandler, IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreaturePathAccess creaturePathAccess)
+            MonsterDefendEventHandler monsterDefendEventHandler, IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreaturePathAccess creaturePathAccess, Logger logger,
+            MonsterChangedStateEventHandler monsterChangedStateEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
@@ -29,14 +34,16 @@ namespace NeoServer.Game.Creatures
             _monsterDefendEventHandler = monsterDefendEventHandler;
             this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
             pathAccess = creaturePathAccess;
+            this.logger = logger;
+            this.monsterChangedStateEventHandler = monsterChangedStateEventHandler;
         }
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
             var result = _monsterManager.TryGetMonster(name, out IMonsterType monsterType);
             if (result == false)
             {
+                logger.Warning($"Given monster name: {name} is not loaded");
                 return null;
-                Console.WriteLine($"Given monster name: {name} is not loaded");
             }
             var monster = new Monster(monsterType, pathAccess, spawn);
 
@@ -44,6 +51,7 @@ namespace NeoServer.Game.Creatures
             monster.OnAttackEnemy += _creatureAttackEventHandler.Execute;
             monster.OnDefende += _monsterDefendEventHandler.Execute;
             monster.OnDropLoot += creatureDroppedLootEventHandler.Execute;
+            monster.OnChangedState += monsterChangedStateEventHandler.Execute;
             return monster;
         }
 

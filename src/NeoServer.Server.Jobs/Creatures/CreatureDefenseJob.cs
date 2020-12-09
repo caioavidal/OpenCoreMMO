@@ -6,17 +6,10 @@ namespace NeoServer.Server.Jobs.Creatures
 {
     public class CreatureDefenseJob
     {
-        private const uint INTERVAL = 1000;
-        public static void Execute(ICombatActor creature, Game game)
+        public static void Execute(IMonster monster, Game game)
         {
-            if (!(creature is IMonster monster))
-            {
-                return;
-            }
-            if (monster.IsDead)
-            {
-                return;
-            }
+            if (monster.IsDead) return;
+
             if (monster.IsInCombat && !monster.Defending)
             {
                 var interval = monster.Defend();

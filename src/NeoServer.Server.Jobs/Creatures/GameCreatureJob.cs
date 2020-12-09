@@ -21,28 +21,26 @@ namespace NeoServer.Server.Jobs.Creatures
         {
             game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartCheckingCreatures));
 
-            foreach (var creature in game.CreatureManager.GetCreatures()) //todo: change to only creatures to check
+            foreach (var creature in game.CreatureManager.GetCreatures()) 
             {
-                if (creature is ICombatActor actor && actor.IsDead)
-                {
-                    continue;
-                }
+                if (creature is ICombatActor actor && actor.IsDead) continue;
+
                 if (creature is IPlayer player)
                 {
                     PlayerPingJob.Execute(player, game);
                     PlayerRecoveryJob.Execute(player, game);
                 }
-                CreatureDefenseJob.Execute(creature as ICombatActor, game);
+
                 CreatureConditionJob.Execute(creature as ICombatActor);
 
                 if(creature is IMonster monster)
                 {
+                    CreatureDefenseJob.Execute(monster, game);
                     MonsterStateJob.Execute(monster);
+                    MonsterYellJob.Execute(monster);
                 }
-                
-                MonsterYellJob.Execute(creature as ICombatActor);
-                RespawnJob.Execute(spawnManager);
 
+                RespawnJob.Execute(spawnManager);
             }
 
         }
