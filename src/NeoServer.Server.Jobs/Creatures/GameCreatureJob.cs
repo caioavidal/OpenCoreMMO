@@ -38,7 +38,6 @@ namespace NeoServer.Server.Jobs.Creatures
                     CreatureDefenseJob.Execute(monster, game);
                     MonsterStateJob.Execute(monster);
                     MonsterYellJob.Execute(monster);
-
                 }
 
                 RespawnJob.Execute(spawnManager);

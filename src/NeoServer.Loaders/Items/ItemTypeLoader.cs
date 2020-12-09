@@ -21,7 +21,7 @@ namespace NeoServer.Loaders.Items
         /// Loads the OTB and XML files into a collection of ItemType objects
         /// </summary>
         public void Load()
-        { 
+        {
             var basePath = "./data/items/";
             var itemTypes = LoadOTB(basePath);
 
@@ -45,33 +45,32 @@ namespace NeoServer.Loaders.Items
             var itemTypeMetadatas = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(jsonString);
 
             var itemTypeMetadataParser = new ItemTypeMetadataParser(itemTypes);
-            foreach (var metadata in itemTypeMetadatas)
+
+            itemTypeMetadatas.AsParallel().ForAll(metadata =>
             {
                 if (metadata.Id.HasValue)
                 {
                     itemTypeMetadataParser.AddMetadata(metadata, metadata.Id.Value);
-                    continue;
                 }
-
-                if (metadata.Fromid == null)
+                else if (metadata.Fromid == null)
                 {
                     Console.WriteLine("No item id found");
-                    continue;
                 }
-
-                if (metadata.Toid == null)
+                else if (metadata.Toid == null)
                 {
                     Console.WriteLine($"fromid ({metadata.Fromid}) without toid");
-                    continue;
                 }
-
-                var id = metadata.Fromid.Value;
-
-                while (id <= metadata.Toid)
+                else
                 {
-                    itemTypeMetadataParser.AddMetadata(metadata, id++);
+                    var id = metadata.Fromid.Value;
+
+                    while (id <= metadata.Toid)
+                    {
+                        itemTypeMetadataParser.AddMetadata(metadata, id++);
+                    }
                 }
-            }
+            });
+
         }
     }
 }
