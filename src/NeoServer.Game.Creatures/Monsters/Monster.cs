@@ -304,6 +304,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void Escape()
         {
             StopFollowing();
+            StopAttack();
 
             ICreature escapeFrom = null;
 

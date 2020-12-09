@@ -71,7 +71,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 if (FirstStep)
                     return 0;
 
-                return (int)((Tile.StepSpeed / (decimal)Speed) * 1000 * lastStepCost);
+                return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * lastStepCost);
             }
         }
 
