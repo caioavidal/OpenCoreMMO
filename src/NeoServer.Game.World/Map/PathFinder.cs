@@ -8,6 +8,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Server.Helpers;
 
 namespace NeoServer.Game.World.Map
 {
@@ -20,7 +21,7 @@ namespace NeoServer.Game.World.Map
         public bool Find(ICreature creature, Location target, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
-            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule,  out directions);
+            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule, out directions);
         }
 
         public bool Find(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
@@ -80,41 +81,67 @@ namespace NeoServer.Game.World.Map
             }
             var startLocation = creature.Location;
 
-            var xDistance = startLocation.GetSqmDistanceX(target);
-            var yDistance = startLocation.GetSqmDistanceY(target);
+            var currentDistance = startLocation.GetMaxSqmDistance(target);
 
-            if (xDistance > fpp.MaxTargetDist || yDistance > fpp.MaxTargetDist)
+            if (currentDistance > fpp.MaxTargetDist) return false;
+
+            if (currentDistance == fpp.MaxTargetDist) return true;
+
+            var directionList = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast, Direction.NorthEast, Direction.SouthEast, Direction.SouthWest };
+
+            (Direction, int) directionWeight = (Direction.None, 0);
+
+            var canGoToDirections = new Direction[8];
+            var canGoIndex = 0;
+
+            var cannotGoDirectionCount = 0;
+            foreach (var direction in directionList)
             {
-                return false;
-            }
-            if (xDistance == fpp.MaxTargetDist || yDistance == fpp.MaxTargetDist) return true;
-
-            var currentDistance = startLocation.GetSumSqmDistance(target);
-            foreach (var direction in new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North })
-            {
-
                 var nextLocation = startLocation.GetNextLocation(direction);
-                var nextDistance = nextLocation.GetSumSqmDistance(target);
-                if (nextDistance / 2 >= fpp.MaxTargetDist)
-                {
-                    return true;
-                }
-                if (nextDistance < currentDistance) continue;
+                var nextDistance = nextLocation.GetMaxSqmDistance(target);
 
-                if (!Map.CanGoToDirection(creature.Location, direction, tileEnterRule))
+                var canGoToDirection = Map.CanGoToDirection(creature.Location, direction, tileEnterRule);
+                var isDiagonalMovement = startLocation.IsDiagonalMovement(nextLocation);
+
+                if (!canGoToDirection)
                 {
+                    if (!isDiagonalMovement) cannotGoDirectionCount++;
                     continue;
                 }
-                directions = new Direction[] { direction };
+
+                var weight = 0;
+
+                if (isDiagonalMovement && cannotGoDirectionCount < 4)
+                    continue;
+
+                canGoToDirections[canGoIndex++] = direction;
+
+                if (nextDistance > currentDistance)
+                {
+                    weight++;
+                }
+                if (nextLocation.GetSumSqmDistance(target) > startLocation.GetSumSqmDistance(target))
+                {
+                    weight++;
+                }
+
+                if (weight > directionWeight.Item2)
+                {
+                    directionWeight.Item1 = direction;
+                    directionWeight.Item2 = weight;
+                }
+            }
+
+            if (directionWeight.Item1 != Direction.None)
+            {
+                directions = new Direction[] { directionWeight.Item1 };
                 return true;
             }
-            foreach (var direction in new Direction[] { Direction.West, Direction.North, Direction.East, Direction.South })
+
+            if (canGoIndex > 0)
             {
-                if (!Map.CanGoToDirection(creature.Location, direction, tileEnterRule))
-                {
-                    continue;
-                }
-                directions = new Direction[] { direction };
+                var randonIndex = ServerRandom.Random.Next(minValue: 0, maxValue: canGoIndex);
+                directions = new Direction[] { canGoToDirections[randonIndex] };
                 return true;
             }
 
