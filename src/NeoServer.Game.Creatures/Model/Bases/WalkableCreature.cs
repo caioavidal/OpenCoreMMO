@@ -134,11 +134,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 WalkingQueue.Clear();
             }
 
-            if(directions.Length == 1 && Cooldowns.Expired(CooldownType.Move))
+            if(directions.Length >= 1 && Cooldowns.Expired(CooldownType.Move))
             {
                 FirstStep = true;
             }
-            
+         
             foreach (var direction in directions)
             {
                 if (direction == Direction.None) continue;
@@ -166,11 +166,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool TryGetNextStep(out Direction direction)
         {
-            if (!Cooldowns.Expired(CooldownType.Move))
-            {
-                direction = Direction.None;
-                return false;
-            }
+            //if (!Cooldowns.Expired(CooldownType.Move))
+            //{
+            //    direction = Direction.None;
+            //    return false;
+            //}
 
             if (WalkingQueue.TryDequeue(out direction))
             {
