@@ -8,7 +8,6 @@ using NeoServer.Game.Contracts.World;
 
 namespace NeoServer.Server.Commands.Player
 {
-
     public class PlayerUseItemCommand : Command
     {
         private readonly Game game;

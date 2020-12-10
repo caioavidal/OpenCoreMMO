@@ -3,17 +3,11 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Items.Items
 {
     public class FloorChanger : BaseItem, IUseable, IItem
     {
-
         public FloorChanger(IItemType metadata, Location location) : base(metadata)
         {
             Location = location;
@@ -38,7 +32,5 @@ namespace NeoServer.Game.Items.Items
             }
         }
         public static bool IsApplicable(IItemType type) => type.Attributes.HasAttribute(Common.ItemAttribute.FloorChange) && type.HasFlag(Common.ItemFlag.Useable);
-
-
     }
 }
