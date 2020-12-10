@@ -35,7 +35,8 @@ steps:
     projects: '$(solution)'
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'test src --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
+    command: 'test '
+    arguments: 'src --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
     projects: '$(solution)'
 
 - script: |
