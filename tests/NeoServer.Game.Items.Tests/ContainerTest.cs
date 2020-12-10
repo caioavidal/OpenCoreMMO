@@ -18,11 +18,11 @@ namespace NeoServer.Game.Items.Tests
     public class ContainerTest
     {
 
-        private Container CreateContainer(byte capacity = 6)
+        private Container CreateContainer(byte capacity = 6, string name = "")
         {
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
-
+            itemType.SetName(name);
             return new Container(itemType, new Location(100, 100, 7));
         }
 
@@ -35,11 +35,11 @@ namespace NeoServer.Game.Items.Tests
             return new Cumulative(type, new Location(100, 100, 7), amount);
         }
 
-        private Item CreateRegularItem(ushort id)
+        private Item CreateRegularItem(ushort id, string name = "item")
         {
             var type = new ItemType();
             type.SetClientId(id);
-            type.SetName("item");
+            type.SetName(name);
 
             return new Item(type, new Location(100, 100, 7));
         }
@@ -128,6 +128,16 @@ namespace NeoServer.Game.Items.Tests
             Assert.Same(container, sut[0]);
             Assert.True(container.HasParent);
             Assert.Same(sut, container.Parent);
+        }
+        [Fact]
+        public void TryAddItem_Adding_Container_To_Itseft_Should_Return_Error()
+        {
+            var sut = CreateContainer();
+            var item = sut;
+            var result = sut.TryAddItem(item);
+
+            Assert.False(result.Success);
+            Assert.Equal(InvalidOperation.NotPossible, result.Error);
         }
 
         [Fact]
@@ -494,5 +504,40 @@ namespace NeoServer.Game.Items.Tests
             Assert.False(child.IsEquiped);
             Assert.True(sut.IsEquiped);
         }
+
+        [Fact]
+        public void ToString_When_Container_Is_Empty_Should_Return_Nothing()
+        {
+            var itemType = new ItemType();
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
+
+            var sut = new Container(itemType, new Location(100, 100, 7));
+
+            Assert.Equal("nothing", sut.ToString());
+        }
+        [Fact]
+        public void ToString_When_Container_Has_Items_Should_Return_Items_Name()
+        {
+            var itemType = new ItemType();
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
+
+            var sut = new Container(itemType, new Location(100, 100, 7));
+
+            var item = CreateRegularItem(100, "item 1");
+            sut.TryAddItem(item);
+
+            var item2 = CreateRegularItem(100, "item 2");
+            sut.TryAddItem(item2);
+
+            var item3 = CreateRegularItem(100, "item 3");
+
+            var container = CreateContainer(20, "bag");
+            container.TryAddItem(item3);
+
+            sut.TryAddItem(container);
+
+            Assert.Equal("bag, item 3, item 2, item 1", sut.ToString());
+        }
+
     }
 }
