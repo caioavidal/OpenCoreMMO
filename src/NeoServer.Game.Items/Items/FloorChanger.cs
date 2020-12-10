@@ -20,6 +20,7 @@ namespace NeoServer.Game.Items.Items
         }
         public void Use(IPlayer player, IMap map)
         {
+            if (!player.Location.IsNextTo(Location)) return;
             Location toLocation = Location.Zero;
 
             var floorChange = Metadata.Attributes.GetAttribute(Common.ItemAttribute.FloorChange);
