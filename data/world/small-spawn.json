@@ -5,11 +5,19 @@
       "centerz": "6",
       "radius": "1",
       "monsters": [{
-         "name": "Orc Warrior",
+         "name": "Snake",
          "x": "0",
          "y": "0",
          "z": "7",
          "spawntime": "10"
-      }]
+      },
+	  {
+         "name": "Orc",
+         "x": "1",
+         "y": "0",
+         "z": "7",
+         "spawntime": "10"
+      }
+	  ]
    }
 ]

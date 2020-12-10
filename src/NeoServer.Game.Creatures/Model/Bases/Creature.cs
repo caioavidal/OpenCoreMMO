@@ -55,7 +55,7 @@ namespace NeoServer.Game.Creatures.Model
         public new string Name => CreatureType.Name;
         public uint CreatureId { get; }
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
-        public IContainer Corpse { get; set; }
+        public IThing Corpse { get; set; }
         public virtual BloodType Blood => BloodType.Blood;
         
         public abstract IOutfit Outfit { get; protected set; }

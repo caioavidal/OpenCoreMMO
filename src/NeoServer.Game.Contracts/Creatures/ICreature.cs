@@ -47,7 +47,7 @@ namespace NeoServer.Game.Contracts.Creatures
         uint HealthPoints { get; }
         uint MaxHealthPoints { get; }
         bool IsHealthHidden { get; }
-        IContainer Corpse { get; set; }
+        IThing Corpse { get; set; }
 
         event RemoveCreature OnCreatureRemoved;
         event GainExperience OnGainedExperience;

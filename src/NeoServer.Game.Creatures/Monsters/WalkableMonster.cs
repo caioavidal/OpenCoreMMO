@@ -12,7 +12,6 @@ namespace NeoServer.Game.Creatures.Monsters
         protected WalkableMonster(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints) { }
         public bool CanReachAnyTarget { get; protected set; } = false;
 
-
         private Direction GetRandomStep()
         {
             int randomIndex = ServerRandom.Random.Next(minValue: 0, maxValue: 4);
@@ -59,8 +58,6 @@ namespace NeoServer.Game.Creatures.Monsters
             if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
             Cooldowns.Start(CooldownType.MoveAroundEnemy, ServerRandom.Random.Next(minValue: 3000, maxValue: 5000));
 
-            //if (!IsInPerfectPostionToCombat(combatTarget)) return;
-
             var direction = GetRandomStep();
             if (direction == Direction.None) return;
 
@@ -69,7 +66,6 @@ namespace NeoServer.Game.Creatures.Monsters
             if (targetLocation.GetMaxSqmDistance(nextLocation) > PathSearchParams.MaxTargetDist) return;
 
             TryWalkTo(direction);
-
         }
     }
 }
