@@ -21,6 +21,8 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(ICombatActor creature, ILoot loot)
         {
+            if (creature.Corpse is not IContainer container) return;
+
             CreateLoot(creature, loot);
 
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))

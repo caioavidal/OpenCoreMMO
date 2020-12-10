@@ -92,6 +92,10 @@ namespace NeoServer.Game.Items.Items
 
         private Result AddItem(IItem item, byte slot)
         {
+            if(item == this)
+            {
+                return new Result(InvalidOperation.NotPossible);
+            }
 
             if (Capacity <= slot)
             {
