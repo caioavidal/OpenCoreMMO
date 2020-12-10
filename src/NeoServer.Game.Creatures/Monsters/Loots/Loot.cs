@@ -31,6 +31,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
                     childrenItems = Drop(item.Items);
                 }
 
+                if (item?.Items?.Length > 0 && childrenItems?.Length == 0) continue;
+
                 var amount = item.Amount;
                 if (amount > 1)
                 {

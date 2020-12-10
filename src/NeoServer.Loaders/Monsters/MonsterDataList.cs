@@ -144,8 +144,8 @@ namespace NeoServer.Loaders.Monsters
             [JsonProperty("chance")]
             public string Chance { get; set; }
 
-            [JsonProperty("item")]
-            public List<LootData> Item { get; set; }
+            [JsonProperty("items")]
+            public List<LootData> Items { get; set; }
         }
 
     }

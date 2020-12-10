@@ -34,9 +34,9 @@ namespace NeoServer.Loaders.Monsters.Converters
 
             var items = new List<ILootItem>();
 
-            if(item?.Item?.Count > 0)
+            if(item?.Items?.Count > 0)
             {
-                foreach (var child in item?.Item)
+                foreach (var child in item?.Items)
                 {
                     items.Add(ConvertToLootItem(child));
                 }
