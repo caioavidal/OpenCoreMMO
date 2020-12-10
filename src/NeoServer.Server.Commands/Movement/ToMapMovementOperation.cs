@@ -22,45 +22,22 @@ namespace NeoServer.Server.Commands.Movement
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             //todo check if tile reached max stack count
             //todo check max throw distance
-
-            FromGround(player, game, map, itemThrow);
+            new WalkToMechanism().DoOperation(player, () => FromGround(player, map, itemThrow), itemThrow.FromLocation, game);
             FromInventory(player, map, itemThrow);
             FromContainer(player, map, itemThrow);
         }
 
-        private static Action<ICreature> callBack;
-
-        private static void FromGround(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow, bool secondChance = false)
+        private static void FromGround(IPlayer player, IMap map, ItemThrowPacket itemThrow, bool secondChance = false)
         {
-            if (secondChance)
-            {
-                player.OnCompleteWalking -= callBack.Invoke;
-            }
-
             if (itemThrow.FromLocation.Type != LocationType.Ground) return;
 
             if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
 
             if (fromTile.TopItemOnStack is not IMoveableThing thing) return;
 
-            if (!itemThrow.FromLocation.IsNextTo(player.Location))
-            {
-                if (secondChance) return;
+            if (!itemThrow.FromLocation.IsNextTo(player.Location)) return;
 
-                callBack = (creature) => FromGround(player, game, map, itemThrow, true);
-
-                player.WalkTo(itemThrow.FromLocation, callBack);
-                return;
-            }
-
-            var delay = 0;
-
-            if (secondChance)
-            {
-                delay = player.StepDelayMilliseconds;
-            }
-
-            game.Scheduler.AddEvent(new SchedulerEvent(delay, () => map.TryMoveThing(thing, itemThrow.ToLocation, itemThrow.Count)));
+            map.TryMoveThing(thing, itemThrow.ToLocation, itemThrow.Count);
         }
         private static void FromInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {

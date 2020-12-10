@@ -5,6 +5,8 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Server.Commands.Movement;
+using System;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -28,7 +30,8 @@ namespace NeoServer.Server.Commands.Player
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
                 if(tile.TopItemOnStack is IContainer container)
                 {
-                    player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
+                    Action action = () => player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
+                    new WalkToMechanism().DoOperation(player, action, useItemPacket.Location, game);
                     return;
                 }
                 if(tile.TopItemOnStack is IUseable useable)
@@ -41,6 +44,5 @@ namespace NeoServer.Server.Commands.Player
                 player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index);
             }
         }
-
     }
 }
