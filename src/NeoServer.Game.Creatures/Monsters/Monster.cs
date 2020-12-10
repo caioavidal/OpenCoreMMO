@@ -118,7 +118,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Race.Venom => BloodType.Slime,
             _ => BloodType.Blood
         };
-
         public ushort Defense => Metadata.Defense;
         public uint Experience => Metadata.Experience;
         private IDictionary<uint, CombatTarget> Targets = new Dictionary<uint, CombatTarget>(150);

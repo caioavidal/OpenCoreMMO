@@ -166,11 +166,9 @@ namespace NeoServer.Game.Creatures
 
         private void AttachDeathEvent(ICreature creature)
         {
-            if(itemFactory.Create(creature.CorpseType, creature.Location, null) is not IContainer corpse) return;
+            var corpse = itemFactory.Create(creature.CorpseType, creature.Location, null);
             creature.Corpse = corpse;
             _map.ReplaceThing(creature, creature.Corpse);
         }
-
-     
     }
 }

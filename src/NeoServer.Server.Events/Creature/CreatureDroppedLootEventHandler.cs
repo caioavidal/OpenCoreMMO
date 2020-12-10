@@ -39,8 +39,9 @@ namespace NeoServer.Server.Events.Creature
         public void CreateLoot(ICombatActor creature, ILoot loot)
         {
             if (creature is not IMonster monster) return;
+            if (monster.Corpse is not IContainer container) return;
 
-            CreateLootItems(loot.Items, monster.Location, monster.Corpse);
+            CreateLootItems(loot.Items, monster.Location, container);
         }
 
         public void CreateLootItems(ILootItem[] items, Location location, IContainer container)
