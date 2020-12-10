@@ -4,9 +4,6 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Helpers.Extensions;
-using System;
-using System.Buffers;
-using System.Collections.Generic;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Server.Helpers;
 
@@ -55,17 +52,12 @@ namespace NeoServer.Game.World.Map
 
             var startLocation = creature.Location;
 
-            foreach (var neighbour in startLocation.Neighbours.Random())
+            var possibleDirections = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast };
+
+            foreach (var direction in possibleDirections)
             {
-                if (neighbour.GetSqmDistanceX(target) > fpp.MaxTargetDist || neighbour.GetSqmDistanceY(target) > fpp.MaxTargetDist) continue;
-
-                if (fpp.MaxTargetDist > 1 && (neighbour.GetSqmDistanceX(target) < fpp.MaxTargetDist && neighbour.GetSqmDistanceY(target) < fpp.MaxTargetDist)) continue;
-
-                if (tileEnterRule.CanEnter(Map[neighbour]))
-                {
-                    directions = new Direction[1] { startLocation.DirectionTo(neighbour) };
-                    return true;
-                }
+                if (startLocation.GetMaxSqmDistance(target) > fpp.MaxTargetDist) continue;
+                
             }
 
             return false;
@@ -87,7 +79,7 @@ namespace NeoServer.Game.World.Map
 
             if (currentDistance == fpp.MaxTargetDist) return true;
 
-            var directionList = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast, Direction.NorthEast, Direction.SouthEast, Direction.SouthWest };
+            var possibleDirections = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast, Direction.NorthEast, Direction.SouthEast, Direction.SouthWest };
 
             (Direction, int) directionWeight = (Direction.None, 0);
 
@@ -95,7 +87,7 @@ namespace NeoServer.Game.World.Map
             var canGoIndex = 0;
 
             var cannotGoDirectionCount = 0;
-            foreach (var direction in directionList)
+            foreach (var direction in possibleDirections)
             {
                 var nextLocation = startLocation.GetNextLocation(direction);
                 var nextDistance = nextLocation.GetMaxSqmDistance(target);

@@ -23,6 +23,8 @@ namespace NeoServer.Server.Jobs.Creatures
 
             if (monster.State == MonsterState.InCombat)
             {
+                monster.MoveAroundEnemy();
+
                 if (monster.Metadata.TargetChance.Interval == 0) return;
 
                 if (monster.Attacking && monster.Metadata.TargetChance.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100)) return;
