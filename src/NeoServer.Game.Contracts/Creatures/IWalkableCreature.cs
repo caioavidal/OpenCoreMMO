@@ -34,6 +34,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event OnTurnedToDirection OnTurnedToDirection;
         event StartFollow OnStartedFollowing;
         event ChangeSpeed OnChangedSpeed;
+        event StopWalk OnCompleteWalking;
 
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);
@@ -48,5 +49,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void TurnTo(Direction direction);
         void StartFollowing(IWalkableCreature creature, FindPathParams fpp);
         bool WalkTo(Location location);
+        bool WalkTo(Location location, Action<ICreature> callbackAction);
     }
 }

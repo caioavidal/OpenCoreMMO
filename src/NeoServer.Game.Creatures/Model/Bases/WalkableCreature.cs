@@ -15,6 +15,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
     {
         #region Events
         public event StopWalk OnStoppedWalking;
+        public event StopWalk OnCompleteWalking;
         public event StartWalk OnStartedWalking;
         public event OnTurnedToDirection OnTurnedToDirection;
         public event StartFollow OnStartedFollowing;
@@ -51,6 +52,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 lastStepCost = 2;
             }
+            if (WalkingQueue.IsEmpty)
+            {
+                OnCompleteWalking?.Invoke(this);
+            }
         }
         public void TurnTo(Direction direction)
         {
@@ -72,7 +77,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StopWalking()
         {
-            WalkingQueue.Clear(); // reset the actual queue
+            WalkingQueue.Clear();
             OnStoppedWalking?.Invoke(this);
         }
 
@@ -127,6 +132,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
             return false;
         }
+        public virtual bool WalkTo(Location location, Action<ICreature> callbackAction)
+        {
+            StopWalking();
+            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
+            {
+                OnCompleteWalking += callbackAction.Invoke;
+                return TryWalkTo(directions);
+            }
+            return false;
+        }
         public virtual bool TryWalkTo(params Direction[] directions)
         {
             if (!WalkingQueue.IsEmpty)
@@ -134,11 +149,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 WalkingQueue.Clear();
             }
 
-            if(directions.Length >= 1 && Cooldowns.Expired(CooldownType.Move))
+            if (directions.Length >= 1 && Cooldowns.Expired(CooldownType.Move))
             {
                 FirstStep = true;
             }
-         
+
             foreach (var direction in directions)
             {
                 if (direction == Direction.None) continue;
@@ -170,6 +185,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 FirstStep = false;
                 Cooldowns.Start(CooldownType.Move, StepDelayMilliseconds);
+
                 return true;
             }
 

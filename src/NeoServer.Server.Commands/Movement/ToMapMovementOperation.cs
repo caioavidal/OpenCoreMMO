@@ -11,37 +11,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Commands.Movement
 {
     public class ToMapMovementOperation
     {
-        public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+        public static void Execute(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow)
         {
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             //todo check if tile reached max stack count
             //todo check max throw distance
-
-            FromGround(player, map, itemThrow);
+            new WalkToMechanism().DoOperation(player, () => FromGround(player, map, itemThrow), itemThrow.FromLocation, game);
             FromInventory(player, map, itemThrow);
             FromContainer(player, map, itemThrow);
         }
 
-        private static void FromGround(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+        private static void FromGround(IPlayer player, IMap map, ItemThrowPacket itemThrow, bool secondChance = false)
         {
-            if (itemThrow.FromLocation.Type == LocationType.Ground)
-            {
-                if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
+            if (itemThrow.FromLocation.Type != LocationType.Ground) return;
 
-                if (fromTile.TopItemOnStack is not IMoveableThing thing) return;
+            if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
 
-                if (!itemThrow.FromLocation.IsNextTo(player.Location))
-                {
-                    player.WalkTo(itemThrow.FromLocation);
-                }
+            if (fromTile.TopItemOnStack is not IMoveableThing thing) return;
 
-                map.TryMoveThing(thing, itemThrow.ToLocation, itemThrow.Count);
-            }
+            if (!itemThrow.FromLocation.IsNextTo(player.Location)) return;
+
+            map.TryMoveThing(thing, itemThrow.ToLocation, itemThrow.Count);
         }
         private static void FromInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
