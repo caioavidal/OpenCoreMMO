@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -33,9 +34,11 @@ namespace NeoServer.Loaders.Monsters.Converters
                 attack.TryGetValue("target", out byte target);
                 attack.TryGetValue("range", out byte range);
 
-                attack.TryGetValue<JArray>("attributes", out var attributes);
-                var shootEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "shootEffect")?.Value<string>("value");
-                var areaEffect = attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value");
+                attack.TryGetValue<JArray>("attributes", out var attributesArray);
+                var attributes = attributesArray?.ToDictionary(k => ((JObject)k).Properties().First().Name, v => v.Values().First().Value<object>());
+
+                attributes.TryGetValue("shootEffect", out string shootEffect);
+                attributes.TryGetValue("areaEffect", out string areaEffect);
 
                 var combatAttack = new MonsterCombatAttack()
                 {

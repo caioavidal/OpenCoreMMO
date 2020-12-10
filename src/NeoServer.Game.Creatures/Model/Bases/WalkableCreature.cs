@@ -141,8 +141,12 @@ namespace NeoServer.Game.Creatures.Model.Bases
             
             foreach (var direction in directions)
             {
+                if (direction == Direction.None) continue;
+
                 WalkingQueue.Enqueue(direction);
             }
+
+            if (WalkingQueue.IsEmpty) return true;
 
             OnStartedWalking?.Invoke(this);
             return true;

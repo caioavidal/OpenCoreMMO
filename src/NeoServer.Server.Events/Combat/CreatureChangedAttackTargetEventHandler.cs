@@ -44,12 +44,5 @@ namespace NeoServer.Server.Events.Combat
             }
             return result;
         }
-
-        private void MoveAroundEnemy(ICombatActor actor)
-        {
-            if (!(actor is IMonster monster)) return;
-
-            monster.MoveAroundEnemy();
-        }
     }
 }
