@@ -48,10 +48,10 @@ namespace NeoServer.Server.Events.Creature
 
         public void CreateLootItems(ILootItem[] items, Location location, IContainer container)
         {
-            var attributes = new Dictionary<ItemAttribute, IConvertible>();
-
             foreach (var item in items)
             {
+                var attributes = new Dictionary<ItemAttribute, IConvertible>();
+
                 if (item.Amount > 1) attributes.TryAdd(ItemAttribute.Count, item.Amount);
 
                 var itemToDrop = itemFactory.Create(item.ItemId, location, attributes);

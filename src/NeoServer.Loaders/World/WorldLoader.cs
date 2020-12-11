@@ -41,13 +41,7 @@ namespace NeoServer.Loaders.World
 
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
-            var tiles = GetTiles(otbm);
-
-            // tiles.AsParallel().ForAll(x => world.AddTile(x));
-            foreach (var tile in tiles)
-            {
-                world.AddTile(tile);
-            }
+            LoadTiles(otbm);
 
             foreach (var townNode in otbm.Towns)
             {
@@ -71,17 +65,18 @@ namespace NeoServer.Loaders.World
 
         }
 
-        private IEnumerable<ITile> GetTiles(OTBM.Structure.OTBM otbm)
+        private void LoadTiles(OTBM.Structure.OTBM otbm)
         {
-            return otbm.TileAreas.AsParallel().SelectMany(t => t.Tiles)
-                .Select(tileNode =>
+            otbm.TileAreas.AsParallel().SelectMany(t => t.Tiles)
+                .ForAll(tileNode =>
                 {
 
                     var items = GetItemsOnTile(tileNode).ToArray();
 
                     var tile = TileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
 
-                    return tile;
+                    world.AddTile(tile);
+                   // return tile;
                 });
         }
 

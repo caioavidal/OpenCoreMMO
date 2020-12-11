@@ -22,7 +22,7 @@ namespace NeoServer.Game.Combat.Attacks
         {
             damage = new CombatDamage();
 
-            if (actor.Location.GetSqmDistanceX(enemy.Location) > option.Range || actor.Location.GetSqmDistanceY(enemy.Location) > option.Range) return false;
+            if (actor.Location.GetMaxSqmDistance(enemy.Location) > option.Range) return false;
 
             var damageValue = (ushort)ServerRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
 
