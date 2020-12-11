@@ -50,7 +50,6 @@ namespace NeoServer.Game.Effects.Magical
                             break;
                     }
                 }
-
             }
 
             pool.Return(points);

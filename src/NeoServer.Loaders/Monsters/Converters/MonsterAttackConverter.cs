@@ -110,6 +110,12 @@ namespace NeoServer.Loaders.Monsters.Converters
                     combatAttack.CombatAttack = new SpreadCombatAttack(length, spread);
                 }
 
+                if(attackName == "lifedrain")
+                {
+                  //  combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect); 
+                    combatAttack.CombatAttack = new DrainCombatAttack(range, radius, Game.Common.Item.ShootType.None);
+                }
+
                 if(attackName == "speed")
                 {
                     attack.TryGetValue("duration", out uint duration);
