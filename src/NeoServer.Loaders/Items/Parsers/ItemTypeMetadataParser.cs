@@ -57,7 +57,9 @@ namespace NeoServer.Loaders.Items
             {
                 var itemAttribute = OpenTibiaTranslationMap.TranslateAttributeName(attribute.Key, out bool success);
 
-                itemType.Attributes.SetAttribute(itemAttribute, attribute.Value);
+                var value = itemAttribute == Game.Common.ItemAttribute.Weight ? (int.Parse(attribute.Value) / 100).ToString() : attribute.Value; //todo place this code in another place
+
+                itemType.Attributes.SetAttribute(itemAttribute, value);
             }
 
             if (metadata.OnUse == null) return;

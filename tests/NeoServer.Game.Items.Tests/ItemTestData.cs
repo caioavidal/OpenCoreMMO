@@ -18,7 +18,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Weight, 2000);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Weight, 20);
 
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
@@ -26,7 +26,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Weight, 2000);
+            itemType.Attributes.SetAttribute(Common.ItemAttribute.Weight, 20);
 
             itemType.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "backpack");
 
@@ -38,7 +38,7 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 100);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
 
             return new Cumulative(type, new Location(100, 100, 7), amount);
         }
@@ -78,7 +78,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetName("item");
 
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, "distance");
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 4000);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
 
             return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
         }
@@ -108,7 +108,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, slot);
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, weaponType);
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 4000);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
             type.SetName("item");
 
             return new BodyDefenseEquimentItem(type, new Location(100, 100, 7));
@@ -121,7 +121,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetName("item");
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, "ammunition");
             type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "ammo");
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 100);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
 
             return new AmmoItem(type, new Location(100, 100, 7), amount);
         }
