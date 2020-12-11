@@ -1,5 +1,4 @@
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
@@ -27,7 +26,6 @@ namespace NeoServer.Loaders.World
 
         public WorldLoader(Game.World.World world, Logger logger, IItemFactory itemFactory, ServerConfiguration serverConfiguration)
         {
-            //this.itemFactory = itemFactory;
             this.world = world;
             this.logger = logger;
             this.itemFactory = itemFactory;
