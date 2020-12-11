@@ -10,12 +10,14 @@ namespace NeoServer.Server.Commands.Movement
 {
     public class MapToContainerMovementOperation
     {
-
-        public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+        public static void Execute(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow)
         {
+            WalkToMechanism.DoOperation(player, () => MapToContainer(player, map, itemThrow), itemThrow.FromLocation, game);
+        }
 
+        private static void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+        {
             if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
-            
 
             if (fromTile.TopItemOnStack is not IPickupable item) return;
 
@@ -30,7 +32,7 @@ namespace NeoServer.Server.Commands.Movement
 
             IItem itemToAdd = item;
 
-            if(item is ICumulative cumulative)
+            if (item is ICumulative cumulative)
             {
                 itemToAdd = cumulative.Clone(itemThrow.Count);
             }
@@ -39,6 +41,7 @@ namespace NeoServer.Server.Commands.Movement
 
             map.RemoveThing(item, fromTile, itemThrow.Count);
         }
+
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>
               itemThrowPacket.FromLocation.Type == LocationType.Ground
               && itemThrowPacket.ToLocation.Type == LocationType.Container;

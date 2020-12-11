@@ -11,7 +11,9 @@ namespace NeoServer.Server.Commands.Movement
 {
     public sealed class MapToInventoryMovementOperation
     {
-        public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+        public static void Execute(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow) => WalkToMechanism.DoOperation(player, () => FromMapToInventory(player, map, itemThrow), itemThrow.FromLocation, game);
+
+        private static void FromMapToInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
             var tile = map[itemThrow.FromLocation] as IDynamicTile;
             var amount = itemThrow.Count;
