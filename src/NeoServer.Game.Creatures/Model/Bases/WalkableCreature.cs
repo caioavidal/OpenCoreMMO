@@ -29,6 +29,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             Speed = type.Speed;
             PathAccess = pathAccess;
+            OnCompleteWalking += ExecuteNextAction;
+
         }
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
@@ -137,11 +139,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
             StopWalking();
             if (PathAccess.FindPathToDestination(this, location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
             {
-                OnCompleteWalking += callbackAction.Invoke;
+                NextAction = callbackAction;
                 return TryWalkTo(directions);
             }
             return false;
         }
+
+   
         public virtual bool TryWalkTo(params Direction[] directions)
         {
             if (!WalkingQueue.IsEmpty)

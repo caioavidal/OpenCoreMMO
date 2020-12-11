@@ -50,6 +50,7 @@ namespace NeoServer.Game.Creatures.Model
         }
 
         //public Location Location { get; set; }
+        public Action<ICreature> NextAction { get; protected set; }
         public uint HealthPoints { get; protected set; }
         public uint MaxHealthPoints { get; protected set; }
         public new string Name => CreatureType.Name;
@@ -57,7 +58,7 @@ namespace NeoServer.Game.Creatures.Model
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
         public IThing Corpse { get; set; }
         public virtual BloodType Blood => BloodType.Blood;
-        
+
         public abstract IOutfit Outfit { get; protected set; }
         public Direction Direction { get; protected set; }
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
@@ -128,6 +129,12 @@ namespace NeoServer.Game.Creatures.Model
 
             return false;
         }
+
+        protected void ExecuteNextAction(ICreature creature)
+        {
+            NextAction?.Invoke(creature);
+            NextAction = null;
+        }
         public bool CanSee(Location pos)
         {
             if (Location.Z <= 7)
@@ -188,7 +195,7 @@ namespace NeoServer.Game.Creatures.Model
         }
         public void RemoveCondition(ConditionType type)
         {
-            if(Conditions.Remove(type, out var condition) is false) return;
+            if (Conditions.Remove(type, out var condition) is false) return;
             OnRemovedCondition?.Invoke(this, condition);
         }
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
@@ -214,7 +221,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public bool Equals([AllowNull] Creature other)
         {
-           return this == other;
+            return this == other;
         }
 
         public void OnMoved()

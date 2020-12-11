@@ -65,7 +65,7 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, weaponType);
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 4000);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
 
             if (twoHanded)
                 type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "two-handed");

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using NeoServer.Game.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Creatures.Tests
 {
@@ -349,7 +350,6 @@ namespace NeoServer.Game.Creatures.Tests
         }
 
         [Fact]
-
         public void AddItemToSlot_AddItem_When_Slot_Has_Cumulative_Item_And_Exceeds_Join_Item_And_Returns_Exceeding_Amount()
         {
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
@@ -365,7 +365,6 @@ namespace NeoServer.Game.Creatures.Tests
 
         [Theory]
         [MemberData(nameof(BackpackSlotAddItemsData))]
-
         public void AddItemToSlot_When_BackpackSlot_Has_Backpack_Add_Item_To_It(IPickupable item)
         {
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
@@ -380,6 +379,15 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(sut[Slot.Backpack], backpack);
             Assert.Equal(1, backpack.SlotsUsed);
         }
+        [Theory]
+        [MemberData(nameof(SlotItemsData))]
+        public void AddItemToSlot_Changes_Item_Location(Slot slot, IPickupable item)
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
+            var result = sut.TryAddItemToSlot(slot, item);
+
+            Assert.Equal(Location.Inventory(slot), item.Location);
+        }
     }
 }

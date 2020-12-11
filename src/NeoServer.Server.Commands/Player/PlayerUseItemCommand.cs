@@ -28,16 +28,19 @@ namespace NeoServer.Server.Commands.Player
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
+
+                Action action = null;
+
                 if(tile.TopItemOnStack is IContainer container)
                 {
-                    Action action = () => player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
-                    new WalkToMechanism().DoOperation(player, action, useItemPacket.Location, game);
-                    return;
+                    action = () => player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
                 }
-                if(tile.TopItemOnStack is IUseable useable)
+                else if(tile.TopItemOnStack is IUseable useable)
                 {
-                    useable.Use(player, game.Map);
+                    action = () => useable.Use(player, game.Map);
                 }
+
+                WalkToMechanism.DoOperation(player, action, useItemPacket.Location, game);
             }
             else if (useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)
             {

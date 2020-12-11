@@ -12,26 +12,19 @@ namespace NeoServer.Server.Commands.Movement
 {
     public class WalkToMechanism
     {
-        private Action<ICreature> callBack;
-
-        public void DoOperation(IPlayer player, Action action, Location toLocation, Game game, bool secondChance = false)
+        public static void DoOperation(IPlayer player, Action action, Location toLocation, Game game, bool secondChance = false)
         {
-            if (secondChance)
-            {
-                player.OnCompleteWalking -= callBack.Invoke;
-            }
-
             if (!toLocation.IsNextTo(player.Location))
             {
                 if (secondChance) return;
 
-                callBack = (creature) => game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () => DoOperation(player, action, toLocation, game, true)));
+                Action<ICreature> callBack = (creature) => game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelayMilliseconds, () => DoOperation(player, action, toLocation, game, true)));
 
                 player.WalkTo(toLocation, callBack);
                 return;
             }
 
-            action.Invoke();
+            action?.Invoke();
         }
     }
 }

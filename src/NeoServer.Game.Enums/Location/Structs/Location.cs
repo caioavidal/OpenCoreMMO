@@ -85,7 +85,7 @@ namespace NeoServer.Game.Common.Location.Structs
 
         public Slot Slot => (Slot)Convert.ToByte(Y);
 
-        public byte Container => Convert.ToByte(Y - 0x40);
+       // public byte Container => Convert.ToByte(Y - 0x40);
         public byte ContainerId => Convert.ToByte(Y & 0x0F);
 
         public sbyte ContainerSlot
@@ -304,6 +304,8 @@ namespace NeoServer.Game.Common.Location.Structs
         }
 
         public static Location Zero => new Location(0, 0, 0);
+        public static Location Inventory(Slot slot) => new Location(0xFFFF, (byte)slot, 0);
+        public static Location Container(int id, byte containerSlot) => new Location(0xFFFF, (ushort)(id + 64), containerSlot);
 
         /// <summary>
         /// Check whether location is 1 sqm next to dest
