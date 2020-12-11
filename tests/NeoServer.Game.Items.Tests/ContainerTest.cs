@@ -40,6 +40,7 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName(name);
+            type.SetFlag(ItemFlag.Pickupable);
 
             return new Item(type, new Location(100, 100, 7));
         }
@@ -56,7 +57,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.NotNull(sut.Items);
             Assert.Empty(sut.Items);
         }
-      
+
         [Fact]
         public void SetParent_Should_Modify_Parent_Property()
         {
@@ -442,8 +443,8 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void IsEquiped_When_Parent_Is_Player_Returns_True()
         {
-            var player = new Player(id: 1,characterName:"PlayerA", chaseMode: ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, soulMax:100, skills: new Dictionary<SkillType, ISkill>
+            var player = new Player(id: 1, characterName: "PlayerA", chaseMode: ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+             soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0) }
 
@@ -478,12 +479,12 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void IsEquiped_When_Moved_To_Another_Container_Where_Parent_Is_Null_Returns_False()
         {
-            var player = new Player(1,"PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, soulMax:100, skills: new Dictionary<SkillType, ISkill>
+            var player = new Player(1, "PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+             soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
              {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null,null));
+             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null, null));
 
             var sut = CreateContainer(2);
 
@@ -537,6 +538,16 @@ namespace NeoServer.Game.Items.Tests
             sut.TryAddItem(container);
 
             Assert.Equal("bag, item 3, item 2, item 1", sut.ToString());
+        }
+
+        [Fact]
+        public void TryAddItem_Changes_Item_Location()
+        {
+            var sut = CreateContainer(5);
+            var item = ItemTestData.CreateWeaponItem(100, "axe");
+            sut.TryAddItem(item);
+
+            Assert.Equal(Location.Container(0, 1), item.Location);
         }
 
     }

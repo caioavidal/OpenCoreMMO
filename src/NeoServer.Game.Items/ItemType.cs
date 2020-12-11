@@ -46,7 +46,7 @@ namespace NeoServer.Game.Items
         public string Article { get; private set; }
         public string Plural { get; private set; }
 
-        public float Weight => Attributes.GetAttribute<float>(Common.ItemAttribute.Weight) / 100;
+        public float Weight => Attributes.GetAttribute<float>(ItemAttribute.Weight);
 
         void ThrowIfLocked()
         {

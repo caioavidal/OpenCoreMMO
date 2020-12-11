@@ -85,7 +85,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (location.Type == LocationType.Ground)
             {
-                if (!location.IsNextTo(player.Location)) return;
+                if (!player.Location.IsNextTo(containerToOpen.Location)) return;
                 playerContainer = new PlayerContainer(containerToOpen, player);
             }
             else if (location.Slot == Slot.Backpack)

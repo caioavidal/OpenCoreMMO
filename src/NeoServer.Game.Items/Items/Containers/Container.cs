@@ -92,7 +92,7 @@ namespace NeoServer.Game.Items.Items
 
         private Result AddItem(IItem item, byte slot)
         {
-            if(item == this)
+            if (item == this)
             {
                 return new Result(InvalidOperation.NotPossible);
             }
@@ -175,6 +175,8 @@ namespace NeoServer.Game.Items.Items
             {
                 container.SetParent(this);
             }
+
+            if (item is IPickupable pickupable) pickupable.SetNewLocation(Location.Container(0, 1));
 
             OnItemAdded?.Invoke(item);
 

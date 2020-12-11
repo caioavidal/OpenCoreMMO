@@ -8,6 +8,7 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -187,7 +188,6 @@ namespace NeoServer.Server.Model.Players
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                 {
-
                     return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item).Error);
                 }
                 else if (item is IPickupableContainer container)
@@ -227,6 +227,8 @@ namespace NeoServer.Server.Model.Players
             }
 
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
+
+            item.SetNewLocation(Location.Inventory(slot));
 
             OnItemAddedToSlot?.Invoke(this, item, slot);
             return new Result<IPickupable>();
