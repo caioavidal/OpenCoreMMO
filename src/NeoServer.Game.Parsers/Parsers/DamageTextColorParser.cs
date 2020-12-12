@@ -17,6 +17,7 @@ namespace NeoServer.Game.Parsers.Effects
             DamageType.ManaDrain => TextColor.Blue,
             DamageType.FireField => TextColor.Orange,
             DamageType.Earth => TextColor.Green,
+            DamageType.Death => TextColor.DarkRed,
             DamageType.AbsorbPercentPhysical => TextColor.DarkRed,
             _ => TextColor.None
         };

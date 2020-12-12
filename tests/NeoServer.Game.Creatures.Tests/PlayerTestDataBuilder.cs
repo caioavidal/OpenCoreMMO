@@ -13,9 +13,9 @@ namespace NeoServer.Game.Creatures.Tests
 {
     internal class PlayerTestDataBuilder
     {
-        public static IPlayer BuildPlayer(uint capacity = 100)
+        public static IPlayer BuildPlayer(uint capacity = 100, ushort hp = 100, ushort mana = 30)
         {
-            var sut = new Player(1,"PlayerA", ChaseMode.Stand, capacity: capacity, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+            var sut = new Player(1,"PlayerA", ChaseMode.Stand, capacity: capacity, healthPoints: hp, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: mana, maxMana: 30, fightMode: FightMode.Attack,
               soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
               {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }

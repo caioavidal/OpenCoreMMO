@@ -26,6 +26,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 "holy" => DamageType.Holy,
                 "death"=>DamageType.Death,
                 "lifedrain"=> DamageType.AbsorbPercentPhysical,
+                "mortarea" => DamageType.Death,
                 _ => DamageType.Melee
             };
         }
@@ -36,6 +37,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 "blueshimmer" => EffectT.GlitterBlue,
                 "redshimmer" => EffectT.GlitterRed,
                 "greenshimmer"=> EffectT.GlitterGreen,
+                "mortarea" => EffectT.BubbleBlack,
                 _ => EffectT.None
             };
         }
@@ -48,6 +50,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 "star" => ShootType.ThrowingStar,
                 "energy" => ShootType.Energy,
                 "fire" => ShootType.Fire,
+                "suddendeath" => ShootType.SuddenDeath,
                 _ => ShootType.None
             };
         }
