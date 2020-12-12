@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
 using NeoServer.Server.Helpers;
 using System;
+using NeoServer.Game.Common.Combat;
 
 namespace NeoServer.Game.Combat.Attacks
 {

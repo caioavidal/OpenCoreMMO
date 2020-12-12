@@ -350,7 +350,7 @@ namespace NeoServer.Server.Model.Players
         public override int ShieldDefend(int attack)
         {
             var resultDamage = (int)(attack - Inventory.TotalDefense * Skills[SkillType.Shielding].Level * (DefenseFactor / 100d) - (attack / 100d) * ArmorRating);
-            if(resultDamage <= 0)
+            if (resultDamage <= 0)
             {
                 IncreaseSkillCounter(SkillType.Shielding, 1);
             }
@@ -372,7 +372,7 @@ namespace NeoServer.Server.Model.Players
             return damage;
         }
         public void ReceiveManaAttack(ICreature enemy, ushort damage) => ConsumeMana(damage);
-        
+
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             combat = new CombatAttackType();
@@ -496,6 +496,12 @@ namespace NeoServer.Server.Model.Players
             Cooldowns.Start(CooldownType.ManaRecovery, Vocation.GainManaTicks * 1000);
             Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
         }
-       
+
+        public override void OnDamage(ICombatActor enemy, CombatDamage damage)
+        {
+            if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);
+            else
+                ReduceHealth(enemy, damage);
+        }
     }
 }

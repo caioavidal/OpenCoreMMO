@@ -112,11 +112,18 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 if(attackName == "lifedrain")
                 {
-                  //  combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect); 
-                    combatAttack.CombatAttack = new DrainCombatAttack(range, radius, Game.Common.Item.ShootType.None);
+                    var shootType = MonsterAttributeParser.ParseShootType(shootEffect);
+
+                    combatAttack.CombatAttack = new DrainCombatAttack(range, radius, shootType);
+                }
+                if (attackName == "manadrain")
+                {
+                    var shootType = MonsterAttributeParser.ParseShootType(shootEffect);
+
+                    combatAttack.CombatAttack = new DrainCombatAttack(range, radius, shootType);
                 }
 
-                if(attackName == "speed")
+                if (attackName == "speed")
                 {
                     attack.TryGetValue("duration", out uint duration);
                     attack.TryGetValue("speedchange", out short speedchange);
