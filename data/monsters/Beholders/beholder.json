@@ -68,7 +68,7 @@
       ]
     },
     {
-      "name": "physical",
+      "name": "death",
       "interval": "2000",
       "chance": "8",
       "range": "7",
