@@ -371,8 +371,6 @@ namespace NeoServer.Server.Model.Players
             }
             return damage;
         }
-        public void ReceiveManaAttack(ICreature enemy, ushort damage) => ConsumeMana(damage);
-
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             combat = new CombatAttackType();
