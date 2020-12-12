@@ -186,7 +186,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (KeepDistance)
             {
-                if (target.Creature.Location.GetMaxSqmDistance(Location) == TargetDistance)  return true && target.CanReachCreature;
+                if (target.Creature.Location.GetMaxSqmDistance(Location) == TargetDistance) return true && target.CanReachCreature;
             }
             else
             {
@@ -407,5 +407,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             return damage;
         }
+
+        public override void OnDamage(ICombatActor enemy, CombatDamage damage) => ReduceHealth(enemy, damage);
+        
     }
 }

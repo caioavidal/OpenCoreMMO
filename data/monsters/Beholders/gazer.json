@@ -47,12 +47,7 @@
       "chance": "12",
       "range": "7",
       "min": "-25",
-      "max": "-35",
-      "attributes": [
-        {
-          "areaEffect": "redshimmer"
-        }
-      ]
+      "max": "-35"
     },
     {
       "name": "manadrain",
@@ -60,12 +55,7 @@
       "chance": "15",
       "range": "7",
       "min": "-5",
-      "max": "-15",
-      "attributes": [
-        {
-          "areaEffect": "redshimmer"
-        }
-      ]
+      "max": "-15"
     }
   ],
   "defense": {

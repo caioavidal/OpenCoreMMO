@@ -72,7 +72,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             blockCount++;
         }
         public void ResetHealthPoints() => Heal((ushort)MaxHealthPoints);
-        
+
 
         public CombatDamage ReduceDamage(CombatDamage attack)
         {
@@ -140,7 +140,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return true;
         }
 
-     
+
         public virtual void SetAttackTarget(uint targetId)
         {
             if (targetId == AutoAttackTargetId) return;
@@ -156,10 +156,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnTargetChanged?.Invoke(this, oldAttackTarget, targetId);
         }
 
-        private void ReduceHealth(ICombatActor enemy, CombatDamage damage)
+        protected void ReduceHealth(ICombatActor enemy, CombatDamage damage)
         {
             HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
-            OnDamaged?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath();
         }
         public virtual void OnDeath()
@@ -193,6 +192,15 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);
         public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
+
+        public abstract void OnDamage(ICombatActor enemy, CombatDamage damage);
+
+        private void OnDamage(ICombatActor enemy, ICombatActor actor, CombatDamage damage)
+        {
+            OnDamage(enemy, damage);
+            OnDamaged?.Invoke(enemy, this, damage);
+        }
+
         public virtual bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
             if (IsDead) return false;
@@ -204,15 +212,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 WasDamagedOnLastAttack = false;
                 return false;
             }
-            if (damage.Type != DamageType.ManaDrain)
-            {
-                ReduceHealth(enemy, damage);
-            }
+
+            OnDamage(enemy, this, damage);
+
 
             WasDamagedOnLastAttack = true;
             return true;
         }
-        public void PropagateAttack(Coordinate[] area, CombatDamage damage )
+        public void PropagateAttack(Coordinate[] area, CombatDamage damage)
         {
             if (IsDead) return;
             if (damage.Damage <= 0) return;
