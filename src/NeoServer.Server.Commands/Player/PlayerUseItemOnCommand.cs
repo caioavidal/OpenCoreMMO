@@ -47,19 +47,19 @@ namespace NeoServer.Server.Commands.Player
             {
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
           
-                if(tile.TopItemOnStack is IUseableOnItem useable)
+                if(tile.TopItemOnStack is IUseableOn useable)
                 {
                     useable.UseOn(player, game.Map, useOnItem);
                 }
             }
             else if (useItemPacket.Location.Type ==  LocationType.Slot)
             {
-                if (player.Inventory[useItemPacket.Location.Slot] is not IUseableOnItem useable) return;
+                if (player.Inventory[useItemPacket.Location.Slot] is not IUseableOn useable) return;
                 useable.UseOn(player, game.Map, useOnItem);
             }
             else if (useItemPacket.Location.Type == LocationType.Container)
             {
-                if (player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot] is not IUseableOnItem useable) return;
+                if (player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot] is not IUseableOn useable) return;
                 useable.UseOn(player, game.Map, useOnItem);
             }
         }

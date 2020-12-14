@@ -50289,10 +50289,17 @@
        "id": "7618",
        "article": "a",
        "name": "health potion",
+	   "flags": ["useable"],
        "attributes": [{
           "key": "weight",
           "value": "270"
-       }]
+       },
+	   {
+          "key": "healing",
+          "value": "hp",
+		  "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
+       }
+	  ]
     },
     {
        "id": "7619",

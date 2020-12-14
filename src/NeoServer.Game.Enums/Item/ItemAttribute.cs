@@ -193,6 +193,9 @@
         AbsorbPercentLifeDrain,
         AbsorbPercentDeath,
         AbsorbPercentHoly,
-        AbsorbPercentIce
+        AbsorbPercentIce,
+        Healing,
+        Min,
+        Max
     }
 }

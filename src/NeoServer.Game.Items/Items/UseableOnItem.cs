@@ -6,7 +6,7 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class UseableOnItem : MoveableItem, IPickupable, IUseableOnItem
+    public class UseableOnItem : MoveableItem, IPickupable, IUseableOn
     {
         public UseableOnItem(IItemType type, Location location) : base(type, location)
         {
