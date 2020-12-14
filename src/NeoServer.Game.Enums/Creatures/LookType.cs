@@ -7,6 +7,7 @@
         Body,
         Legs,
         Feet,
-        Corpse
+        Corpse,
+        Addon
     }
 }

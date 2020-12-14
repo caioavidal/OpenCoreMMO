@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Defenses;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,9 +11,9 @@ namespace NeoServer.Loaders.Monsters.Converters
 {
     public class MonsterDefenseConverter
     {
-        public static ICombatDefense[] Convert(MonsterData data)
+        public static ICombatDefense[] Convert(MonsterData data, IMonsterDataManager monsters)
         {
-            if (data.Defenses is null) return new ICombatDefense[0];
+            if (data.Defenses is null) return Array.Empty<ICombatDefense>();
 
             var defenses = new List<ICombatDefense>();
 
@@ -60,6 +61,18 @@ namespace NeoServer.Loaders.Monsters.Converters
                     defense.TryGetValue("duration", out uint duration);
 
                     defenses.Add(new InvisibleCombatDefense(duration)
+                    {
+                        Chance = chance,
+                        Interval = interval,
+                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
+                    });
+                }
+                else if (defenseName.Equals("outfit", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    defense.TryGetValue("duration", out uint duration);
+                    defense.TryGetValue("monster", out string monsterName);
+
+                    defenses.Add(new IllusionCombatDefense(duration, monsterName, monsters)
                     {
                         Chance = chance,
                         Interval = interval,
