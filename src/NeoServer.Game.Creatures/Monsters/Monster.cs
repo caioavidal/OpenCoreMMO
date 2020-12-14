@@ -21,7 +21,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
     public class Monster : WalkableMonster, IMonster
     {
         public event Born OnWasBorn;
-        public event Defende OnDefende;
         public event DropLoot OnDropLoot;
         public event MonsterChangeState OnChangedState;
         public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
@@ -363,8 +362,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (defense.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100)) return defense.Interval; //can defend but lost his chance
 
             defense.Defende(this);
-
-            OnDefende?.Invoke(this, defense);
 
             return defense.Interval;
         }

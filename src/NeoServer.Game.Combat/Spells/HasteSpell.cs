@@ -21,6 +21,10 @@ namespace NeoServer.Game.Creatures.Spells
             SpeedBoost = speedBoost;
             Duration = duration;
         }
+        public HasteSpell()
+        {
+
+        }
         public override void OnCast(ICombatActor actor)
         {
             actor.IncreaseSpeed(SpeedBoost);
