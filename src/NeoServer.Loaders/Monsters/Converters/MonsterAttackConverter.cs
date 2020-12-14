@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -97,12 +98,12 @@ namespace NeoServer.Loaders.Monsters.Converters
                 {
                     if (areaEffect != null)
                         combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
-                    combatAttack.CombatAttack = new DistanceCombatAttack(range, MonsterAttributeParser.ParseShootType(shootEffect));
+                    combatAttack.CombatAttack = new DistanceCombatAttack(range, ShootTypeParser.Parse(shootEffect));
                 }
                 if (radius > 1)
                 {
                     combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
-                    combatAttack.CombatAttack = new DistanceAreaCombatAttack(range, radius, MonsterAttributeParser.ParseShootType(shootEffect));
+                    combatAttack.CombatAttack = new DistanceAreaCombatAttack(range, radius, ShootTypeParser.Parse(shootEffect));
                 }
                 if (length > 0)
                 {
@@ -112,13 +113,13 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 if(attackName == "lifedrain")
                 {
-                    var shootType = MonsterAttributeParser.ParseShootType(shootEffect);
+                    var shootType = ShootTypeParser.Parse(shootEffect);
 
                     combatAttack.CombatAttack = new DrainCombatAttack(range, radius, shootType);
                 }
                 if (attackName == "manadrain")
                 {
-                    var shootType = MonsterAttributeParser.ParseShootType(shootEffect);
+                    var shootType = ShootTypeParser.Parse(shootEffect);
 
                     combatAttack.CombatAttack = new DrainCombatAttack(range, radius, shootType);
                 }
@@ -129,7 +130,12 @@ namespace NeoServer.Loaders.Monsters.Converters
                     attack.TryGetValue("speedchange", out short speedchange);
 
                     combatAttack.DamageType = default;
-                    combatAttack.CombatAttack = new SpeedCombatAttack(duration, speedchange, range, MonsterAttributeParser.ParseShootType(shootEffect));
+                    combatAttack.CombatAttack = new SpeedCombatAttack(duration, speedchange, range, ShootTypeParser.Parse(shootEffect));
+                }
+
+                if (combatAttack.CombatAttack is null)
+                {
+             //       Console.WriteLine($"{attackName} was not created on monster: {data.Name}");
                 }
 
                 attacks.Add(combatAttack);

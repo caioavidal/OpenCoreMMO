@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Items.Parsers
+namespace NeoServer.Game.Common.Parsers
 {
-    internal class ShootTypeParser
+    public class ShootTypeParser
     {
         public static ShootType Parse(string shootType) =>
             shootType switch

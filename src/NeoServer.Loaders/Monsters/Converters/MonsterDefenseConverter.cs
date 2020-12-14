@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -22,8 +21,11 @@ namespace NeoServer.Loaders.Monsters.Converters
                 defense.TryGetValue("name", out string defenseName);
                 defense.TryGetValue("chance", out byte chance);
                 defense.TryGetValue("interval", out ushort interval);
-                defense.TryGetValue<JArray>("attributes", out var attributes);
 
+                defense.TryGetValue<JArray>("attributes", out var attributesArray);
+                var attributes = attributesArray?.ToDictionary(k => ((JObject)k).Properties().First().Name, v => v.Values().First().Value<object>());
+
+                attributes.TryGetValue("areaEffect", out string areaEffect);
 
                 if (defenseName == "healing")
                 {
@@ -36,10 +38,10 @@ namespace NeoServer.Loaders.Monsters.Converters
                         Interval = interval,
                         Min = (int)Math.Abs(min),
                         Max = (int)Math.Abs(max),
-                        Effect = MonsterAttributeParser.ParseAreaEffect(attributes?.FirstOrDefault(a => a?.Value<string>("key") == "areaEffect")?.Value<string>("value"))
+                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
                     });
                 }
-                if (defenseName == "speed")
+                else if (defenseName == "speed")
                 {
                     defense.TryGetValue("speedchange", out ushort speed);
                     defense.TryGetValue("duration", out uint duration);
@@ -50,8 +52,23 @@ namespace NeoServer.Loaders.Monsters.Converters
                         Interval = interval,
                         SpeedBoost = speed,
                         Duration = duration,
-                        Effect = MonsterAttributeParser.ParseAreaEffect(attributes?.FirstOrDefault(a => a.Value<string>("key") == "areaEffect")?.Value<string>("value"))
+                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
                     });
+                }
+                else if (defenseName == "invisible")
+                {
+                    defense.TryGetValue("duration", out uint duration);
+
+                    defenses.Add(new InvisibleCombatDefense(duration)
+                    {
+                        Chance = chance,
+                        Interval = interval,
+                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
+                    });
+                }
+                else
+                {
+                    Console.WriteLine($"{defenseName} defense was not created on monster: {data.Name}");
                 }
             }
 

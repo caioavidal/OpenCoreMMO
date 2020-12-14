@@ -6,17 +6,17 @@ using System.Text;
 
 namespace NeoServer.Game.Contracts.Combat.Defenses
 {
-    public abstract class BaseCombatDefense:ICombatDefense
+    public abstract class BaseCombatDefense : ICombatDefense
     {
         /// <summary>
         /// Minumum interval to occurr
         /// </summary>
-        public ushort Interval { get; set; }
+        public ushort Interval { get; init; }
         /// <summary>
         /// Chance to occurr - 0 to 100
         /// </summary>
-        public byte Chance { get; set; }
-        public EffectT Effect { get; set; }
+        public byte Chance { get; init; }
+        public EffectT Effect { get; init; }
 
         /// <summary>
         /// action to execute when defence occurrs

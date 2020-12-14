@@ -32,6 +32,8 @@ namespace NeoServer.Game.Creatures
         private readonly CreatureStartedFollowingEventHandler  _creatureStartedFollowingEventHandler;
         private readonly CreatureChangedSpeedEventHandler _creatureChangedSpeedEventHandler;
         private readonly CreatureSayEventHandler _creatureSayEventHandler;
+        private readonly CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler;
+        private readonly CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler;
         private ILiquidPoolFactory _liquidPoolFactory;
 
         private readonly IMap _map;
@@ -50,7 +52,9 @@ namespace NeoServer.Game.Creatures
             IPlayerFactory playerFactory, IMonsterFactory monsterFactory, IMap map,
             CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, CreatureHealedEventHandler creatureHealedEventHandler,
             CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler,
-            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, CreatureSayEventHandler creatureSayEventHandler, ILiquidPoolFactory liquidPoolFactory, IItemFactory itemFactory)
+            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, CreatureSayEventHandler creatureSayEventHandler,
+            ILiquidPoolFactory liquidPoolFactory, IItemFactory itemFactory, 
+            CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler, CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -70,6 +74,8 @@ namespace NeoServer.Game.Creatures
             _creatureSayEventHandler = creatureSayEventHandler;
             _liquidPoolFactory = liquidPoolFactory;
             this.itemFactory = itemFactory;
+            this.creatureTurnedInvisibleEventHandler = creatureTurnedInvisibleEventHandler;
+            this.creatureChangedOutfitEventHandler = creatureChangedOutfitEventHandler;
         }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         { 
@@ -102,22 +108,27 @@ namespace NeoServer.Game.Creatures
             creature.OnChangedSpeed += _creatureChangedSpeedEventHandler.Execute;
             return creature;
         }
-        private ICreature AttachEvents(ICombatActor creature)
+        private ICreature AttachEvents(ICreature creature)
         {
-            creature.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
-            creature.OnKilled += _creatureKilledEventHandler.Execute;
-            creature.OnKilled += AttachDeathEvent;
-            creature.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
-            creature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
-            creature.OnPropagateAttack += _map.PropagateAttack;
-            creature.OnAttackEnemy += _creatureAttackEventHandler.Execute;
-            creature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
-            creature.OnHeal += _creatureHealedEventHandler.Execute;
+            if (creature is ICombatActor combatActor)
+            {
+                combatActor.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
+                combatActor.OnKilled += _creatureKilledEventHandler.Execute;
+                combatActor.OnKilled += AttachDeathEvent;
+                combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
+                combatActor.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
+                combatActor.OnPropagateAttack += _map.PropagateAttack;
+                combatActor.OnAttackEnemy += _creatureAttackEventHandler.Execute;
+                combatActor.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
+                combatActor.OnHeal += _creatureHealedEventHandler.Execute;
+                combatActor.OnKilled += DetachEvents;
+                combatActor.OnDamaged += AttachDamageLiquidPoolEvent;
+                combatActor.OnKilled += AttachDeathLiquidPoolEvent;
+                combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
+            }
+
+            creature.OnChangedOutfit += creatureChangedOutfitEventHandler.Execute;
             creature.OnSay += _creatureSayEventHandler.Execute;
-            creature.OnKilled += DetachEvents;
-            creature.OnDamaged += AttachDamageLiquidPoolEvent;
-            creature.OnKilled += AttachDeathLiquidPoolEvent;
-            
             return creature;
         }
         private void DetachEvents(ICombatActor creature)

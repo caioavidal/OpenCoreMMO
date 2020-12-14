@@ -3,9 +3,9 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Players;
-using NeoServer.Game.Items.Parsers;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Game.Items
 {

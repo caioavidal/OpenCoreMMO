@@ -41,18 +41,6 @@ namespace NeoServer.Loaders.Monsters.Converters
                 _ => EffectT.None
             };
         }
-        public static ShootType ParseShootType(string type)
-        {
-            return type switch
-            {
-                "bolt" => ShootType.Bolt,
-                "spear" => ShootType.Spear,
-                "star" => ShootType.ThrowingStar,
-                "energy" => ShootType.Energy,
-                "fire" => ShootType.Fire,
-                "suddendeath" => ShootType.SuddenDeath,
-                _ => ShootType.None
-            };
-        }
+     
     }
 }

@@ -24,6 +24,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void Say(ICreature creature, TalkType type, string message);
     public delegate void AddCondition(ICreature creature, ICondition condition);
     public delegate void RemoveCondition(ICreature creature, ICondition condition);
+    public delegate void ChangeOutfit(ICreature creature, IOutfit outfit);
 
     public interface ICreature : IMoveableThing
     {
@@ -48,16 +49,20 @@ namespace NeoServer.Game.Contracts.Creatures
         uint MaxHealthPoints { get; }
         bool IsHealthHidden { get; }
         IThing Corpse { get; set; }
+        IOutfit OldOutfit { get; }
 
         event RemoveCreature OnCreatureRemoved;
         event GainExperience OnGainedExperience;
         event Say OnSay;
         event RemoveCondition OnRemovedCondition;
+        event ChangeOutfit OnChangedOutfit;
 
         void AddCondition(ICondition condition);
         bool CanSee(Contracts.Creatures.ICreature otherCreature);
         bool CanSee(Location pos);
+        void ChangeOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon);
         IItem CreateItem(ushort itemId, byte amount);
+        void DisableTemporaryOutfit();
         void GainExperience(uint exp);
         bool HasCondition(ConditionType type, out ICondition condition);
         bool HasCondition(ConditionType type);
@@ -67,6 +72,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void SetAsRemoved();
         void SetDirection(Direction direction);
         void SetFlag(CreatureFlag flag);
+        void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon);
         void UnsetFlag(CreatureFlag flag);
     }
 }

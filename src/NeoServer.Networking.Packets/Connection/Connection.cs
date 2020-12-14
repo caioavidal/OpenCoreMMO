@@ -251,6 +251,7 @@ namespace NeoServer.Networking
             while (OutgoingPackets.Any())
             {
                 var packet = OutgoingPackets.Dequeue();
+                //Console.WriteLine($"{packet.GetType().Name}"); debug
                 packet.WriteToMessage(message);
             }
 

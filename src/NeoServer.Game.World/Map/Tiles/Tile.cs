@@ -408,7 +408,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in topItems)
             {
-                if(FloorDirection == FloorChangeDirection.None) FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
+                if (FloorDirection == FloorChangeDirection.None) FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
                 TopItems.Push(item);
             }
 
@@ -514,6 +514,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var creature in Creatures)
             {
+                if (creature.Value is IMonster monster && !playerRequesting.CanSee(monster)) continue;
                 if (countThings == 9)
                 {
                     break;
