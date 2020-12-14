@@ -25,7 +25,6 @@ namespace NeoServer.Game.Creatures.Spells
             Effect = effect;
             CreatureName = creatureName;
         }
-
         public override void OnCast(ICombatActor actor)
         {
             if (!Monsters.TryGetMonster(CreatureName, out var monster)) return;

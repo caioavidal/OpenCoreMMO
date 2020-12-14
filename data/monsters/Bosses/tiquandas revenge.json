@@ -95,7 +95,7 @@
   },
   "defenses": [
     {
-      "name": "ultimate healing",
+      "name": "healing",
       "interval": "1200",
       "chance": "35",
       "min": "600",

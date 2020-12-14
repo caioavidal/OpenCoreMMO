@@ -114,16 +114,6 @@
       ]
     },
     {
-      "name": "effect",
-      "interval": "1000",
-      "chance": "5",
-      "attributes": [
-        {
-          "areaEffect": "redshimmer"
-        }
-      ]
-    },
-    {
       "name": "outfit",
       "interval": "1000",
       "chance": "5",
