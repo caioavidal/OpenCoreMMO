@@ -6,6 +6,6 @@ namespace NeoServer.Game.Contracts
 {
     public interface IProbability
     {
-        byte Chance { get; set; }
+        byte Chance { get; init; }
     }
 }

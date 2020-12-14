@@ -22,6 +22,7 @@ namespace NeoServer.Game.Creatures.Model
         public event GainExperience OnGainedExperience;
         public event AddCondition OnAddedCondition;
         public event RemoveCondition OnRemovedCondition;
+        public event ChangeOutfit OnChangedOutfit;
 
         public event Say OnSay;
 
@@ -60,6 +61,8 @@ namespace NeoServer.Game.Creatures.Model
         public virtual BloodType Blood => BloodType.Blood;
 
         public abstract IOutfit Outfit { get; protected set; }
+        public IOutfit OldOutfit { get; private set; }
+
         public Direction Direction { get; protected set; }
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
         public Direction ClientSafeDirection
@@ -83,6 +86,25 @@ namespace NeoServer.Game.Creatures.Model
                         throw new ArgumentOutOfRangeException();
                 }
             }
+        }
+
+        public void ChangeOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
+        {
+            OldOutfit = null;
+            Outfit.Change(lookType, id, head, body, legs, feet, addon);
+            OnChangedOutfit?.Invoke(this, Outfit);
+        }
+        public void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
+        {
+            OldOutfit = Outfit;
+            Outfit.Change(lookType, id, head, body, legs, feet, addon);
+            OnChangedOutfit?.Invoke(this, Outfit);
+        }
+        public void DisableTemporaryOutfit()
+        {
+            Outfit = OldOutfit;
+            OldOutfit = null;
+            OnChangedOutfit?.Invoke(this, Outfit);
         }
         public byte LightBrightness { get; protected set; }
         public byte LightColor { get; protected set; }

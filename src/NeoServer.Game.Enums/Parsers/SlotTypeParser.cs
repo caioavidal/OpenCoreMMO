@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Common.Players;
 
-namespace NeoServer.Game.Items.Parsers
+namespace NeoServer.Game.Common.Parsers
 {
-    internal class SlotTypeParser
+    public class SlotTypeParser
     {
         public static Slot Parse(string slotType) => slotType switch
         {

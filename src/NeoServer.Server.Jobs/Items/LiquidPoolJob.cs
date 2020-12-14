@@ -19,7 +19,7 @@ namespace NeoServer.Server.Jobs.Creatures
                     game.Map.CreateBloodPool(liquid, tile);
                 }
 
-                if(item.ShouldDisappear)
+                if (item.ShouldDisappear)
                 {
                     game.Map.CreateBloodPool(null, tile);
                 }
