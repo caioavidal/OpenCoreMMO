@@ -96,10 +96,11 @@ namespace NeoServer.Game.Creatures.Model
         }
         public void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
         {
-            OldOutfit = Outfit;
+            OldOutfit = Outfit.Clone();
             Outfit.Change(lookType, id, head, body, legs, feet, addon);
             OnChangedOutfit?.Invoke(this, Outfit);
         }
+      
         public void DisableTemporaryOutfit()
         {
             Outfit = OldOutfit;

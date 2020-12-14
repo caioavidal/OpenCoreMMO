@@ -27,6 +27,7 @@
         SoundPurple = 0x17,
         SoundBlue = 0x18,
         SoundWhite = 0x19,
+        GroundShaker = 35,
         None = 0xFF // Don't send to client.
     }
 }

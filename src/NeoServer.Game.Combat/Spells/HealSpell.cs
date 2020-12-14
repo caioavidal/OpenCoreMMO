@@ -4,34 +4,34 @@ using NeoServer.Game.Common.Creatures.Players;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Game.Common;
+using NeoServer.Server.Helpers;
 
 namespace NeoServer.Game.Creatures.Spells
 {
-    public class HasteSpell: Spell<HasteSpell>
+    public class HealSpell : Spell<HealSpell>
     {
-        public override string Name => "Haste";
+        public override string Name => "Healing";
         public override EffectT Effect { get; } = EffectT.GlitterBlue;
-        public override uint Duration { get; } = 10000;
-        public virtual ushort SpeedBoost { get; } = 200;
         public override ushort Mana => 60;
         public override ConditionType ConditionType => ConditionType.Haste;
-        public HasteSpell(uint duration, ushort speedBoost, EffectT effect)
+        public virtual ushort Min { get; }
+        public virtual ushort Max { get; }
+        public override uint Duration => 0;
+
+        public HealSpell(MinMax minMax, EffectT effect)
         {
             Effect = effect;
-            SpeedBoost = speedBoost;
-            Duration = duration;
-        }
-        public HasteSpell()
-        {
-
+            Min = (ushort) minMax.Min;
+            Max = (ushort) minMax.Max;
         }
         public override void OnCast(ICombatActor actor)
         {
-            actor.IncreaseSpeed(SpeedBoost);
+            var hpToIncrease = ServerRandom.Random.NextInRange(Min, Max);
+            actor.Heal((ushort)hpToIncrease);
         }
         public override void OnEnd(ICombatActor actor)
         {
-            actor.DecreaseSpeed(SpeedBoost);
             base.OnEnd(actor);
         }
     }

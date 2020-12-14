@@ -104,7 +104,10 @@ namespace NeoServer.Game.Creatures.Spells
     }
     public abstract class Spell<T> : BaseSpell where T : ISpell
     {
-     
+        public Spell()
+        {
+
+        }
         private static readonly Lazy<T> Lazy = new Lazy<T>(() => (T)Activator.CreateInstance(typeof(T), true));
         public static T Instance => Lazy.Value;
     }

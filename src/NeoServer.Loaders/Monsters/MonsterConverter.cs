@@ -14,7 +14,7 @@ namespace NeoServer.Loaders.Monsters
 {
     public class MonsterConverter
     {
-        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration)
+        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration, IMonsterDataManager monsters)
         {
             var data = monsterData;
             var monster = new MonsterType()
@@ -41,7 +41,7 @@ namespace NeoServer.Loaders.Monsters
 
             monster.Immunities = MonsterImmunityConverter.Convert(data).ToImmutableDictionary();
 
-            monster.Defenses = MonsterDefenseConverter.Convert(data);
+            monster.Defenses = MonsterDefenseConverter.Convert(data, monsters);
 
             monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate);
 

@@ -16,8 +16,6 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
         /// Chance to occurr - 0 to 100
         /// </summary>
         public byte Chance { get; init; }
-        public EffectT Effect { get; init; }
-
         /// <summary>
         /// action to execute when defence occurrs
         /// </summary>

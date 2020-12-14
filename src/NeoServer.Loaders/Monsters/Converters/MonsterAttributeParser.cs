@@ -38,6 +38,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 "redshimmer" => EffectT.GlitterRed,
                 "greenshimmer"=> EffectT.GlitterGreen,
                 "mortarea" => EffectT.BubbleBlack,
+                "groundshaker" =>EffectT.GroundShaker,
                 _ => EffectT.None
             };
         }

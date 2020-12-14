@@ -16,7 +16,6 @@ namespace NeoServer.Game.Creatures
         private readonly IMonsterDataManager _monsterManager;
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
-        private readonly MonsterDefendEventHandler _monsterDefendEventHandler;
         private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
         private readonly MonsterChangedStateEventHandler monsterChangedStateEventHandler;
         private readonly IPathAccess pathAccess;
@@ -25,13 +24,12 @@ namespace NeoServer.Game.Creatures
 
         public MonsterFactory(IMonsterDataManager monsterManager,
             CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
-            MonsterDefendEventHandler monsterDefendEventHandler, IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreaturePathAccess creaturePathAccess, Logger logger,
+            IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreaturePathAccess creaturePathAccess, Logger logger,
             MonsterChangedStateEventHandler monsterChangedStateEventHandler)
         {
             _monsterManager = monsterManager;
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
             _creatureAttackEventHandler = creatureAttackEventHandler;
-            _monsterDefendEventHandler = monsterDefendEventHandler;
             this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
             pathAccess = creaturePathAccess;
             this.logger = logger;
@@ -49,7 +47,6 @@ namespace NeoServer.Game.Creatures
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttackEnemy += _creatureAttackEventHandler.Execute;
-            monster.OnDefende += _monsterDefendEventHandler.Execute;
             monster.OnDropLoot += creatureDroppedLootEventHandler.Execute;
             monster.OnChangedState += monsterChangedStateEventHandler.Execute;
             return monster;

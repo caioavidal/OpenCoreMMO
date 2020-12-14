@@ -1,11 +1,13 @@
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Creature.Model
 {
 
     public class Outfit : IOutfit
     {
-  
+
         public ushort LookType { get; set; }
 
         public ushort Id { get; set; }
@@ -28,6 +30,11 @@ namespace NeoServer.Game.Creature.Model
             Legs = legs;
             Feet = feet;
             Addon = addon;
+        }
+
+        public IOutfit Clone()
+        {
+            return (IOutfit) MemberwiseClone();
         }
     }
 
