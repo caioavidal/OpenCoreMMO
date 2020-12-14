@@ -1,5 +1,8 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Spells;
+using NeoServer.Game.Creatures.Spells;
 using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
@@ -9,13 +12,11 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
 {
     public class HealCombatDefense : BaseCombatDefense
     {
-        public int Min { get; set; }
-        public int Max { get; set; }
-
-        public override void Defende(ICombatActor actor)
+        public ISpell Spell { get; }
+        public HealCombatDefense(int min, int max, EffectT effect) //todo: remove dataManager from here
         {
-            var hpToIncrease = ServerRandom.Random.NextInRange(Min, Max);
-            actor.Heal((ushort)hpToIncrease);
+            Spell = new HealSpell(new MinMax(min, max), effect);
         }
+        public override void Defende(ICombatActor actor) => Spell?.Invoke(actor, out var error);
     }
 }

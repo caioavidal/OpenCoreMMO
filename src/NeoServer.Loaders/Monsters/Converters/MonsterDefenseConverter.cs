@@ -33,13 +33,10 @@ namespace NeoServer.Loaders.Monsters.Converters
                     defense.TryGetValue("min", out decimal min);
                     defense.TryGetValue("max", out decimal max);
 
-                    defenses.Add(new HealCombatDefense
+                    defenses.Add(new HealCombatDefense((int)Math.Abs(min), (int)Math.Abs(max), MonsterAttributeParser.ParseAreaEffect(areaEffect))
                     {
                         Chance = chance,
-                        Interval = interval,
-                        Min = (int)Math.Abs(min),
-                        Max = (int)Math.Abs(max),
-                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
+                        Interval = interval
                     });
                 }
                 else if (defenseName.Equals("speed", StringComparison.InvariantCultureIgnoreCase))
@@ -47,24 +44,20 @@ namespace NeoServer.Loaders.Monsters.Converters
                     defense.TryGetValue("speedchange", out ushort speed);
                     defense.TryGetValue("duration", out uint duration);
 
-                    defenses.Add(new HasteCombatDefense()
+                    defenses.Add(new HasteCombatDefense(duration, speed, MonsterAttributeParser.ParseAreaEffect(areaEffect))
                     {
                         Chance = chance,
-                        Interval = interval,
-                        SpeedBoost = speed,
-                        Duration = duration,
-                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
+                        Interval = interval
                     });
                 }
                 else if (defenseName.Equals("invisible", StringComparison.InvariantCultureIgnoreCase))
                 {
                     defense.TryGetValue("duration", out uint duration);
 
-                    defenses.Add(new InvisibleCombatDefense(duration)
+                    defenses.Add(new InvisibleCombatDefense(duration, MonsterAttributeParser.ParseAreaEffect(areaEffect))
                     {
                         Chance = chance,
                         Interval = interval,
-                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
                     });
                 }
                 else if (defenseName.Equals("outfit", StringComparison.InvariantCultureIgnoreCase))
@@ -72,11 +65,10 @@ namespace NeoServer.Loaders.Monsters.Converters
                     defense.TryGetValue("duration", out uint duration);
                     defense.TryGetValue("monster", out string monsterName);
 
-                    defenses.Add(new IllusionCombatDefense(duration, monsterName, monsters)
+                    defenses.Add(new IllusionCombatDefense(duration, monsterName, MonsterAttributeParser.ParseAreaEffect(areaEffect), monsters)
                     {
                         Chance = chance,
                         Interval = interval,
-                        Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
                     });
                 }
                 else
