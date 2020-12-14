@@ -85,9 +85,10 @@
       ]
     },
     {
-      "name": "Invisible",
+      "name": "invisible",
       "interval": "4000",
-      "chance": "0",
+	  "duration": "2000",
+      "chance": "9",
       "attributes": [
         {
           "areaEffect": "blueshimmer"

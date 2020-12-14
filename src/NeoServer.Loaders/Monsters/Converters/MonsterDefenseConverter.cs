@@ -27,7 +27,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 attributes.TryGetValue("areaEffect", out string areaEffect);
 
-                if (defenseName == "healing")
+                if (defenseName.Equals("healing", StringComparison.InvariantCultureIgnoreCase))
                 {
                     defense.TryGetValue("min", out decimal min);
                     defense.TryGetValue("max", out decimal max);
@@ -41,7 +41,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                         Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
                     });
                 }
-                else if (defenseName == "speed")
+                else if (defenseName.Equals("speed", StringComparison.InvariantCultureIgnoreCase))
                 {
                     defense.TryGetValue("speedchange", out ushort speed);
                     defense.TryGetValue("duration", out uint duration);
@@ -55,7 +55,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                         Effect = MonsterAttributeParser.ParseAreaEffect(areaEffect)
                     });
                 }
-                else if (defenseName == "invisible")
+                else if (defenseName.Equals("invisible", StringComparison.InvariantCultureIgnoreCase))
                 {
                     defense.TryGetValue("duration", out uint duration);
 
