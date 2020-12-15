@@ -17012,7 +17012,7 @@
           },
           {
              "key": "regeneration",
-             "value": "180"
+             "value": "10"
           },{
 		  "key":"type",
 		  "value": "food"

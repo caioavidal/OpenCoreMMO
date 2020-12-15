@@ -457,7 +457,6 @@ namespace NeoServer.Server.Model.Players
             StopFollowing();
             StopWalking();
             return true;
-
         }
         public override bool CanBlock(DamageType damage)
         {
@@ -471,6 +470,15 @@ namespace NeoServer.Server.Model.Players
             if (Mana == MaxMana) return;
 
             Mana = Mana + increasing >= MaxMana ? MaxMana : (ushort)(Mana + increasing);
+            OnStatusChanged?.Invoke(this);
+        }
+        public void HealSoul(ushort increasing)
+        {
+            if (increasing <= 0) return;
+
+            if (SoulPoints == MaxSoulPoints) return;
+
+            SoulPoints = SoulPoints + increasing >= MaxSoulPoints ? MaxSoulPoints : (byte)(SoulPoints + increasing);
             OnStatusChanged?.Invoke(this);
         }
         public void HealMana(byte increasing)
@@ -487,7 +495,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount);
             if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
-            if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealMana(1);
+            if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealSoul(1);
 
             //todo: start these cooldowns when player logs in
             Cooldowns.Start(CooldownType.HealthRecovery, Vocation.GainHpTicks * 1000);
@@ -513,9 +521,10 @@ namespace NeoServer.Server.Model.Players
             item.Use(creature);
             OnUsedItem?.Invoke(this, creature, item);
         }
-        public void Feed(IFood food)
+        public bool Feed(IFood food)
         {
-            if (food is null) return;
+            if (food is null) return false;
+
             var regenerationMs = (uint)food.Regeneration * 1000;
             var maxRegenerationTime = (uint)1200 * 1000;
             if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
@@ -523,6 +532,7 @@ namespace NeoServer.Server.Model.Players
                 if (condition.RemainingTime + regenerationMs >= maxRegenerationTime) //todo: this number can be configured
                 {
                     OnOperationFailed?.Invoke(CreatureId, "You are full");
+                    return false;
                 }
 
                 condition.Extend(regenerationMs, maxRegenerationTime);
@@ -531,7 +541,9 @@ namespace NeoServer.Server.Model.Players
             {
                 AddCondition(new Condition(ConditionType.Regeneration, regenerationMs, OnHungry));
             }
+
             Recovering = true;
+            return true;
         }
 
         public void OnHungry()

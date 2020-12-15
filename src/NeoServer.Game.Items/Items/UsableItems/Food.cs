@@ -22,7 +22,9 @@ namespace NeoServer.Game.Items.Items.UsableItems
         {
             if (creature is not IPlayer player) return;
 
-            player.Feed(this);
+            if (!player.Feed(this)) return;
+
+            Reduce(1);
         }
         public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type) == "food" && Cumulative.IsApplicable(type);
 
