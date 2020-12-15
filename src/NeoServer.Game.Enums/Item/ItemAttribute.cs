@@ -198,6 +198,7 @@
         Min,
         Max,
         Sentence,
-        Vocation
+        Vocation,
+        Regeneration
     }
 }

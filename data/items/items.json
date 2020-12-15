@@ -17011,9 +17011,12 @@
              "value": "1300"
           },
           {
-             "key": "showcount",
-             "value": "0"
-          }
+             "key": "regeneration",
+             "value": "180"
+          },{
+		  "key":"type",
+		  "value": "food"
+		  }
        ]
     },
     {
@@ -17034,11 +17037,8 @@
           {
              "key": "weight",
              "value": "320"
-          },
-          {
-             "key": "showcount",
-             "value": "0"
           }
+         
        ]
     },
     {

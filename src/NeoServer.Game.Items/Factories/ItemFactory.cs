@@ -91,7 +91,10 @@ namespace NeoServer.Game.Items
                 if (HealingItem.IsApplicable(itemType))
                 {
                     return new HealingItem(itemType, location, attributes);
-
+                }
+                if (Food.IsApplicable(itemType))
+                {
+                    return new Food(itemType, location, attributes);
                 }
                 return new Cumulative(itemType, location, attributes);
             }

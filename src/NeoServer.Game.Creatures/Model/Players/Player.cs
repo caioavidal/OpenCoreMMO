@@ -246,9 +246,8 @@ namespace NeoServer.Server.Model.Players
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
 
         public string Guild { get; }
-
-        public bool Recovering => true;
-
+        public bool Recovering { get; private set; }
+        
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -513,6 +512,31 @@ namespace NeoServer.Server.Model.Players
 
             item.Use(creature);
             OnUsedItem?.Invoke(this, creature, item);
+        }
+        public void Feed(IFood food)
+        {
+            if (food is null) return;
+            var regenerationMs = (uint)food.Regeneration * 1000;
+            var maxRegenerationTime = (uint)1200 * 1000;
+            if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
+            {
+                if (condition.RemainingTime + regenerationMs >= maxRegenerationTime) //todo: this number can be configured
+                {
+                    OnOperationFailed?.Invoke(CreatureId, "You are full");
+                }
+
+                condition.Extend(regenerationMs, maxRegenerationTime);
+            }
+            else
+            {
+                AddCondition(new Condition(ConditionType.Regeneration, regenerationMs, OnHungry));
+            }
+            Recovering = true;
+        }
+
+        public void OnHungry()
+        {
+            Recovering = false;
         }
     }
 }

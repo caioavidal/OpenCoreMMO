@@ -25,27 +25,47 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
+            IItem item = null;
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
-
-                Action action = null;
-
-                if(tile.TopItemOnStack is IContainer container)
-                {
-                    action = () => player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
-                }
-                else if(tile.TopItemOnStack is IUseable useable)
-                {
-                    action = () => useable.Use(player, game.Map);
-                }
-
-                WalkToMechanism.DoOperation(player, action, useItemPacket.Location, game);
+                item = tile.TopItemOnStack;
             }
-            else if (useItemPacket.Location.Slot == Slot.Backpack || useItemPacket.Location.Type == LocationType.Container)
+            else if (useItemPacket.Location.Slot == Slot.Backpack)
             {
-                player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index);
+                item = player.Inventory[Slot.Backpack];
             }
+            else if (useItemPacket.Location.Type == LocationType.Container)
+            {
+                item = player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
+            }
+
+            Action action = null;
+
+            if (item is null) return;
+
+            if (item is IContainer container)
+            {
+                action = () => player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
+            }
+            else if (item is IUseable useable)
+            {
+                action = () => useable.Use(player, game.Map);
+            }
+            else if (item is IConsumable consumable)
+            {
+                action = () => player.Use(consumable, player);
+            }
+
+            if (action is null) return;
+
+            if (useItemPacket.Location.Type == LocationType.Ground)
+            {
+                WalkToMechanism.DoOperation(player, action, useItemPacket.Location, game);
+                return;
+            }
+
+            action?.Invoke();
         }
     }
 }
