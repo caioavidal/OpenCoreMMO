@@ -81,7 +81,7 @@ namespace NeoServer.Game.Items.Items
         public bool GetContainerAt(byte index, out IContainer container)
         {
             container = null;
-            if (Items[index] is IContainer)
+            if (Items.Count > index && Items[index] is IContainer)
             {
                 container = Items[index] as IContainer;
                 return true;
