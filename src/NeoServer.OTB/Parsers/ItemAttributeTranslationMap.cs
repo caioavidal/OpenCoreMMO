@@ -2,7 +2,7 @@
 
 namespace NeoServer.OTB.Parsers
 {
-    public class OpenTibiaTranslationMap
+    public class ItemAttributeTranslationMap
     {
         /// <summary>
         /// Translate attribute name to enum
@@ -130,7 +130,10 @@ namespace NeoServer.OTB.Parsers
                 case "minlevel": return ItemAttribute.MinimumLevel;
                 case "teleport": return ItemAttribute.UseOn;
                 case "useon": return ItemAttribute.UseOn;
-
+                case "healing": return ItemAttribute.Healing;
+                case "min": return ItemAttribute.Min;
+                case "max": return ItemAttribute.Max;
+                case "sentence": return ItemAttribute.Sentence;
                 default:
                     success = false;
                     return ItemAttribute.AbsTeleportEffect; // Just return the first

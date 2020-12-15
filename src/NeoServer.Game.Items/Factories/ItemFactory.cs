@@ -88,6 +88,11 @@ namespace NeoServer.Game.Items
                 {
                     return new AmmoItem(itemType, location, attributes);
                 }
+                if (HealingItem.IsApplicable(itemType))
+                {
+                    return new HealingItem(itemType, location, attributes);
+
+                }
                 return new Cumulative(itemType, location, attributes);
             }
             if (LiquidPoolItem.IsApplicable(itemType))
@@ -112,6 +117,7 @@ namespace NeoServer.Game.Items
                 {
                     return new TransformerUsableItem(itemType, location, this); 
                 }
+           
                 return new UseableOnItem(itemType, location);
             }
 

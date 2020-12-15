@@ -2,14 +2,10 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace NeoServer.Server.Events
 {
@@ -59,19 +55,14 @@ namespace NeoServer.Server.Events
                     SendPacketsToSpectator(spectatorPlayer, creature, connection, cylinderSpectator.ToStackPosition);
                 }           
                 connection.Send();
-
             }
-
         }
 
         private void SendPacketsToSpectator(IPlayer playerToSend, IWalkableCreature creatureAdded, IConnection connection, byte stackPosition)
         {
-            
-            //spectator.add
             connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creatureAdded, stackPosition));
             connection.OutgoingPackets.Enqueue(new AddCreaturePacket(playerToSend, creatureAdded));
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(creatureAdded.Location, EffectT.BubbleBlue));
-
         }
 
         private void SendPacketsToPlayer(IPlayer player, IConnection connection)
@@ -88,7 +79,6 @@ namespace NeoServer.Server.Events
             connection.OutgoingPackets.Enqueue(new CreatureLightPacket(player));
 
             connection.OutgoingPackets.Enqueue(new PlayerConditionsPacket());
-
         }
     }
 }

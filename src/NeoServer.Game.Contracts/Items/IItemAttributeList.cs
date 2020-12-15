@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -14,12 +15,14 @@ namespace NeoServer.Game.Contracts.Items
 
         string GetAttribute(ItemAttribute attribute);
         T GetAttribute<T>(ItemAttribute attribute) where T : struct;
+        EffectT GetEffect();
         FloorChangeDirection GetFloorChangeDirection();
+        IItemAttributeList GetInnerAttributes(ItemAttribute attribute);
         ushort GetTransformationItem();
         Tuple<DamageType, byte> GetWeaponElementDamage();
         bool HasAttribute(ItemAttribute attribute);
         void SetAttribute(ItemAttribute attribute, IConvertible attributeValue);
         void SetAttribute(ItemAttribute attribute, int attributeValue);
-        void SetAttribute(string attributeName, int attributeValue);
+        void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs);
     }
 }

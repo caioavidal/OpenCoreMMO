@@ -13,5 +13,20 @@
         "spawntime": 60
       }
     ]
+  },
+  {
+    "centerx": 1018,
+    "centery": 1035,
+    "centerz": 8,
+    "radius": 1,
+    "monsters": [
+      {
+        "name": "Dragon",
+        "x": 0,
+        "y": 0,
+        "z": 8,
+        "spawntime": 60
+      }
+    ]
   }
 ]

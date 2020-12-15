@@ -77,6 +77,7 @@ namespace NeoServer.Server.Model.Players
         public event CannotUseSpell OnCannotUseSpell;
         public event LookAt OnLookedAt;
         public event UseSpell OnUsedSpell;
+        public event UseItem OnUsedItem;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -500,6 +501,12 @@ namespace NeoServer.Server.Model.Players
             if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);
             else
                 ReduceHealth(enemy, damage);
+        }
+
+        public void Use(IConsumable item, ICreature creature)
+        {
+            item.Use(creature);
+            OnUsedItem?.Invoke(this, creature, item);
         }
     }
 }

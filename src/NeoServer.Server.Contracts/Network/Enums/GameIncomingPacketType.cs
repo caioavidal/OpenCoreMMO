@@ -28,7 +28,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         TradeCancel = 0x80, // Close/cancel trade
         ItemUse = 0x82, // use item
         ItemUseOn = 0x83, // use item
-        ItemBattleWindow = 0x84, // battle window
+        ItemUseOnCreature = 0x84, // battle window
         ItemRotate = 0x85,  // rotate item
         ContainerClose = 0x87, // close container
         ContainerUp = 0x88, // "up-arrow" - container

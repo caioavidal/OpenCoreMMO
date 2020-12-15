@@ -1,4 +1,6 @@
-﻿namespace NeoServer.Game.Contracts.Items.Types
+﻿using NeoServer.Enums.Creatures.Enums;
+
+namespace NeoServer.Game.Contracts.Items.Types
 {
     public interface ICumulative : IPickupable
     {
@@ -16,6 +18,5 @@
         string IThing.InspectionText => LookText;
         string Subject => HasMany ? "They weigh" : "It weighs";
         string IThing.CloseInspectionText => $"{InspectionText}.\n{Subject} {Weight} oz";
-
     }
 }

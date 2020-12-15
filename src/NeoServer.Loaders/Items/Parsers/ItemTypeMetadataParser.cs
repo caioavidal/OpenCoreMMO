@@ -1,5 +1,7 @@
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Items;
 using NeoServer.OTB.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,7 +40,7 @@ namespace NeoServer.Loaders.Items
             itemType.SetName(metadata.Name);
             itemType.SetArticle(metadata.Article);
 
-            
+
             itemType.SetRequirements(metadata.ItemRequirements);
 
             itemType.SetPlural(metadata.Plural);
@@ -47,27 +49,47 @@ namespace NeoServer.Loaders.Items
             {
                 foreach (var flagName in metadata.Flags)
                 {
-                    if (!OpenTibiaTranslationMap.TranslateFlagName(flagName, out var flag)) continue;
+                    if (!ItemAttributeTranslationMap.TranslateFlagName(flagName, out var flag)) continue;
                     itemType.Flags.Add(flag);
                 }
             }
 
             if (metadata.Attributes == null) return;
-            foreach (var attribute in metadata.Attributes)
-            {
-                var itemAttribute = OpenTibiaTranslationMap.TranslateAttributeName(attribute.Key, out bool success);
 
-                var value = itemAttribute == Game.Common.ItemAttribute.Weight ? (int.Parse(attribute.Value) / 100).ToString() : attribute.Value; //todo place this code in another place
-
-                itemType.Attributes.SetAttribute(itemAttribute, value);
-            }
+            SetAttributes(metadata.Attributes, itemType.Attributes);
 
             if (metadata.OnUse == null) return;
             foreach (var attribute in metadata.OnUse)
             {
-                var itemAttribute = OpenTibiaTranslationMap.TranslateAttributeName(attribute.Key, out bool success);
+                var itemAttribute = ItemAttributeTranslationMap.TranslateAttributeName(attribute.Key, out bool success);
                 itemType.SetOnUse();
                 itemType.OnUse.SetAttribute(itemAttribute, attribute.Value);
+            }
+        }
+
+        private static void SetAttributes(IEnumerable<ItemTypeMetadata.Attribute> metaAttributes, IItemAttributeList attributes)
+        {
+            foreach (var attribute in metaAttributes)
+            {
+                var itemAttribute = ItemAttributeTranslationMap.TranslateAttributeName(attribute.Key, out bool success);
+
+                var value = itemAttribute == Game.Common.ItemAttribute.Weight ? (int.Parse(attribute.Value) / 100).ToString() : attribute.Value; //todo place this code in another place
+
+
+                if (attribute.Attributes is null || !attribute.Attributes.Any())
+                {
+                    attributes.SetAttribute(itemAttribute, value);
+
+                }
+                else
+                {
+                    var innerAttributes = new ItemAttributeList();
+
+                    SetAttributes(attribute.Attributes, innerAttributes);
+
+                    attributes.SetAttribute(itemAttribute, value, innerAttributes);
+                }
+
             }
         }
     }
