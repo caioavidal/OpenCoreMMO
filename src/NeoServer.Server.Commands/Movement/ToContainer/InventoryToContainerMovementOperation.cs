@@ -22,9 +22,10 @@ namespace NeoServer.Server.Commands.Movement
             {
                 itemToAdd = cumulative.Clone(itemThrow.Count);
             }
-            if (container.TryAddItem(itemToAdd, (byte)itemThrow.ToLocation.ContainerSlot).Success is false) return;
 
-            var result = player.Inventory.RemoveItemFromSlot(itemThrow.FromLocation.Slot, itemThrow.Count, out var removedItem);
+            if (container.TryAddItem(itemToAdd, (byte)itemThrow.ToLocation.ContainerSlot).IsSuccess is false) return;
+
+            player.Inventory.RemoveItemFromSlot(itemThrow.FromLocation.Slot, itemThrow.Count, out var removedItem);
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

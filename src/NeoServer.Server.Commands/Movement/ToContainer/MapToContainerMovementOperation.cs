@@ -37,7 +37,7 @@ namespace NeoServer.Server.Commands.Movement
                 itemToAdd = cumulative.Clone(itemThrow.Count);
             }
 
-            if (container.TryAddItem(itemToAdd).Success is false) return;
+            if (container.TryAddItem(itemToAdd).IsSuccess is false) return;
 
             map.RemoveThing(item, fromTile, itemThrow.Count);
         }

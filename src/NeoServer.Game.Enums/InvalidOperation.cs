@@ -13,6 +13,7 @@
         VocationCannotUseSpell,
         NotEnoughLevel,
         Exhausted,
-        CannotDrink
+        CannotDrink,
+        IsFull
     }
 }

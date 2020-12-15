@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using NeoServer.Game.Creatures;
+using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Game.Items.Tests
 {
@@ -23,7 +24,7 @@ namespace NeoServer.Game.Items.Tests
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
             itemType.SetName(name);
-            return new Container(itemType, new Location(100, 100, 7));
+            return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
 
         private ICumulative CreateCumulativeItem(ushort id, byte amount)
@@ -137,8 +138,8 @@ namespace NeoServer.Game.Items.Tests
             var item = sut;
             var result = sut.TryAddItem(item);
 
-            Assert.False(result.Success);
-            Assert.Equal(InvalidOperation.NotPossible, result.Error);
+            Assert.False(result.IsSuccess);
+            Assert.Equal(InvalidOperation.Impossible, result.Error);
         }
 
         [Fact]
@@ -166,21 +167,21 @@ namespace NeoServer.Game.Items.Tests
             var sut = CreateContainer(3);
             sut.TryAddItem(CreateRegularItem(100));
 
-            Assert.True(sut.TryAddItem(CreateRegularItem(100)).Success);
-            Assert.True(sut.TryAddItem(CreateContainer()).Success);
+            Assert.True(sut.TryAddItem(CreateRegularItem(100)).IsSuccess);
+            Assert.True(sut.TryAddItem(CreateContainer()).IsSuccess);
 
             //adding items to child container
-            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).Success);
-            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).Success);
-            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).Success);
+            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).IsSuccess);
+            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).IsSuccess);
+            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).IsSuccess);
 
-            Assert.False(sut.TryAddItem(CreateRegularItem(100), 1).Success);
-            Assert.False(sut.TryAddItem(CreateRegularItem(100), 2).Success);
+            Assert.False(sut.TryAddItem(CreateRegularItem(100), 1).IsSuccess);
+            Assert.False(sut.TryAddItem(CreateRegularItem(100), 2).IsSuccess);
 
             var result = sut.TryAddItem(CreateRegularItem(100), 2);
-            Assert.False(result.Success);
+            Assert.False(result.IsSuccess);
 
-            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).Success);
+            Assert.True(sut.TryAddItem(CreateRegularItem(100), 0).IsSuccess);
 
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
             Assert.Equal(3, sut.SlotsUsed);
@@ -196,12 +197,12 @@ namespace NeoServer.Game.Items.Tests
             var container = CreateContainer(2);
             sut.TryAddItem(container);
 
-            Assert.True(sut.TryAddItem(CreateContainer(100), 0).Success); //inserting on child container
-            Assert.True(sut.TryAddItem(CreateContainer(100), 0).Success); //inserting on child container
+            Assert.True(sut.TryAddItem(CreateContainer(100), 0).IsSuccess); //inserting on child container
+            Assert.True(sut.TryAddItem(CreateContainer(100), 0).IsSuccess); //inserting on child container
 
             //at this point, child container is full
 
-            Assert.False(sut.TryAddItem(CreateRegularItem(100), 0).Success); //inserting on child container
+            Assert.False(sut.TryAddItem(CreateRegularItem(100), 0).IsSuccess); //inserting on child container
         }
 
         [Fact]
@@ -307,7 +308,7 @@ namespace NeoServer.Game.Items.Tests
         }
 
         [Fact]
-        public void TryAddItem_Adding_Different_CumulativeItem_Dot_Not_Join()
+        public void TryAddItem_Adding_Different_CumulativeItem_Do_Not_Join()
         {
             var sut = CreateContainer(5);
             sut.TryAddItem(CreateRegularItem(500));
@@ -331,29 +332,124 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(2);
 
-            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 40)).Success);
-            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 70)).Success);
-            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 90)).Success);
+            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 40)).IsSuccess);
+            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 70)).IsSuccess);
+            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 90)).IsSuccess);
 
             var result = sut.TryAddItem(CreateCumulativeItem(100, 90), 0);
 
-            Assert.False(result.Success);
-            Assert.Equal(InvalidOperation.TooHeavy, result.Error);
+            Assert.False(result.IsSuccess);
+            Assert.Equal(InvalidOperation.IsFull, result.Error);
 
             result = sut.TryAddItem(CreateCumulativeItem(200, 90));
-            Assert.False(result.Success);
-            Assert.Equal(InvalidOperation.TooHeavy, result.Error);
+            Assert.False(result.IsSuccess);
+            Assert.Equal(InvalidOperation.IsFull, result.Error);
+        }
+        [Fact]
+        public void MoveItem_When_Moving_Cumulative_To_Child_Should_Remove_From_Parent_And_Add_To_Child()
+        {
+            var sut = CreateContainer(2);
+            var child = CreateContainer(1);
+            var item = CreateCumulativeItem(100, 40);
+
+            sut.TryAddItem(child);
+            sut.TryAddItem(item);
+
+            var eventCalled = false;
+            var childEventCalled = false;
+
+            sut.OnItemRemoved += (a, b) => { eventCalled = true; };
+            child.OnItemAdded += (a) => { childEventCalled = true; };
+
+            sut.MoveItem((byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot, 40);
+
+            Assert.True(eventCalled);
+            Assert.True(childEventCalled);
+
+            Assert.Single(sut.Items);
+            Assert.Equal(40, (child[0] as ICumulative).Amount);
+        }
+        [Fact]
+        public void MoveItem_When_Moving_To_Child_Should_Remove_From_Parent_And_Add_To_Child()
+        {
+            var sut = CreateContainer(2);
+            var child = CreateContainer(1);
+            var item = ItemTestData.CreateBodyEquipmentItem(100, "head");
+
+            sut.TryAddItem(child);
+            sut.TryAddItem(item);
+
+            var eventCalled = false;
+            var childEventCalled = false;
+
+            sut.OnItemRemoved += (a, b) => { eventCalled = true; };
+            child.OnItemAdded += (a) => { childEventCalled = true; };
+
+            sut.MoveItem((byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+
+            Assert.True(eventCalled);
+            Assert.True(childEventCalled);
+
+            Assert.Single(sut.Items);
+            Assert.Equal(100, child[0].ClientId);
+        }
+        [Fact]
+        public void MoveItem_When_Moving_Cumulative_To_Child_And_Is_Full_Return_Error()
+        {
+            var sut = CreateContainer(2);
+            var child = CreateContainer(1);
+            var item = CreateCumulativeItem(100, 40);
+            var item2 = CreateCumulativeItem(100, 100);
+
+
+            sut.TryAddItem(child);
+            sut.TryAddItem(item);
+            child.TryAddItem(item2);
+
+            var result = sut.MoveItem((byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot, 40);
+
+            Assert.Equal(InvalidOperation.IsFull, result.Error);
+            Assert.Equal(2, sut.Items.Count);
+            Assert.Equal(100, (child[0] as ICumulative).Amount);
+        }
+        [Fact]
+        public void MoveItem_When_Moving_Cumulative_To_Child_Should_Remove_Amount_From_Parent_And_Add_To_Child()
+        {
+            var sut = CreateContainer(2);
+            var child = CreateContainer(1);
+            var item = CreateCumulativeItem(100, 40);
+            var item2 = CreateCumulativeItem(100, 20);
+
+
+            sut.TryAddItem(child);
+            sut.TryAddItem(item);
+            child.TryAddItem(item2);
+
+            var eventCalled = false;
+            var childEventCalled = false;
+
+            sut.OnItemUpdated += (a, b, c) => { eventCalled = true; };
+            child.OnItemUpdated += (a, b, c) => { childEventCalled = true; };
+
+            var result = sut.MoveItem((byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot, 20);
+
+            Assert.True(eventCalled);
+            Assert.True(childEventCalled);
+
+            Assert.Equal(2, sut.Items.Count);
+            Assert.Equal(20, (sut[(byte)item.Location.ContainerSlot] as ICumulative).Amount);
+            Assert.Equal(40, (child[(byte)item2.Location.ContainerSlot] as ICumulative).Amount);
         }
         [Fact]
         public void TryAddItem_Adding_CumulativeItem_Rejects_Exceeding_Amount_When_Full()
         {
             var sut = CreateContainer(2);
 
-            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 70)).Success);
-            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 70)).Success);
+            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 70)).IsSuccess);
+            Assert.True(sut.TryAddItem(CreateCumulativeItem(100, 70)).IsSuccess);
 
             var result = sut.TryAddItem(CreateCumulativeItem(100, 90), 0);
-            Assert.False(result.Success);
+            Assert.False(result.IsSuccess);
 
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
 
@@ -440,71 +536,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(item.ClientId, removedItem.ClientId);
         }
 
-        [Fact]
-        public void IsEquiped_When_Parent_Is_Player_Returns_True()
-        {
-            var player = new Player(id: 1, characterName: "PlayerA", chaseMode: ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
-             {
-                    { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0) }
 
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, location: new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null, null));
-
-            var sut = CreateContainer(2);
-            sut.TryAddItem(CreateRegularItem(100));
-
-            var child = CreateContainer(2);
-            sut.TryAddItem(child);
-
-            sut.SetParent(player);
-
-            Assert.True(child.IsEquiped);
-            Assert.True(sut.IsEquiped);
-        }
-
-        [Fact]
-        public void IsEquiped_When_Parent_Is_Null_Returns_False()
-        {
-
-            var sut = CreateContainer(2);
-            sut.TryAddItem(CreateRegularItem(100));
-
-            var child = CreateContainer(2);
-            sut.TryAddItem(child);
-
-            Assert.False(child.IsEquiped);
-            Assert.False(sut.IsEquiped);
-        }
-
-        [Fact]
-        public void IsEquiped_When_Moved_To_Another_Container_Where_Parent_Is_Null_Returns_False()
-        {
-            var player = new Player(1, "PlayerA", ChaseMode.Stand, capacity: 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-             soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
-             {
-                    { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
-
-             }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null, null));
-
-            var sut = CreateContainer(2);
-
-            var child = CreateContainer(2);
-            sut.TryAddItem(child);
-
-            sut.SetParent(player);
-
-            Assert.True(child.IsEquiped);
-            Assert.True(sut.IsEquiped);
-
-            var anotherContainer = CreateContainer(3);
-
-            var removedContainer = sut.RemoveItem(0);
-
-            anotherContainer.TryAddItem(removedContainer);
-
-            Assert.False(child.IsEquiped);
-            Assert.True(sut.IsEquiped);
-        }
 
         [Fact]
         public void ToString_When_Container_Is_Empty_Should_Return_Nothing()
@@ -547,7 +579,7 @@ namespace NeoServer.Game.Items.Tests
             var item = ItemTestData.CreateWeaponItem(100, "axe");
             sut.TryAddItem(item);
 
-            Assert.Equal(Location.Container(0, 1), item.Location);
+            Assert.Equal(Location.Container(0, 0), item.Location);
         }
 
     }

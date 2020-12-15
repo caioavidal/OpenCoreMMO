@@ -414,7 +414,7 @@ namespace NeoServer.Server.Model.Players
         public override IItem CreateItem(ushort itemId, byte amount)
         {
             var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.TryAddItem(item).Success)
+            if (!Inventory.BackpackSlot.TryAddItem(item).IsSuccess)
             {
                 var thing = item as IThing;
                 Tile.AddThing(thing);
