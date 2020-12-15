@@ -9,14 +9,13 @@ using System.Text;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {
-    public interface IInventoryItem : IItem
+    public interface IInventoryItem : IItemRequirement, IItem
     {
         public Slot Slot => Metadata.BodyPosition;
     }
     public interface IBodyEquipmentItem : IMoveableThing, IPickupable, IInventoryItem
     {
         bool Pickupable => true;
-        IItemRequirement[] Requirements => Metadata.Requirements;
       
         ushort MinimumLevelRequired => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
         public ImmutableDictionary<SkillType, byte> SkillBonus => Metadata.Attributes.SkillBonus.ToImmutableDictionary();
@@ -26,29 +25,21 @@ namespace NeoServer.Game.Contracts.Items.Types
         {
             get
             {
-                if (Requirements is null || Requirements.Length == 0) return string.Empty;
-
                 var stringBuilder = new StringBuilder();
                 var sufix = "\nIt can only be wielded properly by";
 
-                var minLevel = 0;
-                foreach (var requirement in Requirements)
+                for (int i = 0; i < Vocations.Length; i++)
                 {
-                    if (requirement.MinLevel == 0) return string.Empty;
-
-                    if (requirement.Vocation == VocationType.All)
+                    stringBuilder.Append($"{VocationTypeParser.Parse(Vocations[i]).ToLower()}s");
+                    if (i + 1 < Vocations.Length)
                     {
-                        stringBuilder.Clear();
-                        stringBuilder.Append($"players of level {requirement.MinLevel} or higher");
-                        return $"{sufix} {stringBuilder}";
+                        stringBuilder.Append(", ");
                     }
-
-                    stringBuilder.Append($"{VocationTypeParser.Parse(requirement.Vocation).ToLower()}s, ");
-                    minLevel = requirement.MinLevel;
                 }
-
-                stringBuilder.Remove(stringBuilder.Length - 2, 2);
-                stringBuilder.Append($" of level {minLevel} or higher");
+                if (MinLevel > 0)
+                {
+                    stringBuilder.Append($" of level {MinLevel} or higher");
+                }
 
                 return $"{sufix} {stringBuilder}";
             }

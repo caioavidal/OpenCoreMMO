@@ -197,6 +197,7 @@
         Healing,
         Min,
         Max,
-        Sentence
+        Sentence,
+        Vocation
     }
 }

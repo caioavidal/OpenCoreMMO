@@ -35,7 +35,6 @@ namespace NeoServer.Game.Contracts.Items
         float Weight { get; }
         ushort TransformTo { get; }
         string Plural { get; }
-        IItemRequirement[] Requirements { get; }
         IItemAttributeList OnUse { get; }
 
         void SetName(string value);

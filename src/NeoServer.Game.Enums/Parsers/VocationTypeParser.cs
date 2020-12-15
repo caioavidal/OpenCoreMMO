@@ -9,18 +9,18 @@ namespace NeoServer.Game.Common.Parsers
 {
     public class VocationTypeParser
     {
-        public static VocationType Parse(string vocation) => vocation switch
+        public static VocationType Parse(string vocation) => vocation.ToLower().Replace(" ","") switch
         {
-            "Paladin" => VocationType.Paladin,
-            "Knight" => VocationType.Knight,
-            "Sorcerer" => VocationType.Sorcerer,
-            "Druid" => VocationType.Druid,
-            "All" => VocationType.All,
-            "None" => VocationType.None,
-            "Master Sorcerer" => VocationType.MasterSorcerer,
-            "Elder Druid" => VocationType.ElderDruid,
-            "Royal Paladin" => VocationType.RoyalPaladin,
-            "Elite Knight" => VocationType.EliteKnight,
+            "paladin" => VocationType.Paladin,
+            "knight" => VocationType.Knight,
+            "sorcerer" => VocationType.Sorcerer,
+            "druid" => VocationType.Druid,
+            "all" => VocationType.All,
+            "none" => VocationType.None,
+            "mastersorcerer" => VocationType.MasterSorcerer,
+            "elderdruid" => VocationType.ElderDruid,
+            "royalpaladin" => VocationType.RoyalPaladin,
+            "eliteknight" => VocationType.EliteKnight,
             _ => VocationType.All
         };
         public static string Parse(VocationType vocation) => vocation switch

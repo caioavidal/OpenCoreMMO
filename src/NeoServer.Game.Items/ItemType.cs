@@ -30,8 +30,6 @@ namespace NeoServer.Game.Items
 
         public IItemAttributeList Attributes { get; }
         public IItemAttributeList OnUse { get; private set; }
-
-        public IItemRequirement[] Requirements { get; private set; }
         public bool Locked { get; private set; }
 
         public ushort ClientId { get; private set; }
@@ -148,7 +146,6 @@ namespace NeoServer.Game.Items
         public void SetRequirements(IItemRequirement[] requirements)
         {
             ThrowIfLocked();
-            Requirements = requirements;
         }
         public void SetOnUse()
         {

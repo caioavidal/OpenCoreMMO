@@ -505,6 +505,12 @@ namespace NeoServer.Server.Model.Players
 
         public void Use(IConsumable item, ICreature creature)
         {
+            if (!item.CanBeUsed(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, item.ValidationError);
+                return;
+            }
+
             item.Use(creature);
             OnUsedItem?.Invoke(this, creature, item);
         }
