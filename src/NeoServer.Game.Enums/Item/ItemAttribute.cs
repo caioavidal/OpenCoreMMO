@@ -196,6 +196,7 @@
         AbsorbPercentIce,
         Healing,
         Min,
-        Max
+        Max,
+        Sentence
     }
 }

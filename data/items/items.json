@@ -50289,10 +50289,17 @@
        "id": "7618",
        "article": "a",
        "name": "health potion",
-	   "flags": ["useable"],
        "attributes": [{
           "key": "weight",
           "value": "270"
+       },
+	   {
+          "key": "sentence",
+          "value": "Aaaah..."
+       },
+	   {
+          "key": "effect",
+          "value": "blueshimmer"
        },
 	   {
           "key": "healing",
@@ -50312,6 +50319,18 @@
        "attributes": [{
           "key": "weight",
           "value": "270"
+       },{
+          "key": "sentence",
+          "value": "Aaaah..."
+       },
+	   {
+          "key": "effect",
+          "value": "blueshimmer"
+       },
+	   {
+          "key": "healing",
+          "value": "mp",
+		  "attributes":[{"key":"min","value":70},{"key":"max","value":130}]
        }]
     },
     {

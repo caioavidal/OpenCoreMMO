@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Location;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using NeoServer.Enums.Creatures.Enums;
 
 namespace NeoServer.Game.Items
 {
@@ -82,6 +83,24 @@ namespace NeoServer.Game.Items
             }
 
             return FloorChangeDirection.None;
+        }
+        public EffectT GetEffect()
+        {
+            if (_defaultAttributes?.ContainsKey(ItemAttribute.Effect) ?? false)
+            {
+                var effect = GetAttribute(ItemAttribute.Effect);
+
+                return effect switch
+                {
+                    "teleport" => EffectT.BubbleBlue,
+                    "blueshimmer" => EffectT.GlitterBlue,
+                    "bluebubble" => EffectT.BubbleBlue,
+                    "greenbubble" => EffectT.GlitterGreen,
+                    _ => EffectT.None
+                };
+            }
+
+            return EffectT.None;
         }
 
         public ushort GetTransformationItem()

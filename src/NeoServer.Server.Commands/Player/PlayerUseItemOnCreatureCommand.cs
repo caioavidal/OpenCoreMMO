@@ -2,8 +2,8 @@
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -43,10 +43,9 @@ namespace NeoServer.Server.Commands.Player
                 itemToUse = thing;
             }
 
-            if (itemToUse is not IUseableOn useable) return;
+            if (itemToUse is not IConsumable consumable) return;
 
-            useable.UseOn(player, game.Map, creature);
+            player.Use(consumable, creature);
         }
-
     }
 }

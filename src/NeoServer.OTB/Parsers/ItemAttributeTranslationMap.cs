@@ -133,7 +133,7 @@ namespace NeoServer.OTB.Parsers
                 case "healing": return ItemAttribute.Healing;
                 case "min": return ItemAttribute.Min;
                 case "max": return ItemAttribute.Max;
-
+                case "sentence": return ItemAttribute.Sentence;
                 default:
                     success = false;
                     return ItemAttribute.AbsTeleportEffect; // Just return the first

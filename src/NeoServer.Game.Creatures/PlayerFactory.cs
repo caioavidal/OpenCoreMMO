@@ -37,6 +37,7 @@ namespace NeoServer.Game.Creatures
         private readonly PlayerOperationFailedEventHandler _playerOperationFailedEventHandler;
         private readonly PlayerLookedAtEventHandler playerLookedAtEventHandler;
         private readonly PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler;
+        private readonly PlayerUsedItemEventHandler playerUsedItemEventHandler;
         private readonly CreaturePathAccess creaturePathAccess;
 
         public PlayerFactory(IItemFactory itemFactory,
@@ -48,7 +49,8 @@ namespace NeoServer.Game.Creatures
             SpellInvokedEventHandler playerUsedSpellEventHandler,
             PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler, PlayerConditionChangedEventHandler playerConditionChangedEventHandler,
             PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler, PlayerOperationFailedEventHandler playerOperationFailedEventHandler,
-            PlayerLookedAtEventHandler playerLookedAtEventHandler, PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, CreaturePathAccess creaturePathAccess)
+            PlayerLookedAtEventHandler playerLookedAtEventHandler, PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler,
+            CreaturePathAccess creaturePathAccess, PlayerUsedItemEventHandler playerUsedItemEventHandler)
         {
             this.itemFactory = itemFactory;
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
@@ -69,6 +71,7 @@ namespace NeoServer.Game.Creatures
             this.playerLookedAtEventHandler = playerLookedAtEventHandler;
             this.playerGainedSkillPointsEventHandler = playerGainedSkillPointsEventHandler;
             this.creaturePathAccess = creaturePathAccess;
+            this.playerUsedItemEventHandler = playerUsedItemEventHandler;
         }
         public IPlayer Create(IPlayerModel player)
         {
@@ -130,6 +133,7 @@ namespace NeoServer.Game.Creatures
             newPlayer.OnOperationFailed += _playerOperationFailedEventHandler.Execute;
             newPlayer.OnLookedAt += playerLookedAtEventHandler.Execute;
             newPlayer.OnGainedSkillPoint += playerGainedSkillPointsEventHandler.Execute;
+            newPlayer.OnUsedItem += playerUsedItemEventHandler.Execute;
             return newPlayer;
         }
 

@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -8,30 +8,41 @@ using NeoServer.Server.Helpers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Items.Items.UsableItems
 {
-    public class HealingItem: CumulativeUsableOnItem
+    public class HealingItem : Cumulative, IConsumable
     {
         public HealingItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
         {
         }
 
-        public ushort Min => Metadata.Attributes.GetInnerAttributes(Common.ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Min) ?? 0;
-        public ushort Max => Metadata.Attributes.GetInnerAttributes(Common.ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Max) ?? 0;
+        public ushort Min => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Min) ?? 0;
+        public ushort Max => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Max) ?? 0;
+        public string Type => Metadata.Attributes.GetAttribute(ItemAttribute.Healing);
+        public string Sentence => Metadata.Attributes.GetAttribute(ItemAttribute.Sentence);
+        public static new bool IsApplicable(IItemType type) => (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && Cumulative.IsApplicable(type) && UseableOnItem.IsApplicable(type);
 
-        public override void UseOn(IPlayer player, IMap map, IThing thing)
+        public void Use(ICreature creature)
         {
-            if (thing is not ICombatActor creature) return;
+            if (creature is not ICombatActor actor) return;
             if (Max == 0) return;
 
-            var value = (ushort) ServerRandom.Random.Next(minValue: Min, maxValue: Max);
-            creature.Heal(value);        
-        }
-        public static new bool IsApplicable(IItemType type) => (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && CumulativeUsableOnItem.IsApplicable(type);
+            var value = (ushort)ServerRandom.Random.Next(minValue: Min, maxValue: Max);
 
+            if (Type.Equals("hp", StringComparison.InvariantCultureIgnoreCase))
+            {
+                actor.Heal(value);
+            }
+            else if (creature is IPlayer player)
+            {
+                player.HealMana(value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Sentence))
+            {
+                creature.Say(Sentence, Common.Talks.TalkType.MonsterSay);
+            }
+        }
     }
 }

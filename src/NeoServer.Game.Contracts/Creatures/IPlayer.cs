@@ -23,7 +23,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void OperationFail(uint id, string message);
     public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
     public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
-
+    public delegate void UseItem(IPlayer player, ICreature creature, IConsumable consumable);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -56,6 +56,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event OperationFail OnOperationFailed;
         event LookAt OnLookedAt;
         event PlayerGainSkillPoint OnGainedSkillPoint;
+        event UseItem OnUsedItem;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -130,6 +131,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         /// Health and mana recovery
         /// </summary>
         void Recover();
+        void HealMana(ushort increasing);
+        void Use(IConsumable item, ICreature creature);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
