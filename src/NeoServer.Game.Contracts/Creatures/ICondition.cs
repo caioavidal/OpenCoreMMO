@@ -11,8 +11,17 @@ namespace NeoServer.Game.Contracts.Creatures
 
         long EndTime { get; }
         void End();
+        /// <summary>
+        /// Extends condition duration in milliseconds
+        /// </summary>
+        /// <param name="duration"></param>
+        void Extend(uint duration, uint maxDuration = uint.MaxValue);
 
         bool IsPersistent { get; }
         bool HasExpired { get; }
+        /// <summary>
+        /// Remaining time in milliseconds
+        /// </summary>
+        long RemainingTime { get; }
     }
 }

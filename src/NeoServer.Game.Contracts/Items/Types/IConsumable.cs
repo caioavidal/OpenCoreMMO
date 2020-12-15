@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {
-    public interface IConsumable: IItem
+    public interface IConsumable: IItemRequirement, IItem
     {
         public EffectT EffecT => Metadata.Attributes.GetEffect();
 
         void Use(ICreature creature);
-
     }
 }

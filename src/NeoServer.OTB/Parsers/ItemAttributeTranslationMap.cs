@@ -134,6 +134,8 @@ namespace NeoServer.OTB.Parsers
                 case "min": return ItemAttribute.Min;
                 case "max": return ItemAttribute.Max;
                 case "sentence": return ItemAttribute.Sentence;
+                case "vocations": return ItemAttribute.Vocation;
+                case "regeneration": return ItemAttribute.Regeneration;
                 default:
                     success = false;
                     return ItemAttribute.AbsTeleportEffect; // Just return the first

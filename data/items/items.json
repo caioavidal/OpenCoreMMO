@@ -17011,9 +17011,12 @@
              "value": "1300"
           },
           {
-             "key": "showcount",
-             "value": "0"
-          }
+             "key": "regeneration",
+             "value": "10"
+          },{
+		  "key":"type",
+		  "value": "food"
+		  }
        ]
     },
     {
@@ -17034,11 +17037,8 @@
           {
              "key": "weight",
              "value": "320"
-          },
-          {
-             "key": "showcount",
-             "value": "0"
           }
+         
        ]
     },
     {
@@ -50267,7 +50267,28 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by knights of level 80 or higher."
-          }
+          },
+		     {
+          "key": "sentence",
+          "value": "Aaaah..."
+       },
+	   {
+          "key": "effect",
+          "value": "blueshimmer"
+       },
+	   {
+          "key": "healing",
+          "value": "hp",
+		  "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
+       },
+		  {
+			"key": "minlevel",
+			"value": 80
+		  },
+		  {
+			"key":"vocations",
+			"value":["knight","paladin"]
+		  }
        ]
     },
     {

@@ -1,6 +1,9 @@
+using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Items;
 using NeoServer.OTB.Parsers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,9 +43,6 @@ namespace NeoServer.Loaders.Items
             itemType.SetName(metadata.Name);
             itemType.SetArticle(metadata.Article);
 
-
-            itemType.SetRequirements(metadata.ItemRequirements);
-
             itemType.SetPlural(metadata.Plural);
 
             if (metadata.Flags is not null)
@@ -78,8 +78,18 @@ namespace NeoServer.Loaders.Items
 
                 if (attribute.Attributes is null || !attribute.Attributes.Any())
                 {
-                    attributes.SetAttribute(itemAttribute, value);
+                    if (value is JArray jArray)
+                    {
+                        value = jArray.ToObject<string[]>();
 
+                        value = itemAttribute == Game.Common.ItemAttribute.Vocation ? GetVocationAttribute(value) : value;
+                        attributes.SetAttribute(itemAttribute,values: value);
+
+                    }
+                    else
+                    {
+                        attributes.SetAttribute(itemAttribute, value);
+                    }
                 }
                 else
                 {
@@ -90,6 +100,20 @@ namespace NeoServer.Loaders.Items
                     attributes.SetAttribute(itemAttribute, value, innerAttributes);
                 }
 
+            }
+        }
+
+        private static VocationType[] GetVocationAttribute(dynamic value)
+        {
+            if (value is null) return default;
+
+            if (value is dynamic[] array)
+            {
+                return array.Select(x => VocationTypeParser.Parse((string)x)).ToArray();
+            }
+            else
+            {
+                return new VocationType[] { VocationTypeParser.Parse((string)value) };
             }
         }
     }

@@ -21,20 +21,10 @@ namespace NeoServer.Loaders.Items
         public Requirement[] Requirements { get; set; }
         public string[] Flags { get; set; }
 
-        public IItemRequirement[] ItemRequirements
-        {
-            get
-            {
-                if (Requirements is null) return null;
-
-                return Requirements.Select(x => new ItemRequirement { Vocation = VocationTypeParser.Parse(x.Vocation), MinLevel = x.MinLevel } as IItemRequirement).ToArray();
-            }
-        }
-
         public struct Attribute
         {
             public string Key { get; set; }
-            public string Value { get; set; }
+            public dynamic Value { get; set; }
             public IEnumerable<Attribute> Attributes { get; set; }
 
         }

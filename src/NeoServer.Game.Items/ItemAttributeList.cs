@@ -7,22 +7,26 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common.Players;
+using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Game.Items
 {
 
     public sealed class ItemAttributeList : IItemAttributeList
     {
-        private IDictionary<ItemAttribute, (IConvertible, IItemAttributeList)> _defaultAttributes;
+        private IDictionary<ItemAttribute, (dynamic, IItemAttributeList)> _defaultAttributes;
 
         public ItemAttributeList()
         {
-            _defaultAttributes = new Dictionary<ItemAttribute, (IConvertible, IItemAttributeList)>();
+            _defaultAttributes = new Dictionary<ItemAttribute, (dynamic, IItemAttributeList)>();
         }
 
         public void SetAttribute(ItemAttribute attribute, int attributeValue) => _defaultAttributes[attribute] = (attributeValue, null);
 
         public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue) => _defaultAttributes[attribute] = (attributeValue, null);
+        public void SetAttribute(ItemAttribute attribute, dynamic values) => _defaultAttributes[attribute] = (values, null);
+
 
         public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs) => _defaultAttributes[attribute] = (attributeValue, attrs);
 
@@ -30,9 +34,9 @@ namespace NeoServer.Game.Items
 
         public T GetAttribute<T>(ItemAttribute attribute) where T : struct
         {
-            (IConvertible, IItemAttributeList) value = (null, null);
+            if (_defaultAttributes is null) return default;
 
-            if (_defaultAttributes?.TryGetValue(attribute, out value) ?? false)
+            if (_defaultAttributes.TryGetValue(attribute, out var value))
             {
                 return (T)Convert.ChangeType(value.Item1, typeof(T));
             }
@@ -50,6 +54,18 @@ namespace NeoServer.Game.Items
 
             return default;
         }
+        public dynamic[] GetAttributeArray(ItemAttribute attribute)
+        {
+            if (_defaultAttributes is null) return default;
+
+            if (_defaultAttributes.TryGetValue(attribute, out var value))
+            {
+                return value.Item1;
+            }
+
+            return default;
+        }
+
         public IItemAttributeList GetInnerAttributes(ItemAttribute attribute)
         {
             if (_defaultAttributes is null) return default;
@@ -64,6 +80,7 @@ namespace NeoServer.Game.Items
 
         public FloorChangeDirection GetFloorChangeDirection()
         {
+
             if (_defaultAttributes?.ContainsKey(ItemAttribute.FloorChange) ?? false)
             {
                 var floorChange = GetAttribute(ItemAttribute.FloorChange);
@@ -83,6 +100,18 @@ namespace NeoServer.Game.Items
             }
 
             return FloorChangeDirection.None;
+        }
+
+        public VocationType[] GetRequiredVocations()
+        {
+            if (_defaultAttributes is null) return default;
+
+            if (_defaultAttributes.TryGetValue(ItemAttribute.Vocation, out var value))
+            {
+                return (VocationType[])value.Item1;
+            }
+
+            return default;
         }
         public EffectT GetEffect()
         {
