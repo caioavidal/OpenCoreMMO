@@ -135,8 +135,18 @@ namespace NeoServer.Game.Items.Items
                 if (i is IPickupable pickupable) pickupable.SetNewLocation(Location.Container(0, (byte)index++));
             }
 
+            if (item is ICumulative cumulative)
+            {
+                cumulative.OnReduced += OnItemReduced;
+            }
+
             OnItemAdded?.Invoke(item);
             return Result.Success;
+        }
+        public void OnItemReduced(ICumulative item, byte amount)
+        {
+            if (item.Amount == 0) RemoveItem((byte)item.Location.ContainerSlot);
+            if (item.Amount > 0) OnItemUpdated?.Invoke((byte)item.Location.ContainerSlot, item, (sbyte)item.Amount);
         }
 
         public Result CanAddItem(IItem item, byte? slot = null)
@@ -203,6 +213,12 @@ namespace NeoServer.Game.Items.Items
                 container.SetParent(null);
             }
 
+
+            if (item is ICumulative cumulative)
+            {
+                cumulative.OnReduced -= OnItemReduced;
+            }
+
             SlotsUsed--;
 
             OnItemRemoved?.Invoke(slotIndex, item);
@@ -217,8 +233,8 @@ namespace NeoServer.Game.Items.Items
             if (item is ICumulative cumulative)
             {
                 var amountToReduce = Math.Min(cumulative.Amount, amount);
-                cumulative.Reduce(Math.Min(cumulative.Amount, amount));
-                removedItem = cumulative.Clone(amountToReduce);
+
+                removedItem = cumulative.Split(amountToReduce);
 
                 if (cumulative.Amount == 0)
                 {
@@ -249,6 +265,8 @@ namespace NeoServer.Game.Items.Items
                     DetachEvents(container);
                     container.Clear();
                 }
+
+                if(item is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced;
             }
 
             Items.Clear();

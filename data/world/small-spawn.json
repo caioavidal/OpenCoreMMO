@@ -1,19 +1,6 @@
 [
-   {
-    "centerx": 1022,
-    "centery": 1022,
-    "centerz": 7,
-    "radius": 1,
-    "monsters": [
-      {
-        "name": "FernFang",
-        "x": 0,
-        "y": 0,
-        "z": 7,
-        "spawntime": 60
-      }
-    ]
-  },
+   
+  
   {
     "centerx": 1018,
     "centery": 1035,

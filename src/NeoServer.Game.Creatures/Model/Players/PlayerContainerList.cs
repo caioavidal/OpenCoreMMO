@@ -158,6 +158,8 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (item is ICumulative)
             {
+                if (!toContainer.Container.CanAddItem(item, (byte)toLocation.ContainerSlot).IsSuccess) return;
+             
                 var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot, amount) as ICumulative;
                 toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerSlot);
             }

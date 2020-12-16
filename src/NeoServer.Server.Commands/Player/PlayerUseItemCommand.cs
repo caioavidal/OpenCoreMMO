@@ -34,10 +34,12 @@ namespace NeoServer.Server.Commands.Player
             else if (useItemPacket.Location.Slot == Slot.Backpack)
             {
                 item = player.Inventory[Slot.Backpack];
+                item.Location = useItemPacket.Location;
             }
             else if (useItemPacket.Location.Type == LocationType.Container)
             {
                 item = player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
+                item.Location = useItemPacket.Location;
             }
 
             Action action = null;
