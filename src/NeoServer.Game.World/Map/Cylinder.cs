@@ -17,6 +17,33 @@ namespace NeoServer.Game.World.Map
         private static IMap _map;
         public static void Setup(IMap map) => _map = map;
 
+        /// <summary>
+        /// Creates a cylinder instance as removed
+        /// </summary>
+        /// <param name="thing"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static Cylinder Removed(IThing thing, byte amount)
+        {
+            var spectators = _map.GetCreaturesAtPositionZone(thing.Location, thing.Location);
+
+            var tile = _map[thing.Location];
+            var tileSpectators = new ICylinderSpectator[spectators.Count()];
+
+            int index = 0;
+            foreach (var spectator in spectators)
+            {
+                byte stackPosition = default;
+                if (spectator is IPlayer player)
+                {
+                    tile.TryGetStackPositionOfThing(player, thing, out stackPosition);
+                }
+
+                tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);
+            }
+
+            return new Cylinder(thing, tile, tile, Operation.Removed, tileSpectators);
+        }
         public static Result<ITileOperationResult> RemoveThing(IThing thing, IDynamicTile tile, byte amount, out ICylinder cylinder)
         {
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);

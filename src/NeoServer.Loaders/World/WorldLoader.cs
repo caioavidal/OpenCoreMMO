@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NeoServer.Server.Standalone;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Loaders.World
 {
@@ -24,7 +25,7 @@ namespace NeoServer.Loaders.World
         private readonly IItemFactory itemFactory;
         private readonly ServerConfiguration serverConfiguration;
 
-        public WorldLoader(Game.World.World world, Logger logger, IItemFactory itemFactory, ServerConfiguration serverConfiguration)
+        public WorldLoader(IMap map, Game.World.World world, Logger logger, IItemFactory itemFactory, ServerConfiguration serverConfiguration)
         {
             this.world = world;
             this.logger = logger;
