@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace NeoServer.Game.Contracts
 {
     public delegate void PlaceCreatureOnMap(IWalkableCreature creature, ICylinder cylinder);
-    public delegate void RemoveThingFromTile(Items.IThing thing, ICylinder tile);
+    public delegate void RemoveThingFromTile(Items.IThing thing, ICylinder cylinder);
     public delegate void MoveCreatureOnFloor(IWalkableCreature creature, ICylinder cylinder);
     public delegate void AddThingToTile(Items.IThing thing, ICylinder cylinder);
     public delegate void UpdateThingOnTile(Items.IThing thing, ICylinder cylinder);

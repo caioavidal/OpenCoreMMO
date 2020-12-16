@@ -89,6 +89,7 @@ namespace NeoServer.Server.Standalone.IoC
             LoadConfigurations(builder);
 
             //world
+            builder.RegisterType<Map>().As<IMap>().SingleInstance();
             builder.RegisterType<World>().SingleInstance();
 
             //loaders
@@ -98,8 +99,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
 
-            //builder.RegisterType<OTBMWorldLoader>();
-            builder.RegisterType<Map>().As<IMap>().SingleInstance();
 
 
             //factories

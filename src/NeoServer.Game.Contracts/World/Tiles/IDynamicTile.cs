@@ -9,7 +9,6 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.World.Tiles
 {
-    public delegate void AddThingToTileDel(IThing thing, ITile tile);
 
     public interface IDynamicTile : ITile
     {
@@ -22,11 +21,8 @@ namespace NeoServer.Game.Contracts.World.Tiles
         bool ProtectionZone { get; }
         FloorChangeDirection FloorDirection { get; }
         byte MovementPenalty { get; }
-        IItem TopItemOnStack { get; }
         bool HasCreature { get; }
         IMagicField MagicField { get; }
-
-        event AddThingToTileDel OnThingAddedToTile;
 
         byte[] GetRaw(IPlayer playerRequesting = null);
         uint GetThingByStackPosition(byte stackPosition);

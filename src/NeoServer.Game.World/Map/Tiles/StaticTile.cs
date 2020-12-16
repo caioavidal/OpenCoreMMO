@@ -22,9 +22,6 @@ namespace NeoServer.Game.World.Map.Tiles
         public byte[] Raw { get; }
 
         public FloorChangeDirection FloorDirection { get; private set; }
-        //public IItem[] TopItems { get; private set; }
-        //public IItem[] DownItems { get; private set; }
-        //public IGround Ground { get; private set; }
         private IItem _topItemOnStack;
         public override IItem TopItemOnStack => _topItemOnStack;
         public override ICreature TopCreatureOnStack => null;

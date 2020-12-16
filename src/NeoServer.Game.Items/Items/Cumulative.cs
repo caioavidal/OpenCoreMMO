@@ -17,7 +17,7 @@ namespace NeoServer.Game.Items.Items
                 Amount = Math.Min((byte)100, (byte)amount);
             }
         }
-        
+
         public Cumulative(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
 
         public event ItemReduce OnReduced;
@@ -42,12 +42,12 @@ namespace NeoServer.Game.Items.Items
 
         public ICumulative Clone(byte amount)
         {
-            var clone = (ICumulative) MemberwiseClone();
+            var clone = (ICumulative)MemberwiseClone();
             clone.Amount = amount;
             clone.ClearSubscribers();
             return clone;
         }
-        
+
 
         public void ClearSubscribers()
         {
@@ -58,11 +58,24 @@ namespace NeoServer.Game.Items.Items
         /// Reduce amount from item
         /// </summary>
         /// <param name="amount">Amount to be reduced</param>
-        public void Reduce(byte amount)
+        protected void Reduce(byte amount = 1)
         {
-            amount = (byte)(amount > 100 ? 100 : amount);
-            Amount -= amount;
+            if (TryReduce(amount) is false) return;
+
             OnReduced?.Invoke(this, amount);
+        }
+
+        private bool TryReduce(byte amount = 1)
+        {
+            if (amount == 0 || Amount == 0) return false;
+
+            amount = (byte)(amount > 100 ? 100 : amount);
+
+            var oldAmount = Amount;
+            Amount -= amount;
+
+            if (oldAmount == Amount) return false;
+            return true;
         }
 
         /// <summary>
@@ -71,8 +84,7 @@ namespace NeoServer.Game.Items.Items
         /// <param name="amount">Amount to be reduced</param>
         public ICumulative Split(byte amount)
         {
-            amount = (byte)(amount > 100 ? 100 : amount);
-            Amount -= amount;
+            if (TryReduce(amount) is false) return null;
             return Clone(amount);
         }
 
@@ -85,7 +97,7 @@ namespace NeoServer.Game.Items.Items
         {
             if (item?.Metadata?.ClientId is null) return false;
             if (item.Metadata.ClientId != Metadata.ClientId) return false;
-            
+
             var totalAmount = Amount + item.Amount;
 
             if (totalAmount <= 100)

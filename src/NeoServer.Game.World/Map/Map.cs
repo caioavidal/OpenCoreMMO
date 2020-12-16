@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.World.Map.Operations;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.World.Map
 {
@@ -36,6 +37,24 @@ namespace NeoServer.Game.World.Map
             MapReplaceOperation.Init(this);
             MapMoveOperation.Init(this);
             CylinderOperation.Setup(this);
+            TileOperationEvent.OnTileChanged += OnTileChanged;
+        }
+
+        public void OnTileChanged(ITile tile, ITileOperationResult result)
+        {
+            if (!result.HasAnyOperation) return;
+
+            foreach (var operation in result.Operations)
+            {
+                switch (operation.Item2)
+                {
+                    case Operation.Removed: 
+                        if (operation.Item1 is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced; break;
+                    case Operation.Added: 
+                        if(operation.Item1 is ICumulative c) c.OnReduced += OnItemReduced; break;
+                    default: break;
+                }
+            }
         }
 
         public void ReplaceThing(IThing thingToRemove, IThing thingToAdd, byte amount = 1)
@@ -47,7 +66,7 @@ namespace NeoServer.Game.World.Map
             if (thingToAdd is IGround ground && this[thingToAdd.Location] is IDynamicTile tile && tile.HasCreature)
             {
                 if (GetTileDestination(tile) is not IDynamicTile destination) return;
-                
+
                 foreach (var creature in tile.Creatures.Values)
                 {
                     TryMoveThing(creature, destination.Location);
@@ -87,7 +106,6 @@ namespace NeoServer.Game.World.Map
                         default: break;
                     }
                 }
-
             }
 
             if (thing is IWalkableCreature creature)
@@ -205,7 +223,6 @@ namespace NeoServer.Game.World.Map
             }
             return true;
         }
-    
 
         public ITile GetTileDestination(IDynamicTile tile)
         {
@@ -318,6 +335,13 @@ namespace NeoServer.Game.World.Map
 
             if (thing is IMoveableThing moveable) moveable.OnMoved();
         }
+        public void OnItemReduced(ICumulative item, byte amount)
+        {
+            if (item.Amount == 0 && this[item.Location] is IDynamicTile tile) 
+                RemoveThing(item, tile, amount);
+            if (item.Amount > 0) 
+                OnThingUpdatedOnTile?.Invoke(item, CylinderOperation.Removed(item, amount));
+        }
         public void AddItem(IThing thing, IDynamicTile tile)
         {
             var result = CylinderOperation.AddThing(thing, tile, out ICylinder cylinder);
@@ -326,12 +350,13 @@ namespace NeoServer.Game.World.Map
             {
                 switch (operation.Item2)
                 {
-                    case Operation.Added: OnThingAddedToTile?.Invoke(operation.Item1, cylinder); break;
+                    case Operation.Added:
+                        OnThingAddedToTile?.Invoke(operation.Item1, cylinder);
+                        break;
                     case Operation.Updated: OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder); break;
                     default: break;
                 }
             }
-
             if (thing is IMoveableThing moveable) moveable.OnMoved();
         }
 
@@ -572,4 +597,8 @@ namespace NeoServer.Game.World.Map
             return rule.CanEnter(tile);
         }
     }
+
+ 
 }
+
+

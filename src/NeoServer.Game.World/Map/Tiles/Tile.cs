@@ -18,8 +18,6 @@ namespace NeoServer.Game.World.Map.Tiles
 {
     public class Tile : BaseTile, IDynamicTile
     {
-        public event AddThingToTileDel OnThingAddedToTile;
-
         public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
             Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
@@ -381,6 +379,8 @@ namespace NeoServer.Game.World.Map.Tiles
             var operations = AddThingToTile(thing);
             if (operations.HasAnyOperation) thing.Location = Location;
             if (thing is IContainer container) container.SetParent(null);
+
+            TileOperationEvent.OnChanged(this, operations);
             return new Result<ITileOperationResult>(operations);
         }
 
@@ -442,7 +442,7 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 if (thing is ICumulative && topStackItem is ICumulative topCumulative)
                 {
-                    topCumulative.Reduce(amount);
+                    removedThing = topCumulative.Split(amount);
 
                     if (topCumulative.Amount == 0)
                     {
@@ -453,7 +453,6 @@ namespace NeoServer.Game.World.Map.Tiles
                     {
                         operations.Add(Operation.Updated, topCumulative);
                     }
-                    removedThing = topCumulative.Clone(amount);
                 }
                 else
                 {
@@ -471,6 +470,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
 
             SetCacheAsExpired();
+            TileOperationEvent.OnChanged(this, operations);
             return new Result<ITileOperationResult>(operations);
         }
         private void SetCacheAsExpired() => cache = null;

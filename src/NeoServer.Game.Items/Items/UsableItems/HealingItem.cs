@@ -1,7 +1,5 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Common;
+﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -22,8 +20,6 @@ namespace NeoServer.Game.Items.Items.UsableItems
         public ushort Max => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Max) ?? 0;
         public string Type => Metadata.Attributes.GetAttribute(ItemAttribute.Healing);
         public string Sentence => Metadata.Attributes.GetAttribute(ItemAttribute.Sentence);
-
-
 
         public static new bool IsApplicable(IItemType type) => (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && Cumulative.IsApplicable(type) && UseableOnItem.IsApplicable(type);
 
@@ -47,6 +43,8 @@ namespace NeoServer.Game.Items.Items.UsableItems
             {
                 creature.Say(Sentence, Common.Talks.TalkType.MonsterSay);
             }
+
+            Reduce();
         }
     }
 }
