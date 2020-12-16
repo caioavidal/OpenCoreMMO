@@ -14,6 +14,10 @@
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Items\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>

@@ -17,8 +17,10 @@ namespace NeoServer.Game.Items.Items
                 Amount = Math.Min((byte)100, (byte)amount);
             }
         }
+        
         public Cumulative(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
 
+        public event ItemReduce OnReduced;
         public byte Amount { get; set; }
 
         public new float Weight => CalculateWeight(Amount);
@@ -40,9 +42,16 @@ namespace NeoServer.Game.Items.Items
 
         public ICumulative Clone(byte amount)
         {
-            var clone = (ICumulative)MemberwiseClone();
+            var clone = (ICumulative) MemberwiseClone();
             clone.Amount = amount;
+            clone.ClearSubscribers();
             return clone;
+        }
+        
+
+        public void ClearSubscribers()
+        {
+            OnReduced = null;
         }
 
         /// <summary>
@@ -53,6 +62,7 @@ namespace NeoServer.Game.Items.Items
         {
             amount = (byte)(amount > 100 ? 100 : amount);
             Amount -= amount;
+            OnReduced?.Invoke(this, amount);
         }
 
         /// <summary>
@@ -61,7 +71,8 @@ namespace NeoServer.Game.Items.Items
         /// <param name="amount">Amount to be reduced</param>
         public ICumulative Split(byte amount)
         {
-            Reduce(amount);
+            amount = (byte)(amount > 100 ? 100 : amount);
+            Amount -= amount;
             return Clone(amount);
         }
 

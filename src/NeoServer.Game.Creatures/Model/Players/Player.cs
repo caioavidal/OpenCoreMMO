@@ -414,7 +414,7 @@ namespace NeoServer.Server.Model.Players
         public override IItem CreateItem(ushort itemId, byte amount)
         {
             var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.TryAddItem(item).Success)
+            if (!Inventory.BackpackSlot.TryAddItem(item).IsSuccess)
             {
                 var thing = item as IThing;
                 Tile.AddThing(thing);
@@ -529,7 +529,7 @@ namespace NeoServer.Server.Model.Players
             var maxRegenerationTime = (uint)1200 * 1000;
             if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
             {
-                if (condition.RemainingTime + regenerationMs >= maxRegenerationTime) //todo: this number can be configured
+                if (condition.RemainingTime + regenerationMs >= maxRegenerationTime) //todo: this number should be configurable
                 {
                     OnOperationFailed?.Invoke(CreatureId, "You are full");
                     return false;

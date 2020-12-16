@@ -9,7 +9,8 @@
         }
 
         public InvalidOperation Error { get; }
-        public readonly bool Success => Error == InvalidOperation.None;
+        public readonly bool IsSuccess => Error == InvalidOperation.None;
+        public static Result Success => new Result(InvalidOperation.None);
     }
     public readonly ref struct Result<T>
     {

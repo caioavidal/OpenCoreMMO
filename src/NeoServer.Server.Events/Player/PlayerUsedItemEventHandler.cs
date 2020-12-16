@@ -33,6 +33,8 @@ namespace NeoServer.Server.Events
 
                 connection.Send();
             }
+
+
         }
     }
 }

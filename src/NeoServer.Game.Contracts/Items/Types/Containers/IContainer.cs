@@ -36,14 +36,13 @@ namespace NeoServer.Game.Contracts.Items.Types
         event Move OnContainerMoved;
 
         bool GetContainerAt(byte index, out IContainer container);
-        Result MoveItem(byte fromSlotIndex, byte toSlotIndex);
-        void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
+        Result MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
         IItem RemoveItem(byte slotIndex);
         IItem RemoveItem(byte slotIndex, byte amount);
         void SetParent(IThing thing);
-        Result TryAddItem(IItem item, byte slot);
         Result TryAddItem(IItem item, byte? slot = null);
         void Clear();
+        Result CanAddItem(IItem item, byte? slot = null);
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
     }
