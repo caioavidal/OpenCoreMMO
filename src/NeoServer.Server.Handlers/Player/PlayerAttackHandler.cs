@@ -17,8 +17,10 @@ namespace NeoServer.Server.Handlers.Player
             var targetId = message.GetUInt32();
             if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player)) return;
 
+            if (!game.CreatureManager.TryGetCreature(targetId, out ICreature creature)) return;
+
             game.Dispatcher.AddEvent(new Event(() => 
-            player.SetAttackTarget(targetId)));
+            player.SetAttackTarget(creature)));
         }
     }
 }

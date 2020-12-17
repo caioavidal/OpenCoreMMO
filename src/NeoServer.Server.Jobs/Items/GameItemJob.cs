@@ -12,7 +12,6 @@ namespace NeoServer.Server.Jobs.Items
         private const ushort EVENT_CHECK_ITEM_INTERVAL = 5000;
         private readonly Game game;
 
-
         public GameItemJob(Game game)
         {
             this.game = game;

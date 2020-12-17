@@ -21,7 +21,6 @@ namespace NeoServer.Game.Creatures
         private readonly IPathAccess pathAccess;
         private readonly Logger logger;
 
-
         public MonsterFactory(IMonsterDataManager monsterManager,
             CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
             IItemFactory itemFactory, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreaturePathAccess creaturePathAccess, Logger logger,

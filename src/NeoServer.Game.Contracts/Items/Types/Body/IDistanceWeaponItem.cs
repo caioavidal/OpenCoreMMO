@@ -33,5 +33,4 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
 
     }
 
-
 }

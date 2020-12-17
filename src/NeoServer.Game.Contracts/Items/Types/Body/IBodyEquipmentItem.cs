@@ -28,7 +28,7 @@ namespace NeoServer.Game.Contracts.Items.Types
                 var stringBuilder = new StringBuilder();
                 var sufix = "\nIt can only be wielded properly by";
 
-                for (int i = 0; i < Vocations.Length; i++)
+                for (int i = 0; i < Vocations?.Length; i++)
                 {
                     stringBuilder.Append($"{VocationTypeParser.Parse(Vocations[i]).ToLower()}s");
                     if (i + 1 < Vocations.Length)

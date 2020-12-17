@@ -59,6 +59,5 @@ namespace NeoServer.Data.Parsers
             return BuildContainer(items, ++index, location, container, itemFactory);
         }
 
-
     }
 }

@@ -48,7 +48,6 @@ namespace NeoServer.Game.Items.Items
             return clone;
         }
 
-
         public void ClearSubscribers()
         {
             OnReduced = null;
@@ -89,7 +88,6 @@ namespace NeoServer.Game.Items.Items
         }
 
         public void Increase(byte amount) => Amount = (byte)(amount + Amount > 100 ? 100 : amount + Amount);
-
 
         public byte AmountToComplete => (byte)(100 - Amount);
 

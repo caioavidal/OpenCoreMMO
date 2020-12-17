@@ -159,6 +159,8 @@ namespace NeoServer.Server.Model.Players
             }
             else
             {
+                if (item is ICumulative c) c.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+
                 Inventory.Remove(slot);
                 removedItem = item;
             }
@@ -166,7 +168,6 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-      
         public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
             bool canCarry = CanCarryItem(item, slot);
@@ -225,6 +226,10 @@ namespace NeoServer.Server.Model.Players
                 OnItemAddedToSlot?.Invoke(this, item, slot);
                 return itemToSwap == null ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
             }
+            else
+            {
+                if (item is ICumulative cumulative) cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+            }
 
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
 
@@ -232,6 +237,16 @@ namespace NeoServer.Server.Model.Players
 
             OnItemAddedToSlot?.Invoke(this, item, slot);
             return new Result<IPickupable>();
+        }
+
+        private void OnItemReduced(ICumulative item, Slot slot, byte amount)
+        {
+            if (item.Amount == 0)
+            {
+                RemoveItemFromSlot(slot, amount, out var removedItem);
+                return;
+            }
+            OnItemAddedToSlot?.Invoke(this, item, slot, amount);
         }
 
         private Tuple<IPickupable, ushort> SwapItem(Slot slot, IPickupable item)

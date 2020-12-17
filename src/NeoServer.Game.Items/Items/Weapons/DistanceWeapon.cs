@@ -12,7 +12,6 @@ using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
-
     public class DistanceWeapon : MoveableItem, IDistanceWeaponItem
     {
         public DistanceWeapon(IItemType type, Location location) : base(type, location) { }
@@ -29,11 +28,11 @@ namespace NeoServer.Game.Items.Items
             var result = false;
             combatType = new CombatAttackType();
 
-            if (!(actor is IPlayer player)) return false;
+            if (actor is not IPlayer player) return false;
 
             if (player?.Inventory[Slot.Ammo] == null) return false;
 
-            if (!(player?.Inventory[Slot.Ammo] is AmmoItem ammo)) return false;
+            if (!(player?.Inventory[Slot.Ammo] is IAmmoItem ammo)) return false;
 
             if (ammo.AmmoType != Metadata.AmmoType) return false;
 
@@ -49,6 +48,7 @@ namespace NeoServer.Game.Items.Items
             if (missed)
             {
                 combatType.Missed = true;
+                ammo.Throw();
                 return true;
             }
 
@@ -66,13 +66,13 @@ namespace NeoServer.Game.Items.Items
 
             if (result)
             {
-                // ammo.Reduce(1); todo
+                ammo.Throw();
             }
 
             return result;
         }
 
-        private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackType combatType, ref bool result, IPlayer player, AmmoItem ammo, ref ushort maxDamage, ref CombatAttackValue combat)
+        private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackType combatType, ref bool result, IPlayer player, IAmmoItem ammo, ref ushort maxDamage, ref CombatAttackValue combat)
         {
             if (ammo.HasElementalDamage)
             {

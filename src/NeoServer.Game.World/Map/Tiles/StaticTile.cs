@@ -59,7 +59,6 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
             }
 
-         
             return ground.Concat(top1).Concat(downRawItems).ToArray();
 
         }

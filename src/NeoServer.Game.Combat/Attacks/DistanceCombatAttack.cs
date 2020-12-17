@@ -26,7 +26,6 @@ namespace NeoServer.Game.Combat.Attacks
 
             var damageValue = (ushort)ServerRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
 
-
             damage = new CombatDamage(damageValue, option.DamageType);
 
             return true;
@@ -37,7 +36,6 @@ namespace NeoServer.Game.Combat.Attacks
             var value = ServerRandom.Random.Next(minValue: 1, maxValue: 100);
             return hitChance < value;
         }
-
 
         public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
         {

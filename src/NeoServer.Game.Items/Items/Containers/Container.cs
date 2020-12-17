@@ -213,7 +213,6 @@ namespace NeoServer.Game.Items.Items
                 container.SetParent(null);
             }
 
-
             if (item is ICumulative cumulative)
             {
                 cumulative.OnReduced -= OnItemReduced;

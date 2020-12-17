@@ -171,7 +171,6 @@ namespace NeoServer.Game.World.Map
       
     }
 
-
     public record Cylinder(IThing Thing, ITile FromTile, ITile ToTile, Operation Operation, ICylinderSpectator[] TileSpectators) : ICylinder;
 }
 

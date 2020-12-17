@@ -18,14 +18,11 @@ namespace NeoServer.Server.Commands.Movement
 
             var itemToAdd = item;
 
-            if(item is ICumulative cumulative && cumulative.Amount < itemThrow.Count) 
-            {
-                itemToAdd = cumulative.Clone(itemThrow.Count);
-            }
-
-            if (container.TryAddItem(itemToAdd, (byte)itemThrow.ToLocation.ContainerSlot).IsSuccess is false) return;
+            if (!container.CanAddItem(item, (byte)itemThrow.ToLocation.ContainerSlot).IsSuccess) return;
 
             player.Inventory.RemoveItemFromSlot(itemThrow.FromLocation.Slot, itemThrow.Count, out var removedItem);
+
+            container.TryAddItem(removedItem, (byte)itemThrow.ToLocation.ContainerSlot);
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

@@ -20,7 +20,6 @@ namespace NeoServer.Server
 
         private ICreatureGameInstance creatureInstances;
 
-
         private readonly Func<IPlayerModel, IPlayer> playerFactory;
 
         /// <summary>

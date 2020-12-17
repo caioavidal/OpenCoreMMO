@@ -27,7 +27,6 @@ namespace NeoServer.Game.Items
         public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue) => _defaultAttributes[attribute] = (attributeValue, null);
         public void SetAttribute(ItemAttribute attribute, dynamic values) => _defaultAttributes[attribute] = (values, null);
 
-
         public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs) => _defaultAttributes[attribute] = (attributeValue, attrs);
 
         public bool HasAttribute(ItemAttribute attribute) => _defaultAttributes.ContainsKey(attribute);

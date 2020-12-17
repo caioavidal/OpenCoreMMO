@@ -26,11 +26,9 @@ namespace NeoServer.Game.Effects.Explosion
         {0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0}
     };
 
-
         public static IEnumerable<Coordinate> Create(int radius)
         {
             var points = new List<Coordinate>();
-          
 
             for (int row = 0; row < 13; row++)
             {

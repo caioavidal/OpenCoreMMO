@@ -401,7 +401,6 @@ namespace NeoServer.Game.Items.Tests
             var item = CreateCumulativeItem(100, 40);
             var item2 = CreateCumulativeItem(100, 100);
 
-
             sut.TryAddItem(child);
             sut.TryAddItem(item);
             child.TryAddItem(item2);
@@ -419,7 +418,6 @@ namespace NeoServer.Game.Items.Tests
             var child = CreateContainer(1);
             var item = CreateCumulativeItem(100, 40);
             var item2 = CreateCumulativeItem(100, 20);
-
 
             sut.TryAddItem(child);
             sut.TryAddItem(item);
@@ -535,8 +533,6 @@ namespace NeoServer.Game.Items.Tests
             Assert.NotSame(item, removedItem);
             Assert.Equal(item.ClientId, removedItem.ClientId);
         }
-
-
 
         [Fact]
         public void ToString_When_Container_Is_Empty_Should_Return_Nothing()

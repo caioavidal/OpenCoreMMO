@@ -21,7 +21,6 @@ namespace NeoServer.Server.Tasks
             reader = channel.Reader;
             writer = channel.Writer;
 
-   
         }
 
         /// <summary>

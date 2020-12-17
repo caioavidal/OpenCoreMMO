@@ -143,6 +143,5 @@ namespace NeoServer.Loaders.Monsters.Converters
             return attacks.ToArray();
         }
 
-
     }
 }

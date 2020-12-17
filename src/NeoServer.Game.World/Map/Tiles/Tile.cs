@@ -32,7 +32,6 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public override ICreature TopCreatureOnStack => Creatures.FirstOrDefault().Value;
 
-
         public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
 
         public byte MovementPenalty => Ground.MovementPenalty;
@@ -126,7 +125,6 @@ namespace NeoServer.Game.World.Map.Tiles
             {
                 throw new ArgumentNullException(nameof(id));
             }
-
 
             if (Ground?.ClientId == id)
             {
@@ -384,8 +382,6 @@ namespace NeoServer.Game.World.Map.Tiles
             return new Result<ITileOperationResult>(operations);
         }
 
-
-
         private byte flags;
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
 
@@ -467,7 +463,6 @@ namespace NeoServer.Game.World.Map.Tiles
                 operations.Add(Operation.Removed, thing);
                 removedThing = thing;
             }
-
 
             SetCacheAsExpired();
             TileOperationEvent.OnChanged(this, operations);

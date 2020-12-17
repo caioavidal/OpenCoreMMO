@@ -59,7 +59,6 @@ namespace NeoServer.Server.Model.Players
             KnownCreatures = new Dictionary<uint, long>();//todo
             VipList = new Dictionary<string, bool>(); //todo
 
-
             foreach (var skill in Skills.Values)
             {
                 skill.OnAdvance += OnLevelAdvance;
@@ -289,7 +288,6 @@ namespace NeoServer.Server.Model.Players
             base.OnMoved(fromTile, toTile);
         }
 
-
         public override void SetAsInFight()
         {
             if (IsPacified) return;
@@ -329,14 +327,13 @@ namespace NeoServer.Server.Model.Players
         {
             ChaseMode = mode;
             FollowCreature = mode == ChaseMode.Follow;
-            if (FollowCreature)
+            if (FollowCreature && AutoAttackTarget is not null)
             {
-                // StartFollowing(AutoAttackTargetId);
+                StartFollowing(AutoAttackTarget as IWalkableCreature, PathSearchParams);
                 return;
             }
 
             StopFollowing();
-
         }
 
         public void SetSecureMode(byte mode) => SecureMode = mode;

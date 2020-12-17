@@ -17,8 +17,6 @@ namespace NeoServer.Server.Helpers
             return rand_normal;
         }
 
- 
-
         private static ServerRandom Instance;
 
         public static ServerRandom Random

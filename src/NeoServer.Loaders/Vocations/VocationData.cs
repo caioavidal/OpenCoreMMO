@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Loaders.Vocations
 {
- 
 
     public class VocationData
     {
@@ -49,6 +48,5 @@ namespace NeoServer.Loaders.Vocations
             public List<Skill> skill { get; set; }
         }
     }
-
 
 }

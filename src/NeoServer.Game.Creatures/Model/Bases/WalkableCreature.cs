@@ -99,6 +99,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StartFollowing(IWalkableCreature creature, FindPathParams fpp)
         {
+            if (creature is null) return;
             if (IsFollowing)
             {
                 Following = creature.CreatureId;
@@ -145,7 +146,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return false;
         }
 
-   
         public virtual bool TryWalkTo(params Direction[] directions)
         {
             if (!WalkingQueue.IsEmpty)
