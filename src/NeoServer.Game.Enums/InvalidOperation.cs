@@ -14,6 +14,7 @@
         NotEnoughLevel,
         Exhausted,
         CannotDrink,
-        IsFull
+        IsFull,
+        TooFar
     }
 }

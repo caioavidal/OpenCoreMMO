@@ -28,7 +28,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
         uint GetThingByStackPosition(byte stackPosition);
         ICreature GetTopVisibleCreature(ICreature creature);
         bool HasBlockPathFinding { get; }
-        Result<ITileOperationResult> RemoveThing(IThing thing, byte count, out IThing removedThing);
-        Result<ITileOperationResult> AddThing(IThing thing);
+        Result<IOperationResult> RemoveThing(IThing thing, byte count, out IThing removedThing);
+        Result<IOperationResult> AddThing(IThing thing);
     }
 }

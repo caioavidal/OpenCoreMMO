@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
-    public struct TileOperationResult: ITileOperationResult
+    public struct TileOperationResult: IOperationResult
     {
         public List<(IThing,Operation)> Operations { get; private set; }
         public void Add(Operation operation, IThing thing)

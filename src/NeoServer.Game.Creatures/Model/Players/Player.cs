@@ -24,6 +24,8 @@ using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Conditions;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Common;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -493,6 +495,12 @@ namespace NeoServer.Server.Model.Players
         }
 
         public void OnHungry() => Recovering = false;
-        
+
+        public Result MoveThing(IStore source, IStore destination, IThing thing, byte fromPosition, byte? toPosition)
+        {
+            if (!Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
+
+            return source.SendTo(destination, thing, fromPosition, toPosition);
+        }
     }
 }

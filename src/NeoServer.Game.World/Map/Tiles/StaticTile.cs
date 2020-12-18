@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common;
+using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
@@ -74,5 +76,14 @@ namespace NeoServer.Game.World.Map.Tiles
             stackPosition = default;
             return false;
         }
+
+        #region Store Methods
+        public override Result CanAddThing(IThing item, byte? slot = null) => new Result(InvalidOperation.NotEnoughRoom);
+        public override bool CanRemoveItem(IThing item) => false;
+        public override int PossibleAmountToAdd(IThing item) => 0;
+        public override Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition) => Result<IOperationResult>.NotPossible;
+        public override Result<IOperationResult> StoreThing(IThing thing, byte? position) => Result<IOperationResult>.NotPossible;
+        #endregion
+
     }
 }

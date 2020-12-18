@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.World.Tiles
 {
-    public interface ITileOperationResult
+    public interface IOperationResult
     {
         List<(IThing,Operation)> Operations { get; }
         bool HasAnyOperation { get; }

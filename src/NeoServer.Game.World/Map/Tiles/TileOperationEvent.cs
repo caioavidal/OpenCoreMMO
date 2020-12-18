@@ -6,9 +6,9 @@ namespace NeoServer.Game.World.Map.Tiles
 {
     public class TileOperationEvent
     {
-        public static event Action<ITile, ITileOperationResult> OnTileChanged;
+        public static event Action<ITile, IOperationResult> OnTileChanged;
 
-        public static void OnChanged(ITile tile, ITileOperationResult operation)
+        public static void OnChanged(ITile tile, IOperationResult operation)
         {
             OnTileChanged?.Invoke(tile, operation);
         }

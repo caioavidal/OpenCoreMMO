@@ -1,18 +1,15 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
@@ -299,7 +296,7 @@ namespace NeoServer.Game.World.Map.Tiles
             FloorDirection = ground.FloorDirection;
         }
 
-        private ITileOperationResult AddThingToTile(IThing thing)
+        private IOperationResult AddThingToTile(IThing thing)
         {
             var operations = new TileOperationResult();
 
@@ -372,14 +369,14 @@ namespace NeoServer.Game.World.Map.Tiles
             return operations;
         }
 
-        public Result<ITileOperationResult> AddThing(IThing thing)
+        public Result<IOperationResult> AddThing(IThing thing)
         {
             var operations = AddThingToTile(thing);
             if (operations.HasAnyOperation) thing.Location = Location;
             if (thing is IContainer container) container.SetParent(null);
 
             TileOperationEvent.OnChanged(this, operations);
-            return new Result<ITileOperationResult>(operations);
+            return new Result<IOperationResult>(operations);
         }
 
         private byte flags;
@@ -414,7 +411,7 @@ namespace NeoServer.Game.World.Map.Tiles
             }
         }
 
-        public Result<ITileOperationResult> RemoveThing(IThing thing, byte amount, out IThing removedThing)
+        public Result<IOperationResult> RemoveThing(IThing thing, byte amount, out IThing removedThing)
         {
             amount = amount == 0 ? 1 : amount;
             var operations = new TileOperationResult();
@@ -466,7 +463,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             SetCacheAsExpired();
             TileOperationEvent.OnChanged(this, operations);
-            return new Result<ITileOperationResult>(operations);
+            return new Result<IOperationResult>(operations);
         }
         private void SetCacheAsExpired() => cache = null;
 
@@ -541,6 +538,54 @@ namespace NeoServer.Game.World.Map.Tiles
 
             cache = stream.Slice(0, countBytes).ToArray();
             return cache;
+        }
+
+        public override Result CanAddThing(IThing thing, byte? slot = null)
+        {
+            if (thing is null) return new Result(InvalidOperation.NotPossible);
+            if (thing is IGround) return Result.Success;
+
+            if (thing is IPlayer && Creatures?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
+            if (thing is IItem item && item.IsAlwaysOnTop && TopItems?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
+
+            if (thing is IItem down && !down.IsAlwaysOnTop && DownItems?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
+
+            return Result.Success;
+        }
+
+        public override bool CanRemoveItem(IThing thing)
+        {
+            if (thing is IItem item && !item.CanBeMoved) return false;
+            if (thing is ICreature) return false; //todo should be configurable
+
+            return true;
+        }
+
+        public override int PossibleAmountToAdd(IThing thing)
+        {
+            if (thing is ICreature && HasCreature) return 0; //todo: must be configurable
+
+            var freeSpace = 10 - DownItems?.Count ?? 0;
+            if (thing is not ICumulative cumulative)
+            {
+                if (freeSpace <= 0) return 0;
+                return freeSpace;
+            }
+
+            var possibleAmountToAdd = freeSpace * 100;
+            if (TopItemOnStack is ICumulative c && TopItemOnStack.ClientId == cumulative.ClientId) possibleAmountToAdd += c.AmountToComplete;
+
+            return possibleAmountToAdd;
+        }
+
+        public override Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Result<IOperationResult> StoreThing(IThing thing, byte? position)
+        {
+            throw new NotImplementedException();
         }
     }
 }

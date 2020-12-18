@@ -5,7 +5,7 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.World
 {
-    public interface ITile
+    public interface ITile : IStore
     {
         Location Location { get; }
 
