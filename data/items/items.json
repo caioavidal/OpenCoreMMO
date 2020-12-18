@@ -50222,6 +50222,31 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by paladins and knights of level 50 or higher."
+          },
+          {
+            "key": "sentence",
+            "value": "Aaaah..."
+          },
+          {
+            "key": "effect",
+            "value": "blueshimmer"
+          },
+          {
+            "key": "healing",
+            "value": "hp",
+            "attributes":[{"key":"min","value":250},{"key":"max","value":350}]
+          },
+          {
+          "key": "minlevel",
+          "value": 50
+          },
+          {
+            "key":"vocations",
+            "value":["knight","paladin","elite knight","royal paladin"]
+          },
+          {
+             "key":"transformTo",
+             "value":"7634"
           }
        ]
     },
@@ -50237,6 +50262,31 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by sorcerers, druids and paladins of level 50 or higher."
+          },
+          {
+            "key": "sentence",
+            "value": "Aaaah..."
+          },
+          {
+            "key": "effect",
+            "value": "blueshimmer"
+          },
+          {
+            "key": "healing",
+            "value": "mp",
+            "attributes":[{"key":"min","value":115},{"key":"max","value":185}]
+          },
+          {
+            "key": "minlevel",
+            "value": 50
+          },
+          {
+            "key":"vocations",
+            "value":["sorcerer","druid","paladin","master sorcerer","elder druid","royal paladin"]
+          },
+          {
+             "key":"transformTo",
+             "value":"7634"
           }
        ]
     },
@@ -50245,14 +50295,39 @@
        "article": "a",
        "name": "great mana potion",
        "attributes": [
-          {
+         {
              "key": "weight",
              "value": "310"
-          },
-          {
+         },
+         {
              "key": "description",
              "value": "This potion can only be consumed by sorcerers and druids of level 80 or higher."
-          }
+         },
+         {
+            "key": "sentence",
+            "value": "Aaaah..."
+         },
+         {
+            "key": "effect",
+            "value": "blueshimmer"
+         },
+         {
+            "key": "healing",
+            "value": "mp",
+            "attributes":[{"key":"min","value":150},{"key":"max","value":250}]
+         },
+         {
+            "key": "minlevel",
+            "value": 80
+         },
+         {
+            "key":"vocations",
+            "value":["sorcerer","druid","master sorcerer","elder druid"]
+         },
+         {
+            "key":"transformTo",
+            "value":"7635"
+         }
        ]
     },
     {
@@ -50260,35 +50335,39 @@
        "article": "a",
        "name": "great health potion",
        "attributes": [
-          {
-             "key": "weight",
-             "value": "310"
-          },
-          {
-             "key": "description",
-             "value": "This potion can only be consumed by knights of level 80 or higher."
-          },
-		     {
-          "key": "sentence",
-          "value": "Aaaah..."
-       },
-	   {
-          "key": "effect",
-          "value": "blueshimmer"
-       },
-	   {
-          "key": "healing",
-          "value": "hp",
-		  "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
-       },
-		  {
-			"key": "minlevel",
-			"value": 80
-		  },
-		  {
-			"key":"vocations",
-			"value":["knight","paladin"]
-		  }
+         {
+            "key": "weight",
+            "value": "310"
+         },
+         {
+            "key": "description",
+            "value": "This potion can only be consumed by knights of level 80 or higher."
+         },
+		   {
+            "key": "sentence",
+            "value": "Aaaah..."
+         },
+	      {
+            "key": "effect",
+            "value": "blueshimmer"
+         },
+	      {
+            "key": "healing",
+            "value": "hp",
+		      "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
+         },
+		   {
+		      "key": "minlevel",
+			   "value": 80
+		   },
+		   {
+			   "key":"vocations",
+			   "value":["knight","paladin"]
+         },
+         {
+            "key":"transformTo",
+            "value":"7635"
+         }
        ]
     },
     {
@@ -50310,23 +50389,28 @@
        "id": "7618",
        "article": "a",
        "name": "health potion",
-       "attributes": [{
+       "attributes": [
+      {
           "key": "weight",
           "value": "270"
-       },
+      },
 	   {
           "key": "sentence",
           "value": "Aaaah..."
-       },
+      },
 	   {
           "key": "effect",
           "value": "blueshimmer"
-       },
+      },
 	   {
           "key": "healing",
           "value": "hp",
-		  "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
-       }
+		    "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
+      },
+      {
+         "key": "transformTo",
+         "value": "7636"
+      }
 	  ]
     },
     {
@@ -50352,7 +50436,12 @@
           "key": "healing",
           "value": "mp",
 		  "attributes":[{"key":"min","value":70},{"key":"max","value":130}]
-       }]
+       },
+      {
+         "key": "transformTo",
+         "value": "7636"
+      }
+      ]
     },
     {
        "id": "7621",
@@ -58024,7 +58113,37 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by paladins of level 80 or higher."
-          }
+          },
+          {
+             "key": "sentence",
+             "value": "Aaaah..."
+          },
+          {
+             "key": "effect",
+             "value": "blueshimmer"
+          },
+          {
+             "key": "healing",
+             "value": "hp",
+             "attributes":[{"key":"min","value":250},{"key":"max","value":350}]
+          },
+          {
+            "key": "healing",
+            "value": "mp",
+            "attributes":[{"key":"min","value":100},{"key":"max","value":200}]
+         },
+         {
+            "key": "minlevel",
+            "value": 80
+         },
+         {
+            "key":"vocations",
+            "value":["paladin","royal paladin"]
+         },
+         {
+            "key":"transformTo",
+            "value":"7635"
+         }
        ]
     },
     {
@@ -58039,6 +58158,31 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by knights of level 130 or higher."
+          },
+          {
+             "key": "sentence",
+             "value": "Aaaah..."
+          },
+          {
+             "key": "effect",
+             "value": "blueshimmer"
+          },
+          {
+             "key": "healing",
+             "value": "hp",
+             "attributes":[{"key":"min","value":650},{"key":"max","value":850}]
+          },
+          {
+            "key": "minlevel",
+            "value": 130
+          },
+          {
+            "key":"vocations",
+            "value":["knight","elite knight"]
+          },
+          {
+             "key":"transformTo",
+             "value":"7635"
           }
        ]
     },
@@ -58958,10 +59102,25 @@
        "id": "8704",
        "article": "a",
        "name": "small health potion",
-       "attributes": [{
+       "attributes": [
+         {
           "key": "weight",
           "value": "265"
-       }]
+         },
+         {
+            "key": "sentence",
+            "value": "Aaaah..."
+         },
+         {
+            "key": "effect",
+            "value": "blueshimmer"
+         },
+         {
+            "key": "healing",
+            "value": "hp",
+          "attributes":[{"key":"min","value":60},{"key":"max","value":90}]
+         }
+      ]
     },
     {
        "fromid": "8705",
