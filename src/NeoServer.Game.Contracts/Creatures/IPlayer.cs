@@ -33,9 +33,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte LevelPercent { get; }
 
         uint Experience { get; }
-
-        byte AccessLevel { get; } // TODO: implement.
-
         byte SoulPoints { get; }
 
         float CarryStrength { get; }
@@ -43,7 +40,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         IDictionary<SkillType, ISkill> Skills { get; }
         ushort StaminaMinutes { get; }
 
-        Location LocationInFront { get; }
         FightMode FightMode { get; }
         ChaseMode ChaseMode { get; }
         byte SecureMode { get; }

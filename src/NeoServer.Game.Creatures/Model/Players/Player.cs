@@ -155,49 +155,7 @@ namespace NeoServer.Server.Model.Players
             base.GainExperience(exp);
         }
 
-        public byte AccessLevel { get; set; } // TODO: implement.
-
         public bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
-
-        public Location LocationInFront
-        {
-            get
-            {
-                switch (Direction)
-                {
-                    case Direction.North:
-                        return new Location
-                        {
-                            X = Location.X,
-                            Y = (ushort)(Location.Y - 1),
-                            Z = Location.Z
-                        };
-                    case Direction.East:
-                        return new Location
-                        {
-                            X = (ushort)(Location.X + 1),
-                            Y = Location.Y,
-                            Z = Location.Z
-                        };
-                    case Direction.West:
-                        return new Location
-                        {
-                            X = (ushort)(Location.X - 1),
-                            Y = Location.Y,
-                            Z = Location.Z
-                        };
-                    case Direction.South:
-                        return new Location
-                        {
-                            X = Location.X,
-                            Y = (ushort)(Location.Y + 1),
-                            Z = Location.Z
-                        };
-                    default:
-                        return Location; // should not happen.
-                }
-            }
-        }
         public float DamageFactor => FightMode switch
         {
             FightMode.Attack => 1,
@@ -478,15 +436,6 @@ namespace NeoServer.Server.Model.Players
             SoulPoints = SoulPoints + increasing >= MaxSoulPoints ? MaxSoulPoints : (byte)(SoulPoints + increasing);
             OnStatusChanged?.Invoke(this);
         }
-        public void HealMana(byte increasing)
-        {
-            if (increasing <= 0) return;
-
-            if (SoulPoints == MaxSoulPoints) return;
-
-            SoulPoints += increasing;
-            OnStatusChanged?.Invoke(this);
-        }
 
         public void Recover()
         {
@@ -543,9 +492,7 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-        public void OnHungry()
-        {
-            Recovering = false;
-        }
+        public void OnHungry() => Recovering = false;
+        
     }
 }
