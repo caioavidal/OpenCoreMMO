@@ -159,7 +159,7 @@ namespace NeoServer.Server.Model.Players
             }
             else
             {
-                if (item is ICumulative c) c.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+                if (item is ICumulative c) c.ClearSubscribers();
 
                 Inventory.Remove(slot);
                 removedItem = item;
@@ -217,6 +217,8 @@ namespace NeoServer.Server.Model.Players
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
                         }
                     }
+
+                    if (itemToSwap?.Item1 is ICumulative c) c.ClearSubscribers();
                 }
                 else
                 {
@@ -239,6 +241,7 @@ namespace NeoServer.Server.Model.Players
             return new Result<IPickupable>();
         }
 
+        
         private void OnItemReduced(ICumulative item, Slot slot, byte amount)
         {
             if (item.Amount == 0)
@@ -246,13 +249,16 @@ namespace NeoServer.Server.Model.Players
                 RemoveItemFromSlot(slot, amount, out var removedItem);
                 return;
             }
-            OnItemAddedToSlot?.Invoke(this, item, slot, amount);
+            OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
         }
 
         private Tuple<IPickupable, ushort> SwapItem(Slot slot, IPickupable item)
         {
             var itemToSwap = Inventory[slot];
             Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+
+            if (item is ICumulative cumulative) cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+
             return itemToSwap;
         }
 

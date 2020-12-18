@@ -26,6 +26,8 @@ namespace NeoServer.Game.Items.Items
         public IItem this[int index] => Items[index];
         public bool HasItems => SlotsUsed > 0;
         public byte LastFreeSlot => IsFull ? 0 : SlotsUsed;
+        public int FreeSlotsCount => Capacity - SlotsUsed;
+
         public IThing Root
         {
             get
@@ -45,7 +47,19 @@ namespace NeoServer.Game.Items.Items
             if (Parent is IPlayer player) Location = new Location(Common.Players.Slot.Backpack);
         }
         public static bool IsApplicable(IItemType type) => type.Group == ItemGroup.GroundContainer || type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
+        public int PossibleAmountToAdd(IItem item)
+        {
+            if (item is not ICumulative cumulative) return IsFull ? 0 : FreeSlotsCount;
 
+            var possibleAmountToAdd = FreeSlotsCount * 100;
+
+            foreach (var i in Items)
+            {
+                if (i is ICumulative c && i.ClientId == item.ClientId) possibleAmountToAdd += c.AmountToComplete;
+            }
+
+            return possibleAmountToAdd;
+        }
         public bool GetContainerAt(byte index, out IContainer container)
         {
             container = null;
@@ -118,7 +132,7 @@ namespace NeoServer.Game.Items.Items
         {
             if (SlotsUsed >= Capacity)
             {
-                return new Result(InvalidOperation.TooHeavy);
+                return new Result(InvalidOperation.IsFull);
             }
 
             Items.Insert(0, item);
@@ -178,11 +192,12 @@ namespace NeoServer.Game.Items.Items
         public Result MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1)
         {
             var movingToContainer = GetContainerAt(toSlotIndex, out var container);
+
             if (movingToContainer)
             {
                 IItem itemToMove = null;
 
-                if(Items[fromSlotIndex] is ICumulative cumulative)
+                if (Items[fromSlotIndex] is ICumulative cumulative)
                 {
                     itemToMove = cumulative.Clone(amount);
                 }
@@ -195,11 +210,20 @@ namespace NeoServer.Game.Items.Items
                 if (!validation.IsSuccess) return validation;
             }
 
-            var item = RemoveItem(fromSlotIndex, amount);
+            var possibleAmountToAdd = movingToContainer ?  container.PossibleAmountToAdd(Items[fromSlotIndex]) : PossibleAmountToAdd(Items[fromSlotIndex]);
+            var amountPossibleToAdd = possibleAmountToAdd < amount ? possibleAmountToAdd : amount;
 
-            if (movingToContainer) return container.TryAddItem(item, toSlotIndex);
+            var item = RemoveItem(fromSlotIndex, (byte)amountPossibleToAdd);
 
-            return TryAddItem(item);
+            Result result = movingToContainer ? container.TryAddItem(item, toSlotIndex) : TryAddItem(item);
+
+
+            if(amountPossibleToAdd < amount)
+            {
+                result = MoveItem(fromSlotIndex, toSlotIndex, (byte)(amount - amountPossibleToAdd));
+            }
+
+            return result;
         }
 
         public IItem RemoveItem(byte slotIndex)

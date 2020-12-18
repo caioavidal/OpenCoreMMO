@@ -348,6 +348,66 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(sut[slot], item);
             Assert.Equal((sut[slot] as Cumulative).Amount, resultItem.Amount);
         }
+        [Fact]
+        public void AddItemToSlot_When_Item_Is_Cumulative_Raises_Event_When_Reduced()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
+            var result = sut.TryAddItemToSlot(Slot.Ammo, item);
+
+            var eventRaised = false;
+            var itemRemovedEventRaised = false;
+
+            item.OnReduced += (a, b) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (a, b, c, d) => 
+            itemRemovedEventRaised = true;
+
+            item.Throw();
+
+            Assert.True(eventRaised);
+            Assert.True(itemRemovedEventRaised);
+        }
+        [Fact]
+        public void AddItemToSlot_When_Swap_Item_Is_Cumulative_Raises_Event_When_Reduced()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var initialItem = ItemTestData.CreateAmmoItem(101, 1) as AmmoItem;
+            var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
+
+            sut.TryAddItemToSlot(Slot.Ammo, initialItem);
+            var result = sut.TryAddItemToSlot(Slot.Ammo, item);
+
+            var eventRaised = false;
+            var itemRemovedEventRaised = false;
+
+            item.OnReduced += (a, b) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (a, b, c, d) => 
+            itemRemovedEventRaised = true;
+            item.Throw();
+
+            Assert.True(eventRaised);
+            Assert.True(itemRemovedEventRaised);
+        }
+        [Fact]
+        public void TryAddItemToSlot_SwappedItem_Should_Not_Raise_Event_When_Reduced()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var initialItem = ItemTestData.CreateAmmoItem(101, 3) as AmmoItem;
+            var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
+
+            sut.TryAddItemToSlot(Slot.Ammo, initialItem);
+            var result = sut.TryAddItemToSlot(Slot.Ammo, item);
+
+            var itemRemovedEventRaised = false;
+
+            var swapped = (result.Value as AmmoItem);
+
+            sut.OnItemRemovedFromSlot += (a, b, c, d) => itemRemovedEventRaised = true;
+
+            swapped.Throw();
+
+            Assert.False(itemRemovedEventRaised);
+        }
 
         [Fact]
         public void AddItemToSlot_AddItem_When_Slot_Has_Cumulative_Item_And_Exceeds_Join_Item_And_Returns_Exceeding_Amount()
@@ -391,3 +451,4 @@ namespace NeoServer.Game.Creatures.Tests
         }
     }
 }
+
