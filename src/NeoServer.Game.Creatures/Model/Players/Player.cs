@@ -496,11 +496,11 @@ namespace NeoServer.Server.Model.Players
 
         public void OnHungry() => Recovering = false;
 
-        public Result MoveThing(IStore source, IStore destination, IThing thing, byte fromPosition, byte? toPosition)
+        public Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
         {
             if (!Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
 
-            return source.SendTo(destination, thing, fromPosition, toPosition);
+            return source.SendTo(destination, thing, amount, fromPosition, toPosition);
         }
     }
 }

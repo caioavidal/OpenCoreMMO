@@ -25,10 +25,10 @@ namespace NeoServer.Game.Contracts.World.Tiles
         IMagicField MagicField { get; }
 
         byte[] GetRaw(IPlayer playerRequesting = null);
-        uint GetThingByStackPosition(byte stackPosition);
         ICreature GetTopVisibleCreature(ICreature creature);
+        bool TryGetStackPositionOfItem(IItem item, out byte stackPosition);
+        byte CreatureStackPositionCount(IPlayer observer);
+
         bool HasBlockPathFinding { get; }
-        Result<IOperationResult> RemoveThing(IThing thing, byte count, out IThing removedThing);
-        Result<IOperationResult> AddThing(IThing thing);
     }
 }

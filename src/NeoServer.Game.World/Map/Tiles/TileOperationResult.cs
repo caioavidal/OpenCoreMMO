@@ -8,11 +8,11 @@ namespace NeoServer.Game.World.Map.Tiles
 {
     public struct TileOperationResult: IOperationResult
     {
-        public List<(IThing,Operation)> Operations { get; private set; }
-        public void Add(Operation operation, IThing thing)
+        public List<(IThing,Operation, byte)> Operations { get; private set; }
+        public void Add(Operation operation, IThing thing, byte stackPosition = 0)
         {
             Operations = Operations ?? new();
-            Operations.Add((thing,operation));
+            Operations.Add((thing,operation, stackPosition));
         }
 
         public bool HasAnyOperation => Operations?.Any() ?? false;

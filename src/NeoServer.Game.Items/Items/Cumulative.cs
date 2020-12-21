@@ -21,7 +21,6 @@ namespace NeoServer.Game.Items.Items
         public Cumulative(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
 
         public event ItemReduce OnReduced;
-        public byte Amount { get; set; }
 
         public new float Weight => CalculateWeight(Amount);
 

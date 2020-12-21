@@ -19,6 +19,7 @@ namespace NeoServer.Server.Commands.Movement
     {
         public static void Execute(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow)
         {
+
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             //todo check if tile reached max stack count
             //todo check max throw distance
@@ -37,7 +38,7 @@ namespace NeoServer.Server.Commands.Movement
 
             if (!itemThrow.FromLocation.IsNextTo(player.Location)) return;
 
-            map.TryMoveThing(thing, itemThrow.ToLocation, itemThrow.Count);
+            player.MoveThing(fromTile, map[itemThrow.ToLocation], thing, itemThrow.Count, 0, 0);
         }
         private static void FromInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {

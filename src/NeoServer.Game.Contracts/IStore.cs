@@ -36,15 +36,16 @@ namespace NeoServer.Game.Contracts
         /// <param name="thing">thing to be stored</param>
         /// <param name="position">position where thing will be stored</param>
         /// <returns></returns>
-        Result<IOperationResult> StoreThing(IThing thing, byte? position);
+        Result<IOperationResult> AddThing(IThing thing, byte? position = null);
         /// <summary>
         /// Removes thing from store
         /// </summary>
         /// <param name="thing">thing to be removed</param>
         /// <param name="amount">amount of the thing to be removed</param>
         /// <param name="fromPosition">position where thing will be removed</param>
+        /// <param name="removedThing">removed thing instance from store</param>
         /// <returns></returns>
-        Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition);
+        Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing);
 
         /// <summary>
         /// Sends thing to another store
@@ -54,29 +55,28 @@ namespace NeoServer.Game.Contracts
         /// <param name="fromPosition">position source in store</param>
         /// <param name="toPosition">position destination in store</param>
         /// <returns></returns>
-        public Result SendTo(IStore destination, IThing thing, byte fromPosition, byte? toPosition)
+        public Result SendTo(IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
         {
             var canAdd = destination.CanAddThing(thing);
             if (!canAdd.IsSuccess) return canAdd;
 
             var possibleAmountToAdd = destination.PossibleAmountToAdd(thing);
 
-
+            IThing removedThing;
             if (thing is not ICumulative cumulative)
             {
                 if (possibleAmountToAdd < 1) return new Result(InvalidOperation.NotEnoughRoom);
+                RemoveThing(thing, 1, fromPosition, out removedThing);
+
             }
             else
             {
-                var amount = (byte)(possibleAmountToAdd < cumulative.Amount ? possibleAmountToAdd : cumulative.Amount);
+                var amountToAdd = (byte)(possibleAmountToAdd < amount ? possibleAmountToAdd : amount);
 
-                var splitted = cumulative.Split(amount);
-                RemoveThing(thing, amount, fromPosition);
-
-                return destination.ReceiveFrom(this, splitted, toPosition);
+                RemoveThing(thing, amountToAdd, fromPosition, out removedThing);
             }
 
-            return destination.ReceiveFrom(this, thing, toPosition);
+            return destination.ReceiveFrom(this, removedThing, toPosition);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace NeoServer.Game.Contracts
             var canAdd = CanAddThing(thing);
             if (!canAdd.IsSuccess) return canAdd;
 
-            return StoreThing(thing, toPosition).ResultValue;
+            return AddThing(thing, toPosition).ResultValue;
         }
 
     }
