@@ -35,7 +35,10 @@ namespace NeoServer.Game.World.Map
             {
                 if (spectator is IPlayer player)
                 {
-                   stackPosition = (byte)(tile.GetCreatureStackPositionCount(player) + stackPosition);
+                    if (thing is IItem item && !item.IsAlwaysOnTop && item is not IGround)
+                    {
+                        stackPosition = (byte)(tile.GetCreatureStackPositionCount(player) + stackPosition);
+                    }
                 }
 
                 tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);

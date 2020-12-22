@@ -28,4 +28,8 @@
     <ProjectReference Include="..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Items\UseableItems\" />
+  </ItemGroup>
+
 </Project>
