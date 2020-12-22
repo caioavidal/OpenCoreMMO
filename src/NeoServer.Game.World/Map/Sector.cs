@@ -59,7 +59,6 @@ namespace NeoServer.Game.World.Map
         public bool OnlyPlayers { get; }
         public Location CenterPosition { get; }
 
-
         public SpectatorSearch(ref Location center, int minRangeX, int maxRangeX, int minRangeY, int maxRangeY, int minRangeZ, int maxRangeZ, bool onlyPlayers)
         {
             int minY = center.Y + minRangeY;
@@ -85,5 +84,4 @@ namespace NeoServer.Game.World.Map
         }
     }
 
-  
 }

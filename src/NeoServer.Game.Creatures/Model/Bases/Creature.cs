@@ -224,7 +224,6 @@ namespace NeoServer.Game.Creatures.Model
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
         public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
 
-
         public virtual void Say(string message, TalkType talkType)
         {
             OnSay?.Invoke(this, talkType, message);
@@ -236,7 +235,6 @@ namespace NeoServer.Game.Creatures.Model
             //if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
             //return item;
         }
-
 
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == CreatureId;
 

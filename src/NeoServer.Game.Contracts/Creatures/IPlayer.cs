@@ -11,6 +11,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
@@ -33,9 +34,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte LevelPercent { get; }
 
         uint Experience { get; }
-
-        byte AccessLevel { get; } // TODO: implement.
-
         byte SoulPoints { get; }
 
         float CarryStrength { get; }
@@ -43,7 +41,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         IDictionary<SkillType, ISkill> Skills { get; }
         ushort StaminaMinutes { get; }
 
-        Location LocationInFront { get; }
         FightMode FightMode { get; }
         ChaseMode ChaseMode { get; }
         byte SecureMode { get; }
@@ -134,6 +131,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void HealMana(ushort increasing);
         void Use(IConsumable item, ICreature creature);
         bool Feed(IFood food);
+        Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";

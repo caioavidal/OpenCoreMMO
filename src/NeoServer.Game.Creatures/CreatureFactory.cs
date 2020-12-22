@@ -96,7 +96,6 @@ namespace NeoServer.Game.Creatures
             return AttachEvents(player) as IPlayer;
         }
 
-
         private ICreature AttachCombatActorEvents(ICombatActor actor)
         {
             actor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;

@@ -29,9 +29,6 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
 
         string IThing.InspectionText => $"{LookText} {AttributesText}";
 
-
-
     }
-
 
 }

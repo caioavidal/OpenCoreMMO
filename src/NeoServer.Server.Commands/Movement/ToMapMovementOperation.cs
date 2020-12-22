@@ -1,17 +1,10 @@
 ﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Commands.Movement
 {
@@ -20,8 +13,7 @@ namespace NeoServer.Server.Commands.Movement
         public static void Execute(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow)
         {
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
-            //todo check if tile reached max stack count
-            //todo check max throw distance
+
             WalkToMechanism.DoOperation(player, () => FromGround(player, map, itemThrow), itemThrow.FromLocation, game);
             FromInventory(player, map, itemThrow);
             FromContainer(player, map, itemThrow);
@@ -37,7 +29,7 @@ namespace NeoServer.Server.Commands.Movement
 
             if (!itemThrow.FromLocation.IsNextTo(player.Location)) return;
 
-            map.TryMoveThing(thing, itemThrow.ToLocation, itemThrow.Count);
+            player.MoveThing(fromTile, map[itemThrow.ToLocation], thing, itemThrow.Count, 0, 0);
         }
         private static void FromInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
@@ -45,9 +37,8 @@ namespace NeoServer.Server.Commands.Movement
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             if (player.Inventory[itemThrow.FromLocation.Slot] is not IPickupable item) return;
 
-            if (player.Inventory.RemoveItemFromSlot(itemThrow.FromLocation.Slot, itemThrow.Count, out var removedItem) is false) return;
+            player.MoveThing(player.Inventory, toTile, item, itemThrow.Count, (byte)itemThrow.FromLocation.Slot, 0);
 
-            map.AddItem(removedItem, toTile);
         }
         private static void FromContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
@@ -57,8 +48,7 @@ namespace NeoServer.Server.Commands.Movement
             var container = player.Containers[itemThrow.FromLocation.ContainerId];
             if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
 
-            var removedItem = container.RemoveItem((byte)itemThrow.FromLocation.ContainerSlot, itemThrow.Count);
-            map.AddItem(removedItem, toTile);
+            player.MoveThing(container, toTile, item, itemThrow.Count, (byte)itemThrow.FromLocation.ContainerSlot, 0);
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) => itemThrowPacket.ToLocation.Type == LocationType.Ground;

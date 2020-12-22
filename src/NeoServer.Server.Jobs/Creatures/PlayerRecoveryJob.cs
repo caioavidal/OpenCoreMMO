@@ -12,6 +12,5 @@ namespace NeoServer.Server.Jobs.Creatures
             player.Recover();
         }
 
-      
     }
 }

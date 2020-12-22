@@ -1,18 +1,15 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
@@ -31,7 +28,6 @@ namespace NeoServer.Game.World.Map.Tiles
         public ushort StepSpeed => Ground.StepSpeed;
 
         public override ICreature TopCreatureOnStack => Creatures.FirstOrDefault().Value;
-
 
         public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
 
@@ -117,16 +113,13 @@ namespace NeoServer.Game.World.Map.Tiles
 
             return false;
         }
-        private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
+
+        public bool TryGetStackPositionOfItem(IItem item, out byte stackPosition)
         {
             stackPosition = 0;
 
             var id = item.ClientId;
-            if (id == default)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
+            if (id == default) throw new ArgumentNullException(nameof(id));
 
             if (Ground?.ClientId == id)
             {
@@ -153,22 +146,10 @@ namespace NeoServer.Game.World.Map.Tiles
             }
             else
             {
-
                 stackPosition += (byte)(TopItems?.Count ?? 0);
                 if (stackPosition >= 10)
                 {
                     return false;
-                }
-            }
-
-            foreach (var creature in Creatures)
-            {
-                if (observer.CanSee(creature.Value))
-                {
-                    if (++stackPosition >= 10)
-                    {
-                        return false;
-                    }
                 }
             }
 
@@ -186,6 +167,25 @@ namespace NeoServer.Game.World.Map.Tiles
                     }
                 }
             }
+
+            return false;
+        }
+        public override byte GetCreatureStackPositionCount(IPlayer observer)
+        {
+            byte stackPosition = 0;
+            foreach (var creature in Creatures)
+            {
+                if (observer.CanSee(creature.Value) && ++stackPosition >= 10) return 0;
+            }
+            return stackPosition;
+        }
+        private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
+        {
+            TryGetStackPositionOfItem(item, out stackPosition);
+
+            if (stackPosition >= 10) return false;
+
+            stackPosition = (byte)(stackPosition + ((item.IsAlwaysOnTop || item is IGround) ? 0 : GetCreatureStackPositionCount(observer)));
 
             return false;
         }
@@ -231,53 +231,6 @@ namespace NeoServer.Game.World.Map.Tiles
             return false;
         }
 
-        public uint GetThingByStackPosition(byte stackPosition)
-        {
-            if (stackPosition == 0)
-            {
-                return Ground.ClientId;
-            }
-            var n = 0;
-
-            if (TopItems != null)
-            {
-                foreach (var item in TopItems)
-                {
-                    ++n;
-
-                    if (n == stackPosition)
-                    {
-                        return item.ClientId;
-                    }
-                }
-            }
-
-            foreach (var creature in Creatures)
-            {
-                ++n;
-
-                if (n == stackPosition)
-                {
-                    return creature.Key;
-                }
-            }
-
-            if (DownItems != null)
-            {
-                foreach (var item in DownItems)
-                {
-                    ++n;
-                    if (n == stackPosition)
-                    {
-                        return item.ClientId;
-                    }
-                }
-            }
-
-            // return byte.MaxValue; // TODO: throw?
-            throw new Exception("stackposition invalid");
-        }
-
         public bool HasBlockPathFinding
         {
             get
@@ -301,9 +254,9 @@ namespace NeoServer.Game.World.Map.Tiles
             FloorDirection = ground.FloorDirection;
         }
 
-        private ITileOperationResult AddThingToTile(IThing thing)
+        private OperationResult<IThing> AddThingToTile(IThing thing)
         {
-            var operations = new TileOperationResult();
+            var operations = new OperationResult<IThing>();
 
             if (thing is IGround ground && Ground is null)
             {
@@ -374,17 +327,6 @@ namespace NeoServer.Game.World.Map.Tiles
             return operations;
         }
 
-        public Result<ITileOperationResult> AddThing(IThing thing)
-        {
-            var operations = AddThingToTile(thing);
-            if (operations.HasAnyOperation) thing.Location = Location;
-            if (thing is IContainer container) container.SetParent(null);
-
-            TileOperationEvent.OnChanged(this, operations);
-            return new Result<ITileOperationResult>(operations);
-        }
-
-
 
         private byte flags;
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
@@ -414,65 +356,10 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in items)
             {
-                AddThing(item);
+                AddThing(item, null);
             }
         }
 
-        public Result<ITileOperationResult> RemoveThing(IThing thing, byte amount, out IThing removedThing)
-        {
-            amount = amount == 0 ? 1 : amount;
-            var operations = new TileOperationResult();
-
-            removedThing = null;
-            var itemToRemove = thing as IItem;
-
-            if (thing is ICreature c)
-            {
-                Creatures.Remove(c.CreatureId, out var creature);
-                operations.Add(Operation.Removed, creature);
-                removedThing = creature;
-            }
-            else if (itemToRemove.IsAlwaysOnTop)
-            {
-                TopItems.TryPop(out var item);
-                operations.Add(Operation.Removed, item);
-                removedThing = item;
-            }
-            else if (DownItems is not null && DownItems.TryPeek(out var topStackItem))
-            {
-                if (thing is ICumulative && topStackItem is ICumulative topCumulative)
-                {
-                    removedThing = topCumulative.Split(amount);
-
-                    if (topCumulative.Amount == 0)
-                    {
-                        DownItems.TryPop(out var item);
-                        operations.Add(Operation.Removed, item);
-                    }
-                    else
-                    {
-                        operations.Add(Operation.Updated, topCumulative);
-                    }
-                }
-                else
-                {
-                    DownItems.TryPop(out var item);
-                    operations.Add(Operation.Removed, item);
-                    removedThing = item;
-                }
-            }
-            else if (thing == Ground)
-            {
-                Ground = null;
-                operations.Add(Operation.Removed, thing);
-                removedThing = thing;
-            }
-
-
-            SetCacheAsExpired();
-            TileOperationEvent.OnChanged(this, operations);
-            return new Result<ITileOperationResult>(operations);
-        }
         private void SetCacheAsExpired() => cache = null;
 
         public byte[] GetRaw(IPlayer playerRequesting)
@@ -547,5 +434,119 @@ namespace NeoServer.Game.World.Map.Tiles
             cache = stream.Slice(0, countBytes).ToArray();
             return cache;
         }
+
+        #region Store Methods
+        public override Result CanAddThing(IThing thing, byte amount = 1, byte? slot = null)
+        {
+            if (thing is null) return new Result(InvalidOperation.NotPossible);
+            if (thing is IGround) return Result.Success;
+
+            if (thing is IPlayer && Creatures?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
+            if (thing is IItem item && item.IsAlwaysOnTop && TopItems?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
+
+            if (thing is IItem down && !down.IsAlwaysOnTop && DownItems?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
+
+            return Result.Success;
+        }
+
+        public override bool CanRemoveItem(IThing thing)
+        {
+            if (thing is IItem item && !item.CanBeMoved) return false;
+            if (thing is ICreature) return false; //todo should be configurable
+
+            return true;
+        }
+
+        public override int PossibleAmountToAdd(IThing thing, byte? toPosition = null)
+        {
+            if (thing is ICreature && HasCreature) return 0; //todo: must be configurable
+
+            var freeSpace = 10 - (DownItems?.Count ?? 0);
+            if (thing is not ICumulative cumulative)
+            {
+                if (freeSpace <= 0) return 0;
+                return freeSpace;
+            }
+
+            var possibleAmountToAdd = freeSpace * 100;
+            if (TopItemOnStack is ICumulative c && TopItemOnStack.ClientId == cumulative.ClientId) possibleAmountToAdd += c.AmountToComplete;
+
+            return possibleAmountToAdd;
+        }
+
+        public override Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
+        {
+            amount = amount == 0 ? 1 : amount;
+            var operations = new OperationResult<IThing>();
+
+            removedThing = null;
+            var itemToRemove = thing as IItem;
+
+
+            if (thing is ICreature c)
+            {
+                Creatures.Remove(c.CreatureId, out var creature);
+                operations.Add(Operation.Removed, creature);
+                removedThing = creature;
+            }
+            else if(thing is IItem itemToBeRemoved)
+            {
+                TryGetStackPositionOfItem(itemToBeRemoved, out var stackPosition);
+
+                if (itemToRemove.IsAlwaysOnTop)
+                {
+                    TopItems.TryPop(out var item);
+                    operations.Add(Operation.Removed, item, stackPosition);
+                    removedThing = item;
+                }
+                else if (DownItems is not null && DownItems.TryPeek(out var topStackItem))
+                {
+                    if (thing is ICumulative && topStackItem is ICumulative topCumulative)
+                    {
+                        var amountBeforeSplit = topCumulative.Amount;
+                        removedThing = topCumulative.Split(amount);
+
+                        if ((removedThing?.Amount ?? 0) == amountBeforeSplit)
+                        {
+                            DownItems.TryPop(out var item);
+                            operations.Add(Operation.Removed, item, stackPosition);
+                        }
+                        else
+                        {
+                            operations.Add(Operation.Updated, topCumulative);
+                        }
+                    }
+                    else
+                    {
+                        DownItems.TryPop(out var item);
+                        operations.Add(Operation.Removed, item, stackPosition);
+                        removedThing = item;
+                    }
+                }
+                else if (thing == Ground)
+                {
+                    Ground = null;
+                    operations.Add(Operation.Removed, thing, stackPosition);
+                    removedThing = thing;
+                }
+            }
+
+            SetCacheAsExpired();
+            TileOperationEvent.OnChanged(this, thing, operations);
+            return new(operations);
+        }
+
+        public override Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null)
+        {
+            var operations = AddThingToTile(thing);
+            if (operations.HasAnyOperation) thing.Location = Location;
+            if (thing is IContainer container) container.SetParent(null);
+
+            TileOperationEvent.OnChanged(this, thing, operations);
+            return new(operations);
+        }
+
+        #endregion
+
     }
 }

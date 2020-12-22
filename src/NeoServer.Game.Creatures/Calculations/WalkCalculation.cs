@@ -72,7 +72,6 @@ namespace NeoServer.Game.Creatures.Calculations
 
             long stepDuration = (long)Math.Ceiling(duration / 50) * 50;
 
-
             //todo
             //const Monster* monster = getMonster();
             //if (monster && monster->isTargetNearby() && !monster->isFleeing() && !monster->getMaster())

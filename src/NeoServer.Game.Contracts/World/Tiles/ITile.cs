@@ -5,7 +5,7 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.World
 {
-    public interface ITile
+    public interface ITile : IStore
     {
         Location Location { get; }
 
@@ -15,6 +15,8 @@ namespace NeoServer.Game.Contracts.World
         /// <returns></returns>
         public bool IsNextTo(ITile dest) => Location.IsNextTo(dest.Location);
         bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition);
+        byte GetCreatureStackPositionCount(IPlayer observer);
+
         IItem TopItemOnStack { get; }
         ICreature TopCreatureOnStack { get; }
 

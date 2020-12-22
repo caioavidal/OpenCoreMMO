@@ -38,7 +38,6 @@ namespace NeoServer.Game.Effects.Explosion
             {0, 3, 0}
         };
 
-
         public static byte[,] DiagonalWave4 = new byte[13, 13] {
         {0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 8, 8, 7, 8, 8, 0, 0, 0, 0},
@@ -58,7 +57,6 @@ namespace NeoServer.Game.Effects.Explosion
         public static IEnumerable<Coordinate> Create(byte [,] area)
         {
             var points = new List<Coordinate>();
-
 
             for (int row = 0; row < 13; row++)
             {

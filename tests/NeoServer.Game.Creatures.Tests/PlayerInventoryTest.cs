@@ -9,6 +9,11 @@ using System.Collections.Generic;
 using Xunit;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.World.Map.Tiles;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures.Tests
 {
@@ -137,7 +142,7 @@ namespace NeoServer.Game.Creatures.Tests
             });
             var result = sut.TryAddItemToSlot(slot, item);
 
-            Assert.False(result.Success);
+            Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.CannotDress, result.Error);
         }
 
@@ -154,13 +159,13 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.Same(twoHanded, sut[Slot.Left]);
             Assert.Null(sut[Slot.Right]);
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
 
             var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
             Assert.Same(twoHanded, sut[Slot.Left]);
 
             result = sut.TryAddItemToSlot(Slot.Right, shield);
-            Assert.False(result.Success);
+            Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.BothHandsNeedToBeFree, result.Error);
 
             Assert.Null(sut[Slot.Right]);
@@ -179,13 +184,13 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.Same(shield, sut[Slot.Right]);
             Assert.Null(sut[Slot.Left]);
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
 
             var twoHanded = ItemTestData.CreateWeaponItem(100, "axe", true);
             Assert.Same(shield, sut[Slot.Right]);
 
             result = sut.TryAddItemToSlot(Slot.Left, twoHanded);
-            Assert.False(result.Success);
+            Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.BothHandsNeedToBeFree, result.Error);
 
             Assert.Null(sut[Slot.Left]);
@@ -206,11 +211,11 @@ namespace NeoServer.Game.Creatures.Tests
             sut.TryAddItemToSlot(Slot.Legs, legs);
             var result = sut.TryAddItemToSlot(Slot.Feet, feet);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
 
             result = sut.TryAddItemToSlot(Slot.Body, body);
 
-            Assert.False(result.Success);
+            Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
 
         }
@@ -235,11 +240,11 @@ namespace NeoServer.Game.Creatures.Tests
 
             var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
 
             result = sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmoItem(105, 20));
 
-            Assert.False(result.Success);
+            Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
         }
 
@@ -264,7 +269,7 @@ namespace NeoServer.Game.Creatures.Tests
 
             var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
 
             result = sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmoItem(105, 20));
 
@@ -348,6 +353,66 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(sut[slot], item);
             Assert.Equal((sut[slot] as Cumulative).Amount, resultItem.Amount);
         }
+        [Fact]
+        public void AddItemToSlot_When_Item_Is_Cumulative_Raises_Event_When_Reduced()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
+            var result = sut.TryAddItemToSlot(Slot.Ammo, item);
+
+            var eventRaised = false;
+            var itemRemovedEventRaised = false;
+
+            item.OnReduced += (a, b) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (a, b, c, d) =>
+            itemRemovedEventRaised = true;
+
+            item.Throw();
+
+            Assert.True(eventRaised);
+            Assert.True(itemRemovedEventRaised);
+        }
+        [Fact]
+        public void AddItemToSlot_When_Swap_Item_Is_Cumulative_Raises_Event_When_Reduced()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var initialItem = ItemTestData.CreateAmmoItem(101, 1) as AmmoItem;
+            var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
+
+            sut.TryAddItemToSlot(Slot.Ammo, initialItem);
+            var result = sut.TryAddItemToSlot(Slot.Ammo, item);
+
+            var eventRaised = false;
+            var itemRemovedEventRaised = false;
+
+            item.OnReduced += (a, b) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (a, b, c, d) =>
+            itemRemovedEventRaised = true;
+            item.Throw();
+
+            Assert.True(eventRaised);
+            Assert.True(itemRemovedEventRaised);
+        }
+        [Fact]
+        public void TryAddItemToSlot_SwappedItem_Should_Not_Raise_Event_When_Reduced()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var initialItem = ItemTestData.CreateAmmoItem(101, 3) as AmmoItem;
+            var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
+
+            sut.TryAddItemToSlot(Slot.Ammo, initialItem);
+            var result = sut.TryAddItemToSlot(Slot.Ammo, item);
+
+            var itemRemovedEventRaised = false;
+
+            var swapped = (result.Value as AmmoItem);
+
+            sut.OnItemRemovedFromSlot += (a, b, c, d) => itemRemovedEventRaised = true;
+
+            swapped.Throw();
+
+            Assert.False(itemRemovedEventRaised);
+        }
 
         [Fact]
         public void AddItemToSlot_AddItem_When_Slot_Has_Cumulative_Item_And_Exceeds_Join_Item_And_Returns_Exceeding_Amount()
@@ -389,5 +454,164 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.Equal(Location.Inventory(slot), item.Location);
         }
+        [Fact]
+        public void SendTo_When_Send_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var item = ItemTestData.CreateWeaponItem(100, "sword");
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(sut[Slot.Left], item);
+            Assert.Null(tile.TopItemOnStack);
+        }
+        [Fact]
+        public void SendTo_When_Send_From_Tile_To_Inventory_Must_Swap_Item()
+        {
+            var dictionary = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+
+            var itemOnInventory = ItemTestData.CreateWeaponItem(200, "axe");
+            dictionary.Add(Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, (ushort)200));
+
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), dictionary);
+            var item = ItemTestData.CreateWeaponItem(100, "sword");
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(sut[Slot.Left], item);
+            Assert.Equal(itemOnInventory, tile.TopItemOnStack);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
+        {
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+            var item = ItemTestData.CreateAmmoItem(100, 20);
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 20, 0, (byte)Slot.Ammo);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(20, sut[Slot.Ammo].Amount);
+
+            Assert.Null(tile.TopItemOnStack);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Join_To_Inventory()
+        {
+            var itemOnInventory = ItemTestData.CreateAmmoItem(100, 51);
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                { Slot.Ammo, new Tuple<IPickupable, ushort>(itemOnInventory, 100) }
+            });
+
+            var item = ItemTestData.CreateAmmoItem(100, 100);
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 100, 0, (byte)Slot.Ammo);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
+            Assert.Equal(100, sut[Slot.Ammo].Amount);
+
+            Assert.Equal(51, tile.TopItemOnStack.Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Do_Nothing_When_Error()
+        {
+            var itemOnInventory = ItemTestData.CreateWeaponItem(100, "sword");
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                { Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 100) }
+            });
+
+            var item = ItemTestData.CreateThrowableDistanceItem(200, 100);
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 100, 0, (byte)Slot.Ammo);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal(itemOnInventory, sut[Slot.Left]);
+
+            Assert.Equal(item, tile.TopItemOnStack);
+            Assert.Equal(100, tile.TopItemOnStack.Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_To_Backpack_Move_Item()
+        {
+            var backpack = ItemTestData.CreateBackpack();
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                { Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
+            });
+
+            var item = ItemTestData.CreateAmmoItem(200, 100);
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 100, 0, (byte)Slot.Backpack);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(item, (sut[Slot.Backpack] as IContainer)[item.Location.ContainerSlot]);
+
+            Assert.Null(tile.TopItemOnStack);
+            Assert.Equal(100, (sut[Slot.Backpack] as IContainer)[item.Location.ContainerSlot].Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_From_Right_To_Tile_Must_Remove_From_Inventory_And_Add_To_Tile()
+        {
+            var item = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
+
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+                 {
+                { Slot.Right, new Tuple<IPickupable, ushort>(item,100) }
+            });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = sut.SendTo(tile, item, 1, (byte)Slot.Right, 0);
+
+            Assert.True(result.IsSuccess);
+            Assert.Null(sut[Slot.Right]);
+            Assert.Equal(item, tile.TopItemOnStack);
+        }
+        [Fact]
+        public void SendTo_When_Send_From_Container_To_Ammo_Must_Remove_From_Container_And_Add_To_Inventory()
+        {
+            var container = ItemTestData.CreateContainer(2);
+            var ammo = ItemTestData.CreateAmmoItem(100, 1);
+            container.AddThing(ammo);
+
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+            var result = container.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(2, container.FreeSlotsCount);
+            Assert.Equal(ammo, sut[Slot.Ammo]);
+            Assert.Equal(1, sut[Slot.Ammo].Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_From_Backpack_To_Ammo_Must_Remove_From_Backpack_And_Add_To_Inventory()
+        {
+            var backpack = ItemTestData.CreateBackpack();
+            var ammo = ItemTestData.CreateAmmoItem(100, 1);
+            backpack.AddThing(ammo);
+
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                {Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
+            });
+
+            var result = backpack.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(20, backpack.FreeSlotsCount);
+            Assert.Equal(ammo, sut[Slot.Ammo]);
+            Assert.Equal(1, sut[Slot.Ammo].Amount);
+        }
     }
 }
+

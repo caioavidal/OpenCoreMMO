@@ -52,7 +52,6 @@ namespace NeoServer.Loaders.Vocations
             return vocations;
         }
 
-
         public class SkillConverter : JsonConverter<Dictionary<byte, float>>
         {
             public override Dictionary<byte, float> ReadJson(JsonReader reader, Type objectType, [AllowNull] Dictionary<byte, float> existingValue, bool hasExistingValue, JsonSerializer serializer)

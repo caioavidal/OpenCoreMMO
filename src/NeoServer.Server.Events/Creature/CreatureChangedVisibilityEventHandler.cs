@@ -29,7 +29,6 @@ namespace NeoServer.Server.Events.Creature
                 {
                     if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
 
-
                     if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out byte stackPostion)) continue;
 
                     if (creature.IsInvisible)

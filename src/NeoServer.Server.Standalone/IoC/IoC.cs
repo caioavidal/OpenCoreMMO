@@ -69,12 +69,10 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<NeoServer.Game.World.Map.PathFinder>().As<IPathFinder>().SingleInstance();
 
-
             builder.Register((c, p) =>
             {
                 return new CreaturePathAccess(c.Resolve<IPathFinder>().Find, c.Resolve<IMap>().CanGoToDirection);
             }).SingleInstance();
-
 
             RegisterPacketHandlers(builder);
 
@@ -98,8 +96,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
-
-
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
@@ -132,7 +128,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(assembly);
 
         }
-
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
         {

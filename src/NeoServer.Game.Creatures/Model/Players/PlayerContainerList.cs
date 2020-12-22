@@ -144,32 +144,9 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            if (fromContainer.Id == toContainer.Id)
-            {
-                if (item is ICumulative)
-                {
-                    fromContainer.Container.MoveItem((byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot, amount);
-                    return;
-                }
-
-                fromContainer.Container.MoveItem((byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
-                return;
-            }
-
-            if (item is ICumulative)
-            {
-                if (!toContainer.Container.CanAddItem(item, (byte)toLocation.ContainerSlot).IsSuccess) return;
-             
-                var splitItem = fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot, amount) as ICumulative;
-                toContainer.Container.TryAddItem(splitItem, (byte)toLocation.ContainerSlot);
-            }
-            else
-            {
-                fromContainer.Container.RemoveItem((byte)fromLocation.ContainerSlot);
-                toContainer.Container.TryAddItem(item, (byte)toLocation.ContainerSlot);
-            }
-
-            if (item is IContainer container)
+            var result = player.MoveThing(fromContainer.Container, toContainer.Container, item, amount, (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
+            
+            if (result.IsSuccess && item is IContainer container)
             {
                 container.SetParent(toContainer.Container);
             }

@@ -44,7 +44,6 @@ namespace NeoServer.Server.Events
 
             if (creature is IMonster && creature.IsInvisible) return;
 
-
             if (creature is ICreature)
             {
                 creature.SetDirection(toDirection);

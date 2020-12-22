@@ -34,8 +34,6 @@ container.Resolve<Database>().Connect();
 
 var logger = container.Resolve<Logger>();
 
-
-
 RSA.LoadPem();
 
 //   ScriptCompiler.Compile();
@@ -62,7 +60,6 @@ scheduler.Start(cancellationToken);
 scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
 scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartCheckingItems));
 
-
 container.Resolve<EventSubscriber>().AttachEvents();
 
 container.Resolve<Game>().Open();
@@ -80,7 +77,6 @@ logger.Information($"Memory usage: {Math.Round((System.Diagnostics.Process.GetCu
 
 listeningTask.Wait(cancellationToken);
 
-
 static async Task StartListening(IContainer container, CancellationToken token)
 {
     container.Resolve<LoginListener>().BeginListening();
@@ -91,6 +87,5 @@ static async Task StartListening(IContainer container, CancellationToken token)
         await Task.Delay(TimeSpan.FromSeconds(1), token);
     }
 }
-
 
 

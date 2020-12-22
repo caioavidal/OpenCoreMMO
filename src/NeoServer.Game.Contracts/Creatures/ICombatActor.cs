@@ -47,7 +47,7 @@ namespace NeoServer.Game.Contracts.Creatures
         //bool Attack(ICombatActor enemy, ICombatAttack combatAttack);
         void Heal(ushort increasing);
         CombatDamage ReduceDamage(CombatDamage damage);
-        void SetAttackTarget(uint targetId);
+        void SetAttackTarget(ICreature target);
         int ShieldDefend(int attack);
         void StopAttack();
         void ResetHealthPoints();

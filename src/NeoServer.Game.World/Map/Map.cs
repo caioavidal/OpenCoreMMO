@@ -40,18 +40,29 @@ namespace NeoServer.Game.World.Map
             TileOperationEvent.OnTileChanged += OnTileChanged;
         }
 
-        public void OnTileChanged(ITile tile, ITileOperationResult result)
+        public void OnTileChanged(ITile tile, IThing thing, OperationResult<IThing> result)
         {
             if (!result.HasAnyOperation) return;
+            if (thing is ICreature)
+            {
+                return;
+            }
 
             foreach (var operation in result.Operations)
             {
                 switch (operation.Item2)
                 {
                     case Operation.Removed: 
-                        if (operation.Item1 is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced; break;
+                        if (operation.Item1 is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced;
+                        OnThingRemovedFromTile?.Invoke(operation.Item1, CylinderOperation.Removed(operation.Item1, operation.Item3));
+                        break;
+                    case Operation.Updated:
+                        OnThingUpdatedOnTile?.Invoke(operation.Item1, CylinderOperation.Updated(operation.Item1, operation.Item1.Amount));
+                        break;
                     case Operation.Added: 
-                        if(operation.Item1 is ICumulative c) c.OnReduced += OnItemReduced; break;
+                        if(operation.Item1 is ICumulative c) c.OnReduced += OnItemReduced;
+                        OnThingAddedToTile?.Invoke(operation.Item1, CylinderOperation.Added(operation.Item1));
+                        break;
                     default: break;
                 }
             }
@@ -91,29 +102,12 @@ namespace NeoServer.Game.World.Map
                 return false;
             }
 
-            if (thing is IItem item)
-            {
-                var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
-                if (result.Success is false) return false;
-
-                foreach (var operation in result.Value.Operations)
-                {
-                    switch (operation.Item2)
-                    {
-                        case Operation.Removed: OnThingRemovedFromTile?.Invoke(operation.Item1, cylinder); break;
-                        case Operation.Added: OnThingAddedToTile?.Invoke(operation.Item1, cylinder); break;
-                        case Operation.Updated: OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder); break;
-                        default: break;
-                    }
-                }
-            }
-
             if (thing is IWalkableCreature creature)
             {
                 SwapCreatureBetweenSectors(creature, toLocation);
 
                 var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
-                if (result.Success is false)
+                if (result.IsSuccess is false)
                 {
                     RollbackSwapCreatureBetweenSectors(creature, toLocation);
 
@@ -323,16 +317,7 @@ namespace NeoServer.Game.World.Map
         }
         public void RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1)
         {
-
-            var result = CylinderOperation.RemoveThing(thing, tile, amount, out var cylinder);
-            if (result.Success is false) return;
-
-            foreach (var operation in result.Value.Operations)
-            {
-                if (operation.Item2 == Operation.Removed) OnThingRemovedFromTile?.Invoke(operation.Item1, cylinder);
-                if (operation.Item2 == Operation.Updated) OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder);
-            }
-
+            if (tile.RemoveThing(thing, amount, 0, out var removedThing).IsSuccess is false) return;
             if (thing is IMoveableThing moveable) moveable.OnMoved();
         }
         public void OnItemReduced(ICumulative item, byte amount)
@@ -345,18 +330,8 @@ namespace NeoServer.Game.World.Map
         public void AddItem(IThing thing, IDynamicTile tile)
         {
             var result = CylinderOperation.AddThing(thing, tile, out ICylinder cylinder);
+            if (result.IsSuccess is false) return;
 
-            foreach (var operation in result.Value.Operations)
-            {
-                switch (operation.Item2)
-                {
-                    case Operation.Added:
-                        OnThingAddedToTile?.Invoke(operation.Item1, cylinder);
-                        break;
-                    case Operation.Updated: OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder); break;
-                    default: break;
-                }
-            }
             if (thing is IMoveableThing moveable) moveable.OnMoved();
         }
 
@@ -409,12 +384,6 @@ namespace NeoServer.Game.World.Map
             {
                 maxZ = 7;
             }
-
-            //if (location.Z != toLocation.Z) //if player changed floor, we have to increase the min and max z range
-            //{
-            //    minZ = Math.Max(minZ - 1, 0);
-            //    maxZ = Math.Max(maxZ + 1, 15);
-            //}
 
             var minX = (ushort)(location.X + -viewPortX);
             var minY = (ushort)(location.Y + -viewPortY);
@@ -524,7 +493,7 @@ namespace NeoServer.Game.World.Map
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
 
-                if (CylinderOperation.AddThing(thing, tile, out ICylinder cylinder).Success is false) return;
+                if (CylinderOperation.AddThing(thing, tile, out ICylinder cylinder).IsSuccess is false) return;
 
                 if (creature is IPlayer player)
                 {
@@ -598,7 +567,6 @@ namespace NeoServer.Game.World.Map
         }
     }
 
- 
 }
 
 

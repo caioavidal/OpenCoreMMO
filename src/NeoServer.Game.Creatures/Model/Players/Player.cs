@@ -24,6 +24,8 @@ using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Conditions;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Common;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -58,7 +60,6 @@ namespace NeoServer.Server.Model.Players
 
             KnownCreatures = new Dictionary<uint, long>();//todo
             VipList = new Dictionary<string, bool>(); //todo
-
 
             foreach (var skill in Skills.Values)
             {
@@ -156,49 +157,7 @@ namespace NeoServer.Server.Model.Players
             base.GainExperience(exp);
         }
 
-        public byte AccessLevel { get; set; } // TODO: implement.
-
         public bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
-
-        public Location LocationInFront
-        {
-            get
-            {
-                switch (Direction)
-                {
-                    case Direction.North:
-                        return new Location
-                        {
-                            X = Location.X,
-                            Y = (ushort)(Location.Y - 1),
-                            Z = Location.Z
-                        };
-                    case Direction.East:
-                        return new Location
-                        {
-                            X = (ushort)(Location.X + 1),
-                            Y = Location.Y,
-                            Z = Location.Z
-                        };
-                    case Direction.West:
-                        return new Location
-                        {
-                            X = (ushort)(Location.X - 1),
-                            Y = Location.Y,
-                            Z = Location.Z
-                        };
-                    case Direction.South:
-                        return new Location
-                        {
-                            X = Location.X,
-                            Y = (ushort)(Location.Y + 1),
-                            Z = Location.Z
-                        };
-                    default:
-                        return Location; // should not happen.
-                }
-            }
-        }
         public float DamageFactor => FightMode switch
         {
             FightMode.Attack => 1,
@@ -289,7 +248,6 @@ namespace NeoServer.Server.Model.Players
             base.OnMoved(fromTile, toTile);
         }
 
-
         public override void SetAsInFight()
         {
             if (IsPacified) return;
@@ -329,14 +287,13 @@ namespace NeoServer.Server.Model.Players
         {
             ChaseMode = mode;
             FollowCreature = mode == ChaseMode.Follow;
-            if (FollowCreature)
+            if (FollowCreature && AutoAttackTarget is not null)
             {
-                // StartFollowing(AutoAttackTargetId);
+                StartFollowing(AutoAttackTarget as IWalkableCreature, PathSearchParams);
                 return;
             }
 
             StopFollowing();
-
         }
 
         public void SetSecureMode(byte mode) => SecureMode = mode;
@@ -414,7 +371,7 @@ namespace NeoServer.Server.Model.Players
         public override IItem CreateItem(ushort itemId, byte amount)
         {
             var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.TryAddItem(item).IsSuccess)
+            if (!Inventory.BackpackSlot.AddThing(item).IsSuccess)
             {
                 var thing = item as IThing;
                 Tile.AddThing(thing);
@@ -481,15 +438,6 @@ namespace NeoServer.Server.Model.Players
             SoulPoints = SoulPoints + increasing >= MaxSoulPoints ? MaxSoulPoints : (byte)(SoulPoints + increasing);
             OnStatusChanged?.Invoke(this);
         }
-        public void HealMana(byte increasing)
-        {
-            if (increasing <= 0) return;
-
-            if (SoulPoints == MaxSoulPoints) return;
-
-            SoulPoints += increasing;
-            OnStatusChanged?.Invoke(this);
-        }
 
         public void Recover()
         {
@@ -546,9 +494,13 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-        public void OnHungry()
+        public void OnHungry() => Recovering = false;
+
+        public Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
         {
-            Recovering = false;
+            if (thing.Location.Type == LocationType.Ground && !Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
+
+            return source.SendTo(destination, thing, amount, fromPosition, toPosition);
         }
     }
 }

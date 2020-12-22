@@ -274,7 +274,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 StartFollowing(target.Creature, PathSearchParams);
             }
 
-            SetAttackTarget(target.Creature.CreatureId);
+            SetAttackTarget(target.Creature);
             UpdateLastTargetChance();
         }
 

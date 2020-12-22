@@ -21,7 +21,6 @@ namespace NeoServer.Game.Common.Conditions
 
         public Action OnEnd { private get; set; }
 
-
         public ConditionIcon Icons => isBuff ? ConditionIcon.PartyBuff : 0;
 
         public abstract ConditionType Type { get; }

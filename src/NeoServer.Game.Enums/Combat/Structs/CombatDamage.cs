@@ -28,7 +28,6 @@ namespace NeoServer.Game.Common.Combat.Structs
         /// </summary>
         public DamageType Type { get; }
 
-
         /// <summary>
         /// Sets a new damage
         /// </summary>

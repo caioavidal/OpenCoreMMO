@@ -8,5 +8,6 @@ namespace NeoServer.Game.Contracts.Items
         string Name { get; }
         string InspectionText => $"{Name}";
         string CloseInspectionText => InspectionText;
+        public byte Amount => 1;
     }
 }

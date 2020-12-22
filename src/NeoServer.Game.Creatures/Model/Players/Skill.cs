@@ -14,7 +14,6 @@ namespace NeoServer.Server.Model.Players
 
         public ushort Level { get; private set; }
 
-
         public double Count { get; private set; }
 
         public float Rate { get; }
@@ -24,7 +23,6 @@ namespace NeoServer.Server.Model.Players
         public double BaseIncrease => SkillsRates[Type].Item1;
 
         public double Percentage => CalculatePercentage(Count);
-
 
         //BaseIncrease and skill offset
         private IDictionary<SkillType, Tuple<double, double>> SkillsRates = new Dictionary<SkillType, Tuple<double, double>>()
@@ -60,7 +58,6 @@ namespace NeoServer.Server.Model.Players
 
         private double GetExpForLevel(int level) => ((50 * Math.Pow(level, 3)) / 3) - (100 * Math.Pow(level, 2)) + ((850 * level) / 3) - 200;
         private double GetPointsForLevel(int skillLevel, float vocationRate) => SkillsRates[Type].Item1 * Math.Pow(vocationRate, skillLevel - SkillsRates[Type].Item2);
-
 
         private double CalculatePercentage(double count, double nextLevelCount) => Math.Min(100, (count * 100) / nextLevelCount);
         private double CalculatePercentage(double count)
@@ -115,7 +112,6 @@ namespace NeoServer.Server.Model.Players
             if (Type ==  SkillType.Level) IncreaseLevel();
             else IncreaseSkillLevel();
         }
-     
 
         public void IncreaseLevel()
         {

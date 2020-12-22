@@ -262,7 +262,6 @@ namespace NeoServer.Networking
             SendMessage(encryptedMessage);
         }
 
-
         public void Disconnect(string text)
         {
             var message = new NetworkMessage();

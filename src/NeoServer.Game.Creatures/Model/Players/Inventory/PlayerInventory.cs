@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.World.Map.Tiles;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -144,7 +147,7 @@ namespace NeoServer.Server.Model.Players
                 return sum;
             }
         }
-    
+
         public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
         {
             removedItem = null;
@@ -159,6 +162,8 @@ namespace NeoServer.Server.Model.Players
             }
             else
             {
+                if (item is ICumulative c) c.ClearSubscribers();
+
                 Inventory.Remove(slot);
                 removedItem = item;
             }
@@ -166,7 +171,6 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-      
         public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
             bool canCarry = CanCarryItem(item, slot);
@@ -188,7 +192,7 @@ namespace NeoServer.Server.Model.Players
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                 {
-                    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item).Error);
+                    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).AddThing(item).Error);
                 }
                 else if (item is IPickupableContainer container)
                 {
@@ -216,6 +220,8 @@ namespace NeoServer.Server.Model.Players
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
                         }
                     }
+
+                    if (itemToSwap?.Item1 is ICumulative c) c.ClearSubscribers();
                 }
                 else
                 {
@@ -224,6 +230,10 @@ namespace NeoServer.Server.Model.Players
 
                 OnItemAddedToSlot?.Invoke(this, item, slot);
                 return itemToSwap == null ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
+            }
+            else
+            {
+                if (item is ICumulative cumulative) cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
             }
 
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
@@ -234,10 +244,24 @@ namespace NeoServer.Server.Model.Players
             return new Result<IPickupable>();
         }
 
+
+        private void OnItemReduced(ICumulative item, Slot slot, byte amount)
+        {
+            if (item.Amount == 0)
+            {
+                RemoveItemFromSlot(slot, amount, out var removedItem);
+                return;
+            }
+            OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
+        }
+
         private Tuple<IPickupable, ushort> SwapItem(Slot slot, IPickupable item)
         {
             var itemToSwap = Inventory[slot];
             Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+
+            if (item is ICumulative cumulative) cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+
             return itemToSwap;
         }
 
@@ -265,14 +289,15 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-        private bool CanCarryItem(IPickupable item, Slot slot)
+        private bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1)
         {
+            var itemWeight = item is ICumulative c ? c.CalculateWeight(amount) : item.Weight;
 
             if (NeedToSwap(item, slot))
             {
                 var itemOnSlot = Inventory[slot].Item1;
 
-                return (TotalWeight - itemOnSlot.Weight + item.Weight) <= Owner.TotalCapacity;
+                return (TotalWeight - itemOnSlot.Weight + itemWeight) <= Owner.TotalCapacity;
             }
 
             float weight = item.Weight;
@@ -337,5 +362,76 @@ namespace NeoServer.Server.Model.Players
             return new Result<bool>(true);
         }
 
+        #region Store Methods
+        public Result CanAddThing(IThing thing,byte amount = 1, byte? slot = null)
+        {
+            if (thing is not IPickupable item) return Result.NotPossible;
+            if (!CanCarryItem(item, (Slot)slot, amount)) return new Result(InvalidOperation.TooHeavy);
+            
+            return CanAddItemToSlot((Slot)slot, item).ResultValue;
+        }
+
+        public int PossibleAmountToAdd(IThing thing, byte? toPosition = null)
+        {
+            if (toPosition is null) return 0;
+            if (thing is not IItem item) return 0;
+
+            var slot = (Slot)toPosition;
+
+            if(slot == Slot.Backpack)
+            {
+                if (this[slot] is null) return 1;
+                if (this[slot] is IContainer container) return container.PossibleAmountToAdd(item);
+            }
+
+            if (slot != Slot.Left && slot != Slot.Ammo) return 1;
+
+            if (thing is not ICumulative) return 1;
+            if (thing is ICumulative c1 && this[slot] is IItem i  && c1.ClientId != i.ClientId) return 100;
+            if (thing is ICumulative && this[slot] is null) return 100;
+            if (thing is ICumulative cumulative) return 100 - this[slot].Amount;
+
+            return 0;
+        }
+
+        public bool CanRemoveItem(IThing item) => true;
+
+        public Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null)
+        {
+            if (thing is not IPickupable item) return Result<OperationResult<IThing>>.NotPossible;
+
+            var swappedItem = TryAddItemToSlot((Slot)position, item);
+
+            if (swappedItem.Value is null) return Result<OperationResult<IThing>>.Success;
+
+            return new(new OperationResult<IThing>(Operation.Removed, swappedItem.Value));
+        }
+
+        public Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
+        {
+            removedThing = null;
+            if (!RemoveItemFromSlot((Slot)fromPosition, amount, out var removedItem)) return Result<OperationResult<IThing>>.NotPossible;
+
+            removedThing = removedItem;
+            return new();
+        }
+        public Result ReceiveFrom(IStore source, IThing thing, byte? toPosition)
+        {
+            var canAdd = CanAddThing(thing, thing.Amount, toPosition);
+            if (!canAdd.IsSuccess) return canAdd;
+
+            var result = AddThing(thing, toPosition);
+            if (!(result.Value.HasAnyOperation)) return result.ResultValue;
+
+            foreach (var operation in result.Value.Operations)
+            {
+                if (operation.Item2 == Operation.Removed)
+                {
+                    source.ReceiveFrom(this, operation.Item1, null);
+                }
+            }
+            return result.ResultValue;
+        }
+        #endregion
     }
 }

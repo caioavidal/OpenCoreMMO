@@ -9,7 +9,7 @@ namespace NeoServer.Game.Contracts.Items.Types
     public delegate void DeleteContainer(IContainer container);
     public delegate void Move(IContainer container);
 
-    public interface IContainer : IItem, IInventoryItem
+    public interface IContainer : IItem, IInventoryItem, IStore
     {
         IItem this[int index] { get; }
         /// <summary>
@@ -36,13 +36,10 @@ namespace NeoServer.Game.Contracts.Items.Types
         event Move OnContainerMoved;
 
         bool GetContainerAt(byte index, out IContainer container);
-        Result MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
-        IItem RemoveItem(byte slotIndex);
-        IItem RemoveItem(byte slotIndex, byte amount);
+        //Result MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
         void SetParent(IThing thing);
-        Result TryAddItem(IItem item, byte? slot = null);
+        //Result TryAddItem(IItem item, byte? slot = null);
         void Clear();
-        Result CanAddItem(IItem item, byte? slot = null);
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
     }

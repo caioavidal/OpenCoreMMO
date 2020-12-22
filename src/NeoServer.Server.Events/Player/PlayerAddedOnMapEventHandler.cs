@@ -51,7 +51,6 @@ namespace NeoServer.Server.Events
                         continue;
                     }
 
-
                     SendPacketsToSpectator(spectatorPlayer, creature, connection, cylinderSpectator.ToStackPosition);
                 }           
                 connection.Send();

@@ -47,6 +47,5 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
             return drop.ToArray();
         }
 
-        
     }
 }

@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Players;
 using System.Collections.Generic;
 namespace NeoServer.Server.Model.Players
 {
-  
 
     public class PlayerModel : IPlayerModel
     {

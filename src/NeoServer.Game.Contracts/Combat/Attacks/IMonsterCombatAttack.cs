@@ -21,7 +21,6 @@ namespace NeoServer.Game.Contracts.Combat.Attacks
 
         CooldownTime Cooldown { get; }
 
-
         CombatAttackValue Translate();
     }
 }

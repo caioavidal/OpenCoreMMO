@@ -43,7 +43,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             MoveOpenedContainer?.Invoke(Id, container);
         }
 
-
         public void AttachActions(RemoveItemFromOpenedContainer removeItemAction, AddItemOnOpenedContainer addItemAction, UpdateItemOnOpenedContainer updateItemAction, MoveOpenedContainer moveOpenedContainer)
         {
             if (RemoveItem == null)

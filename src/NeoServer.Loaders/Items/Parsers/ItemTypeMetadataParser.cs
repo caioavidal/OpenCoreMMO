@@ -75,7 +75,6 @@ namespace NeoServer.Loaders.Items
 
                 var value = itemAttribute == Game.Common.ItemAttribute.Weight ? (int.Parse(attribute.Value) / 100).ToString() : attribute.Value; //todo place this code in another place
 
-
                 if (attribute.Attributes is null || !attribute.Attributes.Any())
                 {
                     if (value is JArray jArray)

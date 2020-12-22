@@ -33,7 +33,6 @@ namespace NeoServer.Game.Common.Location.Structs
             Z = z;
         }
 
-
         public ushort X { get; set; }
 
         public ushort Y { get; set; }
@@ -44,7 +43,6 @@ namespace NeoServer.Game.Common.Location.Structs
         public bool IsSurface => Z == 7;
 
         public int GetOffSetZ(Location location) => Z - location.Z;
-
 
         public LocationType Type
         {
@@ -234,7 +232,6 @@ namespace NeoServer.Game.Common.Location.Structs
                 if (locationDiff.Y > 0) directionY = Direction.South;
                 if (locationDiff.Y < 0) directionY = Direction.North;
 
-
                 if (directionX != Direction.None && directionY == Direction.None) return directionX;
                 if (directionY != Direction.None && directionX == Direction.None) return directionY;
 
@@ -276,7 +273,6 @@ namespace NeoServer.Game.Common.Location.Structs
         }
         public int GetMaxSqmDistance(Location dest) => Math.Max(GetSqmDistanceX(dest), GetSqmDistanceY(dest));
         public int GetSumSqmDistance(Location dest) => GetSqmDistanceX(dest) + GetSqmDistanceY(dest);
-
 
         public int GetSqmDistanceX(Location dest) => (ushort)Math.Abs(X - dest.X);
         public int GetSqmDistanceY(Location dest) => (ushort)Math.Abs(Y - dest.Y);
