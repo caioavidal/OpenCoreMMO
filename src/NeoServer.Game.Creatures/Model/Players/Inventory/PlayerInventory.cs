@@ -192,7 +192,7 @@ namespace NeoServer.Server.Model.Players
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                 {
-                    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).TryAddItem(item).Error);
+                    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).AddThing(item).Error);
                 }
                 else if (item is IPickupableContainer container)
                 {
@@ -388,7 +388,7 @@ namespace NeoServer.Server.Model.Players
 
             if (thing is not ICumulative) return 1;
             if (thing is ICumulative c1 && this[slot] is IItem i  && c1.ClientId != i.ClientId) return 100;
-
+            if (thing is ICumulative && this[slot] is null) return 100;
             if (thing is ICumulative cumulative) return 100 - this[slot].Amount;
 
             return 0;
@@ -396,24 +396,24 @@ namespace NeoServer.Server.Model.Players
 
         public bool CanRemoveItem(IThing item) => true;
 
-        public Result<IOperationResult> AddThing(IThing thing, byte? position = null)
+        public Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null)
         {
-            if (thing is not IPickupable item) return Result<IOperationResult>.NotPossible;
+            if (thing is not IPickupable item) return Result<OperationResult<IThing>>.NotPossible;
 
             var swappedItem = TryAddItemToSlot((Slot)position, item);
 
-            if (swappedItem.Value is null) return Result<IOperationResult>.Success;
+            if (swappedItem.Value is null) return Result<OperationResult<IThing>>.Success;
 
-            return new Result<IOperationResult>(new OperationResult(Operation.Removed, swappedItem.Value));
+            return new(new OperationResult<IThing>(Operation.Removed, swappedItem.Value));
         }
 
-        public Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
+        public Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
         {
             removedThing = null;
-            if (!RemoveItemFromSlot((Slot)fromPosition, amount, out var removedItem)) return Result<IOperationResult>.NotPossible;
+            if (!RemoveItemFromSlot((Slot)fromPosition, amount, out var removedItem)) return Result<OperationResult<IThing>>.NotPossible;
 
             removedThing = removedItem;
-            return new Result<IOperationResult>();
+            return new();
         }
         public Result ReceiveFrom(IStore source, IThing thing, byte? toPosition)
         {
@@ -421,7 +421,7 @@ namespace NeoServer.Server.Model.Players
             if (!canAdd.IsSuccess) return canAdd;
 
             var result = AddThing(thing, toPosition);
-            if (!(result.Value?.HasAnyOperation ?? false)) return result.ResultValue;
+            if (!(result.Value.HasAnyOperation)) return result.ResultValue;
 
             foreach (var operation in result.Value.Operations)
             {

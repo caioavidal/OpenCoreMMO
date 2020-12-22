@@ -371,7 +371,7 @@ namespace NeoServer.Server.Model.Players
         public override IItem CreateItem(ushort itemId, byte amount)
         {
             var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.TryAddItem(item).IsSuccess)
+            if (!Inventory.BackpackSlot.AddThing(item).IsSuccess)
             {
                 var thing = item as IThing;
                 Tile.AddThing(thing);
@@ -498,7 +498,7 @@ namespace NeoServer.Server.Model.Players
 
         public Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
         {
-            if (!Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
+            if (thing.Location.Type == LocationType.Ground && !Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
 
             return source.SendTo(destination, thing, amount, fromPosition, toPosition);
         }

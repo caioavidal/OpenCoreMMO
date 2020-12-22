@@ -40,7 +40,7 @@ namespace NeoServer.Game.World.Map
             TileOperationEvent.OnTileChanged += OnTileChanged;
         }
 
-        public void OnTileChanged(ITile tile, IThing thing, IOperationResult result)
+        public void OnTileChanged(ITile tile, IThing thing, OperationResult<IThing> result)
         {
             if (!result.HasAnyOperation) return;
             if (thing is ICreature) return;

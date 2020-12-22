@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Items.Tests
 {
@@ -14,7 +15,7 @@ namespace NeoServer.Game.Items.Tests
 
             return new Container(itemType, new Location(100, 100, 7));
         }
-        public static PickupableContainer CreatePickupableContainer(byte capacity = 6)
+        public static IPickupableContainer CreatePickupableContainer(byte capacity = 6)
         {
             var itemType = new ItemType();
             itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);

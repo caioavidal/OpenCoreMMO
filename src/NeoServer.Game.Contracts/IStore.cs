@@ -36,7 +36,7 @@ namespace NeoServer.Game.Contracts
         /// <param name="thing">thing to be stored</param>
         /// <param name="position">position where thing will be stored</param>
         /// <returns></returns>
-        Result<IOperationResult> AddThing(IThing thing, byte? position = null);
+        Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null);
         /// <summary>
         /// Removes thing from store
         /// </summary>
@@ -45,7 +45,7 @@ namespace NeoServer.Game.Contracts
         /// <param name="fromPosition">position where thing will be removed</param>
         /// <param name="removedThing">removed thing instance from store</param>
         /// <returns></returns>
-        Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing);
+        Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing);
 
         /// <summary>
         /// Sends thing to another store
@@ -61,6 +61,7 @@ namespace NeoServer.Game.Contracts
             if (!canAdd.IsSuccess) return canAdd;
 
             var possibleAmountToAdd = destination.PossibleAmountToAdd(thing,toPosition);
+            if (possibleAmountToAdd == 0) return new Result(InvalidOperation.NotEnoughRoom);
 
             IThing removedThing;
             if (thing is not ICumulative cumulative)
@@ -76,7 +77,12 @@ namespace NeoServer.Game.Contracts
                 RemoveThing(thing, amountToAdd, fromPosition, out removedThing);
             }
 
-            return destination.ReceiveFrom(this, removedThing, toPosition);
+            var result = destination.ReceiveFrom(this, removedThing, toPosition);
+
+            if (amount - possibleAmountToAdd > 0)
+                return SendTo(destination, thing, (byte)(amount - possibleAmountToAdd), fromPosition, toPosition);
+
+            return result;
         }
 
         /// <summary>

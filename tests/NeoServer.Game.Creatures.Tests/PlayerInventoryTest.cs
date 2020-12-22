@@ -13,6 +13,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures.Tests
 {
@@ -487,7 +488,22 @@ namespace NeoServer.Game.Creatures.Tests
         [Fact]
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
         {
-            var itemOnInventory = ItemTestData.CreateAmmoItem(100, 70);
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+            var item = ItemTestData.CreateAmmoItem(100, 20);
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 20, 0, (byte)Slot.Ammo);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(20, sut[Slot.Ammo].Amount);
+
+            Assert.Null(tile.TopItemOnStack);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Join_To_Inventory()
+        {
+            var itemOnInventory = ItemTestData.CreateAmmoItem(100, 51);
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
             {
                 { Slot.Ammo, new Tuple<IPickupable, ushort>(itemOnInventory, 100) }
@@ -496,12 +512,13 @@ namespace NeoServer.Game.Creatures.Tests
             var item = ItemTestData.CreateAmmoItem(100, 100);
             ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
-            var result = tile.SendTo(sut, tile.TopItemOnStack, amount:100, 0, (byte)Slot.Ammo);
+            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 100, 0, (byte)Slot.Ammo);
 
-            Assert.True(result.IsSuccess);
+            Assert.False(result.IsSuccess);
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
             Assert.Equal(100, sut[Slot.Ammo].Amount);
 
-            Assert.Equal(70, tile.TopItemOnStack.Amount);
+            Assert.Equal(51, tile.TopItemOnStack.Amount);
         }
         [Fact]
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Do_Nothing_When_Error()
@@ -542,6 +559,58 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.Null(tile.TopItemOnStack);
             Assert.Equal(100, (sut[Slot.Backpack] as IContainer)[item.Location.ContainerSlot].Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_From_Right_To_Tile_Must_Remove_From_Inventory_And_Add_To_Tile()
+        {
+            var item = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
+
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+                 {
+                { Slot.Right, new Tuple<IPickupable, ushort>(item,100) }
+            });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+
+            var result = sut.SendTo(tile, item, 1, (byte)Slot.Right, 0);
+
+            Assert.True(result.IsSuccess);
+            Assert.Null(sut[Slot.Right]);
+            Assert.Equal(item, tile.TopItemOnStack);
+        }
+        [Fact]
+        public void SendTo_When_Send_From_Container_To_Ammo_Must_Remove_From_Container_And_Add_To_Inventory()
+        {
+            var container = ItemTestData.CreateContainer(2);
+            var ammo = ItemTestData.CreateAmmoItem(100, 1);
+            container.AddThing(ammo);
+
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+            var result = container.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(2, container.FreeSlotsCount);
+            Assert.Equal(ammo, sut[Slot.Ammo]);
+            Assert.Equal(1, sut[Slot.Ammo].Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_From_Backpack_To_Ammo_Must_Remove_From_Backpack_And_Add_To_Inventory()
+        {
+            var backpack = ItemTestData.CreateBackpack();
+            var ammo = ItemTestData.CreateAmmoItem(100, 1);
+            backpack.AddThing(ammo);
+
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                {Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
+            });
+
+            var result = backpack.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(20, backpack.FreeSlotsCount);
+            Assert.Equal(ammo, sut[Slot.Ammo]);
+            Assert.Equal(1, sut[Slot.Ammo].Amount);
         }
     }
 }

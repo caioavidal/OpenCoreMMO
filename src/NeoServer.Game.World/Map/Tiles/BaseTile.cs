@@ -22,8 +22,8 @@ namespace NeoServer.Game.World.Map.Tiles
         public abstract Result CanAddThing(IThing thing, byte amount = 1, byte? slot = null);
         public abstract bool CanRemoveItem(IThing thing);
         public abstract int PossibleAmountToAdd(IThing thing, byte? toPosition = null);
-        public abstract Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing);
-        public abstract Result<IOperationResult> AddThing(IThing thing, byte? position = null);
+        public abstract Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing);
+        public abstract Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null);
 
         public abstract byte GetCreatureStackPositionCount(IPlayer observer);
         #endregion

@@ -82,12 +82,12 @@ namespace NeoServer.Game.World.Map.Tiles
         public override Result CanAddThing(IThing item, byte amount=1, byte? slot = null) => new Result(InvalidOperation.NotEnoughRoom);
         public override bool CanRemoveItem(IThing item) => false;
         public override int PossibleAmountToAdd(IThing item, byte? toPosition = null) => 0;
-        public override Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
+        public override Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
         {
             removedThing = null;
-            return Result<IOperationResult>.NotPossible;
+            return Result<OperationResult<IThing>>.NotPossible;
         }
-        public override Result<IOperationResult> AddThing(IThing thing, byte? position = null) => Result<IOperationResult>.NotPossible;
+        public override Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null) => Result<OperationResult<IThing>>.NotPossible;
         #endregion
 
     }

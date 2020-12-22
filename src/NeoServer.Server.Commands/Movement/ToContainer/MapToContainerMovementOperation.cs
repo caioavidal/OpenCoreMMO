@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
@@ -28,18 +27,7 @@ namespace NeoServer.Server.Commands.Movement
 
             var container = player.Containers[itemThrow.ToLocation.ContainerId];
 
-            if (container is null) return;
-
-            IItem itemToAdd = item;
-
-            if (item is ICumulative cumulative)
-            {
-                itemToAdd = cumulative.Clone(itemThrow.Count);
-            }
-
-            if (container.TryAddItem(itemToAdd).IsSuccess is false) return;
-
-            map.RemoveThing(item, fromTile, itemThrow.Count);
+            player.MoveThing(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

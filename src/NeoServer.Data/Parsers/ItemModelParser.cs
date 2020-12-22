@@ -49,11 +49,11 @@ namespace NeoServer.Data.Parsers
             if (item is IContainer childrenContainer)
             {
                 childrenContainer.SetParent(container);
-                container.TryAddItem(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer, itemFactory));
+                container.AddThing(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer, itemFactory));
             }
             else
             {
-                container.TryAddItem(item);
+                container.AddThing(item);
 
             }
             return BuildContainer(items, ++index, location, container, itemFactory);

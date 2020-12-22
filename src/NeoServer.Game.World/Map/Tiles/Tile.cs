@@ -254,9 +254,9 @@ namespace NeoServer.Game.World.Map.Tiles
             FloorDirection = ground.FloorDirection;
         }
 
-        private IOperationResult AddThingToTile(IThing thing)
+        private OperationResult<IThing> AddThingToTile(IThing thing)
         {
-            var operations = new OperationResult();
+            var operations = new OperationResult<IThing>();
 
             if (thing is IGround ground && Ground is null)
             {
@@ -474,10 +474,10 @@ namespace NeoServer.Game.World.Map.Tiles
             return possibleAmountToAdd;
         }
 
-        public override Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
+        public override Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
         {
             amount = amount == 0 ? 1 : amount;
-            var operations = new OperationResult();
+            var operations = new OperationResult<IThing>();
 
             removedThing = null;
             var itemToRemove = thing as IItem;
@@ -506,7 +506,7 @@ namespace NeoServer.Game.World.Map.Tiles
                         var amountBeforeSplit = topCumulative.Amount;
                         removedThing = topCumulative.Split(amount);
 
-                        if (removedThing.Amount == amountBeforeSplit)
+                        if ((removedThing?.Amount ?? 0) == amountBeforeSplit)
                         {
                             DownItems.TryPop(out var item);
                             operations.Add(Operation.Removed, item, stackPosition);
@@ -533,17 +533,17 @@ namespace NeoServer.Game.World.Map.Tiles
 
             SetCacheAsExpired();
             TileOperationEvent.OnChanged(this, thing, operations);
-            return new Result<IOperationResult>(operations);
+            return new(operations);
         }
 
-        public override Result<IOperationResult> AddThing(IThing thing, byte? position = null)
+        public override Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null)
         {
             var operations = AddThingToTile(thing);
             if (operations.HasAnyOperation) thing.Location = Location;
             if (thing is IContainer container) container.SetParent(null);
 
             TileOperationEvent.OnChanged(this, thing, operations);
-            return new Result<IOperationResult>(operations);
+            return new(operations);
         }
 
         #endregion
