@@ -224,6 +224,26 @@ namespace NeoServer.Game.World.Tests
             Assert.Equal(80, (dest.TopItemOnStack as ICumulative).Amount);
         }
         [Fact]
+        public void SendTo_When_Send_Cumulative_In_Equals_Part_Should_Remove_Item_And_Add_Item_On_Destination()
+        {
+            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+
+            var item = ItemTestData.CreateAmmoItem(100, 100);
+
+            sut.AddThing(item);
+
+            var result = sut.SendTo(dest, item, 50, 0, 0);
+
+            Assert.True(result.IsSuccess);
+
+            Assert.Equal(100, dest.TopItemOnStack.ClientId);
+            Assert.Equal(item, sut.TopItemOnStack);
+
+            Assert.Equal(50, (sut.TopItemOnStack as ICumulative).Amount);
+            Assert.Equal(50, (dest.TopItemOnStack as ICumulative).Amount);
+        }
+        [Fact]
         public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Join_Item_On_Destination()
         {
             ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);

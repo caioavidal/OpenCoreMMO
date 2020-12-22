@@ -17,7 +17,7 @@ namespace NeoServer.Server.Commands.Movement.ToInventory
         {
             if (player.Inventory[itemThrow.FromLocation.Slot] is not IPickupable item) return;
 
-            if (player.Inventory.CanAddItemToSlot(itemThrow.ToLocation.Slot, item).Success is false) return;
+            if (player.Inventory.CanAddItemToSlot(itemThrow.ToLocation.Slot, item).IsSuccess is false) return;
 
             if (player.Inventory.RemoveItemFromSlot(itemThrow.FromLocation.Slot, itemThrow.Count, out var removedItem) is false) return;
 

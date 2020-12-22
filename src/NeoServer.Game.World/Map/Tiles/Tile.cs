@@ -170,7 +170,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             return false;
         }
-        public override byte CreatureStackPositionCount(IPlayer observer)
+        public override byte GetCreatureStackPositionCount(IPlayer observer)
         {
             byte stackPosition = 0;
             foreach (var creature in Creatures)
@@ -185,10 +185,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (stackPosition >= 10) return false;
 
-            foreach (var creature in Creatures)
-            {
-                if (observer.CanSee(creature.Value) && ++stackPosition >= 10) return false;
-            }
+            stackPosition = (byte)(stackPosition + ((item.IsAlwaysOnTop || item is IGround) ? 0 : GetCreatureStackPositionCount(observer)));
 
             return false;
         }
@@ -259,7 +256,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private IOperationResult AddThingToTile(IThing thing)
         {
-            var operations = new TileOperationResult();
+            var operations = new OperationResult();
 
             if (thing is IGround ground && Ground is null)
             {
@@ -439,7 +436,7 @@ namespace NeoServer.Game.World.Map.Tiles
         }
 
         #region Store Methods
-        public override Result CanAddThing(IThing thing, byte? slot = null)
+        public override Result CanAddThing(IThing thing, byte amount = 1, byte? slot = null)
         {
             if (thing is null) return new Result(InvalidOperation.NotPossible);
             if (thing is IGround) return Result.Success;
@@ -460,7 +457,7 @@ namespace NeoServer.Game.World.Map.Tiles
             return true;
         }
 
-        public override int PossibleAmountToAdd(IThing thing)
+        public override int PossibleAmountToAdd(IThing thing, byte? toPosition = null)
         {
             if (thing is ICreature && HasCreature) return 0; //todo: must be configurable
 
@@ -480,7 +477,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public override Result<IOperationResult> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
         {
             amount = amount == 0 ? 1 : amount;
-            var operations = new TileOperationResult();
+            var operations = new OperationResult();
 
             removedThing = null;
             var itemToRemove = thing as IItem;
@@ -506,9 +503,10 @@ namespace NeoServer.Game.World.Map.Tiles
                 {
                     if (thing is ICumulative && topStackItem is ICumulative topCumulative)
                     {
+                        var amountBeforeSplit = topCumulative.Amount;
                         removedThing = topCumulative.Split(amount);
 
-                        if (topCumulative.Amount == 0)
+                        if (removedThing.Amount == amountBeforeSplit)
                         {
                             DownItems.TryPop(out var item);
                             operations.Add(Operation.Removed, item, stackPosition);

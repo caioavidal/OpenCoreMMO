@@ -102,7 +102,7 @@ namespace NeoServer.Game.World.Map
             if (thing is IItem item)
             {
                 var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
-                if (result.Success is false) return false;
+                if (result.IsSuccess is false) return false;
 
                 foreach (var operation in result.Value.Operations)
                 {
@@ -121,7 +121,7 @@ namespace NeoServer.Game.World.Map
                 SwapCreatureBetweenSectors(creature, toLocation);
 
                 var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
-                if (result.Success is false)
+                if (result.IsSuccess is false)
                 {
                     RollbackSwapCreatureBetweenSectors(creature, toLocation);
 
@@ -333,7 +333,7 @@ namespace NeoServer.Game.World.Map
         {
 
             var result = CylinderOperation.RemoveThing(thing, tile, amount, out var cylinder);
-            if (result.Success is false) return;
+            if (result.IsSuccess is false) return;
 
             foreach (var operation in result.Value.Operations)
             {
@@ -354,17 +354,17 @@ namespace NeoServer.Game.World.Map
         {
             var result = CylinderOperation.AddThing(thing, tile, out ICylinder cylinder);
 
-            foreach (var operation in result.Value.Operations)
-            {
-                switch (operation.Item2)
-                {
-                    case Operation.Added:
-                        OnThingAddedToTile?.Invoke(operation.Item1, cylinder);
-                        break;
-                    case Operation.Updated: OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder); break;
-                    default: break;
-                }
-            }
+            //foreach (var operation in result.Value.Operations)
+            //{
+            //    switch (operation.Item2)
+            //    {
+            //        case Operation.Added:
+            //            OnThingAddedToTile?.Invoke(operation.Item1, cylinder);
+            //            break;
+            //        case Operation.Updated: OnThingUpdatedOnTile?.Invoke(operation.Item1, cylinder); break;
+            //        default: break;
+            //    }
+            //}
             if (thing is IMoveableThing moveable) moveable.OnMoved();
         }
 
@@ -532,7 +532,7 @@ namespace NeoServer.Game.World.Map
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
 
-                if (CylinderOperation.AddThing(thing, tile, out ICylinder cylinder).Success is false) return;
+                if (CylinderOperation.AddThing(thing, tile, out ICylinder cylinder).IsSuccess is false) return;
 
                 if (creature is IPlayer player)
                 {

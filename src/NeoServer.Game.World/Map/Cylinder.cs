@@ -35,7 +35,7 @@ namespace NeoServer.Game.World.Map
             {
                 if (spectator is IPlayer player)
                 {
-                   stackPosition = (byte)(tile.CreatureStackPositionCount(player) + stackPosition);
+                   stackPosition = (byte)(tile.GetCreatureStackPositionCount(player) + stackPosition);
                 }
 
                 tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);
@@ -112,7 +112,7 @@ namespace NeoServer.Game.World.Map
         {
             var result = tile.AddThing(thing);
 
-            if (result.Success is false)
+            if (result.IsSuccess is false)
             {
                 cylinder = null;
                 return result;
@@ -148,11 +148,11 @@ namespace NeoServer.Game.World.Map
 
             var removeResult = RemoveThing(thing, fromTile, amount, out var removeCylinder);
 
-            if (removeResult.Success is false) return removeResult;
+            if (removeResult.IsSuccess is false) return removeResult;
 
             var result = AddThing(removeCylinder.Thing, toTile, out var addCylinder);
 
-            if (result.Success is false)
+            if (result.IsSuccess is false)
             {
                 cylinder = removeCylinder;
                 return result;

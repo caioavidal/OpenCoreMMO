@@ -82,6 +82,11 @@ namespace NeoServer.Game.Items.Items
         /// <param name="amount">Amount to be reduced</param>
         public ICumulative Split(byte amount)
         {
+            if (amount == Amount)
+            {
+                ClearSubscribers();
+                return this;
+            }
             if (TryReduce(amount) is false) return null;
             return Clone(amount);
         }

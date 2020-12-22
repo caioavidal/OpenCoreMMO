@@ -27,7 +27,7 @@ namespace NeoServer.Game.Contracts.World.Tiles
         byte[] GetRaw(IPlayer playerRequesting = null);
         ICreature GetTopVisibleCreature(ICreature creature);
         bool TryGetStackPositionOfItem(IItem item, out byte stackPosition);
-        byte CreatureStackPositionCount(IPlayer observer);
+        byte GetCreatureStackPositionCount(IPlayer observer);
 
         bool HasBlockPathFinding { get; }
     }

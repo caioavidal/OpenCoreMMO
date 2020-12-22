@@ -16,13 +16,13 @@ namespace NeoServer.Game.Contracts
         /// <param name="item"></param>
         /// <param name="slot"></param>
         /// <returns></returns>
-        Result CanAddThing(IThing item, byte? slot = null);
+        Result CanAddThing(IThing item,byte amount = 1, byte? slot = null);
         /// <summary>
         /// Gives amount that can be added to store
         /// </summary>
         /// <param name="thing"></param>
         /// <returns></returns>
-        int PossibleAmountToAdd(IThing thing);
+        int PossibleAmountToAdd(IThing thing, byte? toPosition = null);
         /// <summary>
         /// Checks if thing can be removed from store
         /// </summary>
@@ -57,10 +57,10 @@ namespace NeoServer.Game.Contracts
         /// <returns></returns>
         public Result SendTo(IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
         {
-            var canAdd = destination.CanAddThing(thing);
+            var canAdd = destination.CanAddThing(thing, amount, toPosition);
             if (!canAdd.IsSuccess) return canAdd;
 
-            var possibleAmountToAdd = destination.PossibleAmountToAdd(thing);
+            var possibleAmountToAdd = destination.PossibleAmountToAdd(thing,toPosition);
 
             IThing removedThing;
             if (thing is not ICumulative cumulative)

@@ -29,7 +29,9 @@
 
         public T Value { get; }
         public InvalidOperation Error { get; }
-        public readonly bool Success => Error == InvalidOperation.None;
+        public readonly bool IsSuccess => Error == InvalidOperation.None;
+        public static Result<T> Success => new Result<T>(InvalidOperation.None);
+
         public static Result<T> NotPossible => new Result<T>(InvalidOperation.NotPossible);
 
     }
