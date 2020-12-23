@@ -18,13 +18,17 @@ namespace NeoServer.Game.Items.Items.UsableItems
         {
         }
 
-        public void Use(ICreature creature)
+        public event Use OnUsed;
+
+        public void Use(IPlayer usedBy, ICreature creature)
         {
             if (creature is not IPlayer player) return;
 
             if (!player.Feed(this)) return;
 
             Reduce(1);
+
+            OnUsed?.Invoke(usedBy, creature, this);
         }
         public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type) == "food" && Cumulative.IsApplicable(type);
 

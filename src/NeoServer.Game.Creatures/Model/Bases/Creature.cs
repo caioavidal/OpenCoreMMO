@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Game.Creatures.Model
 {

@@ -17011,12 +17011,17 @@
              "value": "1300"
           },
           {
-             "key": "regeneration",
+             "key": "duration",
              "value": "10"
-          },{
+          },
+		  {
 		  "key":"type",
 		  "value": "food"
-		  }
+		  },
+		  {
+             "key": "sentence",
+             "value": "Munch."
+          },
        ]
     },
     {
@@ -69909,6 +69914,7 @@
              "key": "weaponType",
              "value": "shield"
           },
+		 
           {
              "key": "description",
              "value": "A sturdy shield made of old meat."

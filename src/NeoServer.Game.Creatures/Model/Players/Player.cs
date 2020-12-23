@@ -466,14 +466,14 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
 
-            item.Use(creature);
+            item.Use(this, creature);
             OnUsedItem?.Invoke(this, creature, item);
         }
         public bool Feed(IFood food)
         {
             if (food is null) return false;
 
-            var regenerationMs = (uint)food.Regeneration * 1000;
+            var regenerationMs = (uint)food.Duration * 1000;
             var maxRegenerationTime = (uint)1200 * 1000;
             if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
             {
