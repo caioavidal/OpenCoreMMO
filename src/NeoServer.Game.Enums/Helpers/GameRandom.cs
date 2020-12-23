@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace NeoServer.Server.Helpers
+namespace NeoServer.Game.Common.Helpers
 {
-    public class ServerRandom : Random
+    public class GameRandom : Random
     {
         public double Next(double mu = 0, double sigma = 1)
         {
@@ -17,13 +21,13 @@ namespace NeoServer.Server.Helpers
             return rand_normal;
         }
 
-        private static ServerRandom Instance;
+        private static GameRandom Instance;
 
-        public static ServerRandom Random
+        public static GameRandom Random
         {
             get
             {
-                if (Instance == null) Instance = new ServerRandom();
+                if (Instance == null) Instance = new GameRandom();
 
                 return Instance;
             }

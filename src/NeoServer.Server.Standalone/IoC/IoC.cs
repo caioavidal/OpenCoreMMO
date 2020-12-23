@@ -83,6 +83,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             RegisterServerEvents(builder);
             RegisterGameEvents(builder);
+            RegisterEventSubscribers(builder);
 
             RegisterIncomingPacketFactory(builder);
             RegisterPlayerFactory(builder);
@@ -131,14 +132,23 @@ namespace NeoServer.Server.Standalone.IoC
         private static void RegisterGameEvents(ContainerBuilder builder)
         {
             var interfaceType = typeof(IGameEventHandler);
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x=>x.GetTypes()).Where(x=>interfaceType.IsAssignableFrom(x));
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => interfaceType.IsAssignableFrom(x));
 
             foreach (var type in types)
             {
                 if (type == interfaceType) continue;
-                builder.RegisterType(type).SingleInstance().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+                builder.RegisterType(type).SingleInstance();
                 ;
             }
+        }
+        private static void RegisterEventSubscribers(ContainerBuilder builder)
+        {
+            var interfaceType = typeof(ICreatureEventSubscriber);
+            var types = AppDomain.CurrentDomain.GetAssemblies();
+
+
+            builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
+
         }
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)

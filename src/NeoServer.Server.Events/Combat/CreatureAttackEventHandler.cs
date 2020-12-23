@@ -7,6 +7,7 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Helpers;
 using System.Linq;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Server.Events.Combat
 {
@@ -54,7 +55,7 @@ namespace NeoServer.Server.Events.Combat
             Location destLocation;
             do
             {
-                index = ServerRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
+                index = GameRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
                 destLocation = victim.Location.Neighbours[index];
             } while (destLocation == creature.Location);
 

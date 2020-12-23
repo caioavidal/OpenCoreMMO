@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Server.Helpers;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.World.Map
 {
@@ -132,7 +133,7 @@ namespace NeoServer.Game.World.Map
 
             if (canGoIndex > 0)
             {
-                var randonIndex = ServerRandom.Random.Next(minValue: 0, maxValue: canGoIndex);
+                var randonIndex = GameRandom.Random.Next(minValue: 0, maxValue: canGoIndex);
                 directions = new Direction[] { canGoToDirections[randonIndex] };
                 return true;
             }

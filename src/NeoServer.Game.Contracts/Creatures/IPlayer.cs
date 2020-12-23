@@ -54,6 +54,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         event LookAt OnLookedAt;
         event PlayerGainSkillPoint OnGainedSkillPoint;
         event UseItem OnUsedItem;
+        event ReduceMana OnStatusChanged;
+        event PlayerLevelAdvance OnLevelAdvanced;
 
         IInventory Inventory { get; }
         ushort Mana { get; }

@@ -26,6 +26,7 @@ using NeoServer.Game.Common.Conditions;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -320,7 +321,7 @@ namespace NeoServer.Server.Model.Players
             {
                 var min = ArmorRating / 2;
                 var max = (ArmorRating / 2) * 2 - 1;
-                damage -= (ushort)ServerRandom.Random.NextInRange(min, max);
+                damage -= (ushort)GameRandom.Random.NextInRange(min, max);
             }
             else if (ArmorRating > 0)
             {
