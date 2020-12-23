@@ -40,6 +40,7 @@ namespace NeoServer.Server.Commands.Player
             else if (useItemPacket.FromLocation.Type == LocationType.Container)
             {
                 if (player.Containers[useItemPacket.FromLocation.ContainerId][useItemPacket.FromLocation.ContainerSlot] is not IThing thing) return;
+                
                 itemToUse = thing;
             }
 

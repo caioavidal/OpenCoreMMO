@@ -81,5 +81,6 @@ namespace NeoServer.Game.Model.Tests.Structs
             Assert.Equal(id, location.ContainerId);
             Assert.Equal(slot, location.ContainerSlot);
         }
+     
     }
 }

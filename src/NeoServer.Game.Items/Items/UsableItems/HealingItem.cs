@@ -19,11 +19,13 @@ namespace NeoServer.Game.Items.Items.UsableItems
         public ushort Min => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Min) ?? 0;
         public ushort Max => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Max) ?? 0;
         public string Type => Metadata.Attributes.GetAttribute(ItemAttribute.Healing);
-        public string Sentence => Metadata.Attributes.GetAttribute(ItemAttribute.Sentence);
+      
+
+        public event Use OnUsed;
 
         public static new bool IsApplicable(IItemType type) => (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && Cumulative.IsApplicable(type) && UseableOnItem.IsApplicable(type);
 
-        public void Use(ICreature creature)
+        public void Use(IPlayer usedBy, ICreature creature)
         {
             if (creature is not ICombatActor actor) return;
             if (Max == 0) return;
@@ -39,12 +41,9 @@ namespace NeoServer.Game.Items.Items.UsableItems
                 player.HealMana(value);
             }
 
-            if (!string.IsNullOrWhiteSpace(Sentence))
-            {
-                creature.Say(Sentence, Common.Talks.TalkType.MonsterSay);
-            }
-
             Reduce();
+
+            OnUsed?.Invoke(usedBy, creature, this);
         }
     }
 }

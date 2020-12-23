@@ -9,5 +9,7 @@ namespace NeoServer.Game.Contracts.Items
         string InspectionText => $"{Name}";
         string CloseInspectionText => InspectionText;
         public byte Amount => 1;
+       // IStore StoredIn { get; protected set; }
+      //  public void SetStoredPlace(IStore store) => StoredIn = store;
     }
 }

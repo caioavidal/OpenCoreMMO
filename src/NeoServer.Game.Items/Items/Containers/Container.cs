@@ -20,7 +20,7 @@ namespace NeoServer.Game.Items.Items
         public event Move OnContainerMoved;
         public byte SlotsUsed { get; private set; }
         public bool IsFull => SlotsUsed >= Capacity;
-
+        public byte? Id { get; private set; }
         public IThing Parent { get; private set; }
         public bool HasParent => Parent != null;
         public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Capacity);
@@ -72,6 +72,15 @@ namespace NeoServer.Game.Items.Items
             }
 
             return false;
+        }
+        public void UpdateId(byte id)
+        {
+            Id = id;
+            UpdateItemsLocation(id);
+        }
+        public void RemoveId()
+        {
+            Id = null;
         }
 
         private Result AddItem(IItem item, byte slot)
@@ -145,11 +154,7 @@ namespace NeoServer.Game.Items.Items
                 container.SetParent(this);
             }
 
-            var index = 0;
-            foreach (var i in Items)
-            {
-                if (i is IPickupable pickupable) pickupable.SetNewLocation(Location.Container(0, (byte)index++));
-            }
+            UpdateItemsLocation();
 
             if (item is ICumulative cumulative)
             {
@@ -159,6 +164,18 @@ namespace NeoServer.Game.Items.Items
             OnItemAdded?.Invoke(item);
             return Result.Success;
         }
+
+        private void UpdateItemsLocation(byte? containerId = null)
+        {
+            var index = 0;
+            foreach (var i in Items)
+            {
+                containerId = containerId ?? Id ?? 0;
+                var newLocation = Location.Container(containerId.Value, (byte)index++);
+                if (i is IPickupable pickupable) pickupable.SetNewLocation(newLocation);
+            }
+        }
+
         public void OnItemReduced(ICumulative item, byte amount)
         {
             if (item.Amount == 0) RemoveItem((byte)item.Location.ContainerSlot);
@@ -208,6 +225,8 @@ namespace NeoServer.Game.Items.Items
             }
 
             SlotsUsed--;
+
+            UpdateItemsLocation();
 
             OnItemRemoved?.Invoke(slotIndex, item);
             return item;

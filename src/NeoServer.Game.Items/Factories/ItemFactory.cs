@@ -9,16 +9,28 @@ using System;
 using System.Collections.Generic;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.UsableItems;
+using NeoServer.Game.Items.Events;
+using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.Items
 {
     public class ItemFactory : IItemFactory, IFactory
     {
         public event CreateItem OnItemCreated;
+        private readonly ItemUsedEventHandler itemUsedEventHandler;
+
+        public ItemFactory(ItemUsedEventHandler itemUsedEventHandler)
+        {
+            this.itemUsedEventHandler = itemUsedEventHandler;
+        }
 
         public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
             var createdItem = CreateItem(typeId, location, attributes);
+            if(createdItem is IConsumable consumable)
+            {
+                consumable.OnUsed += (usedBy, creature, item) => itemUsedEventHandler.Execute(this, usedBy, creature, item);
+            }
             return createdItem;
         }
 

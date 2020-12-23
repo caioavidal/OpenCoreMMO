@@ -85,7 +85,7 @@ namespace NeoServer.Game.Common.Location.Structs
 
        // public byte Container => Convert.ToByte(Y - 0x40);
         public byte ContainerId => Convert.ToByte(Y & 0x0F);
-
+    
         public sbyte ContainerSlot
         {
             get

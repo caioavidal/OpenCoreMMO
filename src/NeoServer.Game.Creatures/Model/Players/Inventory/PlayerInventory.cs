@@ -430,6 +430,9 @@ namespace NeoServer.Server.Model.Players
                     source.ReceiveFrom(this, operation.Item1, null);
                 }
             }
+
+           // if (result.IsSuccess) thing.SetStoredPlace(this);
+
             return result.ResultValue;
         }
         #endregion

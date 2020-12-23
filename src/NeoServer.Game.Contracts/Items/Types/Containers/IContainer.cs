@@ -40,6 +40,8 @@ namespace NeoServer.Game.Contracts.Items.Types
         void SetParent(IThing thing);
         //Result TryAddItem(IItem item, byte? slot = null);
         void Clear();
+        void UpdateId(byte id);
+        void RemoveId();
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
     }

@@ -36,6 +36,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.World.Map.Operations;
 using NeoServer.Data.Repositories;
 using NeoServer.Loaders.Vocations;
+using System.Linq;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -80,7 +81,8 @@ namespace NeoServer.Server.Standalone.IoC
             //commands
             builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
 
-            RegisterEvents(builder);
+            RegisterServerEvents(builder);
+            RegisterGameEvents(builder);
 
             RegisterIncomingPacketFactory(builder);
             RegisterPlayerFactory(builder);
@@ -121,12 +123,22 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(assemblies).SingleInstance();
         }
 
-        private static void RegisterEvents(ContainerBuilder builder)
+        private static void RegisterServerEvents(ContainerBuilder builder)
         {
             var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
-
             builder.RegisterAssemblyTypes(assembly);
+        }
+        private static void RegisterGameEvents(ContainerBuilder builder)
+        {
+            var interfaceType = typeof(IGameEventHandler);
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x=>x.GetTypes()).Where(x=>interfaceType.IsAssignableFrom(x));
 
+            foreach (var type in types)
+            {
+                if (type == interfaceType) continue;
+                builder.RegisterType(type).SingleInstance().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+                ;
+            }
         }
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)

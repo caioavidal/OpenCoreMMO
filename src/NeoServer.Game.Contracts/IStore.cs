@@ -97,7 +97,10 @@ namespace NeoServer.Game.Contracts
             var canAdd = CanAddThing(thing);
             if (!canAdd.IsSuccess) return canAdd;
 
-            return AddThing(thing, toPosition).ResultValue;
+            var result = AddThing(thing, toPosition);
+          //  if (result.IsSuccess) thing.SetStoredPlace(this);
+
+            return result.ResultValue;
         }
 
     }
