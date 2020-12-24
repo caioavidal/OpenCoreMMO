@@ -13,9 +13,10 @@ namespace NeoServer.Server.Model.Players
     public class PlayerModel : IPlayerModel
     {
         public int Id { get; set; }
+        public int AccountId { get; set; }
         public string CharacterName { get; set; }
 
-        public IAccountModel Account { get; set; }
+        public AccountModel Account { get; set; }
         public ChaseMode ChaseMode { get; set; }
         public float Capacity { get; set; }
         public ushort Level { get; set; }

@@ -21,6 +21,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server;
+using NeoServer.Data.Model;
+using NeoServer.Server.Model.Players;
 
 Console.Title = "OpenCoreMMO Server";
 
@@ -35,31 +37,33 @@ container.Resolve<Database>().Connect();
 
 var context = container.Resolve<NeoContext>();
 
-var blog = new Blog
+var account = new AccountModel
 {
-    BlogId = 0,
-    Url = "0"
+    Id = 0,
+    AccountName = "Felipe",
+    Email = "felipe@teste@gmail.com",
+    Password = "teste",
+    PremiumTime = 1
 };
 
-var post = new Post
+var player = new PlayerModel
 {
-    BlogId = 0,
-    Conteudo = "post 0 content",
-    PostId = 0,
-    Titulo = "post 0 title"
+    Id = 0,
+    CharacterName = "Felipe Muniz",
+    Level = 1
 };
 
-context.Blogs.Add(blog);
+context.Accounts.Add(account);
 
 context.SaveChanges();
 
-var blogs = context.Blogs.AsQueryable().ToList();
+var accounts = context.Accounts.AsQueryable().ToList();
 
-context.Posts.Add(post);
+context.Player.Add(player);
 
 context.SaveChanges();
 
-var posts = context.Posts.AsQueryable().ToList();
+var players = context.Player.AsQueryable().ToList();
 
 var logger = container.Resolve<Logger>();
 
