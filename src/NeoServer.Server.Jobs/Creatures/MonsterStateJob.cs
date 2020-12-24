@@ -1,13 +1,12 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Server.Helpers;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Server.Jobs.Creatures
 {
     public class MonsterStateJob
     {
-        private const int INTERVAL = 1000;
-
         public static void Execute(IMonster monster)
         {
             if (monster.IsDead) return;
@@ -25,7 +24,7 @@ namespace NeoServer.Server.Jobs.Creatures
 
                 if (monster.Metadata.TargetChance.Interval == 0) return;
 
-                if (monster.Attacking && monster.Metadata.TargetChance.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100)) return;
+                if (monster.Attacking && monster.Metadata.TargetChance.Chance < GameRandom.Random.Next(minValue: 1, maxValue: 100)) return;
 
                 monster.SelectTargetToAttack();
             }

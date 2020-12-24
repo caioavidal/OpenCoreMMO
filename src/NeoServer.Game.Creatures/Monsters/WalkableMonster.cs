@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Enums;
@@ -14,7 +15,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
         private Direction GetRandomStep()
         {
-            int randomIndex = ServerRandom.Random.Next(minValue: 0, maxValue: 4);
+            int randomIndex = GameRandom.Random.Next(minValue: 0, maxValue: 4);
 
             var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
 
@@ -56,7 +57,7 @@ namespace NeoServer.Game.Creatures.Monsters
             if (!Attacking) return;
 
             if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
-            Cooldowns.Start(CooldownType.MoveAroundEnemy, ServerRandom.Random.Next(minValue: 3000, maxValue: 5000));
+            Cooldowns.Start(CooldownType.MoveAroundEnemy, GameRandom.Random.Next(minValue: 3000, maxValue: 5000));
 
             var direction = GetRandomStep();
             if (direction == Direction.None) return;

@@ -11,26 +11,33 @@ using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Events;
 using NeoServer.Game.Contracts.Items.Types;
+using System.Linq;
 
 namespace NeoServer.Game.Items
 {
     public class ItemFactory : IItemFactory, IFactory
     {
         public event CreateItem OnItemCreated;
-        private readonly ItemUsedEventHandler itemUsedEventHandler;
-
-        public ItemFactory(ItemUsedEventHandler itemUsedEventHandler)
+        public ItemFactory()
         {
-            this.itemUsedEventHandler = itemUsedEventHandler;
         }
+
+        public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
 
         public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
             var createdItem = CreateItem(typeId, location, attributes);
-            if(createdItem is IConsumable consumable)
+
+            foreach (var gameSubscriber in ItemEventSubscribers.Where(x => x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
             {
-                consumable.OnUsed += (usedBy, creature, item) => itemUsedEventHandler.Execute(this, usedBy, creature, item);
+                gameSubscriber.Subscribe(createdItem);
             }
+
+            foreach (var subscriber in ItemEventSubscribers.Where(x => !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
+            {
+                subscriber.Subscribe(createdItem);
+            }
+
             return createdItem;
         }
 

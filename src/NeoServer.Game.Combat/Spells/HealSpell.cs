@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using NeoServer.Game.Common;
 using NeoServer.Server.Helpers;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Creatures.Spells
 {
@@ -27,7 +28,7 @@ namespace NeoServer.Game.Creatures.Spells
         }
         public override void OnCast(ICombatActor actor)
         {
-            var hpToIncrease = ServerRandom.Random.NextInRange(Min, Max);
+            var hpToIncrease = GameRandom.Random.NextInRange(Min, Max);
             actor.Heal((ushort)hpToIncrease);
         }
         public override void OnEnd(ICombatActor actor)

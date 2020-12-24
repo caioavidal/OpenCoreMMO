@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Combat;
-using NeoServer.Game.Contracts.Combat;
+﻿using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
@@ -8,13 +7,14 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
-using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Creatures.Model.Monsters.Loots;
 using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Combat;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
@@ -81,7 +81,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override int ShieldDefend(int attack)
         {
-            attack -= (ushort)ServerRandom.Random.NextInRange((Defense / 2), Defense);
+            attack -= (ushort)GameRandom.Random.NextInRange((Defense / 2), Defense);
             return attack;
         }
 
@@ -95,7 +95,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (ArmorRating > 3)
             {
-                attack -= (ushort)ServerRandom.Random.NextInRange(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
+                attack -= (ushort)GameRandom.Random.NextInRange(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
             }
             else if (ArmorRating > 0)
             {
@@ -318,9 +318,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (!Cooldowns.Expired(CooldownType.Yell)) return;
             Cooldowns.Start(CooldownType.Yell, Metadata.VoiceConfig.Interval);
 
-            if (!Metadata.Voices.Any() || Metadata.VoiceConfig.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100)) return;
+            if (!Metadata.Voices.Any() || Metadata.VoiceConfig.Chance < GameRandom.Random.Next(minValue: 1, maxValue: 100)) return;
 
-            var voiceIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Metadata.Voices.Length - 1);
+            var voiceIndex = GameRandom.Random.Next(minValue: 0, maxValue: Metadata.Voices.Length - 1);
 
             Say(Metadata.Voices[voiceIndex], TalkType.MonsterYell);
         }
@@ -356,10 +356,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             Defending = true;
 
-            var defenseIndex = ServerRandom.Random.Next(minValue: 0, maxValue: Defenses.Length);
+            var defenseIndex = GameRandom.Random.Next(minValue: 0, maxValue: Defenses.Length);
             var defense = Defenses[defenseIndex];
 
-            if (defense.Chance < ServerRandom.Random.Next(minValue: 1, maxValue: 100)) return defense.Interval; //can defend but lost his chance
+            if (defense.Chance < GameRandom.Random.Next(minValue: 1, maxValue: 100)) return defense.Interval; //can defend but lost his chance
 
             defense.Defende(this);
 
@@ -380,7 +380,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             {
                 if (!attack.Cooldown.Expired) continue;
 
-                if (attack.Chance < ServerRandom.Random.Next(minValue: 0, maxValue: 100))
+                if (attack.Chance < GameRandom.Random.Next(minValue: 0, maxValue: 100))
                     continue;
 
                 if (attack.CombatAttack is null) Console.WriteLine($"Combat attack not found for monster: {Name}");

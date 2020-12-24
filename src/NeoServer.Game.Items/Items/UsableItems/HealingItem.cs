@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -30,7 +31,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
             if (creature is not ICombatActor actor) return;
             if (Max == 0) return;
 
-            var value = (ushort)ServerRandom.Random.Next(minValue: Min, maxValue: Max);
+            var value = (ushort)GameRandom.Random.Next(minValue: Min, maxValue: Max);
 
             if (Type.Equals("hp", StringComparison.InvariantCultureIgnoreCase))
             {

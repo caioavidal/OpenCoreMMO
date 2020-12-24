@@ -56,6 +56,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event Say OnSay;
         event RemoveCondition OnRemovedCondition;
         event ChangeOutfit OnChangedOutfit;
+        event AddCondition OnAddedCondition;
 
         void AddCondition(ICondition condition);
         bool CanSee(Contracts.Creatures.ICreature otherCreature);

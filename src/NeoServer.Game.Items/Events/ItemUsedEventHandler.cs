@@ -16,18 +16,20 @@ namespace NeoServer.Game.Items.Events
     public class ItemUsedEventHandler: IGameEventHandler
     {
         private readonly IMap map;
-        public ItemUsedEventHandler(IMap map)
+        private readonly IItemFactory itemFactory;
+        public ItemUsedEventHandler(IMap map, IItemFactory itemFactory)
         {
             this.map = map;
+            this.itemFactory = itemFactory;
         }
 
-        public void Execute(IItemFactory itemFactory, IPlayer usedBy, ICreature creature, IItem item)
+        public void Execute(IPlayer usedBy, ICreature creature, IItem item)
         {
-            Transform(itemFactory, usedBy, creature, item);
+            Transform(usedBy, creature, item);
             Say(creature, item);
         }
 
-        private void Transform(IItemFactory itemFactory, IPlayer usedBy, ICreature creature, IItem item)
+        private void Transform(IPlayer usedBy, ICreature creature, IItem item)
         {
             if (item?.TransformTo == 0) return;
             var createdItem = itemFactory.Create(item.TransformTo, creature.Location, null);

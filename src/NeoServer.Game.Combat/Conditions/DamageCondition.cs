@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Creatures.Structs;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Helpers;
@@ -84,7 +85,7 @@ namespace NeoServer.Game.Common.Conditions
                 DamageQueue = new Queue<ushort>();
             }
 
-            int amount = (ushort)ServerRandom.Random.Next(minValue: MinDamage, maxValue: MaxDamage);
+            int amount = (ushort)GameRandom.Random.Next(minValue: MinDamage, maxValue: MaxDamage);
             var start = GetStartDamage(MaxDamage, amount);
 
             DamageQueue.Clear();

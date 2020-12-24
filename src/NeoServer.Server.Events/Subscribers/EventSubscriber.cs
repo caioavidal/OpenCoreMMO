@@ -18,7 +18,7 @@ namespace NeoServer.Server.Events
             this.itemFactory = itemFactory;   
         }
 
-        public void AttachEvents()
+        public virtual void AttachEvents()
         {
             map.OnCreatureAddedOnMap += (creature, cylinder) => container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
             map.OnThingRemovedFromTile += container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
