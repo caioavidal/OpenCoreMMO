@@ -1,11 +1,7 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using NeoServer.Game.Common;
-using NeoServer.Server.Helpers;
 using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Creatures.Spells

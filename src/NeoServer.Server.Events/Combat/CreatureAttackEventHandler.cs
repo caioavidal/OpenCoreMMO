@@ -5,7 +5,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Helpers;
 using System.Linq;
 using NeoServer.Game.Common.Helpers;
 

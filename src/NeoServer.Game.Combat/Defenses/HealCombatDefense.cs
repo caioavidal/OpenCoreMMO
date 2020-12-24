@@ -3,10 +3,6 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Spells;
-using NeoServer.Server.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Contracts.Combat.Defenses
 {

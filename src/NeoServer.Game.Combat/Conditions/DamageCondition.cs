@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
 

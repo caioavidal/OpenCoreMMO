@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace NeoServer.Server.Helpers
-{
+
     public class RandomIdGenerator
     {
         private static Random _random = new Random();
@@ -14,4 +13,4 @@ namespace NeoServer.Server.Helpers
             }
         }
     }
-}
+

@@ -3,9 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Server.Helpers;
 using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.World.Map
