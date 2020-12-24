@@ -37,6 +37,7 @@ using NeoServer.Game.World.Map.Operations;
 using NeoServer.Data.Repositories;
 using NeoServer.Loaders.Vocations;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -101,7 +102,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<VocationLoader>().SingleInstance();
 
             //factories
-            builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
+            builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
             builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
 
             builder.RegisterType<PlayerFactory>().As<IPlayerFactory>().SingleInstance();
@@ -143,12 +144,9 @@ namespace NeoServer.Server.Standalone.IoC
         }
         private static void RegisterEventSubscribers(ContainerBuilder builder)
         {
-            var interfaceType = typeof(ICreatureEventSubscriber);
             var types = AppDomain.CurrentDomain.GetAssemblies();
-
-
             builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
-
+            builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
         }
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
