@@ -7,12 +7,9 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
-using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts;
 
 namespace NeoServer.Game.Creatures.Model
 {

@@ -11,7 +11,6 @@ namespace NeoServer.Game.World
 {
     public class World
     {
-        //public bool HasLoaded(int x, int y, byte z) => tiles.Any();
         public int LoadedTilesCount { get; private set; }
         public int LoadedTownsCount => towns.Count();
         public int LoadedWaypointsCount => waypoints.Count();

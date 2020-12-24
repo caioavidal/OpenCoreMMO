@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Server.Helpers;
 
 namespace NeoServer.Game.Creatures.Monsters
 {

@@ -1,9 +1,7 @@
 ﻿using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 {
