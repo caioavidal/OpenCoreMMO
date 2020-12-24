@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface IPlayerModel
     {
         //IAccountModel Account { get; set; }
-        float Capacity { get; set; }
+        uint Capacity { get; set; }
         string CharacterName { get; set; }
         ChaseMode ChaseMode { get; set; }
         FightMode FightMode { get; }
@@ -28,7 +28,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte MaxSoulPoints { get; set; }
         bool Online { get; set; }
         IOutfit Outfit { get; set; }
-        IDictionary<SkillType, ISkill> Skills { get; set; }
+        IDictionary<SkillType, ISkillModel> Skills { get; set; }
         byte SoulPoints { get; set; }
         ushort Speed { get; set; }
         ushort StaminaMinutes { get; set; }

@@ -1,130 +1,120 @@
 {
-  "monster": {
-    "name": "Tortoise",
-    "nameDescription": "a tortoise",
-    "race": "blood",
-    "experience": "90",
-    "speed": "200",
-    "manacost": "445",
-    "health": {
-      "now": "185",
-      "max": "185"
-    },
-    "look": {
-      "type": "197",
-      "corpse": "6072"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-50"
-      }
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "35"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "earthPercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "30",
-          "chance": "59000"
-        },
-        {
-          "name": "battle hammer",
-          "chance": "730"
-        },
-        {
-          "name": "plate shield",
-          "chance": "2850"
-        },
-        {
-          "id": "2667",
-          "chance": "4600"
-        },
-        {
-          "name": "tortoise egg",
-          "countmax": "2",
-          "chance": "770"
-        },
-        {
-          "name": "turtle shell",
-          "chance": "1300"
-        },
-        {
-          "name": "tortoise shield",
-          "chance": "200"
-        }
-      ]/* fish */
+  "name": "Tortoise",
+  "nameDescription": "a tortoise",
+  "race": "blood",
+  "experience": 90,
+  "speed": 200,
+  "manaCost": 445,
+  "health": {
+    "max": 185,
+    "now": 185
+  },
+  "look": {
+    "type": 197,
+    "corpse": 6072
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-50"
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 35,
+    "icePercent": 20,
+    "earthPercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 59000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": "battle hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2850,
+      "items": [],
+      "name": "plate shield"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 4600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 770,
+      "items": [],
+      "name": "tortoise egg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1300,
+      "items": [],
+      "name": "turtle shell"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "tortoise shield"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

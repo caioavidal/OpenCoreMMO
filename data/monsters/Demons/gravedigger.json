@@ -1,264 +1,269 @@
 {
-  "monster": {
-    "name": "Gravedigger",
-    "nameDescription": "a gravedigger",
-    "race": "blood",
-    "experience": "950",
-    "speed": "230",
-    "health": {
-      "now": "1500",
-      "max": "1500"
+  "name": "Gravedigger",
+  "nameDescription": "a gravedigger",
+  "race": "blood",
+  "experience": 950,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 558,
+    "corpse": 21279
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 70,
+    "runonhealth": 200,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-320",
+      "poison": "180"
     },
-    "look": {
-      "type": "558",
-      "corpse": "21279"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "70"
-        },
-        {
-          "runonhealth": "200"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-320",
-          "poison": "180"
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "range": "1",
-          "min": "-40",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "15",
-          "range": "1",
-          "min": "-175",
-          "max": "-300",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "death"
-          }
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "radius": "5",
-          "target": "0",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallclouds"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": [
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "15",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "20",
-          "min": "100",
-          "max": "250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "420",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "-5"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "holyPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "ice": "1"
-        },
-        {
-          "energy": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "manadrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "range": "1",
+      "min": "-40",
+      "max": "-250",
+      "attributes": [
         {
-          "sentence": "High Five!"
-        },
-        {
-          "sentence": "scrabble"
-        },
-        {
-          "sentence": "Put it there!"
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "min": "-175",
+      "max": "-300",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "137",
-          "chance": "100000"
-        },
-        {
-          "name": "platinum coin",
-          "chance": "24470"
-        },
-        {
-          "name": "yellow gem",
-          "chance": "800"
-        },
-        {
-          "name": "wand of inferno",
-          "chance": "5590"
-        },
-        {
-          "name": "sudden death rune",
-          "countmax": "9",
-          "chance": "7300"
-        },
-        {
-          "name": "skull staff",
-          "chance": "130"
-        },
-        {
-          "name": "mysterious voodoo skull",
-          "chance": "100"
-        },
-        {
-          "name": "hardened bone",
-          "chance": "50"
-        },
-        {
-          "id": "6300",
-          "chance": "800"
-        },
-        {
-          "name": "strong health potion",
-          "countmax": "2",
-          "chance": "2260"
-        },
-        {
-          "name": "strong mana potion",
-          "countmax": "2",
-          "chance": "3600"
-        },
-        {
-          "name": "lump of dirt",
-          "chance": "100"
-        },
-        {
-          "name": "unholy bone",
-          "chance": "9570"
-        },
-        {
-          "name": "pile of grave earth",
-          "chance": "6650"
-        },
-        {
-          "name": "safety pin",
-          "chance": "6000"
+          "shootEffect": "death"
         }
-      ]/* death ring */
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "5",
+      "target": "0",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "100",
+      "max": "250",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "420",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": -5,
+    "firePercent": -10,
+    "holyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 137,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 24470,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "yellow gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5590,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 9,
+      "chance": 7300,
+      "items": [],
+      "name": "sudden death rune"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "skull staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "mysterious voodoo skull"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": "hardened bone"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2260,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 3600,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "lump of dirt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9570,
+      "items": [],
+      "name": "unholy bone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6650,
+      "items": [],
+      "name": "pile of grave earth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "safety pin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "High Five!",
+        "yell": false
+      },
+      {
+        "sentence": "scrabble",
+        "yell": false
+      },
+      {
+        "sentence": "Put it there!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "energy": 1,
+    "death": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

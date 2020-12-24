@@ -40,6 +40,7 @@ namespace NeoServer.Game.World.Spawns
                 }
                 if (_creatureGameInstance.TryRemoveFromKilledMonsters(monster.CreatureId))
                 {
+                  //  _creatureGameInstance.Add(monster);
                     monster.Reborn();
                 }
             }
@@ -50,10 +51,13 @@ namespace NeoServer.Game.World.Spawns
             foreach (var monsterToSpawn in _world.Spawns.SelectMany(x => x.Monsters).ToList())
             {
                 var monster = _creatureFactory.CreateMonster(monsterToSpawn.Name, monsterToSpawn.Spawn);
+
+                if (monster == null) continue;
+
                 monster.SetNewLocation(monsterToSpawn.Spawn.Location);
                 _map.AddCreature(monster);
 
-                _creatureGameInstance.Add(monster);
+                //_creatureGameInstance.Add(monster);
             }
         }
     }

@@ -1,10 +1,7 @@
-﻿using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Combat.Attacks;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
-using NeoServer.Server.Helpers;
-using System;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Combat.Attacks
 {
@@ -22,10 +19,9 @@ namespace NeoServer.Game.Combat.Attacks
         {
             damage = new CombatDamage();
 
-            if (actor.Location.GetSqmDistanceX(enemy.Location) > option.Range || actor.Location.GetSqmDistanceY(enemy.Location) > option.Range) return false;
+            if (actor.Location.GetMaxSqmDistance(enemy.Location) > option.Range) return false;
 
-            var damageValue = (ushort)ServerRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
-
+            var damageValue = (ushort)GameRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
 
             damage = new CombatDamage(damageValue, option.DamageType);
 
@@ -34,10 +30,9 @@ namespace NeoServer.Game.Combat.Attacks
 
         public static bool MissedAttack(byte hitChance)
         {
-            var value = ServerRandom.Random.Next(minValue: 1, maxValue: 100);
+            var value = GameRandom.Random.Next(minValue: 1, maxValue: 100);
             return hitChance < value;
         }
-
 
         public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
         {

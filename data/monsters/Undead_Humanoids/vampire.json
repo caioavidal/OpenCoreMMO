@@ -1,253 +1,252 @@
 {
-  "monster": {
-    "name": "Vampire",
-    "nameDescription": "a vampire",
-    "race": "blood",
-    "experience": "305",
-    "speed": "220",
-    "health": {
-      "now": "475",
-      "max": "475"
+  "name": "Vampire",
+  "nameDescription": "a vampire",
+  "race": "blood",
+  "experience": 305,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 475,
+    "now": 475
+  },
+  "look": {
+    "type": 68,
+    "corpse": 6006
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 30,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-150"
     },
-    "look": {
-      "type": "68",
-      "corpse": "6006"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "range": "1",
+      "min": "-50",
+      "max": "-200",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "30"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "smallclouds"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "target": "1",
+      "speedchange": "-400",
+      "duration": "60000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-150"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "20",
-          "target": "1",
-          "range": "1",
-          "min": "-50",
-          "max": "-200",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallclouds"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "range": "1",
-          "target": "1",
-          "speedchange": "-400",
-          "duration": "60000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": [
-        {
-          "name": "outfit",
-          "interval": "4000",
-          "chance": "10",
-          "monster": "bat",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "groundshaker"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "300",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "15",
-          "min": "15",
-          "max": "25"
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "35"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "holyPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "drunk": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "BLOOD!",
-          "yell": "1"
-        },
-        {
-          "sentence": "Let me kiss your neck"
-        },
-        {
-          "sentence": "I smell warm blood!"
-        },
-        {
-          "sentence": "I call you, my bats! Come!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "emerald bangle",
-          "chance": "230"
-        },
-        {
-          "name": "black pearl",
-          "chance": "1800"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "60",
-          "chance": "90230"
-        },
-        {
-          "name": "bronze amulet",
-          "chance": "220"
-        },
-        {
-          "id": "2229",
-          "chance": "1000"
-        },
-        {
-          "name": "spike sword",
-          "chance": "1000"
-        },
-        {
-          "name": "ice rapier",
-          "chance": "420"
-        },
-        {
-          "name": "katana",
-          "chance": "1560"
-        },
-        {
-          "name": "strange helmet",
-          "chance": "420"
-        },
-        {
-          "name": "vampire shield",
-          "chance": "230"
-        },
-        {
-          "name": "grave flower",
-          "chance": "1910"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "1500"
-        },
-        {
-          "name": "vampire teeth",
-          "chance": "7600"
-        },
-        {
-          "name": "blood preservation",
-          "chance": "5100"
-        }
-      ]/* skull */
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "outfit",
+      "interval": "4000",
+      "chance": "10",
+      "monster": "bat",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "groundshaker"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "15",
+      "max": "25"
+    }
+  ],
+  "elements": {
+    "physicalPercent": 35,
+    "firePercent": -10,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 230,
+      "items": [],
+      "name": "emerald bangle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1800,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 90230,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 220,
+      "items": [],
+      "name": "bronze amulet"
+    },
+    {
+      "id": 2229,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "spike sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "ice rapier"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1560,
+      "items": [],
+      "name": "katana"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "strange helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 230,
+      "items": [],
+      "name": "vampire shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1910,
+      "items": [],
+      "name": "grave flower"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7600,
+      "items": [],
+      "name": "vampire teeth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5100,
+      "items": [],
+      "name": "blood preservation"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BLOOD!",
+        "yell": false
+      },
+      {
+        "sentence": "Let me kiss your neck",
+        "yell": false
+      },
+      {
+        "sentence": "I smell warm blood!",
+        "yell": false
+      },
+      {
+        "sentence": "I call you, my bats! Come!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1,
+    "earth": 1,
+    "death": 1,
+    "drown": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

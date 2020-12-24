@@ -1,170 +1,131 @@
 {
-  "monster": {
-    "name": "Berserker Chicken",
-    "namedescription": "a berserker chicken",
-    "race": "blood",
-    "experience": "220",
-    "speed": "300",
-    "manacost": "220",
-    "health": {
-      "now": "465",
-      "max": "465"
+  "name": "Berserker Chicken",
+  "nameDescription": null,
+  "race": "blood",
+  "experience": 220,
+  "speed": 300,
+  "manaCost": 220,
+  "health": {
+    "max": 465,
+    "now": 465
+  },
+  "look": {
+    "type": 111,
+    "corpse": 6042
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1200",
+      "min": "0",
+      "max": "-200"
     },
-    "look": {
-      "type": "111",
-      "corpse": "6042"
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "30",
+      "range": "1",
+      "min": "0",
+      "max": "-100"
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "min": "-41",
+      "max": "-70",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "explosionarea"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "1200",
-          "min": "0",
-          "max": "-200"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "30",
-          "range": "1",
-          "min": "0",
-          "max": "-100"
-        },
-        {
-          "name": "drown",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "min": "-41",
-          "max": "-70",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "explosionarea"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "35",
-      "defense": {
-        "name": "speed",
-        "interval": "1000",
-        "chance": "40",
-        "speedchange": "400",
-        "duration": "8000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "10"
-        },
-        {
-          "deathPercent": "10"
-        },
-        {
-          "firePercent": "10"
-        },
-        {
-          "energyPercent": "10"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "earthPercent": "10"
-        },
-        {
-          "physicalPercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "drown": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Gokgoooook"
-        },
-        {
-          "sentence": "Cluck Cluck"
-        },
-        {
-          "sentence": "I will fill MY cushion with YOUR hair! CLUCK!"
-        }
-      ]
-    },
-    "loot": {
-      "item": {
-        "name": "gold coin",
-        "countmax": "100",
-        "chance": "50000"
-      }
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "40",
+      "speedchange": "400",
+      "duration": "8000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 10,
+    "deathPercent": 10,
+    "firePercent": 10,
+    "energyPercent": 10,
+    "icePercent": 10,
+    "earthPercent": 10,
+    "physicalPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Gokgoooook",
+        "yell": false
+      },
+      {
+        "sentence": "Cluck Cluck",
+        "yell": false
+      },
+      {
+        "sentence": "I will fill MY cushion with YOUR hair! CLUCK!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

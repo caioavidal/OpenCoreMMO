@@ -1,142 +1,137 @@
 {
-  "monster": {
-    "name": "Swamp Troll",
-    "nameDescription": "a swamp troll",
-    "race": "venom",
-    "experience": "65",
-    "speed": "128",
-    "manacost": "320",
-    "health": {
-      "now": "55",
-      "max": "55"
+  "name": "Swamp Troll",
+  "nameDescription": "a swamp troll",
+  "race": "venom",
+  "experience": 65,
+  "speed": 128,
+  "manaCost": 320,
+  "health": {
+    "max": 55,
+    "now": 55
+  },
+  "look": {
+    "type": 76,
+    "corpse": 6018
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 15
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "10",
+      "attack": "13",
+      "poison": "30"
+    }
+  ],
+  "defense": {
+    "armor": 6,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 5,
+      "chance": 31500,
+      "items": [],
+      "name": null
     },
-    "look": {
-      "type": "76",
-      "corpse": "6018"
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 63500,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
+    {
+      "id": 2379,
+      "countmax": 1,
+      "chance": 27500,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "summonable": "1"
+          "id": 2050,
+          "countmax": 1,
+          "chance": 15750,
+          "items": [],
+          "name": null
         },
         {
-          "attackable": "1"
+          "id": 2389,
+          "countmax": 1,
+          "chance": 14700,
+          "items": [],
+          "name": null
         },
         {
-          "hostile": "1"
+          "id": 2643,
+          "countmax": 1,
+          "chance": 9500,
+          "items": [],
+          "name": null
         },
         {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "15"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "10",
-        "attack": "13",
-        "poison": "30"
-      }
-    },
-    "defenses": {
-      "armor": "6",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Grrrr"
-        },
-        {
-          "sentence": "Groar!"
-        },
-        {
-          "sentence": "Me strong! Me ate spinach!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "5",
-          "chance": "31500"
-        },
-        {
-          "id": "2667",
-          "chance": "63500"
-        },
-        {
-          "id": "2379",
-          "chance": "27500"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2050",
-              "chance": "15750"
-            },
-            {
-              "id": "2389",
-              "chance": "14700"
-            },
-            {
-              "id": "2643",
-              "chance": "9500"
-            },
-            {
-              "id": "2580",
-              "chance": "150"
-            }
-          ]
+          "id": 2580,
+          "countmax": 1,
+          "chance": 150,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Groar!",
+        "yell": false
+      },
+      {
+        "sentence": "Me strong! Me ate spinach!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

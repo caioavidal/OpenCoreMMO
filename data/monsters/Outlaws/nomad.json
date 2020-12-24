@@ -1,167 +1,160 @@
 {
-  "monster": {
-    "name": "Nomad",
-    "nameDescription": "a nomad",
-    "race": "blood",
-    "experience": "60",
-    "speed": "215",
-    "manacost": "420",
-    "health": {
-      "now": "160",
-      "max": "160"
+  "name": "Nomad",
+  "nameDescription": "a nomad",
+  "race": "blood",
+  "experience": 60,
+  "speed": 215,
+  "manaCost": 420,
+  "health": {
+    "max": 160,
+    "now": 160
+  },
+  "look": {
+    "type": 146,
+    "corpse": 6080
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 18
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "40"
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 13
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 20,
+    "holyPercent": 10,
+    "physicalPercent": -12,
+    "icePercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 51,
+      "chance": 16250,
+      "items": [],
+      "name": null
     },
-    "look": {
-      "type": "146",
-      "head": "114",
-      "body": "20",
-      "legs": "22",
-      "feet": "2",
-      "corpse": "6080"
+    {
+      "id": 2666,
+      "countmax": 2,
+      "chance": 22500,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
+    {
+      "id": 2386,
+      "countmax": 1,
+      "chance": 28000,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2511,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "18"
-        }
-      ]
+    {
+      "id": 2649,
+      "countmax": 1,
+      "chance": 13750,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "30",
-        "attack": "40"
-      }
+    {
+      "id": 2398,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "10",
-      "defense": "13"
+    {
+      "id": 2458,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "firePercent": "20"
+          "id": 2465,
+          "countmax": 1,
+          "chance": 1500,
+          "items": [],
+          "name": null
         },
         {
-          "holyPercent": "10"
+          "id": 2509,
+          "countmax": 1,
+          "chance": 750,
+          "items": [],
+          "name": null
         },
         {
-          "physicalPercent": "-12"
-        },
-        {
-          "icePercent": "-10"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "We are the true sons of the desert!"
-        },
-        {
-          "sentence": "I will leave your remains to the vultures!"
-        },
-        {
-          "sentence": "We are swift as the wind of the desert!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "51",
-          "chance": "16250"
-        },
-        {
-          "id": "2666",
-          "countmax": "2",
-          "chance": "22500"
-        },
-        {
-          "id": "2386",
-          "chance": "28000"
-        },
-        {
-          "id": "2511",
-          "chance": "20000"
-        },
-        {
-          "id": "2649",
-          "chance": "13750"
-        },
-        {
-          "id": "2398",
-          "chance": "12500"
-        },
-        {
-          "id": "2458",
-          "chance": "4500"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2465",
-              "chance": "1500"
-            },
-            {
-              "id": "2509",
-              "chance": "750"
-            },
-            {
-              "id": "2459",
-              "chance": "450"
-            }
-          ]
+          "id": 2459,
+          "countmax": 1,
+          "chance": 450,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "We are the true sons of the desert!",
+        "yell": false
+      },
+      {
+        "sentence": "I will leave your remains to the vultures!",
+        "yell": false
+      },
+      {
+        "sentence": "We are swift as the wind of the desert!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

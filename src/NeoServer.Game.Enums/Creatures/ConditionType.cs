@@ -28,6 +28,8 @@
         Cursed = 1 << 22,
         ExhaustCombat = 1 << 23, // unused
         ExhaustHeal = 1 << 24, // unused
-        Pacified = 1 << 25
+        Pacified = 1 << 25,
+        Illusion = 1 << 26,
+        Hungry = 1 << 27
     }
 }

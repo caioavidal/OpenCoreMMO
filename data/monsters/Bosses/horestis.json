@@ -1,252 +1,249 @@
 {
-  "monster": {
-    "name": "Horestis",
-    "nameDescription": "Horestis",
-    "race": "undead",
-    "experience": "3500",
-    "speed": "276",
-    "health": {
-      "now": "6000",
-      "max": "6000"
+  "name": "Horestis",
+  "nameDescription": "Horestis",
+  "race": "undead",
+  "experience": 3500,
+  "speed": 276,
+  "manaCost": 0,
+  "health": {
+    "max": 6000,
+    "now": 6000
+  },
+  "look": {
+    "type": 88,
+    "corpse": 6031
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-592",
+      "poison": "165"
     },
-    "look": {
-      "type": "88",
-      "head": "20",
-      "body": "30",
-      "legs": "40",
-      "feet": "50",
-      "corpse": "6031"
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "8",
+      "range": "1",
+      "min": "-300",
+      "max": "-500"
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "min": "-300",
+      "max": "-500",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "poison"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "speedchange": "-850",
+      "duration": "50000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-592",
-          "poison": "165"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "8",
-          "range": "1",
-          "min": "-300",
-          "max": "-500"
-        },
-        {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "12",
-          "range": "7",
-          "min": "-300",
-          "max": "-500",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "25",
-          "range": "7",
-          "speedchange": "-850",
-          "duration": "50000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "30",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "20",
-          "min": "200",
-          "max": "400",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "1000",
-          "chance": "7",
-          "duration": "2000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "outfit",
-          "interval": "1000",
-          "chance": "3",
-          "monster": "ancient scarab",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "20"
-        },
-        {
-          "energyPercent": "5"
-        },
-        {
-          "physicalPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Feel my eternal wrath!"
-        },
-        {
-          "sentence": "I might be dead but I'm not gone!"
-        },
-        {
-          "sentence": "Receive a lesson of the past!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "silver brooch",
-          "chance": "12500"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "243",
-          "chance": "50000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "5",
-          "chance": "33333"
-        },
-        {
-          "name": "scarab coin",
-          "countmax": "5",
-          "chance": "14285"
-        },
-        {
-          "name": "pharaoh sword",
-          "chance": "5000"
-        },
-        {
-          "name": "twin axe",
-          "chance": "2500"
-        },
-        {
-          "name": "great mana potion",
-          "countmax": "3",
-          "chance": "10000"
-        },
-        {
-          "name": "great health potion",
-          "countmax": "4",
-          "chance": "5000"
-        },
-        {
-          "id": "9811",
-          "chance": "2500"
-        },
-        {
-          "name": "mini mummy",
-          "chance": "2500"
-        },
-        {
-          "id": "13472",
-          "chance": "16666"
-        },
-        {
-          "name": "scorpion sceptre",
-          "chance": "100000"
-        },
-        {
-          "id": "13739",
-          "chance": "12500"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "20",
+      "min": "200",
+      "max": "400",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "1000",
+      "chance": "7",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "3",
+      "monster": "ancient scarab",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "energyPercent": 5,
+    "physicalPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "silver brooch"
+    },
+    {
+      "id": 0,
+      "countmax": 243,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 33333,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 14285,
+      "items": [],
+      "name": "scarab coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "pharaoh sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "twin axe"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 5000,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 9811,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "mini mummy"
+    },
+    {
+      "id": 13472,
+      "countmax": 1,
+      "chance": 16666,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "scorpion sceptre"
+    },
+    {
+      "id": 13739,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel my eternal wrath!",
+        "yell": false
+      },
+      {
+        "sentence": "I might be dead but I'm not gone!",
+        "yell": false
+      },
+      {
+        "sentence": "Receive a lesson of the past!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

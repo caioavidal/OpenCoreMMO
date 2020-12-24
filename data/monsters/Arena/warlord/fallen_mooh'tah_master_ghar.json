@@ -1,170 +1,152 @@
 {
-  "monster": {
-    "name": "Fallen Mooh'tah Master Ghar",
-    "nameDescription": "Fallen Mooh'Tah Master Ghar",
-    "race": "blood",
-    "experience": "4400",
-    "speed": "190",
-    "health": {
-      "now": "7990",
-      "max": "7990"
-    },
-    "look": {
-      "type": "29",
-      "corpse": "7349"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-525",
-          "poison": "18"
-        },
-        {
-          "name": "fire",
-          "interval": "6000",
-          "chance": "30",
-          "min": "-80",
-          "max": "-300",
-          "length": "8",
-          "spread": "3",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "firearea"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "3000",
-          "chance": "45",
-          "radius": "5",
-          "target": "1",
-          "min": "-80",
-          "max": "-400",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "4000",
-          "chance": "30",
-          "min": "-80",
-          "max": "-270",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "death"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "4500",
-          "chance": "40",
-          "min": "-10",
-          "max": "-200",
-          "range": "10",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "5000",
-          "chance": "30",
-          "length": "8",
-          "spread": "3",
-          "min": "-60",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "33"
-    },
-    "elements": {
-      "element": {
-        "firePercent": "60"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "Fallen Mooh'tah Master Ghar",
+  "nameDescription": "Fallen Mooh'Tah Master Ghar",
+  "race": "blood",
+  "experience": 4400,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 7990,
+    "now": 7990
+  },
+  "look": {
+    "type": 29,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5",
-      "voice": [
+      "min": "0",
+      "max": "-525",
+      "poison": "18"
+    },
+    {
+      "name": "fire",
+      "interval": "6000",
+      "chance": "30",
+      "min": "-80",
+      "max": "-300",
+      "length": "8",
+      "spread": "3",
+      "attributes": [
         {
-          "sentence": "I will finish you!"
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "3000",
+      "chance": "45",
+      "radius": "5",
+      "target": "1",
+      "min": "-80",
+      "max": "-400",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "4000",
+      "chance": "30",
+      "min": "-80",
+      "max": "-270",
+      "attributes": [
+        {
+          "shootEffect": "death"
         },
         {
-          "sentence": "You are no match for a master of the Mooh'Tha!"
-        },
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "4500",
+      "chance": "40",
+      "min": "-10",
+      "max": "-200",
+      "range": "10",
+      "attributes": [
         {
-          "sentence": "I might be fallen but you will fall before me!"
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "5000",
+      "chance": "30",
+      "length": "8",
+      "spread": "3",
+      "min": "-60",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 33
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 60
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I will finish you!",
+        "yell": false
+      },
+      {
+        "sentence": "You are no match for a master of the Mooh'Tha!",
+        "yell": false
+      },
+      {
+        "sentence": "I might be fallen but you will fall before me!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

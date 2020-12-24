@@ -1,187 +1,188 @@
 {
-  "monster": {
-    "name": "Crawler",
-    "nameDescription": "a crawler",
-    "race": "venom",
-    "experience": "1000",
-    "speed": "200",
-    "health": {
-      "now": "1450",
-      "max": "1450"
+  "name": "Crawler",
+  "nameDescription": "a crawler",
+  "race": "venom",
+  "experience": 1000,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 1450,
+    "now": 1450
+  },
+  "look": {
+    "type": 456,
+    "corpse": 15292
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 40,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-228",
+      "poison": "80"
     },
-    "look": {
-      "type": "456",
-      "corpse": "15292"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "-100",
+      "max": "-180",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "runonhealth": "40"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-228",
-          "poison": "80"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "-100",
-          "max": "-180",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "smallearth"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": {
-        "name": "speed",
-        "interval": "2000",
-        "chance": "15",
-        "speedchange": "300",
-        "duration": "3000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "deathPercent": "5"
-        },
-        {
-          "holyPercent": "-5"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "icePercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Sssschrchrsss!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "50000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "50000"
-        },
-        {
-          "name": "yellow gem",
-          "chance": "530"
-        },
-        {
-          "name": "life ring",
-          "chance": "50000"
-        },
-        {
-          "name": "war hammer",
-          "chance": "2070"
-        },
-        {
-          "name": "great mana potion",
-          "chance": "9300"
-        },
-        {
-          "name": "great health potion",
-          "chance": "6200"
-        },
-        {
-          "name": "springsprout rod",
-          "chance": "710"
-        },
-        {
-          "name": "small topaz",
-          "countmax": "2",
-          "chance": "10040"
-        },
-        {
-          "name": "crawler head plating",
-          "chance": "18430"
-        },
-        {
-          "name": "compound eye",
-          "chance": "14640"
-        },
-        {
-          "name": "grasshopper legs",
-          "chance": "100"
+          "shootEffect": "smallearth"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 5,
+    "holyPercent": -5,
+    "firePercent": -10,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 530,
+      "items": [],
+      "name": "yellow gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2070,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9300,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6200,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 710,
+      "items": [],
+      "name": "springsprout rod"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 10040,
+      "items": [],
+      "name": "small topaz"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18430,
+      "items": [],
+      "name": "crawler head plating"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14640,
+      "items": [],
+      "name": "compound eye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "grasshopper legs"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Sssschrchrsss!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

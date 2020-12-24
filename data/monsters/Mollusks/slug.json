@@ -1,118 +1,97 @@
 {
-  "monster": {
-    "name": "Slug",
-    "nameDescription": "a slug",
-    "race": "venom",
-    "experience": "70",
-    "speed": "150",
-    "health": {
-      "now": "255",
-      "max": "255"
+  "name": "Slug",
+  "nameDescription": "a slug",
+  "race": "venom",
+  "experience": 70,
+  "speed": 150,
+  "manaCost": 0,
+  "health": {
+    "max": 255,
+    "now": 255
+  },
+  "look": {
+    "type": 407,
+    "corpse": 13515
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-44"
     },
-    "look": {
-      "type": "407",
-      "corpse": "13515"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-5",
+      "max": "-40",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-44"
-        },
-        {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "target": "1",
-          "min": "-5",
-          "max": "-40",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "deathPercent": "7"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "40",
-          "chance": "62000"
-        },
-        {
-          "name": "worm",
-          "countmax": "3",
-          "chance": "5000"
+          "shootEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "deathPercent": 7
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 62000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5000,
+      "items": [],
+      "name": "worm"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

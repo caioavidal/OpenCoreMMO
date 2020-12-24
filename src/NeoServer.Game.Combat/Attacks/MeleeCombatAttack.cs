@@ -1,9 +1,9 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Server.Helpers;
 using System;
 using NeoServer.Game.Common.Conditions;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Combat.Attacks
 {
@@ -22,7 +22,7 @@ namespace NeoServer.Game.Combat.Attacks
             damage = new CombatDamage();
             if (!actor.Location.IsNextTo(enemy.Location)) return false;
 
-            var damageValue = (ushort)ServerRandom.Random.NextInRange(combat.MinDamage, combat.MaxDamage);
+            var damageValue = (ushort)GameRandom.Random.NextInRange(combat.MinDamage, combat.MaxDamage);
 
             damage = new CombatDamage(damageValue, combat.DamageType);
 

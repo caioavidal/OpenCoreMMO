@@ -10,12 +10,21 @@ namespace NeoServer.Game.Creatures.Spells
     public class HasteSpell: Spell<HasteSpell>
     {
         public override string Name => "Haste";
-        public override EffectT Effect => EffectT.GlitterBlue;
-        public override uint Duration => 10000;
-        public virtual ushort SpeedBoost => 200;
+        public override EffectT Effect { get; } = EffectT.GlitterBlue;
+        public override uint Duration { get; } = 10000;
+        public virtual ushort SpeedBoost { get; } = 200;
         public override ushort Mana => 60;
         public override ConditionType ConditionType => ConditionType.Haste;
+        public HasteSpell(uint duration, ushort speedBoost, EffectT effect)
+        {
+            Effect = effect;
+            SpeedBoost = speedBoost;
+            Duration = duration;
+        }
+        public HasteSpell()
+        {
 
+        }
         public override void OnCast(ICombatActor actor)
         {
             actor.IncreaseSpeed(SpeedBoost);

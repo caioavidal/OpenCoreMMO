@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Creatures.Players;
+using System;
 
 namespace NeoServer.Game.Common.Conditions
 {
@@ -8,6 +9,12 @@ namespace NeoServer.Game.Common.Conditions
         {
             Type = type;
         }
+
+        public Condition(ConditionType type, uint duration, Action onEnd) : base(duration, onEnd)
+        {
+            Type = type;
+        }
+
         public override ConditionType Type { get; }
     }
 

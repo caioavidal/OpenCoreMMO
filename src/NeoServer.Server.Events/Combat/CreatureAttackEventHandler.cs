@@ -1,19 +1,12 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Explosion;
-using NeoServer.Game.Effects.Magical;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Helpers;
-using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Server.Events.Combat
 {
@@ -34,24 +27,7 @@ namespace NeoServer.Server.Events.Combat
                 {
                     continue;
                 }
-                //if (attack is IAreaAttack areaAttack)
-                //{
-                //    foreach (var coordinate in areaAttack.AffectedArea)
-                //    {
-                //        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, damageEffect));
-                //    }
-                //}
-                //else
-                //{
-                //    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
-                //}
-
-                //if (attack is IDistanceCombatAttack distanceAttack)
-                //{
-                //    var effect = (byte)distanceAttack.ShootType;
-                //    connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, effect));
-                //}
-
+            
                 if (attack.Missed)
                 {
                     SendMissedAttack(creature, victim, attack, connection);
@@ -78,7 +54,7 @@ namespace NeoServer.Server.Events.Combat
             Location destLocation;
             do
             {
-                index = ServerRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
+                index = GameRandom.Random.Next(minValue: 0, maxValue: victim.Location.Neighbours.Length);
                 destLocation = victim.Location.Neighbours[index];
             } while (destLocation == creature.Location);
 

@@ -1,4 +1,8 @@
+using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Items.Items;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Loaders.Items
 {
@@ -9,16 +13,25 @@ namespace NeoServer.Loaders.Items
         public ushort? Fromid { get; set; }
         public ushort? Toid { get; set; }
         public IEnumerable<Attribute> Attributes { get; set; }
+        public IEnumerable<Attribute> OnUse { get; set; }
+
         public string Article { get; set; }
         public string Plural { get; set; }
         public string Editorsuffix { get; set; }
+        public Requirement[] Requirements { get; set; }
+        public string[] Flags { get; set; }
 
         public struct Attribute
         {
             public string Key { get; set; }
-            public string Value { get; set; }
+            public dynamic Value { get; set; }
             public IEnumerable<Attribute> Attributes { get; set; }
 
+        }
+        public struct Requirement
+        {
+            public string Vocation { get; set; }
+            public ushort MinLevel { get; set; }
         }
     }
 }

@@ -1,503 +1,622 @@
 {
-  "monster": {
-    "name": "Gaz'haragoth",
-    "nameDescription": "Gaz'haragoth",
-    "race": "undead",
-    "experience": "1000000",
-    "speed": "400",
-    "health": {
-      "now": "350000",
-      "max": "350000"
+  "name": "Gaz'haragoth",
+  "nameDescription": "Gaz'haragoth",
+  "race": "undead",
+  "experience": 1000000,
+  "speed": 400,
+  "manaCost": 0,
+  "health": {
+    "max": 350000,
+    "now": 350000
+  },
+  "look": {
+    "type": 591,
+    "corpse": 22562
+  },
+  "targetChange": {
+    "interval": 10000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 98,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-5000"
     },
-    "look": {
-      "type": "591",
-      "head": "0",
-      "body": "94",
-      "legs": "79",
-      "feet": "79",
-      "corpse": "22562"
-    },
-    "targetchange": {
-      "interval": "10000",
-      "chance": "20"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "ice",
+      "interval": "3000",
+      "chance": "35",
+      "range": "7",
+      "radius": "7",
+      "target": "1",
+      "min": "-900",
+      "max": "-1100",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "ice"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "staticattack": "98"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "icearea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "melee",
+      "interval": "1800",
+      "chance": "40",
+      "range": "7",
+      "radius": "5",
+      "target": "0",
+      "min": "0",
+      "max": "-1000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-5000"
-        },
-        {
-          "name": "ice",
-          "interval": "3000",
-          "chance": "35",
-          "range": "7",
-          "radius": "7",
-          "target": "1",
-          "min": "-900",
-          "max": "-1100",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "ice"
-            },
-            {
-              "key": "areaEffect",
-              "value": "icearea"
-            }
-          ]
-        },
-        {
-          "name": "melee",
-          "interval": "1800",
-          "chance": "40",
-          "range": "7",
-          "radius": "5",
-          "target": "0",
-          "min": "0",
-          "max": "-1000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blackspark"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "3000",
-          "chance": "30",
-          "length": "8",
-          "spread": "0",
-          "min": "-4000",
-          "max": "-6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "2500",
-          "chance": "20",
-          "range": "7",
-          "radius": "5",
-          "target": "0",
-          "min": "-200",
-          "max": "-480",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenshimmer"
-          }
+          "areaEffect": "blackspark"
         }
       ]
     },
-    "defenses": {
-      "armor": "55",
-      "defense": "65",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "3000",
-          "chance": "35",
-          "min": "2500",
-          "max": "3500",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "4000",
-          "chance": "80",
-          "speedchange": "500",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "50"
-        },
-        {
-          "earthPercent": "50"
-        },
-        {
-          "energyPercent": "50"
-        },
-        {
-          "deathPercent": "50"
-        },
-        {
-          "physicalPercent": "50"
-        },
-        {
-          "holyPercent": "50"
-        },
-        {
-          "icePercent": "50"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "6",
-      "summon": [
-        {
-          "name": "Minion of Gaz'haragoth",
-          "interval": "4000",
-          "chance": "33",
-          "max": "3"
-        },
-        {
-          "name": "Nightmare of Gaz'haragoth",
-          "interval": "4000",
-          "chance": "33",
-          "max": "3"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "fire",
+      "interval": "3000",
       "chance": "30",
-      "voice": [
+      "length": "8",
+      "spread": "0",
+      "min": "-4000",
+      "max": "-6000",
+      "attributes": [
         {
-          "sentence": "Gaz'haragoth begins to channel DEATH AND DOOM into the area! RUN!",
-          "yell": "1"
-        },
-        {
-          "sentence": "Minions! Follow my call!",
-          "yell": "1"
-        },
-        {
-          "sentence": "I've beaten tougher demons then you even know",
-          "yell": "1"
-        },
-        {
-          "sentence": "You puny humans will be my snacks!",
-          "yell": "1"
-        },
-        {
-          "sentence": "Gaz'haragoth calls down: DEATH AND DOOM!",
-          "yell": "1"
+          "areaEffect": "fire"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "physical",
+      "interval": "2500",
+      "chance": "20",
+      "range": "7",
+      "radius": "5",
+      "target": "0",
+      "min": "-200",
+      "max": "-480",
+      "attributes": [
         {
-          "name": "platinum coin",
-          "countmax": "50",
-          "chance": "10000"
-        },
-        {
-          "name": "blue gem",
-          "countmax": "2",
-          "chance": "10000"
-        },
-        {
-          "name": "crystal coin",
-          "countmax": "6",
-          "chance": "10000"
-        },
-        {
-          "name": "life ring",
-          "chance": "6000"
-        },
-        {
-          "name": "boots of haste",
-          "chance": "6000"
-        },
-        {
-          "name": "red piece of cloth",
-          "chance": "6000"
-        },
-        {
-          "name": "yellow piece of cloth",
-          "chance": "6000"
-        },
-        {
-          "name": "demon horn",
-          "chance": "6000"
-        },
-        {
-          "name": "demonic essence",
-          "countmax": "2",
-          "chance": "10000"
-        },
-        {
-          "name": "infernal bolt",
-          "chance": "6000"
-        },
-        {
-          "name": "assassin star",
-          "countmax": "100",
-          "chance": "10000"
-        },
-        {
-          "name": "great mana potion",
-          "countmax": "100",
-          "chance": "10000"
-        },
-        {
-          "id": "7632",
-          "chance": "6000"
-        },
-        {
-          "name": "magma coat",
-          "chance": "6000"
-        },
-        {
-          "name": "great spirit potion",
-          "countmax": "100",
-          "chance": "10000"
-        },
-        {
-          "name": "ultimate health potion",
-          "countmax": "100",
-          "chance": "10000"
-        },
-        {
-          "name": "phoenix charm",
-          "chance": "6000"
-        },
-        {
-          "name": "unity charm",
-          "chance": "6000"
-        },
-        {
-          "name": "spiritual charm",
-          "chance": "6000"
-        },
-        {
-          "name": "twin sun charm",
-          "chance": "6000"
-        },
-        {
-          "name": "solitude charm",
-          "chance": "6000"
-        },
-        {
-          "name": "violet crystal shard",
-          "countmax": "15",
-          "chance": "10000"
-        },
-        {
-          "name": "green crystal shard",
-          "countmax": "5",
-          "chance": "10000"
-        },
-        {
-          "name": "green crystal splinter",
-          "countmax": "10",
-          "chance": "10000"
-        },
-        {
-          "name": "blue crystal splinter",
-          "countmax": "15",
-          "chance": "10000"
-        },
-        {
-          "name": "cluster of solace",
-          "countmax": "14",
-          "chance": "10000"
-        },
-        {
-          "name": "dream matter",
-          "countmax": "3",
-          "chance": "10000"
-        },
-        {
-          "name": "crude umbral blade",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral blade",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral masterblade",
-          "chance": "4000"
-        },
-        {
-          "name": "crude umbral slayer",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral slayer",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral master slayer",
-          "chance": "3000"
-        },
-        {
-          "name": "crude umbral axe",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral axe",
-          "chance": "4000"
-        },
-        {
-          "name": "umbral master axe",
-          "chance": "3000"
-        },
-        {
-          "name": "crude umbral chopper",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral chopper",
-          "chance": "4000"
-        },
-        {
-          "name": "umbral master chopper",
-          "chance": "3000"
-        },
-        {
-          "name": "crude umbral mace",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral mace",
-          "chance": "4000"
-        },
-        {
-          "name": "umbral master mace",
-          "chance": "3000"
-        },
-        {
-          "name": "crude umbral hammer",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral hammer",
-          "chance": "4000"
-        },
-        {
-          "name": "umbral master hammer",
-          "chance": "3000"
-        },
-        {
-          "name": "crude umbral bow",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral bow",
-          "chance": "4000"
-        },
-        {
-          "name": "umbral master bow",
-          "chance": "3000"
-        },
-        {
-          "name": "crude umbral crossbow",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral crossbow",
-          "chance": "4000"
-        },
-        {
-          "name": "umbral master crossbow",
-          "chance": "3000"
-        },
-        {
-          "name": "crude umbral spellbook",
-          "chance": "5000"
-        },
-        {
-          "name": "umbral spellbook",
-          "chance": "4000"
-        },
-        {
-          "name": "umbral master spellbook",
-          "chance": "3000"
-        },
-        {
-          "name": "unrealized dream",
-          "countmax": "3",
-          "chance": "10000"
-        },
-        {
-          "name": "nightmare horn",
-          "chance": "6000"
-        },
-        {
-          "name": "dream warden mask",
-          "chance": "6000"
-        },
-        {
-          "name": "psychedelic tapestry",
-          "chance": "6000"
-        },
-        {
-          "name": "demonic tapestry",
-          "chance": "6000"
-        },
-        {
-          "name": "eye pod",
-          "chance": "6000"
-        },
-        {
-          "id": "22614",
-          "chance": "6000"
+          "areaEffect": "greenshimmer"
         }
-      ],
-      "#comment": []
+      ]
     }
+  ],
+  "defense": {
+    "armor": 55,
+    "defense": 65
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "3000",
+      "chance": "35",
+      "min": "2500",
+      "max": "3500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "4000",
+      "chance": "80",
+      "speedchange": "500",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 50,
+    "earthPercent": 50,
+    "energyPercent": 50,
+    "deathPercent": 50,
+    "physicalPercent": 50,
+    "holyPercent": 50,
+    "icePercent": 50
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 10000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 10000,
+      "items": [],
+      "name": "blue gem"
+    },
+    {
+      "id": 0,
+      "countmax": 6,
+      "chance": 10000,
+      "items": [],
+      "name": "crystal coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "yellow piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "demon horn"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 10000,
+      "items": [],
+      "name": "demonic essence"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "infernal bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 10000,
+      "items": [],
+      "name": "assassin star"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 10000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 7632,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "magma coat"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 10000,
+      "items": [],
+      "name": "great spirit potion"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 10000,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "phoenix charm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "unity charm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "spiritual charm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "twin sun charm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "solitude charm"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 10000,
+      "items": [],
+      "name": "violet crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 10000,
+      "items": [],
+      "name": "green crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 10000,
+      "items": [],
+      "name": "green crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 10000,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 14,
+      "chance": 10000,
+      "items": [],
+      "name": "cluster of solace"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "dream matter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "umbral blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral masterblade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral slayer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "umbral slayer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master slayer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral chopper"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral chopper"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master chopper"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "crude umbral spellbook"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "umbral spellbook"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "umbral master spellbook"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "unrealized dream"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "nightmare horn"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "dream warden mask"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "psychedelic tapestry"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "demonic tapestry"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "eye pod"
+    },
+    {
+      "id": 22614,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 30,
+    "sentences": [
+      {
+        "sentence": "Gaz'haragoth begins to channel DEATH AND DOOM into the area! RUN!",
+        "yell": false
+      },
+      {
+        "sentence": "Minions! Follow my call!",
+        "yell": false
+      },
+      {
+        "sentence": "I've beaten tougher demons then you even know",
+        "yell": false
+      },
+      {
+        "sentence": "You puny humans will be my snacks!",
+        "yell": false
+      },
+      {
+        "sentence": "Gaz'haragoth calls down: DEATH AND DOOM!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 6,
+    "summons": [
+      {
+        "name": "Minion of Gaz'haragoth",
+        "interval": 4000,
+        "chance": 33,
+        "max": 3
+      },
+      {
+        "name": "Nightmare of Gaz'haragoth",
+        "interval": 4000,
+        "chance": 33,
+        "max": 3
+      }
+    ]
   }
 }

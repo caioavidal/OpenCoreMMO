@@ -1,5 +1,4 @@
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
@@ -14,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NeoServer.Server.Standalone;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Loaders.World
 {
@@ -22,29 +23,24 @@ namespace NeoServer.Loaders.World
         private Game.World.World world;
         private readonly Logger logger;
         private readonly IItemFactory itemFactory;
+        private readonly ServerConfiguration serverConfiguration;
 
-        public WorldLoader(Game.World.World world, Logger logger, IItemFactory itemFactory)
+        public WorldLoader(IMap map, Game.World.World world, Logger logger, IItemFactory itemFactory, ServerConfiguration serverConfiguration)
         {
-            //this.itemFactory = itemFactory;
             this.world = world;
             this.logger = logger;
             this.itemFactory = itemFactory;
+            this.serverConfiguration = serverConfiguration;
         }
         public void Load()
         {
-            var fileStream = File.ReadAllBytes("./data/world/small.otbm");
+            var fileStream = File.ReadAllBytes($"./data/world/{serverConfiguration.OTBM}");
 
             var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
 
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 
-            var tiles = GetTiles(otbm);
-
-            // tiles.AsParallel().ForAll(x => world.AddTile(x));
-            foreach (var tile in tiles)
-            {
-                world.AddTile(tile);
-            }
+            LoadTiles(otbm);
 
             foreach (var townNode in otbm.Towns)
             {
@@ -68,17 +64,18 @@ namespace NeoServer.Loaders.World
 
         }
 
-        private IEnumerable<ITile> GetTiles(OTBM.Structure.OTBM otbm)
+        private void LoadTiles(OTBM.Structure.OTBM otbm)
         {
-            return otbm.TileAreas.AsParallel().SelectMany(t => t.Tiles)
-                .Select(tileNode =>
+            otbm.TileAreas.AsParallel().SelectMany(t => t.Tiles)
+                .ForAll(tileNode =>
                 {
 
                     var items = GetItemsOnTile(tileNode).ToArray();
 
                     var tile = TileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
 
-                    return tile;
+                    world.AddTile(tile);
+                   // return tile;
                 });
         }
 

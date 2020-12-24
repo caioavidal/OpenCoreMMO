@@ -1,273 +1,270 @@
 {
-  "monster": {
-    "name": "Abyssador",
-    "nameDescription": "Abyssador",
-    "race": "blood",
-    "experience": "50000",
-    "speed": "470",
-    "health": {
-      "now": "300000",
-      "max": "300000"
+  "name": "Abyssador",
+  "nameDescription": "Abyssador",
+  "race": "blood",
+  "experience": 50000,
+  "speed": 470,
+  "manaCost": 0,
+  "health": {
+    "max": 300000,
+    "now": 300000
+  },
+  "look": {
+    "type": 495,
+    "corpse": 17413
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 50,
+    "runonhealth": 100
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2500",
+      "min": "0",
+      "max": "-960"
     },
-    "look": {
-      "type": "495",
-      "corpse": "17413"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "speedchange": "-400",
+      "duration": "2500",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "runonhealth": "100"
+          "shootEffect": "earth"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2500",
-          "min": "0",
-          "max": "-960"
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "speedchange": "-400",
-          "duration": "2500",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "earth"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "800",
-          "chance": "10",
-          "radius": "10",
-          "range": "7",
-          "min": "-820",
-          "max": "-1250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenspark"
-          }
-        },
-        {
-          "name": "energy",
-          "interval": "750",
-          "chance": "10",
-          "radius": "12",
-          "range": "3",
-          "target": "1",
-          "min": "-650",
-          "max": "-1300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenspark"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "700",
-          "chance": "10",
-          "range": "3",
-          "radius": "4",
-          "target": "1",
-          "min": "-600",
-          "max": "-1230",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "700",
-          "chance": "12",
-          "radius": "3",
-          "target": "0",
-          "min": "-40",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "20",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "1",
-          "min": "0",
-          "max": "300000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "5000",
-          "chance": "30",
-          "min": "1000",
-          "max": "1000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "25",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "10"
-        },
-        {
-          "deathPercent": "-20"
-        },
-        {
-          "energyPercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "drown": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "outfit": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "3000",
+    {
+      "name": "fire",
+      "interval": "800",
       "chance": "10",
-      "voice": [
+      "radius": "10",
+      "range": "7",
+      "min": "-820",
+      "max": "-1250",
+      "attributes": [
         {
-          "sentence": "*** BRAINS *** SMALL ***"
-        },
-        {
-          "sentence": "*** LIVE *** DRY ***"
-        },
-        {
-          "sentence": "*** IMPORTANT ***"
-        },
-        {
-          "sentence": "*** FIRE *** HOME *** VICTORY ***"
-        },
-        {
-          "sentence": "*** EXISTENCE *** FUTILE ***"
-        },
-        {
-          "sentence": "*** TIME ***"
-        },
-        {
-          "sentence": "*** STEALTH ***"
-        },
-        {
-          "sentence": "*** DEATH ***"
+          "areaEffect": "greenspark"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "energy",
+      "interval": "750",
+      "chance": "10",
+      "radius": "12",
+      "range": "3",
+      "target": "1",
+      "min": "-650",
+      "max": "-1300",
+      "attributes": [
         {
-          "name": "decorative ribbon",
-          "chance": "10000"
-        },
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "700",
+      "chance": "10",
+      "range": "3",
+      "radius": "4",
+      "target": "1",
+      "min": "-600",
+      "max": "-1230",
+      "attributes": [
         {
-          "name": "crystalline sword",
-          "chance": "5500"
-        },
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "700",
+      "chance": "12",
+      "radius": "3",
+      "target": "0",
+      "min": "-40",
+      "max": "-130",
+      "attributes": [
         {
-          "name": "crystalline axe",
-          "chance": "5500"
-        },
-        {
-          "name": "mycological mace",
-          "chance": "4500"
-        },
-        {
-          "name": "crystal crossbow",
-          "chance": "4500"
-        },
-        {
-          "name": "mycological bow",
-          "chance": "10000"
-        },
-        {
-          "name": "shiny blade",
-          "chance": "8000"
-        },
-        {
-          "name": "Abyssador's lash",
-          "chance": "100000"
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "1",
+      "min": "0",
+      "max": "300000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "5000",
+      "chance": "30",
+      "min": "1000",
+      "max": "1000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "25",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 10,
+    "deathPercent": -20,
+    "energyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "decorative ribbon"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "crystalline sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "crystalline axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "mycological mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "crystal crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "mycological bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "shiny blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "Abyssador's lash"
+    }
+  ],
+  "voices": {
+    "interval": 3000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "*** BRAINS *** SMALL ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** LIVE *** DRY ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** IMPORTANT ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** FIRE *** HOME *** VICTORY ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** EXISTENCE *** FUTILE ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** TIME ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** STEALTH ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** DEATH ***",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "drown": 1,
+    "paralyze": 1,
+    "invisible": 1,
+    "earth": 1,
+    "drunk": 1,
+    "outfit": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

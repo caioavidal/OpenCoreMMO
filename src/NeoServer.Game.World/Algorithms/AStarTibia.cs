@@ -22,7 +22,7 @@ namespace NeoServer.Game.World.Map
             }
 
             int testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
-            if (fpp.MaxTargetDist== 1)
+            if (fpp.MaxTargetDist == 1)
             {
                 if (testDist < fpp.MinTargetDist || testDist > fpp.MaxTargetDist)
                 {
@@ -54,7 +54,7 @@ namespace NeoServer.Game.World.Map
         }
 
         public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
-            fpp, out Direction[] directions)
+            fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             var pos = creature.Location;
 
@@ -185,17 +185,11 @@ namespace NeoServer.Game.World.Map
 
                     AStarNode neighborNode = nodes.GetNodeByPosition(pos);
 
-                    ITile tile;
-                    if (neighborNode != null)
+                    ITile tile = map[pos];
+
+                    if (!tileEnterRule.CanEnter(tile))
                     {
-                        tile = map[pos];
-                    }
-                    else
-                    {
-                        if (!map.CanWalkTo(pos, out tile))
-                        {
-                            continue;
-                        }
+                        continue;
                     }
 
                     var cost = n.GetMapWalkCost(pos);
@@ -427,7 +421,7 @@ namespace NeoServer.Game.World.Map
         }
     }
 
-    internal readonly struct AStarPosition: IEquatable<AStarPosition>
+    internal readonly struct AStarPosition : IEquatable<AStarPosition>
     {
         public AStarPosition(int x, int y)
         {

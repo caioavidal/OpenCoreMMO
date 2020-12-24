@@ -1,185 +1,182 @@
 {
-  "monster": {
-    "name": "Tiquandas Revenge",
-    "nameDescription": "Tiquandas Revenge",
-    "race": "venom",
-    "experience": "2635",
-    "speed": "440",
-    "health": {
-      "now": "1800",
-      "max": "1800"
+  "name": "Tiquandas Revenge",
+  "nameDescription": "Tiquandas Revenge",
+  "race": "venom",
+  "experience": 2635,
+  "speed": 440,
+  "manaCost": 0,
+  "health": {
+    "max": 1800,
+    "now": 1800
+  },
+  "look": {
+    "type": 120,
+    "corpse": 6047
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 400
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-160",
+      "poison": "95"
     },
-    "look": {
-      "type": "120",
-      "corpse": "6047"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "min": "-60",
+      "max": "-200",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "400"
+          "areaEffect": "greenspark"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "34",
+      "range": "7",
+      "speedchange": "-850",
+      "duration": "30000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-160",
-          "poison": "95"
+          "shootEffect": "poison"
         },
         {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "25",
-          "range": "7",
-          "min": "-60",
-          "max": "-200",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenspark"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "34",
-          "range": "7",
-          "speedchange": "-850",
-          "duration": "30000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenspark"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "12",
-          "radius": "3",
-          "target": "0",
-          "min": "-40",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
+          "areaEffect": "greenspark"
         }
       ]
     },
-    "defenses": {
-      "armor": "30",
-      "defense": "31",
-      "defense": {
-        "name": "healing",
-        "interval": "1200",
-        "chance": "35",
-        "min": "600",
-        "max": "800",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "12",
+      "radius": "3",
+      "target": "0",
+      "min": "-40",
+      "max": "-130",
+      "attributes": [
         {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small diamond",
-          "countmax": "3",
-          "chance": "33333"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "10",
-          "chance": "100000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "100000"
-        },
-        {
-          "name": "meat",
-          "countmax": "50",
-          "chance": "33333"
-        },
-        {
-          "name": "ham",
-          "countmax": "8",
-          "chance": "20000"
-        },
-        {
-          "name": "worm",
-          "countmax": "10",
-          "chance": "50000"
-        },
-        {
-          "name": "mandrake",
-          "chance": "100000"
-        },
-        {
-          "name": "seeds",
-          "chance": "4000"
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 31
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1200",
+      "chance": "35",
+      "min": "600",
+      "max": "800",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 33333,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 33333,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 20000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 50000,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "mandrake"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "seeds"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

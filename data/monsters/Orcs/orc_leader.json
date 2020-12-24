@@ -1,203 +1,217 @@
 {
-  "monster": {
-    "name": "Orc Leader",
-    "nameDescription": "an orc leader",
-    "race": "blood",
-    "experience": "270",
-    "speed": "220",
-    "manacost": "640",
-    "health": {
-      "now": "450",
-      "max": "450"
+  "name": "Orc Leader",
+  "nameDescription": "an orc leader",
+  "race": "blood",
+  "experience": 270,
+  "speed": 220,
+  "manaCost": 640,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 59,
+    "corpse": 6001
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-185"
     },
-    "look": {
-      "type": "59",
-      "corpse": "6001"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "0",
+      "max": "-70",
+      "attributes": [
         {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "shootEffect": "throwingknife"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-185"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "0",
-          "max": "-70",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "throwingknife"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "holyPercent": "20"
-        },
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "fire": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Ulderek futgyr human!"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "35",
-          "chance": "28000"
-        },
-        {
-          "name": "sword ring",
-          "chance": "3920"
-        },
-        {
-          "name": "longsword",
-          "chance": "2800"
-        },
-        {
-          "name": "throwing knife",
-          "countmax": "4",
-          "chance": "9950"
-        },
-        {
-          "name": "broadsword",
-          "chance": "610"
-        },
-        {
-          "id": "2419",
-          "chance": "1860"
-        },
-        {
-          "name": "plate armor",
-          "chance": "1650"
-        },
-        {
-          "name": "warrior helmet",
-          "chance": "180"
-        },
-        {
-          "name": "brass legs",
-          "chance": "3100"
-        },
-        {
-          "name": "plate shield",
-          "chance": "1650"
-        },
-        {
-          "name": "plate legs",
-          "chance": "440"
-        },
-        {
-          "id": "2667",
-          "chance": "29400"
-        },
-        {
-          "name": "brown mushroom",
-          "chance": "9650"
-        },
-        {
-          "name": "royal spear",
-          "chance": "2400"
-        },
-        {
-          "name": "health potion",
-          "chance": "550"
-        },
-        {
-          "name": "orc tooth",
-          "chance": "1030"
-        },
-        {
-          "name": "orc leather",
-          "chance": "19510"
-        },
-        {
-          "name": "skull belt",
-          "chance": "2008"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "holyPercent": 20,
+    "earthPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 35,
+      "chance": 28000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3920,
+      "items": [],
+      "name": "sword ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2800,
+      "items": [],
+      "name": "longsword"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 9950,
+      "items": [],
+      "name": "throwing knife"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 610,
+      "items": [],
+      "name": "broadsword"
+    },
+    {
+      "id": 2419,
+      "countmax": 1,
+      "chance": 1860,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1650,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "warrior helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3100,
+      "items": [],
+      "name": "brass legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1650,
+      "items": [],
+      "name": "plate shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 440,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 29400,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9650,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2400,
+      "items": [],
+      "name": "royal spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1030,
+      "items": [],
+      "name": "orc tooth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 19510,
+      "items": [],
+      "name": "orc leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2008,
+      "items": [],
+      "name": "skull belt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ulderek futgyr human!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

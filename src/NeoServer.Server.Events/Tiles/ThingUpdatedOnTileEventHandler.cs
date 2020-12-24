@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;

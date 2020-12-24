@@ -1,326 +1,321 @@
 {
-  "monster": {
-    "name": "The Imperor",
-    "nameDescription": "the imperor",
-    "race": "fire",
-    "experience": "8000",
-    "speed": "330",
-    "manacost": "0",
-    "health": {
-      "now": "15000",
-      "max": "15000"
+  "name": "The Imperor",
+  "nameDescription": "the imperor",
+  "race": "fire",
+  "experience": 8000,
+  "speed": 330,
+  "manaCost": 0,
+  "health": {
+    "max": 15000,
+    "now": 15000
+  },
+  "look": {
+    "type": 237,
+    "corpse": 8635
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "110",
+      "attack": "110"
     },
-    "look": {
-      "type": "237",
-      "corpse": "8635"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "5"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "13",
+      "range": "1",
+      "target": "1",
+      "min": "-50",
+      "max": "-800",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "fire"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "fireattack"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "6",
+      "target": "1",
+      "min": "-50",
+      "max": "-800",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "110",
-          "attack": "110"
+          "shootEffect": "fire"
         },
         {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "13",
-          "range": "1",
-          "target": "1",
-          "min": "-50",
-          "max": "-800",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "fireattack"
-            }
-          ]
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "radius": "6",
-          "target": "1",
-          "min": "-50",
-          "max": "-800",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "30",
-          "length": "4",
-          "spread": "2",
-          "target": "1",
-          "min": "-90",
-          "max": "-350",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
+          "areaEffect": "firearea"
         }
       ]
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "30",
+      "length": "4",
+      "spread": "2",
+      "target": "1",
+      "min": "-90",
+      "max": "-350",
+      "attributes": [
         {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "50",
-          "min": "175",
-          "max": "505",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
+          "shootEffect": "fire"
         },
         {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "12",
-          "speedchange": "380",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
+          "areaEffect": "firearea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "50",
+      "min": "175",
+      "max": "505",
+      "attributes": [
         {
-          "name": "invisible",
-          "interval": "3000",
-          "chance": "20",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "elements": {
-      "element": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "12",
+      "speedchange": "380",
+      "duration": "4000",
+      "attributes": [
         {
-          "icePercent": "-20"
-        },
-        {
-          "holyPercent": "-20"
-        },
-        {
-          "deathPercent": "20"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "invisible",
+      "interval": "3000",
+      "chance": "20",
+      "duration": "5000",
+      "attributes": [
         {
-          "physical": "0"
-        },
-        {
-          "energy": "0"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "poison": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "icePercent": -20,
+    "holyPercent": -20,
+    "deathPercent": 20
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 79,
+      "chance": 100000,
+      "items": [],
+      "name": null
     },
-    "summons": {
-      "maxSummons": "2",
-      "summon": {
-        "name": "diabolic imp",
-        "interval": "5500",
-        "chance": "30"
-      }
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Muahaha!"
-        },
-        {
-          "sentence": "He he he!"
-        }
-      ]
+    {
+      "id": 6558,
+      "countmax": 1,
+      "chance": 2222,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2260,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6534,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 999,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2465,
+      "countmax": 1,
+      "chance": 6577,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "79",
-          "chance": "100000"
+          "id": 2548,
+          "countmax": 1,
+          "chance": 20000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2050",
-          "chance": "15000"
+          "id": 6529,
+          "countmax": 5,
+          "chance": 5000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "6558",
-          "chance": "2222"
+          "id": 2465,
+          "countmax": 1,
+          "chance": 6577,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2260",
-          "chance": "18000"
+          "id": 2185,
+          "countmax": 1,
+          "chance": 833,
+          "items": [],
+          "name": null
         },
         {
-          "id": "6534",
-          "chance": "100000"
+          "id": 2464,
+          "countmax": 1,
+          "chance": 7887,
+          "items": [],
+          "name": null
         },
         {
-          "id": "6300",
-          "chance": "999"
+          "id": 5944,
+          "countmax": 1,
+          "chance": 5666,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2465",
-          "chance": "6577"
+          "id": 7899,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2548",
-              "chance": "20000"
-            },
-            {
-              "id": "6529",
-              "countmax": "5",
-              "chance": "5000"
-            },
-            {
-              "id": "2465",
-              "chance": "6577"
-            },
-            {
-              "id": "2185",
-              "chance": "833"
-            },
-            {
-              "id": "2464",
-              "chance": "7887"
-            },
-            {
-              "id": "5944",
-              "chance": "5666"
-            },
-            {
-              "id": "7899",
-              "chance": "2000"
-            },
-            {
-              "id": "7900",
-              "chance": "2000"
-            },
-            {
-              "id": "7891",
-              "chance": "2000"
-            },
-            {
-              "id": "6500",
-              "countmax": "1",
-              "chance": "7777"
-            },
-            {
-              "id": "2150",
-              "countmax": "1",
-              "chance": "8888"
-            },
-            {
-              "id": "2165",
-              "chance": "4555"
-            }
-          ]
+          "id": 7900,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7891,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 6500,
+          "countmax": 1,
+          "chance": 7777,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2150,
+          "countmax": 1,
+          "chance": 8888,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2165,
+          "countmax": 1,
+          "chance": 4555,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Muahaha!",
+        "yell": false
+      },
+      {
+        "sentence": "He he he!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "poison": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "diabolic imp",
+        "interval": 5500,
+        "chance": 30,
+        "max": 0
+      }
+    ]
   }
 }

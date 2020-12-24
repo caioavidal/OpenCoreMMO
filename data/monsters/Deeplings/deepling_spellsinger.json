@@ -1,232 +1,234 @@
 {
-  "monster": {
-    "name": "Deepling Spellsinger",
-    "nameDescription": "a deepling spellsinger",
-    "race": "blood",
-    "experience": "1000",
-    "speed": "190",
-    "health": {
-      "now": "850",
-      "max": "850"
+  "name": "Deepling Spellsinger",
+  "nameDescription": "a deepling spellsinger",
+  "race": "blood",
+  "experience": 1000,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 850,
+    "now": 850
+  },
+  "look": {
+    "type": 443,
+    "corpse": 15208
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 60,
+    "runonhealth": 60,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-152"
     },
-    "look": {
-      "type": "443",
-      "corpse": "15208"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "staticattack": "60"
-        },
-        {
-          "runonhealth": "60"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-152"
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "10",
-          "length": "10",
-          "spread": "3",
-          "min": "-180",
-          "max": "-350",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "icetornado"
-          }
-        },
-        {
-          "name": "drown",
-          "interval": "2000",
-          "chance": "20",
-          "target": "1",
-          "radius": "4",
-          "min": "-90",
-          "max": "-130",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bubbles"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "min": "-60",
-          "max": "-140",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallplants"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "min": "-60",
-          "max": "-140",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallplants"
-          }
-        },
-        {
-          "name": "deepling spellsinger skill reducer",
-          "range": "5",
-          "interval": "2000",
-          "chance": "5"
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "-20"
-        },
-        {
-          "energyPercent": "-20"
-        },
-        {
-          "deathPercent": "50"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "fire": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "ice",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "length": "10",
+      "spread": "3",
+      "min": "-180",
+      "max": "-350",
+      "attributes": [
         {
-          "sentence": "Jey Obu giotja!!"
-        },
-        {
-          "sentence": "Mmmmmoooaaaaaahaaa!!"
+          "areaEffect": "icetornado"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "radius": "4",
+      "min": "-90",
+      "max": "-130",
+      "attributes": [
         {
-          "name": "small sapphire",
-          "chance": "2854"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "60",
-          "chance": "70000"
-        },
-        {
-          "name": "platinum coin",
-          "chance": "80000"
-        },
-        {
-          "name": "life ring",
-          "chance": "2439"
-        },
-        {
-          "id": "2667",
-          "chance": "3448"
-        },
-        {
-          "name": "fish fin",
-          "chance": "498"
-        },
-        {
-          "name": "eye of a deepling",
-          "chance": "2500"
-        },
-        {
-          "name": "deepling staff",
-          "chance": "2000"
-        },
-        {
-          "name": "necklace of the deep",
-          "chance": "813"
-        },
-        {
-          "name": "spellsinger's seal",
-          "chance": "14285"
-        },
-        {
-          "name": "key to the Drowned Library",
-          "chance": "10000"
-        },
-        {
-          "name": "deepling filet",
-          "chance": "14285"
-        },
-        {
-          "name": "ornate crossbow",
-          "chance": "220"
+          "areaEffect": "bubbles"
         }
-      ]/* fish */
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-60",
+      "max": "-140",
+      "attributes": [
+        {
+          "areaEffect": "smallplants"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-60",
+      "max": "-140",
+      "attributes": [
+        {
+          "areaEffect": "smallplants"
+        }
+      ]
+    },
+    {
+      "name": "deepling spellsinger skill reducer",
+      "range": "5",
+      "interval": "2000",
+      "chance": "5"
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": -20,
+    "energyPercent": -20,
+    "deathPercent": 50
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2854,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 70000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2439,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 3448,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 498,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "eye of a deepling"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "deepling staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 813,
+      "items": [],
+      "name": "necklace of the deep"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "spellsinger's seal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "key to the Drowned Library"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "deepling filet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 220,
+      "items": [],
+      "name": "ornate crossbow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Jey Obu giotja!!",
+        "yell": false
+      },
+      {
+        "sentence": "Mmmmmoooaaaaaahaaa!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "ice": 1,
+    "drown": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

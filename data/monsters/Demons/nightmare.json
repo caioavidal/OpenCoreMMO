@@ -1,283 +1,292 @@
 {
-  "monster": {
-    "name": "Nightmare",
-    "nameDescription": "a nightmare",
-    "race": "blood",
-    "experience": "2150",
-    "speed": "270",
-    "manacost": "0",
-    "health": {
-      "now": "2700",
-      "max": "2700"
+  "name": "Nightmare",
+  "nameDescription": "a nightmare",
+  "race": "blood",
+  "experience": 2150,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 2700,
+    "now": 2700
+  },
+  "look": {
+    "type": 245,
+    "corpse": 6340
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "50",
+      "attack": "50"
     },
-    "look": {
-      "type": "245",
-      "corpse": "6340"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-130",
+      "max": "-170",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "fire"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "energy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "melee",
+      "interval": "3000",
+      "chance": "18",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-250",
+      "max": "-400",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "50",
-          "attack": "50"
+          "shootEffect": "poison"
         },
         {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "min": "-130",
-          "max": "-170",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "50",
+      "min": "100",
+      "max": "155",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "3000",
-          "chance": "18",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "min": "-250",
-          "max": "-400",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "defenses": {
-      "armor": "25",
-      "defense": "20",
-      "defense": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "40",
+      "speedchange": "360",
+      "duration": "80000",
+      "attributes": [
         {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "50",
-          "min": "100",
-          "max": "155",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "40",
-          "speedchange": "360",
-          "duration": "80000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 100,
+    "firePercent": 25,
+    "energyPercent": 20,
+    "earthPercent": 10,
+    "icePercent": 10,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 75,
+      "chance": 50000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "deathPercent": "100"
-        },
-        {
-          "firePercent": "25"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "earthPercent": "10"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "holyPercent": "-25"
-        }
-      ]
+    {
+      "id": 2148,
+      "countmax": 45,
+      "chance": 50000,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
+    {
+      "id": 2532,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Close your eyes... I want to show you something!"
-        },
-        {
-          "sentence": "I will haunt you forever!"
-        },
-        {
-          "sentence": "I will make you scream!"
-        },
-        {
-          "sentence": "Pffffrrrrrrrrrrrr."
-        },
-        {
-          "sentence": "Take a ride with me."
-        },
-        {
-          "sentence": "Weeeheeheeeheee!"
-        }
-      ]
+    {
+      "id": 2195,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 6558,
+      "countmax": 2,
+      "chance": 13500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 1429,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6500,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2387,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2671,
+      "countmax": 2,
+      "chance": 15000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "75",
-          "chance": "50000"
+          "id": 2477,
+          "countmax": 1,
+          "chance": 3333,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "45",
-          "chance": "50000"
+          "id": 2666,
+          "countmax": 4,
+          "chance": 17500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2532",
-          "chance": "800"
+          "id": 5669,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2195",
-          "chance": "300"
+          "id": 2152,
+          "countmax": 4,
+          "chance": 1000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "6558",
-          "countmax": "2",
-          "chance": "13500"
+          "id": 2547,
+          "countmax": 4,
+          "chance": 7000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "6300",
-          "chance": "1429"
+          "id": 6526,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "6500",
-          "chance": "10000"
+          "id": 5944,
+          "countmax": 1,
+          "chance": 20000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2387",
-          "chance": "15000"
+          "id": 2457,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2671",
-          "countmax": "2",
-          "chance": "15000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2477",
-              "chance": "3333"
-            },
-            {
-              "id": "2666",
-              "countmax": "4",
-              "chance": "17500"
-            },
-            {
-              "id": "5669",
-              "chance": "100"
-            },
-            {
-              "id": "2152",
-              "countmax": "4",
-              "chance": "1000"
-            },
-            {
-              "id": "2547",
-              "countmax": "4",
-              "chance": "7000"
-            },
-            {
-              "id": "6526",
-              "chance": "500"
-            },
-            {
-              "id": "5944",
-              "chance": "20000"
-            },
-            {
-              "id": "2457",
-              "chance": "500"
-            },
-            {
-              "id": "2454",
-              "chance": "100"
-            }
-          ]
+          "id": 2454,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Close your eyes... I want to show you something!",
+        "yell": false
+      },
+      {
+        "sentence": "I will haunt you forever!",
+        "yell": false
+      },
+      {
+        "sentence": "I will make you scream!",
+        "yell": false
+      },
+      {
+        "sentence": "Pffffrrrrrrrrrrrr.",
+        "yell": false
+      },
+      {
+        "sentence": "Take a ride with me.",
+        "yell": false
+      },
+      {
+        "sentence": "Weeeheeheeeheee!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

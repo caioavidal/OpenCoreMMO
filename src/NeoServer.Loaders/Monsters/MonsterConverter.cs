@@ -14,9 +14,9 @@ namespace NeoServer.Loaders.Monsters
 {
     public class MonsterConverter
     {
-        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration)
+        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration, IMonsterDataManager monsters)
         {
-            var data = monsterData.Monster;
+            var data = monsterData;
             var monster = new MonsterType()
             {
                 Name = data.Name,
@@ -34,14 +34,14 @@ namespace NeoServer.Loaders.Monsters
             if (data.Voices != null)
             {
                 monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval), System.Convert.ToByte(data.Voices.Chance));
-                monster.Voices = data.Voices.Voice.Select(x => x.Sentence).ToArray();
+                monster.Voices = data.Voices.Sentences.Select(x => x.Sentence).ToArray();
             }
 
             monster.Attacks = MonsterAttackConverter.Convert(data);
 
             monster.Immunities = MonsterImmunityConverter.Convert(data).ToImmutableDictionary();
 
-            monster.Defenses = MonsterDefenseConverter.Convert(data);
+            monster.Defenses = MonsterDefenseConverter.Convert(data, monsters);
 
             monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate);
 
@@ -53,8 +53,6 @@ namespace NeoServer.Loaders.Monsters
 
             return monster;
         }
-
-
         private static CreatureFlagAttribute ParseCreatureFlag(string flag)
         {
             return flag switch
@@ -70,6 +68,7 @@ namespace NeoServer.Loaders.Monsters
                 "targetdistance" => CreatureFlagAttribute.TargetDistance,
                 "staticattack" => CreatureFlagAttribute.StaticAttack,
                 "runonhealth" => CreatureFlagAttribute.RunOnHealth,
+                "lightcolor" => CreatureFlagAttribute.LightColor,
                 _ => CreatureFlagAttribute.None
             };
         }

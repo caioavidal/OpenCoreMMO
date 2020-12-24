@@ -1,260 +1,257 @@
 {
-  "monster": {
-    "name": "Feversleep",
-    "nameDescription": "a feversleep",
-    "race": "blood",
-    "experience": "4400",
-    "speed": "270",
-    "health": {
-      "now": "5900",
-      "max": "5900"
+  "name": "Feversleep",
+  "nameDescription": "a feversleep",
+  "race": "blood",
+  "experience": 4400,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 5900,
+    "now": 5900
+  },
+  "look": {
+    "type": 593,
+    "corpse": 22497
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-450"
     },
-    "look": {
-      "type": "593",
-      "corpse": "22497"
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "7",
+      "target": "0",
+      "min": "-800",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "yellowbubble"
+        }
+      ]
     },
-    "targetchange": {
-      "interval": "4000",
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "5",
+      "target": "0",
+      "min": "-70",
+      "max": "-100",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "feversleep skill reducer",
+      "interval": "2000",
       "chance": "10"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "length": "6",
+      "spread": "0",
+      "target": "1",
+      "min": "-250",
+      "max": "-300",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "yellowenergy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "1",
+      "target": "1",
+      "min": "-150",
+      "max": "-300",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-450"
+          "shootEffect": "suddendeath"
         },
         {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "20",
-          "radius": "7",
-          "target": "0",
-          "min": "-800",
-          "max": "-1000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowbubble"
-          }
+          "areaEffect": "smallclouds"
         },
         {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "radius": "5",
-          "target": "0",
-          "min": "-70",
-          "max": "-100",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "feversleep skill reducer",
-          "interval": "2000",
-          "chance": "10"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "10",
-          "length": "6",
-          "spread": "0",
-          "target": "1",
-          "min": "-250",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "yellowenergy"
-          }
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "1",
-          "target": "1",
-          "min": "-150",
-          "max": "-300",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "smallclouds"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "45",
-      "defense": "45",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "20",
-          "min": "250",
-          "max": "425",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "10",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blackspark"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "10"
-        },
-        {
-          "deathPercent": "5"
-        },
-        {
-          "firePercent": "5"
-        },
-        {
-          "energyPercent": "5"
-        },
-        {
-          "icePercent": "5"
-        },
-        {
-          "holyPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "100000"
-        },
-        {
-          "name": "small emerald",
-          "countmax": "2",
-          "chance": "11000"
-        },
-        {
-          "name": "small amethyst",
-          "countmax": "3",
-          "chance": "12000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "9",
-          "chance": "100000"
-        },
-        {
-          "name": "blue robe",
-          "chance": "1500"
-        },
-        {
-          "name": "great mana potion",
-          "countmax": "2",
-          "chance": "40000"
-        },
-        {
-          "name": "ultimate health potion",
-          "chance": "18000"
-        },
-        {
-          "name": "small topaz",
-          "countmax": "2",
-          "chance": "16000"
-        },
-        {
-          "name": "blue crystal shard",
-          "chance": "11000"
-        },
-        {
-          "name": "blue crystal splinter",
-          "chance": "13000"
-        },
-        {
-          "name": "cyan crystal fragment",
-          "chance": "18000"
-        },
-        {
-          "name": "trapped bad dream monster",
-          "chance": "17000"
-        },
-        {
-          "name": "bowl of terror sweat",
-          "chance": "14000"
+          "areaEffect": "mortarea"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "250",
+      "max": "425",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 10,
+    "deathPercent": 5,
+    "firePercent": 5,
+    "energyPercent": 5,
+    "icePercent": 5,
+    "holyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 11000,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 12000,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 9,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "blue robe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 40000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 16000,
+      "items": [],
+      "name": "small topaz"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11000,
+      "items": [],
+      "name": "blue crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "cyan crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17000,
+      "items": [],
+      "name": "trapped bad dream monster"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14000,
+      "items": [],
+      "name": "bowl of terror sweat"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

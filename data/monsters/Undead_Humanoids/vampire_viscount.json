@@ -1,229 +1,228 @@
 {
-  "monster": {
-    "name": "Vampire Viscount",
-    "nameDescription": "a vampire viscount",
-    "race": "blood",
-    "experience": "800",
-    "speed": "250",
-    "health": {
-      "now": "1200",
-      "max": "1200"
+  "name": "Vampire Viscount",
+  "nameDescription": "a vampire viscount",
+  "race": "blood",
+  "experience": 800,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 1200,
+    "now": 1200
+  },
+  "look": {
+    "type": 555,
+    "corpse": 21275
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-150"
     },
-    "look": {
-      "type": "555",
-      "corpse": "21275"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "range": "6",
+      "target": "1",
+      "min": "-50",
+      "max": "-100",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "death"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-150"
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "3",
-          "range": "6",
-          "target": "1",
-          "min": "-50",
-          "max": "-100",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "death"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "bleedcondition",
-          "interval": "2000",
-          "chance": "10",
-          "radius": "6",
-          "min": "-320",
-          "max": "-560",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bats"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": [
-        {
-          "name": "outfit",
-          "interval": "2000",
-          "chance": "10",
-          "monster": "Vicious Manbat",
-          "duration": "4000"
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "300",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "-5"
-        },
-        {
-          "firePercent": "-5"
-        },
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "icePercent": "5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "earth": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "bleedcondition",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "radius": "6",
+      "min": "-320",
+      "max": "-560",
+      "attributes": [
         {
-          "sentence": "Prepare to BLEED!"
-        },
-        {
-          "sentence": "Don't struggle. We don't want to waste a drop of blood now, do we?"
-        },
-        {
-          "sentence": "Ah, refreshments have arrived!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "black pearl",
-          "chance": "2500"
-        },
-        {
-          "name": "small ruby",
-          "countmax": "2",
-          "chance": "3040"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "50",
-          "chance": "83000"
-        },
-        {
-          "name": "red gem",
-          "chance": "540"
-        },
-        {
-          "name": "ice rapier",
-          "chance": "810"
-        },
-        {
-          "name": "vampire shield",
-          "chance": "200"
-        },
-        {
-          "name": "red piece of cloth",
-          "chance": "70"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "7100"
-        },
-        {
-          "name": "strong mana potion",
-          "chance": "8180"
-        },
-        {
-          "name": "vampire teeth",
-          "chance": "7200"
-        },
-        {
-          "name": "blood preservation",
-          "chance": "2910"
-        },
-        {
-          "name": "tooth file",
-          "chance": "6560"
-        },
-        {
-          "name": "vampire's cape chain",
-          "chance": "4460"
+          "areaEffect": "bats"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "10",
+      "monster": "Vicious Manbat",
+      "duration": "4000"
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": -5,
+    "firePercent": -5,
+    "physicalPercent": 5,
+    "icePercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 3040,
+      "items": [],
+      "name": "small ruby"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 83000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 540,
+      "items": [],
+      "name": "red gem"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 810,
+      "items": [],
+      "name": "ice rapier"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "vampire shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7100,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8180,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7200,
+      "items": [],
+      "name": "vampire teeth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2910,
+      "items": [],
+      "name": "blood preservation"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6560,
+      "items": [],
+      "name": "tooth file"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4460,
+      "items": [],
+      "name": "vampire's cape chain"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Prepare to BLEED!",
+        "yell": false
+      },
+      {
+        "sentence": "Don't struggle. We don't want to waste a drop of blood now, do we?",
+        "yell": false
+      },
+      {
+        "sentence": "Ah, refreshments have arrived!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "paralyze": 1,
+    "death": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

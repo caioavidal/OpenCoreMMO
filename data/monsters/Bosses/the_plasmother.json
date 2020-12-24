@@ -1,207 +1,197 @@
 {
-  "monster": {
-    "name": "The Plasmother",
-    "nameDescription": "The Plasmother",
-    "race": "venom",
-    "experience": "12000",
-    "speed": "310",
-    "health": {
-      "now": "7500",
-      "max": "7500"
+  "name": "The Plasmother",
+  "nameDescription": "The Plasmother",
+  "race": "venom",
+  "experience": 12000,
+  "speed": 310,
+  "manaCost": 0,
+  "health": {
+    "max": 7500,
+    "now": 7500
+  },
+  "look": {
+    "type": 238,
+    "corpse": 6532
+  },
+  "targetChange": {
+    "interval": 5500,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
     },
-    "look": {
-      "type": "238",
-      "corpse": "6532"
-    },
-    "targetchange": {
-      "interval": "5500",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "8",
+      "radius": "6",
+      "target": "0",
+      "speedchange": "-800",
+      "duration": "10000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "poison"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "radius": "4",
+      "min": "-200",
+      "max": "-350",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100"
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "8",
-          "radius": "6",
-          "target": "0",
-          "speedchange": "-800",
-          "duration": "10000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "target": "0",
-          "radius": "4",
-          "min": "-200",
-          "max": "-350",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "3000",
-          "chance": "15",
-          "target": "1",
-          "radius": "4",
-          "min": "-200",
-          "max": "-530",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "greenspark"
-            },
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            }
-          ]
+          "areaEffect": "poison"
         }
       ]
     },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "75",
-        "min": "505",
-        "max": "605",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "earth",
+      "interval": "3000",
+      "chance": "15",
+      "target": "1",
+      "radius": "4",
+      "min": "-200",
+      "max": "-530",
+      "attributes": [
         {
-          "firePercent": "-20"
+          "areaEffect": "greenspark"
         },
         {
-          "energyPercent": "15"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Blubb"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "black pearl",
-          "countmax": "3",
-          "chance": "5000"
-        },
-        {
-          "name": "small sapphire",
-          "countmax": "3",
-          "chance": "5000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "70",
-          "chance": "20000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "60",
-          "chance": "20000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "45",
-          "chance": "20000"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "13",
-          "chance": "25000"
-        },
-        {
-          "name": "soul orb",
-          "chance": "35000"
-        },
-        {
-          "name": "demonic essence",
-          "chance": "45000"
-        },
-        {
-          "name": "the Plasmother's remains",
-          "chance": "100000"
+          "shootEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "75",
+      "min": "505",
+      "max": "605",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": -20,
+    "energyPercent": 15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5000,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5000,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 20000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 20000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 20000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 13,
+      "chance": 25000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 35000,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 45000,
+      "items": [],
+      "name": "demonic essence"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "the Plasmother's remains"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Blubb",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,144 +1,103 @@
 {
-  "monster": {
-    "name": "Dreadbeast",
-    "species": "undead",
-    "nameDescription": "a dreadbeast",
-    "race": "undead",
-    "experience": "580",
-    "speed": "200",
-    "manacost": "800",
-    "health": {
-      "now": "515",
-      "max": "515"
+  "name": "Dreadbeast",
+  "nameDescription": "a dreadbeast",
+  "race": "undead",
+  "experience": 580,
+  "speed": 200,
+  "manaCost": 800,
+  "health": {
+    "max": 515,
+    "now": 515
+  },
+  "look": {
+    "type": 101,
+    "corpse": 3031
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 80,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "-0",
+      "max": "-100"
     },
-    "look": {
-      "type": "101",
-      "head": "20",
-      "body": "30",
-      "legs": "40",
-      "feet": "50",
-      "corpse": "3031"
-    },
-    "targetchange": {
-      "interval": "60000",
-      "chance": "10"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "1",
+      "target": "1",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
+          "areaEffect": "yellowenergy"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "suddendeath"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "1",
+      "target": "1",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "-0",
-          "max": "-100"
+          "areaEffect": "purpleenergy"
         },
         {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "20",
-          "radius": "1",
-          "target": "1",
-          "min": "-150",
-          "max": "-250",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "yellowenergy"
-            },
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            }
-          ]
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "20",
-          "radius": "1",
-          "target": "1",
-          "min": "-150",
-          "max": "-250",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "purpleenergy"
-            },
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            }
-          ]
+          "shootEffect": "suddendeath"
         }
       ]
-    },
-    "defenses": {
-      "armor": "34",
-      "defense": "36"
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "70"
-        },
-        {
-          "physicalPercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "poison": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "loot": {/* TODO: loot */}
+    }
+  ],
+  "defense": {
+    "armor": 34,
+    "defense": 36
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 70,
+    "physicalPercent": -25
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "poison": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

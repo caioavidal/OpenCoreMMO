@@ -1,210 +1,194 @@
 {
-  "monster": {
-    "name": "Zevelon Duskbringer",
-    "nameDescription": "Zevelon Duskbringer",
-    "race": "undead",
-    "experience": "1800",
-    "speed": "310",
-    "health": {
-      "now": "1400",
-      "max": "1400"
+  "name": "Zevelon Duskbringer",
+  "nameDescription": "Zevelon Duskbringer",
+  "race": "undead",
+  "experience": 1800,
+  "speed": 310,
+  "manaCost": 0,
+  "health": {
+    "max": 1400,
+    "now": 1400
+  },
+  "look": {
+    "type": 287,
+    "corpse": 8937
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-282"
     },
-    "look": {
-      "type": "287",
-      "corpse": "8937"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "death",
+      "interval": "1000",
+      "chance": "12",
+      "target": "1",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
         {
-          "summonable": "0"
+          "areaEffect": "mortarea"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "suddendeath"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-282"
-        },
-        {
-          "name": "death",
-          "interval": "1000",
-          "chance": "12",
-          "target": "1",
-          "min": "0",
-          "max": "-200",
-          "attribute": [
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            },
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            }
-          ]
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "target": "1",
-          "speedchange": "-700"
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "12",
-          "min": "100",
-          "max": "235",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "invisible",
-          "interval": "3000",
-          "chance": "25",
-          "duration": "6000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "outfit",
-          "interval": "4500",
-          "chance": "30",
-          "monster": "bat",
-          "duration": "4000"
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "20"
-        },
-        {
-          "holyPercent": "-15"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "3",
-      "summon": {
-        "name": "Vampire",
-        "interval": "3000",
-        "chance": "40"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Human blood is not suitable for drinking"
-        },
-        {
-          "sentence": "Your short live is coming to an end"
-        },
-        {
-          "sentence": "Ashari Mortals. Come and stay forever!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "black pearl",
-          "chance": "8000"
-        },
-        {
-          "name": "gold coin",
-          "chance": "100000",
-          "countmax": "75"
-        },
-        {
-          "name": "platinum coin",
-          "chance": "50000",
-          "countmax": "5"
-        },
-        {
-          "name": "ring of healing (faster regeneration)",
-          "chance": "11111"
-        },
-        {
-          "name": "vampire shield",
-          "chance": "4500"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "4000"
-        },
-        {
-          "name": "vampire lord token",
-          "chance": "100000"
-        }
-      ]
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "speedchange": "-700"
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "12",
+      "min": "100",
+      "max": "235",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "3000",
+      "chance": "25",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "4500",
+      "chance": "30",
+      "monster": "bat",
+      "duration": "4000"
+    }
+  ],
+  "elements": {
+    "physicalPercent": 20,
+    "holyPercent": -15,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 75,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 50000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11111,
+      "items": [],
+      "name": "ring of healing (faster regeneration)"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "vampire shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "vampire lord token"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Human blood is not suitable for drinking",
+        "yell": false
+      },
+      {
+        "sentence": "Your short live is coming to an end",
+        "yell": false
+      },
+      {
+        "sentence": "Ashari Mortals. Come and stay forever!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "death": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Vampire",
+        "interval": 3000,
+        "chance": 40,
+        "max": 0
+      }
+    ]
   }
 }

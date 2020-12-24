@@ -1,115 +1,103 @@
 {
-  "monster": {
-    "name": "Gnarlhound",
-    "nameDescription": "a gnarlhound",
-    "race": "blood",
-    "experience": "60",
-    "speed": "280",
-    "manacost": "465",
-    "health": {
-      "now": "198",
-      "max": "198"
-    },
-    "look": {
-      "type": "341",
-      "corpse": "11250"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-70"
-      }
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10"
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Gnarllll!"
-        },
-        {
-          "sentence": "Grrrrrr!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "30",
-          "chance": "48000"
-        },
-        {
-          "name": "meat",
-          "countmax": "3",
-          "chance": "39075"
-        },
-        {
-          "name": "worm",
-          "countmax": "3",
-          "chance": "33300"
-        },
-        {
-          "name": "shaggy tail",
-          "chance": "25550"
-        }
-      ]
+  "name": "Gnarlhound",
+  "nameDescription": "a gnarlhound",
+  "race": "blood",
+  "experience": 60,
+  "speed": 280,
+  "manaCost": 465,
+  "health": {
+    "max": 198,
+    "now": 198
+  },
+  "look": {
+    "type": 341,
+    "corpse": 11250
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-70"
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 48000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 39075,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 33300,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25550,
+      "items": [],
+      "name": "shaggy tail"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Gnarllll!",
+        "yell": false
+      },
+      {
+        "sentence": "Grrrrrr!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

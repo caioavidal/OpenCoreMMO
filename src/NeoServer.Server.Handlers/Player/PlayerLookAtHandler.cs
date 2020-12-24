@@ -1,6 +1,8 @@
-﻿using NeoServer.Game.Contracts.World.Tiles;
+﻿using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,11 +21,23 @@ namespace NeoServer.Server.Handlers.Player
         {
             var lookAtPacket = new LookAtPacket(message);
 
-            //if (game.Map[lookAtPacket.Location] is IDynamicTile tile)
-            //{
-            //    tile.TopItemOnStack.Name;
-                
-            //}
+            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player))
+            {
+                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Ground)
+                {
+                    if (game.Map[lookAtPacket.Location] is not ITile tile) return;
+                    
+                    game.Dispatcher.AddEvent(new Event(() => player.LookAt(tile)));
+                }
+                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Container)
+                {
+                    game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.ContainerId, lookAtPacket.Location.ContainerSlot)));
+                }
+                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Slot)
+                {
+                    game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.Slot)));
+                }
+            }
         }
     }
 }

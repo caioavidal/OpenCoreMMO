@@ -1,230 +1,199 @@
 {
-  "monster": {
-    "name": "Obujos",
-    "nameDescription": "Obujos",
-    "race": "blood",
-    "experience": "20000",
-    "speed": "560",
-    "health": {
-      "now": "35000",
-      "max": "35000"
-    },
-    "look": {
-      "type": "445",
-      "corpse": "15224"
-    },
-    "targetchange": {
+  "name": "Obujos",
+  "nameDescription": "Obujos",
+  "race": "blood",
+  "experience": 20000,
+  "speed": 560,
+  "manaCost": 0,
+  "health": {
+    "max": 35000,
+    "now": 35000
+  },
+  "look": {
+    "type": 445,
+    "corpse": 15224
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 60
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "50"
+      "min": "0",
+      "max": "-1200",
+      "poison": "360"
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "runonhealth": "60"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-1200",
-          "poison": "360"
-        },
-        {
-          "name": "death",
-          "interval": "3000",
-          "chance": "23",
-          "range": "7",
-          "radius": "7",
-          "target": "1",
-          "min": "-200",
-          "max": "-800",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "manadrain",
-          "interval": "3500",
-          "chance": "20",
-          "range": "7",
-          "radius": "6",
-          "target": "1",
-          "min": "-200",
-          "max": "-600",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "bigclouds"
-            }
-          ]
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "25",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "min": "-200",
-          "max": "-800",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poisonarrow"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenbubble"
-            }
-          ]
-        },
-        {
-          "name": "ice",
-          "interval": "1200",
-          "chance": "7",
-          "length": "8",
-          "spread": "0",
-          "min": "-600",
-          "max": "-1300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "giantice"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "14",
-          "length": "8",
-          "spread": "3",
-          "min": "-600",
-          "max": "-1600",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "icetornado"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "40",
-      "defense": "40",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "15",
-        "min": "1000",
-        "max": "2100",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "-20"
-        },
-        {
-          "energyPercent": "-20"
-        },
-        {
-          "physicalPercent": "-20"
-        },
-        {
-          "deathPercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "ice": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+    {
+      "name": "death",
       "interval": "3000",
-      "chance": "100",
-      "voice": [
+      "chance": "23",
+      "range": "7",
+      "radius": "7",
+      "target": "1",
+      "min": "-200",
+      "max": "-800",
+      "attributes": [
         {
-          "sentence": "JN OBU!!"
+          "shootEffect": "suddendeath"
         },
         {
-          "sentence": "QJELL KEJH!!"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "manadrain",
+      "interval": "3500",
+      "chance": "20",
+      "range": "7",
+      "radius": "6",
+      "target": "1",
+      "min": "-200",
+      "max": "-600",
+      "attributes": [
         {
-          "name": "deepling axe",
-          "chance": "14285"
+          "shootEffect": "suddendeath"
         },
         {
-          "name": "depth scutum",
-          "chance": "100000"
+          "areaEffect": "bigclouds"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "25",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-200",
+      "max": "-800",
+      "attributes": [
+        {
+          "shootEffect": "poisonarrow"
         },
         {
-          "name": "ornate legs",
-          "chance": "14285"
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "1200",
+      "chance": "7",
+      "length": "8",
+      "spread": "0",
+      "min": "-600",
+      "max": "-1300",
+      "attributes": [
+        {
+          "areaEffect": "giantice"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "14",
+      "length": "8",
+      "spread": "3",
+      "min": "-600",
+      "max": "-1600",
+      "attributes": [
+        {
+          "areaEffect": "icetornado"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 40
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "15",
+      "min": "1000",
+      "max": "2100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": -20,
+    "energyPercent": -20,
+    "physicalPercent": -20,
+    "deathPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "deepling axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "depth scutum"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "ornate legs"
+    }
+  ],
+  "voices": {
+    "interval": 3000,
+    "chance": 100,
+    "sentences": [
+      {
+        "sentence": "JN OBU!!",
+        "yell": false
+      },
+      {
+        "sentence": "QJELL KEJH!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "paralyze": 1,
+    "drown": 1,
+    "fire": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

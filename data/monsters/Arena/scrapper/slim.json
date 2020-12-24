@@ -1,117 +1,94 @@
 {
-  "monster": {
-    "name": "Slim",
-    "nameDescription": "slim",
-    "race": "undead",
-    "experience": "580",
-    "speed": "200",
-    "manacost": "0",
-    "health": {
-      "now": "1025",
-      "max": "1025"
-    },
-    "look": {
-      "type": "101",
-      "corpse": "7349"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "50",
-          "attack": "50"
-        },
-        {
-          "name": "poisonfield",
-          "interval": "1000",
-          "chance": "50",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "3049",
-          "chance": "40",
-          "min": "-10",
-          "max": "-50",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blackSpark"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "36",
-      "defense": "38"
-    },
-    "elements": {
-      "element": [
-        {
-          "deathPercent": "100"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "holyPercent": "-6"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "Slim",
+  "nameDescription": "slim",
+  "race": "undead",
+  "experience": 580,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 1025,
+    "now": 1025
+  },
+  "look": {
+    "type": 101,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5",
-      "voice": {
-        "sentence": "Zhroozzzzs."
-      }
+      "skill": "50",
+      "attack": "50"
+    },
+    {
+      "name": "poisonfield",
+      "interval": "1000",
+      "chance": "50",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "3049",
+      "chance": "40",
+      "min": "-10",
+      "max": "-50",
+      "attributes": [
+        {
+          "areaEffect": "blackSpark"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 36,
+    "defense": 38
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": 100,
+    "firePercent": -10,
+    "holyPercent": -6
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Zhroozzzzs.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

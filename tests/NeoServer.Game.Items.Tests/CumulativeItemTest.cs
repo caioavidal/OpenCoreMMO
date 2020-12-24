@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
 using Xunit;
+using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Items.Tests
 {
@@ -83,11 +84,11 @@ namespace NeoServer.Game.Items.Tests
         }
 
         [Theory]
-        [InlineData(3000, 50, 1500)]
-        [InlineData(3000, 1, 30)]
-        [InlineData(100, 100, 100)]
-        [InlineData(1000, 10, 100)]
-        [InlineData(0960, 10, 96.0)]
+        [InlineData(30, 50, 1500)]
+        [InlineData(30, 1, 30)]
+        [InlineData(1, 100, 100)]
+        [InlineData(10, 10, 100)]
+        [InlineData(09.60, 10, 96.0)]
         public void Weight_Returns_Total_Item_Weight(float weight, byte amount, float totalWeight)
         {
             var type = new ItemType();
@@ -96,7 +97,6 @@ namespace NeoServer.Game.Items.Tests
 
             var sup = new Cumulative(type, new Location(100, 100, 7), amount);
             Assert.Equal(totalWeight, sup.Weight);
-
         }
 
     }

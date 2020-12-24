@@ -1,173 +1,165 @@
 {
-  "monster": {
-    "name": "Lizard Noble",
-    "nameDescription": "a lizard noble",
-    "race": "blood",
-    "experience": "2000",
-    "speed": "200",
-    "health": {
-      "now": "7000",
-      "max": "7000"
+  "name": "Lizard Noble",
+  "nameDescription": "a lizard noble",
+  "race": "blood",
+  "experience": 2000,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 7000,
+    "now": 7000
+  },
+  "look": {
+    "type": 115,
+    "corpse": 6041
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-30"
     },
-    "look": {
-      "type": "115",
-      "corpse": "6041"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "25",
+      "range": "7",
+      "min": "-120",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
+          "areaEffect": "poison"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-30"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "25",
-          "range": "7",
-          "min": "-120",
-          "max": "-250",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "min": "0",
-          "max": "-100",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "50",
-        "min": "200",
-        "max": "250",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": {
-        "firePercent": "90"
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "manadrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": {
-        "sentence": "Where are zhe guardz when you need zhem!"
-      }
-    },
-    "loot": {
-      "item": [
+      "range": "7",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
         {
-          "name": "small ruby",
-          "countmax": "5",
-          "chance": "7100"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "91300"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "20",
-          "chance": "10000"
-        },
-        {
-          "name": "lizard leather",
-          "chance": "220"
-        },
-        {
-          "name": "lizard scale",
-          "chance": "650"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "2550"
-        },
-        {
-          "name": "great health potion",
-          "chance": "2900"
+          "areaEffect": "blueshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "50",
+      "min": "200",
+      "max": "250",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 90
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 7100,
+      "items": [],
+      "name": "small ruby"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 91300,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 20,
+      "chance": 10000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 220,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 650,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2550,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2900,
+      "items": [],
+      "name": "great health potion"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Where are zhe guardz when you need zhem!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace NeoServer.Game.Contracts
 {
     public delegate void PlaceCreatureOnMap(IWalkableCreature creature, ICylinder cylinder);
-    public delegate void RemoveThingFromTile(Items.IThing thing, ICylinder tile);
+    public delegate void RemoveThingFromTile(Items.IThing thing, ICylinder cylinder);
     public delegate void MoveCreatureOnFloor(IWalkableCreature creature, ICylinder cylinder);
     public delegate void AddThingToTile(Items.IThing thing, ICylinder cylinder);
     public delegate void UpdateThingOnTile(Items.IThing thing, ICylinder cylinder);
@@ -40,7 +40,6 @@ namespace NeoServer.Game.Contracts
         IEnumerable<ICreature> GetPlayersAtPositionZone(Location location);
         void AddItem(IThing thing, IDynamicTile tile);
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
-        bool CanWalkTo(Location location, out ITile tile);
         HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
         void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
         void MoveCreature(IWalkableCreature creature);
@@ -48,5 +47,6 @@ namespace NeoServer.Game.Contracts
         ITile GetTileDestination(IDynamicTile tile);
         bool TryMoveThing(IMoveableThing thing, Location toLocation, byte amount =1);
         void ReplaceThing(IThing thingToRemove, IThing thingToAdd, byte amount = 1);
+        bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
     }
 }

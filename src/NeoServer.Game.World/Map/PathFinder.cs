@@ -3,71 +3,66 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Helpers.Extensions;
-using System;
-using System.Buffers;
-using System.Collections.Generic;
+using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.World.Map
 {
     public class PathFinder : IPathFinder
     {
         public PathFinder(IMap map) => Map = map;
-        
+
         public IMap Map { get; set; }
 
-        public bool Find(ICreature creature, Location target, out Direction[] directions)
+        public bool Find(ICreature creature, Location target, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
-            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), out directions);
+            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule, out directions);
         }
 
-        public bool Find(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        public bool Find(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
 
             directions = new Direction[0];
 
+            if (creature.Location.Z != target.Z) return false;
+
             if (fpp.OneStep)
             {
-                return FindStep(creature, target, fpp, out directions);
+                return FindStep(creature, target, fpp, tileEnterRule, out directions);
             }
 
             if (fpp.MaxTargetDist > 1)
             {
-                if (!FindPathToKeepDistance(creature, target, fpp, out directions))
+                if (!FindPathToKeepDistance(creature, target, fpp, tileEnterRule, out directions))
                 {
-                    return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
+                    return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
                 }
                 return true;
             }
 
-            return AStarTibia.GetPathMatching(Map, creature, target, fpp, out directions);
+            return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
         }
 
-        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             directions = new Direction[0];
 
             var startLocation = creature.Location;
 
-            foreach (var neighbour in startLocation.Neighbours.Random())
+            var possibleDirections = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast };
+
+            foreach (var direction in possibleDirections)
             {
-                if (neighbour.GetSqmDistanceX(target) > fpp.MaxTargetDist || neighbour.GetSqmDistanceY(target) > fpp.MaxTargetDist) continue;
-
-                if (fpp.MaxTargetDist > 1 && (neighbour.GetSqmDistanceX(target) < fpp.MaxTargetDist && neighbour.GetSqmDistanceY(target) < fpp.MaxTargetDist)) continue;
-
-                if (Map.CanWalkTo(neighbour, out var tile))
-                {
-                    directions = new Direction[1] { startLocation.DirectionTo(neighbour) };
-                    return true;
-                }
+                if (startLocation.GetMaxSqmDistance(target) > fpp.MaxTargetDist) continue;
+                
             }
 
             return false;
         }
 
-        public bool FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp, out Direction[] directions)
+        public bool FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             directions = new Direction[0];
 
@@ -77,24 +72,67 @@ namespace NeoServer.Game.World.Map
             }
             var startLocation = creature.Location;
 
-            var xDistance = startLocation.GetSqmDistanceX(target);
-            var yDistance = startLocation.GetSqmDistanceY(target);
+            var currentDistance = startLocation.GetMaxSqmDistance(target);
 
-            if (xDistance > fpp.MaxTargetDist || yDistance > fpp.MaxTargetDist)
+            if (currentDistance > fpp.MaxTargetDist) return false;
+
+            if (currentDistance == fpp.MaxTargetDist) return true;
+
+            var possibleDirections = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast, Direction.NorthEast, Direction.SouthEast, Direction.SouthWest };
+
+            (Direction, int) directionWeight = (Direction.None, 0);
+
+            var canGoToDirections = new Direction[8];
+            var canGoIndex = 0;
+
+            var cannotGoDirectionCount = 0;
+            foreach (var direction in possibleDirections)
             {
-                return false;
+                var nextLocation = startLocation.GetNextLocation(direction);
+                var nextDistance = nextLocation.GetMaxSqmDistance(target);
+
+                var canGoToDirection = Map.CanGoToDirection(creature.Location, direction, tileEnterRule);
+                var isDiagonalMovement = startLocation.IsDiagonalMovement(nextLocation);
+
+                if (!canGoToDirection)
+                {
+                    if (!isDiagonalMovement) cannotGoDirectionCount++;
+                    continue;
+                }
+
+                var weight = 0;
+
+                if (isDiagonalMovement && cannotGoDirectionCount < 4)
+                    continue;
+
+                canGoToDirections[canGoIndex++] = direction;
+
+                if (nextDistance > currentDistance)
+                {
+                    weight++;
+                }
+                if (nextLocation.GetSumSqmDistance(target) > startLocation.GetSumSqmDistance(target))
+                {
+                    weight++;
+                }
+
+                if (weight > directionWeight.Item2)
+                {
+                    directionWeight.Item1 = direction;
+                    directionWeight.Item2 = weight;
+                }
             }
-            if (xDistance == fpp.MaxTargetDist || yDistance == fpp.MaxTargetDist) return true;
 
-            if (xDistance < fpp.MaxTargetDist && xDistance >= yDistance)
+            if (directionWeight.Item1 != Direction.None)
             {
-                directions = new Direction[1] { startLocation.DirectionTo(target) == Direction.West ? Direction.East : Direction.West };
+                directions = new Direction[] { directionWeight.Item1 };
                 return true;
             }
 
-            if (yDistance < fpp.MaxTargetDist && yDistance >= xDistance)
+            if (canGoIndex > 0)
             {
-                directions = new Direction[1] { startLocation.DirectionTo(target) == Direction.South ? Direction.North : Direction.South };
+                var randonIndex = GameRandom.Random.Next(minValue: 0, maxValue: canGoIndex);
+                directions = new Direction[] { canGoToDirections[randonIndex] };
                 return true;
             }
 

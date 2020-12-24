@@ -22,6 +22,10 @@ namespace NeoServer.Game.Items.Items
 
         public Slot Slot => Metadata.WeaponType == WeaponType.Shield ? Slot.Right : Metadata.BodyPosition;
 
+        public VocationType[] Vocations => throw new System.NotImplementedException();
+
+        public ushort MinLevel => throw new System.NotImplementedException();
+
         public static bool IsApplicable(IItemType type) =>
             type.BodyPosition switch
             {

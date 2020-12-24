@@ -1,186 +1,192 @@
 {
-  "monster": {
-    "name": "Crazed Beggar",
-    "nameDescription": "a crazed beggar",
-    "race": "blood",
-    "experience": "35",
-    "speed": "220",
-    "manacost": "300",
-    "health": {
-      "now": "100",
-      "max": "100"
+  "name": "Crazed Beggar",
+  "nameDescription": "a crazed beggar",
+  "race": "blood",
+  "experience": 35,
+  "speed": 220,
+  "manaCost": 300,
+  "health": {
+    "max": 100,
+    "now": 100
+  },
+  "look": {
+    "type": 153,
+    "corpse": 3058
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 80,
+    "targetdistance": 1,
+    "runonhealth": 10
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "15",
+      "attack": "20"
+    }
+  ],
+  "defense": {
+    "armor": 11,
+    "defense": 16
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 5,
+    "energyPercent": 20,
+    "holyPercent": 10,
+    "earthPercent": -10,
+    "deathPercent": -15
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 9,
+      "chance": 50000,
+      "items": [],
+      "name": null
     },
-    "look": {
-      "type": "153",
-      "body": "38",
-      "feet": "97",
-      "head": "59",
-      "legs": "38",
-      "addons": "3",
-      "corpse": "3058"
+    {
+      "id": 2237,
+      "countmax": 1,
+      "chance": 55000,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
+    {
+      "id": 2690,
+      "countmax": 1,
+      "chance": 22500,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2666,
+      "countmax": 1,
+      "chance": 12000,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "10"
-        }
-      ]
+    {
+      "id": 2567,
+      "countmax": 1,
+      "chance": 9750,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "15",
-        "attack": "20"
-      }
+    {
+      "id": 2556,
+      "countmax": 1,
+      "chance": 6500,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "11",
-      "defense": "16"
+    {
+      "id": 2570,
+      "countmax": 1,
+      "chance": 4850,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "holyPercent": "10"
-        },
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "deathPercent": "-15"
-        }
-      ]
+    {
+      "id": 2744,
+      "countmax": 1,
+      "chance": 4800,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "4000",
-      "chance": "16",
-      "voice": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "sentence": "Hehehe!"
+          "id": 1681,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Raahhh!"
+          "id": 5553,
+          "countmax": 1,
+          "chance": 850,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "You are one of THEM! Die!"
+          "id": 2802,
+          "countmax": 1,
+          "chance": 800,
+          "items": [],
+          "name": null
         },
         {
-          "sentence": "Wanna buy roses??"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "9",
-          "chance": "50000"
+          "id": 9808,
+          "countmax": 1,
+          "chance": 750,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2237",
-          "chance": "55000"
+          "id": 2213,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2690",
-          "chance": "22500"
-        },
-        {
-          "id": "2666",
-          "chance": "12000"
-        },
-        {
-          "id": "2567",
-          "chance": "9750"
-        },
-        {
-          "id": "2556",
-          "chance": "6500"
-        },
-        {
-          "id": "2570",
-          "chance": "4850"
-        },
-        {
-          "id": "2744",
-          "chance": "4800"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "1681",
-              "chance": "2500"
-            },
-            {
-              "id": "5553",
-              "chance": "850"
-            },
-            {
-              "id": "2802",
-              "chance": "800"
-            },
-            {
-              "id": "9808",
-              "chance": "750"
-            },
-            {
-              "id": "2213",
-              "chance": "200"
-            },
-            {
-              "id": "2072",
-              "chance": "7500"
-            }
-          ]
+          "id": 2072,
+          "countmax": 1,
+          "chance": 7500,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 4000,
+    "chance": 16,
+    "sentences": [
+      {
+        "sentence": "Hehehe!",
+        "yell": false
+      },
+      {
+        "sentence": "Raahhh!",
+        "yell": false
+      },
+      {
+        "sentence": "You are one of THEM! Die!",
+        "yell": false
+      },
+      {
+        "sentence": "Wanna buy roses??",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

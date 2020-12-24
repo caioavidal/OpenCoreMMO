@@ -1,324 +1,362 @@
 {
-  "monster": {
-    "name": "Serpent Spawn",
-    "nameDescription": "a serpent spawn",
-    "race": "venom",
-    "experience": "3050",
-    "speed": "250",
-    "health": {
-      "now": "3000",
-      "max": "3000"
+  "name": "Serpent Spawn",
+  "nameDescription": "a serpent spawn",
+  "race": "venom",
+  "experience": 3050,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 3000,
+    "now": 3000
+  },
+  "look": {
+    "type": 220,
+    "corpse": 6061
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 275,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-252"
     },
-    "look": {
-      "type": "220",
-      "corpse": "6061"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "-80",
+      "max": "-300",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "runonhealth": "275"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "shootEffect": "poison"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "range": "7",
+      "item": "3976",
+      "duration": "3000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-252"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "-80",
-          "max": "-300",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "outfit",
-          "interval": "2000",
-          "chance": "1",
-          "range": "7",
-          "item": "3976",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "25",
-          "range": "7",
-          "target": "1",
-          "radius": "4",
-          "speedchange": "-850",
-          "duration": "12000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "greenbubble"
-            }
-          ]
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "0",
-          "min": "-200",
-          "max": "-500",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "rednote"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "10",
-          "length": "8",
-          "spread": "3",
-          "min": "-200",
-          "max": "-500",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
+          "areaEffect": "blueshimmer"
         }
       ]
     },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "25",
+      "range": "7",
+      "target": "1",
+      "radius": "4",
+      "speedchange": "-850",
+      "duration": "12000",
+      "attributes": [
         {
-          "name": "healing",
-          "interval": "2000",
-          "chance": "15",
-          "min": "250",
-          "max": "500",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
+          "shootEffect": "poison"
         },
         {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "340",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "greenbubble"
         }
       ]
     },
-    "elements": {
-      "element": [
-        {
-          "icePercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "energyPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "lifedrain",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "length": "8",
+      "spread": "0",
+      "min": "-200",
+      "max": "-500",
+      "attributes": [
         {
-          "sentence": "Sssssouls for the one"
-        },
-        {
-          "sentence": "HISSSS",
-          "yell": "1"
-        },
-        {
-          "sentence": "Tsssse one will risssse again"
-        },
-        {
-          "sentence": "I bring your deathhh, mortalssss"
+          "areaEffect": "rednote"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "3",
+      "min": "-200",
+      "max": "-500",
+      "attributes": [
         {
-          "name": "golden mug",
-          "chance": "2870"
-        },
-        {
-          "name": "small sapphire",
-          "chance": "12000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "32300"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "32300"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "39",
-          "chance": "32300"
-        },
-        {
-          "name": "energy ring",
-          "chance": "590"
-        },
-        {
-          "name": "life ring",
-          "chance": "6250"
-        },
-        {
-          "name": "life crystal",
-          "chance": "800"
-        },
-        {
-          "name": "snakebite rod",
-          "chance": "930"
-        },
-        {
-          "name": "warrior helmet",
-          "chance": "560"
-        },
-        {
-          "name": "strange helmet",
-          "chance": "670"
-        },
-        {
-          "name": "crown armor",
-          "chance": "510"
-        },
-        {
-          "name": "royal helmet",
-          "chance": "140"
-        },
-        {
-          "name": "tower shield",
-          "chance": "920"
-        },
-        {
-          "name": "power bolt",
-          "chance": "6200"
-        },
-        {
-          "name": "green mushroom",
-          "chance": "18200"
-        },
-        {
-          "name": "charmer's tiara",
-          "chance": "180"
-        },
-        {
-          "id": "4842",
-          "chance": "600"
-        },
-        {
-          "name": "mercenary sword",
-          "chance": "2070"
-        },
-        {
-          "name": "noble axe",
-          "chance": "750"
-        },
-        {
-          "name": "great mana potion",
-          "chance": "2000"
-        },
-        {
-          "name": "swamplair armor",
-          "chance": "90"
-        },
-        {
-          "name": "spellbook of mind control",
-          "chance": "90"
-        },
-        {
-          "name": "snake skin",
-          "chance": "14800"
-        },
-        {
-          "name": "winged tail",
-          "chance": "960"
+          "areaEffect": "poison"
         }
-      ]/* Old Parchment */
+      ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "250",
+      "max": "500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "340",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "firePercent": -10,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2870,
+      "items": [],
+      "name": "golden mug"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12000,
+      "items": [],
+      "name": "small sapphire"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 32300,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 32300,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 39,
+      "chance": 32300,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 590,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6250,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "snakebite rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "warrior helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 670,
+      "items": [],
+      "name": "strange helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "crown armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 140,
+      "items": [],
+      "name": "royal helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6200,
+      "items": [],
+      "name": "power bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18200,
+      "items": [],
+      "name": "green mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "charmer's tiara"
+    },
+    {
+      "id": 4842,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2070,
+      "items": [],
+      "name": "mercenary sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 750,
+      "items": [],
+      "name": "noble axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "swamplair armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "spellbook of mind control"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14800,
+      "items": [],
+      "name": "snake skin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "winged tail"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Sssssouls for the one",
+        "yell": false
+      },
+      {
+        "sentence": "HISSSS",
+        "yell": false
+      },
+      {
+        "sentence": "Tsssse one will risssse again",
+        "yell": false
+      },
+      {
+        "sentence": "I bring your deathhh, mortalssss",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

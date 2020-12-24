@@ -7,15 +7,11 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Events.Creature
 {
     public class CreatureDroppedLootEventHandler
     {
-
         private readonly Game game;
         private readonly IItemFactory itemFactory;
         public CreatureDroppedLootEventHandler(Game game, IItemFactory itemFactory)
@@ -25,6 +21,8 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(ICombatActor creature, ILoot loot)
         {
+            if (creature.Corpse is not IContainer container) return;
+
             CreateLoot(creature, loot);
 
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
@@ -43,16 +41,17 @@ namespace NeoServer.Server.Events.Creature
         public void CreateLoot(ICombatActor creature, ILoot loot)
         {
             if (creature is not IMonster monster) return;
+            if (monster.Corpse is not IContainer container) return;
 
-            CreateLootItems(loot.Items, monster.Location, monster.Corpse);
+            CreateLootItems(loot.Items, monster.Location, container);
         }
 
         public void CreateLootItems(ILootItem[] items, Location location, IContainer container)
         {
-            var attributes = new Dictionary<ItemAttribute, IConvertible>();
-
             foreach (var item in items)
             {
+                var attributes = new Dictionary<ItemAttribute, IConvertible>();
+
                 if (item.Amount > 1) attributes.TryAdd(ItemAttribute.Count, item.Amount);
 
                 var itemToDrop = itemFactory.Create(item.ItemId, location, attributes);
@@ -61,7 +60,7 @@ namespace NeoServer.Server.Events.Creature
 
                 if (itemToDrop is IContainer c && item.Items?.Length > 0) CreateLootItems(item.Items, location, c);
 
-                container?.TryAddItem(itemToDrop);
+                container?.AddThing(itemToDrop);
             }
         }
     }

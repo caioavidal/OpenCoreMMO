@@ -12,14 +12,14 @@ namespace NeoServer.Game.Creature
 
         public bool TryGetMonster(string name, out IMonsterType monster) => _monsters.TryGetValue(name, out monster);
 
-        public void Load(IEnumerable<IMonsterType> monsters)
+        public void Load(IEnumerable<(string, IMonsterType)> monsters)
         {
             if (_loaded == true)
             {
                 throw new InvalidOperationException("Monsters already loaded");
             }
 
-            _monsters = monsters.ToImmutableDictionary(x => x.Name);
+            _monsters = monsters.ToImmutableDictionary(x => x.Item1, v=> v.Item2, StringComparer.InvariantCultureIgnoreCase);
             _loaded = true;
         }
     }

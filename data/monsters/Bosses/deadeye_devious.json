@@ -1,165 +1,156 @@
 {
-  "monster": {
-    "name": "Deadeye Devious",
-    "nameDescription": "Deadeye Devious",
-    "race": "blood",
-    "experience": "750",
-    "speed": "300",
-    "health": {
-      "now": "1450",
-      "max": "1450"
+  "name": "Deadeye Devious",
+  "nameDescription": "Deadeye Devious",
+  "race": "blood",
+  "experience": 750,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 1450,
+    "now": 1450
+  },
+  "look": {
+    "type": 151,
+    "corpse": 20378
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-550"
     },
-    "look": {
-      "type": "151",
-      "head": "115",
-      "body": "76",
-      "legs": "35",
-      "feet": "117",
-      "addons": "2",
-      "corpse": "20378"
-    },
-    "targetchange": {
-      "interval": "60000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "4000",
+      "chance": "60",
+      "min": "-200",
+      "max": "-250",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-550"
-        },
-        {
-          "name": "physical",
-          "interval": "4000",
-          "chance": "60",
-          "min": "-200",
-          "max": "-250",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "throwingknife"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "50",
-      "defense": {
-        "name": "healing",
-        "interval": "6000",
-        "chance": "65",
-        "min": "200",
-        "max": "250",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Let's kill 'em"
-        },
-        {
-          "sentence": "Arrrgh!"
-        },
-        {
-          "sentence": "You'll never take me alive!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "65",
-          "chance": "100000"
-        },
-        {
-          "name": "skull of Ratha",
-          "countmax": "2",
-          "chance": "100000"
-        },
-        {
-          "name": "plate armor",
-          "chance": "4000"
-        },
-        {
-          "name": "knight armor",
-          "chance": "1200"
-        },
-        {
-          "name": "meat",
-          "chance": "100000"
-        },
-        {
-          "name": "pirate backpack",
-          "chance": "4000"
-        },
-        {
-          "name": "Deadeye Devious' eye patch",
-          "chance": "100000"
+          "shootEffect": "throwingknife"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 50
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "6000",
+      "chance": "65",
+      "min": "200",
+      "max": "250",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 100000,
+      "items": [],
+      "name": "skull of Ratha"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "pirate backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "Deadeye Devious' eye patch"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Let's kill 'em",
+        "yell": false
+      },
+      {
+        "sentence": "Arrrgh!",
+        "yell": false
+      },
+      {
+        "sentence": "You'll never take me alive!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

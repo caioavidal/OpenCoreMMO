@@ -1,149 +1,137 @@
 {
-  "monster": {
-    "name": "Frost Troll",
-    "nameDescription": "a frost troll",
-    "race": "blood",
-    "experience": "23",
-    "speed": "190",
-    "manacost": "300",
-    "health": {
-      "now": "55",
-      "max": "55"
-    },
-    "look": {
-      "type": "53",
-      "corpse": "5998"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "10"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-20"
-      }
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "50"
-        },
-        {
-          "holyPercent": "10"
-        },
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "deathPercent": "-15"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Brrrr"
-        },
-        {
-          "sentence": "Broar!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "12",
-          "chance": "50840"
-        },
-        {
-          "name": "twigs",
-          "chance": "8300"
-        },
-        {
-          "name": "rapier",
-          "chance": "15500"
-        },
-        {
-          "name": "spear",
-          "chance": "21500"
-        },
-        {
-          "id": "2512",
-          "chance": "15850"
-        },
-        {
-          "name": "coat",
-          "chance": "1200"
-        },
-        {
-          "id": "2667",
-          "chance": "18000"
-        },
-        {
-          "name": "frosty ear of a troll",
-          "chance": "2000"
-        }
-      ],
-      "#comment": []
+  "name": "Frost Troll",
+  "nameDescription": "a frost troll",
+  "race": "blood",
+  "experience": 23,
+  "speed": 190,
+  "manaCost": 300,
+  "health": {
+    "max": 55,
+    "now": 55
+  },
+  "look": {
+    "type": 53,
+    "corpse": 5998
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-20"
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 50,
+    "holyPercent": 10,
+    "earthPercent": -10,
+    "energyPercent": -10,
+    "deathPercent": -15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 12,
+      "chance": 50840,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8300,
+      "items": [],
+      "name": "twigs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15500,
+      "items": [],
+      "name": "rapier"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 21500,
+      "items": [],
+      "name": "spear"
+    },
+    {
+      "id": 2512,
+      "countmax": 1,
+      "chance": 15850,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "coat"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "frosty ear of a troll"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Brrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Broar!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

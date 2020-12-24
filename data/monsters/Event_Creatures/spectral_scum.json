@@ -1,114 +1,93 @@
 {
-  "monster": {
-    "name": "Spectral Scum",
-    "nameDescription": "Spectral Scum",
-    "race": "undead",
-    "experience": "0",
-    "speed": "230",
-    "health": {
-      "now": "1",
-      "max": "1"
-    },
-    "look": {
-      "type": "195",
-      "head": "0",
-      "body": "0",
-      "legs": "0",
-      "feet": "0",
-      "corpse": "6070"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "0"
-        },
-        {
-          "name": "drunk",
-          "interval": "5000",
-          "chance": "10",
-          "range": "2",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poff"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "18",
-      "defense": "19"
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "Spectral Scum",
+  "nameDescription": "Spectral Scum",
+  "race": "undead",
+  "experience": 0,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1,
+    "now": 1
+  },
+  "look": {
+    "type": 195,
+    "corpse": 6070
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
+      "min": "0",
+      "max": "0"
+    },
+    {
+      "name": "drunk",
+      "interval": "5000",
       "chance": "10",
-      "voice": [
+      "range": "2",
+      "attributes": [
         {
-          "sentence": "BBooze! More booze!, Harrr Harrr!"
-        },
-        {
-          "sentence": "Burp, Fart."
-        },
-        {
-          "sentence": "Nothing better than plundering and getting palstered!"
-        },
-        {
-          "sentence": "Yarrr!, A pirate's unlife for me!"
+          "areaEffect": "poff"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 18,
+    "defense": 19
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BBooze! More booze!, Harrr Harrr!",
+        "yell": false
+      },
+      {
+        "sentence": "Burp, Fart.",
+        "yell": false
+      },
+      {
+        "sentence": "Nothing better than plundering and getting palstered!",
+        "yell": false
+      },
+      {
+        "sentence": "Yarrr!, A pirate's unlife for me!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

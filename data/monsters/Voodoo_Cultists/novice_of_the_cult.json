@@ -1,215 +1,203 @@
 {
-  "monster": {
-    "name": "Novice of the Cult",
-    "nameDescription": "a novice of the cult",
-    "race": "blood",
-    "experience": "100",
-    "speed": "200",
-    "health": {
-      "now": "285",
-      "max": "285"
+  "name": "Novice of the Cult",
+  "nameDescription": "a novice of the cult",
+  "race": "blood",
+  "experience": 100,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 285,
+    "now": 285
+  },
+  "look": {
+    "type": 133,
+    "corpse": 20467
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 40,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-65",
+      "poison": "1"
     },
-    "look": {
-      "type": "133",
-      "head": "114",
-      "body": "95",
-      "legs": "114",
-      "feet": "114",
-      "corpse": "20467"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-20",
+      "max": "-80",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "40"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "redshimmer"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-65",
-          "poison": "1"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "min": "-20",
-          "max": "-80",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "redshimmer"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "15",
-        "min": "20",
-        "max": "40",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "10"
-        },
-        {
-          "icePercent": "10"
-        },
-        {
-          "holyPercent": "10"
-        },
-        {
-          "physicalPercent": "-10"
-        },
-        {
-          "energyPercent": "-8"
-        },
-        {
-          "firePercent": "-5"
-        },
-        {
-          "deathPercent": "-8"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "1",
-      "summon": {
-        "name": "Chicken",
-        "interval": "2000",
-        "chance": "10"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Fear us!"
-        },
-        {
-          "sentence": "You will not tell anyone what you have seen!"
-        },
-        {
-          "sentence": "Your curiosity will be punished!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "1962",
-          "chance": "700"
-        },
-        {
-          "name": "small diamond",
-          "chance": "210"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "40",
-          "chance": "43380"
-        },
-        {
-          "name": "wand of vortex",
-          "chance": "450"
-        },
-        {
-          "name": "garlic necklace",
-          "chance": "420"
-        },
-        {
-          "name": "dwarven ring",
-          "chance": "500"
-        },
-        {
-          "name": "scarf",
-          "chance": "2900"
-        },
-        {
-          "name": "pirate voodoo doll",
-          "chance": "520"
-        },
-        {
-          "id": "6087",
-          "chance": "970"
-        },
-        {
-          "name": "cultish robe",
-          "chance": "1030"
-        },
-        {
-          "name": "rope belt",
-          "chance": "5910"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "20",
+      "max": "40",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 10,
+    "icePercent": 10,
+    "holyPercent": 10,
+    "physicalPercent": -10,
+    "energyPercent": -8,
+    "firePercent": -5,
+    "deathPercent": -8
+  },
+  "loot": [
+    {
+      "id": 1962,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 210,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 43380,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "wand of vortex"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "garlic necklace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "dwarven ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2900,
+      "items": [],
+      "name": "scarf"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "pirate voodoo doll"
+    },
+    {
+      "id": 6087,
+      "countmax": 1,
+      "chance": 970,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1030,
+      "items": [],
+      "name": "cultish robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5910,
+      "items": [],
+      "name": "rope belt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Fear us!",
+        "yell": false
+      },
+      {
+        "sentence": "You will not tell anyone what you have seen!",
+        "yell": false
+      },
+      {
+        "sentence": "Your curiosity will be punished!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "Chicken",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
   }
 }

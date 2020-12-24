@@ -1,131 +1,108 @@
 {
-  "monster": {
-    "name": "Doom Deer",
-    "nameDescription": "a doom deer",
-    "race": "blood",
-    "experience": "200",
-    "speed": "300",
-    "health": {
-      "now": "405",
-      "max": "405"
-    },
-    "look": {
-      "type": "31",
-      "corpse": "5970"
-    },
-    "targetchange": {
+  "name": "Doom Deer",
+  "nameDescription": "a doom deer",
+  "race": "blood",
+  "experience": 200,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 405,
+    "now": 405
+  },
+  "look": {
+    "type": 31,
+    "corpse": 5970
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 25,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "20"
+      "min": "0",
+      "max": "-100"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "4000",
+      "chance": "30",
+      "length": "5",
+      "min": "-35",
+      "max": "-55",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "25"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "bigclouds"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-100"
-        },
-        {
-          "name": "energy",
-          "interval": "4000",
-          "chance": "30",
-          "length": "5",
-          "min": "-35",
-          "max": "-55",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bigclouds"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "30",
-      "defense": "35",
-      "defense": {
-        "name": "speed",
-        "interval": "3000",
-        "chance": "30",
-        "speedchange": "400",
-        "duration": "8000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "energy": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "I bet it was you who killed my mom!"
-      }
-    },
-    "loot": {
-      "item": {
-        "name": "gold coin",
-        "countmax": "100",
-        "chance": "50000"
-      }
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "3000",
+      "chance": "30",
+      "speedchange": "400",
+      "duration": "8000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I bet it was you who killed my mom!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "drown": 1,
+    "lifedrain": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

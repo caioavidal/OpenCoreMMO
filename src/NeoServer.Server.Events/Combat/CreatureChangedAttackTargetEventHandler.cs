@@ -14,25 +14,19 @@ namespace NeoServer.Server.Events.Combat
         }
         public void Execute(ICombatActor actor, uint oldTarget, uint newTarget)
         {
-            
-            if (actor.AttackEvent != 0)
-            {
-                return;
-            }
+            if (actor.AttackEvent != 0) return;
 
             var result = Attack(actor);
             var attackSpeed = result ? actor.BaseAttackSpeed : 300;
-            actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int)actor.BaseAttackSpeed, () => Attack(actor)));
+            actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int)attackSpeed, () => Attack(actor)));
         }
         private bool Attack(ICombatActor actor)
         {
             var result = false;
             if (actor.Attacking)
             {
-                if (game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature) && creature is ICombatActor enemy)
-                {
-                    result = actor.Attack(enemy);
-                }
+                game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
+                result = actor.Attack(creature);
             }
             else
             {
@@ -49,13 +43,6 @@ namespace NeoServer.Server.Events.Combat
                 Execute(actor, 0, 0);
             }
             return result;
-        }
-
-        private void MoveAroundEnemy(ICombatActor actor)
-        {
-            if (!(actor is IMonster monster)) return;
-
-            monster.MoveAroundEnemy();
         }
     }
 }

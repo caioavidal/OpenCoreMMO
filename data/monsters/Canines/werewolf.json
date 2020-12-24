@@ -1,242 +1,252 @@
 {
-  "monster": {
-    "name": "Werewolf",
-    "nameDescription": "a werewolf",
-    "experience": "1450",
-    "speed": "320",
-    "race": "blood",
-    "manacost": "0",
-    "health": {
-      "now": "1955",
-      "max": "1955"
+  "name": "Werewolf",
+  "nameDescription": "a werewolf",
+  "race": "blood",
+  "experience": 1450,
+  "speed": 320,
+  "manaCost": 0,
+  "health": {
+    "max": 1955,
+    "now": 1955
+  },
+  "look": {
+    "type": 308,
+    "corpse": 6080
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 100
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "chance": "100",
+      "skill": "90",
+      "attack": "70"
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "targetchange": {
-      "speed": "0",
-      "chance": "8"
-    },
-    "look": {
-      "type": "308",
-      "corpse": "6080"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "9",
+      "range": "7",
+      "monster": "werewolf",
+      "duration": "5000",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "100"
+          "areaeffect": "blueshimmer"
         }
       ]
+    }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 55
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 5,
+    "energyPercent": 15,
+    "earthPercent": 20,
+    "firePercent": -10,
+    "deathPercent": 20,
+    "icePercent": -10,
+    "holyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 35000,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "chance": "100",
-          "skill": "90",
-          "attack": "70"
-        },
-        {
-          "name": "outfit",
-          "interval": "1000",
-          "chance": "9",
-          "range": "7",
-          "monster": "werewolf",
-          "duration": "5000",
-          "attribute": {
-            "key": "areaeffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 35000,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "50",
-      "defense": "55"
+    {
+      "id": 2148,
+      "countmax": 45,
+      "chance": 35000,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "energyPercent": "15"
-        },
-        {
-          "earthPercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "deathPercent": "20"
-        },
-        {
-          "icePercent": "-10"
-        },
-        {
-          "holyPercent": "-10"
-        }
-      ]
+    {
+      "id": 2381,
+      "countmax": 1,
+      "chance": 2700,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
+    {
+      "id": 2398,
+      "countmax": 1,
+      "chance": 19000,
+      "items": [],
+      "name": null
     },
-    "summons": {
-      "maxSummons": "6",
-      "summon": {
-        "name": "war wolf",
-        "interval": "2500",
-        "chance": "25"
-      }
+    {
+      "id": 2647,
+      "countmax": 1,
+      "chance": 6500,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "speed": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "BLOOD!",
-          "yell": "1"
-        },
-        {
-          "sentence": "HRAAAAAAAAAARRRRRR!",
-          "yell": "1"
-        }
-      ]
+    {
+      "id": 2510,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2171,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7439,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7428,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2438,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "90",
-          "chance": "35000"
+          "id": 7383,
+          "countmax": 1,
+          "chance": 420,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "90",
-          "chance": "35000"
+          "id": 9809,
+          "countmax": 1,
+          "chance": 7800,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "45",
-          "chance": "35000"
+          "id": 2197,
+          "countmax": 1,
+          "chance": 800,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2381",
-          "chance": "2700"
+          "id": 7588,
+          "countmax": 1,
+          "chance": 5500,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2398",
-          "chance": "19000"
+          "id": 2169,
+          "countmax": 1,
+          "chance": 700,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2647",
-          "chance": "6500"
+          "id": 2805,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2510",
-          "chance": "10000"
+          "id": 5897,
+          "countmax": 1,
+          "chance": 5200,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2171",
-          "chance": "600"
+          "id": 8473,
+          "countmax": 1,
+          "chance": 2400,
+          "items": [],
+          "name": null
         },
         {
-          "id": "7439",
-          "chance": "1000"
-        },
-        {
-          "id": "7428",
-          "chance": "300"
-        },
-        {
-          "id": "2438",
-          "chance": "600"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "7383",
-              "chance": "420"
-            },
-            {
-              "id": "9809",
-              "chance": "7800"
-            },
-            {
-              "id": "2197",
-              "chance": "800"
-            },
-            {
-              "id": "7588",
-              "chance": "5500"
-            },
-            {
-              "id": "2169",
-              "chance": "700"
-            },
-            {
-              "id": "2805",
-              "chance": "5000"
-            },
-            {
-              "id": "5897",
-              "chance": "5200"
-            },
-            {
-              "id": "8473",
-              "chance": "2400"
-            },
-            {
-              "id": "7419",
-              "chance": "200"
-            }
-          ]
+          "id": 7419,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BLOOD!",
+        "yell": false
+      },
+      {
+        "sentence": "HRAAAAAAAAAARRRRRR!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 6,
+    "summons": [
+      {
+        "name": "war wolf",
+        "interval": 2500,
+        "chance": 25,
+        "max": 0
+      }
+    ]
   }
 }

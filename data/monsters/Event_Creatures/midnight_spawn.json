@@ -1,111 +1,81 @@
 {
-  "monster": {
-    "name": "Midnight Spawn",
-    "nameDescription": "a midnight spawn",
-    "race": "undead",
-    "experience": "900",
-    "speed": "230",
-    "health": {
-      "now": "1000",
-      "max": "1000"
-    },
-    "look": {
-      "type": "315",
-      "corpse": "9960"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-100"
-      }
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "30"
-        },
-        {
-          "deathPercent": "99"
-        },
-        {
-          "firePercent": "30"
-        },
-        {
-          "earthPercent": "99"
-        },
-        {
-          "lifedrainPercent": "99"
-        },
-        {
-          "holyPercent": "10"
-        },
-        {
-          "icePercent": "10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": {
-        "name": "midnight shard",
-        "chance": "8333"
-      }
+  "name": "Midnight Spawn",
+  "nameDescription": "a midnight spawn",
+  "race": "undead",
+  "experience": 900,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1000,
+    "now": 1000
+  },
+  "look": {
+    "type": 315,
+    "corpse": 9960
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 30,
+    "deathPercent": 99,
+    "firePercent": 30,
+    "earthPercent": 99,
+    "lifedrainPercent": 99,
+    "holyPercent": 10,
+    "icePercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8333,
+      "items": [],
+      "name": "midnight shard"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

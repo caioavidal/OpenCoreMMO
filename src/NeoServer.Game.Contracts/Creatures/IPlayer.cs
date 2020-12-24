@@ -8,16 +8,23 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using System.Collections.Generic;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
     public delegate void CancelWalk(IPlayer player);
     public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
-    public delegate void OpenedContainer(IPlayer player, byte containerId, Game.Contracts.Items.Types.IContainer container);
+    public delegate void OpenedContainer(IPlayer player, byte containerId, IContainer container);
     public delegate void ReduceMana(IPlayer player);
     public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
     public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
     public delegate void OperationFail(uint id, string message);
+    public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
+    public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
+    public delegate void UseItem(IPlayer player, ICreature creature, IConsumable consumable);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -27,17 +34,13 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte LevelPercent { get; }
 
         uint Experience { get; }
-
-        byte AccessLevel { get; } // TODO: implement.
-
-        byte SoulPoints { get; } // TODO: nobody likes soulpoints... figure out what to do with them :)
+        byte SoulPoints { get; }
 
         float CarryStrength { get; }
-
+        public string Guild { get; }
         IDictionary<SkillType, ISkill> Skills { get; }
         ushort StaminaMinutes { get; }
 
-        Location LocationInFront { get; }
         FightMode FightMode { get; }
         ChaseMode ChaseMode { get; }
         byte SecureMode { get; }
@@ -48,6 +51,11 @@ namespace NeoServer.Server.Model.Players.Contracts
         event CancelWalk OnCancelledWalk;
         event CannotUseSpell OnCannotUseSpell;
         event OperationFail OnOperationFailed;
+        event LookAt OnLookedAt;
+        event PlayerGainSkillPoint OnGainedSkillPoint;
+        event UseItem OnUsedItem;
+        event ReduceMana OnStatusChanged;
+        event PlayerLevelAdvance OnLevelAdvanced;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -56,6 +64,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool CannotLogout { get; }
         uint Id { get; }
         bool HasDepotOpened { get; }
+        VocationType VocationType { get;  }
 
         //  IAction PendingAction { get; }
 
@@ -108,12 +117,28 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ResetIdleTime();
         void CancelWalk();
         bool CanMoveThing(Location location);
-        void ReceiveManaAttack(ICreature enemy, ushort damage);
         void Say(string message, TalkType talkType);
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);
         bool Logout();
         ushort CalculateAttackPower(float attackRate, ushort attack);
+        void LookAt(ITile tile);
+        void LookAt(byte containerId, sbyte containerSlot);
+        void LookAt(Slot slot);
+        /// <summary>
+        /// Health and mana recovery
+        /// </summary>
+        void Recover();
+        void HealMana(ushort increasing);
+        void Use(IConsumable item, ICreature creature);
+        bool Feed(IFood food);
+        Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition);
+
+        string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
+        private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
+
+        uint TotalCapacity { get; }
+        bool Recovering { get; }
     }
 }

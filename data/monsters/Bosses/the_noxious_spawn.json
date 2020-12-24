@@ -1,241 +1,231 @@
 {
-  "monster": {
-    "name": "The Noxious Spawn",
-    "nameDescription": "The Noxious Spawn",
-    "race": "venom",
-    "experience": "6000",
-    "speed": "360",
-    "health": {
-      "now": "9500",
-      "max": "9500"
+  "name": "The Noxious Spawn",
+  "nameDescription": "The Noxious Spawn",
+  "race": "venom",
+  "experience": 6000,
+  "speed": 360,
+  "manaCost": 0,
+  "health": {
+    "max": 9500,
+    "now": 9500
+  },
+  "look": {
+    "type": 220,
+    "corpse": 4323
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 275,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250"
     },
-    "look": {
-      "type": "220",
-      "corpse": "4323"
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "6",
+      "range": "7",
+      "speedchange": "-660",
+      "duration": "5000"
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "7",
+      "length": "8",
+      "spread": "3",
+      "min": "0",
+      "max": "-550",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "275"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "smallplants"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "9",
+      "length": "8",
+      "spread": "0",
+      "min": "0",
+      "max": "-550",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-250"
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "6",
-          "range": "7",
-          "speedchange": "-660",
-          "duration": "5000"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "7",
-          "length": "8",
-          "spread": "3",
-          "min": "0",
-          "max": "-550",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "smallplants"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "9",
-          "length": "8",
-          "spread": "0",
-          "min": "0",
-          "max": "-550",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "rednote"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "12",
-          "range": "1",
-          "min": "0",
-          "max": "-300",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        },
-        {
-          "name": "outfit",
-          "interval": "2000",
-          "chance": "11",
-          "range": "7",
-          "item": "3976",
-          "duration": "4000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
+          "areaEffect": "rednote"
         }
       ]
     },
-    "defenses": {
-      "armor": "18",
-      "defense": "25",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "900",
-        "max": "1000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "12",
+      "range": "1",
+      "min": "0",
+      "max": "-300",
+      "attributes": [
         {
-          "icePercent": "20"
+          "shootEffect": "poison"
         },
         {
-          "firePercent": "-10"
-        },
-        {
-          "energyPercent": "-10"
+          "areaEffect": "poison"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "11",
+      "range": "7",
+      "item": "3976",
+      "duration": "4000",
+      "attributes": [
         {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
+          "areaEffect": "blueshimmer"
         }
       ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Sssssouls for the one"
-        },
-        {
-          "sentence": "HISSSS",
-          "yell": "1"
-        },
-        {
-          "sentence": "Tsssse one will risssse again"
-        },
-        {
-          "sentence": "I bring your deathhh, mortalssss"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "platinum coin",
-          "countmax": "5",
-          "chance": "51850"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "95",
-          "chance": "10750"
-        },
-        {
-          "name": "life ring",
-          "chance": "35000"
-        },
-        {
-          "name": "power bolt",
-          "countmax": "29",
-          "chance": "36250"
-        },
-        {
-          "name": "green mushroom",
-          "chance": "11111"
-        },
-        {
-          "name": "onyx arrow",
-          "chance": "525"
-        },
-        {
-          "name": "mercenary sword",
-          "chance": "27750"
-        },
-        {
-          "name": "noble axe",
-          "chance": "37000"
-        },
-        {
-          "id": "10309",
-          "chance": "31500"
-        }
-      ]/* claw of the noxious spawn*/
     }
+  ],
+  "defense": {
+    "armor": 18,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "900",
+      "max": "1000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "firePercent": -10,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 51850,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 95,
+      "chance": 10750,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 35000,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 29,
+      "chance": 36250,
+      "items": [],
+      "name": "power bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11111,
+      "items": [],
+      "name": "green mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 525,
+      "items": [],
+      "name": "onyx arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 27750,
+      "items": [],
+      "name": "mercenary sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 37000,
+      "items": [],
+      "name": "noble axe"
+    },
+    {
+      "id": 10309,
+      "countmax": 1,
+      "chance": 31500,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Sssssouls for the one",
+        "yell": false
+      },
+      {
+        "sentence": "HISSSS",
+        "yell": false
+      },
+      {
+        "sentence": "Tsssse one will risssse again",
+        "yell": false
+      },
+      {
+        "sentence": "I bring your deathhh, mortalssss",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

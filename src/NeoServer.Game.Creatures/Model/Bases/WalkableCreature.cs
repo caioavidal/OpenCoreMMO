@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
+using NeoServer.Game.Creatures.Monsters;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -14,80 +15,48 @@ namespace NeoServer.Game.Creatures.Model.Bases
     {
         #region Events
         public event StopWalk OnStoppedWalking;
+        public event StopWalk OnCompleteWalking;
         public event StartWalk OnStartedWalking;
         public event OnTurnedToDirection OnTurnedToDirection;
         public event StartFollow OnStartedFollowing;
         public event ChangeSpeed OnChangedSpeed;
         #endregion
 
-        protected PathFinder FindPathToDestination { get; }
+        protected IPathAccess PathAccess { get; }
 
         private uint lastStepCost = 1;
-
-        protected WalkableCreature(ICreatureType type, PathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
+        protected WalkableCreature(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
             Speed = type.Speed;
-            FindPathToDestination = pathFinder;
+            PathAccess = pathAccess;
+            OnCompleteWalking += ExecuteNextAction;
+
         }
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
         public uint EventWalk { get; set; }
         public IDynamicTile Tile { get; set; }
-        public ushort Speed { get; protected set; }
+        public virtual ushort Speed { get; protected set; }
         public uint Following { get; private set; }
         public bool IsFollowing => Following > 0;
-        public double LastStep { get; private set; }
         public ConcurrentQueue<Direction> WalkingQueue { get; } = new ConcurrentQueue<Direction>();
         public bool HasNextStep => WalkingQueue.Count > 0;
         public bool FollowCreature { get; protected set; }
         public uint FollowEvent { get; set; }
         public bool HasFollowPath { get; private set; }
-        public virtual FindPathParams PathSearchParams
-        {
-            get
-            {
-                return new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
-            }
-        }
-        public void UpdateLastStepInfo(bool wasDiagonal = true)
-        {
-            var tilePenalty = Tile?.MovementPenalty;
-            var totalPenalty = (tilePenalty ?? 200) * (wasDiagonal ? 2 : 1);
+        public virtual FindPathParams PathSearchParams => new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
 
-            Cooldowns.Start(CooldownType.Move, (int)(1000 * totalPenalty / (double)Math.Max(1, (int)Speed)));
-            lastStepCost = 1;
-        }
-
-        private int stepDelay
-        {
-            get
-            {
-                var stepDuration = CalculateStepDuration() * lastStepCost;
-                return (int)(stepDuration - (DateTime.Now.TimeOfDay.TotalMilliseconds - LastStep));
-            }
-        }
-        private int CalculateStepDuration()
-        {
-            var duration = Math.Floor((double)(1000 * Tile.StepSpeed / Speed));
-
-            var stepDuration = (int)Math.Ceiling(duration / 50) * 50;
-
-            //todo check monster creature.cpp 1367
-            return stepDuration;
-        }
         public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
         {
-            LastStep = DateTime.Now.TimeOfDay.TotalMilliseconds;
-
             lastStepCost = 1;
 
-            if (fromTile.Location.Z != toTile.Location.Z)
+            if (fromTile.Location.Z != toTile.Location.Z || fromTile.Location.IsDiagonalMovement(toTile.Location))
             {
                 lastStepCost = 2;
             }
-            else if (fromTile.Location.IsDiagonalMovement(toTile.Location))
+            if (WalkingQueue.IsEmpty)
             {
-                lastStepCost = 3;
+                OnCompleteWalking?.Invoke(this);
             }
         }
         public void TurnTo(Direction direction)
@@ -99,24 +68,25 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             get
             {
-                if (stepDelay > 0)
-                {
-                    return stepDelay;
-                }
+                if (FirstStep)
+                    return 0;
 
-                return (int)(CalculateStepDuration() * lastStepCost);
+                return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * lastStepCost);
             }
         }
+
+        public bool FirstStep { get; private set; }
+
         public void StopWalking()
         {
-            WalkingQueue.Clear(); // reset the actual queue
-            UpdateLastStepInfo();
-
+            WalkingQueue.Clear();
             OnStoppedWalking?.Invoke(this);
         }
 
         public void StopFollowing()
         {
+            if (!IsFollowing) return;
+
             Following = 0;
             HasFollowPath = false;
             StopWalking();
@@ -129,6 +99,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StartFollowing(IWalkableCreature creature, FindPathParams fpp)
         {
+            if (creature is null) return;
             if (IsFollowing)
             {
                 Following = creature.CreatureId;
@@ -146,7 +117,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 OnCreatureDisappear(creature);
                 return;
             }
-            if (!FindPathToDestination(this, creature.Location, PathSearchParams, out var directions))
+            if (!PathAccess.FindPathToDestination(this, creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
             {
                 HasFollowPath = false;
                 return;
@@ -158,23 +129,43 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location)
         {
             StopWalking();
-            if (FindPathToDestination(this, location, PathSearchParams, out var directions))
+            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
             {
                 return TryWalkTo(directions);
             }
             return false;
         }
+        public virtual bool WalkTo(Location location, Action<ICreature> callbackAction)
+        {
+            StopWalking();
+            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
+            {
+                NextAction = callbackAction;
+                return TryWalkTo(directions);
+            }
+            return false;
+        }
+
         public virtual bool TryWalkTo(params Direction[] directions)
         {
-
             if (!WalkingQueue.IsEmpty)
             {
                 WalkingQueue.Clear();
             }
+
+            if (directions.Length >= 1 && Cooldowns.Expired(CooldownType.Move))
+            {
+                FirstStep = true;
+            }
+
             foreach (var direction in directions)
             {
+                if (direction == Direction.None) continue;
+
                 WalkingQueue.Enqueue(direction);
             }
+
+            if (WalkingQueue.IsEmpty) return true;
 
             OnStartedWalking?.Invoke(this);
             return true;
@@ -194,15 +185,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool TryGetNextStep(out Direction direction)
         {
-            if (!Cooldowns.Expired(CooldownType.Move))
-            {
-                direction = Direction.None;
-                return false;
-            }
-
             if (WalkingQueue.TryDequeue(out direction))
             {
+                FirstStep = false;
                 Cooldowns.Start(CooldownType.Move, StepDelayMilliseconds);
+
                 return true;
             }
 
@@ -210,7 +197,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
 
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);
-
         public void ChangeSpeed(int newSpeed)
         {
             Speed = (ushort)newSpeed;
@@ -218,6 +204,5 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void IncreaseSpeed(ushort speed) => ChangeSpeed(speed + Speed);
         public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Speed - speedBoost);
-
     }
 }

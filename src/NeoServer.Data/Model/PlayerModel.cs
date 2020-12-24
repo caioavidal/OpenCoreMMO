@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Players;
 using System.Collections.Generic;
 namespace NeoServer.Server.Model.Players
 {
-  
 
     public class PlayerModel : IPlayerModel
     {
@@ -18,7 +17,7 @@ namespace NeoServer.Server.Model.Players
 
         public AccountModel Account { get; set; }
         public ChaseMode ChaseMode { get; set; }
-        public float Capacity { get; set; }
+        public uint Capacity { get; set; }
         public ushort Level { get; set; }
         public ushort HealthPoints { get; set; }
         public ushort MaxHealthPoints { get; set; }
@@ -30,7 +29,7 @@ namespace NeoServer.Server.Model.Players
         public FightMode FightMode { get; }
         public byte SoulPoints { get; set; }
         public byte MaxSoulPoints { get; set; }
-        public IDictionary<SkillType, ISkill> Skills { get; set; }
+        public IDictionary<SkillType, ISkillModel> Skills { get; set; }
 
         public IOutfit Outfit { get; set; }
 
@@ -46,6 +45,12 @@ namespace NeoServer.Server.Model.Players
         {
             return false;
         }
+    }
+
+    public class SkillModel: ISkillModel
+    {
+        public int Level { get; set; }
+        public int Count { get; set; }
     }
 
     public class ItemModel:IItemModel

@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Contracts;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -18,98 +20,74 @@ namespace NeoServer.Game.Items.Items
         public event Move OnContainerMoved;
         public byte SlotsUsed { get; private set; }
         public bool IsFull => SlotsUsed >= Capacity;
-
+        public byte? Id { get; private set; }
         public IThing Parent { get; private set; }
         public bool HasParent => Parent != null;
         public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Capacity);
         public List<IItem> Items { get; }
         public IItem this[int index] => Items[index];
         public bool HasItems => SlotsUsed > 0;
+        public byte LastFreeSlot => IsFull ? 0 : SlotsUsed;
+        public int FreeSlotsCount => Capacity - SlotsUsed;
+
         public IThing Root
         {
             get
             {
                 IThing root = this;
-                while (root is IContainer container && container.Parent is not null)
-                {
-                    root = container.Parent;
-                }
-
+                while (root is IContainer container && container.Parent is not null) root = container.Parent;
                 return root;
             }
         }
 
-        public override void OnMoved()
-        {
-            OnContainerMoved?.Invoke(this);
-        }
+        public override void OnMoved() => OnContainerMoved?.Invoke(this);
 
-        public Container(IItemType type, Location location) : base(type, location)
-        {
-            if (!type.Attributes.HasAttribute(Common.ItemAttribute.Capacity))
-            {
-                throw new ArgumentException("Capacity missing");
-            }
-
-            Items = new List<IItem>(Capacity);
-        }
-
-        public bool IsEquiped
-        {
-            get
-            {
-                IThing parent = this;
-                while (true)
-                {
-                    if (parent is IContainer container)
-                    {
-                        parent = container.Parent;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                };
-
-                return parent is IPlayer;
-            }
-        }
-
+        public Container(IItemType type, Location location) : base(type, location) => Items = new List<IItem>(Capacity);
         public void SetParent(IThing thing)
         {
             Parent = thing;
             if (Parent is IPlayer player) Location = new Location(Common.Players.Slot.Backpack);
-
         }
+        public static bool IsApplicable(IItemType type) => type.Group == ItemGroup.GroundContainer || type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
+        private int PossibleAmountToAdd(IItem item)
+        {
+            if (item is not ICumulative cumulative) return IsFull ? 0 : FreeSlotsCount;
 
-        public static bool IsApplicable(IItemType type) => type.Group == Common.ItemGroup.GroundContainer ||
-            type.Attributes.GetAttribute(Common.ItemAttribute.Type)?.ToLower() == "container";
+            var possibleAmountToAdd = FreeSlotsCount * 100;
 
+            foreach (var i in Items)
+            {
+                if (i is ICumulative c && i.ClientId == item.ClientId) possibleAmountToAdd += c.AmountToComplete;
+            }
+
+            return possibleAmountToAdd;
+        }
         public bool GetContainerAt(byte index, out IContainer container)
         {
             container = null;
-            if (Items[index] is IContainer)
+            if (Items.Count > index && Items[index] is IContainer c)
             {
-                container = Items[index] as IContainer;
+                container = c;
                 return true;
             }
 
             return false;
         }
+        public void UpdateId(byte id)
+        {
+            Id = id;
+            UpdateItemsLocation(id);
+        }
+        public void RemoveId()
+        {
+            Id = null;
+        }
 
         private Result AddItem(IItem item, byte slot)
         {
+            if (Capacity <= slot) throw new ArgumentOutOfRangeException("Slot is bigger than capacity");
 
-            if (Capacity <= slot)
-            {
-                throw new ArgumentOutOfRangeException("Slot is bigger than capacity");
-            }
-
-            if (item is ICumulative == false)
-            {
-                return AddItemToFront(item);
-
-            }
+            if (item is not ICumulative) return AddItemToFront(item);
 
             var cumulativeItem = item as ICumulative;
 
@@ -117,8 +95,6 @@ namespace NeoServer.Game.Items.Items
 
             if (itemToJoinSlot >= 0 && item is ICumulative cumulative)
             {
-                //adding to a slot with a different item type
-
                 return TryJoinCumulativeItems(cumulative, (byte)itemToJoinSlot);
             }
 
@@ -143,7 +119,6 @@ namespace NeoServer.Game.Items.Items
 
         private Result TryJoinCumulativeItems(ICumulative item, byte itemToJoinSlot)
         {
-
             var amountToAdd = item.Amount;
 
             var itemToUpdate = Items[itemToJoinSlot] as ICumulative;
@@ -168,7 +143,7 @@ namespace NeoServer.Game.Items.Items
         {
             if (SlotsUsed >= Capacity)
             {
-                return new Result(InvalidOperation.TooHeavy);
+                return new Result(InvalidOperation.IsFull);
             }
 
             Items.Insert(0, item);
@@ -179,69 +154,61 @@ namespace NeoServer.Game.Items.Items
                 container.SetParent(this);
             }
 
+            UpdateItemsLocation();
+
+            if (item is ICumulative cumulative)
+            {
+                cumulative.OnReduced += OnItemReduced;
+            }
+
             OnItemAdded?.Invoke(item);
-
-            return new Result();
+            return Result.Success;
         }
 
-        private Result AddItemToChild(IItem item, IContainer child)
+        private void UpdateItemsLocation(byte? containerId = null)
         {
-            if (!item.IsCumulative && child.IsFull)
+            var index = 0;
+            foreach (var i in Items)
             {
-                return new Result(InvalidOperation.TooHeavy);
+                containerId = containerId ?? Id ?? 0;
+                var newLocation = Location.Container(containerId.Value, (byte)index++);
+                if (i is IPickupable pickupable) pickupable.SetNewLocation(newLocation);
             }
-            var result = child.TryAddItem(item, (byte)(child.Capacity - 1));
-
-            if (item is IContainer container)
-            {
-                container.SetParent(child);
-            }
-            return result;
         }
-        public virtual Result TryAddItem(IItem item, byte? slot = null) => TryAddItem(item, slot ?? (byte)(Capacity - 1));
-        public virtual Result TryAddItem(IItem item, byte slot)
+
+        public void OnItemReduced(ICumulative item, byte amount)
         {
-            var itemOnSlot = Items.ElementAtOrDefault(slot);
-            if (itemOnSlot is IContainer container)
-            {
-                return AddItemToChild(item, container);
-            }
-
-            return AddItem(item, slot);
+            if (item.Amount == 0) RemoveItem((byte)item.Location.ContainerSlot);
+            if (item.Amount > 0) OnItemUpdated?.Invoke((byte)item.Location.ContainerSlot, item, (sbyte)item.Amount);
         }
 
-        public void MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1)
+        public Result CanAddItem(IItem item, byte? slot = null)
         {
-            var item = RemoveItem(fromSlotIndex, amount) as ICumulative;
+            if (item == this) return new Result(InvalidOperation.Impossible);
 
-            var itemOnSlot = Items.ElementAtOrDefault(toSlotIndex);
+            if (slot is null && item is not ICumulative && IsFull) return new Result(InvalidOperation.IsFull);
 
-            if (itemOnSlot?.ClientId == item.ClientId)
-            {
-                TryJoinCumulativeItems(item, toSlotIndex);
-            }
-            else
-            {
-                AddItemToFront(item);
-            }
+            if (slot is not null && GetContainerAt(slot.Value, out var container)) return container.CanAddThing(item, slot: slot);
 
+            if (item is ICumulative cumulative && IsFull && GetSlotOfFirstItemNotFully(cumulative) == -1) return new Result(InvalidOperation.IsFull);
+
+            return Result.Success;
         }
-
-        public Result MoveItem(byte fromSlotIndex, byte toSlotIndex)
+        public virtual Result TryAddItem(IItem item, byte? slot = null)
         {
-            if (GetContainerAt(toSlotIndex, out var container))
-            {
-                var item = RemoveItem(fromSlotIndex);
-                return AddItemToChild(item, container);
-            }
-            if (fromSlotIndex > toSlotIndex)
-            {
-                var item = RemoveItem(fromSlotIndex);
-                return AddItemToFront(item);
-            }
-            return new Result();
+            if (slot.HasValue && Capacity <= slot) slot = null;
+
+            var validation = CanAddItem(item, slot);
+            if (!validation.IsSuccess) return validation;
+
+            slot = slot ?? LastFreeSlot;
+
+            if (GetContainerAt(slot.Value, out var container)) return container.AddThing(item, null).ResultValue;
+
+            return AddItem(item, slot.Value);
         }
-        public IItem RemoveItem(byte slotIndex)
+
+        private IItem RemoveItem(byte slotIndex)
         {
             var item = Items[slotIndex];
 
@@ -252,12 +219,19 @@ namespace NeoServer.Game.Items.Items
                 container.SetParent(null);
             }
 
+            if (item is ICumulative cumulative)
+            {
+                cumulative.OnReduced -= OnItemReduced;
+            }
+
             SlotsUsed--;
+
+            UpdateItemsLocation();
 
             OnItemRemoved?.Invoke(slotIndex, item);
             return item;
         }
-        public IItem RemoveItem(byte slotIndex, byte amount)
+        private IItem RemoveItem(byte slotIndex, byte amount)
         {
             var item = Items[slotIndex];
 
@@ -266,13 +240,18 @@ namespace NeoServer.Game.Items.Items
             if (item is ICumulative cumulative)
             {
                 var amountToReduce = Math.Min(cumulative.Amount, amount);
-                cumulative.Reduce(Math.Min(cumulative.Amount, amount));
-                removedItem = cumulative.Clone(amountToReduce);
 
-                if (cumulative.Amount == 0)
+                var amountBeforeSplit = cumulative.Amount;
+                removedItem = cumulative.Split(amountToReduce);
+
+                if (amountBeforeSplit == removedItem.Amount)
                 {
                     RemoveItem(slotIndex);
                     return removedItem;
+                }
+                else
+                {
+                    OnItemUpdated?.Invoke(slotIndex, item, (sbyte)amount);
                 }
             }
             else
@@ -294,6 +273,8 @@ namespace NeoServer.Game.Items.Items
                     DetachEvents(container);
                     container.Clear();
                 }
+
+                if (item is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced;
             }
 
             Items.Clear();
@@ -334,6 +315,62 @@ namespace NeoServer.Game.Items.Items
             }
 
             return stringBuilder.ToString();
+        }
+
+        public Result CanAddThing(IThing thing, byte amount = 1, byte? slot = null)
+        {
+            if (thing is not IItem item) return Result.NotPossible;
+            return CanAddItem(item, slot);
+        }
+
+        public int PossibleAmountToAdd(IThing thing, byte? toPosition = null)
+        {
+            if (thing is not IItem item) return 0;
+            return PossibleAmountToAdd(item);
+        }
+
+        public bool CanRemoveItem(IThing item) => true;
+
+        public Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null)
+        {
+            if (thing is not IItem item) return Result<OperationResult<IThing>>.NotPossible;
+            return new(TryAddItem(item, position).Error);
+        }
+
+        public Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
+        {
+            amount = amount == 0 ? 1 : amount;
+            removedThing = RemoveItem(fromPosition, amount);
+            return new(new OperationResult<IThing>(Operation.Removed, removedThing, fromPosition));
+        }
+        public Result SendTo(IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
+        {
+            if (destination is IContainer && toPosition is not null && GetContainerAt(toPosition.Value, out var container)) return SendTo(container, thing, amount, fromPosition, null);
+
+            var canAdd = destination.CanAddThing(thing, amount, toPosition);
+            if (!canAdd.IsSuccess) return canAdd;
+
+            var possibleAmountToAdd = destination.PossibleAmountToAdd(thing, toPosition);
+            if (possibleAmountToAdd == 0) return new Result(InvalidOperation.NotEnoughRoom);
+
+            IThing removedThing;
+            if (thing is not ICumulative)
+            {
+                if (possibleAmountToAdd < 1) return new Result(InvalidOperation.NotEnoughRoom);
+                RemoveThing(thing, 1, fromPosition, out removedThing);
+            }
+            else
+            {
+                var amountToAdd = (byte)(possibleAmountToAdd < amount ? possibleAmountToAdd : amount);
+                RemoveThing(thing, amountToAdd, fromPosition, out removedThing);
+            }
+
+            var result = destination.ReceiveFrom(this, removedThing, toPosition);
+
+            if (amount - possibleAmountToAdd > 0)
+                return SendTo(destination, thing, (byte)(amount - possibleAmountToAdd), fromPosition, toPosition);
+
+            return result;
         }
     }
 }

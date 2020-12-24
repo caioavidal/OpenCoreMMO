@@ -6,11 +6,11 @@ using System.Text;
 
 namespace NeoServer.Server.Events.Player
 {
-    public class PlayerManaReducedEventHandler
+    public class PlayerManaChangedEventHandler
     {
         private readonly Game game;
 
-        public PlayerManaReducedEventHandler(Game game)
+        public PlayerManaChangedEventHandler(Game game)
         {
             this.game = game;
         }

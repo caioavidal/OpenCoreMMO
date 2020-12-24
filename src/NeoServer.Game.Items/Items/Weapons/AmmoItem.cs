@@ -16,17 +16,10 @@ namespace NeoServer.Game.Items.Items
         public AmmoItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
         {
 
-            //AllowedVocations = allowedVocations;
-            //MinimumLevelRequired = minimumLevelRequired;
-            //SkillBonus = skillBonus;
         }
-        //todo duplicated code
         public AmmoItem(IItemType type, Location location, byte amount) : base(type, location, amount)
         {
 
-            //AllowedVocations = allowedVocations;
-            //MinimumLevelRequired = minimumLevelRequired;
-            //SkillBonus = skillBonus;
         }
 
         public byte Range => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Range);
@@ -46,5 +39,6 @@ namespace NeoServer.Game.Items.Items
         public ImmutableDictionary<SkillType, byte> SkillBonus { get; }
 
         public static new bool IsApplicable(IItemType type) => type.WeaponType == WeaponType.Ammunition;
+        public void Throw() => Reduce();
     }
 }

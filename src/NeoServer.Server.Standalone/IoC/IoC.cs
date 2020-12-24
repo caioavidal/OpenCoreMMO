@@ -38,6 +38,9 @@ using System.IO;
 using NeoServer.Game.Common;
 using NeoServer.Game.World.Map.Operations;
 using NeoServer.Data.Repositories;
+using NeoServer.Loaders.Vocations;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -48,7 +51,6 @@ namespace NeoServer.Server.Standalone.IoC
             var builder = new ContainerBuilder();
 
             //server
-            builder.RegisterType<GameState>().SingleInstance();
 
             builder.RegisterInstance(new LoggerConfiguration()
                 .WriteTo.Console()
@@ -72,33 +74,38 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<NeoServer.Game.World.Map.PathFinder>().As<IPathFinder>().SingleInstance();
 
+            builder.Register((c, p) =>
+            {
+                return new CreaturePathAccess(c.Resolve<IPathFinder>().Find, c.Resolve<IMap>().CanGoToDirection);
+            }).SingleInstance();
+
             RegisterPacketHandlers(builder);
 
             builder.RegisterType<Scheduler>().As<IScheduler>().SingleInstance();
             //commands
             builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
 
-            RegisterEvents(builder);
+            RegisterServerEvents(builder);
+            RegisterGameEvents(builder);
+            RegisterEventSubscribers(builder);
 
             RegisterIncomingPacketFactory(builder);
             RegisterPlayerFactory(builder);
             LoadConfigurations(builder);
 
             //world
+            builder.RegisterType<Map>().As<IMap>().SingleInstance();
             builder.RegisterType<World>().SingleInstance();
-            //builder.RegisterType<Server.World.WorldLoader>().As<IWorldLoader>();
 
+            //loaders
             builder.RegisterType<ItemTypeLoader>().SingleInstance();
             builder.RegisterType<Loaders.World.WorldLoader>().SingleInstance();
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
-
-            //builder.RegisterType<OTBMWorldLoader>();
-            builder.RegisterType<Map>().As<IMap>().SingleInstance();
-            
+            builder.RegisterType<VocationLoader>().SingleInstance();
 
             //factories
-            builder.RegisterType<ItemFactory>().As<IItemFactory>().SingleInstance();
+            builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
             builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
 
             builder.RegisterType<PlayerFactory>().As<IPlayerFactory>().SingleInstance();
@@ -124,14 +131,29 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(assemblies).SingleInstance();
         }
 
-        private static void RegisterEvents(ContainerBuilder builder)
+        private static void RegisterServerEvents(ContainerBuilder builder)
         {
             var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
-
             builder.RegisterAssemblyTypes(assembly);
-
         }
+        private static void RegisterGameEvents(ContainerBuilder builder)
+        {
+            var interfaceType = typeof(IGameEventHandler);
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => interfaceType.IsAssignableFrom(x));
 
+            foreach (var type in types)
+            {
+                if (type == interfaceType) continue;
+                builder.RegisterType(type).SingleInstance();
+                ;
+            }
+        }
+        private static void RegisterEventSubscribers(ContainerBuilder builder)
+        {
+            var types = AppDomain.CurrentDomain.GetAssemblies();
+            builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
+            builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
+        }
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
         {

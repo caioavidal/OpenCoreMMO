@@ -20,14 +20,15 @@ namespace NeoServer.Server
 
         private ICreatureGameInstance creatureInstances;
 
-
         private readonly Func<IPlayerModel, IPlayer> playerFactory;
 
         /// <summary>
-        /// Gets all creatures all game
+        /// Gets all creatures in game
         /// </summary>
         /// <returns></returns>
         public IEnumerable<ICreature> GetCreatures() => creatureInstances.All();
+
+        public IEnumerable<ICreature> GetAwakeCreatures() => creatureInstances.All();
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
         private IMap map;

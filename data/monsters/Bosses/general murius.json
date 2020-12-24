@@ -1,241 +1,266 @@
 {
-  "monster": {
-    "name": "General Murius",
-    "nameDescription": "the general Murius",
-    "race": "blood",
-    "experience": "300",
-    "speed": "240",
-    "manacost": "0",
-    "health": {
-      "now": "550",
-      "max": "550"
+  "name": "General Murius",
+  "nameDescription": "the general Murius",
+  "race": "blood",
+  "experience": 300,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 550,
+    "now": 550
+  },
+  "look": {
+    "type": 202,
+    "corpse": 5983
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "70",
+      "attack": "55"
     },
-    "look": {
-      "type": "202",
-      "corpse": "5983"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "min": "-50",
+      "max": "-120",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "bolt"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "70",
-          "attack": "55"
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "12",
-          "range": "7",
-          "min": "-50",
-          "max": "-120",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "bolt"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "10",
-          "radius": "3",
-          "target": "0",
-          "min": "-50",
-          "max": "-80",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blackspark"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "16",
-      "defense": "22",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "15",
-        "min": "50",
-        "max": "100",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "summons": {
-      "maxSummons": "4",
-      "summon": [
-        {
-          "name": "Minotaur Archer",
-          "interval": "1000",
-          "chance": "15",
-          "max": "2"
-        },
-        {
-          "name": "Minotaur Guard",
-          "interval": "1000",
-          "chance": "12",
-          "max": "2"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "physical",
+      "interval": "1000",
       "chance": "10",
-      "voice": [
+      "radius": "3",
+      "target": "0",
+      "min": "-50",
+      "max": "-80",
+      "attributes": [
         {
-          "sentence": "Feel the power of the Mooh'Tah!"
-        },
-        {
-          "sentence": "You will get what you deserve!"
-        },
-        {
-          "sentence": "For the king!"
+          "areaEffect": "blackspark"
         }
       ]
+    }
+  ],
+  "defense": {
+    "armor": 16,
+    "defense": 22
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "15",
+      "min": "50",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 30,
+      "chance": 100000,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2410,
+      "countmax": 2,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2419,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2510,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2647,
+      "countmax": 1,
+      "chance": 1818,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2413,
+      "countmax": 1,
+      "chance": 2857,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 3976,
+      "countmax": 10,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1988,
+      "countmax": 1,
+      "chance": 2857,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "30",
-          "chance": "100000"
-        },
-        {
-          "id": "2410",
-          "countmax": "2",
-          "chance": "50000"
-        },
-        {
-          "id": "2419",
-          "chance": "10000"
-        },
-        {
-          "id": "2510",
-          "chance": "5000"
-        },
-        {
-          "id": "2667",
-          "countmax": "1",
-          "chance": "20000"
-        },
-        {
-          "id": "2647",
-          "chance": "1818"
-        },
-        {
-          "id": "2413",
-          "chance": "2857"
-        },
-        {
-          "id": "3976",
-          "countmax": "10",
-          "chance": "50000"
-        },
-        {
-          "id": "1988",
-          "chance": "2857",
-          "#comment": [],
-          "item": {
-            "id": "2148",
-            "countmax": "1",
-            "chance": "2857"
-          }
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2207",
-              "chance": "2000"
-            },
-            {
-              "id": "2666",
-              "countmax": "2",
-              "chance": "33333"
-            },
-            {
-              "id": "2379",
-              "chance": "6666"
-            },
-            {
-              "id": "2475",
-              "chance": "1000"
-            },
-            {
-              "id": "2397",
-              "chance": "10000"
-            },
-            {
-              "id": "2652",
-              "chance": "2500"
-            },
-            {
-              "id": "2478",
-              "chance": "2857"
-            },
-            {
-              "id": "2463",
-              "chance": "1818"
-            }
-          ]
+          "id": 2148,
+          "countmax": 1,
+          "chance": 2857,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2207,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2666,
+          "countmax": 2,
+          "chance": 33333,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2379,
+          "countmax": 1,
+          "chance": 6666,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2475,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2397,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2652,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2478,
+          "countmax": 1,
+          "chance": 2857,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2463,
+          "countmax": 1,
+          "chance": 1818,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel the power of the Mooh'Tah!",
+        "yell": false
+      },
+      {
+        "sentence": "You will get what you deserve!",
+        "yell": false
+      },
+      {
+        "sentence": "For the king!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Minotaur Archer",
+        "interval": 1000,
+        "chance": 15,
+        "max": 2
+      },
+      {
+        "name": "Minotaur Guard",
+        "interval": 1000,
+        "chance": 12,
+        "max": 2
+      }
+    ]
   }
 }

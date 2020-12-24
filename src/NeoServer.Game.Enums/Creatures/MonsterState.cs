@@ -13,6 +13,7 @@ namespace NeoServer.Game.Common.Creatures
         Sleeping,
         InCombat,
         Running,
-        LookingForEnemy
+        LookingForEnemy,
+        Awake
     }
 }

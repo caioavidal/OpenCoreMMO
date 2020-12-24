@@ -1,124 +1,97 @@
 {
-  "monster": {
-    "name": "Colerian The Barbarian",
-    "nameDescription": "Colerian the Barbarian",
-    "race": "blood",
-    "experience": "90",
-    "speed": "190",
-    "health": {
-      "now": "265",
-      "max": "265"
-    },
-    "look": {
-      "type": "253",
-      "head": "76",
-      "body": "115",
-      "legs": "115",
-      "feet": "43",
-      "corpse": "7349"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-60"
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "80",
-          "range": "5",
-          "radius": "1",
-          "target": "1",
-          "min": "0",
-          "max": "-40",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "piercingbolt"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "19",
-      "defense": "20"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "earthPercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "Colerian The Barbarian",
+  "nameDescription": "Colerian the Barbarian",
+  "race": "blood",
+  "experience": 90,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 265,
+    "now": 265
+  },
+  "look": {
+    "type": 253,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5",
-      "voice": [
+      "min": "0",
+      "max": "-60"
+    },
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "80",
+      "range": "5",
+      "radius": "1",
+      "target": "1",
+      "min": "0",
+      "max": "-40",
+      "attributes": [
         {
-          "sentence": "Flee, coward!"
-        },
-        {
-          "sentence": "You will lose!"
-        },
-        {
-          "sentence": "Yeehaawh"
+          "shootEffect": "piercingbolt"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 19,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "earthPercent": -20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Flee, coward!",
+        "yell": false
+      },
+      {
+        "sentence": "You will lose!",
+        "yell": false
+      },
+      {
+        "sentence": "Yeehaawh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

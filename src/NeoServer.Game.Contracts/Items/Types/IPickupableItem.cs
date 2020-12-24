@@ -2,6 +2,8 @@
 {
     public interface IPickupable : IMoveableThing, IItem
     {
-        float Weight => Metadata.Attributes.GetAttribute<float>(Common.ItemAttribute.Weight);
+        float Weight => Metadata.Weight;
+        string IThing.CloseInspectionText => $"{InspectionText}.\nIt weighs {Weight} oz{DescriptionText}";
+        string DescriptionText => Metadata.Description is null ? string.Empty : $"\n{Metadata.Description}";
     }
 }

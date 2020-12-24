@@ -1,191 +1,189 @@
 {
-  "monster": {
-    "name": "Zombie",
-    "nameDescription": "a zombie",
-    "race": "undead",
-    "experience": "280",
-    "speed": "180",
-    "manacost": "0",
-    "health": {
-      "now": "500",
-      "max": "500"
+  "name": "Zombie",
+  "nameDescription": "a zombie",
+  "race": "undead",
+  "experience": 280,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 500,
+    "now": 500
+  },
+  "look": {
+    "type": 311,
+    "corpse": 9875
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "42",
+      "attack": "50"
     },
-    "look": {
-      "type": "311",
-      "corpse": "9875"
+    {
+      "name": "manadrain",
+      "interval": "1000",
+      "chance": "13",
+      "range": "1",
+      "min": "-0",
+      "max": "-45"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": -40
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 64,
+      "chance": 24000,
+      "items": [],
+      "name": null
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
+    {
+      "id": 2227,
+      "countmax": 1,
+      "chance": 45000,
+      "items": [],
+      "name": null
     },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 46250,
+      "items": [],
+      "name": null
     },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
+    {
+      "id": 2460,
+      "countmax": 1,
+      "chance": 8700,
+      "items": [],
+      "name": null
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "42",
-          "attack": "50"
-        },
-        {
-          "name": "manadrain",
-          "interval": "1000",
-          "chance": "13",
-          "range": "1",
-          "min": "-0",
-          "max": "-45"
-        }
-      ]
+    {
+      "id": 2457,
+      "countmax": 1,
+      "chance": 8700,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "10"
+    {
+      "id": 2398,
+      "countmax": 1,
+      "chance": 7250,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": {
-        "firePercent": "-40"
-      }
-    },
-    "immunities": {
-      "immunity": [
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "death": "1"
+          "id": 9808,
+          "countmax": 1,
+          "chance": 7250,
+          "items": [],
+          "name": null
         },
         {
-          "energy": "1"
+          "id": 2381,
+          "countmax": 1,
+          "chance": 2900,
+          "items": [],
+          "name": null
         },
         {
-          "ice": "1"
+          "id": 2381,
+          "countmax": 1,
+          "chance": 4350,
+          "items": [],
+          "name": null
         },
         {
-          "earth": "1"
+          "id": 2205,
+          "countmax": 1,
+          "chance": 2900,
+          "items": [],
+          "name": null
         },
         {
-          "lifedrain": "1"
+          "id": 7620,
+          "countmax": 1,
+          "chance": 1450,
+          "items": [],
+          "name": null
         },
         {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Mst.... klll...."
-        },
-        {
-          "sentence": "Whrrrr... ssss.... mmm.... grrrrl"
-        },
-        {
-          "sentence": "Dnnnt... cmmm... clsrrr...."
-        },
-        {
-          "sentence": "Httt.... hmnnsss..."
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "64",
-          "chance": "24000"
-        },
-        {
-          "id": "2227",
-          "chance": "45000"
-        },
-        {
-          "id": "2050",
-          "chance": "46250"
-        },
-        {
-          "id": "2460",
-          "chance": "8700"
-        },
-        {
-          "id": "2457",
-          "chance": "8700"
-        },
-        {
-          "id": "2398",
-          "chance": "7250"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "9808",
-              "chance": "7250"
-            },
-            {
-              "id": "2381",
-              "chance": "2900"
-            },
-            {
-              "id": "2381",
-              "chance": "4350"
-            },
-            {
-              "id": "2205",
-              "chance": "2900"
-            },
-            {
-              "id": "7620",
-              "chance": "1450"
-            },
-            {
-              "id": "2657",
-              "chance": "900"
-            }
-          ]
+          "id": 2657,
+          "countmax": 1,
+          "chance": 900,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Mst.... klll....",
+        "yell": false
+      },
+      {
+        "sentence": "Whrrrr... ssss.... mmm.... grrrrl",
+        "yell": false
+      },
+      {
+        "sentence": "Dnnnt... cmmm... clsrrr....",
+        "yell": false
+      },
+      {
+        "sentence": "Httt.... hmnnsss...",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "energy": 1,
+    "ice": 1,
+    "earth": 1,
+    "lifedrain": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

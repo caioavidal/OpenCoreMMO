@@ -1,229 +1,219 @@
 {
-  "monster": {
-    "name": "Diseased Bill",
-    "nameDescription": "a diseased Bill",
-    "race": "venom",
-    "experience": "300",
-    "speed": "150",
-    "health": {
-      "now": "1000",
-      "max": "1000"
-    },
-    "look": {
-      "type": "299",
-      "corpse": "8951"
-    },
-    "targetchange": {
-      "interval": "60000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "95"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "1"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-207",
-          "poison": "4"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "min": "-90",
-          "max": "-140",
-          "target": "1",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "40",
-          "radius": "2",
-          "target": "0",
-          "min": "-100",
-          "max": "-175",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "smallearth"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "3000",
-          "chance": "40",
-          "target": "1",
-          "speedchange": "-900",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "15",
-      "defense": [
-        {
-          "name": "speed",
-          "interval": "10000",
-          "chance": "40",
-          "speedchange": "310",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenshimmer"
-          }
-        },
-        {
-          "name": "healing",
-          "interval": "5000",
-          "chance": "60",
-          "min": "50",
-          "max": "80",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "-20"
-        },
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "earthPercent": "30"
-        },
-        {
-          "icePercent": "-5"
-        },
-        {
-          "holyPercent": "-5"
-        },
-        {
-          "deathPercent": "5"
-        },
-        {
-          "firePercent": "85"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "Diseased Bill",
+  "nameDescription": "a diseased Bill",
+  "race": "venom",
+  "experience": 300,
+  "speed": 150,
+  "manaCost": 0,
+  "health": {
+    "max": 1000,
+    "now": 1000
+  },
+  "look": {
+    "type": 299,
+    "corpse": 8951
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 95,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5",
-      "voice": [
+      "min": "0",
+      "max": "-207",
+      "poison": "4"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "min": "-90",
+      "max": "-140",
+      "target": "1",
+      "attributes": [
         {
-          "sentence": "Tchhh!"
-        },
-        {
-          "sentence": "Slurp!"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "40",
+      "radius": "2",
+      "target": "0",
+      "min": "-100",
+      "max": "-175",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "65",
-          "chance": "28000"
-        },
+          "shootEffect": "smallearth"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "3000",
+      "chance": "40",
+      "target": "1",
+      "speedchange": "-900",
+      "duration": "20000",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "64",
-          "chance": "28000"
-        },
-        {
-          "name": "plate legs",
-          "chance": "2000"
-        },
-        {
-          "name": "great health potion",
-          "chance": "5500"
-        },
-        {
-          "name": "great spirit potion",
-          "chance": "3500"
-        },
-        {
-          "name": "ultimate health potion",
-          "chance": "3500"
-        },
-        {
-          "name": "belted cape",
-          "chance": "1000"
-        },
-        {
-          "name": "hibiscus dress",
-          "chance": "300"
-        },
-        {
-          "name": "paladin armor",
-          "chance": "200"
-        },
-        {
-          "name": "springsprout rod",
-          "chance": "800"
+          "areaEffect": "redshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "10000",
+      "chance": "40",
+      "speedchange": "310",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "5000",
+      "chance": "60",
+      "min": "50",
+      "max": "80",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -20,
+    "energyPercent": -10,
+    "earthPercent": 30,
+    "icePercent": -5,
+    "holyPercent": -5,
+    "deathPercent": 5,
+    "firePercent": 85
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 28000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 64,
+      "chance": 28000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "great spirit potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "belted cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": "hibiscus dress"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "paladin armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "springsprout rod"
+    }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Tchhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Slurp!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

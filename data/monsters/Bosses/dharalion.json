@@ -1,303 +1,307 @@
 {
-  "monster": {
-    "name": "Dharalion",
-    "nameDescription": "dharalion",
-    "race": "blood",
-    "experience": "380",
-    "speed": "240",
-    "manacost": "0",
-    "health": {
-      "now": "380",
-      "max": "380"
+  "name": "Dharalion",
+  "nameDescription": "dharalion",
+  "race": "blood",
+  "experience": 380,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 380,
+    "now": 380
+  },
+  "look": {
+    "type": 203,
+    "corpse": 6011
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "28"
     },
-    "look": {
-      "type": "203",
-      "corpse": "6011"
+    {
+      "name": "manadrain",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "min": "-30",
+      "max": "-60"
     },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "13",
+      "range": "7",
+      "min": "-70",
+      "max": "-90",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "energy"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "energy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "30",
-          "attack": "28"
-        },
-        {
-          "name": "manadrain",
-          "interval": "1000",
-          "chance": "15",
-          "range": "7",
-          "min": "-30",
-          "max": "-60"
-        },
-        {
-          "name": "energy",
-          "interval": "1000",
-          "chance": "13",
-          "range": "7",
-          "min": "-70",
-          "max": "-90",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-        {
-          "name": "physical",
-          "interval": "1000",
-          "chance": "10",
-          "range": "7",
-          "min": "-80",
-          "max": "-151",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "suddendeath"
-          }
-        },
-        {
-          "name": "effect",
-          "interval": "1000",
-          "chance": "13",
-          "range": "7",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "25",
-      "defense": [
-        {
-          "name": "healing",
-          "interval": "1000",
-          "chance": "20",
-          "min": "90",
-          "max": "120",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "1000",
-          "chance": "7",
-          "speedchange": "300",
-          "duration": "10000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "physical": "0"
-        },
-        {
-          "energy": "0"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "poison": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "0"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "2",
-      "summon": {
-        "name": "demon skeleton",
-        "interval": "1000",
-        "chance": "6",
-        "max": "2"
-      }
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "physical",
+      "interval": "1000",
       "chance": "10",
-      "voice": [
+      "range": "7",
+      "min": "-80",
+      "max": "-151",
+      "attributes": [
         {
-          "sentence": "Feel my wrath!"
-        },
-        {
-          "sentence": "Noone will stop my ascension!"
-        },
-        {
-          "sentence": "My powers are divine!"
+          "shootEffect": "suddendeath"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "effect",
+      "interval": "1000",
+      "chance": "13",
+      "range": "7",
+      "attributes": [
         {
-          "id": "2148",
-          "countmax": "20",
-          "chance": "100000"
+          "shootEffect": "poison"
         },
         {
-          "id": "1949",
-          "chance": "10000"
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "20",
+      "min": "90",
+      "max": "120",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "7",
+      "speedchange": "300",
+      "duration": "10000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 20,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1949,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2578,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2260,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2401,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2642,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2682,
+      "countmax": 1,
+      "chance": 6666,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2802,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2600,
+      "countmax": 1,
+      "chance": 33333,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2177,
+      "countmax": 1,
+      "chance": 2857,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2689,
+      "countmax": 3,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 3976,
+      "countmax": 10,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2652,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2578",
-          "chance": "5000"
+          "id": 2544,
+          "countmax": 10,
+          "chance": 20000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2260",
-          "chance": "4000"
+          "id": 2456,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2401",
-          "chance": "3000"
+          "id": 2032,
+          "countmax": 1,
+          "chance": 4000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2642",
-          "chance": "20000"
+          "id": 2062,
+          "countmax": 1,
+          "chance": 2857,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2682",
-          "chance": "6666"
+          "id": 2125,
+          "countmax": 1,
+          "chance": 1818,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2802",
-          "countmax": "1",
-          "chance": "10000"
-        },
-        {
-          "id": "2600",
-          "chance": "33333"
-        },
-        {
-          "id": "2177",
-          "chance": "2857"
-        },
-        {
-          "id": "2689",
-          "countmax": "3",
-          "chance": "20000"
-        },
-        {
-          "id": "3976",
-          "countmax": "10",
-          "chance": "50000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2652",
-              "chance": "5000"
-            },
-            {
-              "id": "2544",
-              "countmax": "10",
-              "chance": "20000"
-            },
-            {
-              "id": "2456",
-              "chance": "10000"
-            },
-            {
-              "id": "2032",
-              "chance": "4000"
-            },
-            {
-              "id": "2062",
-              "chance": "2857"
-            },
-            {
-              "id": "2125",
-              "chance": "1818"
-            },
-            {
-              "id": "2154",
-              "chance": "1333"
-            }
-          ]
+          "id": 2154,
+          "countmax": 1,
+          "chance": 1333,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel my wrath!",
+        "yell": false
+      },
+      {
+        "sentence": "Noone will stop my ascension!",
+        "yell": false
+      },
+      {
+        "sentence": "My powers are divine!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "poison": 1,
+    "lifedrain": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "demon skeleton",
+        "interval": 1000,
+        "chance": 6,
+        "max": 2
+      }
+    ]
   }
 }

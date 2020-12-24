@@ -32,12 +32,14 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.Ping, typeof(PlayerPingResponseHandler)},
             { GameIncomingPacketType.CancelAutoWalk, typeof(PlayerCancelAutoWalkHandler)},
             { GameIncomingPacketType.ItemUse, typeof(PlayerUseItemHandler)},
+            { GameIncomingPacketType.ItemUseOn, typeof(PlayerUseOnItemHandler)},
+            { GameIncomingPacketType.ItemUseOnCreature, typeof(PlayerUseOnCreatureHandler)},
             { GameIncomingPacketType.ContainerClose, typeof(PlayerCloseContainerHandler)},
             { GameIncomingPacketType.ContainerUp, typeof(PlayerGoBackContainerHandler) },
             { GameIncomingPacketType.ItemThrow, typeof(PlayerThrowItemHandler)},
             { GameIncomingPacketType.Attack, typeof(PlayerAttackHandler)},
             { GameIncomingPacketType.LookAt, typeof(PlayerLookAtHandler)},
-            { GameIncomingPacketType.Speech, typeof(PlayerSayHandler)},
+            { GameIncomingPacketType.Speech, typeof(PlayerSayHandler)}
         };
     }
 }

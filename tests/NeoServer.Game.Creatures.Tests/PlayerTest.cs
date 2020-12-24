@@ -9,6 +9,7 @@ using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using NeoServer.Game.Creatures.Monsters;
 
 namespace NeoServer.Game.Creatures.Tests
 {
@@ -22,14 +23,34 @@ namespace NeoServer.Game.Creatures.Tests
         [InlineData(94, 94, false)]
         public void CanMoveThing_Given_Distance_Bigger_Than_11_Returns_False(ushort toX, ushort toY, bool expected)
         {
-            var sut = new Player(1,"PlayerA", ChaseMode.Stand, 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-                soulPoints: 100, maxSoulPoints: 100, skills: new Dictionary<SkillType, ISkill>
+            var sut = new Player(1, "PlayerA", ChaseMode.Stand, 100, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
+                soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
                 {
-                    { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
+                    { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
-                }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
+                }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7),
+                pathAccess: new CreaturePathAccess(new World.Map.PathFinder(null).Find, null));
 
             Assert.Equal(expected, sut.CanMoveThing(new Location(toX, toY, 7)));
+        }
+
+        [Fact]
+        public void OnDamage_When_Receives_Melee_Attack_Reduce_Health()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp:100) as Player;
+            var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
+            sut.OnDamage(enemy, new(5, Common.Item.DamageType.Melee));
+
+            Assert.Equal((uint)95, sut.HealthPoints);
+        }
+        [Fact]
+        public void OnDamage_When_Receives_Mana_Attack_Reduce_Mana()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(mana:30) as Player;
+            var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
+            sut.OnDamage(enemy, new(5, Common.Item.DamageType.ManaDrain));
+
+            Assert.Equal((uint)25, sut.Mana);
         }
     }
 }

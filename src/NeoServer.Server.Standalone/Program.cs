@@ -21,6 +21,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server;
+using NeoServer.Loaders.Vocations;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
 
@@ -78,6 +79,7 @@ container.Resolve<WorldLoader>().Load();
 container.Resolve<SpawnLoader>().Load();
 
 container.Resolve<MonsterLoader>().Load();
+container.Resolve<VocationLoader>().Load();
 //new SpellLoader().Load();
 container.Resolve<SpawnManager>().StartSpawn();
 
@@ -92,17 +94,22 @@ scheduler.Start(cancellationToken);
 scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartCheckingCreatures));
 scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartCheckingItems));
 
-
 container.Resolve<EventSubscriber>().AttachEvents();
 
 container.Resolve<Game>().Open();
 
 sw.Stop();
+
+logger.Information($"Running Garbage Collector");
+
+GC.Collect();
+GC.WaitForPendingFinalizers();
+
 logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");
+
 logger.Information($"Memory usage: {Math.Round((System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2)} MB");
 
 listeningTask.Wait(cancellationToken);
-
 
 static async Task StartListening(IContainer container, CancellationToken token)
 {
@@ -114,6 +121,5 @@ static async Task StartListening(IContainer container, CancellationToken token)
         await Task.Delay(TimeSpan.FromSeconds(1), token);
     }
 }
-
 
 

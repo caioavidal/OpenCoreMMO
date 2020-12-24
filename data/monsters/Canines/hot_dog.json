@@ -1,153 +1,121 @@
 {
-  "monster": {
-    "name": "Hot Dog",
-    "nameDescription": "a hot dog",
-    "race": "blood",
-    "experience": "190",
-    "speed": "300",
-    "manacost": "220",
-    "health": {
-      "now": "505",
-      "max": "505"
+  "name": "Hot Dog",
+  "nameDescription": "a hot dog",
+  "race": "blood",
+  "experience": 190,
+  "speed": 300,
+  "manaCost": 220,
+  "health": {
+    "max": 505,
+    "now": 505
+  },
+  "look": {
+    "type": 32,
+    "corpse": 5971
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1200",
+      "min": "0",
+      "max": "-55"
     },
-    "look": {
-      "type": "32",
-      "corpse": "5971"
-    },
-    "targetchange": {
+    {
+      "name": "fire",
       "interval": "2000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+      "chance": "30",
+      "length": "8",
+      "spread": "3",
+      "min": "-30",
+      "max": "-60",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
+          "areaEffect": "fire"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "30",
+      "range": "7",
+      "target": "1",
+      "min": "-50",
+      "max": "-50",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "1200",
-          "min": "0",
-          "max": "-55"
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "30",
-          "length": "8",
-          "spread": "3",
-          "min": "-30",
-          "max": "-60",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "fire"
-          }
-        },
-        {
-          "name": "fire",
-          "interval": "1000",
-          "chance": "30",
-          "range": "7",
-          "target": "1",
-          "min": "-50",
-          "max": "-50",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "fireattack"
-          }
+          "areaEffect": "fireattack"
         }
       ]
-    },
-    "defenses": {
-      "armor": "1",
-      "defense": "2"
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "-5"
-        },
-        {
-          "physicalPercent": "-20"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "fire": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Wuff Wuff"
-        },
-        {
-          "sentence": "Grrr Wuff"
-        },
-        {
-          "sentence": "Show me how good you are without some rolled newspaper!"
-        }
-      ]
-    },
-    "loot": {
-      "item": {
-        "name": "gold coin",
-        "countmax": "75",
-        "chance": "50000"
-      }
     }
+  ],
+  "defense": {
+    "armor": 1,
+    "defense": 2
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": -5,
+    "physicalPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 75,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Wuff Wuff",
+        "yell": false
+      },
+      {
+        "sentence": "Grrr Wuff",
+        "yell": false
+      },
+      {
+        "sentence": "Show me how good you are without some rolled newspaper!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "drown": 1,
+    "lifedrain": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

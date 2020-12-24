@@ -1,128 +1,107 @@
 {
-  "monster": {
-    "name": "Lady Bug",
-    "nameDescription": "Lady Bug",
-    "race": "venom",
-    "experience": "70",
-    "speed": "200",
-    "health": {
-      "now": "255",
-      "max": "255"
+  "name": "Lady Bug",
+  "nameDescription": "Lady Bug",
+  "race": "venom",
+  "experience": 70,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 255,
+    "now": 255
+  },
+  "look": {
+    "type": 448,
+    "corpse": 15272
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 60
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-4"
     },
-    "look": {
-      "type": "448",
-      "corpse": "15272"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "min": "0",
+      "max": "-20",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "runonhealth": "60"
+          "shootEffect": "poison"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-20",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-4"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "range": "1",
-          "min": "0",
-          "max": "-20",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "min": "0",
-          "max": "-20",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
+          "shootEffect": "poison"
         }
       ]
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "5"
-        },
-        {
-          "physicalPercent": "-5"
-        },
-        {
-          "firePercent": "-5"
-        },
-        {
-          "icePercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": {
-        "sentence": "Nee pah!"
-      }
-    },
-    "loot": {
-      "item": {
-        "name": "gold coin",
-        "countmax": "40",
-        "chance": "65000"
-      }
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 5,
+    "physicalPercent": -5,
+    "firePercent": -5,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 65000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Nee pah!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

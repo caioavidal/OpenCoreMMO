@@ -12,7 +12,6 @@ namespace NeoServer.Loaders.Items
 {
     public class ItemTypeLoader
     {
-
         private readonly Logger logger;
         public ItemTypeLoader(Logger logger)
         {
@@ -23,7 +22,6 @@ namespace NeoServer.Loaders.Items
         /// </summary>
         public void Load()
         {
-
             var basePath = "./data/items/";
             var itemTypes = LoadOTB(basePath);
 
@@ -43,38 +41,36 @@ namespace NeoServer.Loaders.Items
 
         private void LoadItemsJson(string basePath, Dictionary<ushort, IItemType> itemTypes)
         {
-
             var jsonString = File.ReadAllText(Path.Combine(basePath, "items.json"));
             var itemTypeMetadatas = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(jsonString);
 
             var itemTypeMetadataParser = new ItemTypeMetadataParser(itemTypes);
-            foreach (var metadata in itemTypeMetadatas)
+
+            itemTypeMetadatas.AsParallel().ForAll(metadata =>
             {
                 if (metadata.Id.HasValue)
                 {
                     itemTypeMetadataParser.AddMetadata(metadata, metadata.Id.Value);
-                    continue;
                 }
-
-                if (metadata.Fromid == null)
+                else if (metadata.Fromid == null)
                 {
-                    Console.WriteLine("[Warning - Items::loadFromXml] No item id found");
-                    continue;
+                    Console.WriteLine("No item id found");
                 }
-
-                if (metadata.Toid == null)
+                else if (metadata.Toid == null)
                 {
-                    Console.WriteLine($"[Warning - Items::loadFromXml] fromid ({metadata.Fromid}) without toid");
-                    continue;
+                    Console.WriteLine($"fromid ({metadata.Fromid}) without toid");
                 }
-
-                var id = metadata.Fromid.Value;
-
-                while (id <= metadata.Toid)
+                else
                 {
-                    itemTypeMetadataParser.AddMetadata(metadata, id++);
+                    var id = metadata.Fromid.Value;
+
+                    while (id <= metadata.Toid)
+                    {
+                        itemTypeMetadataParser.AddMetadata(metadata, id++);
+                    }
                 }
-            }
+            });
+
         }
     }
 }

@@ -1,188 +1,171 @@
 {
-  "monster": {
-    "name": "Azerus",
-    "nameDescription": "Azerus",
-    "race": "blood",
-    "experience": "6000",
-    "speed": "320",
-    "health": {
-      "now": "26000",
-      "max": "26000"
+  "name": "Azerus",
+  "nameDescription": "Azerus",
+  "race": "blood",
+  "experience": 6000,
+  "speed": 320,
+  "manaCost": 0,
+  "health": {
+    "max": 26000,
+    "now": 26000
+  },
+  "look": {
+    "type": 309,
+    "corpse": 9738
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-900"
     },
-    "look": {
-      "type": "309",
-      "head": "19",
-      "body": "96",
-      "legs": "21",
-      "feet": "81",
-      "corpse": "9738"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "0",
+      "max": "-2000",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "energy"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "85"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "poff"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "7",
+      "target": "1",
+      "min": "0",
+      "max": "-800",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-900"
+          "shootEffect": "fire"
         },
         {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "10",
-          "range": "7",
-          "min": "0",
-          "max": "-2000",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poff"
-            }
-          ]
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "radius": "7",
-          "target": "1",
-          "min": "0",
-          "max": "-800",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "bigclouds"
-            }
-          ]
-        },
-        {
-          "name": "death",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "0",
-          "max": "-524",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "lifedrain",
-          "interval": "1000",
-          "chance": "10",
-          "length": "8",
-          "spread": "0",
-          "min": "-100",
-          "max": "-500",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "sleep"
-          }
+          "areaEffect": "bigclouds"
         }
       ]
     },
-    "defenses": {
-      "armor": "40",
-      "defense": "65",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "11",
-        "min": "400",
-        "max": "900",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "greenshimmer"
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "0",
+      "max": "-524",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
         }
-      }
+      ]
     },
-    "summons": {
-      "maxSummons": "10",
-      "summon": {
-        "name": "Rift Worm",
-        "speed": "3000",
-        "chance": "30"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "12",
-      "voice": [
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "10",
+      "length": "8",
+      "spread": "0",
+      "min": "-100",
+      "max": "-500",
+      "attributes": [
         {
-          "sentence": "The ultimate will finally consume this unworthy existence!"
-        },
-        {
-          "sentence": "My masters and I will tear down barriers and join the ultimate in its realm!"
-        },
-        {
-          "sentence": "The power of the Yalahari will all be mine!"
-        },
-        {
-          "sentence": "He who has returned from beyond has taught me secrets you can't even grasp!"
-        },
-        {
-          "sentence": "You can't hope to penetrate my shields!"
-        },
-        {
-          "sentence": "Do you really think you could beat me?"
+          "areaEffect": "sleep"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 65
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "11",
+      "min": "400",
+      "max": "900",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 12,
+    "sentences": [
+      {
+        "sentence": "The ultimate will finally consume this unworthy existence!",
+        "yell": false
+      },
+      {
+        "sentence": "My masters and I will tear down barriers and join the ultimate in its realm!",
+        "yell": false
+      },
+      {
+        "sentence": "The power of the Yalahari will all be mine!",
+        "yell": false
+      },
+      {
+        "sentence": "He who has returned from beyond has taught me secrets you can't even grasp!",
+        "yell": false
+      },
+      {
+        "sentence": "You can't hope to penetrate my shields!",
+        "yell": false
+      },
+      {
+        "sentence": "Do you really think you could beat me?",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 10,
+    "summons": [
+      {
+        "name": "Rift Worm",
+        "interval": 2000,
+        "chance": 30,
+        "max": 0
+      }
+    ]
   }
 }

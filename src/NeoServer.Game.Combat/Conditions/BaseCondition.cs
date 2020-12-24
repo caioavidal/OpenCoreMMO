@@ -13,21 +13,37 @@ namespace NeoServer.Game.Common.Conditions
         {
             Duration = duration * TimeSpan.TicksPerMillisecond;
         }
+        protected BaseCondition(uint duration, Action onEnd)
+        {
+            Duration = duration * TimeSpan.TicksPerMillisecond;
+            OnEnd = onEnd;
+        }
 
         public Action OnEnd { private get; set; }
-
 
         public ConditionIcon Icons => isBuff ? ConditionIcon.PartyBuff : 0;
 
         public abstract ConditionType Type { get; }
-        public long Duration { get; }
+        public long Duration { get; private set; }
         public long EndTime { get; private set; }
-
+        public long RemainingTime => (EndTime - DateTime.Now.Ticks) / TimeSpan.TicksPerMillisecond;
         public void End()
         {
             if (IsPersistent) return;
 
             OnEnd?.Invoke();
+        }
+        public virtual void Extend(uint duration, uint maxDuration = uint.MaxValue)
+        {
+            var maxDurationTicks = maxDuration * TimeSpan.TicksPerMillisecond;
+            var durationTicks = (duration * TimeSpan.TicksPerMillisecond);
+
+            Duration = Duration + durationTicks;
+
+            if (Duration > maxDurationTicks) return;
+
+            EndTime = EndTime + durationTicks;
+
         }
 
         public bool IsPersistent => Duration == 0;

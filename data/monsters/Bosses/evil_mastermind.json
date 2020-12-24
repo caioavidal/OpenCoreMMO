@@ -1,237 +1,199 @@
 {
-  "monster": {
-    "name": "Evil Mastermind",
-    "nameDescription": "Evil Mastermind",
-    "race": "undead",
-    "experience": "675",
-    "speed": "350",
-    "health": {
-      "now": "1295",
-      "max": "1295"
+  "name": "Evil Mastermind",
+  "nameDescription": "Evil Mastermind",
+  "race": "undead",
+  "experience": 675,
+  "speed": 350,
+  "manaCost": 0,
+  "health": {
+    "max": 1295,
+    "now": 1295
+  },
+  "look": {
+    "type": 256,
+    "corpse": 10321
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 3,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1200",
+      "min": "0",
+      "max": "-77"
     },
-    "look": {
-      "type": "256",
-      "corpse": "10321"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "-50",
+      "max": "-78",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "suddendeath"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "3"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "mortarea"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-66",
+      "max": "-72",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "1200",
-          "min": "0",
-          "max": "-77"
+          "shootEffect": "fire"
         },
         {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "30",
-          "range": "7",
-          "min": "-50",
-          "max": "-78",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "suddendeath"
-            },
-            {
-              "key": "areaEffect",
-              "value": "mortarea"
-            }
-          ]
-        },
-        {
-          "name": "fire",
-          "interval": "2000",
-          "chance": "30",
-          "range": "7",
-          "radius": "4",
-          "target": "1",
-          "min": "-66",
-          "max": "-72",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "fire"
-            },
-            {
-              "key": "areaEffect",
-              "value": "firearea"
-            }
-          ]
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "30",
-          "range": "7",
-          "min": "-36",
-          "max": "-57",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energy"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energyarea"
-            }
-          ]
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "30",
-          "range": "7",
-          "min": "-70",
-          "max": "-73",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "30",
-          "range": "7",
-          "min": "-59",
-          "max": "-75",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "speedchange": "-600",
-          "duration": "20000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
+          "areaEffect": "firearea"
         }
       ]
     },
-    "defenses": {
-      "armor": "30",
-      "defense": "30",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "30",
-        "min": "50",
-        "max": "110",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "energy"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "-36",
+      "max": "-57",
+      "attributes": [
         {
-          "icePercent": "20"
+          "shootEffect": "energy"
         },
         {
-          "physicalPercent": "5"
-        },
-        {
-          "energyPercent": "90"
-        },
-        {
-          "holyPercent": "-5"
+          "areaEffect": "energyarea"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "-70",
+      "max": "-73",
+      "attributes": [
         {
-          "earth": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "summons": {
-      "maxSummons": "1",
-      "summon": {
-        "name": "vampire",
-        "interval": "2000",
-        "chance": "40",
-        "max": "1"
-      }
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "-59",
+      "max": "-75",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "speedchange": "-600",
+      "duration": "20000",
+      "attributes": [
         {
-          "sentence": "You won't stop my masterplan to flood the world market with fake Bonelord language dictionaries!"
-        },
-        {
-          "sentence": "My calculations tell me you'll die!"
-        },
-        {
-          "sentence": "You can't stop me!"
-        },
-        {
-          "sentence": "Beware! My evil monolog is coming!"
+          "areaEffect": "redshimmer"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "30",
+      "min": "50",
+      "max": "110",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "physicalPercent": 5,
+    "energyPercent": 90,
+    "holyPercent": -5
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You won't stop my masterplan to flood the world market with fake Bonelord language dictionaries!",
+        "yell": false
+      },
+      {
+        "sentence": "My calculations tell me you'll die!",
+        "yell": false
+      },
+      {
+        "sentence": "You can't stop me!",
+        "yell": false
+      },
+      {
+        "sentence": "Beware! My evil monolog is coming!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "death": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "vampire",
+        "interval": 2000,
+        "chance": 40,
+        "max": 1
+      }
+    ]
   }
 }

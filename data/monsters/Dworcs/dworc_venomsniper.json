@@ -1,179 +1,175 @@
 {
-  "monster": {
-    "name": "Dworc Venomsniper",
-    "namedescription": "a dworc venomsniper",
-    "race": "blood",
-    "experience": "35",
-    "speed": "180",
-    "health": {
-      "now": "80",
-      "max": "80"
+  "name": "Dworc Venomsniper",
+  "nameDescription": null,
+  "race": "blood",
+  "experience": 35,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 80,
+    "now": 80
+  },
+  "look": {
+    "type": 216,
+    "corpse": 6059
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-15"
     },
-    "look": {
-      "type": "216",
-      "corpse": "6059"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "range": "5",
+      "min": "-20",
+      "max": "-40",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "4"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "15"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "shooteffect": "poison"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-15"
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "15",
-          "range": "5",
-          "min": "-20",
-          "max": "-40",
-          "attribute": {
-            "key": "shooteffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "10",
-      "defense": "10"
-    },
-    "elements": {
-      "element": [
-        {
-          "holyPercent": "20"
-        },
-        {
-          "firePercent": "-15"
-        },
-        {
-          "deathPercent": "-10"
-        },
-        {
-          "icePercent": "-13"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": {
-        "earth": "1"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Brak brrretz!"
-        },
-        {
-          "sentence": "Grow truk grrrrr."
-        },
-        {
-          "sentence": "Prek tars, dekklep zurk."
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2050",
-          "chance": "6000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "13",
-          "chance": "75000"
-        },
-        {
-          "name": "bronze amulet",
-          "chance": "110"
-        },
-        {
-          "id": "2229",
-          "countmax": "2",
-          "chance": "1000"
-        },
-        {
-          "name": "throwing star",
-          "countmax": "2",
-          "chance": "8000"
-        },
-        {
-          "name": "poison dagger",
-          "chance": "1500"
-        },
-        {
-          "name": "leather armor",
-          "chance": "10000"
-        },
-        {
-          "name": "poison arrow",
-          "countmax": "3",
-          "chance": "5000"
-        },
-        {
-          "name": "tribal mask",
-          "chance": "510"
-        },
-        {
-          "name": "bast skirt",
-          "chance": "100"
-        },
-        {
-          "name": "seeds",
-          "chance": "200"
-        }
-      ],
-      "#comment": []
     }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": 20,
+    "firePercent": -15,
+    "deathPercent": -10,
+    "icePercent": -13
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 13,
+      "chance": 75000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "bronze amulet"
+    },
+    {
+      "id": 2229,
+      "countmax": 2,
+      "chance": 1000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 8000,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "poison dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "leather armor"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5000,
+      "items": [],
+      "name": "poison arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "tribal mask"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "bast skirt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "seeds"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Brak brrretz!",
+        "yell": false
+      },
+      {
+        "sentence": "Grow truk grrrrr.",
+        "yell": false
+      },
+      {
+        "sentence": "Prek tars, dekklep zurk.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

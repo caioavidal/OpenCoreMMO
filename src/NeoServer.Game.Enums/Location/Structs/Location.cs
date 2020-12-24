@@ -26,6 +26,13 @@ namespace NeoServer.Game.Common.Location.Structs
             Y = (byte)slot;
         }
 
+        public void Update(ushort x, ushort y, byte z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
         public ushort X { get; set; }
 
         public ushort Y { get; set; }
@@ -36,7 +43,6 @@ namespace NeoServer.Game.Common.Location.Structs
         public bool IsSurface => Z == 7;
 
         public int GetOffSetZ(Location location) => Z - location.Z;
-
 
         public LocationType Type
         {
@@ -77,9 +83,9 @@ namespace NeoServer.Game.Common.Location.Structs
 
         public Slot Slot => (Slot)Convert.ToByte(Y);
 
-        public byte Container => Convert.ToByte(Y - 0x40);
+       // public byte Container => Convert.ToByte(Y - 0x40);
         public byte ContainerId => Convert.ToByte(Y & 0x0F);
-
+    
         public sbyte ContainerSlot
         {
             get
@@ -172,6 +178,46 @@ namespace NeoServer.Game.Common.Location.Structs
                 DirectionTo(targetLocation, true) == Direction.SouthWest;
         }
 
+        public Location GetNextLocation(Direction direction)
+        {
+            var toLocation = this;
+
+            switch (direction)
+            {
+                case Direction.East:
+                    toLocation.X += 1;
+                    break;
+                case Direction.West:
+                    toLocation.X -= 1;
+                    break;
+                case Direction.North:
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.South:
+                    toLocation.Y += 1;
+                    break;
+                case Direction.NorthEast:
+                    toLocation.X += 1;
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.NorthWest:
+                    toLocation.X -= 1;
+                    toLocation.Y -= 1;
+                    break;
+                case Direction.SouthEast:
+                    toLocation.X += 1;
+                    toLocation.Y += 1;
+                    break;
+                case Direction.SouthWest:
+                    toLocation.X -= 1;
+                    toLocation.Y += 1;
+                    break;
+
+            }
+
+            return toLocation;
+        }
+
         public Direction DirectionTo(Location targetLocation, bool returnDiagonals = false)
         {
             var locationDiff = this - targetLocation;
@@ -185,7 +231,6 @@ namespace NeoServer.Game.Common.Location.Structs
                 if (locationDiff.X > 0) directionX = Direction.East;
                 if (locationDiff.Y > 0) directionY = Direction.South;
                 if (locationDiff.Y < 0) directionY = Direction.North;
-
 
                 if (directionX != Direction.None && directionY == Direction.None) return directionX;
                 if (directionY != Direction.None && directionX == Direction.None) return directionY;
@@ -226,6 +271,8 @@ namespace NeoServer.Game.Common.Location.Structs
 
             return (ushort)(Math.Abs(offset[0]) + Math.Abs(offset[1]));
         }
+        public int GetMaxSqmDistance(Location dest) => Math.Max(GetSqmDistanceX(dest), GetSqmDistanceY(dest));
+        public int GetSumSqmDistance(Location dest) => GetSqmDistanceX(dest) + GetSqmDistanceY(dest);
 
         public int GetSqmDistanceX(Location dest) => (ushort)Math.Abs(X - dest.X);
         public int GetSqmDistanceY(Location dest) => (ushort)Math.Abs(Y - dest.Y);
@@ -251,6 +298,10 @@ namespace NeoServer.Game.Common.Location.Structs
                 return locations[0..8];
             }
         }
+
+        public static Location Zero => new Location(0, 0, 0);
+        public static Location Inventory(Slot slot) => new Location(0xFFFF, (byte)slot, 0);
+        public static Location Container(int id, byte containerSlot) => new Location(0xFFFF, (ushort)(id + 64), containerSlot);
 
         /// <summary>
         /// Check whether location is 1 sqm next to dest

@@ -3,9 +3,9 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Players;
-using NeoServer.Game.Items.Parsers;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Game.Items
 {
@@ -24,12 +24,12 @@ namespace NeoServer.Game.Items
         /// <summary>
         /// Item's description
         /// </summary>
-        public string Description { get; private set; }
+        public string Description => Attributes.GetAttribute(ItemAttribute.Description);
 
         public ISet<ItemFlag> Flags { get; }
 
         public IItemAttributeList Attributes { get; }
-
+        public IItemAttributeList OnUse { get; private set; }
         public bool Locked { get; private set; }
 
         public ushort ClientId { get; private set; }
@@ -44,7 +44,7 @@ namespace NeoServer.Game.Items
         public string Article { get; private set; }
         public string Plural { get; private set; }
 
-        public float Weight => Attributes.GetAttribute<float>(Common.ItemAttribute.Weight) / 100;
+        public float Weight => Attributes.GetAttribute<float>(ItemAttribute.Weight);
 
         void ThrowIfLocked()
         {
@@ -102,7 +102,6 @@ namespace NeoServer.Game.Items
         {
             TypeId = 0;
             Name = string.Empty;
-            Description = string.Empty;
             Flags = new HashSet<ItemFlag>();
             Attributes = new ItemAttributeList();
             Locked = false;
@@ -144,13 +143,16 @@ namespace NeoServer.Game.Items
             Name = name;
         }
 
-        public void SetDescription(string description)
+        public void SetRequirements(IItemRequirement[] requirements)
         {
             ThrowIfLocked();
-
-            Description = description.Trim('"');
         }
-
+        public void SetOnUse()
+        {
+            ThrowIfLocked();
+            if (OnUse is not null) return;
+            OnUse = new ItemAttributeList();
+        }
         public void SetFlag(ItemFlag flag)
         {
             ThrowIfLocked();

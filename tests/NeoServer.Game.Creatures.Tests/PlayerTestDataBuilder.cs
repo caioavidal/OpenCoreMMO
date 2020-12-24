@@ -13,14 +13,14 @@ namespace NeoServer.Game.Creatures.Tests
 {
     internal class PlayerTestDataBuilder
     {
-        public static IPlayer BuildPlayer(uint capacity = 100)
+        public static IPlayer BuildPlayer(uint capacity = 100, ushort hp = 100, ushort mana = 30)
         {
-            var sut = new Player(1,"PlayerA", ChaseMode.Stand, capacity: capacity, healthPoints: 100, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-              soulPoints: 100, maxSoulPoints: 100, skills: new Dictionary<SkillType, ISkill>
+            var sut = new Player(1,"PlayerA", ChaseMode.Stand, capacity: capacity, healthPoints: hp, maxHealthPoints: 100, vocation: VocationType.Knight, Gender.Male, online: true, mana: mana, maxMana: 30, fightMode: FightMode.Attack,
+              soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
               {
-                    { SkillType.Axe, new Skill(SkillType.Axe, 100,1,1,100,100,1) }
+                    { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
-              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), new World.Map.PathFinder(null).Find);
+              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null, null));
             return sut;
         }
     }

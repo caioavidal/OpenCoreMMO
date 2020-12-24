@@ -1,215 +1,217 @@
 {
-  "monster": {
-    "name": "Goblin Assassin",
-    "nameDescription": "a goblin assassin",
-    "race": "blood",
-    "experience": "52",
-    "speed": "200",
-    "manacost": "360",
-    "health": {
-      "now": "75",
-      "max": "75"
+  "name": "Goblin Assassin",
+  "nameDescription": "a goblin assassin",
+  "race": "blood",
+  "experience": 52,
+  "speed": 200,
+  "manaCost": 360,
+  "health": {
+    "max": 75,
+    "now": 75
+  },
+  "look": {
+    "type": 296,
+    "corpse": 6002
+  },
+  "targetChange": {
+    "interval": 10000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-15"
     },
-    "look": {
-      "type": "296",
-      "corpse": "6002"
-    },
-    "targetchange": {
-      "interval": "10000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "15"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-15"
-        },
-        {
-          "name": "drunk",
-          "interval": "2000",
-          "chance": "10",
-          "duration": "10000",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "poison"
-          }
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "10",
-          "range": "6",
-          "min": "0",
-          "max": "-35",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "throwingknife"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": [
-        {
-          "name": "invisible",
-          "interval": "2000",
-          "chance": "10",
-          "duration": "2000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blueshimmer"
-          }
-        },
-        {
-          "name": "speed",
-          "interval": "2000",
-          "chance": "15",
-          "speedchange": "100",
-          "duration": "3000",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        }
-      ]
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "earthPercent": "-10"
-        },
-        {
-          "holyPercent": "1"
-        },
-        {
-          "deathPercent": "-1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "drunk",
+      "interval": "2000",
       "chance": "10",
-      "voice": [
+      "duration": "10000",
+      "attributes": [
         {
-          "sentence": "Goblin Powahhh!"
-        },
-        {
-          "sentence": "Me kill you!"
-        },
-        {
-          "sentence": "Me green menace!"
-        },
-        {
-          "sentence": "Gobabunga!"
-        },
-        {
-          "sentence": "Gooobliiiins!"
+          "shootEffect": "poison"
         }
       ]
     },
-    "loot": {
-      "item": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "range": "6",
+      "min": "0",
+      "max": "-35",
+      "attributes": [
         {
-          "name": "small stone",
-          "countmax": "3",
-          "chance": "9900"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "9",
-          "chance": "50000"
-        },
-        {
-          "id": "2230",
-          "chance": "13000"
-        },
-        {
-          "name": "mouldy cheese",
-          "chance": "6610"
-        },
-        {
-          "name": "dagger",
-          "chance": "17000"
-        },
-        {
-          "name": "short sword",
-          "chance": "8820"
-        },
-        {
-          "name": "bone club",
-          "chance": "4770"
-        },
-        {
-          "name": "leather helmet",
-          "chance": "13000"
-        },
-        {
-          "name": "leather armor",
-          "chance": "7240"
-        },
-        {
-          "name": "small axe",
-          "chance": "9800"
-        },
-        {
-          "id": "2667",
-          "chance": "12400"
+          "shootEffect": "throwingknife"
         }
-      ],
-      "#comment": []
+      ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "100",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 20,
+    "earthPercent": -10,
+    "holyPercent": 1,
+    "deathPercent": -1
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 9900,
+      "items": [],
+      "name": "small stone"
+    },
+    {
+      "id": 0,
+      "countmax": 9,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6610,
+      "items": [],
+      "name": "mouldy cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17000,
+      "items": [],
+      "name": "dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8820,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4770,
+      "items": [],
+      "name": "bone club"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "leather helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7240,
+      "items": [],
+      "name": "leather armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9800,
+      "items": [],
+      "name": "small axe"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 12400,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Goblin Powahhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Me kill you!",
+        "yell": false
+      },
+      {
+        "sentence": "Me green menace!",
+        "yell": false
+      },
+      {
+        "sentence": "Gobabunga!",
+        "yell": false
+      },
+      {
+        "sentence": "Gooobliiiins!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

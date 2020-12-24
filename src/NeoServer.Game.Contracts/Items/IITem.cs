@@ -6,10 +6,15 @@ namespace NeoServer.Game.Contracts.Items
 {
     public interface IItem : IThing
     {
+        /// <summary>
+        /// Item metadata. Contains a lot of information about item
+        /// </summary>
         IItemType Metadata { get; }
         string IThing.Name => Metadata.Name;
-        string IThing.InspectionText => $"{Metadata.Article} {Metadata.Name}";
-        string IThing.CloseInspectionText => "";
+        protected string LookText => $"{Metadata.Article} {Metadata.Name}";
+        string IThing.InspectionText => $"{LookText}";
+        string Plural => Metadata.Plural;
+
         ushort ClientId => Metadata.ClientId;
         ushort TransformTo => Metadata.Attributes.GetTransformationItem();
 

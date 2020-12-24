@@ -17,9 +17,10 @@ namespace NeoServer.Game.Items.Items
                 Amount = Math.Min((byte)100, (byte)amount);
             }
         }
+
         public Cumulative(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
 
-        public byte Amount { get; set; }
+        public event ItemReduce OnReduced;
 
         public new float Weight => CalculateWeight(Amount);
 
@@ -42,17 +43,37 @@ namespace NeoServer.Game.Items.Items
         {
             var clone = (ICumulative)MemberwiseClone();
             clone.Amount = amount;
+            clone.ClearSubscribers();
             return clone;
+        }
+
+        public void ClearSubscribers()
+        {
+            OnReduced = null;
         }
 
         /// <summary>
         /// Reduce amount from item
         /// </summary>
         /// <param name="amount">Amount to be reduced</param>
-        public void Reduce(byte amount)
+        protected void Reduce(byte amount = 1)
         {
+            if (TryReduce(amount) is false) return;
+
+            OnReduced?.Invoke(this, amount);
+        }
+
+        private bool TryReduce(byte amount = 1)
+        {
+            if (amount == 0 || Amount == 0) return false;
+
             amount = (byte)(amount > 100 ? 100 : amount);
+
+            var oldAmount = Amount;
             Amount -= amount;
+
+            if (oldAmount == Amount) return false;
+            return true;
         }
 
         /// <summary>
@@ -61,12 +82,16 @@ namespace NeoServer.Game.Items.Items
         /// <param name="amount">Amount to be reduced</param>
         public ICumulative Split(byte amount)
         {
-            Reduce(amount);
+            if (amount == Amount)
+            {
+                ClearSubscribers();
+                return this;
+            }
+            if (TryReduce(amount) is false) return null;
             return Clone(amount);
         }
 
         public void Increase(byte amount) => Amount = (byte)(amount + Amount > 100 ? 100 : amount + Amount);
-
 
         public byte AmountToComplete => (byte)(100 - Amount);
 
@@ -74,7 +99,7 @@ namespace NeoServer.Game.Items.Items
         {
             if (item?.Metadata?.ClientId is null) return false;
             if (item.Metadata.ClientId != Metadata.ClientId) return false;
-            
+
             var totalAmount = Amount + item.Amount;
 
             if (totalAmount <= 100)

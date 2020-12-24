@@ -1,124 +1,119 @@
 {
-  "monster": {
-    "name": "Parrot",
-    "nameDescription": "a parrot",
-    "race": "blood",
-    "experience": "0",
-    "speed": "240",
-    "manacost": "250",
-    "health": {
-      "now": "25",
-      "max": "25"
-    },
-    "look": {
-      "type": "217",
-      "corpse": "6056"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "20"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "25"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "10",
-        "attack": "5"
+  "name": "Parrot",
+  "nameDescription": "a parrot",
+  "race": "blood",
+  "experience": 0,
+  "speed": 240,
+  "manaCost": 250,
+  "health": {
+    "max": 25,
+    "now": 25
+  },
+  "look": {
+    "type": 217,
+    "corpse": 6056
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 25
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "10",
+      "attack": "5"
+    }
+  ],
+  "defense": {
+    "armor": 2,
+    "defense": 6
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BR? PL? SWE?",
+        "yell": false
+      },
+      {
+        "sentence": "Screeech!",
+        "yell": false
+      },
+      {
+        "sentence": "Neeeewbiiieee!",
+        "yell": false
+      },
+      {
+        "sentence": "You advanshed, you advanshed!",
+        "yell": false
+      },
+      {
+        "sentence": "Hope you die and loooosh it!",
+        "yell": false
+      },
+      {
+        "sentence": "Hunterrr ish PK!",
+        "yell": false
+      },
+      {
+        "sentence": "Shhtop whining! Rrah",
+        "yell": false
+      },
+      {
+        "sentence": "I'm heeerrre! Screeeech!",
+        "yell": false
+      },
+      {
+        "sentence": "Leeave orrr hunted!!",
+        "yell": false
+      },
+      {
+        "sentence": "Blesshhh my stake! Screeech!",
+        "yell": false
+      },
+      {
+        "sentence": "Tarrrrp?",
+        "yell": false
+      },
+      {
+        "sentence": "You are corrrrupt! Corrrrupt!",
+        "yell": false
+      },
+      {
+        "sentence": "You powerrrrrrabuserrrrr!",
+        "yell": false
+      },
+      {
+        "sentence": "You advanshed, you advanshed!",
+        "yell": false
       }
-    },
-    "defenses": {
-      "armor": "2",
-      "defense": "6"
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "BR? PL? SWE?"
-        },
-        {
-          "sentence": "Screeech!"
-        },
-        {
-          "sentence": "Neeeewbiiieee!"
-        },
-        {
-          "sentence": "You advanshed, you advanshed!"
-        },
-        {
-          "sentence": "Hope you die and loooosh it!"
-        },
-        {
-          "sentence": "Hunterrr ish PK!"
-        },
-        {
-          "sentence": "Shhtop whining! Rrah"
-        },
-        {
-          "sentence": "I'm heeerrre! Screeeech!"
-        },
-        {
-          "sentence": "Leeave orrr hunted!!"
-        },
-        {
-          "sentence": "Blesshhh my stake! Screeech!"
-        },
-        {
-          "sentence": "Tarrrrp?"
-        },
-        {
-          "sentence": "You are corrrrupt! Corrrrupt!"
-        },
-        {
-          "sentence": "You powerrrrrrabuserrrrr!"
-        },
-        {
-          "sentence": "You advanshed, you advanshed!"
-        }
-      ]
-    },
-    "loot": ""
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

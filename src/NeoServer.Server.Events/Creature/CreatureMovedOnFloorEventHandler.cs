@@ -42,7 +42,9 @@ namespace NeoServer.Server.Events
             var fromTile = cylinder.FromTile;
             var toTile = cylinder.ToTile;
 
-            if(creature is ICreature)
+            if (creature is IMonster && creature.IsInvisible) return;
+
+            if (creature is ICreature)
             {
                 creature.SetDirection(toDirection);
             }
@@ -76,7 +78,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
+                if (spectator.CanSee(creature) && spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
                 {
                     if (fromLocation.Z != toLocation.Z)
                     {
@@ -94,7 +96,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (spectator.CanSee(fromLocation)) //spectator can see old position but not the new
+                if (spectator.CanSee(creature) && spectator.CanSee(fromLocation)) //spectator can see old position but not the new
                 {
                     //happens when player leaves spectator's view area
                     connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
@@ -103,7 +105,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (spectator.CanSee(toLocation)) //spectator can't see old position but the new
+                if (spectator.CanSee(creature) && spectator.CanSee(toLocation)) //spectator can't see old position but the new
                 {
                     //happens when player enters spectator's view area
                     connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, cylinderSpectator.ToStackPosition));

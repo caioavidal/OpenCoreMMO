@@ -250,7 +250,9 @@ namespace NeoServer.Networking
 
             while (OutgoingPackets.Any())
             {
-                OutgoingPackets.Dequeue().WriteToMessage(message);
+                var packet = OutgoingPackets.Dequeue();
+                //Console.WriteLine($"{packet.GetType().Name}"); debug
+                packet.WriteToMessage(message);
             }
 
             message.AddLength();
@@ -259,7 +261,6 @@ namespace NeoServer.Networking
 
             SendMessage(encryptedMessage);
         }
-
 
         public void Disconnect(string text)
         {

@@ -7,7 +7,8 @@ namespace NeoServer.Game.Common.Location.Structs
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Auto)]
     public struct FindPathParams
     {
-      
+
+        public static FindPathParams EscapeParams => new FindPathParams(false, true, default, false, 12, 1, 12, false);
         public FindPathParams(bool fullPathSearch, bool clearSight, bool allowDiagonal, bool keepDistance, int maxSearchDist, int minTargetDist, int maxTargetDist, bool oneStep)
         {
             FullPathSearch = fullPathSearch;
@@ -51,5 +52,6 @@ namespace NeoServer.Game.Common.Location.Structs
         public int MaxSearchDist { get; set; }
         public int MinTargetDist { get; set; }
         public int MaxTargetDist { get; set; }
+        
     }
 }

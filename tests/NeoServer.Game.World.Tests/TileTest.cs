@@ -113,7 +113,7 @@ namespace NeoServer.Game.World.Tests
             var sut = CreateTile(item);
 
             var thing = (IThing)item;
-            sut.RemoveThing(thing, 1, out var removedThing);
+            sut.RemoveThing(thing, 1, 0, out var removedThing);
 
             Assert.Equal(2, sut.DownItems.Count);
             Assert.Single(sut.TopItems);
@@ -128,7 +128,7 @@ namespace NeoServer.Game.World.Tests
             var sut = CreateTile(item2, item);
 
             var thing = (IThing)item;
-            sut.RemoveThing(thing, amountToRemove, out var removedThing);
+            sut.RemoveThing(thing, amountToRemove, 0, out var removedThing);
 
             Assert.Equal(topItemId, sut.DownItems.First().ClientId);
             Assert.Equal(remainingAmount, (sut.DownItems.First() as ICumulative).Amount);
@@ -186,6 +186,92 @@ namespace NeoServer.Game.World.Tests
 
             Assert.False(sut.IsNextTo(dest));
         }
+
+        [Fact]
+        public void SendTo_When_Send_Regular_Item_Should_Remove_Item_And_Add_Item_On_Destination()
+        {
+            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+
+            var item = ItemTestData.CreateRegularItem(100);
+            sut.AddThing(item);
+
+            var result = sut.SendTo(dest, item, 1, 0, 0);
+
+            Assert.True(result.IsSuccess);
+
+            Assert.Null(sut.TopItemOnStack);
+            Assert.Equal(item, dest.TopItemOnStack);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Add_Item_On_Destination()
+        {
+            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+
+            var item = ItemTestData.CreateAmmoItem(100, 100);
+
+            sut.AddThing(item);
+
+            var result = sut.SendTo(dest, item, 80, 0, 0);
+            
+            Assert.True(result.IsSuccess);
+
+            Assert.Equal(100, dest.TopItemOnStack.ClientId);
+            Assert.Equal(item, sut.TopItemOnStack);
+
+            Assert.Equal(20, (sut.TopItemOnStack as ICumulative).Amount);
+            Assert.Equal(80, (dest.TopItemOnStack as ICumulative).Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_In_Equals_Part_Should_Remove_Item_And_Add_Item_On_Destination()
+        {
+            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+
+            var item = ItemTestData.CreateAmmoItem(100, 100);
+
+            sut.AddThing(item);
+
+            var result = sut.SendTo(dest, item, 50, 0, 0);
+
+            Assert.True(result.IsSuccess);
+
+            Assert.Equal(100, dest.TopItemOnStack.ClientId);
+            Assert.Equal(item, sut.TopItemOnStack);
+
+            Assert.Equal(50, (sut.TopItemOnStack as ICumulative).Amount);
+            Assert.Equal(50, (dest.TopItemOnStack as ICumulative).Amount);
+        }
+        [Fact]
+        public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Join_Item_On_Destination()
+        {
+            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[1] { ItemTestData.CreateAmmoItem(100, 50) });
+
+            var item = ItemTestData.CreateAmmoItem(100, 100);
+            sut.AddThing(item);
+
+            var result = sut.SendTo(dest, item, 40, 0, 0);
+
+            Assert.True(result.IsSuccess);
+
+            Assert.Equal(100, dest.TopItemOnStack.ClientId);
+            Assert.Equal(item, sut.TopItemOnStack);
+
+            Assert.Equal(60, (sut.TopItemOnStack as ICumulative).Amount);
+            Assert.Equal(90, (dest.TopItemOnStack as ICumulative).Amount);
+
+            result = sut.SendTo(dest, item, 60, 0, 0);
+
+            Assert.True(result.IsSuccess);
+
+            Assert.Equal(100, dest.TopItemOnStack.ClientId);
+            Assert.Null(sut.TopItemOnStack);
+
+            Assert.Equal(50, (dest.TopItemOnStack as ICumulative).Amount);
+        }
+      
     }
 
 }

@@ -7,11 +7,9 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
-using NeoServer.Server.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -22,6 +20,7 @@ namespace NeoServer.Game.Creatures.Model
         public event GainExperience OnGainedExperience;
         public event AddCondition OnAddedCondition;
         public event RemoveCondition OnRemovedCondition;
+        public event ChangeOutfit OnChangedOutfit;
 
         public event Say OnSay;
 
@@ -33,8 +32,8 @@ namespace NeoServer.Game.Creatures.Model
             {
                 throw new ArgumentNullException(nameof(type.Name));
             }
-            MaxHealthpoints = type.MaxHealth;
-            HealthPoints = Math.Min(MaxHealthpoints, healthPoints == 0 ? MaxHealthpoints : healthPoints);
+            MaxHealthPoints = type.MaxHealth;
+            HealthPoints = Math.Min(MaxHealthPoints, healthPoints == 0 ? MaxHealthPoints : healthPoints);
 
             CreatureType = type;
 
@@ -45,18 +44,23 @@ namespace NeoServer.Game.Creatures.Model
             };
             Hostiles = new HashSet<uint>();
             Friendly = new HashSet<uint>();
+            MaxHealthPoints = type.MaxHealth;
 
         }
 
         //public Location Location { get; set; }
+        public Action<ICreature> NextAction { get; protected set; }
         public uint HealthPoints { get; protected set; }
-        public uint MaxHealthpoints { get; protected set; }
+        public uint MaxHealthPoints { get; protected set; }
         public new string Name => CreatureType.Name;
         public uint CreatureId { get; }
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
-        public IContainer Corpse { get; set; }
+        public IThing Corpse { get; set; }
         public virtual BloodType Blood => BloodType.Blood;
+
         public abstract IOutfit Outfit { get; protected set; }
+        public IOutfit OldOutfit { get; private set; }
+
         public Direction Direction { get; protected set; }
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
         public Direction ClientSafeDirection
@@ -81,6 +85,26 @@ namespace NeoServer.Game.Creatures.Model
                 }
             }
         }
+
+        public void ChangeOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
+        {
+            OldOutfit = null;
+            Outfit.Change(lookType, id, head, body, legs, feet, addon);
+            OnChangedOutfit?.Invoke(this, Outfit);
+        }
+        public void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
+        {
+            OldOutfit = Outfit.Clone();
+            Outfit.Change(lookType, id, head, body, legs, feet, addon);
+            OnChangedOutfit?.Invoke(this, Outfit);
+        }
+      
+        public void DisableTemporaryOutfit()
+        {
+            Outfit = OldOutfit;
+            OldOutfit = null;
+            OnChangedOutfit?.Invoke(this, Outfit);
+        }
         public byte LightBrightness { get; protected set; }
         public byte LightColor { get; protected set; }
         public uint Flags { get; private set; }
@@ -90,7 +114,6 @@ namespace NeoServer.Game.Creatures.Model
         public HashSet<uint> Hostiles { get; }
 
         public HashSet<uint> Friendly { get; }
-
         public bool IsRemoved { get; private set; }
 
         public bool HasFlag(CreatureFlag flag)
@@ -126,6 +149,12 @@ namespace NeoServer.Game.Creatures.Model
             }
 
             return false;
+        }
+
+        protected void ExecuteNextAction(ICreature creature)
+        {
+            NextAction?.Invoke(creature);
+            NextAction = null;
         }
         public bool CanSee(Location pos)
         {
@@ -187,12 +216,11 @@ namespace NeoServer.Game.Creatures.Model
         }
         public void RemoveCondition(ConditionType type)
         {
-            if(Conditions.Remove(type, out var condition) is false) return;
+            if (Conditions.Remove(type, out var condition) is false) return;
             OnRemovedCondition?.Invoke(this, condition);
         }
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
         public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
-
 
         public virtual void Say(string message, TalkType talkType)
         {
@@ -206,14 +234,13 @@ namespace NeoServer.Game.Creatures.Model
             //return item;
         }
 
-
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == CreatureId;
 
         public override int GetHashCode() => HashCode.Combine(CreatureId);
 
         public bool Equals([AllowNull] Creature other)
         {
-           return this == other;
+            return this == other;
         }
 
         public void OnMoved()

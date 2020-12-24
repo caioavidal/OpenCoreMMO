@@ -1,260 +1,282 @@
 {
-  "monster": {
-    "name": "Behemoth",
-    "nameDescription": "a behemoth",
-    "race": "blood",
-    "experience": "2500",
-    "speed": "280",
-    "manacost": "0",
-    "health": {
-      "now": "4000",
-      "max": "4000"
+  "name": "Behemoth",
+  "nameDescription": "a behemoth",
+  "race": "blood",
+  "experience": 2500,
+  "speed": 280,
+  "manaCost": 0,
+  "health": {
+    "max": 4000,
+    "now": 4000
+  },
+  "look": {
+    "type": 55,
+    "corpse": 5999
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "80",
+      "attack": "100"
     },
-    "look": {
-      "type": "55",
-      "corpse": "5999"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-100",
+      "max": "-185",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
+          "shootEffect": "largerock"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
+    }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "7",
+      "speedchange": "290",
+      "duration": "4000",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "80",
-          "attack": "100"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "min": "-100",
-          "max": "-185",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "largerock"
-          }
+          "areaEffect": "redshimmer"
         }
       ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 80,
+    "holyPercent": 30,
+    "firePercent": 30,
+    "energyPercent": 10,
+    "physicalPercent": 10,
+    "icePercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 29500,
+      "items": [],
+      "name": null
     },
-    "defenses": {
-      "armor": "40",
-      "defense": "45",
-      "defense": {
-        "name": "speed",
-        "interval": "1000",
-        "chance": "7",
-        "speedchange": "290",
-        "duration": "4000",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "redshimmer"
-        }
-      }
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 29500,
+      "items": [],
+      "name": null
     },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "80"
-        },
-        {
-          "holyPercent": "30"
-        },
-        {
-          "firePercent": "30"
-        },
-        {
-          "energyPercent": "10"
-        },
-        {
-          "physicalPercent": "10"
-        },
-        {
-          "icePercent": "-10"
-        },
-        {
-          "deathPercent": "-5"
-        }
-      ]
+    {
+      "id": 2023,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": null
     },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
+    {
+      "id": 7368,
+      "countmax": 2,
+      "chance": 7000,
+      "items": [],
+      "name": null
     },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "You're so little!"
-        },
-        {
-          "sentence": "Human flesh - delicious!"
-        },
-        {
-          "sentence": "Crush the intruders!",
-          "yell": "1"
-        }
-      ]
+    {
+      "id": 2231,
+      "countmax": 1,
+      "chance": 7650,
+      "items": [],
+      "name": null
     },
-    "loot": {
-      "item": [
+    {
+      "id": 2416,
+      "countmax": 1,
+      "chance": 15750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2489,
+      "countmax": 1,
+      "chance": 2650,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2387,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2666,
+      "countmax": 6,
+      "chance": 6500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 5893,
+      "countmax": 1,
+      "chance": 1300,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2553,
+      "countmax": 1,
+      "chance": 6400,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
         {
-          "id": "2148",
-          "countmax": "70",
-          "chance": "29500"
+          "id": 2463,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2148",
-          "countmax": "70",
-          "chance": "29500"
+          "id": 2150,
+          "countmax": 4,
+          "chance": 1750,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2023",
-          "chance": "10500"
+          "id": 2645,
+          "countmax": 1,
+          "chance": 250,
+          "items": [],
+          "name": null
         },
         {
-          "id": "7368",
-          "countmax": "2",
-          "chance": "7000"
+          "id": 2377,
+          "countmax": 1,
+          "chance": 3200,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2231",
-          "chance": "7650"
+          "id": 2393,
+          "countmax": 1,
+          "chance": 900,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2416",
-          "chance": "15750"
+          "id": 7591,
+          "countmax": 1,
+          "chance": 925,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2489",
-          "chance": "2650"
+          "id": 2174,
+          "countmax": 1,
+          "chance": 850,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2387",
-          "chance": "10000"
+          "id": 5930,
+          "countmax": 1,
+          "chance": 350,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2666",
-          "countmax": "6",
-          "chance": "6500"
+          "id": 2454,
+          "countmax": 1,
+          "chance": 550,
+          "items": [],
+          "name": null
         },
         {
-          "id": "5893",
-          "chance": "1300"
+          "id": 7396,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
         },
         {
-          "id": "2553",
-          "chance": "6400"
+          "id": 2125,
+          "countmax": 1,
+          "chance": 450,
+          "items": [],
+          "name": null
         },
         {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "2463",
-              "chance": "2000"
-            },
-            {
-              "id": "2150",
-              "countmax": "4",
-              "chance": "1750"
-            },
-            {
-              "id": "2645",
-              "chance": "250"
-            },
-            {
-              "id": "2377",
-              "chance": "3200"
-            },
-            {
-              "id": "2393",
-              "chance": "900"
-            },
-            {
-              "id": "7591",
-              "chance": "925"
-            },
-            {
-              "id": "2174",
-              "chance": "850"
-            },
-            {
-              "id": "5930",
-              "chance": "350"
-            },
-            {
-              "id": "2454",
-              "chance": "550"
-            },
-            {
-              "id": "7396",
-              "chance": "100"
-            },
-            {
-              "id": "2125",
-              "chance": "450"
-            },
-            {
-              "id": "7413",
-              "chance": "150"
-            }
-          ]
+          "id": 7413,
+          "countmax": 1,
+          "chance": 150,
+          "items": [],
+          "name": null
         }
       ],
-      "#comment": []
+      "name": null
     }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You're so little!",
+        "yell": false
+      },
+      {
+        "sentence": "Human flesh - delicious!",
+        "yell": false
+      },
+      {
+        "sentence": "Crush the intruders!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

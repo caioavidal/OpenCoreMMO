@@ -25,12 +25,9 @@ namespace NeoServer.Game.Items.Items
             var result = false;
             combatType = new CombatAttackType(ShootType.Fire);
 
-
             var maxDamage = 20;
 
             enemy.ReceiveAttack(enemy, new CombatDamage(20, DamageType.FireField));
-
-
 
             return true;
         }

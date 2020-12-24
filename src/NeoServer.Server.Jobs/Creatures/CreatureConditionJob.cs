@@ -11,10 +11,7 @@ namespace NeoServer.Server.Jobs.Creatures
     {
         public static void Execute(ICombatActor creature)
         {
-            if (creature.IsDead)
-            {
-                return;
-            }
+            if (creature.IsDead) return;
 
             foreach (var condition in creature.Conditions)
             {

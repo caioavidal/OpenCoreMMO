@@ -1,190 +1,164 @@
 {
-  "monster": {
-    "name": "Splasher",
-    "nameDescription": "Splasher",
-    "race": "blood",
-    "experience": "500",
-    "speed": "520",
-    "manacost": "480",
-    "health": {
-      "now": "1000",
-      "max": "1000"
+  "name": "Splasher",
+  "nameDescription": "Splasher",
+  "race": "blood",
+  "experience": 500,
+  "speed": 520,
+  "manaCost": 480,
+  "health": {
+    "max": 1000,
+    "now": 1000
+  },
+  "look": {
+    "type": 72,
+    "corpse": 6064
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 40
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1000",
+      "min": "0",
+      "max": "-382"
     },
-    "look": {
-      "type": "72",
-      "head": "0",
-      "body": "0",
-      "legs": "0",
-      "feet": "0",
-      "corpse": "6064"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "8",
+      "range": "7",
+      "target": "1",
+      "min": "-162",
+      "max": "-228",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "40"
+          "areaEffect": "redshimmer"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "7",
+      "length": "8",
+      "spread": "3",
+      "min": "-106",
+      "max": "-169",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "1000",
-          "min": "0",
-          "max": "-382"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "8",
-          "range": "7",
-          "target": "1",
-          "min": "-162",
-          "max": "-228",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "redshimmer"
-          }
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "7",
-          "length": "8",
-          "spread": "3",
-          "min": "-106",
-          "max": "-169",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "greenspark"
-          }
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "9",
-          "length": "8",
-          "spread": "0",
-          "min": "-134",
-          "max": "-148",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bubbles"
-          }
-        },
-        {
-          "name": "ice",
-          "interval": "2000",
-          "chance": "12",
-          "radius": "3",
-          "target": "0",
-          "min": "-101",
-          "max": "-149",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bubbles"
-          }
+          "areaEffect": "greenspark"
         }
       ]
     },
-    "defenses": {
-      "armor": "15",
-      "defense": "15",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "100",
-        "max": "120",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "9",
+      "length": "8",
+      "spread": "0",
+      "min": "-134",
+      "max": "-148",
+      "attributes": [
         {
-          "energyPercent": "-25"
-        },
-        {
-          "earthPercent": "-15"
+          "areaEffect": "bubbles"
         }
       ]
     },
-    "immunities": {
-      "immunity": [
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "12",
+      "radius": "3",
+      "target": "0",
+      "min": "-101",
+      "max": "-149",
+      "attributes": [
         {
-          "ice": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "drown": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Qua hah tsh!"
-        },
-        {
-          "sentence": "Teech tsha tshul!"
-        },
-        {
-          "sentence": "Quara tsha Fach!"
-        },
-        {
-          "sentence": "Tssssha Quara!"
-        },
-        {
-          "sentence": "Blubber."
-        },
-        {
-          "sentence": "Blup."
+          "areaEffect": "bubbles"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "100",
+      "max": "120",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -25,
+    "earthPercent": -15
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Qua hah tsh!",
+        "yell": false
+      },
+      {
+        "sentence": "Teech tsha tshul!",
+        "yell": false
+      },
+      {
+        "sentence": "Quara tsha Fach!",
+        "yell": false
+      },
+      {
+        "sentence": "Tssssha Quara!",
+        "yell": false
+      },
+      {
+        "sentence": "Blubber.",
+        "yell": false
+      },
+      {
+        "sentence": "Blup.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "fire": 1,
+    "drown": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

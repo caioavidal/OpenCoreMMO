@@ -1,108 +1,84 @@
 {
-  "monster": {
-    "name": "Grimgor Guteater",
-    "nameDescription": "grimgor guteater",
-    "race": "blood",
-    "experience": "670",
-    "speed": "240",
-    "manacost": "0",
-    "health": {
-      "now": "1115",
-      "max": "1115"
-    },
-    "look": {
-      "type": "2",
-      "corpse": "7349"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "skill": "105",
-          "attack": "40"
-        },
-        {
-          "name": "physical",
-          "interval": "4000",
-          "chance": "60",
-          "min": "-55",
-          "max": "-130",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "throwingstar"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "45",
-      "defense": "45"
-    },
-    "elements": {
-      "element": [
-        {
-          "firePercent": "100"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "deathPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "Grimgor Guteater",
+  "nameDescription": "grimgor guteater",
+  "race": "blood",
+  "experience": 670,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1115,
+    "now": 1115
+  },
+  "look": {
+    "type": 2,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5",
-      "voice": {
-        "sentence": "Dont run, You're burning off precious fat."
-      }
+      "skill": "105",
+      "attack": "40"
+    },
+    {
+      "name": "physical",
+      "interval": "4000",
+      "chance": "60",
+      "min": "-55",
+      "max": "-130",
+      "attributes": [
+        {
+          "shootEffect": "throwingstar"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 100,
+    "energyPercent": 20,
+    "deathPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Dont run, You're burning off precious fat.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

@@ -1,191 +1,161 @@
 {
-  "monster": {
-    "name": "energized raging mage",
-    "nameDescription": "an energized raging mage",
-    "race": "blood",
-    "experience": "0",
-    "speed": "230",
-    "health": {
-      "now": "3500",
-      "max": "3500"
+  "name": "energized raging mage",
+  "nameDescription": "an energized raging mage",
+  "race": "blood",
+  "experience": 0,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 3500,
+    "now": 3500
+  },
+  "look": {
+    "type": 423,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 70,
+    "runonhealth": 300
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-78"
     },
-    "look": {
-      "type": "423",
-      "corpse": "0"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "40",
+      "range": "7",
+      "target": "1",
+      "radius": "5",
+      "min": "-150",
+      "max": "-230",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "energyball"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "70"
-        },
-        {
-          "runonhealth": "300"
+          "areaEffect": "energy"
         }
       ]
     },
-    "attacks": {
-      "attack": [
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "-100",
+      "max": "-200"
+    },
+    {
+      "name": "energyfield",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "2",
+      "target": "1",
+      "attributes": [
         {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-78"
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "40",
-          "range": "7",
-          "target": "1",
-          "radius": "5",
-          "min": "-150",
-          "max": "-230",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "energyball"
-            },
-            {
-              "key": "areaEffect",
-              "value": "energy"
-            }
-          ]
-        },
-        {
-          "name": "manadrain",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "min": "-100",
-          "max": "-200"
-        },
-        {
-          "name": "energyfield",
-          "interval": "2000",
-          "chance": "20",
-          "range": "7",
-          "radius": "2",
-          "target": "1",
-          "attribute": {
-            "key": "shootEffect",
-            "value": "energy"
-          }
-        },
-        {
-          "name": "energy",
-          "interval": "2000",
-          "chance": "25",
-          "length": "8",
-          "spread": "0",
-          "min": "-200",
-          "max": "-300",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "bigclouds"
-          }
+          "shootEffect": "energy"
         }
       ]
     },
-    "defenses": {
-      "armor": "35",
-      "defense": "35",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "20",
-        "min": "155",
-        "max": "200",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "25",
+      "length": "8",
+      "spread": "0",
+      "min": "-200",
+      "max": "-300",
+      "attributes": [
         {
-          "physicalPercent": "-50"
-        },
-        {
-          "holyPercent": "10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "energy": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "summons": {
-      "maxSummons": "1",
-      "summon": {
-        "name": "golden servant",
-        "interval": "2000",
-        "chance": "50"
-      }
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Behold the all permeating powers I draw from this gate!!"
-        },
-        {
-          "sentence": "ENERGY!!"
-        },
-        {
-          "sentence": "I FEEL, I FEEEEL... OMNIPOTENCE!!"
-        },
-        {
-          "sentence": "MWAAAHAHAAA!! NO ONE!! NO ONE CAN DEFEAT MEEE!!!"
+          "areaEffect": "bigclouds"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "155",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -50,
+    "holyPercent": 10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Behold the all permeating powers I draw from this gate!!",
+        "yell": false
+      },
+      {
+        "sentence": "ENERGY!!",
+        "yell": false
+      },
+      {
+        "sentence": "I FEEL, I FEEEEL... OMNIPOTENCE!!",
+        "yell": false
+      },
+      {
+        "sentence": "MWAAAHAHAAA!! NO ONE!! NO ONE CAN DEFEAT MEEE!!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "outfit": 1,
+    "fire": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "golden servant",
+        "interval": 2000,
+        "chance": 50,
+        "max": 0
+      }
+    ]
   }
 }

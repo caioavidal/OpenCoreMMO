@@ -1,206 +1,215 @@
 {
-  "monster": {
-    "name": "Lizard Zaogun",
-    "nameDescription": "a lizard zaogun",
-    "race": "blood",
-    "experience": "1700",
-    "speed": "250",
-    "health": {
-      "now": "2955",
-      "max": "2955"
+  "name": "Lizard Zaogun",
+  "nameDescription": "a lizard zaogun",
+  "race": "blood",
+  "experience": 1700,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 2955,
+    "now": 2955
+  },
+  "look": {
+    "type": 343,
+    "corpse": 11284
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-349"
     },
-    "look": {
-      "type": "343",
-      "corpse": "11284"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-220",
+      "max": "-375",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "poison"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-349"
-        },
-        {
-          "name": "earth",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "min": "-220",
-          "max": "-375",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "poison"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "40",
-      "defense": "40",
-      "defense": {
-        "name": "healing",
-        "interval": "2000",
-        "chance": "10",
-        "min": "175",
-        "max": "275",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "greenshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "physicalPercent": "5"
-        },
-        {
-          "deathPercent": "10"
-        },
-        {
-          "firePercent": "45"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "icePercent": "15"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "31500"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "100",
-          "chance": "31500"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "68",
-          "chance": "31000"
-        },
-        {
-          "name": "small emerald",
-          "countmax": "5",
-          "chance": "4830"
-        },
-        {
-          "name": "platinum coin",
-          "countmax": "2",
-          "chance": "48900"
-        },
-        {
-          "name": "tower shield",
-          "chance": "1000"
-        },
-        {
-          "name": "lizard leather",
-          "chance": "14360"
-        },
-        {
-          "name": "lizard scale",
-          "chance": "12520"
-        },
-        {
-          "name": "strong health potion",
-          "chance": "1900"
-        },
-        {
-          "name": "great health potion",
-          "countmax": "3",
-          "chance": "7000"
-        },
-        {
-          "name": "red lantern",
-          "chance": "2170"
-        },
-        {
-          "name": "Zaoan armor",
-          "chance": "530"
-        },
-        {
-          "name": "Zaoan shoes",
-          "chance": "1000"
-        },
-        {
-          "name": "Zaoan legs",
-          "chance": "1001"
-        },
-        {
-          "name": "zaogun flag",
-          "chance": "8280"
-        },
-        {
-          "name": "zaogun shoulderplates",
-          "chance": "14980"
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 40
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "175",
+      "max": "275",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 5,
+    "deathPercent": 10,
+    "firePercent": 45,
+    "energyPercent": 20,
+    "icePercent": 15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 31500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 31500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 68,
+      "chance": 31000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 4830,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 48900,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14360,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12520,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1900,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 7000,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2170,
+      "items": [],
+      "name": "red lantern"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 530,
+      "items": [],
+      "name": "Zaoan armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "Zaoan shoes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1001,
+      "items": [],
+      "name": "Zaoan legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8280,
+      "items": [],
+      "name": "zaogun flag"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14980,
+      "items": [],
+      "name": "zaogun shoulderplates"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

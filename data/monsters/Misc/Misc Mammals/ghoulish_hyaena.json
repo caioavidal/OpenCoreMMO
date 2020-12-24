@@ -1,166 +1,138 @@
 {
-  "monster": {
-    "name": "Ghoulish Hyaena",
-    "nameDescription": "a ghoulish hyaena",
-    "race": "blood",
-    "experience": "195",
-    "speed": "200",
-    "manacost": "275",
-    "health": {
-      "now": "400",
-      "max": "400"
+  "name": "Ghoulish Hyaena",
+  "nameDescription": "a ghoulish hyaena",
+  "race": "blood",
+  "experience": 195,
+  "speed": 200,
+  "manaCost": 275,
+  "health": {
+    "max": 400,
+    "now": 400
+  },
+  "look": {
+    "type": 94,
+    "corpse": 6026
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 30,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-112",
+      "poison": "10"
     },
-    "look": {
-      "type": "94",
-      "head": "20",
-      "body": "30",
-      "legs": "40",
-      "feet": "50",
-      "corpse": "6026"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "length": "3",
+      "spread": "2",
+      "min": "-60",
+      "attributes": [
         {
-          "summonable": "1"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "30"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-112",
-          "poison": "10"
-        },
-        {
-          "name": "poisoncondition",
-          "interval": "2000",
-          "chance": "15",
-          "length": "3",
-          "spread": "2",
-          "min": "-60",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "poison"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "20",
-      "defense": "20",
-      "defense": {
-        "name": "speed",
-        "interval": "2000",
-        "chance": "15",
-        "speedchange": "3000",
-        "duration": "2000"
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "70"
-        },
-        {
-          "holyPercent": "-10"
-        },
-        {
-          "firePercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "death": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Grawrrr!!"
-        },
-        {
-          "sentence": "Hoouu!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small ruby",
-          "countmax": "2",
-          "chance": "2700"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "40",
-          "chance": "89000"
-        },
-        {
-          "name": "meat",
-          "countmax": "3",
-          "chance": "51060"
-        },
-        {
-          "name": "worm",
-          "countmax": "7",
-          "chance": "65000"
-        },
-        {
-          "name": "health potion",
-          "chance": "19840"
+          "areaEffect": "poison"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "3000",
+      "duration": "2000"
+    }
+  ],
+  "elements": {
+    "earthPercent": 70,
+    "holyPercent": -10,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2700,
+      "items": [],
+      "name": "small ruby"
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 89000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 51060,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 65000,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 19840,
+      "items": [],
+      "name": "health potion"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grawrrr!!",
+        "yell": false
+      },
+      {
+        "sentence": "Hoouu!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

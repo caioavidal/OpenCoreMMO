@@ -1,169 +1,152 @@
 {
-  "monster": {
-    "name": "Quara Constrictor Scout",
-    "nameDescription": "a quara constrictor scout",
-    "race": "blood",
-    "experience": "200",
-    "speed": "200",
-    "manacost": "670",
-    "health": {
-      "now": "450",
-      "max": "450"
+  "name": "Quara Constrictor Scout",
+  "nameDescription": "a quara constrictor scout",
+  "race": "blood",
+  "experience": 200,
+  "speed": 200,
+  "manaCost": 670,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 46,
+    "corpse": 6065
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-135"
     },
-    "look": {
-      "type": "46",
-      "corpse": "6065"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "target": "0",
+      "max": "-80",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "20"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-135"
-        },
-        {
-          "name": "lifedrain",
-          "interval": "2000",
-          "chance": "15",
-          "radius": "3",
-          "target": "0",
-          "max": "-80",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "blackspark"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "-10"
-        },
-        {
-          "physicalPercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "lifedrain": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "ice": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Gaaahhh!"
-        },
-        {
-          "sentence": "Gluh! Gluh!"
-        },
-        {
-          "sentence": "Tssss!"
-        },
-        {
-          "sentence": "Boohaa!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "49",
-          "chance": "98800"
-        },
-        {
-          "name": "small amethyst",
-          "chance": "4350"
-        },
-        {
-          "name": "longsword",
-          "chance": "8310"
-        },
-        {
-          "name": "brass armor",
-          "chance": "4660"
-        },
-        {
-          "name": "shrimp",
-          "countmax": "3",
-          "chance": "9680"
-        },
-        {
-          "name": "fish fin",
-          "chance": "290"
-        },
-        {
-          "name": "quara tentacle",
-          "chance": "15600"
+          "areaEffect": "blackspark"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -10,
+    "physicalPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 49,
+      "chance": 98800,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4350,
+      "items": [],
+      "name": "small amethyst"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8310,
+      "items": [],
+      "name": "longsword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4660,
+      "items": [],
+      "name": "brass armor"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 9680,
+      "items": [],
+      "name": "shrimp"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 290,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15600,
+      "items": [],
+      "name": "quara tentacle"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Gaaahhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Gluh! Gluh!",
+        "yell": false
+      },
+      {
+        "sentence": "Tssss!",
+        "yell": false
+      },
+      {
+        "sentence": "Boohaa!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "fire": 1,
+    "paralyze": 1,
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

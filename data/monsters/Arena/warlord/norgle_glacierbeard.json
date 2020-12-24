@@ -1,110 +1,90 @@
 {
-  "monster": {
-    "name": "Norgle Glacierbeard",
-    "nameDescription": "Norgle Glacierbeard",
-    "race": "blood",
-    "experience": "2100",
-    "speed": "195",
-    "health": {
-      "now": "4280",
-      "max": "4280"
-    },
-    "look": {
-      "type": "257",
-      "corpse": "7349"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-225"
-      }
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "27"
-    },
-    "elements": {
-      "element": [
-        {
-          "deathPercent": "-15"
-        },
-        {
-          "energyPercent": "-10"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "ice": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "invisible": "1"
-        }
-      ]
-    },
-    "voices": {
+  "name": "Norgle Glacierbeard",
+  "nameDescription": "Norgle Glacierbeard",
+  "race": "blood",
+  "experience": 2100,
+  "speed": 195,
+  "manaCost": 0,
+  "health": {
+    "max": 4280,
+    "now": 4280
+  },
+  "look": {
+    "type": 257,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "5",
-      "voice": [
-        {
-          "sentence": "I'll extinguish you warmbloods."
-        },
-        {
-          "sentence": "REVENGE!"
-        },
-        {
-          "sentence": "Far too hot."
-        },
-        {
-          "sentence": "DISGUSTING WARMBLOODS!"
-        },
-        {
-          "sentence": "Revenge is sweetest when served cold."
-        }
-      ]
+      "min": "0",
+      "max": "-225"
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 27
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": -15,
+    "energyPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I'll extinguish you warmbloods.",
+        "yell": false
+      },
+      {
+        "sentence": "REVENGE!",
+        "yell": false
+      },
+      {
+        "sentence": "Far too hot.",
+        "yell": false
+      },
+      {
+        "sentence": "DISGUSTING WARMBLOODS!",
+        "yell": false
+      },
+      {
+        "sentence": "Revenge is sweetest when served cold.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

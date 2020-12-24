@@ -330,7 +330,12 @@
     {
        "id": "430",
        "article": "a",
-       "name": "sewer grate"
+       "name": "sewer grate",
+	   "flags":["useable"],
+	    "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "431",
@@ -442,7 +447,14 @@
     {
        "id": "468",
        "article": "a",
-       "name": "stone pile"
+       "name": "stone pile",
+	    "attributes": [
+          {
+			"key": "transformTo",
+			"value": "469"
+		  }
+		  ]
+
     },
     {
        "id": "469",
@@ -1761,7 +1773,12 @@
     {
        "id": "1386",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	   "attributes": [{
+          "key": "floorchange",
+          "value": "up"
+       }],
+	   "flags":["useable"]
     },
     {
        "id": "1387",
@@ -7604,6 +7621,15 @@
        "id": "2120",
        "article": "a",
        "name": "rope",
+	   "onuse":[{
+		  "key": "floorchange",
+		  "value":"up"
+	   },
+	   {
+		  "key":"useOn",
+		  "value":384
+	   }
+	   ],
        "attributes": [{
           "key": "weight",
           "value": "1800"
@@ -15795,6 +15821,15 @@
        "id": "2554",
        "article": "a",
        "name": "shovel",
+	   "onUse":[
+	   {
+		  "key": "transformTo",
+          "value": true
+	   },
+	   {
+		   "key": "useOn",
+          "value": 468
+	   }],
        "attributes": [{
           "key": "weight",
           "value": "3500"
@@ -16976,9 +17011,17 @@
              "value": "1300"
           },
           {
-             "key": "showcount",
-             "value": "0"
-          }
+             "key": "duration",
+             "value": "10"
+          },
+		  {
+		  "key":"type",
+		  "value": "food"
+		  },
+		  {
+             "key": "sentence",
+             "value": "Munch."
+          },
        ]
     },
     {
@@ -16999,11 +17042,8 @@
           {
              "key": "weight",
              "value": "320"
-          },
-          {
-             "key": "showcount",
-             "value": "0"
           }
+         
        ]
     },
     {
@@ -24570,6 +24610,10 @@
              "key": "weight",
              "value": "10000"
           },
+		  {
+             "key": "containersize",
+             "value": "10"
+          },
           {
              "key": "decayTo",
              "value": "0"
@@ -25932,7 +25976,11 @@
     {
        "id": "3678",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	     "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "3679",
@@ -50179,6 +50227,31 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by paladins and knights of level 50 or higher."
+          },
+          {
+            "key": "sentence",
+            "value": "Aaaah..."
+          },
+          {
+            "key": "effect",
+            "value": "blueshimmer"
+          },
+          {
+            "key": "healing",
+            "value": "hp",
+            "attributes":[{"key":"min","value":250},{"key":"max","value":350}]
+          },
+          {
+          "key": "minlevel",
+          "value": 50
+          },
+          {
+            "key":"vocations",
+            "value":["knight","paladin","elite knight","royal paladin"]
+          },
+          {
+             "key":"transformTo",
+             "value":"7634"
           }
        ]
     },
@@ -50194,6 +50267,31 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by sorcerers, druids and paladins of level 50 or higher."
+          },
+          {
+            "key": "sentence",
+            "value": "Aaaah..."
+          },
+          {
+            "key": "effect",
+            "value": "blueshimmer"
+          },
+          {
+            "key": "healing",
+            "value": "mp",
+            "attributes":[{"key":"min","value":115},{"key":"max","value":185}]
+          },
+          {
+            "key": "minlevel",
+            "value": 50
+          },
+          {
+            "key":"vocations",
+            "value":["sorcerer","druid","paladin","master sorcerer","elder druid","royal paladin"]
+          },
+          {
+             "key":"transformTo",
+             "value":"7634"
           }
        ]
     },
@@ -50202,14 +50300,39 @@
        "article": "a",
        "name": "great mana potion",
        "attributes": [
-          {
+         {
              "key": "weight",
              "value": "310"
-          },
-          {
+         },
+         {
              "key": "description",
              "value": "This potion can only be consumed by sorcerers and druids of level 80 or higher."
-          }
+         },
+         {
+            "key": "sentence",
+            "value": "Aaaah..."
+         },
+         {
+            "key": "effect",
+            "value": "blueshimmer"
+         },
+         {
+            "key": "healing",
+            "value": "mp",
+            "attributes":[{"key":"min","value":150},{"key":"max","value":250}]
+         },
+         {
+            "key": "minlevel",
+            "value": 80
+         },
+         {
+            "key":"vocations",
+            "value":["sorcerer","druid","master sorcerer","elder druid"]
+         },
+         {
+            "key":"transformTo",
+            "value":"7635"
+         }
        ]
     },
     {
@@ -50217,14 +50340,39 @@
        "article": "a",
        "name": "great health potion",
        "attributes": [
-          {
-             "key": "weight",
-             "value": "310"
-          },
-          {
-             "key": "description",
-             "value": "This potion can only be consumed by knights of level 80 or higher."
-          }
+         {
+            "key": "weight",
+            "value": "310"
+         },
+         {
+            "key": "description",
+            "value": "This potion can only be consumed by knights of level 80 or higher."
+         },
+		   {
+            "key": "sentence",
+            "value": "Aaaah..."
+         },
+	      {
+            "key": "effect",
+            "value": "blueshimmer"
+         },
+	      {
+            "key": "healing",
+            "value": "hp",
+		      "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
+         },
+		   {
+		      "key": "minlevel",
+			   "value": 80
+		   },
+		   {
+			   "key":"vocations",
+			   "value":["knight","paladin"]
+         },
+         {
+            "key":"transformTo",
+            "value":"7635"
+         }
        ]
     },
     {
@@ -50246,10 +50394,29 @@
        "id": "7618",
        "article": "a",
        "name": "health potion",
-       "attributes": [{
+       "attributes": [
+      {
           "key": "weight",
           "value": "270"
-       }]
+      },
+	   {
+          "key": "sentence",
+          "value": "Aaaah..."
+      },
+	   {
+          "key": "effect",
+          "value": "blueshimmer"
+      },
+	   {
+          "key": "healing",
+          "value": "hp",
+		    "attributes":[{"key":"min","value":150},{"key":"max","value":200}]
+      },
+      {
+         "key": "transformTo",
+         "value": "7636"
+      }
+	  ]
     },
     {
        "id": "7619",
@@ -50262,7 +50429,24 @@
        "attributes": [{
           "key": "weight",
           "value": "270"
-       }]
+       },{
+          "key": "sentence",
+          "value": "Aaaah..."
+       },
+	   {
+          "key": "effect",
+          "value": "blueshimmer"
+       },
+	   {
+          "key": "healing",
+          "value": "mp",
+		  "attributes":[{"key":"min","value":70},{"key":"max","value":130}]
+       },
+      {
+         "key": "transformTo",
+         "value": "7636"
+      }
+      ]
     },
     {
        "id": "7621",
@@ -57934,7 +58118,37 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by paladins of level 80 or higher."
-          }
+          },
+          {
+             "key": "sentence",
+             "value": "Aaaah..."
+          },
+          {
+             "key": "effect",
+             "value": "blueshimmer"
+          },
+          {
+             "key": "healing",
+             "value": "hp",
+             "attributes":[{"key":"min","value":250},{"key":"max","value":350}]
+          },
+          {
+            "key": "healing",
+            "value": "mp",
+            "attributes":[{"key":"min","value":100},{"key":"max","value":200}]
+         },
+         {
+            "key": "minlevel",
+            "value": 80
+         },
+         {
+            "key":"vocations",
+            "value":["paladin","royal paladin"]
+         },
+         {
+            "key":"transformTo",
+            "value":"7635"
+         }
        ]
     },
     {
@@ -57949,6 +58163,31 @@
           {
              "key": "description",
              "value": "This potion can only be consumed by knights of level 130 or higher."
+          },
+          {
+             "key": "sentence",
+             "value": "Aaaah..."
+          },
+          {
+             "key": "effect",
+             "value": "blueshimmer"
+          },
+          {
+             "key": "healing",
+             "value": "hp",
+             "attributes":[{"key":"min","value":650},{"key":"max","value":850}]
+          },
+          {
+            "key": "minlevel",
+            "value": 130
+          },
+          {
+            "key":"vocations",
+            "value":["knight","elite knight"]
+          },
+          {
+             "key":"transformTo",
+             "value":"7635"
           }
        ]
     },
@@ -58450,7 +58689,11 @@
     {
        "id": "8599",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	     "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "8600",
@@ -58864,10 +59107,25 @@
        "id": "8704",
        "article": "a",
        "name": "small health potion",
-       "attributes": [{
+       "attributes": [
+         {
           "key": "weight",
           "value": "265"
-       }]
+         },
+         {
+            "key": "sentence",
+            "value": "Aaaah..."
+         },
+         {
+            "key": "effect",
+            "value": "blueshimmer"
+         },
+         {
+            "key": "healing",
+            "value": "hp",
+          "attributes":[{"key":"min","value":60},{"key":"max","value":90}]
+         }
+      ]
     },
     {
        "fromid": "8705",
@@ -59617,6 +59875,14 @@
        "id": "8851",
        "article": "a",
        "name": "royal crossbow",
+	   "requirements":[{
+			"vocation": "All",
+			"minLevel": 130
+	   },
+	   {
+			"vocation": "Knight",
+			"minLevel": 130
+	   }],
        "attributes": [
           {
              "key": "weight",
@@ -67833,7 +68099,11 @@
     {
        "id": "10035",
        "article": "a",
-       "name": "ladder"
+       "name": "ladder",
+	     "attributes": [{
+          "key": "floorchange",
+          "value": "down"
+       }]
     },
     {
        "id": "10038",
@@ -69644,6 +69914,7 @@
              "key": "weaponType",
              "value": "shield"
           },
+		 
           {
              "key": "description",
              "value": "A sturdy shield made of old meat."

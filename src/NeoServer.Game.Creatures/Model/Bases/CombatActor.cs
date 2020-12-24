@@ -10,6 +10,8 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using System.Linq;
 using NeoServer.Game.Common.Conditions;
+using System;
+using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -33,12 +35,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public decimal BaseAttackSpeed => 2000M;
         public decimal BaseDefenseSpeed { get; }
         public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
-        public abstract ushort AttackPower { get; }
         public abstract ushort ArmorRating { get; }
-        public abstract ushort DefensePower { get; }
-        public uint AutoAttackTargetId { get; private set; }
+        public uint AutoAttackTargetId => AutoAttackTarget?.CreatureId ?? default;
+        public ICreature AutoAttackTarget { get; private set; }
         public bool Attacking => AutoAttackTargetId > 0;
-        public abstract byte AutoAttackRange { get; }
         public abstract ushort MinimumAttackPower { get; }
         public abstract bool UsingDistanceWeapon { get; }
         public uint AttackEvent { get; set; }
@@ -47,7 +47,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private byte blockCount = 0;
         private const byte BLOCK_LIMIT = 2;
 
-        protected CombatActor(ICreatureType type, PathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathFinder, outfit, healthPoints)
+        protected CombatActor(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
         {
         }
         public abstract int ShieldDefend(int attack);
@@ -73,8 +73,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             blockCount++;
         }
-        public void ResetHealthPoints() => HealthPoints = MaxHealthpoints;
-
+        public void ResetHealthPoints() => Heal((ushort)MaxHealthPoints);
+     
         public CombatDamage ReduceDamage(CombatDamage attack)
         {
             int damage = attack.Damage;
@@ -111,16 +111,18 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StopAttack()
         {
-            AutoAttackTargetId = 0;
+            if (!Attacking) return;
+
+            AutoAttackTarget = null;
             OnStoppedAttack?.Invoke(this);
         }
         private bool WasDamagedOnLastAttack = true;
 
         public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
 
-        public bool Attack(ICombatActor enemy)
+        public bool Attack(ICreature creature)
         {
-            if (enemy.IsDead || IsDead)
+            if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location))
             {
                 StopAttack();
                 return false;
@@ -128,7 +130,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             if (!Cooldowns.Expired(CooldownType.Combat)) return false;
 
-            SetAttackTarget(enemy.CreatureId);
+            SetAttackTarget(enemy);
 
             if (!OnAttack(enemy, out var combat)) return false;
 
@@ -139,26 +141,25 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return true;
         }
 
-     
-        public virtual void SetAttackTarget(uint targetId)
+        public virtual void SetAttackTarget(ICreature target)
         {
-            if (targetId == AutoAttackTargetId) return;
+            if (target is not ICombatActor) return;
+            if (target?.CreatureId == AutoAttackTargetId) return;
 
             var oldAttackTarget = AutoAttackTargetId;
-            AutoAttackTargetId = targetId;
+            AutoAttackTarget = target;
 
-            if (targetId == 0)
+            if (target?.CreatureId == 0)
             {
                 StopAttack();
                 StopFollowing();
             }
-            OnTargetChanged?.Invoke(this, oldAttackTarget, targetId);
+            OnTargetChanged?.Invoke(this, oldAttackTarget, target?.CreatureId ?? default);
         }
 
-        private void ReduceHealth(ICombatActor enemy, CombatDamage damage)
+        protected void ReduceHealth(ICombatActor enemy, CombatDamage damage)
         {
             HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
-            OnDamaged?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath();
         }
         public virtual void OnDeath()
@@ -171,9 +172,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void Heal(ushort increasing)
         {
-            if (HealthPoints <= 0) return;
+            if (increasing <= 0) return;
 
-            HealthPoints = HealthPoints + increasing >= MaxHealthpoints ? MaxHealthpoints : HealthPoints + increasing;
+            if (HealthPoints == MaxHealthPoints) return;
+
+            HealthPoints = HealthPoints + increasing >= MaxHealthPoints ? MaxHealthPoints : HealthPoints + increasing;
             OnHeal?.Invoke(this, increasing);
         }
 
@@ -190,7 +193,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);
         public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
-        public bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
+
+        public abstract void OnDamage(ICombatActor enemy, CombatDamage damage);
+
+        private void OnDamage(ICombatActor enemy, ICombatActor actor, CombatDamage damage)
+        {
+            OnDamage(enemy, damage);
+            OnDamaged?.Invoke(enemy, this, damage);
+        }
+
+        public virtual bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
             if (IsDead) return false;
 
@@ -201,15 +213,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 WasDamagedOnLastAttack = false;
                 return false;
             }
-            if (damage.Type != DamageType.ManaDrain)
-            {
-                ReduceHealth(enemy, damage);
-            }
+
+            OnDamage(enemy, this, damage);
 
             WasDamagedOnLastAttack = true;
             return true;
         }
-        public void PropagateAttack(Coordinate[] area, CombatDamage damage )
+        public void PropagateAttack(Coordinate[] area, CombatDamage damage)
         {
             if (IsDead) return;
             if (damage.Damage <= 0) return;
@@ -219,14 +229,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-        public virtual void SetAsInFight()
-        {
-            if (HasCondition(ConditionType.InFight, out var condition))
-            {
-                condition.Start(this);
-                return;
-            }
-            AddCondition(new Condition(ConditionType.InFight, 60000));
-        }
+        public virtual void SetAsInFight() { }
     }
 }

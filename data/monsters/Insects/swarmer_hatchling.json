@@ -1,96 +1,81 @@
 {
-  "monster": {
-    "name": "Swarmer Hatchling",
-    "nameDescription": "a swarmer hatchling",
-    "race": "blood",
-    "experience": "0",
-    "speed": "560",
-    "health": {
-      "now": "5",
-      "max": "5"
-    },
-    "look": {
-      "type": "460",
-      "corpse": "15388"
-    },
-    "targetchange": {
+  "name": "Swarmer Hatchling",
+  "nameDescription": "a swarmer hatchling",
+  "race": "blood",
+  "experience": 0,
+  "speed": 560,
+  "manaCost": 0,
+  "health": {
+    "max": 5,
+    "now": 5
+  },
+  "look": {
+    "type": 460,
+    "corpse": 15388
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 0,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
       "interval": "2000",
-      "chance": "50"
+      "min": "0",
+      "max": "-99"
     },
-    "flags": {
-      "flag": [
+    {
+      "name": "drown",
+      "interval": "1000",
+      "chance": "11",
+      "range": "5",
+      "target": "1",
+      "min": "-15",
+      "max": "-100",
+      "attributes": [
         {
-          "summonable": "0"
+          "shootEffect": "spear"
         },
         {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "0"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonfire": "0"
+          "areaEffect": "bluebubble"
         }
       ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-99"
-        },
-        {
-          "name": "drown",
-          "interval": "1000",
-          "chance": "11",
-          "range": "5",
-          "target": "1",
-          "min": "-15",
-          "max": "-100",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "spear"
-            },
-            {
-              "key": "areaEffect",
-              "value": "bluebubble"
-            }
-          ]/* TODO: Add spear deepling speed effect? */
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "12",
-      "defense": "20"
-    },
-    "immunities": {
-      "immunity": {
-        "earth": "1"
-      }
     }
+  ],
+  "defense": {
+    "armor": 12,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

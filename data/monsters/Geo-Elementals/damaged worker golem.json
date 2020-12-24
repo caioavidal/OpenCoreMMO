@@ -1,172 +1,147 @@
 {
-  "monster": {
-    "name": "Damaged Worker Golem",
-    "nameDescription": "a damaged worker golem",
-    "race": "energy",
-    "experience": "95",
-    "speed": "270",
-    "manacost": "0",
-    "health": {
-      "now": "260",
-      "max": "260"
-    },
-    "look": {
-      "type": "304",
-      "corpse": "9801"
-    },
-    "targetchange": {
-      "interval": "5000",
-      "chance": "8"
-    },
-    "strategy": {
-      "attack": "100",
-      "defense": "0"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "canpushcreatures": "1"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "skill": "50",
-        "attack": "15"
-      }
-    },
-    "defenses": {
-      "armor": "40",
-      "defense": "45",
-      "defense": {
-        "name": "healing",
-        "interval": "1000",
-        "chance": "7",
-        "min": "20",
-        "max": "100",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "elements": {
-      "element": [
-        {
-          "earthPercent": "50"
-        },
-        {
-          "holyPercent": "30"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "energyPercent": "-5"
-        },
-        {
-          "physicalPercent": "40"
-        },
-        {
-          "icePercent": "25"
-        },
-        {
-          "deathPercent": "30"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "invisible": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "2500",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Klonk klonk klonk"
-        },
-        {
-          "sentence": "Failure! Failire!"
-        },
-        {
-          "sentence": "Good morning citizen. How may I serve you?"
-        },
-        {
-          "sentence": "Target identified: Rat! Termination initiated!"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "id": "2148",
-          "countmax": "86",
-          "chance": "21000"
-        },
-        {
-          "id": "1987",
-          "chance": "100000",
-          "#comment": [],
-          "item": [
-            {
-              "id": "9808",
-              "chance": "13275"
-            },
-            {
-              "id": "5880",
-              "chance": "650"
-            },
-            {
-              "id": "2207",
-              "chance": "650"
-            },
-            {
-              "id": "8309",
-              "countmax": "3",
-              "chance": "500"
-            }
-          ]
-        }
-      ]/* gold coin */
+  "name": "Damaged Worker Golem",
+  "nameDescription": "a damaged worker golem",
+  "race": "energy",
+  "experience": 95,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 260,
+    "now": 260
+  },
+  "look": {
+    "type": 304,
+    "corpse": 9801
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "50",
+      "attack": "15"
     }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "7",
+      "min": "20",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 50,
+    "holyPercent": 30,
+    "firePercent": -10,
+    "energyPercent": -5,
+    "physicalPercent": 40,
+    "icePercent": 25,
+    "deathPercent": 30
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 86,
+      "chance": 21000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 9808,
+          "countmax": 1,
+          "chance": 13275,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5880,
+          "countmax": 1,
+          "chance": 650,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2207,
+          "countmax": 1,
+          "chance": 650,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 8309,
+          "countmax": 3,
+          "chance": 500,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 2500,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Klonk klonk klonk",
+        "yell": false
+      },
+      {
+        "sentence": "Failure! Failire!",
+        "yell": false
+      },
+      {
+        "sentence": "Good morning citizen. How may I serve you?",
+        "yell": false
+      },
+      {
+        "sentence": "Target identified: Rat! Termination initiated!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

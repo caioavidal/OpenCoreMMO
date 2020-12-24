@@ -1,187 +1,175 @@
 {
-  "monster": {
-    "name": "Crypt Defiler",
-    "nameDescription": "a crypt defiler",
-    "race": "blood",
-    "experience": "70",
-    "speed": "205",
-    "health": {
-      "now": "180",
-      "max": "180"
+  "name": "Crypt Defiler",
+  "nameDescription": "a crypt defiler",
+  "race": "blood",
+  "experience": 70,
+  "speed": 205,
+  "manaCost": 0,
+  "health": {
+    "max": 180,
+    "now": 180
+  },
+  "look": {
+    "type": 146,
+    "corpse": 20359
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-90"
     },
-    "look": {
-      "type": "146",
-      "head": "115",
-      "body": "115",
-      "legs": "61",
-      "feet": "96",
-      "addons": "3",
-      "corpse": "20359"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "0",
+      "max": "-40",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "15"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-90"
-        },
-        {
-          "name": "physical",
-          "interval": "2000",
-          "chance": "15",
-          "range": "7",
-          "radius": "1",
-          "target": "1",
-          "min": "0",
-          "max": "-40",
-          "attribute": {
-            "key": "shooteffect",
-            "value": "throwingstar"
-          }
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "15",
-      "defense": "15"
-    },
-    "elements": {
-      "element": [
-        {
-          "energyPercent": "20"
-        },
-        {
-          "firePercent": "-10"
-        },
-        {
-          "icePercent": "-5"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "earth": "1"
-        },
-        {
-          "paralyze": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "I smell gold!"
-        },
-        {
-          "sentence": "You'll make a fine fake-mummy to be sold!"
-        },
-        {
-          "sentence": "Untold riches are awaiting me!"
-        },
-        {
-          "sentence": "I don't like competition"
-        }
-      ]
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "gold coin",
-          "countmax": "39",
-          "chance": "50900"
-        },
-        {
-          "name": "axe",
-          "chance": "2730"
-        },
-        {
-          "name": "mace",
-          "chance": "1800"
-        },
-        {
-          "name": "iron helmet",
-          "chance": "450"
-        },
-        {
-          "name": "brass armor",
-          "chance": "2240"
-        },
-        {
-          "name": "steel shield",
-          "chance": "450"
-        },
-        {
-          "name": "nomad parchment",
-          "chance": "220"
-        },
-        {
-          "name": "potato",
-          "countmax": "3",
-          "chance": "4840"
-        },
-        {
-          "name": "dirty turban",
-          "chance": "1570"
-        },
-        {
-          "name": "rope belt",
-          "chance": "4040"
+          "shooteffect": "throwingstar"
         }
       ]
     }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "firePercent": -10,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 39,
+      "chance": 50900,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2730,
+      "items": [],
+      "name": "axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1800,
+      "items": [],
+      "name": "mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "iron helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2240,
+      "items": [],
+      "name": "brass armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "steel shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 220,
+      "items": [],
+      "name": "nomad parchment"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 4840,
+      "items": [],
+      "name": "potato"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1570,
+      "items": [],
+      "name": "dirty turban"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4040,
+      "items": [],
+      "name": "rope belt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I smell gold!",
+        "yell": false
+      },
+      {
+        "sentence": "You'll make a fine fake-mummy to be sold!",
+        "yell": false
+      },
+      {
+        "sentence": "Untold riches are awaiting me!",
+        "yell": false
+      },
+      {
+        "sentence": "I don't like competition",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

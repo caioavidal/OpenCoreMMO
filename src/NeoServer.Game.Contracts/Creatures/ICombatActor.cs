@@ -33,12 +33,9 @@ namespace NeoServer.Game.Contracts.Creatures
 
         ushort ArmorRating { get; }
         bool Attacking { get; }
-        ushort AttackPower { get; }
-        byte AutoAttackRange { get; }
         uint AutoAttackTargetId { get; }
         decimal BaseAttackSpeed { get; }
         decimal BaseDefenseSpeed { get; }
-        ushort DefensePower { get; }
 
         bool InFight { get; }
         bool IsDead { get; }
@@ -50,7 +47,7 @@ namespace NeoServer.Game.Contracts.Creatures
         //bool Attack(ICombatActor enemy, ICombatAttack combatAttack);
         void Heal(ushort increasing);
         CombatDamage ReduceDamage(CombatDamage damage);
-        void SetAttackTarget(uint targetId);
+        void SetAttackTarget(ICreature target);
         int ShieldDefend(int attack);
         void StopAttack();
         void ResetHealthPoints();
@@ -67,7 +64,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <param name="damage"></param>
         /// <returns>Returns true when damage was bigger than 0</returns>
         bool ReceiveAttack(ICombatActor enemy, CombatDamage damage);
-        bool Attack(ICombatActor enemy);
+        bool Attack(ICreature creature);
         void SetAsInFight();
         void PropagateAttack(Coordinate[] area, CombatDamage damage);
     }

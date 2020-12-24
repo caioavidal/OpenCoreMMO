@@ -1,140 +1,103 @@
 {
-  "monster": {
-    "name": "Hive Pore",
-    "nameDescription": "a hive pore",
-    "race": "venom",
-    "experience": "0",
-    "speed": "0",
-    "manacost": "355",
-    "health": {
-      "now": "1",
-      "max": "1"
-    },
-    "look": {
-      "typeex": "15467"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "10"
-    },
-    "flags": {
-      "flag": [
+  "name": "Hive Pore",
+  "nameDescription": "a hive pore",
+  "race": "venom",
+  "experience": 0,
+  "speed": 0,
+  "manaCost": 355,
+  "health": {
+    "max": 1,
+    "now": 1
+  },
+  "look": {
+    "type": 0,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 0,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [
+    {
+      "name": "effect",
+      "interval": "30000",
+      "chance": "100",
+      "target": "0",
+      "radius": "3",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "0"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "1"
-        },
-        {
-          "convinceable": "1"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "0"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "defenses": {
-      "defense": {
-        "name": "effect",
-        "interval": "30000",
-        "chance": "100",
-        "target": "0",
-        "radius": "3",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "greenspark"
-        }
-      }
-    },
-    "summons": {
-      "maxSummons": "3",
-      "summon": [
-        {
-          "name": "Lesser Swarmer",
-          "interval": "30000",
-          "chance": "100"
-        },
-        {
-          "name": "Lesser Swarmer",
-          "interval": "30000",
-          "chance": "100"
-        },
-        {
-          "name": "Lesser Swarmer",
-          "interval": "30000",
-          "chance": "100"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "physical": "1"
-        },
-        {
-          "energy": "1"
-        },
-        {
-          "fire": "1"
-        },
-        {
-          "earth": "1"
-        },
-        {
-          "ice": "1"
-        },
-        {
-          "holy": "1"
-        },
-        {
-          "death": "1"
-        },
-        {
-          "lifedrain": "1"
-        },
-        {
-          "paralyze": "1"
-        },
-        {
-          "drunk": "1"
-        },
-        {
-          "outfit": "1"
-        },
-        {
-          "invisible": "1"
+          "areaEffect": "greenspark"
         }
       ]
     }
+  ],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "physical": 1,
+    "energy": 1,
+    "fire": 1,
+    "earth": 1,
+    "ice": 1,
+    "holy": 1,
+    "death": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "drunk": 1,
+    "outfit": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Lesser Swarmer",
+        "interval": 30000,
+        "chance": 100,
+        "max": 0
+      },
+      {
+        "name": "Lesser Swarmer",
+        "interval": 30000,
+        "chance": 100,
+        "max": 0
+      },
+      {
+        "name": "Lesser Swarmer",
+        "interval": 30000,
+        "chance": 100,
+        "max": 0
+      }
+    ]
   }
 }

@@ -11,7 +11,7 @@
         UniqueId = 5,
         Text = 6,
         Description = 7,      // ATTR_DESC = 7,
-        TeleportDestination = 8,     // ATTR_TELE_DEST = 8,
+        UseOn = 8,     // ATTR_TELE_DEST = 8,
         Item,                    // ATTR_ITEM = 9,
         DepotId = 10,                 // ATTR_DEPOT_ID = 10,
         ExtensionFileForSpawns,  // //ATTR_EXT_SPAWN_FILE = 11,
@@ -193,6 +193,12 @@
         AbsorbPercentLifeDrain,
         AbsorbPercentDeath,
         AbsorbPercentHoly,
-        AbsorbPercentIce
+        AbsorbPercentIce,
+        Healing,
+        Min,
+        Max,
+        Sentence,
+        Vocation,
+        Regeneration
     }
 }

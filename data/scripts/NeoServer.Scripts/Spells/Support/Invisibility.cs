@@ -8,7 +8,6 @@ namespace NeoServer.Scripts
 {
     public class Invisibility : Spell<Invisibility>
     {
-     
 
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 20000;

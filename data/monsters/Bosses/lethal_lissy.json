@@ -1,135 +1,135 @@
 {
-  "monster": {
-    "name": "Lethal Lissy",
-    "nameDescription": "Lethal Lissy",
-    "race": "blood",
-    "experience": "500",
-    "speed": "240",
-    "health": {
-      "now": "1450",
-      "max": "1450"
-    },
-    "look": {
-      "type": "155",
-      "head": "77",
-      "body": "0",
-      "legs": "76",
-      "feet": "132",
-      "addons": "3",
-      "corpse": "20438"
-    },
-    "targetchange": {
-      "interval": "60000",
-      "chance": "0"
-    },
-    "flags": {
-      "flag": [
+  "name": "Lethal Lissy",
+  "nameDescription": "Lethal Lissy",
+  "race": "blood",
+  "experience": 500,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1450,
+    "now": 1450
+  },
+  "look": {
+    "type": 155,
+    "corpse": 20438
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250"
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 50
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "6000",
+      "chance": "65",
+      "min": "200",
+      "max": "250",
+      "attributes": [
         {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "50"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "0"
+          "areaEffect": "blueshimmer"
         }
       ]
-    },
-    "attacks": {
-      "attack": {
-        "name": "melee",
-        "interval": "2000",
-        "min": "0",
-        "max": "-250"
-      }
-    },
-    "defenses": {
-      "armor": "35",
-      "defense": "50",
-      "defense": {
-        "name": "healing",
-        "interval": "6000",
-        "chance": "65",
-        "min": "200",
-        "max": "250",
-        "attribute": {
-          "key": "areaEffect",
-          "value": "blueshimmer"
-        }
-      }
-    },
-    "immunities": {
-      "immunity": {
-        "invisible": "1"
-      }
-    },
-    "summons": {
-      "maxSummons": "4",
-      "summon": {
-        "name": "Pirate Cutthroat",
-        "interval": "2000",
-        "chance": "50"
-      }
-    },
-    "loot": {
-      "item": [
-        {
-          "name": "small diamond",
-          "chance": "100000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "40",
-          "chance": "100000"
-        },
-        {
-          "name": "skull of Ratha",
-          "chance": "100000"
-        },
-        {
-          "name": "double axe",
-          "chance": "1500"
-        },
-        {
-          "name": "plate armor",
-          "chance": "4000"
-        },
-        {
-          "name": "knight armor",
-          "chance": "1200"
-        },
-        {
-          "id": "6100",
-          "chance": "100000"
-        }
-      ]/* lethal lissy's shirt */
     }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "small diamond"
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "skull of Ratha"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 6100,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Pirate Cutthroat",
+        "interval": 2000,
+        "chance": 50,
+        "max": 0
+      }
+    ]
   }
 }

@@ -16,7 +16,7 @@ namespace NeoServer.Game.Contracts.Creatures
         public IMonsterCombatAttack[] Attacks { get; set; }
         public ICombatDefense[] Defenses { get; set; }
 
-        IDictionary<CreatureFlagAttribute, byte> Flags { get; set; }
+        IDictionary<CreatureFlagAttribute, ushort> Flags { get; set; }
         IIntervalChance TargetChance { get; set; }
 
         /// <summary>

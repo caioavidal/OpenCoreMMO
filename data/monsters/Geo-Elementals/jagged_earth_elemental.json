@@ -1,189 +1,173 @@
 {
-  "monster": {
-    "name": "Jagged Earth Elemental",
-    "nameDescription": "a jagged earth elemental",
-    "race": "undead",
-    "experience": "1300",
-    "speed": "280",
-    "health": {
-      "now": "1500",
-      "max": "1500"
+  "name": "Jagged Earth Elemental",
+  "nameDescription": "a jagged earth elemental",
+  "race": "undead",
+  "experience": 1300,
+  "speed": 280,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 285,
+    "corpse": 8933
+  },
+  "targetChange": {
+    "interval": 20000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 80,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300"
     },
-    "look": {
-      "type": "285",
-      "corpse": "8933"
-    },
-    "targetchange": {
-      "interval": "20000",
-      "chance": "50"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "1"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "0"
-        },
-        {
-          "canpushitems": "1"
-        },
-        {
-          "staticattack": "80"
-        },
-        {
-          "lightlevel": "0"
-        },
-        {
-          "lightcolor": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "runonhealth": "1"
-        }
-      ]
-    },
-    "attacks": {
-      "attack": [
-        {
-          "name": "melee",
-          "interval": "2000",
-          "min": "0",
-          "max": "-300"
-        },
-        {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "10",
-          "length": "6",
-          "spread": "0",
-          "min": "-100",
-          "max": "-250",
-          "attribute": {
-            "key": "areaEffect",
-            "value": "stones"
-          }
-        },
-        {
-          "name": "earth",
-          "interval": "1000",
-          "chance": "11",
-          "target": "1",
-          "range": "7",
-          "radius": "6",
-          "min": "0",
-          "max": "-200",
-          "attribute": [
-            {
-              "key": "shootEffect",
-              "value": "smallearth"
-            },
-            {
-              "key": "areaEffect",
-              "value": "poison"
-            }
-          ]
-        }
-      ]
-    },
-    "defenses": {
-      "armor": "25",
-      "defense": "25"
-    },
-    "elements": {
-      "element": [
-        {
-          "deathPercent": "20"
-        },
-        {
-          "icePercent": "20"
-        },
-        {
-          "energyPercent": "20"
-        },
-        {
-          "firePercent": "-25"
-        }
-      ]
-    },
-    "immunities": {
-      "immunity": [
-        {
-          "paralyze": "1"
-        },
-        {
-          "invisible": "1"
-        },
-        {
-          "earth": "1"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
+    {
+      "name": "earth",
+      "interval": "1000",
       "chance": "10",
-      "voice": {
-        "sentence": "Stomp STOMP"
-      }
-    },
-    "loot": {
-      "item": [
+      "length": "6",
+      "spread": "0",
+      "min": "-100",
+      "max": "-250",
+      "attributes": [
         {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "27000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "90",
-          "chance": "27000"
-        },
-        {
-          "name": "gold coin",
-          "countmax": "10",
-          "chance": "1500"
-        },
-        {
-          "name": "small emerald",
-          "countmax": "2",
-          "chance": "3750"
-        },
-        {
-          "id": "2244",
-          "chance": "10000"
-        },
-        {
-          "name": "twigs",
-          "chance": "18000"
-        },
-        {
-          "name": "iron ore",
-          "countmax": "2",
-          "chance": "800"
-        },
-        {
-          "name": "seeds",
-          "chance": "1600"
-        },
-        {
-          "name": "natural soil",
-          "chance": "9000"
+          "areaEffect": "stones"
         }
-      ]/* leaves */
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "11",
+      "target": "1",
+      "range": "7",
+      "radius": "6",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
+        {
+          "shootEffect": "smallearth"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
     }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": 20,
+    "icePercent": 20,
+    "energyPercent": 20,
+    "firePercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 27000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 27000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 1500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 3750,
+      "items": [],
+      "name": "small emerald"
+    },
+    {
+      "id": 2244,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "twigs"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 800,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1600,
+      "items": [],
+      "name": "seeds"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": "natural soil"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Stomp STOMP",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

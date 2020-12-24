@@ -8,7 +8,8 @@ namespace NeoServer.Server.Helpers.Extensions
     {
         public static bool TryGetValue<T>(this Dictionary<string, object> dictionary, string key, out T value)
         {
-            if(!dictionary.TryGetValue(key, out var val))
+           
+            if (dictionary is null || key is null || !dictionary.TryGetValue(key, out var val))
             {
                 value = default;
                 return false;
@@ -16,7 +17,7 @@ namespace NeoServer.Server.Helpers.Extensions
 
             try
             {
-                value = (T) Convert.ChangeType(val, typeof(T));
+                value = (T)Convert.ChangeType(val, typeof(T));
                 return true;
             }
             catch

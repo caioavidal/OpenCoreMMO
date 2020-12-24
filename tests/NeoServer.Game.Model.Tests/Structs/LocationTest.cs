@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using Xunit;
 
 namespace NeoServer.Game.Model.Tests.Structs
@@ -38,5 +39,48 @@ namespace NeoServer.Game.Model.Tests.Structs
 
             Assert.Equal(direction, fromLocation.DirectionTo(toLocation));
         }
+
+        [Theory]
+        [InlineData(Slot.Legs)]
+        [InlineData(Slot.Body)]
+        [InlineData(Slot.Backpack)]
+        [InlineData(Slot.Ammo)]
+        [InlineData(Slot.Head)]
+        [InlineData(Slot.Left)]
+        [InlineData(Slot.Feet)]
+        [InlineData(Slot.Necklace)]
+        [InlineData(Slot.Right)]
+        [InlineData(Slot.Ring)]
+
+        public void Inventory_Returns_Location_As_Slot(Slot slot)
+        {
+            var location = Location.Inventory(slot);
+
+            Assert.Equal(LocationType.Slot, location.Type);
+            Assert.Equal(slot, location.Slot);
+        }
+
+        [Theory]
+        [InlineData(1,1)]
+        [InlineData(2, 2)]
+        [InlineData(3, 5)]
+        [InlineData(4, 10)]
+        [InlineData(5, 11)]
+        [InlineData(6, 13)]
+        [InlineData(7, 15)]
+        [InlineData(8, 18)]
+        [InlineData(9, 19)]
+        [InlineData(10, 20)]
+        [InlineData(13, 25)]
+        [InlineData(15, 6)]
+        public void Container_Returns_Type_As_Container(int id, int slot)
+        {
+            var location = Location.Container(id, (byte)slot);
+
+            Assert.Equal(LocationType.Container, location.Type);
+            Assert.Equal(id, location.ContainerId);
+            Assert.Equal(slot, location.ContainerSlot);
+        }
+     
     }
 }

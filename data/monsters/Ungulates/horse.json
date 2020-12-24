@@ -1,82 +1,71 @@
 {
-  "monster": {
-    "name": "Horse",
-    "nameDescription": "a horse",
-    "race": "blood",
-    "experience": "0",
-    "speed": "190",
-    "health": {
-      "now": "75",
-      "max": "75"
-    },
-    "look": {
-      "type": "435",
-      "corpse": "0"
-    },
-    "targetchange": {
-      "interval": "4000",
-      "chance": "20"
-    },
-    "flags": {
-      "flag": [
-        {
-          "summonable": "0"
-        },
-        {
-          "attackable": "1"
-        },
-        {
-          "hostile": "0"
-        },
-        {
-          "illusionable": "0"
-        },
-        {
-          "convinceable": "0"
-        },
-        {
-          "pushable": "1"
-        },
-        {
-          "canpushitems": "0"
-        },
-        {
-          "canpushcreatures": "0"
-        },
-        {
-          "targetdistance": "1"
-        },
-        {
-          "staticattack": "90"
-        },
-        {
-          "runonhealth": "75"
-        },
-        {
-          "canwalkonenergy": "0"
-        },
-        {
-          "canwalkonfire": "0"
-        },
-        {
-          "canwalkonpoison": "0"
-        }
-      ]
-    },
-    "voices": {
-      "interval": "5000",
-      "chance": "10",
-      "voice": [
-        {
-          "sentence": "Weeeeheeeeeee"
-        },
-        {
-          "sentence": "*snort*"
-        },
-        {
-          "sentence": "*Weeeeheeeeaaa*"
-        }
-      ]
-    }
+  "name": "Horse",
+  "nameDescription": "a horse",
+  "race": "blood",
+  "experience": 0,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 75,
+    "now": 75
+  },
+  "look": {
+    "type": 435,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 75,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Weeeeheeeeeee",
+        "yell": false
+      },
+      {
+        "sentence": "*snort*",
+        "yell": false
+      },
+      {
+        "sentence": "*Weeeeheeeeaaa*",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
   }
 }

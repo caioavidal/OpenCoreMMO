@@ -33,23 +33,12 @@ namespace NeoServer.OTBM.Structure
             Tiles.AddRange(tileNodes);
 
             var unknownNodes = node.Children.Count - Tiles.Count;
-
-            //if (unknownNodes > 0)
-            //{
-            //    throw new Exception($"{unknownNodes} unknown tile nodes found.");
-            //}
         }
 
-        TileNode BuildTile(OTBNode node)
-        {
-
-            return new TileNode(this, node);
-        }
         public ushort X { get; set; }
         public ushort Y { get; set; }
         public sbyte Z { get; set; }
 
         public List<TileNode> Tiles { get; set; }
-
     }
 }

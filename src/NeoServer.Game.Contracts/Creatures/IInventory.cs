@@ -9,7 +9,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void RemoveItemFromSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
     public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
     public delegate void FailAddItemToSlot(InvalidOperation invalidOperation);
-    public interface IInventory
+    public interface IInventory: IStore
     {
         IPlayer Owner { get; }
 
@@ -23,6 +23,7 @@ namespace NeoServer.Game.Contracts.Creatures
         Items.Types.IContainer BackpackSlot { get; }
         IWeapon Weapon { get; }
         bool HasShield { get; }
+        float TotalWeight { get; }
 
         IItem this[Slot slot] { get; }
 

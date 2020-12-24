@@ -12,6 +12,9 @@
         NotEnoughMana,
         VocationCannotUseSpell,
         NotEnoughLevel,
-        Exhausted
+        Exhausted,
+        CannotDrink,
+        IsFull,
+        TooFar
     }
 }

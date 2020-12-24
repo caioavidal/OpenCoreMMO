@@ -5,6 +5,7 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Game.Common;
 
 namespace NeoServer.Game.World.Map
 {
@@ -58,7 +59,6 @@ namespace NeoServer.Game.World.Map
         public bool OnlyPlayers { get; }
         public Location CenterPosition { get; }
 
-
         public SpectatorSearch(ref Location center, int minRangeX, int maxRangeX, int minRangeY, int maxRangeY, int minRangeZ, int maxRangeZ, bool onlyPlayers)
         {
             int minY = center.Y + minRangeY;
@@ -84,16 +84,4 @@ namespace NeoServer.Game.World.Map
         }
     }
 
-    public readonly ref struct MinMax
-    {
-        public MinMax(int min, int max)
-        {
-            Min = min;
-            Max = max;
-        }
-
-        public int Min { get; }
-        public int Max { get; }
-
-    }
 }
