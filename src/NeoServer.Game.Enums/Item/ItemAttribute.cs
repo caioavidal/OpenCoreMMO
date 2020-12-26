@@ -199,6 +199,8 @@
         Max,
         Sentence,
         Vocation,
-        Regeneration
+        Regeneration,
+        NeedTarget,
+        Formula
     }
 }

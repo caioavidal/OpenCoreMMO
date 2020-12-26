@@ -7,6 +7,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Server.Commands.Movement;
 using System;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -54,9 +55,9 @@ namespace NeoServer.Server.Commands.Player
             {
                 action = () => useable.Use(player, game.Map);
             }
-            else if (item is IConsumable consumable)
+            else if (item is IUseableOn2 useableOn)
             {
-                action = () => player.Use(consumable, player);
+                action = () => player.Use(useableOn, player);
             }
 
             if (action is null) return;

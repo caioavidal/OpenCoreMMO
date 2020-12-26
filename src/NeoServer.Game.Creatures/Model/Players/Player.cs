@@ -26,6 +26,7 @@ using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -206,7 +207,7 @@ namespace NeoServer.Server.Model.Players
 
         public string Guild { get; }
         public bool Recovering { get; private set; }
-        
+
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -357,6 +358,13 @@ namespace NeoServer.Server.Model.Players
             base.Say(message, talkType);
         }
 
+        public (string, double)[] FormulaVariables => new (string, double)[]
+            {
+                ("lvl",Level),
+                ("ml", Skills[SkillType.Magic].Level),
+                ("melee", Skills[SkillInUse].Level)
+            };
+
         public bool HasEnoughMana(ushort mana) => Mana >= mana;
         public void ConsumeMana(ushort mana)
         {
@@ -458,16 +466,24 @@ namespace NeoServer.Server.Model.Players
                 ReduceHealth(enemy, damage);
         }
 
-        public void Use(IConsumable item, ICreature creature)
+        public void Use(IUseableOn2 item, IThing onThing)
         {
-            if (!item.CanBeUsed(this))
+            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, item.ValidationError);
+                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
                 return;
             }
 
-            item.Use(this, creature);
-            OnUsedItem?.Invoke(this, creature, item);
+            if (onThing is ICreature creature && item is IUseableOnCreature useableOnCreature)
+            {
+                useableOnCreature.Use(this, creature);
+            }
+            else if (onThing is IItem useOnItem && item is IUseableOnItem useableOnItem)
+            {
+                useableOnItem.Use(this, useOnItem);
+            }
+
+            OnUsedItem?.Invoke(this, onThing, item);
         }
         public bool Feed(IFood food)
         {

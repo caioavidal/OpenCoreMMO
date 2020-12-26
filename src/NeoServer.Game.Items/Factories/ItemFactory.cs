@@ -12,6 +12,7 @@ using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Events;
 using NeoServer.Game.Contracts.Items.Types;
 using System.Linq;
+using NeoServer.Game.Items.Items.UsableItems.Runes;
 
 namespace NeoServer.Game.Items
 {
@@ -114,6 +115,10 @@ namespace NeoServer.Game.Items
                 if (Food.IsApplicable(itemType))
                 {
                     return new Food(itemType, location, attributes);
+                }
+                if (Rune.IsApplicable(itemType))
+                {
+                    return new AttackRune(itemType, location, attributes);
                 }
                 return new Cumulative(itemType, location, attributes);
             }

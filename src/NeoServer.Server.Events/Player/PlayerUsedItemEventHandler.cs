@@ -6,6 +6,8 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Server.Events
 {
@@ -17,9 +19,9 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
-        public void Execute(IPlayer player, ICreature onCreature, IConsumable item)
+        public void Execute(IPlayer player, IThing onThing, IUseableOn2 item)
         {
-            foreach (var spectator in game.Map.GetPlayersAtPositionZone(onCreature.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(onThing.Location))
             {
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
@@ -28,7 +30,7 @@ namespace NeoServer.Server.Events
 
                 if (item.EffecT != EffectT.None)
                 {
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(onCreature.Location, item.EffecT));
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(onThing.Location, item.EffecT));
                 }
 
                 connection.Send();

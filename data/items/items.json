@@ -10729,7 +10729,20 @@
           {
              "key": "charges",
              "value": "10"
-          }
+          },
+		  {
+             "key": "charges",
+             "value": "10"
+          },
+		  {
+			"key": "needtarget",
+			"value": true
+		  },
+		  {
+			"key":"formula",
+			"value": "(lvl/5)+(ml*x)+y",
+			"attributes":[{ "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}]
+		  }
        ]
     },
     {

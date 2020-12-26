@@ -136,9 +136,12 @@ namespace NeoServer.OTB.Parsers
                 case "sentence": return ItemAttribute.Sentence;
                 case "vocations": return ItemAttribute.Vocation;
                 case "regeneration": return ItemAttribute.Regeneration;
+                case "needtarget": return ItemAttribute.NeedTarget;
+                case "formula": return ItemAttribute.Formula;
+
                 default:
                     success = false;
-                    return ItemAttribute.AbsTeleportEffect; // Just return the first
+                    return ItemAttribute.None; // Just return the first
             }
         }
 
