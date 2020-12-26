@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Data.Model
 {
-    public record PlayerDepotModel (uint PlayerId, List<IItemModel> Items)
+    public record PlayerDepotModel (uint PlayerId, List<ItemModel> Items)
     {
         public string Id { get; set; }
     }

@@ -1,8 +1,9 @@
-﻿using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Data.Interfaces;
+using NeoServer.Game.Creatures;
+using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Tasks;
 
@@ -10,16 +11,20 @@ namespace NeoServer.Server.Handlers.Authentication
 {
     public class PlayerLogInHandler : PacketHandler
     {
-        private readonly IAccountRepository repository;
+        //private readonly IAccountRepository repository;
+        private readonly IAccountRepositoryNeo repositoryNeo;
         private readonly ServerConfiguration serverConfiguration;
         private readonly Game game;
+        private CreaturePathAccess _creaturePathAccess;
 
-        public PlayerLogInHandler(IAccountRepository repository,
-         Game game, ServerConfiguration serverConfiguration)
+        public PlayerLogInHandler(/*IAccountRepository repository,*/ IAccountRepositoryNeo repositoryNeo,
+         Game game, ServerConfiguration serverConfiguration, CreaturePathAccess creaturePathAccess)
         {
-            this.repository = repository;
+            this.repositoryNeo = repositoryNeo;
+            // this.repository = repository;
             this.game = game;
             this.serverConfiguration = serverConfiguration;
+            _creaturePathAccess = creaturePathAccess;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -39,7 +44,8 @@ namespace NeoServer.Server.Handlers.Authentication
 
             //todo: ip ban validation
 
-            var accountRecord = repository.FirstOrDefault(a => a.AccountName == packet.Account && a.Password == packet.Password);
+            //var accountRecord = repository.FirstOrDefault(a => a.AccountName == packet.Account && a.Password == packet.Password);
+            var accountRecord = repositoryNeo.Login(packet.Account, packet.Password).Result;
 
             if (accountRecord == null)
             {
@@ -47,7 +53,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection).Execute));
+            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection, _creaturePathAccess).Execute));
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)

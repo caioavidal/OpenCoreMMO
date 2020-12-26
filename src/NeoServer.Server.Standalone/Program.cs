@@ -24,6 +24,7 @@ using NeoServer.Server;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
+using NeoServer.Data.Interfaces;
 
 Console.Title = "OpenCoreMMO Server";
 
@@ -40,18 +41,32 @@ var context = container.Resolve<NeoContext>();
 
 var account = new AccountModel
 {
-    Id = 0,
-    AccountName = "Felipe",
-    Email = "felipe@teste@gmail.com",
-    Password = "teste",
+    Name = "1",
+    Email = "1@gmail.com",
+    Password = "1",
     PremiumTime = 1
 };
 
 var player = new PlayerModel
 {
-    Id = 0,
-    CharacterName = "Felipe Muniz",
-    Level = 1
+    AccountId = 1,
+    Name = "Developer",
+    ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,
+    Level = 100,
+    Health = 4440,
+    MaxHealth = 4440,
+    Vocation = NeoServer.Game.Common.Players.VocationType.Knight,
+    Gender = NeoServer.Game.Common.Players.Gender.Male,
+    Speed = 800,
+    Online = false,
+    Mana = 1750,
+    MaxMana = 1750,
+    Soul = 100,
+    MaxSoul = 100,
+    PosX = 1020,
+    PosY = 1023, 
+    PosZ = 7,
+    StaminaMinutes = 2520
 };
 
 context.Accounts.Add(account);
@@ -65,6 +80,10 @@ context.Player.Add(player);
 context.SaveChanges();
 
 var players = context.Player.AsQueryable().ToList();
+
+var repo = container.Resolve<IAccountRepositoryNeo>();
+
+var acc = repo.GetAllAsync().Result;
 
 var logger = container.Resolve<Logger>();
 

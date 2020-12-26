@@ -5,6 +5,6 @@ namespace NeoServer.Game.Creatures
 {
     public interface IPlayerFactory
     {
-        IPlayer Create(IPlayerModel player);
+        //IPlayer Create(PlayerModel player);
     }
 }

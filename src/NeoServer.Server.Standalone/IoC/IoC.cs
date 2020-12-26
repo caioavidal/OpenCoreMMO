@@ -22,7 +22,6 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Instances;
@@ -36,11 +35,12 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using NeoServer.Game.Common;
-using NeoServer.Game.World.Map.Operations;
 using NeoServer.Data.Repositories;
 using NeoServer.Loaders.Vocations;
 using System.Linq;
 using System.Collections.Generic;
+using NeoServer.Data.Interfaces;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -57,8 +57,10 @@ namespace NeoServer.Server.Standalone.IoC
                 .CreateLogger()).SingleInstance();
 
             builder.RegisterType<Database>().SingleInstance();
-            builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
-            builder.RegisterType<PlayerDepotRepository>().As<IPlayerDepotRepository>().SingleInstance();
+            //builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
+            //builder.RegisterType<PlayerDepotRepository>().As<IPlayerDepotRepository>().SingleInstance();
+
+            builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();
@@ -159,7 +161,7 @@ namespace NeoServer.Server.Standalone.IoC
         {
             builder.Register((c, p) =>
             {
-                var player = p.TypedAs<IPlayerModel>();
+                var player = p.TypedAs<IPlayer>();
 
                 return c.Resolve<ICreatureFactory>().CreatePlayer(player);
             });

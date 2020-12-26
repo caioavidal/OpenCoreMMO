@@ -13,7 +13,7 @@ namespace NeoServer.Data.Parsers
 {
     public class ItemModelParser
     {
-        public static IItemModel ToModel(IItem item)
+        public static ItemModel ToModel(IItem item)
         {
             var itemModel = new ItemModel()
             {
@@ -23,7 +23,7 @@ namespace NeoServer.Data.Parsers
 
             if (item is IContainer container)
             {
-                var items = new List<IItemModel>();
+                var items = new List<ItemModel>();
                 foreach (var i in container.Items)
                 {
                     items.Add(ToModel(i));
@@ -32,7 +32,7 @@ namespace NeoServer.Data.Parsers
             }
             return itemModel;
         }
-        public static IItem BuildContainer(List<IItemModel> items,int index, Location location, IContainer container, IItemFactory itemFactory)
+        public static IItem BuildContainer(List<ItemModel> items,int index, Location location, IContainer container, IItemFactory itemFactory)
         {
             if (items == null || items.Count == index)
             {

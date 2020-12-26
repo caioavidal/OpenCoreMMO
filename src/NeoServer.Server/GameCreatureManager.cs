@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Creatures;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
@@ -20,7 +21,7 @@ namespace NeoServer.Server
 
         private ICreatureGameInstance creatureInstances;
 
-        private readonly Func<IPlayerModel, IPlayer> playerFactory;
+        private readonly Func<PlayerModel, IPlayer> playerFactory;
 
         /// <summary>
         /// Gets all creatures in game
@@ -32,7 +33,7 @@ namespace NeoServer.Server
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
         private IMap map;
-        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Func<IPlayerModel, IPlayer> playerFactory)
+        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Func<PlayerModel, IPlayer> playerFactory)
         {
             this.creatureInstances = creatureInstances;
             this.map = map;
@@ -130,9 +131,11 @@ namespace NeoServer.Server
         /// <param name="playerRecord"></param>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public IPlayer AddPlayer(IPlayerModel playerRecord, IConnection connection)
+        public IPlayer AddPlayer(Player player, IConnection connection)
         {
-            var player = playerFactory(playerRecord);
+            // var player = playerFactory(playerRecord);
+
+            //player = new Player
 
             connection.SetConnectionOwner(player);
 
