@@ -141,6 +141,5 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         uint TotalCapacity { get; }
         bool Recovering { get; }
-        (string, double)[] FormulaVariables { get; }
     }
 }

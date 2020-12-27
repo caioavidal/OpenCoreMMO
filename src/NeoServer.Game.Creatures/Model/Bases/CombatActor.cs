@@ -12,6 +12,7 @@ using System.Linq;
 using NeoServer.Game.Common.Conditions;
 using System;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -74,7 +75,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             blockCount++;
         }
         public void ResetHealthPoints() => Heal((ushort)MaxHealthPoints);
-     
+
         public CombatDamage ReduceDamage(CombatDamage attack)
         {
             int damage = attack.Damage;
@@ -120,6 +121,18 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
 
+        public bool Attack(ICreature creature, IUseableAttackOnCreature item)
+        {
+            if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location))
+            {
+                return false;
+            }
+
+            if (!item.Use(this, creature, out var combat)) return false;
+            OnAttackEnemy?.Invoke(this, enemy, combat);
+
+            return true;
+        }
         public bool Attack(ICreature creature)
         {
             if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location))

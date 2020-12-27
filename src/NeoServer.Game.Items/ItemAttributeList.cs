@@ -79,6 +79,17 @@ namespace NeoServer.Game.Items
 
             return default;
         }
+        public dynamic[] GetAttributeArray(string attribute)
+        {
+            if (_customAttributes is null) return default;
+
+            if (_customAttributes.TryGetValue(attribute, out var value))
+            {
+                return value.Item1;
+            }
+
+            return default;
+        }
 
         public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>()
         {
@@ -90,7 +101,6 @@ namespace NeoServer.Game.Items
             {
                 foreach (var item in _defaultAttributes)
                 {
-
                     dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey)), (TValue)item.Value.Item1);
                 }
             }

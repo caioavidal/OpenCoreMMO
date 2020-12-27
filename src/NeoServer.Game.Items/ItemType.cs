@@ -247,5 +247,7 @@ namespace NeoServer.Game.Items
         public Slot BodyPosition => SlotTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.BodyPosition));
         public ShootType ShootType => ShootTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.ShootType));
         public WeaponType WeaponType => WeaponTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.WeaponType));
+        public DamageType DamageType => DamageTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.Damage));
+
     }
 }

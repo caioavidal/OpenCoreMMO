@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Items.Types.Runes
 {
-    public interface IAttackRune: IUseableOnCreature, IUseableOnItem, IRune
+    public interface IAttackRune: IUseableAttackOnCreature, IUseableOnItem, IRune
     {
         DamageType DamageType { get; }
         ShootType ShootType { get; }

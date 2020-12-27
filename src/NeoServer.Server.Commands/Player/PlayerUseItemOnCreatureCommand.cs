@@ -5,6 +5,8 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Useables;
+using System;
+using NeoServer.Server.Commands.Movement;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -41,13 +43,21 @@ namespace NeoServer.Server.Commands.Player
             else if (useItemPacket.FromLocation.Type == LocationType.Container)
             {
                 if (player.Containers[useItemPacket.FromLocation.ContainerId][useItemPacket.FromLocation.ContainerSlot] is not IThing thing) return;
-                
+
                 itemToUse = thing;
             }
 
             if (itemToUse is not IUseableOn2 useableOn) return;
 
-            player.Use(useableOn, creature);
+            Action action = () => player.Use(useableOn, creature);
+
+            if (useItemPacket.FromLocation.Type == LocationType.Ground)
+            {
+                WalkToMechanism.DoOperation(player, action, useItemPacket.FromLocation, game);
+                return;
+            }
+
+            action?.Invoke();
         }
     }
 }

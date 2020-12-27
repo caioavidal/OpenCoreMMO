@@ -36,6 +36,7 @@ namespace NeoServer.Game.Contracts.Items
         ushort TransformTo { get; }
         string Plural { get; }
         IItemAttributeList OnUse { get; }
+        DamageType DamageType { get; }
 
         void SetName(string value);
         void LockChanges();

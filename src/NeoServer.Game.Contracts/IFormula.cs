@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace NeoServer.Game.Contracts
 {
     public interface IFormula
     {
-        public string Formula { get; }
         public Dictionary<string, (double, double)> Variables { get; }
     }
 }

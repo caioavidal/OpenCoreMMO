@@ -27,48 +27,35 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
         public CooldownTime Cooldown { get; protected set; }
         public abstract ushort Duration { get; }
 
-        public string Formula => Metadata.Attributes.GetAttribute(ItemAttribute.Formula);
+        public virtual MinMax Formula(IPlayer player, int level, int magicLevel)
+        {
+            var variables = Variables;
+            variables.TryGetValue("x", out var x);
+            variables.TryGetValue("y", out var y);
+
+            var min = (int)((level / 5) + (magicLevel * Math.Min(x.Item1, x.Item2)) + Math.Min(y.Item1, y.Item2));
+            var max = (int)((level / 5) + (magicLevel * Math.Max(x.Item1, x.Item2)) + Math.Min(y.Item1, y.Item2));
+
+            return new MinMax(min, max);
+        }
 
         public Dictionary<string, (double, double)> Variables
         {
             get
             {
-                var values =  Metadata.Attributes.GetInnerAttributes(ItemAttribute.Formula).ToDictionary<string, string[]>();
-                var dictionary = new Dictionary<string, (double, double)>(values.Count);
+                Func<string, double> parse = (value) => double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) ? v : default;
 
-                foreach (var value in values)
+                var x = Metadata.Attributes.GetAttributeArray("x");
+                var y = Metadata.Attributes.GetAttributeArray("y");
+                var dictionary = new Dictionary<string, (double, double)>(2)
                 {
-                    dictionary.Add(value.Key, (double.Parse(value.Value[0], CultureInfo.InvariantCulture), double.Parse(value.Value[1], CultureInfo.InvariantCulture)));
-                }
+                    {"x", (parse(x[0]),parse(x[1])) },
+                    {"y", (parse(y[0]),parse(y[1])) }
+                };
                 return dictionary;
             }
         }
 
         public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type)?.Equals("rune", StringComparison.InvariantCultureIgnoreCase) ?? false;
-
-        public MinMax MinMaxFormula(IPlayer player)
-        {
-            var variables = Variables;
-            var arrayLength = variables.Count + player.FormulaVariables.Length;
-            var maxVariables = new (string, double)[arrayLength];
-            var minVariables = new (string, double)[arrayLength];
-
-            int i = 0;
-            foreach (var variable in variables)
-            {
-                minVariables[i] = (variable.Key, Math.Min(variable.Value.Item1, variable.Value.Item2));
-                maxVariables[i++] = (variable.Key, Math.Max(variable.Value.Item1, variable.Value.Item2));
-            }
-            foreach (var variable in player.FormulaVariables)
-            {
-                minVariables[i] = variable;
-                maxVariables[i++] = variable;
-            }
-
-            var min = (int)StringCalculation.Calculate(Formula, minVariables);
-            var max = (int)StringCalculation.Calculate(Formula, maxVariables);
-
-            return new MinMax(min, max);
-        }
     }
 }

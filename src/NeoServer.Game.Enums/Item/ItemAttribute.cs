@@ -201,6 +201,7 @@
         Vocation,
         Regeneration,
         NeedTarget,
-        Formula
+        Formula,
+        Damage
     }
 }

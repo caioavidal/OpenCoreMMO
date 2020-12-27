@@ -44,6 +44,7 @@ namespace NeoServer.Game.Common.Combat.Structs
         public ShootType ShootType { get; set; }
         public DamageType DamageType { get; set; }
         public Coordinate[] Area { get; set; }
+        public static CombatAttackType None => new CombatAttackType();
 
     }
 }

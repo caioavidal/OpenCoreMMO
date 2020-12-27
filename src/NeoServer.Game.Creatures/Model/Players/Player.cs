@@ -358,13 +358,6 @@ namespace NeoServer.Server.Model.Players
             base.Say(message, talkType);
         }
 
-        public (string, double)[] FormulaVariables => new (string, double)[]
-            {
-                ("lvl",Level),
-                ("ml", Skills[SkillType.Magic].Level),
-                ("melee", Skills[SkillInUse].Level)
-            };
-
         public bool HasEnoughMana(ushort mana) => Mana >= mana;
         public void ConsumeMana(ushort mana)
         {
@@ -478,6 +471,10 @@ namespace NeoServer.Server.Model.Players
             {
                 useableOnCreature.Use(this, creature);
             }
+            if (onThing is ICombatActor enemy && item is IUseableAttackOnCreature useableAttackOnCreature)
+            {
+                Attack(enemy, useableAttackOnCreature);
+            }
             else if (onThing is IItem useOnItem && item is IUseableOnItem useableOnItem)
             {
                 useableOnItem.Use(this, useOnItem);
@@ -518,5 +515,6 @@ namespace NeoServer.Server.Model.Players
 
             return source.SendTo(destination, thing, amount, fromPosition, toPosition);
         }
+   
     }
 }

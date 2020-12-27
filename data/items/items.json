@@ -10030,7 +10030,20 @@
           {
              "key": "charges",
              "value": "3"
-          }
+          },
+		  		  {
+			"key": "needtarget",
+			"value": true
+		  },
+		  {
+			"key":"damage",
+			"value":"death"
+		  },
+		  {
+			"key":"shootType",
+			"value":"death"
+		  },
+		  { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
        ]
     },
     {
@@ -10739,10 +10752,15 @@
 			"value": true
 		  },
 		  {
-			"key":"formula",
-			"value": "(lvl/5)+(ml*x)+y",
-			"attributes":[{ "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}]
-		  }
+			"key":"damage",
+			"value":"energy"
+		  },
+		  {
+			"key":"shootType",
+			"value":"energy"
+		  },
+		  { "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}
+		  
        ]
     },
     {
