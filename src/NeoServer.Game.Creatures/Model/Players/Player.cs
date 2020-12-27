@@ -471,10 +471,13 @@ namespace NeoServer.Server.Model.Players
             {
                 useableOnCreature.Use(this, creature);
             }
-            if (onThing is ICombatActor enemy && item is IUseableAttackOnCreature useableAttackOnCreature)
+
+            if (onThing is ICombatActor enemy)
             {
-                Attack(enemy, useableAttackOnCreature);
+                if (item is IUseableAttackOnCreature useableAttackOnCreature) Attack(enemy, useableAttackOnCreature);
+                
             }
+
             else if (onThing is IItem useOnItem && item is IUseableOnItem useableOnItem)
             {
                 useableOnItem.Use(this, useOnItem);
@@ -515,6 +518,6 @@ namespace NeoServer.Server.Model.Players
 
             return source.SendTo(destination, thing, amount, fromPosition, toPosition);
         }
-   
+
     }
 }

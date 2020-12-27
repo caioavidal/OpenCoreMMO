@@ -202,6 +202,7 @@
         Regeneration,
         NeedTarget,
         Formula,
-        Damage
+        Damage,
+        Area
     }
 }

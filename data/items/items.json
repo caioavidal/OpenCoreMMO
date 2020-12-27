@@ -10619,7 +10619,20 @@
           {
              "key": "charges",
              "value": "4"
-          }
+          },
+		  {
+			"key":"damage",
+			"value":"fire"
+		  },
+		  {
+			"key":"shootType",
+			"value":"fire"
+		  },
+		    {
+			"key":"area",
+			"value":"AREA_CIRCLE3X3"
+		  },
+		  { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
        ]
     },
     {

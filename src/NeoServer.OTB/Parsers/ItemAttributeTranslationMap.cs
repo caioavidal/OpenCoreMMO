@@ -139,6 +139,7 @@ namespace NeoServer.OTB.Parsers
                 case "needtarget": return ItemAttribute.NeedTarget;
                 case "formula": return ItemAttribute.Formula;
                 case "damage": return ItemAttribute.Damage;
+                case "area": return ItemAttribute.Area;
 
                 default:
                     success = false;
