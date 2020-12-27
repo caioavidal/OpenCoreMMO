@@ -44,6 +44,8 @@ namespace NeoServer.Server.Commands
                 return;
             }
 
+            //MOVE TO CORRECT LOCAL AND CREATE LOADER
+
             var location = new Location((ushort)playerRecord.PosX, (ushort)playerRecord.PosY, (byte)playerRecord.PosZ);
 
             var outfit = new Outfit
@@ -52,8 +54,19 @@ namespace NeoServer.Server.Commands
             };
 
             var iventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
-            var skills = new Dictionary<SkillType, ISkill>(); 
 
+            var skills = new Dictionary<SkillType, ISkill>();
+
+            skills.Add(SkillType.Axe, new Skill(SkillType.Axe, 1, (ushort)playerRecord.SkillAxe));
+            skills.Add(SkillType.Club, new Skill(SkillType.Club, 1, (ushort)playerRecord.SkillClub));
+            skills.Add(SkillType.Distance, new Skill(SkillType.Distance, 1, (ushort)playerRecord.SkillDist));
+            skills.Add(SkillType.Fishing, new Skill(SkillType.Fishing, 1, (ushort)playerRecord.SkillFishing));
+            skills.Add(SkillType.Fist, new Skill(SkillType.Fist, 1, (ushort)playerRecord.SkillFist));
+            skills.Add(SkillType.Level, new Skill(SkillType.Level, 1, (ushort)playerRecord.Level));
+            skills.Add(SkillType.Magic, new Skill(SkillType.Magic, 1, (ushort)playerRecord.Mana));
+            skills.Add(SkillType.Shielding, new Skill(SkillType.Shielding, 1, (ushort)playerRecord.SkillShielding));
+            skills.Add(SkillType.Speed, new Skill(SkillType.Speed, 1, (ushort)playerRecord.Speed));
+            skills.Add(SkillType.Sword, new Skill(SkillType.Sword, 1, (ushort)playerRecord.SkillSword));
 
             var newPlayer = new Model.Players.Player(
                 (uint)playerRecord.PlayerId,

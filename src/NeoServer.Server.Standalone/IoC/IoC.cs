@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data;
 using NeoServer.Data.InMemoryDB.Extensions;
-using NeoServer.Data.RavenDB;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -55,10 +54,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterInstance(new LoggerConfiguration()
                 .WriteTo.Console()
                 .CreateLogger()).SingleInstance();
-
-            builder.RegisterType<Database>().SingleInstance();
-            //builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
-            //builder.RegisterType<PlayerDepotRepository>().As<IPlayerDepotRepository>().SingleInstance();
 
             builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
 

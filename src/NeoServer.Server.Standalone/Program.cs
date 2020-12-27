@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using NeoServer.Data;
-using NeoServer.Data.RavenDB;
 using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -35,11 +34,11 @@ var cancellationTokenSource = new CancellationTokenSource();
 var cancellationToken = cancellationTokenSource.Token;
 
 var container = Container.CompositionRoot();
-container.Resolve<Database>().Connect();
 
+//TEST EF
 var context = container.Resolve<NeoContext>();
 
-var account = new AccountModel
+var account1 = new AccountModel
 {
     Name = "1",
     Email = "1@gmail.com",
@@ -47,10 +46,18 @@ var account = new AccountModel
     PremiumTime = 1
 };
 
-var player = new PlayerModel
+var account2 = new AccountModel
+{
+    Name = "2",
+    Email = "2@gmail.com",
+    Password = "2",
+    PremiumTime = 1
+};
+
+var player1 = new PlayerModel
 {
     AccountId = 1,
-    Name = "Developer",
+    Name = "Developer1",
     ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,
     Level = 100,
     Health = 4440,
@@ -69,21 +76,36 @@ var player = new PlayerModel
     StaminaMinutes = 2520
 };
 
-context.Accounts.Add(account);
+var player2 = new PlayerModel
+{
+    AccountId = 2,
+    Name = "Developer2",
+    ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,
+    Level = 100,
+    Health = 4440,
+    MaxHealth = 4440,
+    Vocation = NeoServer.Game.Common.Players.VocationType.Knight,
+    Gender = NeoServer.Game.Common.Players.Gender.Male,
+    Speed = 800,
+    Online = false,
+    Mana = 1750,
+    MaxMana = 1750,
+    Soul = 100,
+    MaxSoul = 100,
+    PosX = 1020,
+    PosY = 1022,
+    PosZ = 7,
+    StaminaMinutes = 2520
+};
 
+context.Accounts.Add(account1);
+context.Accounts.Add(account2);
+context.SaveChanges();
+context.Player.Add(player1);
+context.Player.Add(player2);
 context.SaveChanges();
 
-var accounts = context.Accounts.AsQueryable().ToList();
-
-context.Player.Add(player);
-
-context.SaveChanges();
-
-var players = context.Player.AsQueryable().ToList();
-
-var repo = container.Resolve<IAccountRepositoryNeo>();
-
-var acc = repo.GetAllAsync().Result;
+//TEST EF
 
 var logger = container.Resolve<Logger>();
 
