@@ -98,11 +98,103 @@ var player2 = new PlayerModel
     StaminaMinutes = 2520
 };
 
+var playerItem1_Necklace = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid  = 1,
+    Sid = 2125,
+    Count = 1,
+};
+
+var playerItem1_Head = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 2,
+    Sid = 2498,
+    Count = 1,
+};
+
+var playerItem1_Backpack = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 3,
+    Sid = 1988,
+    Count = 1,
+};
+
+var playerItem1_Left = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 4,
+    Sid = 2409,
+    Count = 1,
+};
+
+var playerItem1_Body = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 5,
+    Sid = 2466,
+    Count = 1,
+};
+
+//var playerItem1_Right = new PlayerItemModel
+//{
+//    PlayerId = 1,
+//    Pid = 6,
+//    Sid = 1988,
+//    Count = 1,
+//};
+
+var playerItem1_Ring = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 7,
+    Sid = 6093,
+    Count = 1,
+};
+
+var playerItem1_Legs = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 8,
+    Sid = 2488,
+    Count = 1,
+};
+
+var playerItem1_Ammo = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 9,
+    Sid = 7840,
+    Count = 1,
+};
+
+var playerItem1_Feet = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 10,
+    Sid = 2646,
+    Count = 1,
+};
+
 context.Accounts.Add(account1);
 context.Accounts.Add(account2);
 context.SaveChanges();
+
 context.Player.Add(player1);
 context.Player.Add(player2);
+context.SaveChanges();
+
+context.PlayerItems.Add(playerItem1_Necklace);
+context.PlayerItems.Add(playerItem1_Head);
+context.PlayerItems.Add(playerItem1_Backpack);
+context.PlayerItems.Add(playerItem1_Left);
+context.PlayerItems.Add(playerItem1_Body);
+context.PlayerItems.Add(playerItem1_Ring);
+context.PlayerItems.Add(playerItem1_Legs);
+context.PlayerItems.Add(playerItem1_Ammo);
+context.PlayerItems.Add(playerItem1_Feet);
 context.SaveChanges();
 
 //TEST EF

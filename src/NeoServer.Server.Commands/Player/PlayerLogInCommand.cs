@@ -13,6 +13,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using System;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Server.Commands
 {
@@ -23,8 +24,9 @@ namespace NeoServer.Server.Commands
         private readonly Game game;
         private readonly IConnection connection;
         private CreaturePathAccess _creaturePathAccess;
+        private readonly IItemFactory _itemFactory;
 
-        public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection, CreaturePathAccess creaturePathAccess)
+        public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection, CreaturePathAccess creaturePathAccess, IItemFactory itemFactory)
         {
             this.account = account;
             this.characterName = characterName;
@@ -32,6 +34,7 @@ namespace NeoServer.Server.Commands
             this.game = game;
             this.connection = connection;
             _creaturePathAccess = creaturePathAccess;
+            _itemFactory = itemFactory;
         }
 
         public override void Execute()
@@ -53,6 +56,7 @@ namespace NeoServer.Server.Commands
                 LookType = 75
             };
 
+
             var iventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
 
             var skills = new Dictionary<SkillType, ISkill>();
@@ -67,6 +71,41 @@ namespace NeoServer.Server.Commands
             skills.Add(SkillType.Shielding, new Skill(SkillType.Shielding, 1, (ushort)playerRecord.SkillShielding));
             skills.Add(SkillType.Speed, new Skill(SkillType.Speed, 1, (ushort)playerRecord.Speed));
             skills.Add(SkillType.Sword, new Skill(SkillType.Sword, 1, (ushort)playerRecord.SkillSword));
+
+            //foreach (var item in playerRecord.PlayerItems.Where(c => c.Pid <= 10))
+            //{
+            //    if (!(_itemFactory.Create((ushort)item.Sid, location, null) is IPickupable createdItem))
+            //    {
+            //        continue;
+            //    }
+
+            //    //if (slot.Key == Slot.Backpack)
+            //    //{
+            //    //    if (createdItem is not IContainer container) continue;
+            //    //    BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
+            //    //}
+
+            //    if (item.Pid == 1)
+            //        iventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 2)
+            //        iventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 3)
+            //        iventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 4)
+            //        iventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 5)
+            //        iventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 6)
+            //        iventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 7)
+            //        iventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 8)
+            //        iventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 9)
+            //        iventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //    else if (item.Pid == 10)
+            //        iventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Sid));
+            //}
 
             var newPlayer = new Model.Players.Player(
                 (uint)playerRecord.PlayerId,

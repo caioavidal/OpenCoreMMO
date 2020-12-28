@@ -10,7 +10,7 @@ namespace NeoServer.Server.Model.Players
         public PlayerModel()
         {
             //PlayerDepotitems = new HashSet<PlayerDepotItem>();
-            //PlayerItems = new HashSet<PlayerItem>();
+            PlayerItems = new HashSet<PlayerItemModel>();
         }
 
         public int PlayerId { get; set; }
@@ -72,6 +72,8 @@ namespace NeoServer.Server.Model.Players
 
 
         public AccountModel Account { get; set; }
+
+        public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
 
         public bool IsMounted()
         {

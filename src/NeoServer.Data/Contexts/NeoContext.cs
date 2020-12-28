@@ -12,6 +12,7 @@ namespace NeoServer.Data
 
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<PlayerModel> Player { get; set; }
+        public DbSet<PlayerItemModel> PlayerItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -73,6 +74,56 @@ namespace NeoServer.Data
                 entity.Ignore(i => i.Creation);
 
                 entity.Ignore(i => i.LastDay);
+            });
+
+            modelBuilder.Entity<PlayerItemModel>(entity =>
+            {
+                entity.ToTable("player_items");
+
+                entity.HasIndex(e => e.PlayerId)
+                    .HasName("player_id");
+
+                entity.HasIndex(e => e.Sid)
+                    .HasName("sid");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Attributes)
+                    .IsRequired()
+                    .HasColumnName("attributes")
+                    .HasColumnType("blob");
+
+                entity.Property(e => e.Count)
+                    .HasColumnName("count")
+                    .HasColumnType("smallint(5)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.Itemtype)
+                    .HasColumnName("itemtype")
+                    .HasColumnType("smallint(6)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.Pid)
+                    .HasColumnName("pid")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.PlayerId)
+                    .HasColumnName("player_id")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.Sid)
+                    .HasColumnName("sid")
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("0");
+
+                entity.HasOne(d => d.Player)
+                    .WithMany(p => p.PlayerItems)
+                    .HasForeignKey(d => d.PlayerId)
+                    .HasConstraintName("player_items_ibfk_1");
             });
 
             modelBuilder.Entity<PlayerModel>(entity =>
