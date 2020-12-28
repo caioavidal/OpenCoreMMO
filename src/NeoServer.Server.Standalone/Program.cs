@@ -59,6 +59,7 @@ var player1 = new PlayerModel
     AccountId = 1,
     Name = "Developer1",
     ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,
+    Capacity = 90000,
     Level = 100,
     Health = 4440,
     MaxHealth = 4440,
@@ -81,6 +82,7 @@ var player2 = new PlayerModel
     AccountId = 2,
     Name = "Developer2",
     ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,
+    Capacity = 90000,
     Level = 100,
     Health = 4440,
     MaxHealth = 4440,
@@ -102,7 +104,8 @@ var playerItem1_Necklace = new PlayerItemModel
 {
     PlayerId = 1,
     Pid  = 1,
-    Sid = 2125,
+    Sid = 101,
+    Itemtype = 2125,
     Count = 1,
 };
 
@@ -110,7 +113,8 @@ var playerItem1_Head = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 2,
-    Sid = 2498,
+    Sid = 102,
+    Itemtype = 2498,
     Count = 1,
 };
 
@@ -118,7 +122,8 @@ var playerItem1_Backpack = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 3,
-    Sid = 1988,
+    Sid = 103,
+    Itemtype = 1988,
     Count = 1,
 };
 
@@ -126,7 +131,8 @@ var playerItem1_Left = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 4,
-    Sid = 2409,
+    Sid = 104,
+    Itemtype = 2409,
     Count = 1,
 };
 
@@ -134,7 +140,8 @@ var playerItem1_Body = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 5,
-    Sid = 2466,
+    Sid = 105,
+    Itemtype = 2466,
     Count = 1,
 };
 
@@ -150,7 +157,8 @@ var playerItem1_Ring = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 7,
-    Sid = 6093,
+    Sid = 106,
+    Itemtype = 6093,
     Count = 1,
 };
 
@@ -158,7 +166,8 @@ var playerItem1_Legs = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 8,
-    Sid = 2488,
+    Sid = 107,
+    Itemtype = 2488,
     Count = 1,
 };
 
@@ -166,7 +175,8 @@ var playerItem1_Ammo = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 9,
-    Sid = 7840,
+    Sid = 108,
+    Itemtype = 7840,
     Count = 1,
 };
 
@@ -174,7 +184,17 @@ var playerItem1_Feet = new PlayerItemModel
 {
     PlayerId = 1,
     Pid = 10,
-    Sid = 2646,
+    Sid = 109,
+    Itemtype = 2666,
+    Count = 1,
+};
+
+var playerItem1_b1 = new PlayerItemModel
+{
+    PlayerId = 1,
+    Pid = 103,
+    Sid = 110,
+    Itemtype = 1988,
     Count = 1,
 };
 
@@ -195,6 +215,8 @@ context.PlayerItems.Add(playerItem1_Ring);
 context.PlayerItems.Add(playerItem1_Legs);
 context.PlayerItems.Add(playerItem1_Ammo);
 context.PlayerItems.Add(playerItem1_Feet);
+
+context.PlayerItems.Add(playerItem1_b1);
 context.SaveChanges();
 
 //TEST EF

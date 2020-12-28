@@ -25,7 +25,7 @@ namespace NeoServer.Game.Creatures
             this.itemFactory = itemFactory;
             this.creaturePathAccess = creaturePathAccess;
         }
-        public IPlayer Create(Player player)
+        public IPlayer Create(IPlayer player)
         {
             //if (!VocationStore.TryGetValue(player.Vocation, out var vocation))
             //{
@@ -91,32 +91,32 @@ namespace NeoServer.Game.Creatures
         //    return inventoryDic;
         //}
 
-        public IContainer BuildContainer(IList<IItemModel> items, int index, Location location, IContainer container)
-        {
-            if (items == null || items.Count == index)
-            {
-                return container;
-            }
+        //public IContainer BuildContainer(IList<IItemModel> items, int index, Location location, IContainer container)
+        //{
+        //    if (items == null || items.Count == index)
+        //    {
+        //        return container;
+        //    }
 
-            var itemModel = items[index];
+        //    var itemModel = items[index];
 
-            var item = itemFactory.Create(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
-                        {
-                            {ItemAttribute.Count, itemModel.Amount }
-                        });
+        //    var item = itemFactory.Create(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
+        //                {
+        //                    {ItemAttribute.Count, itemModel.Amount }
+        //                });
 
-            if (item is IContainer childrenContainer)
-            {
-                childrenContainer.SetParent(container);
-                container.AddThing(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));
-            }
-            else
-            {
-                container.AddThing(item);
+        //    if (item is IContainer childrenContainer)
+        //    {
+        //        childrenContainer.SetParent(container);
+        //        container.AddThing(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));
+        //    }
+        //    else
+        //    {
+        //        container.AddThing(item);
 
-            }
-            return BuildContainer(items, ++index, location, container);
-        }
+        //    }
+        //    return BuildContainer(items, ++index, location, container);
+        //}
 
     }
 }

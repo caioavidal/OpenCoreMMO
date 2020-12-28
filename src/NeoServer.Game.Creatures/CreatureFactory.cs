@@ -43,9 +43,9 @@ namespace NeoServer.Game.Creatures
         }
         public IPlayer CreatePlayer(IPlayer playerModel)
         {
-            //var player = _playerFactory.Create(playerModel);
-            //return AttachEvents(player) as IPlayer;
-            return playerModel;
+            var player = _playerFactory.Create(playerModel);
+            return AttachEvents(player) as IPlayer;
+            //return playerModel;
         }
 
         private ICreature AttachEvents(ICreature creature)

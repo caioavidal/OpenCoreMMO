@@ -85,6 +85,7 @@ namespace NeoServer.Networking
 
             try
             {
+                Console.WriteLine($"MessageReceived: {eventArgs.Connection.InMessage.IncomingPacket}");
                 OnProcessEvent?.Invoke(this, eventArgs);
                 BeginStreamRead();
             }
@@ -96,8 +97,8 @@ namespace NeoServer.Networking
                 Console.WriteLine(e.StackTrace);
 
                 // TODO: is closing the connection really necesary?
-                Disconnected = true;
-                OnProcessEvent?.Invoke(this, eventArgs);
+               // Disconnected = true;
+               // OnProcessEvent?.Invoke(this, eventArgs);
             }
         }
 

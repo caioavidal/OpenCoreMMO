@@ -40,6 +40,7 @@ using System.Linq;
 using System.Collections.Generic;
 using NeoServer.Data.Interfaces;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -156,7 +157,7 @@ namespace NeoServer.Server.Standalone.IoC
         {
             builder.Register((c, p) =>
             {
-                var player = p.TypedAs<IPlayer>();
+                var player = p.TypedAs<Player>();
 
                 return c.Resolve<ICreatureFactory>().CreatePlayer(player);
             });

@@ -29,11 +29,11 @@ namespace NeoServer.Server.Events
             //    ItemModelParser.BuildContainer(records.Items, 0, container.Location, container, itemFactory);
             //}
 
-            //if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-            //{
-            //    connection.OutgoingPackets.Enqueue(new OpenContainerPacket(container, containerId));
-            //    connection.Send();
-            //}
+            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
+            {
+                connection.OutgoingPackets.Enqueue(new OpenContainerPacket(container, containerId));
+                connection.Send();
+            }
         }
     }
 }
