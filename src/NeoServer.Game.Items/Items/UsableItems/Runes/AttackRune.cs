@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -20,12 +21,14 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
         public override ushort Duration => 2;
         public virtual DamageType DamageType => Metadata.DamageType;
         public virtual ShootType ShootType => Metadata.ShootType;
+        public virtual EffectT Effect => Metadata.EffectT;
+
         public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
 
         public bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combatAttackType)
         {
-            if(NeedTarget == false) return AttackArea(usedBy, creature, out combatAttackType);
-            
+            if (NeedTarget == false) return AttackArea(usedBy, creature, out combatAttackType);
+
             combatAttackType = CombatAttackType.None;
 
             if (creature is not ICombatActor enemy) return false;
@@ -34,10 +37,11 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             var minMaxDamage = Formula(player, player.Level, player.Skills[Common.Creatures.SkillType.Magic].Level);
             var damage = (ushort)GameRandom.Random.Next(minValue: minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
-            if (enemy.ReceiveAttack(player, new CombatDamage(damage, DamageType)))
+            if (enemy.ReceiveAttack(player, new CombatDamage(damage, DamageType) { Effect = Effect }))
             {
                 combatAttackType.ShootType = ShootType;
                 combatAttackType.DamageType = DamageType;
+                combatAttackType.EffectT = Effect;
 
                 Reduce();
                 return true;
@@ -63,6 +67,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
             combatAttackType.DamageType = DamageType;
             combatAttackType.Area = AreaEffect.Create(thing.Location, Effects.AreaType.AreaCircle3x3);
+            combatAttackType.EffectT = Effect;
 
             player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType));
 

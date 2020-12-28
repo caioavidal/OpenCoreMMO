@@ -6,6 +6,8 @@ using NeoServer.Game.Common.Players;
 using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Effects.Parsers;
 
 namespace NeoServer.Game.Items
 {
@@ -248,6 +250,8 @@ namespace NeoServer.Game.Items
         public ShootType ShootType => ShootTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.ShootType));
         public WeaponType WeaponType => WeaponTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.WeaponType));
         public DamageType DamageType => DamageTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.Damage));
+        public EffectT EffectT => EffectParser.Parse(Attributes?.GetAttribute(ItemAttribute.Effect));
+
 
     }
 }

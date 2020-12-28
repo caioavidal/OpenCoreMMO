@@ -27,7 +27,7 @@ namespace NeoServer.Server.Events.Combat
                 {
                     continue;
                 }
-            
+
                 if (attack.Missed)
                 {
                     SendMissedAttack(creature, victim, attack, connection);
@@ -40,7 +40,8 @@ namespace NeoServer.Server.Events.Combat
                 {
                     foreach (var coordinate in attack.Area)
                     {
-                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, DamageEffectParser.Parse(attack.DamageType)));
+                        var effect = attack.EffectT == EffectT.None ? DamageEffectParser.Parse(attack.DamageType) : attack.EffectT;
+                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, effect));
                     }
                 }
 
@@ -61,6 +62,5 @@ namespace NeoServer.Server.Events.Combat
             if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, destLocation, (byte)attack.ShootType));
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(destLocation, EffectT.Puff));
         }
-    
     }
 }

@@ -10628,6 +10628,10 @@
 			"key":"shootType",
 			"value":"fire"
 		  },
+		  {
+            "key":"effect",
+            "value":"firearea"
+          },
 		    {
 			"key":"area",
 			"value":"AREA_CIRCLE3X3"
