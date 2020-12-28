@@ -25,11 +25,11 @@ namespace NeoServer.Server.Commands.Movement
 
             if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
 
-            if (fromTile.TopItemOnStack is not IMoveableThing thing) return;
+            if (fromTile.TopItemOnStack is not IItem item) return;
 
             if (!itemThrow.FromLocation.IsNextTo(player.Location)) return;
 
-            player.MoveThing(fromTile, map[itemThrow.ToLocation], thing, itemThrow.Count, 0, 0);
+            player.MoveItem(fromTile, map[itemThrow.ToLocation], item, itemThrow.Count, 0, 0);
         }
         private static void FromInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {
@@ -37,7 +37,7 @@ namespace NeoServer.Server.Commands.Movement
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
             if (player.Inventory[itemThrow.FromLocation.Slot] is not IPickupable item) return;
 
-            player.MoveThing(player.Inventory, toTile, item, itemThrow.Count, (byte)itemThrow.FromLocation.Slot, 0);
+            player.MoveItem(player.Inventory, toTile, item, itemThrow.Count, (byte)itemThrow.FromLocation.Slot, 0);
 
         }
         private static void FromContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
@@ -48,7 +48,7 @@ namespace NeoServer.Server.Commands.Movement
             var container = player.Containers[itemThrow.FromLocation.ContainerId];
             if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
 
-            player.MoveThing(container, toTile, item, itemThrow.Count, (byte)itemThrow.FromLocation.ContainerSlot, 0);
+            player.MoveItem(container, toTile, item, itemThrow.Count, (byte)itemThrow.FromLocation.ContainerSlot, 0);
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) => itemThrowPacket.ToLocation.Type == LocationType.Ground;

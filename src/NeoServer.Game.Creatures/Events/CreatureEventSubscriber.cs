@@ -12,11 +12,13 @@ namespace NeoServer.Game.Creatures.Events
     {
         private readonly CreatureKilledEventHandler creatureKilledEventHandler;
         private readonly CreatureDamagedEventHandler creatureDamagedEventHandler;
-
-        public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler, CreatureDamagedEventHandler creatureDamagedEventHandler)
+        private readonly CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler;
+        public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
+            CreatureDamagedEventHandler creatureDamagedEventHandler, CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler)
         {
             this.creatureKilledEventHandler = creatureKilledEventHandler;
             this.creatureDamagedEventHandler = creatureDamagedEventHandler;
+            this.creaturePropagatedAttackEventHandler = creaturePropagatedAttackEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -25,6 +27,7 @@ namespace NeoServer.Game.Creatures.Events
             {
                 combatActor.OnKilled += creatureKilledEventHandler.Execute;
                 combatActor.OnDamaged += creatureDamagedEventHandler.Execute;
+                combatActor.OnPropagateAttack += creaturePropagatedAttackEventHandler.Execute;
             }
         }
 
@@ -34,6 +37,7 @@ namespace NeoServer.Game.Creatures.Events
             {
                 combatActor.OnKilled -= creatureKilledEventHandler.Execute;
                 combatActor.OnDamaged -= creatureDamagedEventHandler.Execute;
+                combatActor.OnPropagateAttack -= creaturePropagatedAttackEventHandler.Execute;
             }
         }
     }

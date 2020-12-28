@@ -405,7 +405,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return damage;
         }
 
-        public override void OnDamage(ICombatActor enemy, CombatDamage damage) => ReduceHealth(enemy, damage);
+        public override void OnDamage(ICombatActor enemy, CombatDamage damage) => ReduceHealth( damage);
         
     }
 }

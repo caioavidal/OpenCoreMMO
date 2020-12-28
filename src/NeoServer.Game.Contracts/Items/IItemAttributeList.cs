@@ -16,6 +16,7 @@ namespace NeoServer.Game.Contracts.Items
 
         string GetAttribute(ItemAttribute attribute);
         T GetAttribute<T>(ItemAttribute attribute) where T : struct;
+        dynamic[] GetAttributeArray(string attribute);
         EffectT GetEffect();
         FloorChangeDirection GetFloorChangeDirection();
         IItemAttributeList GetInnerAttributes(ItemAttribute attribute);
@@ -27,5 +28,10 @@ namespace NeoServer.Game.Contracts.Items
         void SetAttribute(ItemAttribute attribute, int attributeValue);
         void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs);
         void SetAttribute(ItemAttribute attribute, dynamic values);
+        void SetCustomAttribute(string attribute, int attributeValue);
+        void SetCustomAttribute(string attribute, IConvertible attributeValue);
+        void SetCustomAttribute(string attribute, dynamic values);
+        void SetCustomAttribute(string attribute, IConvertible attributeValue, IItemAttributeList attrs);
+        Dictionary<TKey, TValue> ToDictionary<TKey, TValue>();
     }
 }

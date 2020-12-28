@@ -12,6 +12,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Server.Model.Players.Contracts
 {
@@ -24,7 +25,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void OperationFail(uint id, string message);
     public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
     public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
-    public delegate void UseItem(IPlayer player, ICreature creature, IConsumable consumable);
+    public delegate void UseItem(IPlayer player, IThing thing, IUseableOn2 item);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -131,9 +132,9 @@ namespace NeoServer.Server.Model.Players.Contracts
         /// </summary>
         void Recover();
         void HealMana(ushort increasing);
-        void Use(IConsumable item, ICreature creature);
+        void Use(IUseableOn2 item, IThing onThing);
         bool Feed(IFood food);
-        Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition);
+        Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition, byte? toPosition);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";

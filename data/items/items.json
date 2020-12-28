@@ -10030,7 +10030,20 @@
           {
              "key": "charges",
              "value": "3"
-          }
+          },
+		  		  {
+			"key": "needtarget",
+			"value": true
+		  },
+		  {
+			"key":"damage",
+			"value":"death"
+		  },
+		  {
+			"key":"shootType",
+			"value":"death"
+		  },
+		  { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
        ]
     },
     {
@@ -10606,7 +10619,24 @@
           {
              "key": "charges",
              "value": "4"
-          }
+          },
+		  {
+			"key":"damage",
+			"value":"fire"
+		  },
+		  {
+			"key":"shootType",
+			"value":"fire"
+		  },
+		  {
+            "key":"effect",
+            "value":"firearea"
+          },
+		    {
+			"key":"area",
+			"value":"AREA_CIRCLE3X3"
+		  },
+		  { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
        ]
     },
     {
@@ -10729,7 +10759,25 @@
           {
              "key": "charges",
              "value": "10"
-          }
+          },
+		  {
+             "key": "charges",
+             "value": "10"
+          },
+		  {
+			"key": "needtarget",
+			"value": true
+		  },
+		  {
+			"key":"damage",
+			"value":"energy"
+		  },
+		  {
+			"key":"shootType",
+			"value":"energy"
+		  },
+		  { "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}
+		  
        ]
     },
     {

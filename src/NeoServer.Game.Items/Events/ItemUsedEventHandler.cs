@@ -38,15 +38,15 @@ namespace NeoServer.Game.Items.Events
 
             if (item?.Location.Type == Common.Location.LocationType.Ground)
             {
-                tile.AddThing(createdItem);
+                tile.AddItem(createdItem);
             }
 
             if (item?.Location.Type == Common.Location.LocationType.Container)
             {
                 var container = usedBy.Containers[item.Location.ContainerId];
 
-                var result = container.AddThing(createdItem);
-                if(!result.IsSuccess) tile.AddThing(createdItem);
+                var result = container.AddItem(createdItem);
+                if(!result.IsSuccess) tile.AddItem(createdItem);
             }
         }
         private void Say(ICreature creature, IItem item)

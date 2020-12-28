@@ -14,7 +14,7 @@ namespace NeoServer.Benchmarks
             //var summary = BenchmarkRunner.Run<SchedulerQueueBenchmark>();
             //var summary = BenchmarkRunner.Run<ArrayPoolVsDynamicArrayBenchmark>();
             //var summary = BenchmarkRunner.Run<InstanceVsStaticBenchmark>();
-            var summary = BenchmarkRunner.Run<SearchCoordinateDictionaryBenchmark>();
+            var summary = BenchmarkRunner.Run<StringCalculationBenchmark>();
 
             Console.ReadKey();
         }

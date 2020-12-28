@@ -41,18 +41,6 @@ namespace NeoServer.Game.World.Tests
 
         }
 
-        [Fact]
-        public void RemoveThing_RemovesThingFromTile()
-        {
-            var item = ItemTestData.CreateMoveableItem(2);
-
-            var map = CreateMap(item);
-
-            var thing = item as IThing;
-            map.RemoveThing(thing, map[100, 100, 7] as IDynamicTile);
-
-            Assert.Single((map[100, 100, 7] as IDynamicTile).DownItems);
-            Assert.Equal(1, (map[100, 100, 7] as IDynamicTile).DownItems.First().ClientId);
-        }
+        
     }
 }

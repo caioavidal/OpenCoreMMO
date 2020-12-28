@@ -10,8 +10,8 @@ namespace NeoServer.Game.Items.Tests
             var container = ItemTestData.CreatePickupableContainer();
             Assert.Equal(20, container.Weight);
 
-            container.AddThing(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
-            container.AddThing(ItemTestData.CreateBodyEquipmentItem(101, "", "shield"));
+            container.AddItem(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
+            container.AddItem(ItemTestData.CreateBodyEquipmentItem(101, "", "shield"));
 
             Assert.Equal(100, container.Weight);
         }
@@ -22,10 +22,10 @@ namespace NeoServer.Game.Items.Tests
             var container = ItemTestData.CreatePickupableContainer();
             Assert.Equal(20, container.Weight);
 
-            container.AddThing(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
+            container.AddItem(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
             Assert.Equal(60, container.Weight);
 
-            container.RemoveThing(null,1,0, out var removed);
+            container.RemoveItem(null,1,0, out var removed);
 
             Assert.Equal(20, container.Weight);
         }
@@ -36,16 +36,16 @@ namespace NeoServer.Game.Items.Tests
             var container = ItemTestData.CreatePickupableContainer();
             Assert.Equal(20, container.Weight);
 
-            container.AddThing(ItemTestData.CreateCumulativeItem(100, 30));
+            container.AddItem(ItemTestData.CreateCumulativeItem(100, 30));
             Assert.Equal(50, container.Weight);
 
-            container.AddThing(ItemTestData.CreateCumulativeItem(100, 10));
+            container.AddItem(ItemTestData.CreateCumulativeItem(100, 10));
             Assert.Equal(60, container.Weight);
 
-            container.AddThing(ItemTestData.CreateCumulativeItem(100, 70));
+            container.AddItem(ItemTestData.CreateCumulativeItem(100, 70));
             Assert.Equal(130, container.Weight);
 
-            container.AddThing(ItemTestData.CreateCumulativeItem(105, 70));
+            container.AddItem(ItemTestData.CreateCumulativeItem(105, 70));
             Assert.Equal(200, container.Weight);
         }
         [Fact]
@@ -54,10 +54,10 @@ namespace NeoServer.Game.Items.Tests
             var container = ItemTestData.CreatePickupableContainer();
             Assert.Equal(20, container.Weight);
 
-            container.AddThing(ItemTestData.CreateCumulativeItem(100, 30));
+            container.AddItem(ItemTestData.CreateCumulativeItem(100, 30));
             Assert.Equal(50, container.Weight);
 
-            container.AddThing(ItemTestData.CreateCumulativeItem(100, 10));
+            container.AddItem(ItemTestData.CreateCumulativeItem(100, 10));
             Assert.Equal(60, container.Weight);
         }
 
@@ -67,9 +67,9 @@ namespace NeoServer.Game.Items.Tests
             var sut = ItemTestData.CreatePickupableContainer();
             var child = ItemTestData.CreatePickupableContainer();
 
-            sut.AddThing(child);
+            sut.AddItem(child);
 
-            child.AddThing(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
+            child.AddItem(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
 
             Assert.Equal(80, sut.Weight);
         }
@@ -80,18 +80,18 @@ namespace NeoServer.Game.Items.Tests
             var sut = ItemTestData.CreatePickupableContainer();
             var child = ItemTestData.CreatePickupableContainer();
 
-            sut.AddThing(child);
+            sut.AddItem(child);
 
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
-            child.AddThing(shield);
+            child.AddItem(shield);
 
             Assert.Equal(80, sut.Weight);
 
-            child.RemoveThing(null, 1, 0, out var removed);
+            child.RemoveItem(null, 1, 0, out var removed);
 
             Assert.Equal(40, sut.Weight);
 
-            sut.RemoveThing(null, 1, 0, out var removed2);
+            sut.RemoveItem(null, 1, 0, out var removed2);
             Assert.Equal(20, sut.Weight);
         }
 
@@ -101,15 +101,15 @@ namespace NeoServer.Game.Items.Tests
             var sut = ItemTestData.CreatePickupableContainer();
             var child = ItemTestData.CreatePickupableContainer();
 
-            sut.AddThing(child);
+            sut.AddItem(child);
 
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
-            child.AddThing(shield);
+            child.AddItem(shield);
 
-            sut.RemoveThing(null, 1, 0, out var removed);
+            sut.RemoveItem(null, 1, 0, out var removed);
             Assert.Equal(20, sut.Weight);
 
-            child.AddThing(ItemTestData.CreateBodyEquipmentItem(102, "", "shield"));
+            child.AddItem(ItemTestData.CreateBodyEquipmentItem(102, "", "shield"));
 
             Assert.Equal(20, sut.Weight);
         }
@@ -121,26 +121,26 @@ namespace NeoServer.Game.Items.Tests
             var child = ItemTestData.CreatePickupableContainer();
             var child2 = ItemTestData.CreatePickupableContainer();
 
-            sut.AddThing(child);
-            sut.AddThing(child2);
+            sut.AddItem(child);
+            sut.AddItem(child2);
 
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
-            child.AddThing(shield);
+            child.AddItem(shield);
 
             
             sut.SendTo(sut, child,1, 1, 0);
 
             Assert.Equal(100, sut.Weight);
 
-            child.AddThing(ItemTestData.CreateBodyEquipmentItem(102, "", "shield"));
+            child.AddItem(ItemTestData.CreateBodyEquipmentItem(102, "", "shield"));
 
             Assert.Equal(140, sut.Weight);
 
-            child2.AddThing(ItemTestData.CreateBodyEquipmentItem(104, "", "shield"));
+            child2.AddItem(ItemTestData.CreateBodyEquipmentItem(104, "", "shield"));
 
             Assert.Equal(180, sut.Weight);
 
-            child2.RemoveThing(null,1,1, out var removed);
+            child2.RemoveItem(null,1,1, out var removed);
 
             Assert.Equal(80, sut.Weight);
         }

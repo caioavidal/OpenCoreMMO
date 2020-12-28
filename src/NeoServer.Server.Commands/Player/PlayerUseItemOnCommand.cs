@@ -4,6 +4,7 @@ using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Contracts.Items;
+using System;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -23,44 +24,47 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
-            IThing useOnItem = null;
+            IThing onThing = null;
             if (useItemPacket.ToLocation.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.ToLocation] is not ITile tile) return;
                 if (tile.TopItemOnStack is null) return;
-                useOnItem = tile.TopItemOnStack;
+                onThing = tile.TopItemOnStack;
             }
             else if (useItemPacket.ToLocation.Type == LocationType.Slot)
             {
                 if (player.Inventory[useItemPacket.ToLocation.Slot] is null) return;
-                useOnItem = player.Inventory[useItemPacket.ToLocation.Slot];
+                onThing = player.Inventory[useItemPacket.ToLocation.Slot];
             }
             else if (useItemPacket.ToLocation.Type == LocationType.Container)
             {
                 if (player.Containers[useItemPacket.ToLocation.ContainerId][useItemPacket.ToLocation.ContainerSlot] is not IThing thing) return;
-                useOnItem = thing;
+                onThing = thing;
             }
 
-            if (useOnItem is not IThing) return;
+            if (onThing is not IThing) return;
+            Action action = null;
 
+            
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
+            //    action
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
           
                 if(tile.TopItemOnStack is IUseableOn useable)
                 {
-                    useable.UseOn(player, game.Map, useOnItem);
+                    useable.UseOn(player, game.Map, onThing);
                 }
             }
             else if (useItemPacket.Location.Type ==  LocationType.Slot)
             {
                 if (player.Inventory[useItemPacket.Location.Slot] is not IUseableOn useable) return;
-                useable.UseOn(player, game.Map, useOnItem);
+                useable.UseOn(player, game.Map, onThing);
             }
             else if (useItemPacket.Location.Type == LocationType.Container)
             {
                 if (player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot] is not IUseableOn useable) return;
-                useable.UseOn(player, game.Map, useOnItem);
+                useable.UseOn(player, game.Map, onThing);
             }
         }
 

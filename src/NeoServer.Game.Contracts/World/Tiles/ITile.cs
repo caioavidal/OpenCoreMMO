@@ -15,7 +15,7 @@ namespace NeoServer.Game.Contracts.World
         /// <returns></returns>
         public bool IsNextTo(ITile dest) => Location.IsNextTo(dest.Location);
         bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition);
-        byte GetCreatureStackPositionCount(IPlayer observer);
+        byte GetCreatureStackPositionIndex(IPlayer observer);
 
         IItem TopItemOnStack { get; }
         ICreature TopCreatureOnStack { get; }
