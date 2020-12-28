@@ -24,7 +24,9 @@ namespace NeoServer.Game.Items.Items.UsableItems
             if (thing is IGround ground && map[ground.Location] is IDynamicTile tile)
             {
                 var itemCreated =  _itemFactory.Create(item.Metadata.Attributes.GetTransformationItem(), ground.Location, null);
-                map.ReplaceThing(ground, itemCreated);
+
+                tile.RemoveItem(ground,1,0, out var removedItem);
+                tile.AddItem(itemCreated);
             }
 
             base.UseOn(player, map, thing);

@@ -5,30 +5,32 @@ using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Contracts
 {
+    public delegate void SendTo(IStore source, IStore destination, byte amount);
     /// <summary>
     /// A contract to represent anything that can store things
     /// </summary>
     public interface IStore
     {
+        public event SendTo OnSentTo;
         /// <summary>
         /// Checks if thing can be added to store
         /// </summary>
         /// <param name="item"></param>
         /// <param name="slot"></param>
         /// <returns></returns>
-        Result CanAddThing(IThing item,byte amount = 1, byte? slot = null);
+        Result CanAddItem(IItem item,byte amount = 1, byte? slot = null);
         /// <summary>
         /// Gives amount that can be added to store
         /// </summary>
         /// <param name="thing"></param>
         /// <returns></returns>
-        int PossibleAmountToAdd(IThing thing, byte? toPosition = null);
+        int PossibleAmountToAdd(IItem thing, byte? toPosition = null);
         /// <summary>
         /// Checks if thing can be removed from store
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        bool CanRemoveItem(IThing item);
+        bool CanRemoveItem(IItem item);
 
         /// <summary>
         /// Stores thing
@@ -36,7 +38,7 @@ namespace NeoServer.Game.Contracts
         /// <param name="thing">thing to be stored</param>
         /// <param name="position">position where thing will be stored</param>
         /// <returns></returns>
-        Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null);
+        Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null);
         /// <summary>
         /// Removes thing from store
         /// </summary>
@@ -45,7 +47,7 @@ namespace NeoServer.Game.Contracts
         /// <param name="fromPosition">position where thing will be removed</param>
         /// <param name="removedThing">removed thing instance from store</param>
         /// <returns></returns>
-        Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing);
+        Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
 
         /// <summary>
         /// Sends thing to another store
@@ -55,35 +57,7 @@ namespace NeoServer.Game.Contracts
         /// <param name="fromPosition">position source in store</param>
         /// <param name="toPosition">position destination in store</param>
         /// <returns></returns>
-        public Result SendTo(IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
-        {
-            var canAdd = destination.CanAddThing(thing, amount, toPosition);
-            if (!canAdd.IsSuccess) return canAdd;
-
-            var possibleAmountToAdd = destination.PossibleAmountToAdd(thing,toPosition);
-            if (possibleAmountToAdd == 0) return new Result(InvalidOperation.NotEnoughRoom);
-
-            IThing removedThing;
-            if (thing is not ICumulative cumulative)
-            {
-                if (possibleAmountToAdd < 1) return new Result(InvalidOperation.NotEnoughRoom);
-                RemoveThing(thing, 1, fromPosition, out removedThing);
-
-            }
-            else
-            {
-                var amountToAdd = (byte)(possibleAmountToAdd < amount ? possibleAmountToAdd : amount);
-
-                RemoveThing(thing, amountToAdd, fromPosition, out removedThing);
-            }
-
-            var result = destination.ReceiveFrom(this, removedThing, toPosition);
-
-            if (amount - possibleAmountToAdd > 0)
-                return SendTo(destination, thing, (byte)(amount - possibleAmountToAdd), fromPosition, toPosition);
-
-            return result;
-        }
+        Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition);
 
         /// <summary>
         /// Receives thing from another store
@@ -92,16 +66,7 @@ namespace NeoServer.Game.Contracts
         /// <param name="thing">thing being received</param>
         /// <param name="toPosition">destination position where thing will be stored</param>
         /// <returns></returns>
-        public Result ReceiveFrom(IStore source, IThing thing, byte? toPosition)
-        {
-            var canAdd = CanAddThing(thing);
-            if (!canAdd.IsSuccess) return canAdd;
-
-            var result = AddThing(thing, toPosition);
-          //  if (result.IsSuccess) thing.SetStoredPlace(this);
-
-            return result.ResultValue;
-        }
+        Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition);
 
     }
 }

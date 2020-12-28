@@ -25,7 +25,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
                 {
                     if (map[neighbour] is IDynamicTile tile)
                     {
-                        map.TryMoveThing(player, tile.Location);
+                        map.TryMoveCreature(player, tile.Location);
                         return;
                     }
                 }

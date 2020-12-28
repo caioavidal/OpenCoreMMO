@@ -170,7 +170,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             return false;
         }
-        public override byte GetCreatureStackPositionCount(IPlayer observer)
+        public override byte GetCreatureStackPositionIndex(IPlayer observer)
         {
             byte stackPosition = 0;
             foreach (var creature in Creatures)
@@ -185,7 +185,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (stackPosition >= 10) return false;
 
-            stackPosition = (byte)(stackPosition + ((item.IsAlwaysOnTop || item is IGround) ? 0 : GetCreatureStackPositionCount(observer)));
+            stackPosition = (byte)(stackPosition + ((item.IsAlwaysOnTop || item is IGround) ? 0 : GetCreatureStackPositionIndex(observer)));
 
             return false;
         }
@@ -253,25 +253,27 @@ namespace NeoServer.Game.World.Map.Tiles
             Ground = ground;
             FloorDirection = ground.FloorDirection;
         }
-
-        private OperationResult<IThing> AddThingToTile(IThing thing)
+        public Result<OperationResult<ICreature>> AddCreature(ICreature creature)
         {
-            var operations = new OperationResult<IThing>();
+            if(creature is not IWalkableCreature walkableCreature) return Result<OperationResult<ICreature>>.NotPossible;
+            if (HasCreature) return Result<OperationResult<ICreature>>.NotPossible;
+
+            Creatures.TryAdd(creature.CreatureId, walkableCreature);
+            walkableCreature.Tile = this;
+
+            SetCacheAsExpired();
+
+            return new(new OperationResult<ICreature>(Operation.Added, creature));
+        }
+
+        private OperationResult<IItem> AddItemToTile(IThing thing)
+        {
+            var operations = new OperationResult<IItem>();
 
             if (thing is IGround ground && Ground is null)
             {
                 SetGround(ground);
                 operations.Add(Operation.Added, ground);
-            }
-            else if (thing is IWalkableCreature creature)
-            {
-                if (HasCreature)
-                {
-                    return operations;
-                }
-                Creatures.TryAdd(creature.CreatureId, creature);
-                operations.Add(Operation.Added, creature);
-                creature.Tile = this;
             }
             else if (thing is IItem item)
             {
@@ -356,7 +358,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in items)
             {
-                AddThing(item, null);
+                AddItem(item, null);
             }
         }
 
@@ -435,13 +437,69 @@ namespace NeoServer.Game.World.Map.Tiles
             return cache;
         }
 
+        public Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICreature removedCreature)
+        {
+            Creatures.Remove(creature.CreatureId, out var c);
+            removedCreature = c;
+            SetCacheAsExpired();
+
+            return new (new OperationResult<ICreature>(Operation.Removed, creature));
+        }
+        public Result<OperationResult<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)
+        {
+            var operations = new OperationResult<IItem>();
+
+            TryGetStackPositionOfItem(itemToRemove, out var stackPosition);
+            removedItem = null;
+
+            if (itemToRemove.IsAlwaysOnTop)
+            {
+                TopItems.TryPop(out var item);
+                operations.Add(Operation.Removed, item, stackPosition);
+                removedItem = item;
+            }
+            else if (DownItems is not null && DownItems.TryPeek(out var topStackItem))
+            {
+                if (itemToRemove is ICumulative && topStackItem is ICumulative topCumulative)
+                {
+                    var amountBeforeSplit = topCumulative.Amount;
+                    removedItem = topCumulative.Split(amount);
+
+                    if ((removedItem?.Amount ?? 0) == amountBeforeSplit)
+                    {
+                        DownItems.TryPop(out var item);
+                        operations.Add(Operation.Removed, item, stackPosition);
+                    }
+                    else
+                    {
+                        operations.Add(Operation.Updated, topCumulative);
+                    }
+                }
+                else
+                {
+                    DownItems.TryPop(out var item);
+                    operations.Add(Operation.Removed, item, stackPosition);
+                    removedItem = item;
+                }
+            }
+            else if (itemToRemove == Ground)
+            {
+                Ground = null;
+                operations.Add(Operation.Removed, itemToRemove, stackPosition);
+                removedItem = itemToRemove;
+            }
+
+            SetCacheAsExpired();
+            TileOperationEvent.OnChanged(this, itemToRemove, operations);
+            return new(operations);
+        }
+
         #region Store Methods
-        public override Result CanAddThing(IThing thing, byte amount = 1, byte? slot = null)
+        public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
         {
             if (thing is null) return new Result(InvalidOperation.NotPossible);
             if (thing is IGround) return Result.Success;
 
-            if (thing is IPlayer && Creatures?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
             if (thing is IItem item && item.IsAlwaysOnTop && TopItems?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
 
             if (thing is IItem down && !down.IsAlwaysOnTop && DownItems?.Count >= 10) return new Result(InvalidOperation.NotEnoughRoom);
@@ -449,18 +507,15 @@ namespace NeoServer.Game.World.Map.Tiles
             return Result.Success;
         }
 
-        public override bool CanRemoveItem(IThing thing)
+        public override bool CanRemoveItem(IItem thing)
         {
             if (thing is IItem item && !item.CanBeMoved) return false;
-            if (thing is ICreature) return false; //todo should be configurable
 
             return true;
         }
 
-        public override int PossibleAmountToAdd(IThing thing, byte? toPosition = null)
+        public override int PossibleAmountToAdd(IItem thing, byte? toPosition = null)
         {
-            if (thing is ICreature && HasCreature) return 0; //todo: must be configurable
-
             var freeSpace = 10 - (DownItems?.Count ?? 0);
             if (thing is not ICumulative cumulative)
             {
@@ -474,71 +529,16 @@ namespace NeoServer.Game.World.Map.Tiles
             return possibleAmountToAdd;
         }
 
-        public override Result<OperationResult<IThing>> RemoveThing(IThing thing, byte amount, byte fromPosition, out IThing removedThing)
+        public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
         {
             amount = amount == 0 ? 1 : amount;
-            var operations = new OperationResult<IThing>();
-
-            removedThing = null;
-            var itemToRemove = thing as IItem;
-
-
-            if (thing is ICreature c)
-            {
-                Creatures.Remove(c.CreatureId, out var creature);
-                operations.Add(Operation.Removed, creature);
-                removedThing = creature;
-            }
-            else if(thing is IItem itemToBeRemoved)
-            {
-                TryGetStackPositionOfItem(itemToBeRemoved, out var stackPosition);
-
-                if (itemToRemove.IsAlwaysOnTop)
-                {
-                    TopItems.TryPop(out var item);
-                    operations.Add(Operation.Removed, item, stackPosition);
-                    removedThing = item;
-                }
-                else if (DownItems is not null && DownItems.TryPeek(out var topStackItem))
-                {
-                    if (thing is ICumulative && topStackItem is ICumulative topCumulative)
-                    {
-                        var amountBeforeSplit = topCumulative.Amount;
-                        removedThing = topCumulative.Split(amount);
-
-                        if ((removedThing?.Amount ?? 0) == amountBeforeSplit)
-                        {
-                            DownItems.TryPop(out var item);
-                            operations.Add(Operation.Removed, item, stackPosition);
-                        }
-                        else
-                        {
-                            operations.Add(Operation.Updated, topCumulative);
-                        }
-                    }
-                    else
-                    {
-                        DownItems.TryPop(out var item);
-                        operations.Add(Operation.Removed, item, stackPosition);
-                        removedThing = item;
-                    }
-                }
-                else if (thing == Ground)
-                {
-                    Ground = null;
-                    operations.Add(Operation.Removed, thing, stackPosition);
-                    removedThing = thing;
-                }
-            }
-
-            SetCacheAsExpired();
-            TileOperationEvent.OnChanged(this, thing, operations);
-            return new(operations);
+            var result = RemoveItem(thing, amount, out removedThing);
+            return result;
         }
 
-        public override Result<OperationResult<IThing>> AddThing(IThing thing, byte? position = null)
+        public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
         {
-            var operations = AddThingToTile(thing);
+            var operations = AddItemToTile(thing);
             if (operations.HasAnyOperation) thing.Location = Location;
             if (thing is IContainer container) container.SetParent(null);
 

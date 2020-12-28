@@ -134,7 +134,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void HealMana(ushort increasing);
         void Use(IUseableOn2 item, IThing onThing);
         bool Feed(IFood food);
-        Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition);
+        Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition, byte? toPosition);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";

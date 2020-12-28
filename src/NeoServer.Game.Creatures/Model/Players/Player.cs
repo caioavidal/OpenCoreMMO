@@ -372,10 +372,9 @@ namespace NeoServer.Server.Model.Players
         public override IItem CreateItem(ushort itemId, byte amount)
         {
             var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.AddThing(item).IsSuccess)
+            if (!Inventory.BackpackSlot.AddItem(item).IsSuccess)
             {
-                var thing = item as IThing;
-                Tile.AddThing(thing);
+                Tile.AddItem(item);
             }
             return item;
         }
@@ -456,7 +455,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);
             else
-                ReduceHealth(enemy, damage);
+                ReduceHealth(damage);
         }
 
         public void Use(IUseableOn2 item, IThing onThing)
@@ -512,11 +511,11 @@ namespace NeoServer.Server.Model.Players
 
         public void OnHungry() => Recovering = false;
 
-        public Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
+        public Result MoveItem(IStore source, IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
         {
             if (thing.Location.Type == LocationType.Ground && !Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
 
-            return source.SendTo(destination, thing, amount, fromPosition, toPosition);
+            return source.SendTo(destination, thing, amount, fromPosition, toPosition).ResultValue;
         }
 
     }

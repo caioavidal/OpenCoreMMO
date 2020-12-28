@@ -168,7 +168,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnTargetChanged?.Invoke(this, oldAttackTarget, target?.CreatureId ?? default);
         }
 
-        protected void ReduceHealth(ICombatActor enemy, CombatDamage damage)
+        protected void ReduceHealth(CombatDamage damage)
         {
             HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
             if (IsDead) OnDeath();

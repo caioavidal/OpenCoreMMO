@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using NeoServer.Game.World.Map.Tiles;
 
 namespace NeoServer.Game.World.Map
 {
@@ -37,7 +38,7 @@ namespace NeoServer.Game.World.Map
                 {
                     if (thing is IItem item && !item.IsAlwaysOnTop && item is not IGround)
                     {
-                        stackPosition = (byte)(tile.GetCreatureStackPositionCount(player) + stackPosition);
+                        stackPosition = (byte)(tile.GetCreatureStackPositionIndex(player) + stackPosition);
                     }
                 }
 
@@ -89,37 +90,35 @@ namespace NeoServer.Game.World.Map
             }
             return new Cylinder(thing, tile, tile, Operation.Updated, spectators.ToArray());
         }
-        public static Result<OperationResult<IThing>> RemoveThing(IThing thing, IDynamicTile tile, byte amount, out ICylinder cylinder)
+        public static Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICylinder cylinder)
         {
-            var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
+            cylinder = null;
+            if (_map[creature.Location] is not Tile tile) return new();
 
-            var tileSpectators = new ICylinderSpectator[spectators.Count()];
+            var tileSpectators = GetSpectators(creature, tile);
 
-            int index = 0;
-            foreach (var spectator in spectators)
-            {
-                byte stackPosition = default;
-                if (spectator is IPlayer player)
-                {
-                    tile.TryGetStackPositionOfThing(player, thing, out stackPosition);
-                }
-
-                tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);
-            }
-
-            var result = tile.RemoveThing(thing, amount, 0, out var removedThing);
-            cylinder = new Cylinder(removedThing, tile, tile, Operation.Removed, tileSpectators);
+            var result = tile.RemoveCreature(creature, out var removedCreature);
+            cylinder = new Cylinder(removedCreature, tile, tile, Operation.Removed, tileSpectators);
             return result;
         }
-        public static Result<OperationResult<IThing>> AddThing(IThing thing, IDynamicTile tile, out ICylinder cylinder)
+        public static Result<OperationResult<ICreature>> AddCreature(ICreature creature, IDynamicTile toTile, out ICylinder cylinder)
         {
-            var result = tile.AddThing(thing);
+            cylinder = null;
+            if (toTile is not Tile tile) return new();
 
-            if (result.IsSuccess is false)
-            {
-                cylinder = null;
-                return result;
-            }
+            var result = tile.AddCreature(creature);
+
+            if (result.IsSuccess is false) return result;
+
+            ICylinderSpectator[] tileSpectators = GetSpectators(creature, tile);
+
+            cylinder = new Cylinder(creature, tile, tile, Operation.Added, tileSpectators);
+            return result;
+        }
+
+        public static ICylinderSpectator[] GetSpectators(IThing thing, ITile tile)
+        {
+            
 
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
 
@@ -137,23 +136,22 @@ namespace NeoServer.Game.World.Map
                 tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);
             }
 
-            cylinder = new Cylinder(thing, tile, tile, Operation.Added, tileSpectators);
-            return result;
+            return tileSpectators;
         }
 
-        public static Result<OperationResult<IThing>> MoveThing(IMoveableThing thing, IDynamicTile fromTile, IDynamicTile toTile, byte amount, out ICylinder cylinder)
+        public static Result<OperationResult<ICreature>> MoveCreature(ICreature thing, IDynamicTile fromTile, IDynamicTile toTile, byte amount, out ICylinder cylinder)
         {
             amount = amount == 0 ? 1 : amount;
 
             cylinder = null;
 
-            if (thing is ICreature && toTile.HasCreature) return new Result<OperationResult<IThing>>(InvalidOperation.NotPossible);
+            if (thing is ICreature && toTile.HasCreature) return new Result<OperationResult<ICreature>>(InvalidOperation.NotPossible);
 
-            var removeResult = RemoveThing(thing, fromTile, amount, out var removeCylinder);
+            var removeResult = RemoveCreature(thing, out var removeCylinder);
 
             if (removeResult.IsSuccess is false) return removeResult;
 
-            var result = AddThing(removeCylinder.Thing, toTile, out var addCylinder);
+            var result = AddCreature(removeCylinder.Thing as ICreature, toTile, out var addCylinder);
 
             if (result.IsSuccess is false)
             {
@@ -187,7 +185,6 @@ namespace NeoServer.Game.World.Map
             return result;
         }
     }
-
     public class CylinderSpectator : IEqualityComparer<ICylinderSpectator>, ICylinderSpectator
     {
         public CylinderSpectator(ICreature spectator, byte fromStackPosition, byte toStackPosition)
@@ -218,4 +215,3 @@ namespace NeoServer.Game.World.Map
 
     public record Cylinder(IThing Thing, ITile FromTile, ITile ToTile, Operation Operation, ICylinderSpectator[] TileSpectators) : ICylinder;
 }
-
