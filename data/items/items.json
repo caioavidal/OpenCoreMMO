@@ -10522,10 +10522,6 @@
             "value":"earth"
           },
           {
-            "key":"effect",
-            "value":"stones"
-          },
-          {
             "key":"shootType",
             "value":"earth"
           }
