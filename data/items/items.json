@@ -2,7 +2,7 @@
     {
        "id": "100",
        "name": "void"
-    },
+    }, 
     {
        "id": "101",
        "name": "earth"
@@ -10031,19 +10031,19 @@
              "key": "charges",
              "value": "3"
           },
-		  		  {
-			"key": "needtarget",
-			"value": true
-		  },
-		  {
-			"key":"damage",
-			"value":"death"
-		  },
-		  {
-			"key":"shootType",
-			"value":"death"
-		  },
-		  { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
+          {
+            "key":"damage",
+            "value":"death"
+          },
+          {
+            "key":"shootType",
+            "value":"suddendeath"
+          },
+          {
+            "key":"effect",
+            "value":"mortarea"
+          },
+          { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
        ]
     },
     {
@@ -10104,7 +10104,21 @@
           {
              "key": "charges",
              "value": "5"
-          }
+          },
+          {
+            "key": "needtarget",
+            "value": true
+          },
+          {
+            "key":"damage",
+            "value":"ice"
+          },
+          {
+            "key":"shootType",
+            "value":"smallice"
+          },
+          { "key":"x", "value": [1.8,3]},{ "key":"y", "value": [12,17]}
+
        ]
     },
     {
@@ -10165,7 +10179,24 @@
           {
              "key": "charges",
              "value": "4"
-          }
+          },
+          {
+            "key":"damage",
+            "value":"ice"
+          },
+          {
+            "key":"shootType",
+            "value":"ice"
+          },
+          {
+            "key":"effect",
+            "value":"icearea"
+          },
+          {
+            "key":"area",
+            "value":"AREA_CIRCLE3X3"
+          },
+          { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
        ]
     },
     {
@@ -10335,7 +10366,21 @@
           {
              "key": "charges",
              "value": "10"
-          }
+          },
+          {
+            "key": "needtarget",
+            "value": true
+          },
+          {
+            "key":"damage",
+            "value":"energy"
+          },
+          {
+            "key":"shootType",
+            "value":"energy"
+          },
+          { "key":"x", "value": [0.4,0.8]},{ "key":"y", "value": [3,5]}
+
        ]
     },
     {
@@ -10358,7 +10403,24 @@
           {
              "key": "charges",
              "value": "4"
-          }
+          },
+          {
+            "key":"damage",
+            "value":"earth"
+          },
+          {
+            "key":"shootType",
+            "value":"earth"
+          },
+          {
+            "key":"effect",
+            "value":"stones"
+          },
+          {
+            "key":"area",
+            "value":"AREA_CIRCLE3X3"
+          },
+          { "key":"x", "value": [1,2.6]},{ "key":"y", "value": [6,16]}
        ]
     },
     {
@@ -10450,6 +10512,18 @@
           {
              "key": "charges",
              "value": "10"
+          },
+          {
+            "key": "needtarget",
+            "value": true
+          },
+          {
+            "key":"damage",
+            "value":"earth"
+          },
+          {
+            "key":"shootType",
+            "value":"earth"
           }
        ]
     },
@@ -10511,7 +10585,21 @@
           {
              "key": "charges",
              "value": "5"
-          }
+          },
+          {
+            "key": "needtarget",
+            "value": true
+          },
+          {
+            "key":"damage",
+            "value":"holy"
+          },
+          {
+            "key":"shootType",
+            "value":"smallholy"
+          },
+          { "key":"x", "value": [1.8,3.8]},{ "key":"y", "value": [11,23]}
+
        ]
     },
     {
@@ -10573,7 +10661,20 @@
           {
              "key": "charges",
              "value": "5"
-          }
+          },
+          {
+            "key": "needtarget",
+            "value": true
+          },
+          {
+            "key":"damage",
+            "value":"fire"
+          },
+          {
+            "key":"shootType",
+            "value":"fire"
+          },
+          { "key":"x", "value": [1.8,3]},{ "key":"y", "value": [12,17]}
        ]
     },
     {
@@ -10620,23 +10721,23 @@
              "key": "charges",
              "value": "4"
           },
-		  {
-			"key":"damage",
-			"value":"fire"
-		  },
-		  {
-			"key":"shootType",
-			"value":"fire"
-		  },
-		  {
+          {
+            "key":"damage",
+            "value":"fire"
+          },
+          {
+            "key":"shootType",
+            "value":"fire"
+          },
+          {
             "key":"effect",
             "value":"firearea"
           },
-		    {
-			"key":"area",
-			"value":"AREA_CIRCLE3X3"
-		  },
-		  { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
+          {
+            "key":"area",
+            "value":"AREA_CIRCLE3X3"
+          },
+          { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
        ]
     },
     {
@@ -10698,7 +10799,21 @@
           {
              "key": "charges",
              "value": "3"
-          }
+          },
+          {
+            "key": "needtarget",
+            "value": true
+          },
+          {
+            "key":"damage",
+            "value":"fire"
+          },
+          {
+            "key":"shootType",
+            "value":"fire"
+          },
+          { "key":"x", "value": [0.3,0.6]},{ "key":"y", "value": [2,4]}
+
        ]
     },
     {
@@ -10740,46 +10855,46 @@
        ]
     },
     {
-       "id": "2311",
-       "article": "a",
-       "name": "heavy magic missile rune",
-       "attributes": [
-          {
-             "key": "type",
-             "value": "rune"
-          },
-          {
-             "key": "runeSpellName",
-             "value": "adori vis"
-          },
-          {
-             "key": "weight",
-             "value": "21"
-          },
-          {
-             "key": "charges",
-             "value": "10"
-          },
-		  {
-             "key": "charges",
-             "value": "10"
-          },
-		  {
-			"key": "needtarget",
-			"value": true
-		  },
-		  {
-			"key":"damage",
-			"value":"energy"
-		  },
-		  {
-			"key":"shootType",
-			"value":"energy"
-		  },
-		  { "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}
-		  
-       ]
-    },
+      "id": "2311",
+      "article": "a",
+      "name": "heavy magic missile rune",
+      "attributes": [
+         {
+            "key": "type",
+            "value": "rune"
+         },
+         {
+            "key": "runeSpellName",
+            "value": "adori vis"
+         },
+         {
+            "key": "weight",
+            "value": "21"
+         },
+         {
+            "key": "charges",
+            "value": "10"
+         },
+         {
+            "key": "charges",
+            "value": "10"
+         },
+         {
+           "key": "needtarget",
+           "value": true
+         },
+         {
+           "key":"damage",
+           "value":"energy"
+         },
+         {
+           "key":"shootType",
+           "value":"energy"
+         },
+         { "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}
+
+      ]
+   },
     {
        "id": "2312",
        "article": "a",
@@ -10815,7 +10930,24 @@
           {
              "key": "charges",
              "value": "6"
-          }
+          },
+          {
+            "key":"damage",
+            "value":"physical"
+          },
+          {
+            "key":"shootType",
+            "value":"explosion"
+          },
+          {
+            "key":"effect",
+            "value":"explosionarea"
+          },
+          {
+            "key":"area",
+            "value":"AREA_CROSS1X1"
+          },
+          { "key":"x", "value": [1.6,3.2]},{ "key":"y", "value": [9,19]}
        ]
     },
     {
@@ -10853,7 +10985,24 @@
           {
              "key": "charges",
              "value": "4"
-          }
+          },
+          {
+            "key":"damage",
+            "value":"energy"
+          },
+          {
+            "key":"shootType",
+            "value":"energyball"
+          },
+          {
+            "key":"effect",
+            "value":"energy"
+          },
+          {
+            "key":"area",
+            "value":"AREA_CIRCLE3X3"
+          },
+          { "key":"x", "value": [1,2.6]},{ "key":"y", "value": [6,16]}
        ]
     },
     {
