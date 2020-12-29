@@ -10031,7 +10031,6 @@
              "key": "charges",
              "value": "3"
           },
-<<<<<<< HEAD
           {
             "key":"damage",
             "value":"death"
@@ -10045,21 +10044,6 @@
             "value":"mortarea"
           },
           { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
-=======
-		  		  {
-			"key": "needtarget",
-			"value": true
-		  },
-		  {
-			"key":"damage",
-			"value":"death"
-		  },
-		  {
-			"key":"shootType",
-			"value":"death"
-		  },
-		  { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
->>>>>>> upstream/develop
        ]
     },
     {
@@ -10737,7 +10721,6 @@
              "key": "charges",
              "value": "4"
           },
-<<<<<<< HEAD
           {
             "key":"damage",
             "value":"fire"
@@ -10747,29 +10730,14 @@
             "value":"fire"
           },
           {
+            "key":"effect",
+            "value":"firearea"
+          },
+          {
             "key":"area",
             "value":"AREA_CIRCLE3X3"
           },
           { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
-=======
-		  {
-			"key":"damage",
-			"value":"fire"
-		  },
-		  {
-			"key":"shootType",
-			"value":"fire"
-		  },
-		  {
-            "key":"effect",
-            "value":"firearea"
-          },
-		    {
-			"key":"area",
-			"value":"AREA_CIRCLE3X3"
-		  },
-		  { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
->>>>>>> upstream/develop
        ]
     },
     {
