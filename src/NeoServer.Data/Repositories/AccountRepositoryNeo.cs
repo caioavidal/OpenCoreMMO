@@ -49,7 +49,7 @@ namespace NeoServer.Data.Repositories
             return await GetContext.Accounts
                 .Where(x => x.Name.Equals(name))
                 //.Where(x => x.Name == name)
-                //    .Include(x => x.Players)
+                .Include(x => x.Players)
                 //    .Include(x => x.AccountIdentity)
                 //    .Include(x => x.AccountBan)
                 //        .ThenInclude(x => x.Account)
@@ -67,7 +67,7 @@ namespace NeoServer.Data.Repositories
             return await GetContext.Accounts
                     .Where(x => x.Email.Equals(email))
                     //.Where(x => x.Email == email)
-                    //.Include(x => x.Players)
+                    .Include(x => x.Players)
                     //.Include(x => x.AccountIdentity)
                     //.Include(x => x.AccountBan)
                     //    .ThenInclude(x => x.Account)
@@ -86,18 +86,18 @@ namespace NeoServer.Data.Repositories
                     .Include(x=>x.Players)
                     .ThenInclude(x=>x.PlayerItems)
                     .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
-                //.Where(x => x.Email == email)
-                //.Include(x => x.Players)
-                //.Include(x => x.AccountIdentity)
-                //.Include(x => x.AccountBan)
-                //    .ThenInclude(x => x.Account)
-                //.Include(x => x.AccountBan)
-                //    .ThenInclude(x => x.BannedBy)
-                //.Include(x => x.AccountBanHistory)
-                //    .ThenInclude(x => x.Account)
-                //.Include(x => x.AccountBanHistory)
-                //    .ThenInclude(x => x.BannedBy)
-                .SingleOrDefaultAsync();
+                    //.Where(x => x.Email == email)
+                    .Include(x => x.Players)
+                    //.Include(x => x.AccountIdentity)
+                    //.Include(x => x.AccountBan)
+                    //    .ThenInclude(x => x.Account)
+                    //.Include(x => x.AccountBan)
+                    //    .ThenInclude(x => x.BannedBy)
+                    //.Include(x => x.AccountBanHistory)
+                    //    .ThenInclude(x => x.Account)
+                    //.Include(x => x.AccountBanHistory)
+                    //    .ThenInclude(x => x.BannedBy)
+                    .SingleOrDefaultAsync();
         }
 
         #endregion

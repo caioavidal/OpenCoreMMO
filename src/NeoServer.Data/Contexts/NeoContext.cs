@@ -13,7 +13,7 @@ namespace NeoServer.Data
         { }
 
         public DbSet<AccountModel> Accounts { get; set; }
-        public DbSet<PlayerModel> Player { get; set; }
+        public DbSet<PlayerModel> Players { get; set; }
         public DbSet<PlayerItemModel> PlayerItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

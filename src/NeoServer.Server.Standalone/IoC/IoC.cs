@@ -227,7 +227,7 @@ namespace NeoServer.Server.Standalone.IoC
             {
                 DatabaseType.INMEMORY => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.INMEMORY]),
                 DatabaseType.MONGODB => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MONGODB]),
-                DatabaseType.MYSQL => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MYSQL]),
+                DatabaseType.MYSQL => DbContextFactory.GetInstance().UseMySql(config.connections[DatabaseType.MYSQL]),
                 DatabaseType.MSSQL => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MSSQL]),
                 _ => throw new ArgumentException("Invalid active database!"),
             };

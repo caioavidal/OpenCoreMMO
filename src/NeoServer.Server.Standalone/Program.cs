@@ -24,6 +24,7 @@ using NeoServer.Loaders.Vocations;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
 using NeoServer.Data.Interfaces;
+using System.Collections.Generic;
 
 Console.Title = "OpenCoreMMO Server";
 
