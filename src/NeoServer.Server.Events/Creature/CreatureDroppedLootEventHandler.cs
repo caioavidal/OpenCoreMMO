@@ -60,7 +60,7 @@ namespace NeoServer.Server.Events.Creature
 
                 if (itemToDrop is IContainer c && item.Items?.Length > 0) CreateLootItems(item.Items, location, c);
 
-                container?.AddThing(itemToDrop);
+                container?.AddItem(itemToDrop);
             }
         }
     }

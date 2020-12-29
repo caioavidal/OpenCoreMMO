@@ -48,7 +48,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                     MaxDamage = (ushort)Math.Abs(max),
                     MinDamage = (ushort)Math.Abs(min),
                     Target = target,
-                    DamageType = MonsterAttributeParser.ParseDamageType(attackName),
+                    DamageType = DamageTypeParser.Parse(attackName),
                 };
 
                 if (combatAttack.IsMelee)
@@ -97,17 +97,17 @@ namespace NeoServer.Loaders.Monsters.Converters
                 if (range > 1 || radius == 1)
                 {
                     if (areaEffect != null)
-                        combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
+                        combatAttack.DamageType = DamageTypeParser.Parse(areaEffect);
                     combatAttack.CombatAttack = new DistanceCombatAttack(range, ShootTypeParser.Parse(shootEffect));
                 }
                 if (radius > 1)
                 {
-                    combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
+                    combatAttack.DamageType = DamageTypeParser.Parse(areaEffect);
                     combatAttack.CombatAttack = new DistanceAreaCombatAttack(range, radius, ShootTypeParser.Parse(shootEffect));
                 }
                 if (length > 0)
                 {
-                    combatAttack.DamageType = MonsterAttributeParser.ParseDamageType(areaEffect);
+                    combatAttack.DamageType = DamageTypeParser.Parse(areaEffect);
                     combatAttack.CombatAttack = new SpreadCombatAttack(length, spread);
                 }
 

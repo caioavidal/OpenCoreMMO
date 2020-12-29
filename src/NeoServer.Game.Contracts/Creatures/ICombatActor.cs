@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -67,5 +68,6 @@ namespace NeoServer.Game.Contracts.Creatures
         bool Attack(ICreature creature);
         void SetAsInFight();
         void PropagateAttack(Coordinate[] area, CombatDamage damage);
+        bool Attack(ICreature creature, IUseableAttackOnCreature item);
     }
 }

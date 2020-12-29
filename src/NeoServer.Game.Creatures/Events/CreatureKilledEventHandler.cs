@@ -32,8 +32,12 @@ namespace NeoServer.Game.Creatures.Events
         {
             var corpse = itemFactory.Create(creature.CorpseType, creature.Location, null);
             creature.Corpse = corpse;
-            map.ReplaceThing(creature, creature.Corpse);
 
+            if (creature is IWalkableCreature walkable)
+            {
+                map.RemoveCreature(creature);
+                walkable.Tile.AddItem(corpse);
+            }
         }
         private void CreateBlood(ICreature creature)
         {

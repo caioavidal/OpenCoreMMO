@@ -582,7 +582,7 @@ namespace NeoServer.Game.Creatures.Tests
         {
             var container = ItemTestData.CreateContainer(2);
             var ammo = ItemTestData.CreateAmmoItem(100, 1);
-            container.AddThing(ammo);
+            container.AddItem(ammo);
 
             IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
@@ -598,7 +598,7 @@ namespace NeoServer.Game.Creatures.Tests
         {
             var backpack = ItemTestData.CreateBackpack();
             var ammo = ItemTestData.CreateAmmoItem(100, 1);
-            backpack.AddThing(ammo);
+            backpack.AddItem(ammo);
 
             IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
             {

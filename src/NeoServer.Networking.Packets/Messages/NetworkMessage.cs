@@ -31,9 +31,9 @@ namespace NeoServer.Networking.Packets
         /// <param name="location"></param>
         public void AddLocation(Location location)
         {
-            AddUInt16((ushort)location.X);
-            AddUInt16((ushort)location.Y);
-            AddByte((byte)location.Z);
+            AddUInt16(location.X);
+            AddUInt16(location.Y);
+            AddByte(location.Z);
         }
 
         /// <summary>

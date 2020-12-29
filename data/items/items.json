@@ -10031,6 +10031,7 @@
              "key": "charges",
              "value": "3"
           },
+<<<<<<< HEAD
           {
             "key":"damage",
             "value":"death"
@@ -10044,6 +10045,21 @@
             "value":"mortarea"
           },
           { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
+=======
+		  		  {
+			"key": "needtarget",
+			"value": true
+		  },
+		  {
+			"key":"damage",
+			"value":"death"
+		  },
+		  {
+			"key":"shootType",
+			"value":"death"
+		  },
+		  { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
+>>>>>>> upstream/develop
        ]
     },
     {
@@ -10721,6 +10737,7 @@
              "key": "charges",
              "value": "4"
           },
+<<<<<<< HEAD
           {
             "key":"damage",
             "value":"fire"
@@ -10734,6 +10751,25 @@
             "value":"AREA_CIRCLE3X3"
           },
           { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
+=======
+		  {
+			"key":"damage",
+			"value":"fire"
+		  },
+		  {
+			"key":"shootType",
+			"value":"fire"
+		  },
+		  {
+            "key":"effect",
+            "value":"firearea"
+          },
+		    {
+			"key":"area",
+			"value":"AREA_CIRCLE3X3"
+		  },
+		  { "key":"x", "value": [1.2,2.85]},{ "key":"y", "value": [7,16]}
+>>>>>>> upstream/develop
        ]
     },
     {
@@ -10851,6 +10887,7 @@
        ]
     },
     {
+<<<<<<< HEAD
       "id": "2311",
       "article": "a",
       "name": "heavy magic missile rune",
@@ -10891,6 +10928,48 @@
 
       ]
    },
+=======
+       "id": "2311",
+       "article": "a",
+       "name": "heavy magic missile rune",
+       "attributes": [
+          {
+             "key": "type",
+             "value": "rune"
+          },
+          {
+             "key": "runeSpellName",
+             "value": "adori vis"
+          },
+          {
+             "key": "weight",
+             "value": "21"
+          },
+          {
+             "key": "charges",
+             "value": "10"
+          },
+		  {
+             "key": "charges",
+             "value": "10"
+          },
+		  {
+			"key": "needtarget",
+			"value": true
+		  },
+		  {
+			"key":"damage",
+			"value":"energy"
+		  },
+		  {
+			"key":"shootType",
+			"value":"energy"
+		  },
+		  { "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}
+		  
+       ]
+    },
+>>>>>>> upstream/develop
     {
        "id": "2312",
        "article": "a",

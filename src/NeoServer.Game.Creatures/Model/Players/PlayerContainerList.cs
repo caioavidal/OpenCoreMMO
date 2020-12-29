@@ -148,7 +148,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            var result = player.MoveThing(fromContainer.Container, toContainer.Container, item, amount, (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
+            var result = player.MoveItem(fromContainer.Container, toContainer.Container, item, amount, (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
             
             if (result.IsSuccess && item is IContainer container)
             {

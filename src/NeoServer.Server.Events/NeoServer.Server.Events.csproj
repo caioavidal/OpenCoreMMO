@@ -1,6 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Items\**" />
+    <EmbeddedResource Remove="Items\**" />
+    <None Remove="Items\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
 
@@ -12,10 +18,6 @@
     <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Enums\NeoServer.Game.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Items\" />
   </ItemGroup>
 
   <PropertyGroup>

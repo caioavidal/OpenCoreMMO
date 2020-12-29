@@ -10,6 +10,7 @@ using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Enums.Creatures.Enums;
 
 namespace NeoServer.Server.Events
 {
@@ -53,7 +54,7 @@ namespace NeoServer.Server.Events
 
                 if (damage.Type != default)
                 {
-                    var damageEffect = DamageEffectParser.Parse(damage.Type);
+                    var damageEffect = damage.Effect == EffectT.None ? DamageEffectParser.Parse(damage.Type) : damage.Effect;
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
                 }
 
