@@ -13,7 +13,6 @@ using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.World.Map.Operations;
 using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.World.Map
@@ -34,33 +33,27 @@ namespace NeoServer.Game.World.Map
         public Map(World world)
         {
             this.world = world;
-            MapReplaceOperation.Init(this);
-            MapMoveOperation.Init(this);
             CylinderOperation.Setup(this);
             TileOperationEvent.OnTileChanged += OnTileChanged;
         }
 
-        public void OnTileChanged(ITile tile, IThing thing, OperationResult<IThing> result)
+        public void OnTileChanged(ITile tile, IItem item, OperationResult<IItem> result)
         {
             if (!result.HasAnyOperation) return;
-            if (thing is ICreature)
-            {
-                return;
-            }
-
+        
             foreach (var operation in result.Operations)
             {
                 switch (operation.Item2)
                 {
-                    case Operation.Removed: 
+                    case Operation.Removed:
                         if (operation.Item1 is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced;
                         OnThingRemovedFromTile?.Invoke(operation.Item1, CylinderOperation.Removed(operation.Item1, operation.Item3));
                         break;
                     case Operation.Updated:
                         OnThingUpdatedOnTile?.Invoke(operation.Item1, CylinderOperation.Updated(operation.Item1, operation.Item1.Amount));
                         break;
-                    case Operation.Added: 
-                        if(operation.Item1 is ICumulative c) c.OnReduced += OnItemReduced;
+                    case Operation.Added:
+                        if (operation.Item1 is ICumulative c) c.OnReduced += OnItemReduced;
                         OnThingAddedToTile?.Invoke(operation.Item1, CylinderOperation.Added(operation.Item1));
                         break;
                     default: break;
@@ -68,27 +61,10 @@ namespace NeoServer.Game.World.Map
             }
         }
 
-        public void ReplaceThing(IThing thingToRemove, IThing thingToAdd, byte amount = 1)
-        {
-            var result = MapReplaceOperation.Replace(thingToRemove, thingToAdd, amount);
-            OnThingRemovedFromTile?.Invoke(thingToRemove, result.Item1);
-            OnThingAddedToTile?.Invoke(thingToAdd, result.Item2);
-
-            if (thingToAdd is IGround ground && this[thingToAdd.Location] is IDynamicTile tile && tile.HasCreature)
-            {
-                if (GetTileDestination(tile) is not IDynamicTile destination) return;
-
-                foreach (var creature in tile.Creatures.Values)
-                {
-                    TryMoveThing(creature, destination.Location);
-                }
-            }
-        }
-
         public ITile this[Location location] => world.TryGetTile(ref location, out ITile tile) ? tile : null;
         public ITile this[ushort x, ushort y, byte z] => this[new Location(x, y, z)];
 
-        public bool TryMoveThing(IMoveableThing thing, Location toLocation, byte amount = 1)
+        public bool TryMoveCreature(IMoveableThing thing, Location toLocation, byte amount = 1)
         {
             if (this[thing.Location] is not IDynamicTile fromTile)
             {
@@ -106,7 +82,7 @@ namespace NeoServer.Game.World.Map
             {
                 SwapCreatureBetweenSectors(creature, toLocation);
 
-                var result = CylinderOperation.MoveThing(thing, fromTile, toTile, amount, out ICylinder cylinder);
+                var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, amount, out ICylinder cylinder);
                 if (result.IsSuccess is false)
                 {
                     RollbackSwapCreatureBetweenSectors(creature, toLocation);
@@ -135,7 +111,7 @@ namespace NeoServer.Game.World.Map
                 return true;
             }
 
-            return TryMoveThing(thing, tileDestination.Location);
+            return TryMoveCreature(thing, tileDestination.Location);
         }
 
         private void SwapCreatureBetweenSectors(ICreature creature, Location toLocation)
@@ -315,24 +291,17 @@ namespace NeoServer.Game.World.Map
 
             return tile;
         }
-        public void RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1)
-        {
-            if (tile.RemoveThing(thing, amount, 0, out var removedThing).IsSuccess is false) return;
-            if (thing is IMoveableThing moveable) moveable.OnMoved();
-        }
+
         public void OnItemReduced(ICumulative item, byte amount)
         {
-            if (item.Amount == 0 && this[item.Location] is IDynamicTile tile) 
-                RemoveThing(item, tile, amount);
-            if (item.Amount > 0) 
-                OnThingUpdatedOnTile?.Invoke(item, CylinderOperation.Removed(item, amount));
-        }
-        public void AddItem(IThing thing, IDynamicTile tile)
-        {
-            var result = CylinderOperation.AddThing(thing, tile, out ICylinder cylinder);
-            if (result.IsSuccess is false) return;
-
-            if (thing is IMoveableThing moveable) moveable.OnMoved();
+            if (this[item.Location] is not IDynamicTile tile) return;
+            if (item.Amount == 0)
+                tile.RemoveItem(item, amount, 0, out var removedThing);
+            if (item.Amount > 0)
+            {
+                tile.TryGetStackPositionOfItem(item, out var stackPosition);
+                OnThingUpdatedOnTile?.Invoke(item, CylinderOperation.Removed(item, stackPosition));
+            }
         }
 
         public IEnumerable<ICreature> GetPlayersAtPositionZone(Location location)
@@ -354,7 +323,6 @@ namespace NeoServer.Game.World.Map
             spectators.AddRange(fromSpectators);
             spectators.AddRange(toSpectators);
             return spectators.ToHashSet();
-
         }
 
         public IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false)
@@ -486,14 +454,13 @@ namespace NeoServer.Game.World.Map
         }
         public void AddCreature(ICreature creature)
         {
-            var thing = creature as IThing;
 
             if (this[creature.Location] is IDynamicTile tile)
             {
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
 
-                if (CylinderOperation.AddThing(thing, tile, out ICylinder cylinder).IsSuccess is false) return;
+                if (CylinderOperation.AddCreature(creature, tile, out ICylinder cylinder).IsSuccess is false) return;
 
                 if (creature is IPlayer player)
                 {
@@ -507,6 +474,15 @@ namespace NeoServer.Game.World.Map
                 }
 
                 if (creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
+            }
+        }
+        public void RemoveCreature(ICreature creature)
+        {
+            if (this[creature.Location] is Tile tile)
+            {
+                CylinderOperation.RemoveCreature(creature, out var cylinder);
+
+                if (creature is IWalkableCreature walkableCreature) OnThingRemovedFromTile?.Invoke(walkableCreature, cylinder);
             }
         }
         public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
@@ -533,7 +509,7 @@ namespace NeoServer.Game.World.Map
             {
                 var fromTile = creature.Tile;
 
-                if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveThing(creature, toTile.Location))
+                if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveCreature(creature, toTile.Location))
                 {
                     if (creature is IPlayer player) player.CancelWalk();
                     return;
@@ -550,15 +526,13 @@ namespace NeoServer.Game.World.Map
         }
         public void CreateBloodPool(ILiquid pool, IDynamicTile tile)
         {
-            if (tile?.TopItems != null && tile.TopItems.TryPeek(out var topItem) && topItem is ILiquid && topItem is IThing topItemThing)
+            if (tile?.TopItems != null && tile.TopItems.TryPeek(out var topItem) && topItem is ILiquid)
             {
-                RemoveThing(topItemThing, tile, 1);
+                tile.RemoveItem(topItem, 1, 0, out var removedThing);
             }
 
             if (pool is null) return;
-
-            var poolThing = pool as IThing;
-            AddItem(poolThing, tile);
+            tile.AddItem(pool);
         }
         public bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule)
         {

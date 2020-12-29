@@ -112,8 +112,7 @@ namespace NeoServer.Game.World.Tests
             var item = ItemTestData.CreateMoveableItem(500);
             var sut = CreateTile(item);
 
-            var thing = (IThing)item;
-            sut.RemoveThing(thing, 1, 0, out var removedThing);
+            sut.RemoveItem(item, 1, 0, out var removedThing);
 
             Assert.Equal(2, sut.DownItems.Count);
             Assert.Single(sut.TopItems);
@@ -127,8 +126,7 @@ namespace NeoServer.Game.World.Tests
             var item2 = ItemTestData.CreateCumulativeItem(400, 32);
             var sut = CreateTile(item2, item);
 
-            var thing = (IThing)item;
-            sut.RemoveThing(thing, amountToRemove, 0, out var removedThing);
+            sut.RemoveItem(item, amountToRemove, 0, out var removedThing);
 
             Assert.Equal(topItemId, sut.DownItems.First().ClientId);
             Assert.Equal(remainingAmount, (sut.DownItems.First() as ICumulative).Amount);
@@ -140,8 +138,8 @@ namespace NeoServer.Game.World.Tests
             var item = ItemTestData.CreateThrowableDistanceItem(500, 5);
             var sut = CreateTile(item);
 
-            var item2 = ItemTestData.CreateThrowableDistanceItem(500, 3) as IMoveableThing;
-            sut.AddThing(item2);
+            var item2 = ItemTestData.CreateThrowableDistanceItem(500, 3);
+            sut.AddItem(item2);
 
             Assert.Equal(3, sut.DownItems.Count);
             Assert.Single(sut.TopItems);
@@ -155,8 +153,8 @@ namespace NeoServer.Game.World.Tests
             var item = ItemTestData.CreateThrowableDistanceItem(500, 60);
             var sut = CreateTile(item);
 
-            var item2 = ItemTestData.CreateThrowableDistanceItem(500, 100) as IMoveableThing;
-            sut.AddThing(item2);
+            var item2 = ItemTestData.CreateThrowableDistanceItem(500, 100);
+            sut.AddItem(item2);
 
             Assert.Equal(4, sut.DownItems.Count);
             Assert.Single(sut.TopItems);
@@ -194,7 +192,7 @@ namespace NeoServer.Game.World.Tests
             ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
             var item = ItemTestData.CreateRegularItem(100);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             var result = sut.SendTo(dest, item, 1, 0, 0);
 
@@ -211,7 +209,7 @@ namespace NeoServer.Game.World.Tests
 
             var item = ItemTestData.CreateAmmoItem(100, 100);
 
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             var result = sut.SendTo(dest, item, 80, 0, 0);
             
@@ -231,7 +229,7 @@ namespace NeoServer.Game.World.Tests
 
             var item = ItemTestData.CreateAmmoItem(100, 100);
 
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             var result = sut.SendTo(dest, item, 50, 0, 0);
 
@@ -250,7 +248,7 @@ namespace NeoServer.Game.World.Tests
             ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[1] { ItemTestData.CreateAmmoItem(100, 50) });
 
             var item = ItemTestData.CreateAmmoItem(100, 100);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             var result = sut.SendTo(dest, item, 40, 0, 0);
 

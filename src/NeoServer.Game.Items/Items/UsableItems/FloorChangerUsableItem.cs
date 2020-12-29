@@ -3,11 +3,6 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Items.Items.UsableItems
 {
@@ -30,7 +25,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
                 {
                     if (map[neighbour] is IDynamicTile tile)
                     {
-                        map.TryMoveThing(player, tile.Location);
+                        map.TryMoveCreature(player, tile.Location);
                         return;
                     }
                 }

@@ -110,11 +110,9 @@ namespace NeoServer.Server
                 return false;
             }
 
-            var thing = creature as IThing;
-
             if (creature is IWalkableCreature walkableCreature)
             {
-                map.RemoveThing(thing, walkableCreature.Tile);
+                map.RemoveCreature(walkableCreature);
             }
 
             creatureInstances.TryRemove(creature.CreatureId);

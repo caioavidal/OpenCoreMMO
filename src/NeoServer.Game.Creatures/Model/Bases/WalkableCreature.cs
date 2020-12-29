@@ -35,7 +35,17 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
         public uint EventWalk { get; set; }
-        public IDynamicTile Tile { get; set; }
+        private IDynamicTile tile;
+        public IDynamicTile Tile { get
+            {
+                return tile;
+            }
+            set
+            {
+                tile = value;
+                Location = tile.Location;
+            }
+        }
         public virtual ushort Speed { get; protected set; }
         public uint Following { get; private set; }
         public bool IsFollowing => Following > 0;

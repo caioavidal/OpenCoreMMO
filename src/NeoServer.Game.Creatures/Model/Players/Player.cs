@@ -26,6 +26,7 @@ using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Server.Model.Players
 {
@@ -206,7 +207,7 @@ namespace NeoServer.Server.Model.Players
 
         public string Guild { get; }
         public bool Recovering { get; private set; }
-        
+
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
@@ -371,10 +372,9 @@ namespace NeoServer.Server.Model.Players
         public override IItem CreateItem(ushort itemId, byte amount)
         {
             var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.AddThing(item).IsSuccess)
+            if (!Inventory.BackpackSlot.AddItem(item).IsSuccess)
             {
-                var thing = item as IThing;
-                Tile.AddThing(thing);
+                Tile.AddItem(item);
             }
             return item;
         }
@@ -455,19 +455,34 @@ namespace NeoServer.Server.Model.Players
         {
             if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);
             else
-                ReduceHealth(enemy, damage);
+                ReduceHealth(damage);
         }
 
-        public void Use(IConsumable item, ICreature creature)
+        public void Use(IUseableOn2 item, IThing onThing)
         {
-            if (!item.CanBeUsed(this))
+            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, item.ValidationError);
+                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
                 return;
             }
 
-            item.Use(this, creature);
-            OnUsedItem?.Invoke(this, creature, item);
+            if (onThing is ICreature creature && item is IUseableOnCreature useableOnCreature)
+            {
+                useableOnCreature.Use(this, creature);
+            }
+
+            if (onThing is ICombatActor enemy)
+            {
+                if (item is IUseableAttackOnCreature useableAttackOnCreature) Attack(enemy, useableAttackOnCreature);
+                
+            }
+
+            else if (onThing is IItem useOnItem && item is IUseableOnItem useableOnItem)
+            {
+                useableOnItem.Use(this, useOnItem);
+            }
+
+            OnUsedItem?.Invoke(this, onThing, item);
         }
         public bool Feed(IFood food)
         {
@@ -496,11 +511,12 @@ namespace NeoServer.Server.Model.Players
 
         public void OnHungry() => Recovering = false;
 
-        public Result MoveThing(IStore source, IStore destination, IThing thing, byte amount, byte fromPosition, byte? toPosition)
+        public Result MoveItem(IStore source, IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
         {
             if (thing.Location.Type == LocationType.Ground && !Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
 
-            return source.SendTo(destination, thing, amount, fromPosition, toPosition);
+            return source.SendTo(destination, thing, amount, fromPosition, toPosition).ResultValue;
         }
+
     }
 }

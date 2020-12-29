@@ -1,3 +1,4 @@
+using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Players;
@@ -36,6 +37,8 @@ namespace NeoServer.Game.Contracts.Items
         ushort TransformTo { get; }
         string Plural { get; }
         IItemAttributeList OnUse { get; }
+        DamageType DamageType { get; }
+        EffectT EffectT { get; }
 
         void SetName(string value);
         void LockChanges();

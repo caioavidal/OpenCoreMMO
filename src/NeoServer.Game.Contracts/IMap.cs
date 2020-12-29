@@ -35,18 +35,16 @@ namespace NeoServer.Game.Contracts
         bool ArePlayersAround(Location location);
         void AddCreature(ICreature creature);
         ITile GetNextTile(Location fromLocation, Direction direction);
-        void RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1);
         IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, byte width, byte height, int verticalOffset, ref int skip);
         IEnumerable<ICreature> GetPlayersAtPositionZone(Location location);
-        void AddItem(IThing thing, IDynamicTile tile);
         bool IsInRange(Location start, Location current, Location target, FindPathParams fpp);
         HashSet<ICreature> GetCreaturesAtPositionZone(Location location, Location toLocation);
         void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
         void MoveCreature(IWalkableCreature creature);
         void CreateBloodPool(ILiquid liquid, IDynamicTile tile);
         ITile GetTileDestination(IDynamicTile tile);
-        bool TryMoveThing(IMoveableThing thing, Location toLocation, byte amount =1);
-        void ReplaceThing(IThing thingToRemove, IThing thingToAdd, byte amount = 1);
+        bool TryMoveCreature(IMoveableThing thing, Location toLocation, byte amount =1);
         bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
+        void RemoveCreature(ICreature creature);
     }
 }

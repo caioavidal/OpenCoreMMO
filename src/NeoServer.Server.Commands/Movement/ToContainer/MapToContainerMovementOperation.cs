@@ -27,7 +27,7 @@ namespace NeoServer.Server.Commands.Movement
 
             var container = player.Containers[itemThrow.ToLocation.ContainerId];
 
-            player.MoveThing(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
+            player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
         }
 
         public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>

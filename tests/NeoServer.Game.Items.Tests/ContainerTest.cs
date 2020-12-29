@@ -100,10 +100,10 @@ namespace NeoServer.Game.Items.Tests
             var item3 = CreateRegularItem(300);
             var item4 = CreateRegularItem(400);
 
-            sut.AddThing(item1);
-            sut.AddThing(item2);
-            sut.AddThing(item3);
-            sut.AddThing(item4);
+            sut.AddItem(item1);
+            sut.AddItem(item2);
+            sut.AddItem(item3);
+            sut.AddItem(item4);
 
             Assert.Same(item2, sut[2]);
             Assert.Same(item1, sut[3]);
@@ -120,7 +120,7 @@ namespace NeoServer.Game.Items.Tests
             var result = sut.PossibleAmountToAdd(item);
             Assert.Equal(1, result);
 
-            sut.AddThing(item);
+            sut.AddItem(item);
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(0, result);
         }
@@ -133,26 +133,26 @@ namespace NeoServer.Game.Items.Tests
             var result = sut.PossibleAmountToAdd(item);
             Assert.Equal(300, result);
 
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(200, result);
 
             var item2 = ItemTestData.CreateAmmoItem(100, 30);
 
-            sut.AddThing(item2);
+            sut.AddItem(item2);
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(170, result);
 
             var item3 = ItemTestData.CreateAmmoItem(200, 100);
 
-            sut.AddThing(item3);
+            sut.AddItem(item3);
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(70, result);
 
             var item4 = ItemTestData.CreateAmmoItem(100, 70);
 
-            sut.AddThing(item4);
+            sut.AddItem(item4);
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(0, result);
         }
@@ -162,7 +162,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer();
             var container = CreateContainer();
-            sut.AddThing(container);
+            sut.AddItem(container);
 
             Assert.Same(container, sut[0]);
             Assert.True(container.HasParent);
@@ -173,7 +173,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer();
             var item = sut;
-            var result = sut.AddThing(item);
+            var result = sut.AddItem(item);
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.Impossible, result.Error);
@@ -184,13 +184,13 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer();
             var container = CreateContainer();
-            sut.AddThing(container);
+            sut.AddItem(container);
 
             var item = CreateRegularItem(100);
-            sut.AddThing(item, 0);
+            sut.AddItem(item, 0);
 
             var container2 = CreateContainer();
-            sut.AddThing(container2, 0);
+            sut.AddItem(container2, 0);
 
             Assert.Equal(1, sut.SlotsUsed);
             Assert.Same(item, container[1]);
@@ -202,23 +202,23 @@ namespace NeoServer.Game.Items.Tests
         public void TryAddItem_Adding_Item_Should_Return_False_When_Full_Capacity()
         {
             var sut = CreateContainer(3);
-            sut.AddThing(CreateRegularItem(100));
+            sut.AddItem(CreateRegularItem(100));
 
-            Assert.True(sut.AddThing(CreateRegularItem(100)).IsSuccess);
-            Assert.True(sut.AddThing(CreateContainer()).IsSuccess);
+            Assert.True(sut.AddItem(CreateRegularItem(100)).IsSuccess);
+            Assert.True(sut.AddItem(CreateContainer()).IsSuccess);
 
             //adding items to child container
-            Assert.True(sut.AddThing(CreateRegularItem(100), 0).IsSuccess);
-            Assert.True(sut.AddThing(CreateRegularItem(100), 0).IsSuccess);
-            Assert.True(sut.AddThing(CreateRegularItem(100), 0).IsSuccess);
+            Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
+            Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
+            Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
 
-            Assert.False(sut.AddThing(CreateRegularItem(100), 1).IsSuccess);
-            Assert.False(sut.AddThing(CreateRegularItem(100), 2).IsSuccess);
+            Assert.False(sut.AddItem(CreateRegularItem(100), 1).IsSuccess);
+            Assert.False(sut.AddItem(CreateRegularItem(100), 2).IsSuccess);
 
-            var result = sut.AddThing(CreateRegularItem(100), 2);
+            var result = sut.AddItem(CreateRegularItem(100), 2);
             Assert.False(result.IsSuccess);
 
-            Assert.True(sut.AddThing(CreateRegularItem(100), 0).IsSuccess);
+            Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
 
             Assert.Equal(InvalidOperation.IsFull, result.Error);
             Assert.Equal(3, sut.SlotsUsed);
@@ -228,28 +228,28 @@ namespace NeoServer.Game.Items.Tests
         public void TryAddItem_Adding_Item_To_Child_Container_Should_Return_False_When_Full_Capacity()
         {
             var sut = CreateContainer(3);
-            sut.AddThing(CreateRegularItem(100));
-            sut.AddThing(CreateRegularItem(100));
+            sut.AddItem(CreateRegularItem(100));
+            sut.AddItem(CreateRegularItem(100));
 
             var container = CreateContainer(2);
-            sut.AddThing(container);
+            sut.AddItem(container);
 
-            Assert.True(sut.AddThing(CreateContainer(100), 0).IsSuccess); //inserting on child container
-            Assert.True(sut.AddThing(CreateContainer(100), 0).IsSuccess); //inserting on child container
+            Assert.True(sut.AddItem(CreateContainer(100), 0).IsSuccess); //inserting on child container
+            Assert.True(sut.AddItem(CreateContainer(100), 0).IsSuccess); //inserting on child container
 
             //at this point, child container is full
 
-            Assert.False(sut.AddThing(CreateRegularItem(100), 0).IsSuccess); //inserting on child container
+            Assert.False(sut.AddItem(CreateRegularItem(100), 0).IsSuccess); //inserting on child container
         }
 
         [Fact]
         public void TryAddItem_Adding_CumulativeItem_Should_Insert_Item_In_Front()
         {
             var sut = CreateContainer(5);
-            sut.AddThing(CreateRegularItem(500));
+            sut.AddItem(CreateRegularItem(500));
 
             var item = CreateCumulativeItem(100, 40);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             Assert.Equal(item, sut[0]);
             Assert.Equal(40, (sut[0] as ICumulative).Amount);
@@ -258,14 +258,14 @@ namespace NeoServer.Game.Items.Tests
             //adding another item
 
             var item2 = CreateCumulativeItem(200, 60);
-            sut.AddThing(item2);
+            sut.AddItem(item2);
 
             Assert.Equal(item2, sut[0]);
             Assert.Equal(60, (sut[0] as ICumulative).Amount);
 
             //adding a regular item
             var item3 = CreateRegularItem(567);
-            sut.AddThing(item3);
+            sut.AddItem(item3);
 
             Assert.Equal(item3, sut[0]);
             Assert.Equal(item2, sut[1]);
@@ -278,10 +278,10 @@ namespace NeoServer.Game.Items.Tests
         public void TryAddItem_Adding_Same_CumulativeItem_Should_Join()
         {
             var sut = CreateContainer(5);
-            sut.AddThing(CreateRegularItem(500));
+            sut.AddItem(CreateRegularItem(500));
 
             var item = CreateCumulativeItem(100, 40);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             Assert.Equal(item, sut[0]);
             Assert.Equal(40, (sut[0] as ICumulative).Amount);
@@ -290,7 +290,7 @@ namespace NeoServer.Game.Items.Tests
             //adding same item again
 
             var sameItemType = CreateCumulativeItem(100, 40);
-            sut.AddThing(sameItemType);
+            sut.AddItem(sameItemType);
 
             Assert.Equal(item, sut[0]);
             Assert.Equal(80, (sut[0] as ICumulative).Amount);
@@ -298,7 +298,7 @@ namespace NeoServer.Game.Items.Tests
             //adding same item again. This time will exceed the amount of 100
 
             var sameItemType2 = CreateCumulativeItem(100, 40); //total will be 120
-            sut.AddThing(sameItemType2);
+            sut.AddItem(sameItemType2);
 
             Assert.Equal(sameItemType2, sut[0]);
             Assert.Equal(20, (sut[0] as ICumulative).Amount);
@@ -306,7 +306,7 @@ namespace NeoServer.Game.Items.Tests
             //adding same item again. must add to the item with amount of 20
 
             var sameItemType3 = CreateCumulativeItem(100, 40); //total will be 60
-            sut.AddThing(sameItemType3);
+            sut.AddItem(sameItemType3);
 
             Assert.Equal(sameItemType2, sut[0]);
             Assert.Equal(60, (sut[0] as ICumulative).Amount);
@@ -316,13 +316,13 @@ namespace NeoServer.Game.Items.Tests
         public void TryAddItem_Adding_CumulativeItem_Join_To_The_First_Less_Than_100_Item_Amount()
         {
             var sut = CreateContainer(8);
-            sut.AddThing(CreateCumulativeItem(200, 100));
-            sut.AddThing(CreateCumulativeItem(200, 100));
-            sut.AddThing(CreateCumulativeItem(200, 100));
-            sut.AddThing(CreateCumulativeItem(200, 100));
+            sut.AddItem(CreateCumulativeItem(200, 100));
+            sut.AddItem(CreateCumulativeItem(200, 100));
+            sut.AddItem(CreateCumulativeItem(200, 100));
+            sut.AddItem(CreateCumulativeItem(200, 100));
 
-            sut.RemoveThing(null, 60, 1, out var removedThing);
-            sut.RemoveThing(null, amount:77, 3, out var removedThing2);
+            sut.RemoveItem(null, 60, 1, out var removedThing);
+            sut.RemoveItem(null, amount:77, 3, out var removedThing2);
 
             Assert.Equal(100, (sut[0] as ICumulative).Amount);
             Assert.Equal(40, (sut[1] as ICumulative).Amount);
@@ -330,7 +330,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(23, (sut[3] as ICumulative).Amount);
 
             var item = CreateCumulativeItem(200, 100);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             Assert.Equal(40, (sut[0] as ICumulative).Amount);
             Assert.Equal(100, (sut[1] as ICumulative).Amount);
@@ -338,8 +338,8 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(100, (sut[3] as ICumulative).Amount);
             Assert.Equal(23, (sut[4] as ICumulative).Amount);
 
-            sut.AddThing(CreateCumulativeItem(200, 60));
-            sut.AddThing(CreateCumulativeItem(200, 10));
+            sut.AddItem(CreateCumulativeItem(200, 60));
+            sut.AddItem(CreateCumulativeItem(200, 10));
             Assert.Equal(100, (sut[0] as ICumulative).Amount);
             Assert.Equal(33, (sut[4] as ICumulative).Amount);
         }
@@ -348,13 +348,13 @@ namespace NeoServer.Game.Items.Tests
         public void TryAddItem_Adding_Different_CumulativeItem_Do_Not_Join()
         {
             var sut = CreateContainer(5);
-            sut.AddThing(CreateRegularItem(500));
+            sut.AddItem(CreateRegularItem(500));
 
             var item = CreateCumulativeItem(100, 40);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             var item2 = CreateCumulativeItem(200, 26);
-            sut.AddThing(item2);
+            sut.AddItem(item2);
 
             Assert.Equal(item, sut[1]);
             Assert.Equal(40, (sut[1] as ICumulative).Amount);
@@ -369,16 +369,16 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(2);
 
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 40)).IsSuccess);
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 70)).IsSuccess);
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 90)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 90)).IsSuccess);
 
-            var result = sut.AddThing(CreateCumulativeItem(100, 90), 0);
+            var result = sut.AddItem(CreateCumulativeItem(100, 90), 0);
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.IsFull, result.Error);
 
-            result = sut.AddThing(CreateCumulativeItem(200, 90));
+            result = sut.AddItem(CreateCumulativeItem(200, 90));
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.IsFull, result.Error);
         }
@@ -387,12 +387,12 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(2);
 
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 40)).IsSuccess);
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 70)).IsSuccess);
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 40)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).IsSuccess);
             //total amount of 150
             var item = CreateCumulativeItem(100, 70);
-            var result = sut.AddThing(item); //should join only 50 and return full
+            var result = sut.AddItem(item); //should join only 50 and return full
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.IsFull, result.Error);
@@ -408,11 +408,11 @@ namespace NeoServer.Game.Items.Tests
             var child = CreateContainer(1);
 
             var itemOnChild = CreateCumulativeItem(100, 50);
-            child.AddThing(itemOnChild);
+            child.AddItem(itemOnChild);
 
             var item = CreateCumulativeItem(100, 100);
-            sut.AddThing(child);
-            sut.AddThing(item);
+            sut.AddItem(child);
+            sut.AddItem(item);
 
             var result = sut.SendTo(sut, item, 70, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
 
@@ -429,8 +429,8 @@ namespace NeoServer.Game.Items.Tests
             var child = CreateContainer(1);
             var item = CreateCumulativeItem(100, 40);
 
-            sut.AddThing(child);
-            sut.AddThing(item);
+            sut.AddItem(child);
+            sut.AddItem(item);
 
             var eventCalled = false;
             var childEventCalled = false;
@@ -453,8 +453,8 @@ namespace NeoServer.Game.Items.Tests
             var child = CreateContainer(1);
             var item = ItemTestData.CreateBodyEquipmentItem(100, "head");
 
-            sut.AddThing(child);
-            sut.AddThing(item);
+            sut.AddItem(child);
+            sut.AddItem(item);
 
             var eventCalled = false;
             var childEventCalled = false;
@@ -478,9 +478,9 @@ namespace NeoServer.Game.Items.Tests
             var item = CreateCumulativeItem(100, 40);
             var item2 = CreateCumulativeItem(100, 100);
 
-            sut.AddThing(child);
-            sut.AddThing(item);
-            child.AddThing(item2);
+            sut.AddItem(child);
+            sut.AddItem(item);
+            child.AddItem(item2);
 
             var result = sut.SendTo(sut, item, 40, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
 
@@ -496,9 +496,9 @@ namespace NeoServer.Game.Items.Tests
             var item = CreateCumulativeItem(100, 40);
             var item2 = CreateCumulativeItem(100, 20);
 
-            sut.AddThing(child);
-            sut.AddThing(item);
-            child.AddThing(item2);
+            sut.AddItem(child);
+            sut.AddItem(item);
+            child.AddItem(item2);
 
             var eventCalled = false;
             var childEventCalled = false;
@@ -520,10 +520,10 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(2);
 
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 70)).IsSuccess);
-            Assert.True(sut.AddThing(CreateCumulativeItem(100, 70)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
+            Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
 
-            var result = sut.AddThing(CreateCumulativeItem(100, 90), 0);
+            var result = sut.AddItem(CreateCumulativeItem(100, 90), 0);
             Assert.False(result.IsSuccess);
 
             Assert.Equal(InvalidOperation.IsFull, result.Error);
@@ -540,12 +540,12 @@ namespace NeoServer.Game.Items.Tests
             var sut = CreateContainer(2);
 
             var item = CreateRegularItem(100);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             var item2 = CreateRegularItem(100);
-            sut.AddThing(item2);
+            sut.AddItem(item2);
 
-            sut.RemoveThing(null, 1, 0, out var removedItem);
+            sut.RemoveItem(null, 1, 0, out var removedItem);
 
             Assert.Equal(1, sut.SlotsUsed);
             Assert.Equal(item, sut[0]);
@@ -558,12 +558,12 @@ namespace NeoServer.Game.Items.Tests
             var sut = CreateContainer(2);
 
             var container = CreateContainer();
-            sut.AddThing(container);
-            sut.AddThing(CreateRegularItem(100));
+            sut.AddItem(container);
+            sut.AddItem(CreateRegularItem(100));
 
             Assert.Same(sut, container.Parent);
 
-            sut.RemoveThing(null, 1, 1, out var removedThing);
+            sut.RemoveItem(null, 1, 1, out var removedThing);
 
             Assert.Equal(1, sut.SlotsUsed);
             Assert.False(container.HasParent);
@@ -573,12 +573,12 @@ namespace NeoServer.Game.Items.Tests
         public void RemoveItem_When_Cumumulative_Removes_Amount()
         {
             var sut = CreateContainer(2);
-            sut.AddThing(CreateRegularItem(100));
+            sut.AddItem(CreateRegularItem(100));
 
             var item = CreateCumulativeItem(200, 57);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
-            sut.RemoveThing(null, amount: 23, 0, out var removedItem);
+            sut.RemoveItem(null, amount: 23, 0, out var removedItem);
 
             Assert.Equal(2, sut.SlotsUsed);
 
@@ -595,12 +595,12 @@ namespace NeoServer.Game.Items.Tests
         public void RemoveItem_When_Remove_Full_Amount_Removes_Item()
         {
             var sut = CreateContainer(2);
-            sut.AddThing(CreateRegularItem(100));
+            sut.AddItem(CreateRegularItem(100));
 
             var item = CreateCumulativeItem(200, 63);
-            sut.AddThing(item);
+            sut.AddItem(item);
 
-            sut.RemoveThing(null, amount: 63, 0, out var removedItem);
+            sut.RemoveItem(null, amount: 63, 0, out var removedItem);
 
             Assert.Equal(1, sut.SlotsUsed);
 
@@ -637,7 +637,7 @@ namespace NeoServer.Game.Items.Tests
             var item3 = CreateRegularItem(100, "item 3");
 
             var container = CreateContainer(20, "bag");
-            container.AddThing(item3);
+            container.AddItem(item3);
 
             sut.TryAddItem(container);
 
@@ -649,7 +649,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(5);
             var item = ItemTestData.CreateWeaponItem(100, "axe");
-            sut.AddThing(item);
+            sut.AddItem(item);
 
             Assert.Equal(Location.Container(0, 0), item.Location);
         }

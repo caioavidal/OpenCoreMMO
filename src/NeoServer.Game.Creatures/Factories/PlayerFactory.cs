@@ -108,12 +108,12 @@ namespace NeoServer.Game.Creatures
         //    if (item is IContainer childrenContainer)
         //    {
         //        childrenContainer.SetParent(container);
-        //        container.AddThing(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));
+        //        container.AddItem(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));
         //    }
         //    else
         //    {
-        //        container.AddThing(item);
-
+        //        container.AddItem(item);
+        //
         //    }
         //    return BuildContainer(items, ++index, location, container);
         //}
