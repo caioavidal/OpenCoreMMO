@@ -159,11 +159,11 @@ namespace NeoServer.Server.Commands
             if (item is IContainer childrenContainer)
             {
                 childrenContainer.SetParent(container);
-                container.AddThing(BuildContainer(all.Where(c => c.Pid.Equals(itemModel.Sid)).ToList(), 0, location, childrenContainer, all));
+                container.AddItem(BuildContainer(all.Where(c => c.Pid.Equals(itemModel.Sid)).ToList(), 0, location, childrenContainer, all));
             }
             else
             {
-                container.AddThing(item);
+                container.AddItem(item);
 
             }
             return BuildContainer(items, ++index, location, container, all);
