@@ -89,6 +89,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{A779
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data.InMemoryDB", "NeoServer.Data.InMemoryDB\NeoServer.Data.InMemoryDB.csproj", "{B1F24B44-5F54-4A34-B062-3E0455E08781}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Data.MySqlDB", "NeoServer.Data.MySqlDB\NeoServer.Data.MySqlDB.csproj", "{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -361,6 +363,14 @@ Global
 		{B1F24B44-5F54-4A34-B062-3E0455E08781}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1F24B44-5F54-4A34-B062-3E0455E08781}.Release|x64.ActiveCfg = Release|Any CPU
 		{B1F24B44-5F54-4A34-B062-3E0455E08781}.Release|x64.Build.0 = Release|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Debug|x64.Build.0 = Debug|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Release|x64.ActiveCfg = Release|Any CPU
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -400,6 +410,7 @@ Global
 		{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69} = {E0298381-8C65-4339-835B-0F4D230E479E}
 		{A7798DC6-0761-4BE7-AAC7-1A7173DFC1A8} = {8D9B5E00-6CED-11EA-B33F-6FE31AF2C75A}
 		{B1F24B44-5F54-4A34-B062-3E0455E08781} = {C859BCB0-ED88-4607-9687-6CE2B309643F}
+		{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2} = {C859BCB0-ED88-4607-9687-6CE2B309643F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B3C7097-0071-4218-BE24-5EE9128763B6}

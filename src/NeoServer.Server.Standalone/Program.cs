@@ -24,6 +24,7 @@ using NeoServer.Loaders.Vocations;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
 using NeoServer.Data.Interfaces;
+using System.Collections.Generic;
 
 Console.Title = "OpenCoreMMO Server";
 
@@ -103,10 +104,11 @@ var player2 = new PlayerModel
 var playerItem1_Necklace = new PlayerItemModel
 {
     PlayerId = 1,
-    Pid  = 1,
+    Pid = 1,
     Sid = 101,
     Itemtype = 2125,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_Head = new PlayerItemModel
@@ -116,6 +118,7 @@ var playerItem1_Head = new PlayerItemModel
     Sid = 102,
     Itemtype = 2498,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_Backpack = new PlayerItemModel
@@ -125,6 +128,7 @@ var playerItem1_Backpack = new PlayerItemModel
     Sid = 103,
     Itemtype = 1988,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_Left = new PlayerItemModel
@@ -134,6 +138,7 @@ var playerItem1_Left = new PlayerItemModel
     Sid = 104,
     Itemtype = 2409,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_Body = new PlayerItemModel
@@ -143,6 +148,7 @@ var playerItem1_Body = new PlayerItemModel
     Sid = 105,
     Itemtype = 2466,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 //var playerItem1_Right = new PlayerItemModel
@@ -151,6 +157,7 @@ var playerItem1_Body = new PlayerItemModel
 //    Pid = 6,
 //    Sid = 1988,
 //    Count = 1,
+//    Attributes = new List<byte>().ToArray(),
 //};
 
 var playerItem1_Ring = new PlayerItemModel
@@ -160,6 +167,7 @@ var playerItem1_Ring = new PlayerItemModel
     Sid = 106,
     Itemtype = 6093,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_Legs = new PlayerItemModel
@@ -169,6 +177,7 @@ var playerItem1_Legs = new PlayerItemModel
     Sid = 107,
     Itemtype = 2488,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_Ammo = new PlayerItemModel
@@ -178,6 +187,7 @@ var playerItem1_Ammo = new PlayerItemModel
     Sid = 108,
     Itemtype = 7840,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_Feet = new PlayerItemModel
@@ -187,6 +197,7 @@ var playerItem1_Feet = new PlayerItemModel
     Sid = 109,
     Itemtype = 2666,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
 var playerItem1_b1 = new PlayerItemModel
@@ -196,28 +207,39 @@ var playerItem1_b1 = new PlayerItemModel
     Sid = 110,
     Itemtype = 1988,
     Count = 1,
+    Attributes = new List<byte>().ToArray(),
 };
 
-context.Accounts.Add(account1);
-context.Accounts.Add(account2);
-context.SaveChanges();
+context.Database.EnsureCreated();
 
-context.Player.Add(player1);
-context.Player.Add(player2);
-context.SaveChanges();
+if (!context.Accounts.Any())
+{
+    context.Accounts.Add(account1);
+    context.Accounts.Add(account2);
+    context.SaveChanges();
+}
 
-context.PlayerItems.Add(playerItem1_Necklace);
-context.PlayerItems.Add(playerItem1_Head);
-context.PlayerItems.Add(playerItem1_Backpack);
-context.PlayerItems.Add(playerItem1_Left);
-context.PlayerItems.Add(playerItem1_Body);
-context.PlayerItems.Add(playerItem1_Ring);
-context.PlayerItems.Add(playerItem1_Legs);
-context.PlayerItems.Add(playerItem1_Ammo);
-context.PlayerItems.Add(playerItem1_Feet);
+if (!context.Players.Any())
+{
+    context.Players.Add(player1);
+    context.Players.Add(player2);
+    context.SaveChanges();
+}
 
-context.PlayerItems.Add(playerItem1_b1);
-context.SaveChanges();
+if (!context.PlayerItems.Any())
+{
+    context.PlayerItems.Add(playerItem1_Necklace);
+    context.PlayerItems.Add(playerItem1_Head);
+    context.PlayerItems.Add(playerItem1_Backpack);
+    context.PlayerItems.Add(playerItem1_Left);
+    context.PlayerItems.Add(playerItem1_Body);
+    context.PlayerItems.Add(playerItem1_Ring);
+    context.PlayerItems.Add(playerItem1_Legs);
+    context.PlayerItems.Add(playerItem1_Ammo);
+    context.PlayerItems.Add(playerItem1_Feet);
+    context.PlayerItems.Add(playerItem1_b1);
+    context.SaveChanges();
+}
 
 //TEST EF
 
