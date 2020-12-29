@@ -43,12 +43,12 @@ namespace NeoServer.Server.Commands.Player
             }
 
             if (onThing is not IThing) return;
-            Action action = null;
 
+
+            Action action = null;
             
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
-            //    action
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
           
                 if(tile.TopItemOnStack is IUseableOn useable)

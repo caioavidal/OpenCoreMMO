@@ -457,8 +457,7 @@ namespace NeoServer.Server.Model.Players
             else
                 ReduceHealth(damage);
         }
-
-        public void Use(IUseableOn2 item, IThing onThing)
+        public void Use(IUseableOn2 item, ICreature onCreature)
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
@@ -466,23 +465,29 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
 
-            if (onThing is ICreature creature && item is IUseableOnCreature useableOnCreature)
-            {
-                useableOnCreature.Use(this, creature);
-            }
-
-            if (onThing is ICombatActor enemy)
+            if (onCreature is ICombatActor enemy)
             {
                 if (item is IUseableAttackOnCreature useableAttackOnCreature) Attack(enemy, useableAttackOnCreature);
-                
+                else if (item is IUseableOnCreature useableOnCreature) useableOnCreature.Use(this, onCreature);
+                else if (item is IUseableOnTile useableOnTile && onCreature is IWalkableCreature c) useableOnTile.Use(this, c.Tile);
             }
 
-            else if (onThing is IItem useOnItem && item is IUseableOnItem useableOnItem)
+            OnUsedItem?.Invoke(this, onCreature, item);
+        }
+        public void Use(IUseableOn2 item, ITile tile)
+        {
+            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
-                useableOnItem.Use(this, useOnItem);
+                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
+                return;
             }
 
-            OnUsedItem?.Invoke(this, onThing, item);
+            if (tile.TopItemOnStack is not IItem onItem) return;
+
+            if (item is IUseableOnTile useableOnTile) useableOnTile.Use(this, tile);
+            else if (item is IUseableOnItem useableOnItem) useableOnItem.Use(this, onItem);
+
+            OnUsedItem?.Invoke(this, onItem, item);
         }
         public bool Feed(IFood food)
         {

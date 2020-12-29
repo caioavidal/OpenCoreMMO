@@ -14,6 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void StartFollow(IWalkableCreature creature, IWalkableCreature following, FindPathParams fpp);
     public delegate void ChangeSpeed(IWalkableCreature creature, ushort speed);
     public delegate bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
+    public delegate void TeleportTo(IWalkableCreature creature, Location location);
 
     public interface IWalkableCreature: ICreature
     {
@@ -35,6 +36,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event StartFollow OnStartedFollowing;
         event ChangeSpeed OnChangedSpeed;
         event StopWalk OnCompleteWalking;
+        event TeleportTo OnTeleported;
 
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);
@@ -50,5 +52,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void StartFollowing(IWalkableCreature creature, FindPathParams fpp);
         bool WalkTo(Location location);
         bool WalkTo(Location location, Action<ICreature> callbackAction);
+        void TeleportTo(Location location);
     }
 }

@@ -8,12 +8,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
 {
     public class TransformerUsableItem : UseableOnItem
     {
-        private readonly IItemFactory _itemFactory;
-        public TransformerUsableItem(IItemType type, Location location, IItemFactory itemFactory) : base(type, location)
-        {
-            _itemFactory = itemFactory;
-        }
-
+        public TransformerUsableItem(IItemType type, Location location) : base(type, location) { }
         public override void UseOn(IPlayer player, IMap map, IThing thing)
         {
             if (thing is not IItem item) return;
@@ -23,7 +18,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
 
             if (thing is IGround ground && map[ground.Location] is IDynamicTile tile)
             {
-                var itemCreated =  _itemFactory.Create(item.Metadata.Attributes.GetTransformationItem(), ground.Location, null);
+                var itemCreated =  ItemFactory.Instance.Create(item.Metadata.Attributes.GetTransformationItem(), ground.Location, null);
 
                 tile.RemoveItem(ground,1,0, out var removedItem);
                 tile.AddItem(itemCreated);

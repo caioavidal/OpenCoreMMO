@@ -20,6 +20,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event OnTurnedToDirection OnTurnedToDirection;
         public event StartFollow OnStartedFollowing;
         public event ChangeSpeed OnChangedSpeed;
+        public event TeleportTo OnTeleported;
         #endregion
 
         protected IPathAccess PathAccess { get; }
@@ -204,6 +205,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
 
             return false;
+        }
+
+        public virtual void TeleportTo(Location location)
+        {
+            OnTeleported?.Invoke(this, location);
         }
 
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);

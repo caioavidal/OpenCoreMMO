@@ -73,5 +73,8 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
             return true;
         }
+
+        public static new bool IsApplicable(IItemType type) => Rune.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.Damage);
+
     }
 }

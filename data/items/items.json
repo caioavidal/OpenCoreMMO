@@ -10043,6 +10043,10 @@
 			"key":"shootType",
 			"value":"death"
 		  },
+		  {
+		    "key":"minLevel",
+			"value":15
+		  },
 		  { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
        ]
     },
@@ -10550,6 +10554,10 @@
           {
              "key": "charges",
              "value": "3"
+          },
+		  {
+             "key": "field",
+             "value": "1487"
           }
        ]
     },
