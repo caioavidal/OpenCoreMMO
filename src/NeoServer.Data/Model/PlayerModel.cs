@@ -30,12 +30,12 @@ namespace NeoServer.Server.Model.Players
         public byte AmmoAmount { get; set; }
         public bool Online { get; set; }
 
-        public int Lookaddons { get; set; }
-        public int Lookbody { get; set; }
-        public int Lookfeet { get; set; }
-        public int Lookhead { get; set; }
-        public int Looklegs { get; set; }
-        public int Looktype { get; set; }
+        public int LookAddons { get; set; }
+        public int LookBody { get; set; }
+        public int LookFeet { get; set; }
+        public int LookHead { get; set; }
+        public int LookLegs { get; set; }
+        public int LookType { get; set; }
 
         public int PosX { get; set; }
         public int PosY { get; set; }
@@ -66,7 +66,7 @@ namespace NeoServer.Server.Model.Players
         public int SkillFishingTries { get; set; }
 
         public ChaseMode ChaseMode { get; set; }
-        public FightMode FightMode { get; }
+        public FightMode FightMode { get; set; }
         public Gender Gender { get; set; }
         public VocationType Vocation { get; set; }
 
@@ -74,17 +74,14 @@ namespace NeoServer.Server.Model.Players
         public AccountModel Account { get; set; }
 
         public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
+        public int MagicLevel { get; set; }
+        public double MagicLevelTries { get; set; }
+        public double Experience { get; set; }
 
         public bool IsMounted()
         {
             return false;
         }
-    }
-
-    public class SkillModel/*: ISkillModel*/
-    {
-        public int Level { get; set; }
-        public int Count { get; set; }
     }
 
     public class ItemModel/*:IItemModel*/

@@ -83,6 +83,8 @@ namespace NeoServer.Data.Repositories
         public async Task<AccountModel> Login(string name, string password)
         {
             return await GetContext.Accounts
+                    .Include(x=>x.Players)
+                    .ThenInclude(x=>x.PlayerItems)
                     .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
                 //.Where(x => x.Email == email)
                 //.Include(x => x.Players)

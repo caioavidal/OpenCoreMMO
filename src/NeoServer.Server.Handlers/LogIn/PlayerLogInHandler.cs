@@ -1,6 +1,7 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures;
+using NeoServer.Loaders.Players;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
@@ -18,9 +19,10 @@ namespace NeoServer.Server.Handlers.Authentication
         private readonly Game game;
         private CreaturePathAccess _creaturePathAccess;
         private readonly IItemFactory _itemFactory;
+        private readonly PlayerLoader playerLoader;
 
         public PlayerLogInHandler(/*IAccountRepository repository,*/ IAccountRepositoryNeo repositoryNeo,
-         Game game, ServerConfiguration serverConfiguration, CreaturePathAccess creaturePathAccess, IItemFactory itemFactory)
+         Game game, ServerConfiguration serverConfiguration, CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, PlayerLoader playerLoader)
         {
             this.repositoryNeo = repositoryNeo;
             // this.repository = repository;
@@ -28,6 +30,7 @@ namespace NeoServer.Server.Handlers.Authentication
             this.serverConfiguration = serverConfiguration;
             _creaturePathAccess = creaturePathAccess;
             _itemFactory = itemFactory;
+            this.playerLoader = playerLoader;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -56,7 +59,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection, _creaturePathAccess, _itemFactory).Execute));
+            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection, playerLoader).Execute));
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)

@@ -41,6 +41,7 @@ using System.Collections.Generic;
 using NeoServer.Data.Interfaces;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.Players;
+using NeoServer.Loaders.Players;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -101,6 +102,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
+            builder.RegisterType<PlayerLoader>().SingleInstance();
+
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();

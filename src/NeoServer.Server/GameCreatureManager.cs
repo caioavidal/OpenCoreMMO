@@ -126,12 +126,11 @@ namespace NeoServer.Server
         /// Adds player to game
         /// This methods also adds player to map and to connection pool
         /// </summary>
-        /// <param name="playerRecord"></param>
+        /// <param name="player"></param>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public IPlayer AddPlayer(Player playerRecord, IConnection connection)
+        public IPlayer AddPlayer(IPlayer player, IConnection connection)
         {
-            var player = playerFactory(playerRecord);
             //var player2 = _creatureFactory.CreatePlayer(player);
 
             //player = new Player
