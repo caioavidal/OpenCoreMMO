@@ -1,12 +1,7 @@
-﻿using NeoServer.Data.Parsers;
-using NeoServer.Data.Repositories;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Model.Players.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Events
 {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Data.Configurations
 {
-    public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
+    public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
     {
         public void Configure(EntityTypeBuilder<AccountModel> builder)
         {
@@ -17,18 +17,16 @@ namespace NeoServer.Data.Configurations
 
             builder.HasKey(e => e.AccountId);
 
-            builder.HasIndex(e => e.Name)
-                 .HasDatabaseName("name")
-                 .IsUnique();
+            //builder.HasIndex(e => e.Name)
+            //     .HasDatabaseName("name")
+            //     .IsUnique();
 
             builder.Property(e => e.AccountId)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd();
-                //.HasColumnType("int(11)");
 
             builder.Property(e => e._creation)
                 .HasColumnName("creation")
-                .HasColumnType("int(11)")
                 .HasAnnotation("Sqlite:Autoincrement", false)
                 .HasDefaultValueSql("0");
 
@@ -39,7 +37,6 @@ namespace NeoServer.Data.Configurations
 
             builder.Property(e => e._lastday)
                 .HasColumnName("lastday")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             builder.Property(e => e.Name)

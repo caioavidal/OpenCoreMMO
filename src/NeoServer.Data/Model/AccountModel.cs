@@ -17,7 +17,7 @@ namespace NeoServer.Data.Model
         public int AccountId { get; set; }
         public int _creation { get; set; }
         public string Email { get; set; }
-        public int _lastday { get; set; }
+        public uint _lastday { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
         public int PremiumTime { get; set; }
@@ -38,7 +38,7 @@ namespace NeoServer.Data.Model
         {
             get => DateTimeHelper.FromUnixTime(_lastday);
 
-            set => _lastday = DateTimeHelper.ToUnixTimeInt(value);
+            set => _lastday = (uint)DateTimeHelper.ToUnixTimeInt(value);
         }
 
         public bool IsValid() =>

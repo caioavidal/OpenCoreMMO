@@ -4,7 +4,7 @@ using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Data.Configurations
 {
-    public class PlayerModelConfiguration : IEntityTypeConfiguration<PlayerModel>
+    public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<PlayerModel>
     {
         public void Configure(EntityTypeBuilder<PlayerModel> entity)
         {
@@ -12,20 +12,19 @@ namespace NeoServer.Data.Configurations
 
             entity.HasKey(e => e.PlayerId);
 
-            entity.HasIndex(e => e.AccountId)
-                .HasDatabaseName("account_id");
+            //entity.HasIndex(e => e.AccountId)
+            //    .HasDatabaseName("account_id");
 
-            entity.HasIndex(e => e.Name)
-                .HasDatabaseName("name")
-                .IsUnique();
+            //entity.HasIndex(e => e.Name)
+            //    .HasDatabaseName("name")
+            //    .IsUnique();
 
-            entity.HasIndex(e => e.Vocation)
-                .HasDatabaseName("vocation");
+            //entity.HasIndex(e => e.Vocation)
+            //    .HasDatabaseName("vocation");
 
             entity.Property(e => e.PlayerId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("id");
-                //.HasColumnType("int(11)");
 
             entity.Property(e => e.AccountId)
                 .HasColumnName("account_id")
@@ -102,11 +101,8 @@ namespace NeoServer.Data.Configurations
                 .HasColumnType("int(11)")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("-1");
 
-            
-
             entity.Property(e => e.OfflineTrainingTime)
                 .HasColumnName("offlinetraining_time")
-                .HasColumnType("smallint(5) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("4200");
 
             entity.Property(e => e.PosX)
@@ -131,72 +127,58 @@ namespace NeoServer.Data.Configurations
 
             entity.Property(e => e.SkillAxe)
                 .HasColumnName("skill_axe")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
 
             entity.Property(e => e.SkillAxeTries)
                 .HasColumnName("skill_axe_tries")
-                .HasColumnType("bigint(20) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.SkillClub)
                 .HasColumnName("skill_club")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
 
             entity.Property(e => e.SkillClubTries)
                 .HasColumnName("skill_club_tries")
-                .HasColumnType("bigint(20) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.SkillDist)
                 .HasColumnName("skill_dist")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
 
             entity.Property(e => e.SkillDistTries)
                 .HasColumnName("skill_dist_tries")
-                .HasColumnType("bigint(20) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.SkillFishing)
                 .HasColumnName("skill_fishing")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
 
             entity.Property(e => e.SkillFishingTries)
                 .HasColumnName("skill_fishing_tries")
-                .HasColumnType("bigint(20) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.SkillFist)
                 .HasColumnName("skill_fist")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
 
             entity.Property(e => e.SkillFistTries)
                 .HasColumnName("skill_fist_tries")
-                .HasColumnType("bigint(20) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.SkillShielding)
                 .HasColumnName("skill_shielding")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
 
             entity.Property(e => e.SkillShieldingTries)
                 .HasColumnName("skill_shielding_tries")
-                .HasColumnType("bigint(20) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.SkillSword)
                 .HasColumnName("skill_sword")
-                .HasColumnType("int(10) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
 
             entity.Property(e => e.SkillSwordTries)
                 .HasColumnName("skill_sword_tries")
-                .HasColumnType("bigint(20) unsigned")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.Vocation)

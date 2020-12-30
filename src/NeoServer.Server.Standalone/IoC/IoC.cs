@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data;
-using NeoServer.Data.InMemoryDB.Extensions;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -39,9 +38,11 @@ using NeoServer.Loaders.Vocations;
 using System.Linq;
 using System.Collections.Generic;
 using NeoServer.Data.Interfaces;
-using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Model.Players;
 using NeoServer.Loaders.Players;
+using NeoServer.Data.Providers.InMemoryDB.Extensions;
+using NeoServer.Data.Providers.MySQL.Extensions;
+using NeoServer.Data.Providers.SQLite.Extensions;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -229,6 +230,7 @@ namespace NeoServer.Server.Standalone.IoC
                 DatabaseType.MONGODB => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MONGODB]),
                 DatabaseType.MYSQL => DbContextFactory.GetInstance().UseMySql(config.connections[DatabaseType.MYSQL]),
                 DatabaseType.MSSQL => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MSSQL]),
+                DatabaseType.SQLITE => DbContextFactory.GetInstance().UseSQLite(config.connections[DatabaseType.SQLITE]),
                 _ => throw new ArgumentException("Invalid active database!"),
             };
 

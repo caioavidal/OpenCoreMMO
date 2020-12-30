@@ -2,7 +2,6 @@
 using NeoServer.Data.Configurations;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
-using System.Reflection;
 
 namespace NeoServer.Data
 {
@@ -18,8 +17,23 @@ namespace NeoServer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(AccountModelConfiguration)));
+
+            if (Database.IsSqlite())
+            {
+                modelBuilder.ApplyConfiguration(new ForSQLitePlayerModelConfiguration());
+                modelBuilder.ApplyConfiguration(new ForSQLitePlayerItemModelConfiguration());
+                modelBuilder.ApplyConfiguration(new ForSQLiteAccountModelConfiguration());
+
+            }
+            else
+            {
+                modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
+                modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
+                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
+
+            }
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(AccountModelConfiguration)));
         }
     }
 }
