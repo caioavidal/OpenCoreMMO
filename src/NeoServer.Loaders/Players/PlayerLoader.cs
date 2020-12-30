@@ -108,25 +108,25 @@ namespace NeoServer.Loaders.Players
                 }
 
 
-                if (item.ParentId == 1)
+                if (item.ParentId == (int)Slot.Necklace)
                     inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 2)
+                else if (item.ParentId == (int)Slot.Head)
                     inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 3)
+                else if (item.ParentId == (int)Slot.Backpack)
                     inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 4)
+                else if (item.ParentId == (int)Slot.Left)
                     inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 5)
+                else if (item.ParentId == (int)Slot.Body)
                     inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 6)
+                else if (item.ParentId == (int)Slot.Right)
                     inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 7)
+                else if (item.ParentId == (int)Slot.Ring)
                     inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 8)
+                else if (item.ParentId == (int)Slot.Legs)
                     inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 9)
+                else if (item.ParentId == (int)Slot.Ammo)
                     inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == 10)
+                else if (item.ParentId == (int)Slot.Feet)
                     inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
 
 
