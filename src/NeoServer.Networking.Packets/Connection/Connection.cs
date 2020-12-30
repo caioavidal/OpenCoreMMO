@@ -85,7 +85,6 @@ namespace NeoServer.Networking
 
             try
             {
-                Console.WriteLine($"MessageReceived: {eventArgs.Connection.InMessage.IncomingPacket}");
                 OnProcessEvent?.Invoke(this, eventArgs);
                 BeginStreamRead();
             }
