@@ -7,11 +7,9 @@ namespace NeoServer.Server.Handlers.Authentication
 {
     public class AccountLoginHandler : PacketHandler
     {
-        //private readonly IAccountRepository _repository;
         private readonly IAccountRepositoryNeo _repositoryNeo;
-        public AccountLoginHandler(/*IAccountRepository repository,*/ IAccountRepositoryNeo repositoryNeo)
+        public AccountLoginHandler(IAccountRepositoryNeo repositoryNeo)
         {
-            //_repository = repository;
             _repositoryNeo = repositoryNeo;
         }
 
@@ -33,7 +31,6 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            //var foundedAccount = _repository.Get(account.Account, account.Password);
             var foundedAccount = _repositoryNeo.Login(account.Account, account.Password).Result;
 
             if (foundedAccount == null)

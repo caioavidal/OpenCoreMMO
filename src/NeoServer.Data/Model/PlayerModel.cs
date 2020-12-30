@@ -9,7 +9,7 @@ namespace NeoServer.Server.Model.Players
     {
         public PlayerModel()
         {
-            //PlayerDepotitems = new HashSet<PlayerDepotItem>();
+            PlayerDepotItems = new HashSet<PlayerDepotItemModel>();
             PlayerItems = new HashSet<PlayerItemModel>();
         }
 
@@ -65,30 +65,23 @@ namespace NeoServer.Server.Model.Players
         public int SkillFishing { get; set; }
         public int SkillFishingTries { get; set; }
 
+        public int MagicLevel { get; set; }
+        public double MagicLevelTries { get; set; }
+        public double Experience { get; set; }
+
         public ChaseMode ChaseMode { get; set; }
         public FightMode FightMode { get; set; }
         public Gender Gender { get; set; }
         public VocationType Vocation { get; set; }
 
-
         public AccountModel Account { get; set; }
 
         public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
-        public int MagicLevel { get; set; }
-        public double MagicLevelTries { get; set; }
-        public double Experience { get; set; }
-
+        public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
+        
         public bool IsMounted()
         {
             return false;
         }
-    }
-
-    public class ItemModel/*:IItemModel*/
-    {
-        public int Id { get; set; }
-        public ushort ServerId { get; set; }
-        public byte Amount { get; set; }
-        public IEnumerable<ItemModel> Items { get; set; } = new List<ItemModel>();
     }
 }

@@ -59,6 +59,7 @@ namespace NeoServer.Server.Standalone.IoC
                 .CreateLogger()).SingleInstance();
 
             builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
+            builder.RegisterType<PlayerDepotItemRepositoryNeo>().As<IPlayerDepotItemRepositoryNeo>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();
