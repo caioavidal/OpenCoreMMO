@@ -16,15 +16,10 @@ using NeoServer.Server.Contracts.Tasks;
 using Serilog.Core;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server;
 using NeoServer.Loaders.Vocations;
-using NeoServer.Data.Model;
-using NeoServer.Server.Model.Players;
-using NeoServer.Data.Interfaces;
-using System.Collections.Generic;
 
 Console.Title = "OpenCoreMMO Server";
 
@@ -35,13 +30,13 @@ var cancellationTokenSource = new CancellationTokenSource();
 var cancellationToken = cancellationTokenSource.Token;
 
 
-
 var container = Container.CompositionRoot();
+
+var logger = container.Resolve<Logger>();
+logger.Information($"Loading database");
 
 var context = container.Resolve<NeoContext>();
 context.Database.EnsureCreated();
-
-var logger = container.Resolve<Logger>();
 
 RSA.LoadPem();
 
