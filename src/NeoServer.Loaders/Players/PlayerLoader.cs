@@ -92,44 +92,41 @@ namespace NeoServer.Loaders.Players
         {
             var inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
 
-            foreach (var item in playerRecord.PlayerItems)
+            foreach (var item in playerRecord.PlayerInventoryItems)
             {
-                var location = item.ParentId <= 10 ? Location.Inventory((Slot)item.ParentId) : Location.Container(0, 0);
+                var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-                if (!(itemFactory.Create((ushort)item.Itemtype, location, null) is IPickupable createdItem))
+                if (!(itemFactory.Create((ushort)item.ServerId, location, null) is IPickupable createdItem))
                 {
                     continue;
                 }
 
-                if (item.ParentId == (int)Slot.Backpack)
+                if (item.SlotId == (int)Slot.Backpack)
                 {
                     if (createdItem is not IContainer container) continue;
-                    BuildContainer(playerRecord.PlayerItems.Where(c => c.ParentId.Equals(item.ServerId)).ToList(), 0, location, container, playerRecord.PlayerItems.ToList());
+                    BuildContainer(playerRecord.PlayerItems.Where(c => c.ParentId.Equals(0)).ToList(), 0, location, container, playerRecord.PlayerItems.ToList());
                 }
 
-
-                if (item.ParentId == (int)Slot.Necklace)
-                    inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Head)
-                    inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Backpack)
-                    inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Left)
-                    inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Body)
-                    inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Right)
-                    inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Ring)
-                    inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Legs)
-                    inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Ammo)
-                    inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-                else if (item.ParentId == (int)Slot.Feet)
-                    inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.Itemtype));
-
-
+                if (item.SlotId == (int)Slot.Necklace)
+                    inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Head)
+                    inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Backpack)
+                    inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Left)
+                    inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Body)
+                    inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Right)
+                    inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Ring)
+                    inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Legs)
+                    inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Ammo)
+                    inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Feet)
+                    inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
             }
             return inventory;
         }
@@ -143,7 +140,7 @@ namespace NeoServer.Loaders.Players
 
             var itemModel = items[index];
 
-            var item = itemFactory.Create((ushort)itemModel.Itemtype, location, new Dictionary<ItemAttribute, IConvertible>()
+            var item = itemFactory.Create((ushort)itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
                         {
                             {ItemAttribute.Count, itemModel.Amount }
                         });
@@ -151,7 +148,7 @@ namespace NeoServer.Loaders.Players
             if (item is IContainer childrenContainer)
             {
                 childrenContainer.SetParent(container);
-                container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.ServerId)).ToList(), 0, location, childrenContainer, all));
+                container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location, childrenContainer, all));
             }
             else
             {

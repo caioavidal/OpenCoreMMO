@@ -88,6 +88,7 @@ namespace NeoServer.Data.Repositories
                     .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
                     //.Where(x => x.Email == email)
                     .Include(x => x.Players)
+                        .ThenInclude(x => x.PlayerInventoryItems)
                     //.Include(x => x.AccountIdentity)
                     //.Include(x => x.AccountBan)
                     //    .ThenInclude(x => x.Account)

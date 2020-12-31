@@ -15,6 +15,7 @@ namespace NeoServer.Data
         public DbSet<PlayerModel> Players { get; set; }
         public DbSet<PlayerItemModel> PlayerItems { get; set; }
         public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
+        public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +23,7 @@ namespace NeoServer.Data
 
             if (Database.IsSqlite())
             {
+                modelBuilder.ApplyConfiguration(new ForSQLitePlayerInventoryItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new ForSQLitePlayerDepotItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new ForSQLitePlayerItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new ForSQLitePlayerModelConfiguration());
@@ -29,6 +31,7 @@ namespace NeoServer.Data
             }
             else
             {
+                modelBuilder.ApplyConfiguration(new PlayerInventoryItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());

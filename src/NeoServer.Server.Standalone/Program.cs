@@ -34,8 +34,6 @@ sw.Start();
 var cancellationTokenSource = new CancellationTokenSource();
 var cancellationToken = cancellationTokenSource.Token;
 
-
-
 var container = Container.CompositionRoot();
 
 var context = container.Resolve<NeoContext>();

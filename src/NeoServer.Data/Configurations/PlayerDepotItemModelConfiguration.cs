@@ -8,10 +8,10 @@ namespace NeoServer.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<PlayerDepotItemModel> entity)
         {
-            entity.HasKey(e => new { e.PlayerId, e.ServerId })
-                    .HasName("player_id_2");
+            entity.HasKey(e => e.Id )
+                    .HasName("player_depot_items_id");
 
-            entity.ToTable("player_depotitems");
+            entity.ToTable("player_depot_items");
 
             entity.Property(e => e.PlayerId)
                 .HasColumnName("player_id")
@@ -25,20 +25,10 @@ namespace NeoServer.Data.Configurations
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd();
 
-            //.HasColumnType("int(11)");
-            entity.Property(e => e.Attributes)
-                .IsRequired()
-                .HasColumnName("attributes")
-                .HasColumnType("blob");
-
             entity.Property(e => e.Amount)
                 .HasColumnName("count")
                 .HasColumnType("smallint(5)")
                 .HasDefaultValueSql("0");
-
-            entity.Property(e => e.Itemtype)
-                .HasColumnName("itemtype")
-                .HasColumnType("smallint(6)");
 
             entity.Property(e => e.ParentId)
                 .HasColumnName("pid")
@@ -48,7 +38,7 @@ namespace NeoServer.Data.Configurations
             entity.HasOne(d => d.Player)
                 .WithMany(p => p.PlayerDepotItems)
                 .HasForeignKey(d => d.PlayerId)
-                .HasConstraintName("player_depotitems_ibfk_1");
+                .HasConstraintName("player_depot_items_ibfk_1");
 
             Seed(entity);
         }

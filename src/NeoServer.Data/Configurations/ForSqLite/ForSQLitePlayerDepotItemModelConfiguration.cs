@@ -24,18 +24,10 @@ namespace NeoServer.Data.Configurations
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd();
 
-            entity.Property(e => e.Attributes)
-                .HasColumnName("attributes");
-
             entity.Property(e => e.Amount)
                 .HasColumnName("count")
                 .IsRequired()
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
-
-            entity.Property(e => e.Itemtype)
-                .HasColumnName("itemtype")
-                .HasColumnType("smallint(6)")
-                .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
             entity.Property(e => e.ParentId)
                 .HasColumnName("pid")
