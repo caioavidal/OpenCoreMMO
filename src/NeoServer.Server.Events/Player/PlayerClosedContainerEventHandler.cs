@@ -1,5 +1,6 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
+using NeoServer.Data.Parsers;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -32,21 +33,9 @@ namespace NeoServer.Server.Events
 
             if (container.Root is IDepot depot && player.HasDepotOpened is false)
             {
-                var items = new List<IItem>(depot.Items.Count);
-
                 foreach (var item in depot.Items)
                 {
-                    //items.Add(ItemModelParser.ToModel(item));
-
-                    //Loader here
-                    var itemModel = new PlayerDepotItemModel();
-                    //{
-                    //    Amount = item.Amount,
-                    //    Attributes = new List<byte> { }.ToArray(),
-                    //    Itemtype = item.ClientId,
-                    //    ParentId = item.
-                    //}
-
+                    var itemModel = ItemModelParser.ToModel(item);
                     playerDepotItemRepository.Insert(itemModel);
                 }
                 depot.Clear();

@@ -9,6 +9,7 @@ namespace NeoServer.Server.Model.Players
     {
         public PlayerModel()
         {
+            PlayerInventoryItems = new HashSet<PlayerInventoryItemModel>();
             PlayerDepotItems = new HashSet<PlayerDepotItemModel>();
             PlayerItems = new HashSet<PlayerItemModel>();
         }
@@ -78,6 +79,7 @@ namespace NeoServer.Server.Model.Players
 
         public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
         public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
+        public virtual ICollection<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
         
         public bool IsMounted()
         {
