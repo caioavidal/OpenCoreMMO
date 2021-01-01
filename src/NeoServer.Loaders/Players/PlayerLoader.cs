@@ -91,12 +91,14 @@ namespace NeoServer.Loaders.Players
         private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel playerRecord)
         {
             var inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+            var attrs = new Dictionary<ItemAttribute, IConvertible>() { { ItemAttribute.Count, 0 } };
 
             foreach (var item in playerRecord.PlayerInventoryItems)
             {
+                attrs[ItemAttribute.Count] = (byte)item.Amount;
                 var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-                if (!(itemFactory.Create((ushort)item.ServerId, location, null) is IPickupable createdItem))
+                if (!(itemFactory.Create((ushort)item.ServerId, location, attrs) is IPickupable createdItem))
                 {
                     continue;
                 }
