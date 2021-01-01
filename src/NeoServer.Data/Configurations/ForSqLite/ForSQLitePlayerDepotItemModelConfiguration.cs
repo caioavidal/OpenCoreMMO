@@ -14,7 +14,7 @@ namespace NeoServer.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<PlayerDepotItemModel> entity)
         {
-            entity.ToTable("player_depotitems");
+            entity.ToTable("player_depot_items");
 
             entity.Property(e => e.PlayerId)
                 .HasColumnName("player_id")
