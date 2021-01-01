@@ -30,7 +30,7 @@ namespace NeoServer.Data.Repositories
 
         #region properties
 
-        public TContext GetContext => (TContext)DbContext;
+        public TContext Context => (TContext)DbContext;
 
         #endregion
 

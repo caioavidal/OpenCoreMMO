@@ -23,7 +23,7 @@ namespace NeoServer.Data.Repositories
         /// <returns>Account</returns>
         public async Task<AccountModel> GetById(int id)
         {
-            return await GetContext.Accounts
+            return await Context.Accounts
                 .Where(c => c.AccountId.Equals(id))
                 //.Where(c => c.AccountId.Equals(id))
                 //.Include(c => c.Players)
@@ -46,7 +46,7 @@ namespace NeoServer.Data.Repositories
         /// <returns>Account</returns>
         public async Task<AccountModel> GetByName(string name)
         {
-            return await GetContext.Accounts
+            return await Context.Accounts
                 .Where(x => x.Name.Equals(name))
                 //.Where(x => x.Name == name)
                 .Include(x => x.Players)
@@ -64,7 +64,7 @@ namespace NeoServer.Data.Repositories
 
         public async Task<AccountModel> GetByEmail(string email)
         {
-            return await GetContext.Accounts
+            return await Context.Accounts
                     .Where(x => x.Email.Equals(email))
                     //.Where(x => x.Email == email)
                     .Include(x => x.Players)
@@ -82,7 +82,7 @@ namespace NeoServer.Data.Repositories
 
         public async Task<AccountModel> Login(string name, string password)
         {
-            return await GetContext.Accounts
+            return await Context.Accounts
                     .Include(x=>x.Players)
                     .ThenInclude(x=>x.PlayerItems)
                     .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
