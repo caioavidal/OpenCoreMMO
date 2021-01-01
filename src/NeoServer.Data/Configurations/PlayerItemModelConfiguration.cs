@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Model;
+using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations
 {
@@ -48,21 +49,8 @@ namespace NeoServer.Data.Configurations
                 .HasForeignKey(d => d.PlayerId)
                 .HasConstraintName("player_items_ibfk_1");
 
-            Seed(entity);
+            PlayerItemSeed.Seed(entity);
         }
 
-        public void Seed(EntityTypeBuilder<PlayerItemModel> builder)
-        {
-            builder.HasData(
-                new PlayerItemModel
-                {
-                    Id = -10,
-                    PlayerId = 1,
-                    ParentId = 0,
-                    ServerId = 1988,
-                    Amount = 1,
-                }
-            );
-        }
     }
 }

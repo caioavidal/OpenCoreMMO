@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Model;
+using NeoServer.Data.Seeds;
 using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,6 @@ namespace NeoServer.Data.Configurations
         public void Configure(EntityTypeBuilder<PlayerItemModel> entity)
         {
             entity.ToTable("player_items");
-
-            //entity.HasIndex(e => e.PlayerId)
-            //    .HasDatabaseName("player_id");
-
-            //entity.HasIndex(e => e.ServerId)
-            //    .HasDatabaseName("sid");
 
             entity.Property(e => e.Id)
                 .HasColumnName("id")
@@ -49,21 +44,7 @@ namespace NeoServer.Data.Configurations
                 .HasForeignKey(d => d.PlayerId)
                 .HasConstraintName("player_items_ibfk_1");
 
-            Seed(entity);
-        }
-
-        public void Seed(EntityTypeBuilder<PlayerItemModel> builder)
-        {
-            builder.HasData(
-                new PlayerItemModel
-                {
-                    Id = -10,
-                    PlayerId = 1,
-                    ParentId = 0,
-                    ServerId = 1988,
-                    Amount = 1,
-                }
-            );
+            PlayerItemSeed.Seed(entity);
         }
     }
 }

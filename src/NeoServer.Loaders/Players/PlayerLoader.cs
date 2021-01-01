@@ -144,7 +144,7 @@ namespace NeoServer.Loaders.Players
 
             var item = itemFactory.Create((ushort)itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
                         {
-                            {ItemAttribute.Count, itemModel.Amount }
+                            {ItemAttribute.Count, (byte) itemModel.Amount }
                         });
 
             if (item is IContainer childrenContainer)
