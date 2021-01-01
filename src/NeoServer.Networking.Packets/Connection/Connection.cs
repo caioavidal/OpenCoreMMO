@@ -96,8 +96,8 @@ namespace NeoServer.Networking
                 Console.WriteLine(e.StackTrace);
 
                 // TODO: is closing the connection really necesary?
-                Disconnected = true;
-                OnProcessEvent?.Invoke(this, eventArgs);
+               // Disconnected = true;
+               // OnProcessEvent?.Invoke(this, eventArgs);
             }
         }
 

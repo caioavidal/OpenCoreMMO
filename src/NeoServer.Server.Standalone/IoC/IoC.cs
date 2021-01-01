@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using NeoServer.Data.RavenDB;
+using Microsoft.EntityFrameworkCore;
+using NeoServer.Data;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -19,7 +20,6 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Server.Contracts.Repositories;
 using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Instances;
@@ -37,6 +37,12 @@ using NeoServer.Data.Repositories;
 using NeoServer.Loaders.Vocations;
 using System.Linq;
 using System.Collections.Generic;
+using NeoServer.Data.Interfaces;
+using NeoServer.Server.Model.Players;
+using NeoServer.Loaders.Players;
+using NeoServer.Data.Providers.InMemoryDB.Extensions;
+using NeoServer.Data.Providers.MySQL.Extensions;
+using NeoServer.Data.Providers.SQLite.Extensions;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -52,9 +58,8 @@ namespace NeoServer.Server.Standalone.IoC
                 .WriteTo.Console()
                 .CreateLogger()).SingleInstance();
 
-            builder.RegisterType<Database>().SingleInstance();
-            builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
-            builder.RegisterType<PlayerDepotRepository>().As<IPlayerDepotRepository>().SingleInstance();
+            builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
+            builder.RegisterType<PlayerDepotItemRepositoryNeo>().As<IPlayerDepotItemRepositoryNeo>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();
@@ -99,6 +104,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
+            builder.RegisterType<PlayerLoader>().SingleInstance();
+
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
@@ -114,6 +121,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<EventSubscriber>().SingleInstance();
             builder.RegisterType<GameCreatureJob>().SingleInstance();
             builder.RegisterType<GameItemJob>().SingleInstance();
+
+            //Database
+            RegisterContext<NeoContext>(builder);
 
             return builder.Build();
         }
@@ -152,7 +162,7 @@ namespace NeoServer.Server.Standalone.IoC
         {
             builder.Register((c, p) =>
             {
-                var player = p.TypedAs<IPlayerModel>();
+                var player = p.TypedAs<Player>();
 
                 return c.Resolve<ICreatureFactory>().CreatePlayer(player);
             });
@@ -204,7 +214,30 @@ namespace NeoServer.Server.Standalone.IoC
 
             containerBuilder.RegisterInstance(serverConfiguration).SingleInstance();
             containerBuilder.RegisterInstance(gameConfiguration).SingleInstance();
+        }
 
+        private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
+            
+            DatabaseConfiguration2 config = new(null, DatabaseType.INMEMORY);
+            configuration.GetSection("database").Bind(config);
+
+            DbContextOptions<NeoContext> options = config.active switch
+            {
+                DatabaseType.INMEMORY => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.INMEMORY]),
+                DatabaseType.MONGODB => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MONGODB]),
+                DatabaseType.MYSQL => DbContextFactory.GetInstance().UseMySql(config.connections[DatabaseType.MYSQL]),
+                DatabaseType.MSSQL => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MSSQL]),
+                DatabaseType.SQLITE => DbContextFactory.GetInstance().UseSQLite(config.connections[DatabaseType.SQLITE]),
+                _ => throw new ArgumentException("Invalid active database!"),
+            };
+
+            builder.RegisterType<TContext>()
+                   .WithParameter("options", options)
+                   .InstancePerLifetimeScope();
         }
     }
 }

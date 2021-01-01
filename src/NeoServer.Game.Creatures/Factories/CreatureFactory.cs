@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Game.Creatures
 {
@@ -30,10 +31,11 @@ namespace NeoServer.Game.Creatures
             AttachEvents(monster);
             return monster;
         }
-        public IPlayer CreatePlayer(IPlayerModel playerModel)
+        public IPlayer CreatePlayer(IPlayer playerModel)
         {
             var player = _playerFactory.Create(playerModel);
             return AttachEvents(player) as IPlayer;
+            //return playerModel;
         }
 
         private ICreature AttachEvents(ICreature creature)

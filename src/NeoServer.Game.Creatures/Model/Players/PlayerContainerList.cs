@@ -73,6 +73,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 var parentContainer = playerContainer.Container.Parent;
 
+                if (parentContainer is not IContainer)
+                {
+                    CloseContainer(containerId);
+                    return;
+                }
+
                 InsertOrOverrideOpenedContainer(containerId, new PlayerContainer(parentContainer as IContainer, player));
 
                 OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
