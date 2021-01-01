@@ -8,9 +8,6 @@
 
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Properties\**" />
 		<EmbeddedResource Remove="Properties\**" />
@@ -51,7 +48,7 @@
 		</None>
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
 		<Exec Command="xcopy &quot;$(SolutionDir)..\data\*.*&quot; &quot;$(OutDir)\data&quot;/Y /I /E" />
 	</Target>
 
