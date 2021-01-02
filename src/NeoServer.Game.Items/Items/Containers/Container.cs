@@ -342,7 +342,7 @@ namespace NeoServer.Game.Items.Items
         }
         public Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
         {
-            if (destination is IContainer && toPosition is not null && GetContainerAt(toPosition.Value, out var container)) return SendTo(container, thing, amount, fromPosition, null);
+            if (destination is IContainer && destination == this && toPosition is not null && GetContainerAt(toPosition.Value, out var container)) return SendTo(container, thing, amount, fromPosition, null);
 
             return Store.SendTo(destination, thing, amount, fromPosition, toPosition);
         }

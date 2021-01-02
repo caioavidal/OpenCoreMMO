@@ -489,6 +489,20 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(100, (child[0] as ICumulative).Amount);
         }
         [Fact]
+        public void SendTo_When_Moving_Backpack_To_First_Slot_Of_Another_Backpack_Should_Move()
+        {
+            var sut = CreateContainer(2);
+            var bp1 = CreateContainer(2);
+            var item = ItemTestData.CreateBackpack();
+
+            bp1.AddItem(item);
+
+            bp1.SendTo(sut, item, 1, 0, 0);
+
+            Assert.Single(sut.Items);
+            Assert.Equal(item, sut[0]);
+        }
+        [Fact]
         public void MoveItem_When_Moving_Cumulative_To_Child_Should_Remove_Amount_From_Parent_And_Add_To_Child()
         {
             var sut = CreateContainer(2);
@@ -654,5 +668,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(Location.Container(0, 0), item.Location);
         }
 
+
+    
     }
 }

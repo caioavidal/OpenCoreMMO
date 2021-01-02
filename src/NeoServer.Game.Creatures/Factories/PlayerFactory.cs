@@ -25,94 +25,98 @@ namespace NeoServer.Game.Creatures
             this.itemFactory = itemFactory;
             this.creaturePathAccess = creaturePathAccess;
         }
-        public IPlayer Create(IPlayerModel player)
+        public IPlayer Create(IPlayer player)
         {
-            if (!VocationStore.TryGetValue(player.Vocation, out var vocation))
-            {
-                throw new Exception("Player vocation not found");
-            }
+            //if (!VocationStore.TryGetValue(player.Vocation, out var vocation))
+            //{
+            //    throw new Exception("Player vocation not found");
+            //}
 
-            var newPlayer = new Player(
-                (uint)player.Id,
-                player.CharacterName,
-                player.ChaseMode,
-                player.Capacity,
-                player.HealthPoints,
-                player.MaxHealthPoints,
-                player.Vocation,
-                player.Gender,
-                player.Online,
-                player.Mana,
-                player.MaxMana,
-                player.FightMode,
-                player.SoulPoints,
-                vocation.SoulMax,
-                ConvertToSkills(player),
-                player.StaminaMinutes,
-                player.Outfit,
-                ConvertToInventory(player),
-                player.Speed,
-                player.Location,
-               creaturePathAccess
-                );
+            //var newPlayer = new Player(
+            //    (uint)player.Id,
+            //    player.CharacterName,
+            //    player.ChaseMode,
+            //    player.Capacity,
+            //    player.HealthPoints,
+            //    player.MaxHealthPoints,
+            //    player.Vocation,
+            //    player.Gender,
+            //    player.Online,
+            //    player.Mana,
+            //    player.MaxMana,
+            //    player.FightMode,
+            //    player.SoulPoints,
+            //    vocation.SoulMax,
+            //    ConvertToSkills(player),
+            //    player.StaminaMinutes,
+            //    null,
+            //    //player.Outfit,
+            //    ConvertToInventory(player),
+            //    player.Speed,
+            //    player.Location,
+            //   creaturePathAccess
+            //    );
 
 
-            return newPlayer;
+            //return newPlayer;
+
+            return player;
         }
 
-        private Dictionary<SkillType, ISkill> ConvertToSkills(IPlayerModel player)
-        {
-            VocationStore.TryGetValue(player.Vocation, out var vocation);
-            return player.Skills.ToDictionary(x => x.Key, x => (ISkill)new Skill(x.Key, vocation.Skill.ContainsKey((byte)x.Key) ? vocation.Skill[(byte)x.Key] : 1, (ushort)x.Value.Level, x.Value.Count));
-        }
-        private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(IPlayerModel player)
-        {
-            var inventoryDic = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
-            foreach (var slot in player.Inventory)
-            {
-                if (!(itemFactory.Create(slot.Value, player.Location, null) is IPickupable createdItem))
-                {
-                    continue;
-                }
+        //private Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel player)
+        //{
+        //    //VocationStore.TryGetValue(player.Vocation, out var vocation);
+        //    //return player.Skills.ToDictionary(x => x.Key, x => (ISkill)new Skill(x.Key, vocation.Skill.ContainsKey((byte)x.Key) ? vocation.Skill[(byte)x.Key] : 1, (ushort)x.Value.Level, x.Value.Count));
+        //    return new Dictionary<SkillType, ISkill>();
+        //}
+        //private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel player)
+        //{
+        //    var inventoryDic = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+        //    //foreach (var slot in player.Inventory)
+        //    //{
+        //    //    if (!(itemFactory.Create(slot.Value, player.Location, null) is IPickupable createdItem))
+        //    //    {
+        //    //        continue;
+        //    //    }
 
-                if (slot.Key == Slot.Backpack)
-                {
-                    if (createdItem is not IContainer container) continue;
-                    BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
-                }
+        //    //    if (slot.Key == Slot.Backpack)
+        //    //    {
+        //    //        if (createdItem is not IContainer container) continue;
+        //    //        BuildContainer(player.Items?.Reverse().ToList(), 0, player.Location, container);
+        //    //    }
 
-                inventoryDic.Add(slot.Key, new Tuple<IPickupable, ushort>(createdItem, slot.Value));
+        //    //    inventoryDic.Add(slot.Key, new Tuple<IPickupable, ushort>(createdItem, slot.Value));
 
-            }
-            return inventoryDic;
-        }
+        //    //}
+        //    return inventoryDic;
+        //}
 
-        public IContainer BuildContainer(IList<IItemModel> items, int index, Location location, IContainer container)
-        {
-            if (items == null || items.Count == index)
-            {
-                return container;
-            }
+        //public IContainer BuildContainer(IList<IItemModel> items, int index, Location location, IContainer container)
+        //{
+        //    if (items == null || items.Count == index)
+        //    {
+        //        return container;
+        //    }
 
-            var itemModel = items[index];
+        //    var itemModel = items[index];
 
-            var item = itemFactory.Create(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
-                        {
-                            {ItemAttribute.Count, itemModel.Amount }
-                        });
+        //    var item = itemFactory.Create(itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible>()
+        //                {
+        //                    {ItemAttribute.Count, itemModel.Amount }
+        //                });
 
-            if (item is IContainer childrenContainer)
-            {
-                childrenContainer.SetParent(container);
-                container.AddItem(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));
-            }
-            else
-            {
-                container.AddItem(item);
-
-            }
-            return BuildContainer(items, ++index, location, container);
-        }
+        //    if (item is IContainer childrenContainer)
+        //    {
+        //        childrenContainer.SetParent(container);
+        //        container.AddItem(BuildContainer(itemModel.Items?.Reverse().ToList(), 0, location, childrenContainer));
+        //    }
+        //    else
+        //    {
+        //        container.AddItem(item);
+        //
+        //    }
+        //    return BuildContainer(items, ++index, location, container);
+        //}
 
     }
 }

@@ -7,11 +7,10 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class CharacterListPacket : OutgoingPacket
     {
-        private readonly IAccountModel _acountModel;
-        public CharacterListPacket(IAccountModel account)
+        private readonly AccountModel _acountModel;
+        public CharacterListPacket(AccountModel account)
         {
             _acountModel = account;
-
         }
 
         public override void WriteToMessage(INetworkMessage message)
@@ -25,7 +24,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddByte((byte)_acountModel.Players.Count());
             foreach (var player in _acountModel.Players)
             {
-                message.AddString(player.CharacterName);
+                message.AddString(player.Name);
                 message.AddString("NeoServer"); //todo change to const
                 message.AddByte(127);
                 message.AddByte(0);

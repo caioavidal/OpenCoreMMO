@@ -9,6 +9,6 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface ICreatureFactory
     {
         IMonster CreateMonster(string name, ISpawnPoint spawn = null);
-        IPlayer CreatePlayer(IPlayerModel playerModel);
+        IPlayer CreatePlayer(IPlayer playerModel);
     }
 }

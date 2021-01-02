@@ -1,8 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Repositories;
-using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Authentication
@@ -11,7 +8,7 @@ namespace NeoServer.Server.Handlers.Authentication
     {
         private readonly Game game;
 
-        public PlayerChangesModeHandler(IAccountRepository repository, Game game)
+        public PlayerChangesModeHandler(Game game)
         {
             this.game = game;
         }

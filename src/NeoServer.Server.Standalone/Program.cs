@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using NeoServer.Data.RavenDB;
+using NeoServer.Data;
 using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -29,10 +29,14 @@ sw.Start();
 var cancellationTokenSource = new CancellationTokenSource();
 var cancellationToken = cancellationTokenSource.Token;
 
+
 var container = Container.CompositionRoot();
-container.Resolve<Database>().Connect();
 
 var logger = container.Resolve<Logger>();
+logger.Information($"Loading database");
+
+var context = container.Resolve<NeoContext>();
+context.Database.EnsureCreated();
 
 RSA.LoadPem();
 
