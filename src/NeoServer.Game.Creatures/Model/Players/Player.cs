@@ -457,7 +457,11 @@ namespace NeoServer.Server.Model.Players
             else
                 ReduceHealth(damage);
         }
-        public void Use(IUseableOn2 item, ICreature onCreature)
+        public void Use(IUseable item)
+        {
+            item.Use(this);
+        }
+        public void Use(IUseableOn item, ICreature onCreature)
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
@@ -474,7 +478,20 @@ namespace NeoServer.Server.Model.Players
 
             OnUsedItem?.Invoke(this, onCreature, item);
         }
-        public void Use(IUseableOn2 item, ITile tile)
+        public void Use(IUseableOn item, IItem onItem)
+        {
+            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
+                return;
+            }
+
+            if (item is not IUseableOnItem useableOnItem) return;
+
+            useableOnItem.Use(this, onItem); 
+            OnUsedItem?.Invoke(this, onItem, item);
+        }
+        public void Use(IUseableOn item, ITile tile)
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {

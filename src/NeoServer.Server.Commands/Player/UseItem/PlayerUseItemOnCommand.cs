@@ -2,9 +2,10 @@
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Contracts.Items;
 using System;
+using NeoServer.Game.Contracts.Items.Types.Useables;
+using NeoServer.Server.Commands.Movement;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -24,48 +25,61 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
-            IThing onThing = null;
+            IItem onItem = null;
+            ITile onTile = null;
             if (useItemPacket.ToLocation.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.ToLocation] is not ITile tile) return;
-                if (tile.TopItemOnStack is null) return;
-                onThing = tile.TopItemOnStack;
+                onTile = tile;
             }
             else if (useItemPacket.ToLocation.Type == LocationType.Slot)
             {
                 if (player.Inventory[useItemPacket.ToLocation.Slot] is null) return;
-                onThing = player.Inventory[useItemPacket.ToLocation.Slot];
+                onItem = player.Inventory[useItemPacket.ToLocation.Slot];
             }
             else if (useItemPacket.ToLocation.Type == LocationType.Container)
             {
-                if (player.Containers[useItemPacket.ToLocation.ContainerId][useItemPacket.ToLocation.ContainerSlot] is not IThing thing) return;
-                onThing = thing;
+                if (player.Containers[useItemPacket.ToLocation.ContainerId][useItemPacket.ToLocation.ContainerSlot] is not IItem item) return;
+                onItem = item;
             }
 
-            if (onThing is not IThing) return;
+            if (onItem is not IItem && onTile is not ITile) return;
 
 
             Action action = null;
-            
+
+            IUseableOn itemToUse = null;
+
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
-          
-                if(tile.TopItemOnStack is IUseableOn useable)
+
+                if (tile.TopItemOnStack is IUseableOnItem useable)
                 {
-                    useable.UseOn(player, game.Map, onThing);
+                    itemToUse = useable;
                 }
             }
-            else if (useItemPacket.Location.Type ==  LocationType.Slot)
+            else if (useItemPacket.Location.Type == LocationType.Slot)
             {
                 if (player.Inventory[useItemPacket.Location.Slot] is not IUseableOn useable) return;
-                useable.UseOn(player, game.Map, onThing);
+
+                itemToUse = useable;
             }
             else if (useItemPacket.Location.Type == LocationType.Container)
             {
                 if (player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot] is not IUseableOn useable) return;
-                useable.UseOn(player, game.Map, onThing);
+                itemToUse = useable;
             }
+
+            action = onTile is not null ? () => player.Use(itemToUse, onTile) : () => player.Use(itemToUse, onItem);
+
+            if (useItemPacket.Location.Type == LocationType.Ground)
+            {
+                WalkToMechanism.DoOperation(player, action, useItemPacket.Location, game);
+                return;
+            }
+
+            action?.Invoke();
         }
 
     }

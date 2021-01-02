@@ -4,8 +4,5 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Items.Items
 {
-    public interface IUseableOn
-    {
-        void UseOn(IPlayer player, IMap map, IThing thing);
-    }
+  
 }

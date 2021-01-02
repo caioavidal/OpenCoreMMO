@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Items.Types.Useables
 {
-    public interface IUseableOnCreature: IUseableOn2, IItem
+    public interface IUseableOnCreature: IUseableOn, IItem
     {
         /// <summary>
         /// Useable by players on creatures
@@ -17,7 +17,7 @@ namespace NeoServer.Game.Contracts.Items.Types.Useables
         /// <param name="usedBy">creature whose item is being used</param>
         public void Use(IPlayer usedBy, ICreature creature);
     }
-    public interface IUseableAttackOnCreature : IUseableOn2, IItem
+    public interface IUseableAttackOnCreature : IUseableOn, IItem
     {
         /// <summary>
         /// Useable by creatures to attack creatures

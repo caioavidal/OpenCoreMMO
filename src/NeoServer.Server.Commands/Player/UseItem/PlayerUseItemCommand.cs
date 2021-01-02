@@ -53,9 +53,9 @@ namespace NeoServer.Server.Commands.Player
             }
             else if (item is IUseable useable)
             {
-                action = () => useable.Use(player);
+                action = () => player.Use(useable);
             }
-            else if (item is IUseableOn2 useableOn)
+            else if (item is IUseableOn useableOn)
             {
                 action = () => player.Use(useableOn, player);
             }

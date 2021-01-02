@@ -25,7 +25,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void OperationFail(uint id, string message);
     public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
     public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
-    public delegate void UseItem(IPlayer player, IThing thing, IUseableOn2 item);
+    public delegate void UseItem(IPlayer player, IThing thing, IUseableOn item);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -134,8 +134,10 @@ namespace NeoServer.Server.Model.Players.Contracts
         void HealMana(ushort increasing);
         bool Feed(IFood food);
         Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition, byte? toPosition);
-        void Use(IUseableOn2 item, ITile tile);
-        void Use(IUseableOn2 item, ICreature onCreature);
+        void Use(IUseableOn item, ITile tile);
+        void Use(IUseableOn item, ICreature onCreature);
+        void Use(IUseable item);
+        void Use(IUseableOn item, IItem onItem);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";

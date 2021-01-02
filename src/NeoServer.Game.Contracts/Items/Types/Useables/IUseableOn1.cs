@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Items.Types.Useables
 {
-    public interface IUseableOn2: IItem
+    public interface IUseableOn: IItem
     {
         public EffectT EffecT => Metadata.Attributes.GetEffect();
 

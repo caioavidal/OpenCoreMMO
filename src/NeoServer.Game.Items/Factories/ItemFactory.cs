@@ -155,7 +155,7 @@ namespace NeoServer.Game.Items
                     return new TransformerUsableItem(itemType, location); 
                 }
            
-                return new UseableOnItem(itemType, location);
+                //return new UseableOnItem(itemType, location);
             }
 
             return new Item(ItemTypeData.InMemory[typeId], location);

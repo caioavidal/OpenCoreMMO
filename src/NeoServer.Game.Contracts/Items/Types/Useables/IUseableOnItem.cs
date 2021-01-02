@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Items.Types.Useables
 {
-    public interface IUseableOnItem : IUseableOn2, IItem
+    public interface IUseableOnItem : IUseableOn, IItem
     {
         /// <summary>
         /// Useable by creatures on items (ground, weapon, stairs..)
@@ -19,7 +19,7 @@ namespace NeoServer.Game.Contracts.Items.Types.Useables
         /// <param name="item">item which will receive action</param>
         public bool Use(ICreature usedBy, IItem item);
     }
-    public interface IUseableOnTile : IUseableOn2, IItem
+    public interface IUseableOnTile : IUseableOn, IItem
     {
         /// <summary>
         /// Useable by creatures on items (ground, weapon, stairs..)
