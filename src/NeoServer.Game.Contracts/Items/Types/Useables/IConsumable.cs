@@ -5,7 +5,7 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {
-    public delegate void Use(IPlayer usedBy, ICreature creature, IItem item);
+    public delegate void Use(ICreature usedBy, ICreature creature, IItem item);
     public interface IConsumable: IItemRequirement, IUseableOnCreature, IItem
     {
         public event Use OnUsed;

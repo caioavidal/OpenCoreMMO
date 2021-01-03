@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Game.Items.Events
 {
@@ -19,6 +20,7 @@ namespace NeoServer.Game.Items.Events
             {
                 consumable.OnUsed += itemUsedEventHandler.Execute;
             }
+         
         }
 
         public void Unsubscribe(IItem item)

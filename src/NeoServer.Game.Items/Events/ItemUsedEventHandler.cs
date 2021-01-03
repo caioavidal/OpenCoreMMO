@@ -4,12 +4,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Items.Events
 {
@@ -23,15 +17,16 @@ namespace NeoServer.Game.Items.Events
             this.itemFactory = itemFactory;
         }
 
-        public void Execute(IPlayer usedBy, ICreature creature, IItem item)
+        public void Execute(ICreature usedBy, ICreature creature, IItem item)
         {
             Transform(usedBy, creature, item);
             Say(creature, item);
         }
 
-        private void Transform(IPlayer usedBy, ICreature creature, IItem item)
+        private void Transform(ICreature usedBy, ICreature creature, IItem item)
         {
             if (item?.TransformTo == 0) return;
+            if (usedBy is not IPlayer player) return;
             var createdItem = itemFactory.Create(item.TransformTo, creature.Location, null);
 
             if (map[creature.Location] is not IDynamicTile tile) return;
@@ -43,7 +38,7 @@ namespace NeoServer.Game.Items.Events
 
             if (item?.Location.Type == Common.Location.LocationType.Container)
             {
-                var container = usedBy.Containers[item.Location.ContainerId];
+                var container = player.Containers[item.Location.ContainerId];
 
                 var result = container.AddItem(createdItem);
                 if(!result.IsSuccess) tile.AddItem(createdItem);

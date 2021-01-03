@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Items.Types.Useables
 {
+    public delegate void UseOnTile(ICreature usedBy, ITile tile, IUseableOnTile item);
+
     public interface IUseableOnItem : IUseableOn, IItem
     {
         /// <summary>
@@ -21,6 +23,8 @@ namespace NeoServer.Game.Contracts.Items.Types.Useables
     }
     public interface IUseableOnTile : IUseableOn, IItem
     {
+        event UseOnTile OnUsedOnTile;
+        
         /// <summary>
         /// Useable by creatures on items (ground, weapon, stairs..)
         /// </summary>
