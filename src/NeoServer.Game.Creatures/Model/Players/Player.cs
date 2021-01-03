@@ -478,7 +478,7 @@ namespace NeoServer.Server.Model.Players
 
             OnUsedItem?.Invoke(this, onCreature, item);
         }
-        public void Use(IUseableOn item, IItem onItem)
+        public void Use(IUseableOn2 item, ITile tile)
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
@@ -486,22 +486,10 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
 
-            if (item is not IUseableOnItem useableOnItem) return;
+            if (onTile.TopItemOnStack is not IItem onItem) return;
 
-            useableOnItem.Use(this, onItem); 
-            OnUsedItem?.Invoke(this, onItem, item);
-        }
-        public void Use(IUseableOn item, ITile tile)
-        {
-            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
-            {
-                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
-                return;
-            }
-
-            if (tile.TopItemOnStack is not IItem onItem) return;
-
-            if (item is IUseableOnTile useableOnTile) useableOnTile.Use(this, tile);
+            if (item is IUseableAttackOnTile useableAttackOnTile) Attack(onTile, useableAttackOnTile);
+            else if (item is IUseableOnTile useableOnTile) useableOnTile.Use(this, onTile);
             else if (item is IUseableOnItem useableOnItem) useableOnItem.Use(this, onItem);
 
             OnUsedItem?.Invoke(this, onItem, item);
