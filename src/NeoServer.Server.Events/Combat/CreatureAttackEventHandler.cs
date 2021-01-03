@@ -54,7 +54,11 @@ namespace NeoServer.Server.Events.Combat
 
         private static void SendEffect(CombatAttackType attack, IConnection connection, Location location)
         {
+            attack.EffectT = attack.EffectT == 0 ? EffectT.None : attack.EffectT;
             var effect = attack.EffectT == EffectT.None ? DamageEffectParser.Parse(attack.DamageType) : attack.EffectT;
+
+            if (attack.EffectT == EffectT.None && attack.DamageType == NeoServer.Game.Common.Item.DamageType.Melee) return;
+
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, effect));
         }
 
