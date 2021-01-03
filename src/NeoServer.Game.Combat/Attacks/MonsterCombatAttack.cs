@@ -1,8 +1,7 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Combat.Attacks;
-using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Contracts.Combat.Attacks;
 using System;
 
 namespace NeoServer.Game.Combat.Attacks

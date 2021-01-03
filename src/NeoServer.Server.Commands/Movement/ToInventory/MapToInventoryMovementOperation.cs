@@ -1,10 +1,10 @@
 ﻿
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Common.Location;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Game.Contracts.World;
 
 namespace NeoServer.Server.Commands.Movement
 {

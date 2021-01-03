@@ -1,8 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.World.Map
 {

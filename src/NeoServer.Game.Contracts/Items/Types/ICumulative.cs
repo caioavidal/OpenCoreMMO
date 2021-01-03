@@ -1,6 +1,4 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-
-namespace NeoServer.Game.Contracts.Items.Types
+﻿namespace NeoServer.Game.Contracts.Items.Types
 {
     public delegate void ItemReduce(ICumulative item, byte amount);
     public interface ICumulative : IPickupable

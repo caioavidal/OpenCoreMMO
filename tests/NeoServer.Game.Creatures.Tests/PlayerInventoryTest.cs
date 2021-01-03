@@ -1,19 +1,19 @@
-﻿using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Common;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.Items.Types.Containers;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;
+using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using NeoServer.Game.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.World.Map.Tiles;
-using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures.Tests
 {
@@ -473,7 +473,7 @@ namespace NeoServer.Game.Creatures.Tests
             var dictionary = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
 
             var itemOnInventory = ItemTestData.CreateWeaponItem(200, "axe");
-            dictionary.Add(Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, (ushort)200));
+            dictionary.Add(Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 200));
 
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), dictionary);
             var item = ItemTestData.CreateWeaponItem(100, "sword");

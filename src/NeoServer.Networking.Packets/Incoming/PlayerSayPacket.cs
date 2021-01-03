@@ -1,8 +1,5 @@
 ﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Server.Contracts.Network;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Networking.Packets.Incoming
 {

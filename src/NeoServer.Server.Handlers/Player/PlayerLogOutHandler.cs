@@ -1,7 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Commands;
+﻿using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Authentication

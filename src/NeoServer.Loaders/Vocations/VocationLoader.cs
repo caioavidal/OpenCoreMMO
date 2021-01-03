@@ -3,8 +3,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Server.Helpers.JsonConverters;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
@@ -12,8 +10,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Loaders.Vocations
 {

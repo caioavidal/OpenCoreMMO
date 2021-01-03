@@ -1,6 +1,4 @@
-using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Creature.Model
 {

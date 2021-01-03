@@ -1,7 +1,5 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Contracts
 {

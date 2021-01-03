@@ -1,7 +1,6 @@
-﻿using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.World;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

@@ -1,21 +1,7 @@
 using NeoServer.Data.Model;
-using NeoServer.Game.Contracts;
+using NeoServer.Loaders.Players;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
-using System.Threading.Tasks;
-using NeoServer.Server.Model.Players;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures;
-using NeoServer.Game.Creature.Model;
-using System.Collections.Generic;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Items.Types;
-using System;
-using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Common;
-using NeoServer.Loaders.Players;
 
 namespace NeoServer.Server.Commands
 {

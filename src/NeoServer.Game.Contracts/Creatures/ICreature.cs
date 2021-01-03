@@ -1,15 +1,11 @@
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
-using NeoServer.Server.Model.Players.Contracts;
-using System;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Creatures.Enums;
 using System.Collections.Generic;
-using NeoServer.Game.Contracts.Items.Types;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

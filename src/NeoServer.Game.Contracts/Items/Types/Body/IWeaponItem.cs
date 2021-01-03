@@ -1,10 +1,10 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Players;
-using System;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Common.Players;
+using NeoServer.Game.Contracts.Creatures;
+using System;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {

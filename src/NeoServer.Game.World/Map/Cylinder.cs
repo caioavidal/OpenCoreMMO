@@ -1,15 +1,15 @@
-﻿using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Common;
+using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NeoServer.Game.World.Map.Tiles;
 
 namespace NeoServer.Game.World.Map
 {

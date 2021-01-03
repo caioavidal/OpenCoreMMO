@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Common.Item;
+﻿using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types.Body;
 using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items

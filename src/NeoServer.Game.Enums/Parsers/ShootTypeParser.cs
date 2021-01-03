@@ -11,6 +11,8 @@ namespace NeoServer.Game.Common.Parsers
                 "bolt" => ShootType.Bolt,
                 "eartharrow" => ShootType.EarthArrow,
                 "poisonarrow" => ShootType.PoisonArrow,
+                "poison" => ShootType.Poison,
+                "earth" => ShootType.Earth,
                 "death" => ShootType.Death,
                 "ice" => ShootType.Ice,
                 "smallearth" => ShootType.SmallEarth,

@@ -1,4 +1,3 @@
-using NeoServer.Game.Contracts.Items;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using System;

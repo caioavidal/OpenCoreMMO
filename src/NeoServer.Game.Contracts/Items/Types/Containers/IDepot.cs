@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NeoServer.Game.Contracts.Items.Types.Containers
+﻿namespace NeoServer.Game.Contracts.Items.Types.Containers
 {
     public interface IDepot : IContainer
     {

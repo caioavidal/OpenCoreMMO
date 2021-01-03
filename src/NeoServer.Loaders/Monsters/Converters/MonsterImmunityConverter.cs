@@ -1,8 +1,6 @@
 ﻿using NeoServer.Game.Common.Item;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -42,7 +40,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                     immunity = DamageType.Ice;
                 }
 
-                immunities.Add(immunity, (sbyte)element.Value);
+                immunities.Add(immunity, element.Value);
             }
 
             return immunities;

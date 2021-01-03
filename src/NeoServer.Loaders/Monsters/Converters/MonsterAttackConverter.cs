@@ -1,14 +1,13 @@
 ﻿using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Creatures.Combat.Attacks;
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -43,7 +42,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 var combatAttack = new MonsterCombatAttack()
                 {
-                    Chance = chance > 100 || chance <= 0 ? (byte)100 : chance,
+                    Chance = chance > 100 || chance <= 0 ? 100 : chance,
                     Interval = interval,
                     MaxDamage = (ushort)Math.Abs(max),
                     MinDamage = (ushort)Math.Abs(min),

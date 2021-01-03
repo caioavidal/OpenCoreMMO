@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Players;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Immutable;
 using System.Text;
 

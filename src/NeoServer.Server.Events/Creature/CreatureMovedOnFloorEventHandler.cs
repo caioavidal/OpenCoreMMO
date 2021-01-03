@@ -1,13 +1,9 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events
 {

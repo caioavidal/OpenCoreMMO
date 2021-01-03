@@ -10246,6 +10246,14 @@
           {
              "key": "charges",
              "value": "3"
+          },
+		   {
+             "key": "field",
+             "value": "1491"
+          },
+		   {
+             "key": "shootType",
+             "value": "energy"
           }
        ]
     },
@@ -10331,6 +10339,14 @@
           {
              "key": "charges",
              "value": "3"
+          },
+          {
+             "key": "field",
+             "value": 1490
+          },
+          {
+             "key": "shootType",
+             "value": "poison"
           }
        ]
     },
@@ -10558,6 +10574,14 @@
           {
              "key": "charges",
              "value": "3"
+          },
+		    {
+             "key": "field",
+             "value": "1497"
+          },
+		    {
+             "key": "shootType",
+             "value": "energy"
           }
        ]
     },
@@ -10653,7 +10677,11 @@
 		  {
              "key": "field",
              "value": "1487"
-          }
+          },
+		  {
+             "key": "shootType",
+             "value": "fire"
+          },
        ]
     },
     {

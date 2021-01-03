@@ -1,11 +1,6 @@
-﻿using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static NeoServer.Loaders.Monsters.MonsterData;
 
 namespace NeoServer.Loaders.Monsters.Converters

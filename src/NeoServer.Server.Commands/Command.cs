@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace NeoServer.Server.Commands
+﻿namespace NeoServer.Server.Commands
 {
     public abstract class Command
     {

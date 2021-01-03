@@ -4,7 +4,6 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Game.Creatures
 {

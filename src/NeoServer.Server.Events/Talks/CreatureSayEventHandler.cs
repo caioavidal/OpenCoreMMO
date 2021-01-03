@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Talks;
+﻿using NeoServer.Game.Common.Talks;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 
 namespace NeoServer.Server.Events

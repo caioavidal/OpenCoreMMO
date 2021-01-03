@@ -1,11 +1,4 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Item;
-using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NeoServer.Game.Creatures.Combat.Attacks
+﻿namespace NeoServer.Game.Creatures.Combat.Attacks
 {
     //public class ManaDrainCombatAttack : DistanceCombatAttack
     //{

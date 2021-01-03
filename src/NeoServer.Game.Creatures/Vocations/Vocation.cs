@@ -1,15 +1,11 @@
 ﻿using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Vocations
 {
-   
+
     public class Vocation : IVocation
     {
         public string Id { get; set; }

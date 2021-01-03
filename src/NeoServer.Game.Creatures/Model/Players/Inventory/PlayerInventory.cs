@@ -1,18 +1,16 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Bases;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Players;
+using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
-using NeoServer.Game.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.World.Map.Tiles;
-using NeoServer.Game.Contracts.Bases;
 
 namespace NeoServer.Server.Model.Players
 {

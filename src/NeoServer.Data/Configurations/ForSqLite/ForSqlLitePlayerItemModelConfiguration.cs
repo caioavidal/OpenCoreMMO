@@ -2,12 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Model;
 using NeoServer.Data.Seeds;
-using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Data.Configurations
 {

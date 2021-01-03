@@ -1,8 +1,4 @@
-﻿using BenchmarkDotNet.Disassemblers;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Model.Players.Contracts;
+﻿using NeoServer.Networking.Packets.Outgoing;
 
 namespace NeoServer.Server.Events
 {

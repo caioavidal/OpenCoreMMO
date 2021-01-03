@@ -19,6 +19,7 @@ namespace NeoServer.Game.Items.Events
             {
                 consumable.OnUsed += itemUsedEventHandler.Execute;
             }
+         
         }
 
         public void Unsubscribe(IItem item)

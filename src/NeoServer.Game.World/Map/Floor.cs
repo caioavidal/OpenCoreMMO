@@ -1,8 +1,4 @@
 ﻿using NeoServer.Game.Contracts.World;
-using NeoServer.Game.World.Map.Tiles;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.World.Map
 {

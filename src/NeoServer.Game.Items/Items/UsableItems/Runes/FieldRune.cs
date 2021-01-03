@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Runes;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using System;
@@ -12,6 +13,8 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 {
     public class FieldRune : Rune, IFieldRune
     {
+        public event UseOnTile OnUsedOnTile;
+
         public FieldRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
         {
         }
@@ -31,9 +34,11 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             tile.AddItem(field);
 
             Reduce();
+
+            OnUsedOnTile?.Invoke(usedBy, tile, this);
+
             return true;
         }
         public static new bool IsApplicable(IItemType type) => Rune.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.Field);
-
     }
 }

@@ -1,16 +1,12 @@
-﻿using Microsoft.Diagnostics.Runtime.Utilities;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Explosion;
-using NeoServer.Game.Common;
+﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Enums.Creatures.Enums;
 
 namespace NeoServer.Server.Events
 {
@@ -52,11 +48,11 @@ namespace NeoServer.Server.Events
 
                 var damageTextColor = DamageTextColorParser.Parse(damage.Type);
 
-                //if (damage.Type != default)
-                //{
-                //    var damageEffect = damage.Effect == EffectT.None ? DamageEffectParser.Parse(damage.Type) : damage.Effect;
-                //    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
-                //}
+                if (!damage.IsElementalDamage)
+                {
+                    var damageEffect = damage.Effect == EffectT.None ? DamageEffectParser.Parse(damage.Type) : damage.Effect;
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                }
 
                 connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor, damageString));
                 connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(victim));

@@ -1,10 +1,4 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts
 {
