@@ -1,12 +1,12 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
-using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Server.Events.Combat
 {

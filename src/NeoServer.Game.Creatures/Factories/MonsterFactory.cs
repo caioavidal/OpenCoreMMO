@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Model.Monsters;
 using Serilog.Core;

@@ -1,13 +1,11 @@
-using NeoServer.Game.Contracts.Combat;
+using NeoServer.Game.Common;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts

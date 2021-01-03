@@ -1,5 +1,4 @@
 ﻿using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using NeoServer.Data.Parsers;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;

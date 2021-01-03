@@ -1,16 +1,12 @@
-﻿using Microsoft.Diagnostics.Runtime.Utilities;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Explosion;
-using NeoServer.Game.Common;
+﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Enums.Creatures.Enums;
 
 namespace NeoServer.Server.Events
 {

@@ -1,9 +1,6 @@
-﻿using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Location.Structs;
-using System;
+﻿using NeoServer.Game.Common.Location.Structs;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.Effects.Explosion
 {

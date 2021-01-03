@@ -1,12 +1,4 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Item;
-using NeoServer.Game.Contracts.Items.Types.Useables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Game.Contracts.Items.Types.Runes
 {

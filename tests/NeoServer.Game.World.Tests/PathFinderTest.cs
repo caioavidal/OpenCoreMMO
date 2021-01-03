@@ -1,10 +1,4 @@
-﻿
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.World.Map;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NeoServer.Game.World.Map;
 using Xunit;
 
 namespace NeoServer.Game.World.Tests

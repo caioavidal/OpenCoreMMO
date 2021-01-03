@@ -4,22 +4,22 @@ using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
 using NeoServer.Loaders.Spawns;
+using NeoServer.Loaders.Vocations;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
+using NeoServer.Server;
+using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Events;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
-using NeoServer.Server.Contracts.Tasks;
 using Serilog.Core;
 using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using NeoServer.Server;
-using NeoServer.Loaders.Vocations;
 
 Console.Title = "OpenCoreMMO Server";
 

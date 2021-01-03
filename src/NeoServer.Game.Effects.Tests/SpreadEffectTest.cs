@@ -1,10 +1,5 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Effects.Magical;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NeoServer.Game.Effects.Tests

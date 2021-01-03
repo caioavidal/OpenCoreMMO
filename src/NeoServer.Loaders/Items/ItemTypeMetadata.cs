@@ -1,8 +1,4 @@
-using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Items.Items;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Loaders.Items
 {

@@ -1,8 +1,4 @@
-﻿using Autofac;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Creatures.Spells;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
 using NeoServer.Server.Events.Creature.Monsters;

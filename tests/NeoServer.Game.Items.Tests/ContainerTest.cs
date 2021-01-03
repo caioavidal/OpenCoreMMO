@@ -1,9 +1,8 @@
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Items.Items;
 using Xunit;
-using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Game.Items.Tests
 {
@@ -602,7 +601,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(23, (removedItem as ICumulative).Amount);
 
             Assert.NotSame(item, removedItem);
-            Assert.Equal(item.ClientId, (removedItem as IItem).ClientId);
+            Assert.Equal(item.ClientId, removedItem.ClientId);
         }
 
         [Fact]
@@ -621,7 +620,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(100, (sut[0].ClientId));
             Assert.Equal(63, (removedItem as ICumulative).Amount);
 
-            Assert.Equal(item.ClientId, (removedItem as IItem).ClientId);
+            Assert.Equal(item.ClientId, removedItem.ClientId);
         }
 
         [Fact]

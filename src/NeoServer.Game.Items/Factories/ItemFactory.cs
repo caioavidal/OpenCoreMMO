@@ -1,18 +1,15 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Common;
+﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Items.Items;
+using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.UsableItems;
+using NeoServer.Game.Items.Items.UsableItems.Runes;
 using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
-using NeoServer.Game.Items.Items.Containers;
-using NeoServer.Game.Items.Items.UsableItems;
-using NeoServer.Game.Items.Events;
-using NeoServer.Game.Contracts.Items.Types;
 using System.Linq;
-using NeoServer.Game.Items.Items.UsableItems.Runes;
 
 namespace NeoServer.Game.Items
 {

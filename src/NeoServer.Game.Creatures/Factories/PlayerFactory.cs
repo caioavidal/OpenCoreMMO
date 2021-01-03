@@ -1,16 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Players;
-using NeoServer.Server.Model.Players;
+﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Creatures.Vocations;
 
 namespace NeoServer.Game.Creatures
 {

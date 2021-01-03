@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-    public class RandomIdGenerator
+public class RandomIdGenerator
     {
         private static Random _random = new Random();
         private static object _lock = new object();

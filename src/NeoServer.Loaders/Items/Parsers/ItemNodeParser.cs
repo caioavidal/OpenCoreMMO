@@ -1,5 +1,5 @@
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Common;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Items;
 using NeoServer.OTB.Structure;
 

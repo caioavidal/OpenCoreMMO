@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Location;
 using NeoServer.Server.Contracts.Network;
 using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Networking.Packets.Incoming
 {

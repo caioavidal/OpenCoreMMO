@@ -1,8 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World.Tiles;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Jobs.Creatures
 {

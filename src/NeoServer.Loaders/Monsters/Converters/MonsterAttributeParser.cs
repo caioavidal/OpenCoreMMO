@@ -1,8 +1,4 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Common.Item;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {

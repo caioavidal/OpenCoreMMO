@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Creatures.Players;
-using System;
+﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Conditions;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Contracts.Creatures;
+using System;
 
 namespace NeoServer.Game.Combat.Attacks
 {

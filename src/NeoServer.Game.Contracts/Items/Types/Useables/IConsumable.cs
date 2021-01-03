@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types.Useables;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {

@@ -1,13 +1,9 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Common;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Server.Events
 {

@@ -1,10 +1,7 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Model.Players.Contracts;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.World.Tiles

@@ -1,5 +1,4 @@
 ﻿using NeoServer.Data.Model;
-using NeoServer.Game.Contracts;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
 

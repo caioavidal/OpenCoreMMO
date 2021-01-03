@@ -1,8 +1,7 @@
-﻿using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Items.Items;
 using Xunit;
-using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Items.Tests
 {

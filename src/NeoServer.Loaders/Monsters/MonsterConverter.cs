@@ -1,14 +1,11 @@
-﻿using NeoServer.Game.Contracts.Combat;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Monsters;
-using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Item;
-using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Loaders.Monsters.Converters;
+using System.Collections.Generic;
 using System.Collections.Immutable;
-using NeoServer.Game.Common;
+using System.Linq;
 
 namespace NeoServer.Loaders.Monsters
 {

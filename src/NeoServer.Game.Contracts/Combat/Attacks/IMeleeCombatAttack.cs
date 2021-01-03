@@ -1,9 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Contracts.Combat
 {

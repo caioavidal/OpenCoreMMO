@@ -1,4 +1,4 @@
-namespace  NeoServer.Game.Common.Talks
+namespace NeoServer.Game.Common.Talks
 
 {
     public struct Speech

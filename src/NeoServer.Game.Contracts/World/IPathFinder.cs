@@ -1,9 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Contracts.World

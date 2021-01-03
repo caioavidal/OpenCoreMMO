@@ -1,12 +1,6 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Items.Types.Useables
 {

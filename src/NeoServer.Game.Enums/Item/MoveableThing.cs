@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-
-namespace NeoServer.Game.Model
+﻿namespace NeoServer.Game.Model
 {
     //public abstract class MoveableThing : IMoveableThing
     //{

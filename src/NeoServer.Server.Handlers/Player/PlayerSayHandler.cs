@@ -1,12 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Outgoing;
+﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Server.Handlers.Player
 {

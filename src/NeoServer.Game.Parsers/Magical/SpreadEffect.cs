@@ -1,9 +1,6 @@
 ﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using System;
 using System.Buffers;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Effects.Magical
 {

@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Contracts.Items.Types.Containers;
+using NeoServer.Game.Items.Items;
 
 namespace NeoServer.Game.Items.Tests
 {

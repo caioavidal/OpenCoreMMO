@@ -1,9 +1,5 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Parsers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Common.Combat.Structs
 {

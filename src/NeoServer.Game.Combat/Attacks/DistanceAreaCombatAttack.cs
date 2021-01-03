@@ -1,10 +1,9 @@
 ﻿
 using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Explosion;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Effects.Explosion;
 using System.Linq;
 
 namespace NeoServer.Game.Creatures.Combat.Attacks

@@ -32,7 +32,7 @@
 //        Gender Gender { get; set; }
 //        VocationType Vocation { get; set; }
 //        Location Location { get; set; }
-       
+
 //        Dictionary<Slot, ushort> Inventory { get; set; }
 
 //        //IEnumerable<IItemModel> Items { get; set; }

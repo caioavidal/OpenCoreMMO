@@ -1,13 +1,13 @@
-﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Players;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Server.Commands.Movement;
-using System;
 using NeoServer.Game.Contracts.Items.Types.Useables;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Commands.Movement;
+using NeoServer.Server.Model.Players.Contracts;
+using System;
 
 namespace NeoServer.Server.Commands.Player
 {

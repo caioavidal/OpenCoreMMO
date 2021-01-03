@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -16,7 +16,7 @@ namespace NeoServer.Game.Items.Items
         public GroundItem(IItemType type, Location location)
         {
             Metadata = type;
-            StepSpeed = type?.Speed != 0 ? type.Speed : (ushort)150;
+            StepSpeed = type?.Speed != 0 ? type.Speed : 150;
             Location = location;
             MovementPenalty = type.Attributes.GetAttribute<byte>(Common.ItemAttribute.Waypoints);
         }

@@ -1,6 +1,6 @@
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
 
