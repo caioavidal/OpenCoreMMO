@@ -72,6 +72,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
             player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType));
 
+            Reduce();
             return true;
         }
 

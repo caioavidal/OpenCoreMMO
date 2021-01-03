@@ -124,7 +124,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public bool Attack(ITile tile, IUseableAttackOnTile item)
         {
-           if(CanSee(tile.Location)) return false;
+           if(!CanSee(tile.Location)) return false;
 
             if (!item.Use(this, tile, out var combat)) return false;
             OnAttackEnemy?.Invoke(this, null, combat);

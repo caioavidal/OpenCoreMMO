@@ -25,13 +25,11 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
-            IThing onThing = null;
+            IItem onItem = null;
             ITile onTile = null;
             if (useItemPacket.ToLocation.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.ToLocation] is not ITile tile) return;
-                if (tile.TopItemOnStack is null) return;
-                onThing = tile.TopItemOnStack;
                 onTile = tile;
             }
             else if (useItemPacket.ToLocation.Type == LocationType.Slot)
@@ -45,7 +43,7 @@ namespace NeoServer.Server.Commands.Player
                 onItem = item;
             }
 
-            if (onThing is not IThing && onTile is not ITile) return;
+            if (onItem is not IItem && onTile is not ITile) return;
 
 
             Action action = null;
@@ -56,7 +54,7 @@ namespace NeoServer.Server.Commands.Player
             {
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
 
-                if (tile.TopItemOnStack is IUseableOnItem useable)
+                if (tile.TopItemOnStack is IUseableOn useable)
                 {
                     itemToUse = useable;
                 }
