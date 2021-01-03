@@ -10574,6 +10574,14 @@
           {
              "key": "charges",
              "value": "3"
+          },
+		    {
+             "key": "field",
+             "value": "1497"
+          },
+		    {
+             "key": "shootType",
+             "value": "energy"
           }
        ]
     },
