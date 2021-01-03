@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Talks;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Creatures.Model
 {
@@ -48,7 +49,19 @@ namespace NeoServer.Game.Creatures.Model
 
         }
 
-        //public Location Location { get; set; }
+        private IDynamicTile tile;
+        public IDynamicTile Tile
+        {
+            get
+            {
+                return tile;
+            }
+            set
+            {
+                tile = value;
+                Location = tile.Location;
+            }
+        }
         public Action<ICreature> NextAction { get; protected set; }
         public uint HealthPoints { get; protected set; }
         public uint MaxHealthPoints { get; protected set; }

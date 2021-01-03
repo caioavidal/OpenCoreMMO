@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Runes;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Effects.Magical;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -27,7 +28,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
         public bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combatAttackType)
         {
-            if (NeedTarget == false) return AttackArea(usedBy, creature, out combatAttackType);
+            if (NeedTarget == false ) return AttackArea(usedBy, creature.Tile, out combatAttackType);
 
             combatAttackType = CombatAttackType.None;
 
@@ -50,11 +51,11 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             return false;
         }
 
-        public bool Use(ICreature usedBy, IItem item)
+        public bool Use(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
         {
-            return AttackArea(usedBy, item, out var combatAttackType);
+            return AttackArea(usedBy, tile, out combatAttackType);
         }
-        public bool AttackArea(ICreature usedBy, IThing thing, out CombatAttackType combatAttackType)
+        public bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
         {
             combatAttackType = CombatAttackType.None;
 
@@ -66,12 +67,16 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             var damage = (ushort)GameRandom.Random.Next(minValue: minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
             combatAttackType.DamageType = DamageType;
-            combatAttackType.Area = AreaEffect.Create(thing.Location, Effects.AreaType.AreaCircle3x3);
+            combatAttackType.Area = AreaEffect.Create(tile.Location, Effects.AreaType.AreaCircle3x3);
             combatAttackType.EffectT = Effect;
 
             player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType));
 
+            Reduce();
             return true;
         }
+
+        public static new bool IsApplicable(IItemType type) => Rune.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.Damage);
+
     }
 }

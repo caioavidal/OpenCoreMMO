@@ -10014,37 +10014,48 @@
        "id": "2268",
        "article": "a",
        "name": "sudden death rune",
-       "attributes": [
-          {
-             "key": "type",
-             "value": "rune"
-          },
-          {
-             "key": "runeSpellName",
-             "value": "adori gran mort"
-          },
-          {
-             "key": "weight",
-             "value": "70"
-          },
-          {
-             "key": "charges",
-             "value": "3"
-          },
-          {
-            "key":"damage",
-            "value":"death"
-          },
-          {
-            "key":"shootType",
-            "value":"suddendeath"
-          },
-          {
-            "key":"effect",
-            "value":"mortarea"
-          },
-          { "key":"x", "value": [4.3,7.4]},{ "key":"y", "value": [32,48]}
-       ]
+      "attributes": [
+        {
+          "key": "type",
+          "value": "rune"
+        },
+        {
+          "key": "runeSpellName",
+          "value": "adori gran mort"
+        },
+        {
+          "key": "weight",
+          "value": "70"
+        },
+        {
+          "key": "charges",
+          "value": "3"
+        },
+        {
+          "key": "needtarget",
+          "value": true
+        },
+        {
+          "key": "damage",
+          "value": "death"
+        },
+        {
+          "key": "shootType",
+          "value": "suddendeath"
+        },
+        {
+          "key": "effect",
+          "value": "mortarea"
+        },
+        {
+          "key": "x",
+          "value": [ 4.3, 7.4 ]
+        },
+        {
+          "key": "y",
+          "value": [ 32, 48 ]
+        }
+      ]
     },
     {
        "id": "2269",
@@ -10638,6 +10649,10 @@
           {
              "key": "charges",
              "value": "3"
+          },
+		  {
+             "key": "field",
+             "value": "1487"
           }
        ]
     },

@@ -47,7 +47,7 @@ namespace NeoServer.Server.Commands.Player
                 itemToUse = thing;
             }
 
-            if (itemToUse is not IUseableOn2 useableOn) return;
+            if (itemToUse is not IUseableOn useableOn) return;
 
             Action action = () => player.Use(useableOn, creature);
 

@@ -13,6 +13,7 @@ using NeoServer.Game.Common.Conditions;
 using System;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Contracts.Items.Types.Useables;
+using NeoServer.Game.Contracts.World;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -121,7 +122,15 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
 
-        
+        public bool Attack(ITile tile, IUseableAttackOnTile item)
+        {
+           if(!CanSee(tile.Location)) return false;
+
+            if (!item.Use(this, tile, out var combat)) return false;
+            OnAttackEnemy?.Invoke(this, null, combat);
+
+            return true;
+        }
         public bool Attack(ICreature creature, IUseableAttackOnCreature item)
         {
             if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location)) return false;

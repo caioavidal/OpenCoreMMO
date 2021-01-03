@@ -50,6 +50,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool IsHealthHidden { get; }
         IThing Corpse { get; set; }
         IOutfit OldOutfit { get; }
+        IDynamicTile Tile { get; set; }
 
         event RemoveCreature OnCreatureRemoved;
         event GainExperience OnGainedExperience;

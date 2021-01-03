@@ -19,7 +19,7 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
-        public void Execute(IPlayer player, IThing onThing, IUseableOn2 item)
+        public void Execute(IPlayer player, IThing onThing, IUseableOn item)
         {
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(onThing.Location))
             {

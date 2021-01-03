@@ -457,8 +457,29 @@ namespace NeoServer.Server.Model.Players
             else
                 ReduceHealth(damage);
         }
+        public void Use(IUseable item)
+        {
+            item.Use(this);
+        }
+        public void Use(IUseableOn item, ICreature onCreature)
+        {
+            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
+                return;
+            }
+            var result = false;
 
-        public void Use(IUseableOn2 item, IThing onThing)
+            if (onCreature is ICombatActor enemy)
+            {
+                if (item is IUseableAttackOnCreature useableAttackOnCreature) result = Attack(enemy, useableAttackOnCreature);
+                else if (item is IUseableOnCreature useableOnCreature) useableOnCreature.Use(this, onCreature);
+                else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, onCreature.Tile);
+            }
+
+            if(result) OnUsedItem?.Invoke(this, onCreature, item);
+        }
+        public void Use(IUseableOn item, IItem onItem)
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
@@ -466,23 +487,28 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
 
-            if (onThing is ICreature creature && item is IUseableOnCreature useableOnCreature)
+            if (item is not IUseableOnItem useableOnItem) return;
+
+            useableOnItem.Use(this, onItem);
+            OnUsedItem?.Invoke(this, onItem, item);
+        }
+        public void Use(IUseableOn item, ITile onTile)
+        {
+            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
-                useableOnCreature.Use(this, creature);
+                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
+                return;
             }
 
-            if (onThing is ICombatActor enemy)
-            {
-                if (item is IUseableAttackOnCreature useableAttackOnCreature) Attack(enemy, useableAttackOnCreature);
-                
-            }
+            if (onTile.TopItemOnStack is not IItem onItem) return;
 
-            else if (onThing is IItem useOnItem && item is IUseableOnItem useableOnItem)
-            {
-                useableOnItem.Use(this, useOnItem);
-            }
+            var result = false;
 
-            OnUsedItem?.Invoke(this, onThing, item);
+            if (item is IUseableAttackOnTile useableAttackOnTile) result = Attack(onTile, useableAttackOnTile);
+            else if (item is IUseableOnTile useableOnTile) result= useableOnTile.Use(this, onTile);
+            else if (item is IUseableOnItem useableOnItem) result= useableOnItem.Use(this, onItem);
+
+            if(result) OnUsedItem?.Invoke(this, onItem, item);
         }
         public bool Feed(IFood food)
         {
@@ -490,6 +516,7 @@ namespace NeoServer.Server.Model.Players
 
             var regenerationMs = (uint)food.Duration * 1000;
             var maxRegenerationTime = (uint)1200 * 1000;
+
             if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
             {
                 if (condition.RemainingTime + regenerationMs >= maxRegenerationTime) //todo: this number should be configurable

@@ -21,7 +21,10 @@ namespace NeoServer.Game.Items
         public event CreateItem OnItemCreated;
         public ItemFactory()
         {
+            Instance = this;
         }
+
+        public static IItemFactory Instance { get; private set; }
 
         public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
 
@@ -118,7 +121,14 @@ namespace NeoServer.Game.Items
                 }
                 if (Rune.IsApplicable(itemType))
                 {
-                    return new AttackRune(itemType, location, attributes);
+                    if (AttackRune.IsApplicable(itemType))
+                    {
+                        return new AttackRune(itemType, location, attributes);
+                    }
+                    if (FieldRune.IsApplicable(itemType))
+                    {
+                        return new FieldRune(itemType, location, attributes);
+                    }
                 }
                 return new Cumulative(itemType, location, attributes);
             }
@@ -142,10 +152,10 @@ namespace NeoServer.Game.Items
                 }
                 if (TransformerUsableItem.IsApplicable(itemType))
                 {
-                    return new TransformerUsableItem(itemType, location, this); 
+                    return new TransformerUsableItem(itemType, location); 
                 }
            
-                return new UseableOnItem(itemType, location);
+                //return new UseableOnItem(itemType, location);
             }
 
             return new Item(ItemTypeData.InMemory[typeId], location);

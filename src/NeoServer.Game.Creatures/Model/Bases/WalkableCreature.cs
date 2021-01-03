@@ -20,6 +20,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event OnTurnedToDirection OnTurnedToDirection;
         public event StartFollow OnStartedFollowing;
         public event ChangeSpeed OnChangedSpeed;
+        public event TeleportTo OnTeleported;
         #endregion
 
         protected IPathAccess PathAccess { get; }
@@ -35,17 +36,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
         public uint EventWalk { get; set; }
-        private IDynamicTile tile;
-        public IDynamicTile Tile { get
-            {
-                return tile;
-            }
-            set
-            {
-                tile = value;
-                Location = tile.Location;
-            }
-        }
+       
         public virtual ushort Speed { get; protected set; }
         public uint Following { get; private set; }
         public bool IsFollowing => Following > 0;
@@ -204,6 +195,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
 
             return false;
+        }
+
+        public virtual void TeleportTo(Location location)
+        {
+            OnTeleported?.Invoke(this, location);
         }
 
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);

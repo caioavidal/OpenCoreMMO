@@ -40,13 +40,22 @@ namespace NeoServer.Server.Events.Combat
                 {
                     foreach (var coordinate in attack.Area)
                     {
-                        var effect = attack.EffectT == EffectT.None ? DamageEffectParser.Parse(attack.DamageType) : attack.EffectT;
-                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(coordinate.Location, effect));
+                        SendEffect(attack, connection, coordinate.Location);
                     }
+                }
+                else
+                {
+                    SendEffect(attack, connection,victim.Location);
                 }
 
                 connection.Send();
             }
+        }
+
+        private static void SendEffect(CombatAttackType attack, IConnection connection, Location location)
+        {
+            var effect = attack.EffectT == EffectT.None ? DamageEffectParser.Parse(attack.DamageType) : attack.EffectT;
+            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, effect));
         }
 
         private static void SendMissedAttack(ICreature creature, ICreature victim, CombatAttackType attack, IConnection connection)
