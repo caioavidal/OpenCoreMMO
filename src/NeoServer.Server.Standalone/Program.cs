@@ -38,6 +38,8 @@ var logger = container.Resolve<Logger>();
 var serverConfiguration = container.Resolve<ServerConfiguration>();
 var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
 
+logger.Information($"Welcome to OpenCoreMMO Server");
+logger.Information($"Environment: {Environment.GetEnvironmentVariable("ENVIRONMENT")}");
 
 logger.Information($"Loading database: { databaseConfiguration.active}");
 

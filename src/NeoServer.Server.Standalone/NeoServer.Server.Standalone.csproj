@@ -13,7 +13,9 @@
 		<EmbeddedResource Remove="Properties\**" />
 		<None Remove="Properties\**" />
 	</ItemGroup>
-
+	<PropertyGroup>
+		<RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.0.0" />
