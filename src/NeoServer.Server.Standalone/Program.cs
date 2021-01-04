@@ -26,8 +26,6 @@ using System.Threading.Tasks;
 
 public class Program
 {
-    [assembly: AssemblyTitle("OpenCoreMMO Server")]
-
     public static void Main()
     {
         Console.Title = "OpenCoreMMO Server";
