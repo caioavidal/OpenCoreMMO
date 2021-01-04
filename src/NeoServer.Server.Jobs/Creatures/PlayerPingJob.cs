@@ -19,11 +19,8 @@ namespace NeoServer.Server.Jobs
 
             var now = DateTime.Now.Ticks;
 
-            var hasLostConnnection = false;
 
-            IConnection connection = null;
-
-            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out connection))
+            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
                 return;
             }
@@ -37,16 +34,10 @@ namespace NeoServer.Server.Jobs
                 connection.Send(new PingPacket());
             }
 
-            //todo
-            //int64_t noPongTime = timeNow - lastPong;
-            //if ((hasLostConnection || noPongTime >= 7000) && attackedCreature && attackedCreature->getPlayer())
-            //{
-            //    setAttackedCreature(nullptr);
-            //}
-
+         
             var noPongTime = TimeSpan.FromTicks(now - connection.LastPingResponse).TotalMilliseconds;
 
-            if (noPongTime >= CONNECTION_LOST_INTERVAL && !player.CannotLogout && connection.LastPingResponse > 0)
+            if (noPongTime >= CONNECTION_LOST_INTERVAL && connection.LastPingResponse > 0)
             {
                 new PlayerLogOutCommand(player, game, true).Execute();
             }

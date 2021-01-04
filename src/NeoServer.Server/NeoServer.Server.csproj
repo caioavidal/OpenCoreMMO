@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
-        <PackageReference Include="Autofac" Version="6.0.0" />
+        <PackageReference Include="Autofac" Version="6.1.0" />
         <PackageReference Include="Serilog" Version="2.10.0" />
 
   </ItemGroup>

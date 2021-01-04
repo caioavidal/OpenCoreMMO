@@ -26,6 +26,9 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
     public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
     public delegate void UseItem(IPlayer player, IThing thing, IUseableOn item);
+    public delegate void LogIn(IPlayer player);
+    public delegate void LogOut(IPlayer player);
+    
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -57,6 +60,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         event UseItem OnUsedItem;
         event ReduceMana OnStatusChanged;
         event PlayerLevelAdvance OnLevelAdvanced;
+        event LogIn OnLoggedIn;
+        event LogOut OnLoggedOut;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -122,7 +127,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);
-        bool Logout();
+        bool Logout(bool forced = false);
         ushort CalculateAttackPower(float attackRate, ushort attack);
         void LookAt(ITile tile);
         void LookAt(byte containerId, sbyte containerSlot);
@@ -138,6 +143,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void Use(IUseableOn item, ICreature onCreature);
         void Use(IUseable item);
         void Use(IUseableOn item, IItem onItem);
+        bool Login();
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";

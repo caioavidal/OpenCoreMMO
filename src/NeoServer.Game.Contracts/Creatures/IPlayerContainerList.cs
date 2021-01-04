@@ -21,6 +21,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event ClosedContainer OnClosedContainer;
         event OpenedContainer OnOpenedContainer;
 
+        void CloseAll();
         void CloseContainer(byte containerId);
         void CloseDistantContainers();
         void GoBackContainer(byte containerId);

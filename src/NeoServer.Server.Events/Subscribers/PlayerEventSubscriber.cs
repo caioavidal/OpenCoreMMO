@@ -23,15 +23,17 @@ namespace NeoServer.Server.Events
         private readonly PlayerLookedAtEventHandler playerLookedAtEventHandler;
         private readonly PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler;
         private readonly PlayerUsedItemEventHandler playerUsedItemEventHandler;
+        private readonly PlayerSelfAppearOnMapEventHandler  playerSelfAppearOnMapEventHandler;
 
-        public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler, 
+        public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
             PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
             ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler,
             CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler, PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler,
             PlayerManaChangedEventHandler playerManaReducedEventHandler, SpellInvokedEventHandler playerUsedSpellEventHandler, PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler,
             PlayerConditionChangedEventHandler playerConditionChangedEventHandler, PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler,
-            PlayerOperationFailedEventHandler playerOperationFailedEventHandler, PlayerLookedAtEventHandler playerLookedAtEventHandler, 
-            PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler)
+            PlayerOperationFailedEventHandler playerOperationFailedEventHandler, PlayerLookedAtEventHandler playerLookedAtEventHandler,
+            PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler, 
+            PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -50,6 +52,7 @@ namespace NeoServer.Server.Events
             this.playerLookedAtEventHandler = playerLookedAtEventHandler;
             this.playerGainedSkillPointsEventHandler = playerGainedSkillPointsEventHandler;
             this.playerUsedItemEventHandler = playerUsedItemEventHandler;
+            this.playerSelfAppearOnMapEventHandler = playerSelfAppearOnMapEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -86,6 +89,7 @@ namespace NeoServer.Server.Events
             player.OnLookedAt += playerLookedAtEventHandler.Execute;
             player.OnGainedSkillPoint += playerGainedSkillPointsEventHandler.Execute;
             player.OnUsedItem += playerUsedItemEventHandler.Execute;
+            player.OnLoggedIn += playerSelfAppearOnMapEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -122,6 +126,7 @@ namespace NeoServer.Server.Events
             player.OnLookedAt -= playerLookedAtEventHandler.Execute;
             player.OnGainedSkillPoint -= playerGainedSkillPointsEventHandler.Execute;
             player.OnUsedItem -= playerUsedItemEventHandler.Execute;
+            player.OnLoggedIn -= playerSelfAppearOnMapEventHandler.Execute;
         }
     }
 }

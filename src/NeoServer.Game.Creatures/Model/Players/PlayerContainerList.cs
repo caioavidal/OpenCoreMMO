@@ -63,6 +63,15 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
+        public void CloseAll()
+        {
+            if (openedContainers.Count == 0) return;
+            foreach (var container in openedContainers.Values)
+            {
+                CloseContainer(container.Id);
+            }
+        }
+
         public IContainer this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
 
         private Dictionary<byte, PlayerContainer> openedContainers = new Dictionary<byte, PlayerContainer>();

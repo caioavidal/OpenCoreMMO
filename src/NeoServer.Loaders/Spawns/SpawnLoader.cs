@@ -30,7 +30,7 @@ namespace NeoServer.Loaders.Spawns
 
         private IEnumerable<SpawnData> GetSpawnData()
         {
-            var basePath = "./data/world/";
+            var basePath = $"{serverConfiguration.Data}/world/";
 
             var spawnPath = Path.Combine(basePath, $"{serverConfiguration.OTBM.Replace(".otbm", "-spawn")}.json");
             if (!File.Exists(spawnPath))

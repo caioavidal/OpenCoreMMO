@@ -1,6 +1,7 @@
 using NeoServer.Data.Model;
 using NeoServer.Loaders.Players;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
 
 namespace NeoServer.Server.Commands
@@ -33,9 +34,14 @@ namespace NeoServer.Server.Commands
                 return;
             }
 
-            var player = playerLoader.Load(playerRecord);
+            if(!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.PlayerId, out var player))
+            {
+                player = playerLoader.Load(playerRecord);
+            }
 
             game.CreatureManager.AddPlayer(player, connection);
+
+            player.Login();
         }
     }
 }

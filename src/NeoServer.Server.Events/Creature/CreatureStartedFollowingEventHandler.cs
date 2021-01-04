@@ -12,7 +12,7 @@ namespace NeoServer.Server.Events.Creature
         {
             this.game = game;
         }
-        public void Execute(IWalkableCreature creature, IWalkableCreature following, FindPathParams fpp)
+        public void Execute(IWalkableCreature creature, ICreature following, FindPathParams fpp)
         {
             if(creature.FollowEvent != 0)
             {
@@ -24,7 +24,7 @@ namespace NeoServer.Server.Events.Creature
             creature.FollowEvent = game.Scheduler.AddEvent(new SchedulerEvent(1000, () => Follow(creature, following, fpp)));
         }
 
-        private void Follow(IWalkableCreature creature, IWalkableCreature following, FindPathParams fpp)
+        private void Follow(IWalkableCreature creature, ICreature following, FindPathParams fpp)
         {
             if (creature.IsFollowing)
             {
