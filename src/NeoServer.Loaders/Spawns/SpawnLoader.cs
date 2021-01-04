@@ -25,7 +25,7 @@ namespace NeoServer.Loaders.Spawns
             var spawns = spawnData.AsParallel().Select(x => SpawnConverter.Convert(x)).ToList();
 
             _world.LoadSpawns(spawns);
-            logger.Information($"{spawns.Count} spawns loaded!");
+            logger.Information("{n} spawns loaded!", spawns.Count);
         }
 
         private IEnumerable<SpawnData> GetSpawnData()

@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Network;
+using Serilog.Core;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -10,9 +11,11 @@ namespace NeoServer.Networking.Listeners
     public abstract class Listener : TcpListener, IListener
     {
         private readonly IProtocol protocol;
-        public Listener(int port, IProtocol protocol) : base(IPAddress.Any, port)
+        private readonly Logger logger;
+        public Listener(int port, IProtocol protocol, Logger logger) : base(IPAddress.Any, port)
         {
             this.protocol = protocol;
+            this.logger = logger;
         }
 
         public void BeginListening()
@@ -20,7 +23,7 @@ namespace NeoServer.Networking.Listeners
             Task.Run(async () =>
             {
                 Start();
-                Console.WriteLine($"{protocol} is online");
+                logger.Information("{protocol} is online", protocol);
 
                 while (true)
                 {

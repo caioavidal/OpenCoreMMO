@@ -38,6 +38,7 @@ using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Tasks;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -55,7 +56,7 @@ namespace NeoServer.Server.Standalone.IoC
             //server
 
             builder.RegisterInstance(new LoggerConfiguration()
-                .WriteTo.Console()
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
                 .CreateLogger()).SingleInstance();
 
             builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
@@ -202,12 +203,18 @@ namespace NeoServer.Server.Standalone.IoC
         {
             var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
-            configuration = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                        .SetBasePath(Directory.GetCurrentDirectory())
                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                        .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
-                       .AddEnvironmentVariables().Build();
+                       .AddEnvironmentVariables();//.Build();
 
+            //only add secrets in development
+            if (environmentName.Equals("Local", StringComparison.InvariantCultureIgnoreCase))
+            {
+                builder.AddUserSecrets<Program>();
+            }
+            configuration = builder.Build();
             ServerConfiguration serverConfiguration = new(0, null, null, null);
             GameConfiguration gameConfiguration = new();
 
@@ -241,5 +248,6 @@ namespace NeoServer.Server.Standalone.IoC
                    .WithParameter("options", options)
                    .InstancePerLifetimeScope();
         }
+   
     }
 }

@@ -30,7 +30,7 @@ namespace NeoServer.Loaders.Items
 
             LoadItemsJson(basePath, itemTypes);
             ItemTypeData.Load(itemTypes);
-            logger.Information($"{itemTypes.Count} items loaded");
+            logger.Information("{n} items loaded", itemTypes.Count);
         }
 
         private Dictionary<ushort, IItemType> LoadOTB(string basePath)
