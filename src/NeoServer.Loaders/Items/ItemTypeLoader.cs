@@ -1,6 +1,7 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.OTB.Parsers;
 using NeoServer.Server.Items;
+using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
 using System;
@@ -13,16 +14,18 @@ namespace NeoServer.Loaders.Items
     public class ItemTypeLoader
     {
         private readonly Logger logger;
-        public ItemTypeLoader(Logger logger)
+        private readonly ServerConfiguration serverConfiguration;
+        public ItemTypeLoader(Logger logger, ServerConfiguration serverConfiguration)
         {
             this.logger = logger;
+            this.serverConfiguration = serverConfiguration;
         }
         /// <summary>
         /// Loads the OTB and XML files into a collection of ItemType objects
         /// </summary>
         public void Load()
         {
-            var basePath = "./data/items/";
+            var basePath = $"{serverConfiguration.Data}/items/";
             var itemTypes = LoadOTB(basePath);
 
             LoadItemsJson(basePath, itemTypes);

@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
 using System;
@@ -13,12 +14,14 @@ namespace NeoServer.Loaders.Monsters
     {
         private readonly IMonsterDataManager _monsterManager;
         private readonly GameConfiguration gameConfiguration;
+        private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
-        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, Logger logger)
+        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, Logger logger, ServerConfiguration serverConfiguration)
         {
             _monsterManager = monsterManager;
             this.gameConfiguration = gameConfiguration;
             this.logger = logger;
+            this.serverConfiguration = serverConfiguration;
         }
         public void Load()
         {
@@ -30,7 +33,7 @@ namespace NeoServer.Loaders.Monsters
 
         private IEnumerable<(string,IMonsterType)> GetMonsterDataList()
         {
-            var basePath = "./data/monsters";
+            var basePath = $"{serverConfiguration.Data}/monsters";
             var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));
             var monstersPath = JsonConvert.DeserializeObject<List<IDictionary<string, string>>>(jsonString);
 

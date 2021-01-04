@@ -13,6 +13,7 @@ using NeoServer.Server.Events;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Security;
+using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
 using Serilog.Core;
@@ -33,12 +34,17 @@ var cancellationToken = cancellationTokenSource.Token;
 var container = Container.CompositionRoot();
 
 var logger = container.Resolve<Logger>();
-logger.Information($"Loading database");
+
+var serverConfiguration = container.Resolve<ServerConfiguration>();
+var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
+
+
+logger.Information($"Loading database: { databaseConfiguration.active}");
 
 var context = container.Resolve<NeoContext>();
 context.Database.EnsureCreated();
 
-RSA.LoadPem();
+RSA.LoadPem(serverConfiguration.Data);
 
 //   ScriptCompiler.Compile();
 
