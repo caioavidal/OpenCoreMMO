@@ -563,5 +563,13 @@ namespace NeoServer.Server.Model.Players
             return source.SendTo(destination, thing, amount, fromPosition, toPosition).ResultValue;
         }
 
+        public override void SetAttackTarget(ICreature target)
+        {
+            base.SetAttackTarget(target);
+            if(target.CreatureId != 0 && ChaseMode == ChaseMode.Follow)
+            {
+                StartFollowing(target, PathSearchParams);
+            }
+        }
     }
 }

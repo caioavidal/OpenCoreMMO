@@ -97,7 +97,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             StopFollowing();
         }
 
-        public void StartFollowing(IWalkableCreature creature, FindPathParams fpp)
+        public void StartFollowing(ICreature creature, FindPathParams fpp)
         {
             if (creature is null) return;
             if (IsFollowing)
@@ -110,7 +110,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             Following = creature.CreatureId;
             OnStartedFollowing?.Invoke(this, creature, fpp);
         }
-        public void Follow(IWalkableCreature creature)
+        public void Follow(ICreature creature)
         {
             if (!CanSee(creature.Location, 9, 9))
             {

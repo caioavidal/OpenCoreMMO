@@ -110,6 +110,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             if (!Attacking) return;
 
+            StopFollowing();
             AutoAttackTarget = null;
             OnStoppedAttack?.Invoke(this);
         }
@@ -169,6 +170,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 StopAttack();
                 StopFollowing();
             }
+          
             OnTargetChanged?.Invoke(this, oldAttackTarget, target?.CreatureId ?? default);
         }
 
