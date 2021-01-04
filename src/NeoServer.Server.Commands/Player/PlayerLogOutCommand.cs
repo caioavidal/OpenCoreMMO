@@ -18,35 +18,14 @@ namespace NeoServer.Server.Commands
 
         public override void Execute()
         {
-            if (!player.Logout()) return;
+            if (player.IsRemoved) return;
 
-            if (!player.IsRemoved)
-            {
-                game.CreatureManager.RemovePlayer(player);
-                return;
-            }
+            if (!player.Logout(forced) && !forced) return;
 
-            if (forced)
-            {
-                return;
-            }
+            game.CreatureManager.RemovePlayer(player);
+            player.SetAsRemoved();
+            return;
 
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out IConnection connection))
-            {
-                if (player.Tile.CannotLogout)
-                {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket("You can not logout here.", TextMessageOutgoingType.Small));
-                    connection.Send();
-                    return;
-                }
-
-                if (player.CannotLogout)
-                {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket("You may not logout during or immediately after a fight!", TextMessageOutgoingType.Small));
-                    connection.Send();
-                    return;
-                }
-            }
         }
     }
 }

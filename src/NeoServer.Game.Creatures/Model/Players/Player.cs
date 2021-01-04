@@ -81,6 +81,8 @@ namespace NeoServer.Server.Model.Players
         public event UseSpell OnUsedSpell;
         public event UseItem OnUsedItem;
         public event LogIn OnLoggedIn;
+        public event LogOut OnLoggedOut;
+
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -404,9 +406,9 @@ namespace NeoServer.Server.Model.Players
             return damage; //todo
         }
 
-        public bool Logout()
+        public bool Logout(bool forced = false)
         {
-            if (CannotLogout)
+            if (CannotLogout && forced == false)
             {
                 OnOperationFailed?.Invoke(CreatureId, "You may not logout during or immediately after a fight");
                 return false;
@@ -415,6 +417,9 @@ namespace NeoServer.Server.Model.Players
             StopAttack();
             StopFollowing();
             StopWalking();
+            Containers.CloseAll();
+
+            OnLoggedOut?.Invoke(this);
             return true;
         }
         public bool Login()

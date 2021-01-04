@@ -134,9 +134,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void SetAsEnemy(ICombatActor creature)
         {
-            if (IsDead) return;
+            var canSeeInvisible = !creature.IsInvisible || (creature.IsInvisible && CanSeeInvisible);
+            var canSee = CanSee(creature.Location, 9, 9) && canSeeInvisible;
 
-            if (!CanSee(creature.Location, 9, 9))
+            if (IsDead || creature.IsRemoved || !canSee)
             {
                 RemoveFromTargetList(creature);
                 return;

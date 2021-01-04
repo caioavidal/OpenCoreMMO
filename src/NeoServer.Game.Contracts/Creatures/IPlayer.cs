@@ -27,6 +27,8 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
     public delegate void UseItem(IPlayer player, IThing thing, IUseableOn item);
     public delegate void LogIn(IPlayer player);
+    public delegate void LogOut(IPlayer player);
+    
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -59,6 +61,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event ReduceMana OnStatusChanged;
         event PlayerLevelAdvance OnLevelAdvanced;
         event LogIn OnLoggedIn;
+        event LogOut OnLoggedOut;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -124,7 +127,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);
-        bool Logout();
+        bool Logout(bool forced = false);
         ushort CalculateAttackPower(float attackRate, ushort attack);
         void LookAt(ITile tile);
         void LookAt(byte containerId, sbyte containerSlot);
