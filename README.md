@@ -39,6 +39,8 @@
 ## Usage
 
 ```sh
+git clone https://github.com/caioavidal/OpenCoreMMO.git
+cd src
 dotnet run -p "NeoServer.Server.Standalone"
 ```
 
