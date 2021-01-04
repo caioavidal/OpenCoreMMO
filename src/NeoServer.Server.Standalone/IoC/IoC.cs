@@ -202,12 +202,18 @@ namespace NeoServer.Server.Standalone.IoC
         {
             var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
-            configuration = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                        .SetBasePath(Directory.GetCurrentDirectory())
                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                        .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
-                       .AddEnvironmentVariables().Build();
+                       .AddEnvironmentVariables();//.Build();
 
+            //only add secrets in development
+            if (environmentName.Equals("Local", StringComparison.InvariantCultureIgnoreCase))
+            {
+                builder.AddUserSecrets<Program>();
+            }
+            configuration = builder.Build();
             ServerConfiguration serverConfiguration = new(0, null, null, null);
             GameConfiguration gameConfiguration = new();
 
