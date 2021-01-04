@@ -5,7 +5,7 @@ using System.IO;
 
 namespace NeoServer.Server.Security
 {
-    public static class RSA
+    public class RSA
     {
         private static AsymmetricCipherKeyPair asymmetricCipherKeyPair;
         public static byte[] Decrypt(byte[] data)
@@ -16,11 +16,11 @@ namespace NeoServer.Server.Security
             return e.ProcessBlock(data, 0, data.Length);
         }
 
-        public static void LoadPem()
+        public static void LoadPem(string basePath)
         {
             AsymmetricCipherKeyPair keyPair;
 
-            using (var reader = File.OpenText(@"./data/key.pem"))
+            using (var reader = File.OpenText(@$"{basePath}/key.pem"))
             {
                 keyPair = (AsymmetricCipherKeyPair)new PemReader(reader).ReadObject();
 
@@ -29,3 +29,4 @@ namespace NeoServer.Server.Security
         }
     }
 }
+

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NeoServer.Server.Standalone": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ENVIRONMENT": "Local"
+      }
+    }
+  }
+}

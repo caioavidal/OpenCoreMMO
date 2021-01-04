@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Server.Helpers.JsonConverters;
+using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
 using System;
@@ -17,11 +18,14 @@ namespace NeoServer.Loaders.Vocations
     {
         
         private readonly GameConfiguration gameConfiguration;
+        private readonly ServerConfiguration serverConfiguration;
+
         private readonly Logger logger;
-        public VocationLoader(GameConfiguration gameConfiguration, Logger logger)
+        public VocationLoader(GameConfiguration gameConfiguration, Logger logger, ServerConfiguration serverConfiguration)
         {
             this.gameConfiguration = gameConfiguration;
             this.logger = logger;
+            this.serverConfiguration = serverConfiguration;
         }
         public void Load()
         {
@@ -32,19 +36,18 @@ namespace NeoServer.Loaders.Vocations
 
         private List<Vocation> GetVocations()
         {
-            var jsonString = File.ReadAllText(Path.Combine("./data/vocations.json"));
+            var basePath = $"{serverConfiguration.Data}";
+            var jsonString = File.ReadAllText(Path.Combine(basePath,"vocations.json"));
             var vocations = JsonConvert.DeserializeObject<List<Vocation>>(jsonString, new JsonSerializerSettings
             {
 
                 Converters =
                 {
                     new AbstractConverter<VocationFormula, IVocationFormula>(),
-                    //new AbstractConverter<VocationSkill, IVocationSkill>(),
                     new SkillConverter()
 
                 }
             });
-                //Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
             return vocations;
         }
 

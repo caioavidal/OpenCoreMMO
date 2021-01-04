@@ -197,14 +197,16 @@ namespace NeoServer.Server.Standalone.IoC
                 return null;
             });
         }
-
+        private static IConfigurationRoot configuration;
         static void LoadConfigurations(ContainerBuilder containerBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                       .SetBasePath(Directory.GetCurrentDirectory())
-                       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
-            IConfigurationRoot configuration = builder.Build();
+            configuration = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                       .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
+                       .AddEnvironmentVariables().Build();
 
             ServerConfiguration serverConfiguration = new(0, null, null, null);
             GameConfiguration gameConfiguration = new();
@@ -218,10 +220,7 @@ namespace NeoServer.Server.Standalone.IoC
 
         private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                       .SetBasePath(Directory.GetCurrentDirectory())
-                       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
-            
+         
             DatabaseConfiguration2 config = new(null, DatabaseType.INMEMORY);
             configuration.GetSection("database").Bind(config);
 
@@ -234,6 +233,9 @@ namespace NeoServer.Server.Standalone.IoC
                 DatabaseType.SQLITE => DbContextFactory.GetInstance().UseSQLite(config.connections[DatabaseType.SQLITE]),
                 _ => throw new ArgumentException("Invalid active database!"),
             };
+
+            builder.RegisterInstance(config).SingleInstance();
+
 
             builder.RegisterType<TContext>()
                    .WithParameter("options", options)
