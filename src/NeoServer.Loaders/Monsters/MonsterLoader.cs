@@ -28,7 +28,7 @@ namespace NeoServer.Loaders.Monsters
             var monsters = GetMonsterDataList().ToList();
             _monsterManager.Load(monsters);
 
-            logger.Information($"{monsters.Count()} monsters loaded!");
+            logger.Information("{n} monsters loaded!", monsters.Count());
         }
 
         private IEnumerable<(string,IMonsterType)> GetMonsterDataList()

@@ -16,7 +16,9 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
+using Serilog;
 using Serilog.Core;
+using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -44,10 +46,10 @@ public class Program
         var serverConfiguration = container.Resolve<ServerConfiguration>();
         var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
 
-        logger.Information($"Welcome to OpenCoreMMO Server");
-        logger.Information($"Environment: {Environment.GetEnvironmentVariable("ENVIRONMENT")}");
+        logger.Information("Welcome to OpenCoreMMO Server!");
+        logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
-        logger.Information($"Loading database: { databaseConfiguration.active}");
+        logger.Information("Loading database: {db}", databaseConfiguration.active);
 
         var context = container.Resolve<NeoContext>();
         context.Database.EnsureCreated();
@@ -89,9 +91,10 @@ public class Program
         GC.Collect();
         GC.WaitForPendingFinalizers();
 
-        logger.Information($"Server is up! {sw.ElapsedMilliseconds} ms");
+        logger.Information("Memory usage: {mem} MB", Math.Round((Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2));
 
-        logger.Information($"Memory usage: {Math.Round((System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2)} MB");
+
+        logger.Information("Server is {up}! {time} ms","up", sw.ElapsedMilliseconds);
 
         listeningTask.Wait(cancellationToken);
     }

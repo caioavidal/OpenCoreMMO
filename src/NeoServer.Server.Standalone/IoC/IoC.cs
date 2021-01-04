@@ -38,6 +38,7 @@ using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Tasks;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -55,7 +56,7 @@ namespace NeoServer.Server.Standalone.IoC
             //server
 
             builder.RegisterInstance(new LoggerConfiguration()
-                .WriteTo.Console()
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
                 .CreateLogger()).SingleInstance();
 
             builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
@@ -247,5 +248,6 @@ namespace NeoServer.Server.Standalone.IoC
                    .WithParameter("options", options)
                    .InstancePerLifetimeScope();
         }
+   
     }
 }

@@ -60,7 +60,7 @@ namespace NeoServer.Loaders.World
                 });
             }
 
-            logger.Information($"{world.LoadedTilesCount} tiles, {world.LoadedTownsCount} towns and {world.LoadedWaypointsCount} waypoints loaded");
+            logger.Information("{tiles} tiles, {towns} towns and {waypoints} waypoints loaded", world.LoadedTilesCount, world.LoadedTownsCount, world.LoadedWaypointsCount);
 
         }
 
