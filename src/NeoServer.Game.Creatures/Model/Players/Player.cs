@@ -80,6 +80,7 @@ namespace NeoServer.Server.Model.Players
         public event LookAt OnLookedAt;
         public event UseSpell OnUsedSpell;
         public event UseItem OnUsedItem;
+        public event LogIn OnLoggedIn;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -213,8 +214,9 @@ namespace NeoServer.Server.Model.Players
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
         public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
+       
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
-        const int KnownCreatureLimit = 250; // TODO: not sure of the number for this version... debugs will tell :|
+        const int KnownCreatureLimit = 250; //todo: for version 8.60
 
         public uint ChooseToRemoveFromKnownSet()
         {
@@ -413,6 +415,17 @@ namespace NeoServer.Server.Model.Players
             StopAttack();
             StopFollowing();
             StopWalking();
+            return true;
+        }
+        public bool Login()
+        {
+            StopAttack();
+            StopFollowing();
+            StopWalking();
+
+            KnownCreatures.Clear();
+
+            OnLoggedIn?.Invoke(this);
             return true;
         }
         public override bool CanBlock(DamageType damage)

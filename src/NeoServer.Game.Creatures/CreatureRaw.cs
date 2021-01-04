@@ -25,8 +25,6 @@ namespace NeoServer.Game.Creatures
                 cache.AddRange(BitConverter.GetBytes(playerRequesting.ChooseToRemoveFromKnownSet()));
                 cache.AddRange(BitConverter.GetBytes(creature.CreatureId));
 
-                playerRequesting.AddKnownCreature(creature.CreatureId);
-
                 var creatureNameBytes = Encoding.Default.GetBytes(creature.Name);
                 cache.AddRange(BitConverter.GetBytes((ushort)creatureNameBytes.Length));
                 cache.AddRange(creatureNameBytes);

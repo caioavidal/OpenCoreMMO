@@ -409,6 +409,8 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
 
                 var raw = creature.Value.GetRaw(playerRequesting);
+                playerRequesting.AddKnownCreature(creature.Key);
+
                 raw.CopyTo(stream.Slice(countBytes, raw.Length));
 
                 countThings++;

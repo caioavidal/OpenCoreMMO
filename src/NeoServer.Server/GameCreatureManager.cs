@@ -19,8 +19,6 @@ namespace NeoServer.Server
 
         private ICreatureGameInstance creatureInstances;
 
-        private readonly Func<Player, IPlayer> playerFactory;
-
         /// <summary>
         /// Gets all creatures in game
         /// </summary>
@@ -31,11 +29,10 @@ namespace NeoServer.Server
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
         private IMap map;
-        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Func<Player, IPlayer> playerFactory)
+        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map)
         {
             this.creatureInstances = creatureInstances;
             this.map = map;
-            this.playerFactory = playerFactory;
             playersConnection = new ConcurrentDictionary<uint, IConnection>();
         }
 
@@ -86,6 +83,7 @@ namespace NeoServer.Server
             }
             return false;
         }
+        public bool TryGetLoggedPlayer(uint playerId, out IPlayer player) => creatureInstances.TryGetPlayer(playerId, out player);
 
         /// <summary>
         /// Returns a creature by id
@@ -129,15 +127,17 @@ namespace NeoServer.Server
         /// <returns></returns>
         public IPlayer AddPlayer(IPlayer player, IConnection connection)
         {
-            //var player2 = _creatureFactory.CreatePlayer(player);
-
-            //player = new Player
+            var playerIsLogged = creatureInstances.TryGetPlayer(player.Id, out var playerLogged);
+            player = playerLogged ?? player;
 
             connection.SetConnectionOwner(player);
 
-            playersConnection.TryAdd(player.CreatureId, connection);
+            playersConnection.AddOrUpdate(player.CreatureId, connection, (k, v) => connection);
+
+            if (playerIsLogged) return player;
 
             AddCreature(player);
+            creatureInstances.AddPlayer(player);
 
             return player;
         }
@@ -153,6 +153,7 @@ namespace NeoServer.Server
             {
                 connection.Close();
             }
+            creatureInstances.TryRemoveFromLoggedPlayers(player.Id);
 
             RemoveCreature(player);
 
