@@ -280,7 +280,6 @@ namespace NeoServer.Networking
 
         public void SetConnectionOwner(IPlayer player)
         {
-
             if (PlayerId != 0)
             {
                 throw new InvalidOperationException("Connection already has a Player Id");

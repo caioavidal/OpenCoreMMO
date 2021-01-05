@@ -1,4 +1,5 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
@@ -20,6 +21,8 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IWalkableCreature creature)
         {
+         
+
             creature.ThrowIfNull();
 
             if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
@@ -43,7 +46,13 @@ namespace NeoServer.Server.Events
 
             connection.OutgoingPackets.Enqueue(new CreatureLightPacket(player));
 
-            connection.OutgoingPackets.Enqueue(new PlayerConditionsPacket());
+            ushort icons = 0;
+            foreach (var condition in player.Conditions)
+            {
+                icons |= (ushort)ConditionIconParser.Parse(condition.Key);
+            }
+
+            connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
         }
     }
 }
