@@ -56,9 +56,15 @@ namespace NeoServer.Networking
         }
         public void BeginStreamRead()
         {
-            if (Stream.CanRead || Socket.Connected)
+            if (!Stream.CanRead || !Socket.Connected || Disconnected) return;
+
+            try
             {
                 Stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
+            }
+            catch
+            {
+                Console.WriteLine("Error on stream read");
             }
         }
 
@@ -90,14 +96,12 @@ namespace NeoServer.Networking
             }
             catch (Exception e)
             {
-                // Invalid data from the client
-                // TODO: I must not swallow exceptions.
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
 
                 // TODO: is closing the connection really necesary?
-               // Disconnected = true;
-               // OnProcessEvent?.Invoke(this, eventArgs);
+                // Disconnected = true;
+                // OnProcessEvent?.Invoke(this, eventArgs);
             }
         }
 
@@ -107,16 +111,13 @@ namespace NeoServer.Networking
             {
                 lock (connectionLock)
                 {
-                    int read = Stream.EndRead(ar);
 
-                    if (read == 0)
-                    {
-                        Console.WriteLine($"{read} bytes read from {PlayerId}");
-                        // client disconnected
-                        //this.Close();
-
+                    if (Socket.Available == 0)
+                    {                      
                         return false;
                     }
+
+                    int read = Stream.EndRead(ar);
 
                     int size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
 
@@ -135,16 +136,13 @@ namespace NeoServer.Networking
                     }
 
                     InMessage.Resize(size);
-                    //Console.WriteLine($"{size} bytes read on connection {PlayerId}");
                 }
 
                 return true;
             }
             catch (Exception e)
             {
-
-                // TODO: is closing the connection really necesary?
-                this.Close();
+                Close();
             }
 
             return false;
@@ -200,12 +198,14 @@ namespace NeoServer.Networking
             {
                 lock (writeLock)
                 {
-                    if (Closed)
+                    if (Closed || !Socket.Connected || Disconnected)
                     {
                         return;
                     }
                     var streamMessage = message.AddHeader();
+
                     Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
+
                 }
 
                 var eventArgs = new ConnectionEventArgs(this);
@@ -251,7 +251,7 @@ namespace NeoServer.Networking
             while (OutgoingPackets.Any())
             {
                 var packet = OutgoingPackets.Dequeue();
-              //  Console.WriteLine($"{packet.GetType().Name}"); //debug
+                //  Console.WriteLine($"{packet.GetType().Name}"); //debug
                 packet.WriteToMessage(message);
             }
 

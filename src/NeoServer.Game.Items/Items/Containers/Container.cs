@@ -40,8 +40,6 @@ namespace NeoServer.Game.Items.Items
             }
         }
 
-
-
         public override void OnMoved() => OnContainerMoved?.Invoke(this);
 
         public Container(IItemType type, Location location) : base(type, location)
