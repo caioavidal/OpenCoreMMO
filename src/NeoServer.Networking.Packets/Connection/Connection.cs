@@ -56,7 +56,7 @@ namespace NeoServer.Networking
         }
         public void BeginStreamRead()
         {
-            if (Stream.CanRead || Socket.Connected)
+            if (Stream.CanRead && Socket.Connected)
             {
                 Stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
             }
