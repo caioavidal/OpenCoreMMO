@@ -276,7 +276,6 @@ namespace NeoServer.Game.World.Map.Tiles
             }
             else if (thing is IItem item)
             {
-                IItem topStackItem;
 
                 if (item.IsAlwaysOnTop)
                 {
@@ -296,7 +295,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 {
                     if (DownItems is null) DownItems = new Stack<IItem>(10);
 
-                    if (!DownItems.TryPeek(out topStackItem))
+                    if (!DownItems.TryPeek(out IItem topStackItem))
                     {
                         DownItems.Push(item);
                         operations.Add(Operation.Added, item);

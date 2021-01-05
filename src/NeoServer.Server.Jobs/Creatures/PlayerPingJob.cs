@@ -1,6 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
-using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 

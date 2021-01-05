@@ -182,9 +182,8 @@ namespace NeoServer.Server.Standalone.IoC
                     packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
                 }
 
-                Type handlerType = null;
 
-                if (!InputHandlerMap.Data.TryGetValue(packet, out handlerType))
+                if (!InputHandlerMap.Data.TryGetValue(packet, out Type handlerType))
                 {
                     Console.WriteLine($"Incoming Packet not handled: {packet}");
                     return null;

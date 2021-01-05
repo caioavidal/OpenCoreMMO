@@ -1,7 +1,6 @@
 ﻿using NeoServer.Networking.Protocols;
 using NeoServer.Server.Contracts.Network;
 using Serilog.Core;
-using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
