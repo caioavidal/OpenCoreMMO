@@ -246,12 +246,13 @@ namespace NeoServer.Networking
         /// </summary>
         public void Send()
         {
+            if (!OutgoingPackets.Any()) return;
+
             var message = new NetworkMessage();
 
-            while (OutgoingPackets.Any())
+            while (OutgoingPackets.TryDequeue(out var packet))
             {
-                var packet = OutgoingPackets.Dequeue();
-                //  Console.WriteLine($"{packet.GetType().Name}"); //debug
+                //Console.WriteLine($"{packet.GetType().Name}"); //debug
                 packet.WriteToMessage(message);
             }
 

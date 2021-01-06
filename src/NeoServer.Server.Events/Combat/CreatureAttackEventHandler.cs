@@ -1,6 +1,7 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Parsers.Effects;
@@ -43,11 +44,11 @@ namespace NeoServer.Server.Events.Combat
                         SendEffect(attack, connection, coordinate.Location);
                     }
                 }
-                else
+                else if (!attack.Missed)
                 {
                     SendEffect(attack, connection,victim.Location);
                 }
-
+                
                 connection.Send();
             }
         }
@@ -58,7 +59,7 @@ namespace NeoServer.Server.Events.Combat
             var effect = attack.EffectT == EffectT.None ? DamageEffectParser.Parse(attack.DamageType) : attack.EffectT;
 
             if (attack.EffectT == EffectT.None && attack.DamageType == NeoServer.Game.Common.Item.DamageType.Melee) return;
-
+            if (effect == EffectT.None) return;
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, effect));
         }
 

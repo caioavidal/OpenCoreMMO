@@ -51,7 +51,7 @@ namespace NeoServer.Server.Events
                 if (!damage.IsElementalDamage)
                 {
                     var damageEffect = damage.Effect == EffectT.None ? DamageEffectParser.Parse(damage.Type) : damage.Effect;
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                    if(damageEffect != EffectT.None) connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
                 }
 
                 connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor, damageString));
