@@ -485,7 +485,14 @@ namespace NeoServer.Game.World.Map
                 if (creature is IWalkableCreature walkableCreature) OnThingRemovedFromTile?.Invoke(walkableCreature, cylinder);
             }
         }
-        public bool ArePlayersAround(Location location) => GetPlayersAtPositionZone(location).Any();
+        public bool ArePlayersAround(Location location)
+        {
+            foreach (var player in GetPlayersAtPositionZone(location))
+            {
+                if (player.CanSee(location)) return true;
+            }
+            return false;
+        }
         public void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area)
         {
             foreach (var coordinates in area)
@@ -526,13 +533,13 @@ namespace NeoServer.Game.World.Map
         }
         public void CreateBloodPool(ILiquid pool, IDynamicTile tile)
         {
-            if (tile?.TopItems != null && tile.TopItems.TryPeek(out var topItem) && topItem is ILiquid)
-            {
-                tile.RemoveItem(topItem, 1, 0, out var removedThing);
-            }
+            //if (tile?.TopItems != null && tile.TopItems.TryPeek(out var topItem) && topItem is ILiquid)
+            //{
+            //    tile.RemoveItem(topItem, 1, 0, out var removedThing);
+            //}
 
-            if (pool is null) return;
-            tile.AddItem(pool);
+            //if (pool is null) return;
+            //tile.AddItem(pool);
         }
         public bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule)
         {
