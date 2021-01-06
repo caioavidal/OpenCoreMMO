@@ -9,9 +9,9 @@ namespace NeoServer.Server.Jobs.Creatures
         public static void Execute(IMonster monster)
         {
             if (monster.IsDead) return;
-            
-            monster.ChangeState();
 
+            monster.ChangeState();
+            
             if (monster.State == MonsterState.LookingForEnemy)
             {
                 monster.LookForNewEnemy();
@@ -21,10 +21,14 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 monster.MoveAroundEnemy();
 
+                if (!monster.Attacking) {
+                    monster.SelectTargetToAttack();
+                    return;
+                }
+
                 if (monster.Metadata.TargetChance.Interval == 0) return;
 
                 if (monster.Attacking && monster.Metadata.TargetChance.Chance < GameRandom.Random.Next(minValue: 1, maxValue: 100)) return;
-
                 monster.SelectTargetToAttack();
             }
 

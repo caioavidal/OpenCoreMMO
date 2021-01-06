@@ -61,6 +61,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public void TurnTo(Direction direction)
         {
+            if (direction == Direction) return;
             Direction = direction;
             OnTurnedToDirection?.Invoke(this, direction);
         }
@@ -71,6 +72,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 if (FirstStep)
                     return 0;
 
+                if (Speed == 0) return 0;
                 return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * lastStepCost);
             }
         }
@@ -99,7 +101,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StartFollowing(ICreature creature, FindPathParams fpp)
         {
+            if (Speed == 0) return;
             if (creature is null) return;
+
             if (IsFollowing)
             {
                 Following = creature.CreatureId;
@@ -148,6 +152,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool TryWalkTo(params Direction[] directions)
         {
+            if (Speed == 0) return false;
+
             if (!WalkingQueue.IsEmpty)
             {
                 WalkingQueue.Clear();
