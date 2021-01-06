@@ -43,7 +43,7 @@ namespace NeoServer.Server.Events.Combat
                         SendEffect(attack, connection, coordinate.Location);
                     }
                 }
-                else
+                else if (!attack.Missed)
                 {
                     SendEffect(attack, connection,victim.Location);
                 }
@@ -58,7 +58,7 @@ namespace NeoServer.Server.Events.Combat
             var effect = attack.EffectT == EffectT.None ? DamageEffectParser.Parse(attack.DamageType) : attack.EffectT;
 
             if (attack.EffectT == EffectT.None && attack.DamageType == NeoServer.Game.Common.Item.DamageType.Melee) return;
-
+            if (effect == EffectT.None) return;
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, effect));
         }
 
