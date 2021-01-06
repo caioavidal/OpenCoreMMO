@@ -19,11 +19,9 @@ namespace NeoServer.Server.Handlers.Players
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            var autoWalk = new AutoWalkPacket(message);
-
             if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
             {
-                game.Dispatcher.AddEvent(new Event(player.StopWalking));
+                game.Dispatcher.AddEvent(new Event(player.CancelWalk));
             }
         }
     }
