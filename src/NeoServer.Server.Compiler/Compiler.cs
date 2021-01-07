@@ -2,6 +2,8 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model;
 using System;
@@ -57,7 +59,11 @@ namespace NeoServer.Server.Compiler
                 MetadataReference.CreateFromFile(typeof(Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(EffectT).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(ICreature).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Creature).Assembly.Location)
+                MetadataReference.CreateFromFile(typeof(Creature).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(BaseSpell).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(InvalidOperation).Assembly.Location)
+
+
             };
 
             Assembly.GetEntryAssembly().GetReferencedAssemblies()

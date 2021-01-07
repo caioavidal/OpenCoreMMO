@@ -27,17 +27,21 @@ namespace NeoServer.Game.World.Spawns
                 var monster = respawn.Item1;
                 var deathTime = respawn.Item2;
 
-                var spawnTime = TimeSpan.FromSeconds(monster.Spawn.SpawnTime);
-
-                if (DateTime.Now.TimeOfDay < deathTime + spawnTime)
+                if (monster.Spawn is not null)
                 {
-                    continue;
+                    var spawnTime = TimeSpan.FromSeconds(monster.Spawn.SpawnTime);
+
+                    if (DateTime.Now.TimeOfDay < deathTime + spawnTime)
+                    {
+                        continue;
+                    }
+                    if (_map.ArePlayersAround(monster.Location))
+                    {
+                        continue;
+                    }
                 }
 
-                if (_map.ArePlayersAround(monster.Location))
-                {
-                    continue;
-                }
+              
                 if (_creatureGameInstance.TryRemoveFromKilledMonsters(monster.CreatureId))
                 {
                   //  _creatureGameInstance.Add(monster);

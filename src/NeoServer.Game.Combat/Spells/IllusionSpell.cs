@@ -1,4 +1,6 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Contracts.Creatures;
@@ -22,9 +24,11 @@ namespace NeoServer.Game.Creatures.Spells
             Effect = effect;
             CreatureName = creatureName;
         }
-        public override void OnCast(ICombatActor actor)
+        public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {
-            if (!Monsters.TryGetMonster(CreatureName, out var monster)) return;
+            error = InvalidOperation.NotPossible;
+
+            if (!Monsters.TryGetMonster(CreatureName, out var monster)) return false;
 
             var look = monster.Look;
 
@@ -36,6 +40,8 @@ namespace NeoServer.Game.Creatures.Spells
             look.TryGetValue(LookType.Head, out var head);
 
             actor.SetTemporaryOutfit(lookType, 0, (byte)head, (byte)body, (byte)legs, (byte)feet, (byte)addon);
+
+            return true;
         }
         public override void OnEnd(ICombatActor actor)
         {

@@ -4,10 +4,12 @@ using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
 using NeoServer.Loaders.Spawns;
+using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server;
+using NeoServer.Server.Compiler;
 using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Events;
 using NeoServer.Server.Jobs.Creatures;
@@ -34,7 +36,6 @@ public class Program
         var cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = cancellationTokenSource.Token;
 
-
         var container = Container.CompositionRoot();
 
         var logger = container.Resolve<Logger>();
@@ -52,7 +53,8 @@ public class Program
 
         RSA.LoadPem(serverConfiguration.Data);
 
-        //   ScriptCompiler.Compile();
+        logger.Information("Compiling scripts...");
+        ScriptCompiler.Compile(serverConfiguration.Data);
 
         container.Resolve<ItemTypeLoader>().Load();
 
@@ -62,7 +64,8 @@ public class Program
 
         container.Resolve<MonsterLoader>().Load();
         container.Resolve<VocationLoader>().Load();
-        //new SpellLoader().Load();
+        container.Resolve<SpellLoader>().Load();
+        
         container.Resolve<SpawnManager>().StartSpawn();
 
         var listeningTask = StartListening(container, cancellationToken);

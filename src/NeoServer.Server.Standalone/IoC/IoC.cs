@@ -23,6 +23,7 @@ using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
 using NeoServer.Loaders.Players;
 using NeoServer.Loaders.Spawns;
+using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
@@ -106,7 +107,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
             builder.RegisterType<PlayerLoader>().SingleInstance();
-
+            builder.RegisterType<SpellLoader>().SingleInstance();
+            
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
@@ -247,6 +249,6 @@ namespace NeoServer.Server.Standalone.IoC
                    .WithParameter("options", options)
                    .InstancePerLifetimeScope();
         }
-   
+
     }
 }

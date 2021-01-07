@@ -21,7 +21,9 @@ namespace NeoServer.Game.Creatures
             _monsterFactory = monsterFactory;
 
             this.creatureEventSubscribers = creatureEventSubscribers;
+            Instance = this;
         }
+        public static ICreatureFactory Instance { get; private set; }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         {
             var monster = _monsterFactory.Create(name, spawn);

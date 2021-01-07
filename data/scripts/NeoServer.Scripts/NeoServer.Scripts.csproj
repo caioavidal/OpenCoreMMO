@@ -3,9 +3,16 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
+	<ItemGroup>
+		<Compile Remove="Properties\AssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="System.Collections" Version="4.3.0" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+    <ProjectReference Include="..\..\..\src\NeoServer.Game.World\NeoServer.Game.World.csproj" />
   </ItemGroup>
 
 </Project>

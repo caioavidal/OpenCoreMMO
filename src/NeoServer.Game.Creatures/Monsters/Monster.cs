@@ -26,7 +26,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
         {
             type.ThrowIfNull();
-            spawn.ThrowIfNull();
 
             Metadata = type;
             Spawn = spawn;
@@ -72,6 +71,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void Reborn()
         {
+            if (Spawn is null) return;
+
             Damages.Clear();
             ResetHealthPoints();
             Location = Spawn.Location;

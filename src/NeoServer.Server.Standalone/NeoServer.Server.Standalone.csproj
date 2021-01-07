@@ -7,7 +7,6 @@
 		<IsTestProject>false</IsTestProject>
 
 	</PropertyGroup>
-
 	<ItemGroup>
 		<Compile Remove="Properties\**" />
 		<EmbeddedResource Remove="Properties\**" />
@@ -17,6 +16,9 @@
 		<RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>
 		<UserSecretsId>d00c6b5a-86dc-4f58-b885-056c3322a45a</UserSecretsId>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="neo.db" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.1.0" />

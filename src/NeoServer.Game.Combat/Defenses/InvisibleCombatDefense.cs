@@ -12,6 +12,6 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
         {
             Spell = new InvisibleSpell(duration, effect);
         }
-        public override void Defende(ICombatActor actor) => Spell?.Invoke(actor, out var error);
+        public override void Defende(ICombatActor actor) => Spell?.Invoke(actor,null, out var error);
     }
 }

@@ -9,6 +9,6 @@ namespace NeoServer.Game.Contracts.Items
     public interface IItemFactory: IFactory
     {
         IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes);
-        
+        IItem Create(string name, Location location, IDictionary<ItemAttribute, IConvertible> attributes);
     }
 }

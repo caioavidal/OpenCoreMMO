@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures.Spells;
