@@ -17,6 +17,8 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IPlayer player, IThing onThing, IUseableOn item)
         {
+            if (item.EffecT == EffectT.None) return;
+
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(onThing.Location))
             {
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
@@ -24,11 +26,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (item.EffecT != EffectT.None)
-                {
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(onThing.Location, item.EffecT));
-                }
-
+                connection.OutgoingPackets.Enqueue(new MagicEffectPacket(onThing.Location, item.EffecT));
                 connection.Send();
             }
 

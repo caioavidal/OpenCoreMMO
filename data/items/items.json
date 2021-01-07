@@ -10041,7 +10041,7 @@
         },
         {
           "key": "shootType",
-          "value": "suddendeath"
+          "value": "death"
         },
         {
           "key": "effect",

@@ -491,7 +491,7 @@ namespace NeoServer.Server.Model.Players
             if (onCreature is ICombatActor enemy)
             {
                 if (item is IUseableAttackOnCreature useableAttackOnCreature) result = Attack(enemy, useableAttackOnCreature);
-                else if (item is IUseableOnCreature useableOnCreature) useableOnCreature.Use(this, onCreature);
+                else if (item is IUseableOnCreature useableOnCreature) { useableOnCreature.Use(this, onCreature); result = true; }
                 else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, onCreature.Tile);
             }
 
