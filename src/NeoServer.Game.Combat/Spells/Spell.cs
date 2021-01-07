@@ -109,7 +109,7 @@ namespace NeoServer.Game.Combat.Spells
     }
     public abstract class Spell<T> : BaseSpell where T : ISpell
     {
-        bool ShouldSay => true;
+        public override bool ShouldSay => true;
         public string Words { get; set; }
         private static readonly Lazy<T> Lazy = new Lazy<T>(() => (T)Activator.CreateInstance(typeof(T), true));
         public static T Instance => Lazy.Value;
