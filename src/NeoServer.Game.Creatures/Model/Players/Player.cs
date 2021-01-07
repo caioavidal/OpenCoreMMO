@@ -348,17 +348,18 @@ namespace NeoServer.Server.Model.Players
 
         public override void Say(string message, TalkType talkType)
         {
-            if (SpellList.Spells.TryGetValue(message.Trim(), out var spell))
+            if (SpellList.TryGet(message.Trim(), out var spell))
             {
-                if (!spell.Invoke(this, out var error))
+                if (!spell.Invoke(this, message, out var error))
                 {
                     OnCannotUseSpell?.Invoke(this, spell, error);
                     return;
                 }
-
+                talkType = TalkType.MonsterSay;
                 Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
-
+                if (!spell.ShouldSay) return;
             }
+
             base.Say(message, talkType);
         }
 

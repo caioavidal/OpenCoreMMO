@@ -36,8 +36,10 @@ namespace NeoServer.Game.World.Map
             this.world = world;
             CylinderOperation.Setup(this);
             TileOperationEvent.OnTileChanged += OnTileChanged;
+            Instance = this;
         }
 
+        public static IMap Instance { get; private set; }
         public void OnTileChanged(ITile tile, IItem item, OperationResult<IItem> result)
         {
             if (!result.HasAnyOperation) return;
@@ -455,7 +457,6 @@ namespace NeoServer.Game.World.Map
         }
         public void AddCreature(ICreature creature)
         {
-
             if (this[creature.Location] is IDynamicTile tile)
             {
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);

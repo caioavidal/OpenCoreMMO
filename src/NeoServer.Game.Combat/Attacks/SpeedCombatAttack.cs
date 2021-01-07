@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Creatures;
@@ -24,7 +25,7 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
             if (CalculateAttack(actor, enemy, option, out var damage))
             {
-                return SpeedChange > 0 ? HasteSpell.Instance.InvokeOn(actor, enemy, out var error) : ParalyzeSpell.Instance.InvokeOn(actor, enemy, out error);
+                return SpeedChange > 0 ? HasteSpell.Instance.InvokeOn(actor, enemy,null, out var error) : ParalyzeSpell.Instance.InvokeOn(actor, enemy,null, out error);
             }
             return false;
         }

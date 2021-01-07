@@ -1,10 +1,8 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Spells;
 using NeoServer.Game.Common.Creatures.Players;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common;
 
 namespace NeoServer.Scripts.Spells.Support
 {
@@ -16,9 +14,12 @@ namespace NeoServer.Scripts.Spells.Support
 
         public override ConditionType ConditionType => ConditionType.None;
 
-        public override void OnCast(ICombatActor actor)
+        public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {
+            error = InvalidOperation.None;
+
             actor.CreateItem(2666, 100);
+            return true;
         }
     }
 }

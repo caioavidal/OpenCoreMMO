@@ -42,6 +42,14 @@ namespace NeoServer.Game.Items
             return createdItem;
         }
 
+        public IItem Create(string name, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+        {
+            var item = ItemTypeData.InMemory.Values.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            if (item is null) return null;
+
+            return Create(item.TypeId, location, attributes);
+        }
+
         private IItem CreateItem(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
             if (typeId < 100 || !ItemTypeData.InMemory.ContainsKey(typeId))

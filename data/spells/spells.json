@@ -37,5 +37,21 @@
 		"mana": 0,
 		"cooldown":"1000",
 		"level":8
+	},
+	{
+		"name":"Create Item",
+		"words":"/i",
+		"script": "ItemCreator",
+		"mana": 0,
+		"cooldown":"0",
+		"level":1
+	},
+	{
+		"name":"Create Monster",
+		"words":"/m",
+		"script": "MonsterCreator",
+		"mana": 0,
+		"cooldown":"0",
+		"level":1
 	}
 ]

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Spells;
 using System;

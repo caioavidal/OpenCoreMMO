@@ -14,8 +14,14 @@ namespace NeoServer.Game.Contracts.Spells
         ushort MinLevel { get; set; }
         string Name { get; set; }
         uint Cooldown { get; set; }
+        bool ShouldSay { get; }
 
-        bool Invoke(ICombatActor actor, out InvalidOperation error);
-        bool InvokeOn(ICombatActor actor, ICombatActor onCreature, out InvalidOperation error);
+        bool Invoke(ICombatActor actor, string words, out InvalidOperation error);
+        bool InvokeOn(ICombatActor actor, ICombatActor onCreature, string words, out InvalidOperation error);
+    }
+
+    public interface ICommandSpell:ISpell
+    {
+        public object[] Params { get; set; }
     }
 }

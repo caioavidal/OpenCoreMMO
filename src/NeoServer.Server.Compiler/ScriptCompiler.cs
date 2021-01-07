@@ -5,14 +5,19 @@ namespace NeoServer.Server.Compiler
 {
     public class ScriptCompiler
     {
-        public static void Compile()
+        public static void Compile(string basePath)
         {
-            var sourcesPath = Path.Combine(Environment.CurrentDirectory, "data", "scripts");
+            var sourcesPath = Path.Combine(basePath, "scripts");
 
             var compiler = new Compiler();
             var runner = new Runner();
 
-            var files = Directory.GetFiles(sourcesPath, "*.cs", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(sourcesPath, "*.cs", new EnumerationOptions
+            {
+                 AttributesToSkip = FileAttributes.Temporary,
+                IgnoreInaccessible = true,
+                RecurseSubdirectories = true
+            });
 
             var assembly = compiler.Compile(files);
 
