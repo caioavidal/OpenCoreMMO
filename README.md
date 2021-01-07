@@ -39,6 +39,7 @@
 ## Usage
 
 ```sh
+download and install .NET 5: https://dotnet.microsoft.com/download/dotnet/5.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run -p "NeoServer.Server.Standalone"
