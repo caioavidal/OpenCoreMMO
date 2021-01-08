@@ -23,38 +23,11 @@ namespace NeoServer.Game.World
 
         public void AddTile(ITile newTile)
         {
-            var x = newTile.Location.X;
-            var y = newTile.Location.Y;
-            var z = newTile.Location.Z;
-
-            var sector = region.AddChild(x, y, 15);
-
-            if (sector != null)
-            {
-                var northSector = region.GetSector(x, y - 8);
-                if (northSector != null) northSector.South = sector;
-
-                var westSector = region.GetSector(x - 8, y);
-                if (westSector != null) westSector.East = sector;
-
-                var southSector = region.GetSector(x, y + 8);
-                if (southSector != null) sector.South = southSector;
-
-                var eastSector = region.GetSector(x + 8, y);
-                if (eastSector != null) sector.East = eastSector;
-            }
-
-            var floor = sector.AddFloor(z);
-            int offSetX = x & 7;
-            int offSetY = y & 7;
-
-            var tile = floor.Tiles[offSetX, offSetY];
-            if (tile == null)
-            {
-                floor.AddTile(newTile);
-                LoadedTilesCount++;
-            }
+            var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y);
+            sector.AddTile(newTile);
+            LoadedTilesCount++;
         }
+
 
         public void LoadSpawns(IEnumerable<ISpawn> spawns)
         {
@@ -67,14 +40,11 @@ namespace NeoServer.Game.World
         {
             tile = null;
             var sector = region.GetSector(location.X, location.Y);
-            if (sector == null)
-            {
-                return false;
-            }
-            var floor = sector.GetFloor(location.Z);
+            if (sector is null) return false;
 
-            tile = floor.Tiles == null ? null : floor.Tiles[location.X & 7, location.Y & 7];
-            return tile != null;
+            tile = sector.GetTile(location);
+            if (tile is null) return false;
+            return true;
         }
 
         public Sector GetSector(ushort x, ushort y) => region.GetSector(x, y);
@@ -97,6 +67,5 @@ namespace NeoServer.Game.World
         }
 
         public bool TryGetWaypoint(Location location, IWaypoint waypoint) => waypoints.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out waypoint);
-
     }
 }

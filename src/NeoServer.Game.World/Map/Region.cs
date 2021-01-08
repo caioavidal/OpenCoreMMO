@@ -1,50 +1,52 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.World.Map
 {
     public class Region
     {
-        public Region[] Children { get; set; } = new Region[4];
+        public const byte SECTOR_SIZE = 16;
 
-        public Sector AddChild(int x, int y, int level)
+        private ConcurrentDictionary<uint, Sector> Sectors = new();
+
+        /// <summary>
+        /// Creates a new sector or return if it already exists
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public Sector CreateSector(uint x, uint y)
         {
-            if (!(this is Sector sector))
+            var index = (x / SECTOR_SIZE) | ((y / SECTOR_SIZE) << 16);
+            if(Sectors.TryGetValue(index, out var sector))
             {
-                int index = ((x & 0x8000) >> 15) | ((y & 0x8000) >> 14);
-
-                if (Children[index] == null)
-                {
-                    if (level != 3)
-                    {
-                        Children[index] = new Region();
-                    }
-                    else
-                    {
-                        Children[index] = new Sector();
-                    }
-                }
-                return Children[index].AddChild(x * 2, y * 2, level - 1);
-
+                return sector;
             }
-            return sector;
+
+            var north = GetSector(x, y - SECTOR_SIZE);
+            var west = GetSector(x - SECTOR_SIZE, y);
+            var south = GetSector(x, y + SECTOR_SIZE);
+            var east = GetSector(x + SECTOR_SIZE, y);
+
+            var newSector = new Sector(north, west, south, east);
+            Sectors.TryAdd(index, newSector);
+
+            return newSector;
         }
-        public Sector GetSector(int x, int y)
-        {
-            if (this is Sector sector) return sector;
 
-            var region = Children[((x & 0x8000) >> 15) | ((y & 0x8000) >> 14)];
-            if (region == null)
-            {
-                return null;
-            }
-            return region.GetSector(x << 1, y << 1);
+     
+        public Sector GetSector(uint x, uint y)
+        {
+            var index = (x / SECTOR_SIZE) | ((y / SECTOR_SIZE) << 16);
+            Sectors.TryGetValue(index, out var sector);
+            return sector;
         }
         public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search)
         {
             var spectators = new List<ICreature>();
 
-            var startSector = GetSector(search.RangeX.Min, search.RangeY.Min);
+            var startSector = GetSector((uint)search.RangeX.Min, (uint)search.RangeY.Min);
             var south = startSector;
             const int FLOOR_SIZE = 8;
 
@@ -62,31 +64,31 @@ namespace NeoServer.Game.World.Map
                         //}
                         //else
                         //{
-                            IEnumerable<ICreature> creatures = (search.OnlyPlayers ? east.Players : east.Creatures);
+                        IEnumerable<ICreature> creatures = (search.OnlyPlayers ? east.Players : east.Creatures);
 
-                            foreach (ICreature creature in creatures)
+                        foreach (ICreature creature in creatures)
+                        {
+                            var cpos = creature.Location;
+                            if (search.RangeZ.Min > cpos.Z || search.RangeZ.Max < cpos.Z)
                             {
-                                var cpos = creature.Location;
-                                if (search.RangeZ.Min > cpos.Z || search.RangeZ.Max < cpos.Z)
-                                {
-                                    continue;
-                                }
-
-                                int offsetZ = search.CenterPosition.GetOffSetZ(cpos);
-                                if ((search.Y.Min + offsetZ) > cpos.Y || (search.Y.Max + offsetZ) < cpos.Y || (search.X.Min + offsetZ) > cpos.X || (search.X.Max + offsetZ) < cpos.X)
-                                {
-                                    continue;
-                                }
-
-                                east.SpectatorsCache.Add(creature);
-                                spectators.Add(creature);
+                                continue;
                             }
-                       // }
+
+                            int offsetZ = search.CenterPosition.GetOffSetZ(cpos);
+                            if ((search.Y.Min + offsetZ) > cpos.Y || (search.Y.Max + offsetZ) < cpos.Y || (search.X.Min + offsetZ) > cpos.X || (search.X.Max + offsetZ) < cpos.X)
+                            {
+                                continue;
+                            }
+
+                            east.SpectatorsCache.Add(creature);
+                            spectators.Add(creature);
+                        }
+                        // }
                         east = east.East;
                     }
                     else
                     {
-                        east = GetSector(nx + FLOOR_SIZE, ny);
+                        east = GetSector((uint)nx + FLOOR_SIZE, (uint)ny);
                     }
                 }
 
@@ -96,7 +98,7 @@ namespace NeoServer.Game.World.Map
                 }
                 else
                 {
-                    south = GetSector(search.RangeX.Min, ny + FLOOR_SIZE);
+                    south = GetSector((uint)search.RangeX.Min, (uint)ny + FLOOR_SIZE);
                 }
             }
 

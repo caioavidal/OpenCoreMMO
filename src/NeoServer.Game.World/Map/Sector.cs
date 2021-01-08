@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -8,26 +9,56 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.World.Map
 {
-    public class Sector : Region
+    public class Sector
     {
-        public Sector South { get; set; }
-        public Sector East { get; set; }
-        public Floor[] Floors { get; set; } = new Floor[16];
+        public const byte MAP_MAX_LAYERS = 16;
+        public const byte SECTOR_MASK = Region.SECTOR_SIZE - 1;
+        public Sector South { get; private set; }
+        public Sector East { get; private set; }
+        public uint Floors { get; private set; }
         public HashSet<ICreature> Creatures { get; private set; } = new HashSet<ICreature>();
         public HashSet<ICreature> Players { get; private set; } = new HashSet<ICreature>();
         public List<ICreature> SpectatorsCache { get; private set; } = new List<ICreature>(32);
+        public ITile[,,] Tiles { get; set; } = new ITile[MAP_MAX_LAYERS, Region.SECTOR_SIZE, Region.SECTOR_SIZE];
 
-        public Floor GetFloor(byte z) => Floors[z];
-        public Floor AddFloor(byte z)
+        public Sector(Sector north, Sector south, Sector west, Sector east)
         {
-            if (Floors[z].Tiles == null)
-            {
-                Floors[z].Tiles = new BaseTile[8, 8];
-            }
-
-            return Floors[z];
+            UpdateNeighborsSetors(north, south, west, east);
         }
 
+        public void AddTile(ITile tile)
+        {
+            var z = tile.Location.Z;
+            var x = tile.Location.X;
+            var y = tile.Location.Y;
+
+            if (z >= MAP_MAX_LAYERS) return;
+
+            CreateFloor(z);
+
+            if (GetTile(tile.Location) is not null) return;
+
+            Tiles[z, x & SECTOR_MASK, y & SECTOR_MASK] = tile;
+        }
+
+        public void CreateFloor(byte z) => Floors |= (uint)(1 << z);
+
+        public void UpdateNeighborsSetors(Sector north, Sector south, Sector west, Sector east)
+        {
+            if (north is not null) north.South = this;
+            if (west is not null) west.East= this;
+            if (south is not null) South = south;
+            if (east is not null) East = east;
+        }
+
+        public ITile GetTile(Location location)
+        {
+            if (location.Z >= MAP_MAX_LAYERS) return null;
+
+            return Tiles[location.Z, location.X & SECTOR_MASK, location.Y & SECTOR_MASK];
+        }
+
+       
         public void AddCreature(ICreature creature)
         {
             Creatures.Add(creature);
