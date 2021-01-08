@@ -1,11 +1,12 @@
 ﻿using NeoServer.Game.Contracts.Spells;
+using System;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Spells
 {
     public class SpellList
     {
-        private static Dictionary<string, ISpell> Spells { get; set; } = new Dictionary<string, ISpell>();
+        private static Dictionary<string, ISpell> Spells { get; set; } = new Dictionary<string, ISpell>(StringComparer.InvariantCultureIgnoreCase);
 
         public static void Add(string words, ISpell spell)
         {

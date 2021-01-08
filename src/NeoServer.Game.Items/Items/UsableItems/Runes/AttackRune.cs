@@ -8,6 +8,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Runes;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Effects.Magical;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -59,7 +60,11 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
         {
             combatAttackType = CombatAttackType.None;
 
-            if (NeedTarget == true) return false;
+            if (NeedTarget == true)
+            {
+                if(tile is IDynamicTile t && t.HasCreature) return Use(usedBy, t.TopCreatureOnStack, out combatAttackType);
+                return false;
+            }
 
             if (usedBy is not IPlayer player) return false;
 

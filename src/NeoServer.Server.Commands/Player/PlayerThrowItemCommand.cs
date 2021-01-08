@@ -1,4 +1,6 @@
-﻿using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Commands.Movement.ToInventory;
 using NeoServer.Server.Model.Players.Contracts;
@@ -21,6 +23,7 @@ namespace NeoServer.Server.Commands.Player
 
         public override void Execute()
         {
+        
             if (ContainerToContainerMovementOperation.IsApplicable(itemThrow))
             {
                 ContainerToContainerMovementOperation.Execute(player, itemThrow);

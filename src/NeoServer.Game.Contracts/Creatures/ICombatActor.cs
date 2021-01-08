@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void Damage(ICombatActor enemy, ICombatActor victim, CombatDamage damage);
     public delegate void StopAttack(ICombatActor actor);
     public delegate void BlockAttack(ICombatActor creature, BlockType block);
-    public delegate void Attack(ICombatActor creature, ICombatActor victim, CombatAttackType combat);
+    public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackType combat);
     public delegate void UseSpell(ICreature creature, ISpell spell);
     public delegate void ChangeVisibility(ICombatActor actor);
     public delegate void OnPropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
