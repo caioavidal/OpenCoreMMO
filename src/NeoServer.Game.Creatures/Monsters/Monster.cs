@@ -136,7 +136,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public void SetAsEnemy(ICombatActor creature)
         {
             var canSeeInvisible = !creature.IsInvisible || (creature.IsInvisible && CanSeeInvisible);
-            var canSee = CanSee(creature.Location, 9, 9) && canSeeInvisible;
+            var canSee = CanSee(creature.Location, 9, 7) && canSeeInvisible;
 
             if (IsDead || creature.IsRemoved || !canSee)
             {
@@ -372,7 +372,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             combat = new CombatAttackType();
 
-            TurnTo(Location.DirectionTo(enemy.Location));
 
             if (!Attacks.Any()) return false;
 
@@ -390,6 +389,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 if (!(attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat) ?? false)) continue;
                 attacked = true;
             }
+
+            if(attacked) TurnTo(Location.DirectionTo(enemy.Location));
 
             return attacked;
         }

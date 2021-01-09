@@ -43,7 +43,7 @@ namespace NeoServer.Game.World.Map
         public void OnTileChanged(ITile tile, IItem item, OperationResult<IItem> result)
         {
             if (!result.HasAnyOperation) return;
-        
+
             foreach (var operation in result.Operations)
             {
                 switch (operation.Item2)
@@ -67,44 +67,40 @@ namespace NeoServer.Game.World.Map
         public ITile this[Location location] => world.TryGetTile(ref location, out ITile tile) ? tile : null;
         public ITile this[ushort x, ushort y, byte z] => this[new Location(x, y, z)];
 
-        public bool TryMoveCreature(IMoveableThing thing, Location toLocation, byte amount = 1)
+        public bool TryMoveCreature(ICreature creature, Location toLocation, byte amount = 1)
         {
-            if (this[thing.Location] is not IDynamicTile fromTile)
+            if (this[creature.Location] is not IDynamicTile fromTile)
             {
-                OnThingMovedFailed(thing, InvalidOperation.NotPossible);
+                OnThingMovedFailed(creature, InvalidOperation.NotPossible);
                 return false;
             }
 
             if (this[toLocation] is not IDynamicTile toTile)//immutable tiles cannot be modified
             {
-                OnThingMovedFailed(thing, InvalidOperation.NotEnoughRoom);
+                OnThingMovedFailed(creature, InvalidOperation.NotEnoughRoom);
                 return false;
             }
 
-            if (thing is IWalkableCreature creature)
+            if (creature is IWalkableCreature walkableCreature)
             {
-                SwapCreatureBetweenSectors(creature, toLocation);
-
                 var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, amount, out ICylinder cylinder);
                 if (result.IsSuccess is false)
                 {
-                    RollbackSwapCreatureBetweenSectors(creature, toLocation);
-
                     return false;
                 }
 
                 foreach (var spectator in cylinder.TileSpectators)
                 {
-                    if (spectator.Spectator is IMonster monsterSpectator && thing is IPlayer playerWalking)
+                    if (spectator.Spectator is IMonster monsterSpectator && creature is IPlayer playerWalking)
                     {
                         monsterSpectator.SetAsEnemy(playerWalking);
                     }
-                    if (spectator.Spectator is IPlayer playerSpectator && thing is IMonster monsterWalking)
+                    if (spectator.Spectator is IPlayer playerSpectator && creature is IMonster monsterWalking)
                     {
                         monsterWalking.SetAsEnemy(playerSpectator);
                     }
                 }
-                OnCreatureMoved?.Invoke(creature, cylinder);
+                OnCreatureMoved?.Invoke(walkableCreature, cylinder);
             }
 
             var tileDestination = GetTileDestination(toTile);
@@ -114,12 +110,12 @@ namespace NeoServer.Game.World.Map
                 return true;
             }
 
-            return TryMoveCreature(thing, tileDestination.Location);
+            return TryMoveCreature(creature, tileDestination.Location);
         }
 
-        private void SwapCreatureBetweenSectors(ICreature creature, Location toLocation)
+        public void SwapCreatureBetweenSectors(ICreature creature, Location fromLocation, Location toLocation)
         {
-            var oldSector = world.GetSector(creature.Location.X, creature.Location.Y);
+            var oldSector = world.GetSector(fromLocation.X, fromLocation.Y);
             var newSector = world.GetSector(toLocation.X, toLocation.Y);
 
             if (oldSector != newSector)
@@ -128,18 +124,7 @@ namespace NeoServer.Game.World.Map
                 newSector.AddCreature(creature);
             }
         }
-        private void RollbackSwapCreatureBetweenSectors(ICreature creature, Location toLocation)
-        {
-            var oldSector = world.GetSector(creature.Location.X, creature.Location.Y);
-            var newSector = world.GetSector(toLocation.X, toLocation.Y);
-
-            if (oldSector != newSector)
-            {
-                newSector.RemoveCreature(creature);
-                oldSector.AddCreature(creature);
-            }
-        }
-
+      
         public bool IsInRange(Location start, Location current, Location target, FindPathParams fpp)
         {
             if (fpp.FullPathSearch)
@@ -306,6 +291,35 @@ namespace NeoServer.Game.World.Map
                 OnThingUpdatedOnTile?.Invoke(item, CylinderOperation.Removed(item, stackPosition));
             }
         }
+        public HashSet<ICreature> GetSpectators(Location fromLocation, bool onlyPlayers = false) => GetSpectators(fromLocation, fromLocation, onlyPlayer: onlyPlayers);
+        
+        public HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayer = false)
+        {
+            if (fromLocation.Z == toLocation.Z)
+            {
+                int minRangeX = (int)MapViewPort.ViewPortX;
+                int maxRangeX = (int)MapViewPort.ViewPortX;
+                int minRangeY = (int)MapViewPort.ViewPortY;
+                int maxRangeY = (int)MapViewPort.ViewPortY;
+
+                if (fromLocation.Y > toLocation.Y) ++minRangeY;
+                else if (fromLocation.Y < toLocation.Y) ++maxRangeY;
+
+                if (fromLocation.X < toLocation.X) ++maxRangeX;
+                else if (fromLocation.X > toLocation.X) ++minRangeX;
+
+                var search = new SpectatorSearch(center: ref fromLocation, multifloor: true, minRangeX: minRangeX, minRangeY: minRangeY, maxRangeX: maxRangeX, maxRangeY: maxRangeY, onlyPlayers: onlyPlayer);
+                return world.GetSpectators(ref search).ToHashSet();
+            }
+            else
+            {
+                var oldSpecs = GetSpectators(fromLocation);
+                var newSpecs = GetSpectators(toLocation);
+                oldSpecs.UnionWith(newSpecs);
+
+                return oldSpecs;
+            }
+        }
 
         public IEnumerable<ICreature> GetPlayersAtPositionZone(Location location)
         {
@@ -328,42 +342,7 @@ namespace NeoServer.Game.World.Map
             return spectators.ToHashSet();
         }
 
-        public IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false)
-        {
-
-            if (location.Z > MAP_MAX_LAYERS) return new List<ICreature>(0);
-
-            var viewPortX = (ushort)MapViewPort.ViewPortX;
-            var viewPortY = (ushort)MapViewPort.ViewPortY;
-
-            int minZ = 0;
-            int maxZ;
-            if (location.IsUnderground)
-            {
-                minZ = Math.Max(location.Z - 2, 0);
-                maxZ = Math.Min(location.Z + 2, 15); //15 = max floor value
-            }
-            else if (location.Z == 6)
-            {
-                maxZ = 8;
-            }
-            else if (location.IsSurface)
-            {
-                maxZ = 9;
-            }
-            else
-            {
-                maxZ = 7;
-            }
-
-            var minX = (ushort)(location.X + -viewPortX);
-            var minY = (ushort)(location.Y + -viewPortY);
-            var maxX = (ushort)(location.X + viewPortX);
-            var maxY = (ushort)(location.Y + viewPortY);
-
-            var search = new SpectatorSearch(ref location, minRangeX: -viewPortX, minRangeY: -viewPortY, maxRangeX: viewPortX, maxRangeY: viewPortY, minRangeZ: minZ, maxRangeZ: maxZ, onlyPlayers: onlyPlayers);
-            return world.GetSpectators(ref search);
-        }
+        public IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false) => GetSpectators(location, onlyPlayers);
         public IList<byte> GetDescription(Contracts.Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground, byte windowSizeX = MapConstants.DefaultMapWindowSizeX, byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
         {
             var tempBytes = new List<byte>();
@@ -455,14 +434,14 @@ namespace NeoServer.Game.World.Map
             var toLocation = fromLocation.GetNextLocation(direction);
             return this[toLocation];
         }
-        public void AddCreature(ICreature creature)
+        public void PlaceCreature(ICreature creature)
         {
             if (this[creature.Location] is IDynamicTile tile)
             {
+                if (CylinderOperation.AddCreature(creature, tile, out ICylinder cylinder).IsSuccess is false) return;
+
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
-
-                if (CylinderOperation.AddCreature(creature, tile, out ICylinder cylinder).IsSuccess is false) return;
 
                 if (creature is IPlayer player)
                 {

@@ -35,7 +35,7 @@ namespace NeoServer.Scripts.Spells.Commands
                 if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
                 {
                     monster.SetNewLocation(neighbour);
-                    map.AddCreature(monster);
+                    map.PlaceCreature(monster);
                     return true;
                 }
             }

@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace NeoServer.Game.World.Map
         public HashSet<ICreature> Creatures { get; private set; } = new HashSet<ICreature>();
         public HashSet<ICreature> Players { get; private set; } = new HashSet<ICreature>();
         public List<ICreature> SpectatorsCache { get; private set; } = new List<ICreature>(32);
-        public ITile[,,] Tiles { get; set; } = new ITile[MAP_MAX_LAYERS, Region.SECTOR_SIZE, Region.SECTOR_SIZE];
+        private ITile[,,] Tiles = new ITile[MAP_MAX_LAYERS, Region.SECTOR_SIZE, Region.SECTOR_SIZE];
 
         public Sector(Sector north, Sector south, Sector west, Sector east)
         {
@@ -46,7 +47,7 @@ namespace NeoServer.Game.World.Map
         public void UpdateNeighborsSetors(Sector north, Sector south, Sector west, Sector east)
         {
             if (north is not null) north.South = this;
-            if (west is not null) west.East= this;
+            if (west is not null) west.East = this;
             if (south is not null) South = south;
             if (east is not null) East = east;
         }
@@ -58,7 +59,7 @@ namespace NeoServer.Game.World.Map
             return Tiles[location.Z, location.X & SECTOR_MASK, location.Y & SECTOR_MASK];
         }
 
-       
+
         public void AddCreature(ICreature creature)
         {
             Creatures.Add(creature);
@@ -77,6 +78,13 @@ namespace NeoServer.Game.World.Map
 
             SpectatorsCache.Clear();
         }
+
+        //public HashSet<ICreature> GetSpectators(ref SpectatorSearch search)
+        //{
+        //    if (search.CenterPosition.Z >= MAP_MAX_LAYERS) return null;
+
+
+        //}
     }
 
     public readonly ref struct SpectatorSearch
@@ -84,33 +92,55 @@ namespace NeoServer.Game.World.Map
         public MinMax RangeX { get; }
         public MinMax RangeY { get; }
         public MinMax RangeZ { get; }
-        public MinMax Y { get; }
-        public MinMax X { get; }
         public bool OnlyPlayers { get; }
         public Location CenterPosition { get; }
+        public bool Multifloor { get; }
 
-        public SpectatorSearch(ref Location center, int minRangeX, int maxRangeX, int minRangeY, int maxRangeY, int minRangeZ, int maxRangeZ, bool onlyPlayers)
+        public SpectatorSearch(ref Location center, bool multifloor, int minRangeX, int maxRangeX, int minRangeY, int maxRangeY, bool onlyPlayers)
         {
-            int minY = center.Y + minRangeY;
-            int minX = center.X + minRangeX;
-            int maxY = center.Y + maxRangeY;
-            int maxX = center.X + maxRangeX;
+            Multifloor = multifloor;
+            int minY = minRangeY == 0 ? (int)MapViewPort.ViewPortY : minRangeY;
+            int minX = minRangeX == 0 ? (int)MapViewPort.ViewPortX : minRangeX;
+            int maxY = maxRangeY == 0 ? (int)MapViewPort.ViewPortY : maxRangeY;
+            int maxX = maxRangeX == 0 ? (int)MapViewPort.ViewPortX : maxRangeX;
 
-            int minoffset = center.Z - maxRangeZ;
-            ushort x1 = (ushort)Math.Min(0xFFFF, Math.Max(0, (minX + minoffset)));
-            ushort y1 = (ushort)Math.Min(0xFFFF, Math.Max(0, (minY + minoffset)));
+            RangeX = new MinMax(minX, maxX);
+            RangeY = new MinMax(minY, maxY);
+            RangeZ = GetRangeZ(center, multifloor);
 
-            int maxoffset = center.Z - minRangeZ;
-            ushort x2 = (ushort)Math.Min(0xFFFF, Math.Max(0, (maxX + maxoffset)));
-            ushort y2 = (ushort)Math.Min(0xFFFF, Math.Max(0, (maxY + maxoffset)));
-
-            RangeX = new MinMax(x1 - (x1 % 8), x2 - (x2 % 8));
-            RangeY = new MinMax(y1 - (y1 % 8), y2 - (y2 % 8));
-            RangeZ = new MinMax(minRangeZ, maxRangeZ);
-            Y = new MinMax(minY, maxY);
-            X = new MinMax(minX, maxX);
             CenterPosition = center;
             OnlyPlayers = onlyPlayers;
+        }
+
+        private static MinMax GetRangeZ(Location center, bool multifloor)
+        {
+            var minRangeZ = center.Z;
+            var maxRangeZ = center.Z;
+            if (multifloor)
+            {
+                if (center.IsUnderground)
+                {
+                    minRangeZ = (byte)Math.Max(center.Z - 2, 0);
+                    maxRangeZ = (byte)Math.Max(center.Z + 2, Sector.MAP_MAX_LAYERS - 1);
+                }
+                else if (center.Z == 6)
+                {
+                    minRangeZ = 0;
+                    maxRangeZ = 8;
+                }
+                else if (center.Z == 7)
+                {
+                    minRangeZ = 0;
+                    maxRangeZ = 9;
+                }
+                else
+                {
+                    minRangeZ = 0;
+                    maxRangeZ = 7;
+                }
+            }
+
+            return new MinMax(minRangeZ,maxRangeZ);
         }
     }
 

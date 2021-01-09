@@ -2,6 +2,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.World.Map;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -23,7 +24,11 @@ namespace NeoServer.Game.World
 
         public void AddTile(ITile newTile)
         {
-            var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y);
+            ushort x = newTile.Location.X;
+            ushort y = newTile.Location.Y;
+
+            var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y, out var created);
+         
             sector.AddTile(newTile);
             LoadedTilesCount++;
         }

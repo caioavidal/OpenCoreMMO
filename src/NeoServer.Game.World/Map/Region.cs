@@ -1,4 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Model.World.Map;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -16,26 +18,29 @@ namespace NeoServer.Game.World.Map
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public Sector CreateSector(uint x, uint y)
+        public Sector CreateSector(uint x, uint y, out bool created)
         {
+            created = false;
+
             var index = (x / SECTOR_SIZE) | ((y / SECTOR_SIZE) << 16);
-            if(Sectors.TryGetValue(index, out var sector))
+            if (Sectors.TryGetValue(index, out var sector))
             {
                 return sector;
             }
 
-            var north = GetSector(x, y - SECTOR_SIZE);
-            var west = GetSector(x - SECTOR_SIZE, y);
-            var south = GetSector(x, y + SECTOR_SIZE);
-            var east = GetSector(x + SECTOR_SIZE, y);
+            var north = GetSector(x, (ushort)(y - SECTOR_SIZE));
+            var west = GetSector((ushort)(x - SECTOR_SIZE), y);
+            var south = GetSector(x, (ushort)(y + SECTOR_SIZE));
+            var east = GetSector((ushort)(x + SECTOR_SIZE), y);
 
-            var newSector = new Sector(north, west, south, east);
+            var newSector = new Sector(north, south, west, east);
             Sectors.TryAdd(index, newSector);
 
+            created = true;
             return newSector;
         }
 
-     
+
         public Sector GetSector(uint x, uint y)
         {
             var index = (x / SECTOR_SIZE) | ((y / SECTOR_SIZE) << 16);
@@ -44,61 +49,86 @@ namespace NeoServer.Game.World.Map
         }
         public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search)
         {
+            if (search.CenterPosition.Z >= Sector.MAP_MAX_LAYERS) return null;
+
             var spectators = new List<ICreature>();
 
-            var startSector = GetSector((uint)search.RangeX.Min, (uint)search.RangeY.Min);
-            var south = startSector;
-            const int FLOOR_SIZE = 8;
+            var minRangeX = search.RangeX.Min;
+            var maxRangeX = search.RangeX.Max;
+            var minRangeY = search.RangeY.Min;
+            var maxRangeY = search.RangeY.Max;
 
-            for (int ny = search.RangeY.Min; ny <= search.RangeY.Max; ny += FLOOR_SIZE)
+            var minRangeZ = search.RangeZ.Min;
+            var maxRangeZ = search.RangeZ.Max;
+            
+            if (minRangeX == (int)MapViewPort.ViewPortX && maxRangeX == (int)MapViewPort.ViewPortX && minRangeY == (int)MapViewPort.ViewPortY && maxRangeY == (int)MapViewPort.ViewPortY && search.Multifloor)
             {
+            }
 
-                Sector east = south;
-                for (int nx = search.RangeX.Min; nx <= search.RangeX.Max; nx += FLOOR_SIZE)
+            var centerPos = search.CenterPosition;
+
+            int min_y = centerPos.Y - minRangeY;
+            int min_x = centerPos.X - minRangeX;
+            int max_y = centerPos.Y + maxRangeY;
+            int max_x = centerPos.X + maxRangeX;
+
+            uint width = (uint)(max_x - min_x);
+            uint height = (uint)(max_y - min_y);
+            uint depth = (uint)(maxRangeZ - minRangeZ);
+
+            int minoffset = centerPos.Z - maxRangeZ;
+            int x1 = Math.Min(0xFFFF, Math.Max(0, (min_x + minoffset)));
+            int y1 = Math.Min(0xFFFF, Math.Max(0, (min_y + minoffset)));
+
+            int maxoffset = centerPos.Z- minRangeZ;
+            int x2 = Math.Min(0xFFFF, Math.Max(0, (max_x + maxoffset)));
+            int y2 = Math.Min(0xFFFF, Math.Max(0, (max_y + maxoffset)));
+
+            int startx1 = x1 - (x1 & Sector.SECTOR_MASK);
+            int starty1 = y1 - (y1 & Sector.SECTOR_MASK);
+            int endx2 = x2 - (x2 & Sector.SECTOR_MASK);
+            int endy2 = y2 - (y2 & Sector.SECTOR_MASK);
+
+            Sector startSector = GetSector((uint)startx1, (uint)starty1);
+            Sector sectorS = startSector;
+            Sector sectorE;
+            for (int ny = starty1; ny <= endy2; ny += SECTOR_SIZE)
+            {
+                sectorE = sectorS;
+                for (int nx = startx1; nx <= endx2; nx += SECTOR_SIZE)
                 {
-                    if (east != null)
+                    if (sectorE is not null)
                     {
-                        //if (east.SpectatorsCache.Any())
-                        //{
-                        //    spectators.AddRange(east.SpectatorsCache);
-                        //}
-                        //else
-                        //{
-                        IEnumerable<ICreature> creatures = (search.OnlyPlayers ? east.Players : east.Creatures);
-
-                        foreach (ICreature creature in creatures)
+                        IEnumerable<ICreature> spectatorsList = (search.OnlyPlayers ? sectorE.Players : sectorE.Creatures);
+                        foreach (var spec in spectatorsList)
                         {
-                            var cpos = creature.Location;
-                            if (search.RangeZ.Min > cpos.Z || search.RangeZ.Max < cpos.Z)
-                            {
-                                continue;
-                            }
+                            ICreature creature = spec;
 
-                            int offsetZ = search.CenterPosition.GetOffSetZ(cpos);
-                            if ((search.Y.Min + offsetZ) > cpos.Y || (search.Y.Max + offsetZ) < cpos.Y || (search.X.Min + offsetZ) > cpos.X || (search.X.Max + offsetZ) < cpos.X)
+                            var creaturePosition = creature.Location;
+                            if ((uint)(creaturePosition.Z - minRangeZ) <= depth)
                             {
-                                continue;
+                                var offsetZ = centerPos.GetOffSetZ(creaturePosition);
+                                if ((uint)((creaturePosition.X - offsetZ) - min_x) <= width && (uint)((creaturePosition.Y - offsetZ) - min_y) <= height)
+                                {
+                                    spectators.Add(creature);
+                                }
                             }
-
-                            east.SpectatorsCache.Add(creature);
-                            spectators.Add(creature);
                         }
-                        // }
-                        east = east.East;
+                        sectorE = sectorE.East;
                     }
                     else
                     {
-                        east = GetSector((uint)nx + FLOOR_SIZE, (uint)ny);
+                        sectorE = GetSector((ushort)(nx + SECTOR_SIZE), (ushort)ny);
                     }
                 }
 
-                if (south != null)
+                if (sectorS is not null)
                 {
-                    south = south.South;
+                    sectorS = sectorS.South;
                 }
                 else
                 {
-                    south = GetSector((uint)search.RangeX.Min, (uint)ny + FLOOR_SIZE);
+                    sectorS = GetSector((ushort)startx1, (ushort)(ny + SECTOR_SIZE));
                 }
             }
 

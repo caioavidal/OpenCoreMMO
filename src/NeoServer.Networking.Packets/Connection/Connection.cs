@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace NeoServer.Networking
 {
@@ -259,7 +260,6 @@ namespace NeoServer.Networking
             message.AddLength();
 
             var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
-
             SendMessage(encryptedMessage);
         }
 
