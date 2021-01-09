@@ -59,7 +59,7 @@ namespace NeoServer.Game.World.Spawns
                 if (monster == null) continue;
 
                 monster.SetNewLocation(monsterToSpawn.Spawn.Location);
-                _map.AddCreature(monster);
+                _map.PlaceCreature(monster);
 
                 //_creatureGameInstance.Add(monster);
             }

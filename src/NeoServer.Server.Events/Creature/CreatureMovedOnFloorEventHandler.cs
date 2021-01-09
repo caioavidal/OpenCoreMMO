@@ -53,10 +53,9 @@ namespace NeoServer.Server.Events
                 {
                     continue;
                 }
-                if(!(spectator is IPlayer player))
-                {
-                    continue;
-                }
+                if(spectator is not IPlayer player) continue;
+                
+                if (!cylinderSpectator.Spectator.CanSee(creature.Location)) continue;
 
                 if (spectator.CreatureId == creature.CreatureId) //myself
                 {

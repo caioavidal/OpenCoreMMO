@@ -43,7 +43,7 @@ namespace NeoServer.Server
         public bool AddCreature(ICreature creature)
         {
             creatureInstances.Add(creature);
-            map.AddCreature(creature);
+            map.PlaceCreature(creature);
 
             return true;
         }

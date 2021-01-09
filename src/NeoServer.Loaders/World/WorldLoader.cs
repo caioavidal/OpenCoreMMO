@@ -66,8 +66,8 @@ namespace NeoServer.Loaders.World
 
         private void LoadTiles(OTBM.Structure.OTBM otbm)
         {
-            otbm.TileAreas.AsParallel().SelectMany(t => t.Tiles)
-                .ForAll(tileNode =>
+            otbm.TileAreas.SelectMany(t => t.Tiles)
+                .ToList().ForEach(tileNode =>
                 {
 
                     var items = GetItemsOnTile(tileNode).ToArray();
