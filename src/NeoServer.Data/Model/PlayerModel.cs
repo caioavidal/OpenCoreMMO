@@ -73,7 +73,7 @@ namespace NeoServer.Server.Model.Players
         public ChaseMode ChaseMode { get; set; }
         public FightMode FightMode { get; set; }
         public Gender Gender { get; set; }
-        public VocationType Vocation { get; set; }
+        public byte Vocation { get; set; }
 
         public AccountModel Account { get; set; }
 

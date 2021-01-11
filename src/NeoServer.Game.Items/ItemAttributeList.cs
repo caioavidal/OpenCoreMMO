@@ -148,13 +148,13 @@ namespace NeoServer.Game.Items
             return FloorChangeDirection.None;
         }
 
-        public VocationType[] GetRequiredVocations()
+        public byte[] GetRequiredVocations()
         {
             if (_defaultAttributes is null) return default;
 
             if (_defaultAttributes.TryGetValue(ItemAttribute.Vocation, out var value))
             {
-                return (VocationType[])value.Item1;
+                return (byte[])value.Item1;
             }
 
             return default;

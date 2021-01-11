@@ -70,7 +70,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool CannotLogout { get; }
         uint Id { get; }
         bool HasDepotOpened { get; }
-        VocationType VocationType { get;  }
+
+        byte VocationType{ get; }
 
         //  IAction PendingAction { get; }
 
@@ -145,10 +146,11 @@ namespace NeoServer.Server.Model.Players.Contracts
         void Use(IUseableOn item, IItem onItem);
         bool Login();
 
-        string IThing.InspectionText => $"{Name} (Level {Level}). He is a {VocationTypeParser.Parse(VocationType).ToLower()}{GuildText}";
+        string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
 
         uint TotalCapacity { get; }
         bool Recovering { get; }
+        IVocation Vocation { get; }
     }
 }

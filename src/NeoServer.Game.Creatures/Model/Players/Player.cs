@@ -32,7 +32,7 @@ namespace NeoServer.Server.Model.Players
 {
     public class Player : CombatActor, IPlayer
     {
-        public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
+        public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, byte vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location, IPathAccess pathAccess)
@@ -109,7 +109,7 @@ namespace NeoServer.Server.Model.Players
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
         public ushort Level => Skills[SkillType.Level].Level;
-        public VocationType VocationType { get; private set; }
+        public byte VocationType { get; private set; }
         public Gender Gender { get; private set; }
         public bool Online { get; private set; }
         public ushort Mana { get; private set; }

@@ -17,7 +17,7 @@ namespace NeoServer.Data.Seeds
                 new PlayerModel
                 {
                     PlayerId = 1,
-                    PlayerType = 2,
+                    PlayerType = 1,
                     AccountId = 1,
                     Name = "GOD",
                     ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,
@@ -25,7 +25,7 @@ namespace NeoServer.Data.Seeds
                     Level = 800,
                     Health = 4440,
                     MaxHealth = 4440,
-                    Vocation = NeoServer.Game.Common.Players.VocationType.Knight,
+                    Vocation = 4,
                     Gender = NeoServer.Game.Common.Players.Gender.Male,
                     Speed = 800,
                     Online = false,

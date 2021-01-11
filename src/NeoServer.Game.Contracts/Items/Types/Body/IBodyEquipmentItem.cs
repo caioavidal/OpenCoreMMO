@@ -29,11 +29,11 @@ namespace NeoServer.Game.Contracts.Items.Types
 
                 for (int i = 0; i < Vocations?.Length; i++)
                 {
-                    stringBuilder.Append($"{VocationTypeParser.Parse(Vocations[i]).ToLower()}s");
-                    if (i + 1 < Vocations.Length)
-                    {
-                        stringBuilder.Append(", ");
-                    }
+                    //stringBuilder.Append($"{VocationTypeParser.Parse(Vocations[i]).ToLower()}s");
+                    //if (i + 1 < Vocations.Length)
+                    //{
+                    //    stringBuilder.Append(", ");
+                    //}
                 }
                 if (MinLevel > 0)
                 {

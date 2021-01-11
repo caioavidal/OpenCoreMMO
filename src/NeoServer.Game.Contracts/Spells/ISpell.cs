@@ -15,7 +15,7 @@ namespace NeoServer.Game.Contracts.Spells
         string Name { get; set; }
         uint Cooldown { get; set; }
         bool ShouldSay { get; }
-
+        byte[] Vocations { get; set; }
         bool Invoke(ICombatActor actor, string words, out InvalidOperation error);
         bool InvokeOn(ICombatActor actor, ICombatActor onCreature, string words, out InvalidOperation error);
     }

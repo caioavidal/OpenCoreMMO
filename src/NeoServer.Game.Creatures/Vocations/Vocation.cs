@@ -27,7 +27,7 @@ namespace NeoServer.Game.Creatures.Vocations
         public string FromVoc { get; set; }
         public IVocationFormula Formula { get; set; }
         public Dictionary<byte, float> Skill { get; set; }
-        public VocationType VocationType => VocationTypeParser.Parse(Name);
+        public byte VocationType => byte.Parse(Id);
     }
 
 }

@@ -89,7 +89,6 @@ namespace NeoServer.Loaders.Items
                     {
                         value = jArray.ToObject<string[]>();
 
-                        value = itemAttribute == Game.Common.ItemAttribute.Vocation ? GetVocationAttribute(value) : value;
                         if (itemAttribute == Game.Common.ItemAttribute.None)
                         {
                             attributes.SetCustomAttribute(attribute.Key, values: value);
@@ -133,18 +132,6 @@ namespace NeoServer.Loaders.Items
             }
         }
 
-        private static VocationType[] GetVocationAttribute(dynamic value)
-        {
-            if (value is null) return default;
-
-            if (value is dynamic[] array)
-            {
-                return array.Select(x => VocationTypeParser.Parse((string)x)).ToArray();
-            }
-            else
-            {
-                return new VocationType[] { VocationTypeParser.Parse((string)value) };
-            }
-        }
+   
     }
 }

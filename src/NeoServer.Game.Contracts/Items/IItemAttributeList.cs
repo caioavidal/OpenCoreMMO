@@ -20,7 +20,7 @@ namespace NeoServer.Game.Contracts.Items
         EffectT GetEffect();
         FloorChangeDirection GetFloorChangeDirection();
         IItemAttributeList GetInnerAttributes(ItemAttribute attribute);
-        VocationType[] GetRequiredVocations();
+        byte[] GetRequiredVocations();
         ushort GetTransformationItem();
         Tuple<DamageType, byte> GetWeaponElementDamage();
         bool HasAttribute(ItemAttribute attribute);
