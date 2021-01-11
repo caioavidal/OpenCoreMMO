@@ -39,6 +39,7 @@ namespace NeoServer.Game.Contracts.Creatures
         ushort MinimumAttackPower { get; }
         bool UsingDistanceWeapon { get; }
         uint AttackEvent { get; set; }
+        bool CanBeAttacked { get; }
 
         int ArmorDefend(int attack);
         //bool Attack(ICombatActor enemy, ICombatAttack combatAttack);

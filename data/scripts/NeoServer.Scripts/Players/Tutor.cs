@@ -19,12 +19,9 @@ namespace NeoServer.Scripts.Players
         {
 
         }
-
+        public override bool CanBeAttacked => false;
         public override void GainExperience(uint exp) { } //tutor do not gain experience
-        public override bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
-        {
-            return false;
-        }
+      
         public override void OnDamage(ICombatActor enemy, CombatDamage damage) { }
         public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators) { }
         public override void OnCreatureAppear(Location location, ICylinderSpectator[] spectators) { }
