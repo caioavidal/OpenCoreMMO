@@ -104,6 +104,7 @@ namespace NeoServer.Game.Creatures.Model
         {
             OldOutfit = null;
             Outfit.Change(lookType, id, head, body, legs, feet, addon);
+            
             OnChangedOutfit?.Invoke(this, Outfit);
         }
         public void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)

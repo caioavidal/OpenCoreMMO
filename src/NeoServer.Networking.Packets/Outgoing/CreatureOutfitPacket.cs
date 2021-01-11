@@ -29,7 +29,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
             else
             {
-                //message.AddUInt16(creature.Outfit.LookTypeEx) //todo
+                message.AddUInt16(0); //todo
             }
         }
 

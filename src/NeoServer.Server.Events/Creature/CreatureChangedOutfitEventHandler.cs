@@ -19,6 +19,8 @@ namespace NeoServer.Server.Events.Creature
         {
             foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
             {
+                if (!creature.CanSee(spectator.Location)) continue;
+
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
                 {
                     continue;
