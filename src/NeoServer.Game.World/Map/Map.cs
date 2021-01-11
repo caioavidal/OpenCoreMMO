@@ -432,6 +432,7 @@ namespace NeoServer.Game.World.Map
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
 
+                creature.OnCreatureAppear(tile.Location, cylinder.TileSpectators);
                 if (creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }
         }
@@ -473,8 +474,6 @@ namespace NeoServer.Game.World.Map
         {
             if (creature.TryGetNextStep(out var direction))
             {
-                var fromTile = creature.Tile;
-
                 if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveCreature(creature, toTile.Location))
                 {
                     if (creature is IPlayer player) player.CancelWalk();

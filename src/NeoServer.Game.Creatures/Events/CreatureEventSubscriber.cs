@@ -11,13 +11,11 @@ namespace NeoServer.Game.Creatures.Events
         private readonly CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler;
         private readonly CreatureTeleportedEventHandler creatureTeleportedEventHandler;
         private readonly PlayerDisappearedEventHandler playerDisappearedEventHandler;
-        private readonly CreatureAppearedEventHandler creatureAppearedEventHandler;
         private readonly CreatureMovedEventHandler creatureMovedEventHandler;
 
         public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureDamagedEventHandler creatureDamagedEventHandler, CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler,
             CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler, 
-            CreatureAppearedEventHandler creatureAppearedEventHandler, 
             CreatureMovedEventHandler creatureMovedEventHandler)
         {
             this.creatureKilledEventHandler = creatureKilledEventHandler;
@@ -25,7 +23,6 @@ namespace NeoServer.Game.Creatures.Events
             this.creaturePropagatedAttackEventHandler = creaturePropagatedAttackEventHandler;
             this.creatureTeleportedEventHandler = creatureTeleportedEventHandler;
             this.playerDisappearedEventHandler = playerDisappearedEventHandler;
-            this.creatureAppearedEventHandler = creatureAppearedEventHandler;
             this.creatureMovedEventHandler = creatureMovedEventHandler;
         }
 
@@ -45,12 +42,8 @@ namespace NeoServer.Game.Creatures.Events
             if (creature is IPlayer player)
             {
                 player.OnLoggedOut += playerDisappearedEventHandler.Execute;
-                player.OnLoggedIn += creatureAppearedEventHandler.Execute;
             }
-            if (creature is IMonster monster)
-            {
-                monster.OnWasBorn += (monster, location) => creatureAppearedEventHandler.Execute(monster);
-            }
+         
         }
 
         public void Unsubscribe(ICreature creature)
@@ -70,11 +63,6 @@ namespace NeoServer.Game.Creatures.Events
             if (creature is IPlayer player)
             {
                 player.OnLoggedOut -= playerDisappearedEventHandler.Execute;
-                player.OnLoggedIn -= creatureAppearedEventHandler.Execute;
-            }
-            if (creature is IMonster monster)
-            {
-                monster.OnWasBorn -= (monster, location) => creatureAppearedEventHandler.Execute(monster);
             }
         }
     }

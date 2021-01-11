@@ -17,7 +17,7 @@ namespace NeoServer.Data.Seeds
                 new PlayerModel
                 {
                     PlayerId = 1,
-                    PlayerType = 1,
+                    PlayerType = 2,
                     AccountId = 1,
                     Name = "GOD",
                     ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,

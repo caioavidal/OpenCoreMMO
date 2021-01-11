@@ -7,11 +7,6 @@ using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Scripts.Players.Loaders
 {
@@ -19,7 +14,8 @@ namespace NeoServer.Scripts.Players.Loaders
     {
         private CreaturePathAccess _creaturePathAccess;
         private readonly ICreatureFactory creatureFactory;
-        public TutorLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory) : base(creaturePathAccess, itemFactory, creatureFactory)
+        public TutorLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory
+          ) : base(creaturePathAccess, itemFactory, creatureFactory)
         {
             _creaturePathAccess = creaturePathAccess;
             this.creatureFactory = creatureFactory;
@@ -42,7 +38,9 @@ namespace NeoServer.Scripts.Players.Loaders
                _creaturePathAccess
                 );
 
-            return creatureFactory.CreatePlayer(newPlayer);
+            var tutor = creatureFactory.CreatePlayer(newPlayer);
+
+            return tutor;
         }
     }
 }

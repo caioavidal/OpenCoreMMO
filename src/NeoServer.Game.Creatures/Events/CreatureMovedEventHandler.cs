@@ -8,13 +8,6 @@ namespace NeoServer.Game.Creatures.Events
 {
     public class CreatureMovedEventHandler : IGameEventHandler
     {
-        private readonly IMap map;
-
-        public CreatureMovedEventHandler(IMap map)
-        {
-            this.map = map;
-        }
-
         public void Execute(ICreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators)
         {
             foreach (var cylinderSpectator in spectators) 
