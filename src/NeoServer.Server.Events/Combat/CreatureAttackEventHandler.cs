@@ -1,7 +1,6 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Parsers.Effects;

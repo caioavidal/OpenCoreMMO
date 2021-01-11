@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NeoServer.Data.Seeds;
 using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Data.Configurations
@@ -31,7 +32,8 @@ namespace NeoServer.Data.Configurations
                 .HasColumnName("account_id")
                 .HasColumnType("int(11)")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
+            entity.Property(e => e.PlayerType)
+              .HasColumnName("player_type");
             entity.Property(e => e.Capacity)
                 .HasColumnName("cap")
                 .HasColumnType("int(11)")
@@ -209,48 +211,10 @@ namespace NeoServer.Data.Configurations
                 .HasForeignKey(d => d.AccountId)
                 .HasConstraintName("players_ibfk_1");
 
-            Seed(entity);
+            PlayerModelSeed.Seed(entity);
         }
 
 
-        public void Seed(EntityTypeBuilder<PlayerModel> builder)
-        {
-            builder.HasData
-                (
-                new PlayerModel
-                {
-                    PlayerId = 1,
-                    AccountId = 1,
-                    Name = "GOD",
-                    ChaseMode = NeoServer.Game.Common.Players.ChaseMode.Follow,
-                    Capacity = 90000,
-                    Level = 800,
-                    Health = ushort.MaxValue,
-                    MaxHealth = ushort.MaxValue,
-                    Vocation = NeoServer.Game.Common.Players.VocationType.Knight,
-                    Gender = NeoServer.Game.Common.Players.Gender.Male,
-                    Speed = 800,
-                    Online = false,
-                    Mana = 1750,
-                    MaxMana = 1750,
-                    Soul = 100,
-                    MaxSoul = 100,
-                    PosX = 1020,
-                    PosY = 1022,
-                    PosZ = 7,
-                    StaminaMinutes = 2520,
-                    LookType = 75,
-                    SkillAxe = 10,
-                    SkillSword = 40,
-                    SkillClub = 10,
-                    SkillDist = 30,
-                    SkillFishing = 10,
-                    SkillFist = 10,
-                    MagicLevel = 100,
-                    Experience = 8469559800,
-                    FightMode = Game.Common.Players.FightMode.Attack
-                }
-              );
-        }
+     
     }
 }

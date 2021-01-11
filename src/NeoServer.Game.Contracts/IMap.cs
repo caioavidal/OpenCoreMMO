@@ -47,5 +47,6 @@ namespace NeoServer.Game.Contracts
         void SwapCreatureBetweenSectors(ICreature creature, Location fromLocation, Location toLocation);
         HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayers = false);
         HashSet<ICreature> GetSpectators(Location fromLocation, bool onlyPlayers = false);
+        IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false);
     }
 }

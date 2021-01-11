@@ -1,13 +1,14 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures;
-using NeoServer.Loaders.Players;
+using NeoServer.Loaders.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Tasks;
+using System.Collections.Generic;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
@@ -19,10 +20,10 @@ namespace NeoServer.Server.Handlers.Authentication
         private readonly Game game;
         private CreaturePathAccess _creaturePathAccess;
         private readonly IItemFactory _itemFactory;
-        private readonly PlayerLoader playerLoader;
+        private readonly IEnumerable<IPlayerLoader> playerLoaders;
 
         public PlayerLogInHandler(/*IAccountRepository repository,*/ IAccountRepositoryNeo repositoryNeo,
-         Game game, ServerConfiguration serverConfiguration, CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, PlayerLoader playerLoader)
+         Game game, ServerConfiguration serverConfiguration, CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, IEnumerable<IPlayerLoader> playerLoaders)
         {
             this.repositoryNeo = repositoryNeo;
             // this.repository = repository;
@@ -30,7 +31,7 @@ namespace NeoServer.Server.Handlers.Authentication
             this.serverConfiguration = serverConfiguration;
             _creaturePathAccess = creaturePathAccess;
             _itemFactory = itemFactory;
-            this.playerLoader = playerLoader;
+            this.playerLoaders = playerLoaders;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -59,7 +60,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection, playerLoader).Execute));
+            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection, playerLoaders).Execute));
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)

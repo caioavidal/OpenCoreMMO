@@ -3,7 +3,6 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using System;
 using System.Collections.Generic;
@@ -148,13 +147,13 @@ namespace NeoServer.Game.Items
             return FloorChangeDirection.None;
         }
 
-        public VocationType[] GetRequiredVocations()
+        public byte[] GetRequiredVocations()
         {
             if (_defaultAttributes is null) return default;
 
             if (_defaultAttributes.TryGetValue(ItemAttribute.Vocation, out var value))
             {
-                return (VocationType[])value.Item1;
+                return (byte[])value.Item1;
             }
 
             return default;

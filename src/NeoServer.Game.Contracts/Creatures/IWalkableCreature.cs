@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -12,7 +13,8 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void ChangeSpeed(IWalkableCreature creature, ushort speed);
     public delegate bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
     public delegate void TeleportTo(IWalkableCreature creature, Location location);
-
+    public delegate void Moved(IWalkableCreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators);
+    
     public interface IWalkableCreature: ICreature
     {
         uint EventWalk { get; set; }
@@ -34,11 +36,12 @@ namespace NeoServer.Game.Contracts.Creatures
         event ChangeSpeed OnChangedSpeed;
         event StopWalk OnCompleteWalking;
         event TeleportTo OnTeleported;
+        event Moved OnCreatureMoved;
 
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);
         void IncreaseSpeed(ushort speed);
-        void OnMoved(IDynamicTile fromTile, IDynamicTile toTile);
+        void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators);
         void Follow(ICreature creature);
         void StopFollowing();
         void StopWalking();

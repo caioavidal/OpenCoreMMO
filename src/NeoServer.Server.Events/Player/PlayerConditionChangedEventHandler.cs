@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Common.Parsers;
+﻿using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 

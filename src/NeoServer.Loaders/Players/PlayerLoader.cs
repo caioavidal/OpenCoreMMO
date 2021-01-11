@@ -9,6 +9,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -17,11 +18,13 @@ using System.Linq;
 
 namespace NeoServer.Loaders.Players
 {
-    public class PlayerLoader
+    public class PlayerLoader: IPlayerLoader
     {
         private CreaturePathAccess _creaturePathAccess;
         private IItemFactory itemFactory;
         private readonly ICreatureFactory creatureFactory;
+
+        public virtual bool IsApplicable(PlayerModel player) => player.PlayerType == 1;
 
         public PlayerLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory)
         {
@@ -29,7 +32,7 @@ namespace NeoServer.Loaders.Players
             this.itemFactory = itemFactory;
             this.creatureFactory = creatureFactory;
         }
-        public IPlayer Load(PlayerModel player)
+        public virtual IPlayer Load(PlayerModel player)
         {
             if (!VocationStore.TryGetValue(player.Vocation, out var vocation))
             {
@@ -63,11 +66,11 @@ namespace NeoServer.Loaders.Players
             return creatureFactory.CreatePlayer(newPlayer);
         }
 
-        private Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
+        protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
         {
             VocationStore.TryGetValue(playerRecord.Vocation, out var vocation);
 
-            Func<SkillType, float> skillRate = (skill) => vocation.Skill.ContainsKey((byte)skill) ? vocation.Skill[(byte)skill] : 1;
+            Func<SkillType, float> skillRate = (skill) => vocation.Skill?.ContainsKey((byte)skill) ?? false ? vocation.Skill[(byte)skill] : 1;
 
             var skills = new Dictionary<SkillType, ISkill>();
 
@@ -86,7 +89,7 @@ namespace NeoServer.Loaders.Players
         }
 
 
-        private IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel playerRecord)
+        protected IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel playerRecord)
         {
             var inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             var attrs = new Dictionary<ItemAttribute, IConvertible>() { { ItemAttribute.Count, 0 } };

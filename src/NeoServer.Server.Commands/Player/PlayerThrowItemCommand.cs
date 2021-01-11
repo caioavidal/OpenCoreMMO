@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Commands.Movement.ToInventory;
 using NeoServer.Server.Model.Players.Contracts;

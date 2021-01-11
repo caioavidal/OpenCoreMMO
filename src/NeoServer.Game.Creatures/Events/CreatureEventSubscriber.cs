@@ -11,17 +11,19 @@ namespace NeoServer.Game.Creatures.Events
         private readonly CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler;
         private readonly CreatureTeleportedEventHandler creatureTeleportedEventHandler;
         private readonly PlayerDisappearedEventHandler playerDisappearedEventHandler;
-
+        private readonly CreatureMovedEventHandler creatureMovedEventHandler;
 
         public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureDamagedEventHandler creatureDamagedEventHandler, CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler,
-            CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler)
+            CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler, 
+            CreatureMovedEventHandler creatureMovedEventHandler)
         {
             this.creatureKilledEventHandler = creatureKilledEventHandler;
             this.creatureDamagedEventHandler = creatureDamagedEventHandler;
             this.creaturePropagatedAttackEventHandler = creaturePropagatedAttackEventHandler;
             this.creatureTeleportedEventHandler = creatureTeleportedEventHandler;
             this.playerDisappearedEventHandler = playerDisappearedEventHandler;
+            this.creatureMovedEventHandler = creatureMovedEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -32,14 +34,16 @@ namespace NeoServer.Game.Creatures.Events
                 combatActor.OnDamaged += creatureDamagedEventHandler.Execute;
                 combatActor.OnPropagateAttack += creaturePropagatedAttackEventHandler.Execute;
             }
-            if(creature is IWalkableCreature walkableCreature)
+            if (creature is IWalkableCreature walkableCreature)
             {
                 walkableCreature.OnTeleported += creatureTeleportedEventHandler.Execute;
+                walkableCreature.OnCreatureMoved += creatureMovedEventHandler.Execute;
             }
-            if(creature is IPlayer player)
+            if (creature is IPlayer player)
             {
                 player.OnLoggedOut += playerDisappearedEventHandler.Execute;
             }
+         
         }
 
         public void Unsubscribe(ICreature creature)
@@ -53,6 +57,8 @@ namespace NeoServer.Game.Creatures.Events
             if (creature is IWalkableCreature walkableCreature)
             {
                 walkableCreature.OnTeleported -= creatureTeleportedEventHandler.Execute;
+                walkableCreature.OnCreatureMoved -= creatureMovedEventHandler.Execute;
+
             }
             if (creature is IPlayer player)
             {

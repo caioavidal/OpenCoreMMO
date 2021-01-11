@@ -32,7 +32,7 @@ namespace NeoServer.Server.Model.Players
 {
     public class Player : CombatActor, IPlayer
     {
-        public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, VocationType vocation,
+        public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, byte vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location, IPathAccess pathAccess)
@@ -109,7 +109,7 @@ namespace NeoServer.Server.Model.Players
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
         public ushort Level => Skills[SkillType.Level].Level;
-        public VocationType VocationType { get; private set; }
+        public byte VocationType { get; private set; }
         public Gender Gender { get; private set; }
         public bool Online { get; private set; }
         public ushort Mana { get; private set; }
@@ -246,14 +246,19 @@ namespace NeoServer.Server.Model.Players
 
         public void ChangeOutfit(IOutfit outfit) => Outfit = outfit;
 
-        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
+        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator [] spectators)
         {
             TogglePacifiedCondition(fromTile, toTile);
             Containers.CloseDistantContainers();
-            base.OnMoved(fromTile, toTile);
+            base.OnMoved(fromTile, toTile, spectators);
         }
 
-        public override void SetAsInFight()
+        public override void SetAsEnemy(ICreature creature)
+        {
+            if (creature is not IMonster) return;
+            SetAsInFight();
+        }
+        public void SetAsInFight()
         {
             if (IsPacified) return;
 
@@ -263,8 +268,6 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
             AddCondition(new Condition(ConditionType.InFight, 60000));
-
-            base.SetAsInFight();
         }
 
         private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)

@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Vocations
@@ -27,7 +25,7 @@ namespace NeoServer.Game.Creatures.Vocations
         public string FromVoc { get; set; }
         public IVocationFormula Formula { get; set; }
         public Dictionary<byte, float> Skill { get; set; }
-        public VocationType VocationType => VocationTypeParser.Parse(Name);
+        public byte VocationType => byte.Parse(Id);
     }
 
 }

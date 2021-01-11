@@ -40,6 +40,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public abstract ushort MinimumAttackPower { get; }
         public abstract bool UsingDistanceWeapon { get; }
         public uint AttackEvent { get; set; }
+        public virtual bool CanBeAttacked => true;
         #endregion
 
         private byte blockCount = 0;
@@ -223,9 +224,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
+            if (!CanBeAttacked) return false;
             if (IsDead) return false;
 
-            SetAsInFight();
+            SetAsEnemy(enemy);
             damage = ReduceDamage(damage);
             if (damage.Damage <= 0)
             {
@@ -248,6 +250,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-        public virtual void SetAsInFight() { }
+        public abstract void SetAsEnemy(ICreature actor);
     }
 }

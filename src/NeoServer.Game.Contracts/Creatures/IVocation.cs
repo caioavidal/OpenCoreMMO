@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Common.Players;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -24,7 +23,7 @@ namespace NeoServer.Game.Contracts.Creatures
         string Name { get; set; }
         public Dictionary<byte, float> Skill { get; set; }
         byte SoulMax { get; set; }
-        VocationType VocationType { get; }
+        byte VocationType { get; }
     }
 
 }

@@ -7,6 +7,7 @@ using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
+using System.Linq;
 
 namespace NeoServer.Game.Combat.Spells
 {
@@ -16,7 +17,8 @@ namespace NeoServer.Game.Combat.Spells
         public abstract EffectT Effect { get; }
         public abstract uint Duration { get; }
         public virtual ushort Mana { get; set; }
-        public ushort MinLevel { get; set; }
+        public virtual ushort MinLevel { get; set; } = 0;
+        public virtual byte[] Vocations { get; set; }
         public uint Cooldown { get; set; }
 
         public static event InvokeSpell OnSpellInvoked;
@@ -75,6 +77,13 @@ namespace NeoServer.Game.Combat.Spells
                     error = InvalidOperation.NotEnoughLevel;
                     return false;
                 }
+
+                if(!Vocations?.Contains(player.VocationType) ?? false)
+                {
+                    error = InvalidOperation.VocationCannotUseSpell;
+                    return false;
+                }
+
                 if (!player.SpellCooldownHasExpired(this) || !player.CooldownHasExpired(CooldownType.Spell))
                 {
                     error = InvalidOperation.Exhausted;

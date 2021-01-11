@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Monsters;
@@ -20,6 +21,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event StartFollow OnStartedFollowing;
         public event ChangeSpeed OnChangedSpeed;
         public event TeleportTo OnTeleported;
+        public event Moved OnCreatureMoved;
         #endregion
 
         protected IPathAccess PathAccess { get; }
@@ -46,7 +48,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool HasFollowPath { get; private set; }
         public virtual FindPathParams PathSearchParams => new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
 
-        public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
+        public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {
             lastStepCost = 1;
 
@@ -58,6 +60,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 OnCompleteWalking?.Invoke(this);
             }
+            OnCreatureMoved?.Invoke(this, fromTile.Location, toTile.Location, spectators);
         }
         public void TurnTo(Direction direction)
         {

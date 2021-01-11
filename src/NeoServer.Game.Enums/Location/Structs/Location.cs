@@ -40,6 +40,7 @@ namespace NeoServer.Game.Common.Location.Structs
         public byte Z { get; set; }
 
         public bool IsUnderground => Z > 7;
+        public bool IsAboveSurface => Z < 7;
         public bool IsSurface => Z == 7;
 
         public int GetOffSetZ(Location location) => Z - location.Z;

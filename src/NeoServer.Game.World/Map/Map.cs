@@ -14,7 +14,6 @@ using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.World.Map
 {
@@ -88,18 +87,7 @@ namespace NeoServer.Game.World.Map
                 {
                     return false;
                 }
-
-                foreach (var spectator in cylinder.TileSpectators)
-                {
-                    if (spectator.Spectator is IMonster monsterSpectator && creature is IPlayer playerWalking)
-                    {
-                        monsterSpectator.SetAsEnemy(playerWalking);
-                    }
-                    if (spectator.Spectator is IPlayer playerSpectator && creature is IMonster monsterWalking)
-                    {
-                        monsterWalking.SetAsEnemy(playerSpectator);
-                    }
-                }
+                walkableCreature.OnMoved(fromTile, toTile,cylinder.TileSpectators);//todo: needs optimization
                 OnCreatureMoved?.Invoke(walkableCreature, cylinder);
             }
 
@@ -443,17 +431,7 @@ namespace NeoServer.Game.World.Map
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
 
-                if (creature is IPlayer player)
-                {
-                    foreach (var spectator in cylinder.TileSpectators)
-                    {
-                        if (spectator.Spectator is IMonster monster)
-                        {
-                            monster.SetAsEnemy(player);
-                        }
-                    }
-                }
-
+                creature.OnCreatureAppear(tile.Location, cylinder.TileSpectators);
                 if (creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }
         }
@@ -495,15 +473,11 @@ namespace NeoServer.Game.World.Map
         {
             if (creature.TryGetNextStep(out var direction))
             {
-                var fromTile = creature.Tile;
-
                 if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveCreature(creature, toTile.Location))
                 {
                     if (creature is IPlayer player) player.CancelWalk();
                     return;
                 }
-
-                creature.OnMoved(fromTile, toTile);
             }
 
             if (creature.IsRemoved)

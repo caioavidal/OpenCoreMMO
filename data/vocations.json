@@ -490,5 +490,8 @@
             "multiplier": "1.1"
          }
       ]
-   }
+   },
+    { "id": 9, "clientid": "1", "name": "Tutor", "description": "a tutor" },
+	{ "id": 10, "clientid": "1", "name": "Game Master", "description": "a Game Master" },
+	{ "id": 11, "clientid": "1", "name": "GOD", "description": "GOD" }
 ]

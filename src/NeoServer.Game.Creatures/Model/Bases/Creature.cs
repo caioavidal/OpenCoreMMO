@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Enums;
@@ -111,7 +112,7 @@ namespace NeoServer.Game.Creatures.Model
             Outfit.Change(lookType, id, head, body, legs, feet, addon);
             OnChangedOutfit?.Invoke(this, Outfit);
         }
-      
+
         public void DisableTemporaryOutfit()
         {
             Outfit = OldOutfit;
@@ -144,7 +145,7 @@ namespace NeoServer.Game.Creatures.Model
         public void SetAsRemoved() => IsRemoved = true;
         public bool CanSee(Location pos, int viewPortX, int viewPortY)
         {
-            if (Location.IsSurface || Location.IsUnderground)
+            if (Location.IsSurface || Location.IsAboveSurface)
             {
                 if (pos.IsUnderground) return false;
             }
@@ -162,6 +163,18 @@ namespace NeoServer.Game.Creatures.Model
             }
 
             return false;
+        }
+
+        public virtual void OnCreatureAppear(Location location, ICylinderSpectator[] spectators)
+        {
+            foreach (var cylinder in spectators)
+            {
+                var spectator = cylinder.Spectator;
+                if (this == (Creature)spectator) continue;
+
+                if (spectator is ICombatActor actor) actor.SetAsEnemy(this);
+                if (this is ICombatActor a) a.SetAsEnemy(spectator);
+            }
         }
 
         protected void ExecuteNextAction(ICreature creature)
@@ -256,9 +269,7 @@ namespace NeoServer.Game.Creatures.Model
             return this == other;
         }
 
-        public void OnMoved()
-        {
-        }
+        public void OnMoved() { }
 
         public static bool operator ==(Creature creature1, Creature creature2) => creature1.CreatureId == creature2.CreatureId;
         public static bool operator !=(Creature creature1, Creature creature2) => creature1.CreatureId != creature2.CreatureId;

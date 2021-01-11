@@ -18,7 +18,6 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
-using Serilog.Core;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -36,15 +35,18 @@ public class Program
         var cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = cancellationTokenSource.Token;
 
-        var container = Container.CompositionRoot();
+        var logger = Container.RegisterLogger();
+        logger.Information("Welcome to OpenCoreMMO Server!");
 
-        var logger = container.Resolve<Logger>();
+        var serverConfiguration = Container.LoadConfigurations();
+        logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
-        var serverConfiguration = container.Resolve<ServerConfiguration>();
+        logger.Information("Compiling scripts...");
+        ScriptCompiler.Compile(serverConfiguration.Data);
+
+        var container = Container.CompositionRoot();        
         var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
 
-        logger.Information("Welcome to OpenCoreMMO Server!");
-        logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
         logger.Information("Loading database: {db}", databaseConfiguration.active);
 
@@ -53,8 +55,6 @@ public class Program
 
         RSA.LoadPem(serverConfiguration.Data);
 
-        logger.Information("Compiling scripts...");
-        ScriptCompiler.Compile(serverConfiguration.Data);
 
         container.Resolve<ItemTypeLoader>().Load();
 

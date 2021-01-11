@@ -1,6 +1,7 @@
 using NeoServer.Data.Model;
-using NeoServer.Loaders.Players;
+using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Contracts.Network;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Server.Commands
@@ -11,16 +12,16 @@ namespace NeoServer.Server.Commands
         private readonly string characterName;
         private readonly Game game;
         private readonly IConnection connection;
-        private readonly PlayerLoader playerLoader;
-
-        public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection, PlayerLoader playerLoader)
+        private readonly IEnumerable<IPlayerLoader> playerLoaders;
+        
+        public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection, IEnumerable<IPlayerLoader> playerLoader)
         {
             this.account = account;
             this.characterName = characterName;
 
             this.game = game;
             this.connection = connection;
-            this.playerLoader = playerLoader;
+            this.playerLoaders = playerLoader;
         }
 
         public override void Execute()
@@ -35,6 +36,8 @@ namespace NeoServer.Server.Commands
 
             if(!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.PlayerId, out var player))
             {
+                if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader) return;
+
                 player = playerLoader.Load(playerRecord);
             }
 
