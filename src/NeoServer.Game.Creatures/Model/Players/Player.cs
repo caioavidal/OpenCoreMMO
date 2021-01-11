@@ -246,11 +246,11 @@ namespace NeoServer.Server.Model.Players
 
         public void ChangeOutfit(IOutfit outfit) => Outfit = outfit;
 
-        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile)
+        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator [] spectators)
         {
             TogglePacifiedCondition(fromTile, toTile);
             Containers.CloseDistantContainers();
-            base.OnMoved(fromTile, toTile);
+            base.OnMoved(fromTile, toTile, spectators);
         }
 
         public override void SetAsEnemy(ICreature creature)

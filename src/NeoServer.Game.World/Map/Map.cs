@@ -88,7 +88,7 @@ namespace NeoServer.Game.World.Map
                 {
                     return false;
                 }
-                walkableCreature.OnMoved(fromTile, toTile);
+                walkableCreature.OnMoved(fromTile, toTile,cylinder.TileSpectators);//todo: needs optimization
                 OnCreatureMoved?.Invoke(walkableCreature, cylinder);
             }
 
