@@ -31,7 +31,7 @@ namespace NeoServer.Game.Contracts
 
         IList<byte> GetDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground, byte windowSizeX = 18, byte windowSizeY = 14);
         bool ArePlayersAround(Location location);
-        void AddCreature(ICreature creature);
+        void PlaceCreature(ICreature creature);
         ITile GetNextTile(Location fromLocation, Direction direction);
         IList<byte> GetFloorDescription(Items.IThing thing, ushort fromX, ushort fromY, byte currentZ, byte width, byte height, int verticalOffset, ref int skip);
         IEnumerable<ICreature> GetPlayersAtPositionZone(Location location);
@@ -41,9 +41,12 @@ namespace NeoServer.Game.Contracts
         void MoveCreature(IWalkableCreature creature);
         void CreateBloodPool(ILiquid liquid, IDynamicTile tile);
         ITile GetTileDestination(IDynamicTile tile);
-        bool TryMoveCreature(IMoveableThing thing, Location toLocation, byte amount =1);
+        bool TryMoveCreature(ICreature creature, Location toLocation, byte amount =1);
         bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
         void RemoveCreature(ICreature creature);
+        void SwapCreatureBetweenSectors(ICreature creature, Location fromLocation, Location toLocation);
+        HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayers = false);
+        HashSet<ICreature> GetSpectators(Location fromLocation, bool onlyPlayers = false);
         IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false);
     }
 }

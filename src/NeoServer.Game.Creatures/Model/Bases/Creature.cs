@@ -144,11 +144,11 @@ namespace NeoServer.Game.Creatures.Model
         public void SetAsRemoved() => IsRemoved = true;
         public bool CanSee(Location pos, int viewPortX, int viewPortY)
         {
-            if (Location.Z <= 7)
+            if (Location.IsSurface || Location.IsUnderground)
             {
-                if (pos.Z > 7) return false;
+                if (pos.IsUnderground) return false;
             }
-            else if (Location.Z >= 8)
+            else if (Location.IsUnderground)
             {
                 if (Math.Abs(Location.Z - pos.Z) > 2) return false;
             }

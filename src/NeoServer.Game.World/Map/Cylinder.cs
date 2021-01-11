@@ -118,10 +118,14 @@ namespace NeoServer.Game.World.Map
 
         public static ICylinderSpectator[] GetSpectators(IThing thing, ITile tile)
         {
-            
+
 
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
+            return GetSpectatorsStackPositions(thing, tile, spectators);
+        }
 
+        private static ICylinderSpectator[] GetSpectatorsStackPositions(IThing thing, ITile tile, HashSet<ICreature> spectators)
+        {
             var tileSpectators = new ICylinderSpectator[spectators.Count()];
             int index = 0;
 
@@ -139,50 +143,59 @@ namespace NeoServer.Game.World.Map
             return tileSpectators;
         }
 
-        public static Result<OperationResult<ICreature>> MoveCreature(ICreature thing, IDynamicTile fromTile, IDynamicTile toTile, byte amount, out ICylinder cylinder)
+        public static Result<OperationResult<ICreature>> MoveCreature(ICreature creature, IDynamicTile fromTile, IDynamicTile toTile, byte amount, out ICylinder cylinder)
         {
             amount = amount == 0 ? 1 : amount;
 
             cylinder = null;
 
-            if (thing is ICreature && toTile.HasCreature) return new Result<OperationResult<ICreature>>(InvalidOperation.NotPossible);
+            if (creature is ICreature && toTile.HasCreature) return new Result<OperationResult<ICreature>>(InvalidOperation.NotPossible);
 
-            var removeResult = RemoveCreature(thing, out var removeCylinder);
+            var specs = _map.GetSpectators(fromTile.Location, toTile.Location);
+            var spectators = GetSpectatorsStackPositions(creature, fromTile, specs);
+            var result = (fromTile as Tile).RemoveCreature(creature, out var removedCreature);
 
-            if (removeResult.IsSuccess is false) return removeResult;
+            if (result.IsSuccess is false) return result;
 
-            var result = AddCreature(removeCylinder.Thing as ICreature, toTile, out var addCylinder);
+            _map.SwapCreatureBetweenSectors(creature, fromTile.Location, toTile.Location);
 
-            if (result.IsSuccess is false)
-            {
-                cylinder = removeCylinder;
-                return result;
-            }
+            var result2 = (toTile as Tile).AddCreature(creature);
 
-            var spectators = new HashSet<ICylinderSpectator>();
-            foreach (var spec in removeCylinder.TileSpectators)
-            {
-                spectators.Add(spec);
-            }
-            foreach (var spec in addCylinder.TileSpectators)
-            {
-                if (spectators.TryGetValue(spec, out var spectator))
-                {
-                    spectator.ToStackPosition = spec.ToStackPosition;
-                }
-                else
-                {
-                    spectators.Add(spec);
-                }
-            }
 
-            foreach (var operation in removeResult.Value.Operations)
-            {
-                result.Value.Operations?.Add(operation);
-            }
+            cylinder = new Cylinder(creature, fromTile, toTile, Operation.Moved, spectators.ToArray());
+            return result2;
+            //var result = AddCreature(removeCylinder.Thing as ICreature, toTile, out var addCylinder);
 
-            cylinder = new Cylinder(thing, fromTile, toTile, Operation.Moved, spectators.ToArray());
-            return result;
+            //if (result.IsSuccess is false)
+            //{
+            //    cylinder = removeCylinder;
+            //    return result;
+            //}
+
+            //var spectators = new HashSet<ICylinderSpectator>();
+            //foreach (var spec in removeCylinder.TileSpectators)
+            //{
+            //    spectators.Add(spec);
+            //}
+            //foreach (var spec in addCylinder.TileSpectators)
+            //{
+            //    if (spectators.TryGetValue(spec, out var spectator))
+            //    {
+            //        spectator.ToStackPosition = spec.ToStackPosition;
+            //    }
+            //    else
+            //    {
+            //        spectators.Add(spec);
+            //    }
+            //}
+
+            //foreach (var operation in removeResult.Value.Operations)
+            //{
+            //    result.Value.Operations?.Add(operation);
+            //}
+
+            //cylinder = new Cylinder(creature, fromTile, toTile, Operation.Moved, spectators.ToArray());
+            //return result;
         }
     }
     public class CylinderSpectator : IEqualityComparer<ICylinderSpectator>, ICylinderSpectator

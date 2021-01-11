@@ -7,6 +7,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using System.Linq;
 
@@ -123,7 +124,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
            if(!CanSee(tile.Location)) return false;
 
             if (!item.Use(this, tile, out var combat)) return false;
-            OnAttackEnemy?.Invoke(this, null, combat);
+            var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
+            OnAttackEnemy?.Invoke(this, creature, combat);
 
             return true;
         }

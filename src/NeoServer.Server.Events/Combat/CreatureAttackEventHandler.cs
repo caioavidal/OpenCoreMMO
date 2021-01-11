@@ -35,7 +35,7 @@ namespace NeoServer.Server.Events.Combat
                 }
                 else
                 {
-                    if (attack.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
+                    if (attack.ShootType != default && victim?.Location is not null) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(creature.Location, victim.Location, (byte)attack.ShootType));
                 }
                 if (attack.Area?.Any() ?? false)
                 {

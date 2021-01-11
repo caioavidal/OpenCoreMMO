@@ -2,6 +2,8 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using System;
+using System.Threading;
 
 namespace NeoServer.Server.Events
 {
@@ -22,12 +24,14 @@ namespace NeoServer.Server.Events
 
             if (creature.IsInvisible) return;
 
-            foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in map.GetSpectators(creature.Location, onlyPlayers: true))
             {
+                if (!spectator.CanSee(creature.Location)) continue;
+
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
-                
-                if(!game.CreatureManager.TryGetPlayer(spectator.CreatureId, out var player)) continue;
-                
+
+                if (!game.CreatureManager.TryGetPlayer(spectator.CreatureId, out var player)) continue;
+
                 if (!creature.Tile.TryGetStackPositionOfThing(player, creature, out var stackPosition)) continue;
 
                 connection.OutgoingPackets.Enqueue(new TurnToDirectionPacket(creature, direction, stackPosition));
@@ -35,7 +39,6 @@ namespace NeoServer.Server.Events
                 connection.Send();
 
             }
-
         }
     }
 }
