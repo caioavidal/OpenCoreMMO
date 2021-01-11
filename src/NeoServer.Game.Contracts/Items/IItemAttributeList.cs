@@ -3,7 +3,6 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Players;
 using System;
 using System.Collections.Generic;
 

@@ -1,13 +1,8 @@
 ﻿using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.World.Map;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Scripts.Spells.Commands
 {

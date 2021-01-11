@@ -2,7 +2,6 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Loaders.Players;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;

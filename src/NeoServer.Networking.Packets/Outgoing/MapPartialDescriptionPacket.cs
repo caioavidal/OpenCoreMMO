@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Contracts.Network;
-using System;
 using System.Linq;
 
 namespace NeoServer.Networking.Packets.Outgoing

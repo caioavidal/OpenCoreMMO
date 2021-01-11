@@ -2,7 +2,6 @@
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Creatures.Spells;
 
 namespace NeoServer.Game.Contracts.Combat.Defenses
 {

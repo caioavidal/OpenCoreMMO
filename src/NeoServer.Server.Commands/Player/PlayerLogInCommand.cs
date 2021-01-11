@@ -1,8 +1,6 @@
 using NeoServer.Data.Model;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Loaders.Players;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,10 +1,8 @@
 ﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Spells;
-using NeoServer.Game.Common.Creatures.Players;
-using System;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Scripts
 {

@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Vocations

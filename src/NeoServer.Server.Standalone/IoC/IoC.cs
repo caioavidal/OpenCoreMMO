@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using NeoServer.Data;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Providers.InMemoryDB.Extensions;
@@ -23,7 +22,6 @@ using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
-using NeoServer.Loaders.Players;
 using NeoServer.Loaders.Spawns;
 using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;

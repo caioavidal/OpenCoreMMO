@@ -1,14 +1,12 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Combat.Spells;
-using NeoServer.Game.Items;
-using System;
-using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Items;
+using NeoServer.Server.Model.Players.Contracts;
+using System;
 using System.Collections.Generic;
-using NeoServer.Game.Common;
 
 namespace NeoServer.Scripts.Spells.Support
 {

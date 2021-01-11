@@ -2,8 +2,6 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
-using System;
-using System.Threading;
 
 namespace NeoServer.Server.Events
 {

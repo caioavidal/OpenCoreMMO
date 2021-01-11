@@ -2,7 +2,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.World.Map;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;

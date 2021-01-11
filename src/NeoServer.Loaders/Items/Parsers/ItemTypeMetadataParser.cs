@@ -1,5 +1,3 @@
-using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Items;
 using NeoServer.OTB.Parsers;

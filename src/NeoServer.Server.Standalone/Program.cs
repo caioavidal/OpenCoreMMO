@@ -18,7 +18,6 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
-using Serilog.Core;
 using System;
 using System.Diagnostics;
 using System.Threading;

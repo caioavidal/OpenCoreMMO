@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts;

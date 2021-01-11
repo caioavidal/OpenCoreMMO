@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Players;
 using System.Collections.Immutable;
 using System.Text;

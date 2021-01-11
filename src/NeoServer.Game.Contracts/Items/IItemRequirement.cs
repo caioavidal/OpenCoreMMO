@@ -1,6 +1,4 @@
 ﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
 using System.Text;

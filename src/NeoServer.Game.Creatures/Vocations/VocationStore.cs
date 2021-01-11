@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
