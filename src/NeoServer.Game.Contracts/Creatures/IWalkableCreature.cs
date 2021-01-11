@@ -12,7 +12,8 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void ChangeSpeed(IWalkableCreature creature, ushort speed);
     public delegate bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
     public delegate void TeleportTo(IWalkableCreature creature, Location location);
-
+    public delegate void Moved(IWalkableCreature creature, Location fromLocation, Location toLocation);
+    
     public interface IWalkableCreature: ICreature
     {
         uint EventWalk { get; set; }

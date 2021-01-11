@@ -223,7 +223,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             if (IsDead) return false;
 
-            SetAsInFight();
+            SetAsEnemy(enemy);
             damage = ReduceDamage(damage);
             if (damage.Damage <= 0)
             {
@@ -246,6 +246,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-        public virtual void SetAsInFight() { }
+        public abstract void SetAsEnemy(ICreature actor);
     }
 }

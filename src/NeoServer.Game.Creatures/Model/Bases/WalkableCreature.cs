@@ -20,6 +20,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event StartFollow OnStartedFollowing;
         public event ChangeSpeed OnChangedSpeed;
         public event TeleportTo OnTeleported;
+        public event Moved OnCreatureMoved;
         #endregion
 
         protected IPathAccess PathAccess { get; }
@@ -58,6 +59,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 OnCompleteWalking?.Invoke(this);
             }
+            OnCreatureMoved?.Invoke(this, fromTile.Location, toTile.Location);
         }
         public void TurnTo(Direction direction)
         {

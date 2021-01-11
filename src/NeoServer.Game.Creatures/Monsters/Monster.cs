@@ -69,6 +69,14 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
+        public void Born(Location location)
+        {
+            Damages.Clear();
+            ResetHealthPoints();
+            Location = location;
+            State = MonsterState.Sleeping;
+            OnWasBorn?.Invoke(this, location);
+        }
         public void Reborn()
         {
             if (Spawn is null) return;
@@ -133,8 +141,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (AutoAttackTargetId == creature.CreatureId) StopAttack();
         }
 
-        public void SetAsEnemy(ICombatActor creature)
+        public override void SetAsEnemy(ICreature creature)
         {
+            if (creature is not ICombatActor enemy) return;
+            if (creature is Monster monster && !monster.IsSummon) return;
+
             var canSeeInvisible = !creature.IsInvisible || (creature.IsInvisible && CanSeeInvisible);
             var canSee = CanSee(creature.Location, 9, 9) && canSeeInvisible;
 
@@ -147,8 +158,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (State == MonsterState.Sleeping)
                 State = MonsterState.Awake;
 
-            creature.SetAsInFight();
-            AddToTargetList(creature);
+            
+            AddToTargetList(enemy);
         }
 
         public bool IsInCombat => State == MonsterState.InCombat;
@@ -372,7 +383,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             combat = new CombatAttackType();
 
-            TurnTo(Location.DirectionTo(enemy.Location));
 
             if (!Attacks.Any()) return false;
 
@@ -390,6 +400,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 if (!(attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat) ?? false)) continue;
                 attacked = true;
             }
+
+            if(attacked) TurnTo(Location.DirectionTo(enemy.Location));
 
             return attacked;
         }

@@ -36,11 +36,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void MoveAroundEnemy();
         void UpdateLastTargetChance();
 
-        /// <summary>
-        /// Set creature as enemy. If monster can't see creature it will be forgotten
-        /// </summary>
-        /// <param name="creature"></param>
-        void SetAsEnemy(ICombatActor creature);
+      
         void Sleep();
 
         /// <summary>
@@ -53,6 +49,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         void ChangeState();
         void Escape();
+        void Born(Location location);
 
         /// <summary>
         /// Experience that monster can give

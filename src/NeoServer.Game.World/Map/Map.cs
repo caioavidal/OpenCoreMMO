@@ -93,17 +93,6 @@ namespace NeoServer.Game.World.Map
                     return false;
                 }
 
-                foreach (var spectator in cylinder.TileSpectators)
-                {
-                    if (spectator.Spectator is IMonster monsterSpectator && thing is IPlayer playerWalking)
-                    {
-                        monsterSpectator.SetAsEnemy(playerWalking);
-                    }
-                    if (spectator.Spectator is IPlayer playerSpectator && thing is IMonster monsterWalking)
-                    {
-                        monsterWalking.SetAsEnemy(playerSpectator);
-                    }
-                }
                 OnCreatureMoved?.Invoke(creature, cylinder);
             }
 
@@ -463,17 +452,6 @@ namespace NeoServer.Game.World.Map
                 sector.AddCreature(creature);
 
                 if (CylinderOperation.AddCreature(creature, tile, out ICylinder cylinder).IsSuccess is false) return;
-
-                if (creature is IPlayer player)
-                {
-                    foreach (var spectator in cylinder.TileSpectators)
-                    {
-                        if (spectator.Spectator is IMonster monster)
-                        {
-                            monster.SetAsEnemy(player);
-                        }
-                    }
-                }
 
                 if (creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }

@@ -44,5 +44,6 @@ namespace NeoServer.Game.Contracts
         bool TryMoveCreature(IMoveableThing thing, Location toLocation, byte amount =1);
         bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
         void RemoveCreature(ICreature creature);
+        IEnumerable<ICreature> GetCreaturesAtPositionZone(Location location, bool onlyPlayers = false);
     }
 }

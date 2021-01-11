@@ -253,7 +253,12 @@ namespace NeoServer.Server.Model.Players
             base.OnMoved(fromTile, toTile);
         }
 
-        public override void SetAsInFight()
+        public override void SetAsEnemy(ICreature creature)
+        {
+            if (creature is not IMonster) return;
+            SetAsInFight();
+        }
+        public void SetAsInFight()
         {
             if (IsPacified) return;
 
@@ -263,8 +268,6 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
             AddCondition(new Condition(ConditionType.InFight, 60000));
-
-            base.SetAsInFight();
         }
 
         private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)

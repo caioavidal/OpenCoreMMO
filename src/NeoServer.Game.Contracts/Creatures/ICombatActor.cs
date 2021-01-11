@@ -62,8 +62,12 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <returns>Returns true when damage was bigger than 0</returns>
         bool ReceiveAttack(ICombatActor enemy, CombatDamage damage);
         bool Attack(ICreature creature);
-        void SetAsInFight();
         void PropagateAttack(Coordinate[] area, CombatDamage damage);
         bool Attack(ICreature creature, IUseableAttackOnCreature item);
+        /// <summary>
+        /// Set creature as enemy. If monster can't see creature it will be forgotten
+        /// </summary>
+        /// <param name="creature"></param>
+        void SetAsEnemy(ICreature actor);
     }
 }
