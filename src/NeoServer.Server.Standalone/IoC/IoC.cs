@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using NeoServer.Data;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Providers.InMemoryDB.Extensions;
@@ -19,6 +20,7 @@ using NeoServer.Game.Items.Factories;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Spawns;
+using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
 using NeoServer.Loaders.Players;
@@ -39,6 +41,7 @@ using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Tasks;
 using Serilog;
+using Serilog.Core;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections.Generic;
@@ -50,15 +53,21 @@ namespace NeoServer.Server.Standalone.IoC
 {
     public class Container
     {
+        private static ContainerBuilder builder;
+
+        public static ContainerBuilder Builder
+        {
+            get
+            {
+                if (builder is null) builder = new ContainerBuilder();
+                return builder;
+            }
+        }
+
         public static Autofac.IContainer CompositionRoot()
         {
-            var builder = new ContainerBuilder();
-
+            var builder = Builder;
             //server
-
-            builder.RegisterInstance(new LoggerConfiguration()
-                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                .CreateLogger()).SingleInstance();
 
             builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
             builder.RegisterType<PlayerDepotItemRepositoryNeo>().As<IPlayerDepotItemRepositoryNeo>().SingleInstance();
@@ -94,7 +103,6 @@ namespace NeoServer.Server.Standalone.IoC
 
             RegisterIncomingPacketFactory(builder);
             RegisterPlayerFactory(builder);
-            LoadConfigurations(builder);
 
             //world
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
@@ -106,9 +114,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
-            builder.RegisterType<PlayerLoader>().SingleInstance();
+            RegisterPlayerLoaders(builder);
             builder.RegisterType<SpellLoader>().SingleInstance();
-            
+
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
@@ -129,6 +137,15 @@ namespace NeoServer.Server.Standalone.IoC
             RegisterContext<NeoContext>(builder);
 
             return builder.Build();
+        }
+
+        public static Logger RegisterLogger()
+        {
+            var logger = new LoggerConfiguration()
+              .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+              .CreateLogger();
+            Builder.RegisterInstance(logger).SingleInstance();
+            return logger;
         }
 
         private static void RegisterPacketHandlers(ContainerBuilder builder)
@@ -159,6 +176,11 @@ namespace NeoServer.Server.Standalone.IoC
             var types = AppDomain.CurrentDomain.GetAssemblies();
             builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
             builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
+        }
+        private static void RegisterPlayerLoaders(ContainerBuilder builder)
+        {
+            var types = AppDomain.CurrentDomain.GetAssemblies();
+            builder.RegisterAssemblyTypes(types).As<IPlayerLoader>().SingleInstance();
         }
 
         private static void RegisterPlayerFactory(ContainerBuilder builder)
@@ -200,8 +222,9 @@ namespace NeoServer.Server.Standalone.IoC
             });
         }
         private static IConfigurationRoot configuration;
-        static void LoadConfigurations(ContainerBuilder containerBuilder)
+        public static ServerConfiguration LoadConfigurations()
         {
+            
             var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
             var builder = new ConfigurationBuilder()
@@ -222,13 +245,15 @@ namespace NeoServer.Server.Standalone.IoC
             configuration.GetSection("server").Bind(serverConfiguration);
             configuration.GetSection("game").Bind(gameConfiguration);
 
-            containerBuilder.RegisterInstance(serverConfiguration).SingleInstance();
-            containerBuilder.RegisterInstance(gameConfiguration).SingleInstance();
+            Builder.RegisterInstance(serverConfiguration).SingleInstance();
+            Builder.RegisterInstance(gameConfiguration).SingleInstance();
+
+            return serverConfiguration;
         }
 
         private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
         {
-         
+
             DatabaseConfiguration2 config = new(null, DatabaseType.INMEMORY);
             configuration.GetSection("database").Bind(config);
 

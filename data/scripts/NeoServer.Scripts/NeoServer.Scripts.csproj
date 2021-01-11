@@ -13,6 +13,7 @@
     <ProjectReference Include="..\..\..\src\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
     <ProjectReference Include="..\..\..\src\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+    <ProjectReference Include="..\..\..\src\NeoServer.Loaders\NeoServer.Loaders.csproj" />
   </ItemGroup>
 
 </Project>

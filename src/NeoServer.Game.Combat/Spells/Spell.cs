@@ -17,6 +17,7 @@ namespace NeoServer.Game.Combat.Spells
         public abstract uint Duration { get; }
         public virtual ushort Mana { get; set; }
         public ushort MinLevel { get; set; }
+        public byte[] Vocations { get; set; }
         public uint Cooldown { get; set; }
 
         public static event InvokeSpell OnSpellInvoked;
