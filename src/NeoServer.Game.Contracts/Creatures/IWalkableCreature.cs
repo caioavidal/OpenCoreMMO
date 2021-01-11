@@ -35,6 +35,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event ChangeSpeed OnChangedSpeed;
         event StopWalk OnCompleteWalking;
         event TeleportTo OnTeleported;
+        event Moved OnCreatureMoved;
 
         void DecreaseSpeed(ushort speedBoost);
         byte[] GetRaw(IPlayer playerRequesting);

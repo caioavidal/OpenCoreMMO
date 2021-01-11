@@ -88,8 +88,8 @@ namespace NeoServer.Game.World.Map
                 {
                     return false;
                 }
-
-                OnCreatureMoved?.Invoke(creature, cylinder);
+                walkableCreature.OnMoved(fromTile, toTile);
+                OnCreatureMoved?.Invoke(walkableCreature, cylinder);
             }
 
             var tileDestination = GetTileDestination(toTile);
@@ -432,8 +432,6 @@ namespace NeoServer.Game.World.Map
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
                 sector.AddCreature(creature);
 
-                if (CylinderOperation.AddCreature(creature, tile, out ICylinder cylinder).IsSuccess is false) return;
-
                 if (creature is IWalkableCreature walkableCreature) OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
             }
         }
@@ -482,8 +480,6 @@ namespace NeoServer.Game.World.Map
                     if (creature is IPlayer player) player.CancelWalk();
                     return;
                 }
-
-                creature.OnMoved(fromTile, toTile);
             }
 
             if (creature.IsRemoved)
