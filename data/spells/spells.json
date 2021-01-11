@@ -55,5 +55,19 @@
 		"mana": 0,
 		"cooldown":"0",
 		"level":1
+	},{
+		"name":"Up",
+		"words":"/up",
+		"script": "UpDownCommand",
+		"mana": 0,
+		"cooldown":"0",
+		"level":1
+	},{
+		"name":"Up",
+		"words":"/down",
+		"script": "UpDownCommand",
+		"mana": 0,
+		"cooldown":"0",
+		"level":1
 	}
 ]

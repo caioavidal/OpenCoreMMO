@@ -10,20 +10,20 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Scripts.Players.Loaders
 {
-    public class TutorLoader : PlayerLoader, IPlayerLoader
+    public class GodLoader : PlayerLoader, IPlayerLoader
     {
         private CreaturePathAccess _creaturePathAccess;
         private readonly ICreatureFactory creatureFactory;
-        public TutorLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory
+        public GodLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory
           ) : base(creaturePathAccess, itemFactory, creatureFactory)
         {
             _creaturePathAccess = creaturePathAccess;
             this.creatureFactory = creatureFactory;
         }
-        public override bool IsApplicable(PlayerModel player) => player.PlayerType == 2;
+        public override bool IsApplicable(PlayerModel player) => player.PlayerType == 3;
         public override IPlayer Load(PlayerModel player)
         {
-            var newPlayer = new Tutor(
+            var newPlayer = new God(
                 (uint)player.PlayerId,
                 player.Name,
                 4,

@@ -70,7 +70,7 @@ namespace NeoServer.Loaders.Players
         {
             VocationStore.TryGetValue(playerRecord.Vocation, out var vocation);
 
-            Func<SkillType, float> skillRate = (skill) => vocation.Skill.ContainsKey((byte)skill) ? vocation.Skill[(byte)skill] : 1;
+            Func<SkillType, float> skillRate = (skill) => vocation.Skill?.ContainsKey((byte)skill) ?? false ? vocation.Skill[(byte)skill] : 1;
 
             var skills = new Dictionary<SkillType, ISkill>();
 
