@@ -5,7 +5,7 @@ using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Creatures.Events
 {
-    public class CreatureTeleportedEventHandler: IGameEventHandler
+    public class CreatureTeleportedEventHandler : IGameEventHandler
     {
         private readonly IMap map;
 
@@ -16,6 +16,7 @@ namespace NeoServer.Game.Creatures.Events
 
         public void Execute(IWalkableCreature creature, Location location)
         {
+
             if (map[location] is not IDynamicTile tile || tile.FloorDirection != Common.Location.FloorChangeDirection.None)
             {
                 foreach (var neighbour in location.Neighbours)
@@ -26,6 +27,10 @@ namespace NeoServer.Game.Creatures.Events
                         return;
                     }
                 }
+            }
+            else
+            {
+                map.TryMoveCreature(creature, tile.Location); 
             }
         }
     }

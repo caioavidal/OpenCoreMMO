@@ -32,7 +32,7 @@ namespace NeoServer.Server.Events
             MoveCreature(toDirection, creature, cylinder);
         }
 
-        public void MoveCreature(Direction toDirection, IWalkableCreature  creature, ICylinder cylinder)
+        public void MoveCreature(Direction toDirection, IWalkableCreature creature, ICylinder cylinder)
         {
             var fromLocation = cylinder.FromTile.Location;
             var toLocation = cylinder.ToTile.Location;
@@ -57,7 +57,13 @@ namespace NeoServer.Server.Events
 
                 if (spectator.CreatureId == creature.CreatureId) //myself
                 {
+
                     if (fromLocation.Z != toLocation.Z)
+                    {
+                        connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
+                        connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
+                    }
+                    else if (cylinder.IsTeleport)
                     {
                         connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
                         connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
