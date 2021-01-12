@@ -4,14 +4,15 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
+using System;
 
 namespace NeoServer.Server.Events
 {
-    public class CreatureMovedOnFloorEventHandler
+    public class CreatureMovedEventHandler
     {
         private readonly Game game;
 
-        public CreatureMovedOnFloorEventHandler(Game game)
+        public CreatureMovedEventHandler(Game game)
         {
             this.game = game;
         }
@@ -31,7 +32,7 @@ namespace NeoServer.Server.Events
             MoveCreature(toDirection, creature, cylinder);
         }
 
-        private void MoveCreature(Direction toDirection, IWalkableCreature  creature, ICylinder cylinder)
+        public void MoveCreature(Direction toDirection, IWalkableCreature  creature, ICylinder cylinder)
         {
             var fromLocation = cylinder.FromTile.Location;
             var toLocation = cylinder.ToTile.Location;
@@ -49,13 +50,10 @@ namespace NeoServer.Server.Events
             {
                 var spectator = cylinderSpectator.Spectator;
 
-                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection))
-                {
-                    continue;
-                }
-                if(spectator is not IPlayer player) continue;
-                
-                if (!cylinderSpectator.Spectator.CanSee(creature.Location)) continue;
+                if (spectator is not IPlayer player) continue;
+                if (!cylinderSpectator.Spectator.CanSee(creature)) continue;
+
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
 
                 if (spectator.CreatureId == creature.CreatureId) //myself
                 {
@@ -73,7 +71,7 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (spectator.CanSee(creature) && spectator.CanSee(fromLocation) && spectator.CanSee(toLocation))
+                if (spectator.CanSee(creature) && spectator.CanSee(fromLocation) && spectator.CanSee(toLocation)) //spectator can see old and new location
                 {
                     if (fromLocation.Z != toLocation.Z)
                     {
@@ -93,6 +91,7 @@ namespace NeoServer.Server.Events
 
                 if (spectator.CanSee(creature) && spectator.CanSee(fromLocation)) //spectator can see old position but not the new
                 {
+                    Console.WriteLine($"{spectator.Name} can see old but not new {cylinderSpectator.FromStackPosition}");
                     //happens when player leaves spectator's view area
                     connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
                     connection.Send();
@@ -102,6 +101,7 @@ namespace NeoServer.Server.Events
 
                 if (spectator.CanSee(creature) && spectator.CanSee(toLocation)) //spectator can't see old position but the new
                 {
+                    Console.WriteLine($"{spectator.Name} cant see old but new {cylinderSpectator.ToStackPosition}");
                     //happens when player enters spectator's view area
                     connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, cylinderSpectator.ToStackPosition));
                     connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));

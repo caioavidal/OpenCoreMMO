@@ -22,7 +22,7 @@ namespace NeoServer.Server.Events
         {
             map.OnCreatureAddedOnMap += (creature, cylinder) => container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
             map.OnThingRemovedFromTile += container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
-            map.OnCreatureMoved += container.Resolve<CreatureMovedOnFloorEventHandler>().Execute;
+            map.OnCreatureMoved += container.Resolve<CreatureMovedEventHandler>().Execute;
             map.OnThingMovedFailed += container.Resolve<InvalidOperationEventHandler>().Execute;
             map.OnThingAddedToTile += container.Resolve<ThingAddedToTileEventHandler>().Execute;
             map.OnThingUpdatedOnTile += container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;

@@ -333,11 +333,11 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
         {
-            if (topItems.Length > 0)
+            if (topItems?.Length > 0)
             {
                 TopItems = new Stack<IItem>(10);
             }
-            if (items.Length > 0)
+            if (items?.Length > 0)
             {
                 DownItems = new Stack<IItem>(10);
             }
@@ -348,15 +348,21 @@ namespace NeoServer.Game.World.Map.Tiles
                 FloorDirection = ground.Metadata.Attributes.GetFloorChangeDirection();
             }
 
-            foreach (var item in topItems)
+            if (topItems is not null)
             {
-                if (FloorDirection == FloorChangeDirection.None) FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
-                TopItems.Push(item);
+                foreach (var item in topItems)
+                {
+                    if (FloorDirection == FloorChangeDirection.None) FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
+                    TopItems.Push(item);
+                }
             }
 
-            foreach (var item in items)
+            if (items is not null)
             {
-                AddItem(item, null);
+                foreach (var item in items)
+                {
+                    AddItem(item, null);
+                }
             }
         }
 

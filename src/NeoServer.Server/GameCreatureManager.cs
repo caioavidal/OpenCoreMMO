@@ -165,7 +165,7 @@ namespace NeoServer.Server
         /// <param name="playerId"></param>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public bool GetPlayerConnection(uint playerId, out IConnection connection) => playersConnection.TryGetValue(playerId, out connection);
+        public virtual bool GetPlayerConnection(uint playerId, out IConnection connection) => playersConnection.TryGetValue(playerId, out connection);
 
     }
 }

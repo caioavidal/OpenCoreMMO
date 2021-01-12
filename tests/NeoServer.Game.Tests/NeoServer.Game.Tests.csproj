@@ -7,32 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Items\UseableItems\**" />
-    <EmbeddedResource Remove="Items\UseableItems\**" />
-    <None Remove="Items\UseableItems\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="coverlet.msbuild" Version="2.9.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="coverlet.collector" Version="1.3.0">
-      <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
+    <ProjectReference Include="..\..\src\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
     <ProjectReference Include="..\..\src\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\..\src\NeoServer.Game.Enums\NeoServer.Game.Common.csproj" />
     <ProjectReference Include="..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-    <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
+    <ProjectReference Include="..\..\src\NeoServer.Game.Parsers\NeoServer.Game.Effects.csproj" />
+    <ProjectReference Include="..\..\src\NeoServer.Game.World\NeoServer.Game.World.csproj" />
   </ItemGroup>
 
 </Project>

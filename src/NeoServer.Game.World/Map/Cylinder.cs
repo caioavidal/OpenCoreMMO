@@ -137,7 +137,7 @@ namespace NeoServer.Game.World.Map
                     tile.TryGetStackPositionOfThing(player, thing, out stackPosition);
                 }
 
-                tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, stackPosition);
+                tileSpectators[index++] = new CylinderSpectator(spectator, stackPosition, 0xFF);
             }
 
             return tileSpectators;
@@ -161,41 +161,8 @@ namespace NeoServer.Game.World.Map
 
             var result2 = (toTile as Tile).AddCreature(creature);
 
-
             cylinder = new Cylinder(creature, fromTile, toTile, Operation.Moved, spectators.ToArray());
             return result2;
-            //var result = AddCreature(removeCylinder.Thing as ICreature, toTile, out var addCylinder);
-
-            //if (result.IsSuccess is false)
-            //{
-            //    cylinder = removeCylinder;
-            //    return result;
-            //}
-
-            //var spectators = new HashSet<ICylinderSpectator>();
-            //foreach (var spec in removeCylinder.TileSpectators)
-            //{
-            //    spectators.Add(spec);
-            //}
-            //foreach (var spec in addCylinder.TileSpectators)
-            //{
-            //    if (spectators.TryGetValue(spec, out var spectator))
-            //    {
-            //        spectator.ToStackPosition = spec.ToStackPosition;
-            //    }
-            //    else
-            //    {
-            //        spectators.Add(spec);
-            //    }
-            //}
-
-            //foreach (var operation in removeResult.Value.Operations)
-            //{
-            //    result.Value.Operations?.Add(operation);
-            //}
-
-            //cylinder = new Cylinder(creature, fromTile, toTile, Operation.Moved, spectators.ToArray());
-            //return result;
         }
     }
     public class CylinderSpectator : IEqualityComparer<ICylinderSpectator>, ICylinderSpectator
@@ -226,5 +193,8 @@ namespace NeoServer.Game.World.Map
 
     }
 
-    public record Cylinder(IThing Thing, ITile FromTile, ITile ToTile, Operation Operation, ICylinderSpectator[] TileSpectators) : ICylinder;
+    public record Cylinder(IThing Thing, ITile FromTile, ITile ToTile, Operation Operation, ICylinderSpectator[] TileSpectators) : ICylinder
+    {
+        public bool IsTeleport => ToTile.Location.GetMaxSqmDistance(FromTile.Location) > 1;
+    }
 }
