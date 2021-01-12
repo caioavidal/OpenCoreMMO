@@ -200,17 +200,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnHeal?.Invoke(this, increasing);
         }
 
-        public void TurnInvisible()
+        public virtual void TurnInvisible()
         {
             IsInvisible = true;
-            SetTemporaryOutfit(0, 0, 0, 0, 0, 0, 0);
-
             OnChangedVisibility?.Invoke(this);
         }
-        public void TurnVisible()
+        public virtual void TurnVisible()
         {
             IsInvisible = false;
-            DisableTemporaryOutfit();
             OnChangedVisibility?.Invoke(this);
         }
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);

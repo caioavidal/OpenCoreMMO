@@ -17,7 +17,8 @@ namespace NeoServer.Scripts.Players
             base(id, characterName, vocation, gender, online, skills, outfit, inventory, speed, location, pathAccess)
         {
         }
-
+        public override bool CanSeeInvisible => true;
+        public override bool CanBeSeen => false;
         public override void GainExperience(uint exp) { } //tutor do not gain experience
         public override bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
         {
