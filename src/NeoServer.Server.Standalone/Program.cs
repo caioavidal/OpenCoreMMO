@@ -58,6 +58,7 @@ public class Program
 
         container.Resolve<ItemTypeLoader>().Load();
 
+        logger.Information("Loading world...");
         container.Resolve<WorldLoader>().Load();
 
         container.Resolve<SpawnLoader>().Load();

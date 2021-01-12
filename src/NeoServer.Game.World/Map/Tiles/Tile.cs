@@ -23,10 +23,9 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private byte[] cache;
 
-        public Location Location { get; }
         public ushort StepSpeed => Ground.StepSpeed;
 
-        public override ICreature TopCreatureOnStack => Creatures.FirstOrDefault().Value;
+        public override ICreature TopCreatureOnStack => Creatures?.FirstOrDefault().Value;
 
         public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
 
@@ -36,11 +35,11 @@ namespace NeoServer.Game.World.Map.Tiles
         public Stack<IItem> TopItems { get; private set; }
 
         public Stack<IItem> DownItems { get; private set; }
-        public Dictionary<uint, IWalkableCreature> Creatures { get; private set; } = new Dictionary<uint, IWalkableCreature>();
+        public Dictionary<uint, IWalkableCreature> Creatures { get; private set; }
         public bool CannotLogout => HasFlag(TileFlags.NoLogout);
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
-        public bool HasCreature => Creatures.Count > 0;
+        public bool HasCreature => (Creatures?.Count ?? 0) > 0;
         /// <summary>
         /// Get the top item on DownItems's stack
         /// </summary>
@@ -68,27 +67,30 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public ICreature GetTopVisibleCreature(ICreature creature)
         {
-            foreach (var tileCreature in Creatures.Values)
+            if (Creatures is not null)
             {
-                //var tileCreature = Creatures[creatureId];
-                if (creature != null)
+                foreach (var tileCreature in Creatures.Values)
                 {
-                    if (creature.CanSee(tileCreature))
+                    //var tileCreature = Creatures[creatureId];
+                    if (creature != null)
                     {
-                        return tileCreature;
-                    }
-                }
-                else
-                {
-                    var isPlayer = tileCreature is IPlayer;
-
-                    var player = isPlayer ? tileCreature as IPlayer : null;
-
-                    if (!tileCreature.IsInvisible)
-                    {
-                        if (!isPlayer || !player.IsInvisible)
+                        if (creature.CanSee(tileCreature))
                         {
                             return tileCreature;
+                        }
+                    }
+                    else
+                    {
+                        var isPlayer = tileCreature is IPlayer;
+
+                        var player = isPlayer ? tileCreature as IPlayer : null;
+
+                        if (!tileCreature.IsInvisible)
+                        {
+                            if (!isPlayer || !player.IsInvisible)
+                            {
+                                return tileCreature;
+                            }
                         }
                     }
                 }
@@ -171,6 +173,8 @@ namespace NeoServer.Game.World.Map.Tiles
         }
         public override byte GetCreatureStackPositionIndex(IPlayer observer)
         {
+            if (Creatures is null) return 0;
+
             byte stackPosition = 0;
             foreach (var creature in Creatures)
             {
@@ -204,7 +208,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 stackPosition++;
             }
 
-            if (TopItems != null)
+            if (TopItems is not null)
             {
                 stackPosition += (byte)TopItems.Count;
                 if (stackPosition >= 10)
@@ -213,17 +217,20 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
             }
 
-            foreach (var c in Creatures.Values?.Reverse())
+            if (Creatures is not null)
             {
-                if (c == creature)
+                foreach (var c in Creatures.Values?.Reverse())
                 {
-                    return true;
-                }
-                else if (observer.CanSee(creature))
-                {
-                    if (++stackPosition >= 10)
+                    if (c == creature)
                     {
-                        return false;
+                        return true;
+                    }
+                    else if (observer.CanSee(creature))
+                    {
+                        if (++stackPosition >= 10)
+                        {
+                            return false;
+                        }
                     }
                 }
             }
@@ -254,8 +261,10 @@ namespace NeoServer.Game.World.Map.Tiles
         }
         public Result<OperationResult<ICreature>> AddCreature(ICreature creature)
         {
-            if(creature is not IWalkableCreature walkableCreature) return Result<OperationResult<ICreature>>.NotPossible;
+            if (creature is not IWalkableCreature walkableCreature) return Result<OperationResult<ICreature>>.NotPossible;
             if (HasCreature) return Result<OperationResult<ICreature>>.NotPossible;
+
+            Creatures = Creatures ?? new Dictionary<uint, IWalkableCreature>();
 
             Creatures.TryAdd(creature.CreatureId, walkableCreature);
             walkableCreature.Tile = this;
@@ -370,7 +379,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public byte[] GetRaw(IPlayer playerRequesting)
         {
-            if (cache != null && !Creatures.Any())
+            if (cache != null && !(Creatures?.Any() ?? false))
             {
                 return cache;
             }
@@ -388,7 +397,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 countBytes += 2;
             }
 
-            if (TopItems != null)
+            if (TopItems is not null)
             {
                 foreach (var item in TopItems.Reverse()) //todo: remove reverse
                 {
@@ -405,24 +414,27 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
             }
 
-            foreach (var creature in Creatures)
+            if (Creatures is not null)
             {
-                if (!playerRequesting.CanSee(creature.Value)) continue;
-                if (countThings == 9)
+                foreach (var creature in Creatures)
                 {
-                    break;
+                    if (!playerRequesting.CanSee(creature.Value)) continue;
+                    if (countThings == 9)
+                    {
+                        break;
+                    }
+
+                    var raw = creature.Value.GetRaw(playerRequesting);
+                    playerRequesting.AddKnownCreature(creature.Key);
+
+                    raw.CopyTo(stream.Slice(countBytes, raw.Length));
+
+                    countThings++;
+                    countBytes += raw.Length;
                 }
-
-                var raw = creature.Value.GetRaw(playerRequesting);
-                playerRequesting.AddKnownCreature(creature.Key);
-
-                raw.CopyTo(stream.Slice(countBytes, raw.Length));
-
-                countThings++;
-                countBytes += raw.Length;
             }
 
-            if (DownItems != null)
+            if (DownItems is not null)
             {
                 foreach (var item in DownItems)
                 {
@@ -445,11 +457,13 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICreature removedCreature)
         {
+            Creatures = Creatures ?? new Dictionary<uint, IWalkableCreature>();
+
             Creatures.Remove(creature.CreatureId, out var c);
             removedCreature = c;
             SetCacheAsExpired();
 
-            return new (new OperationResult<ICreature>(Operation.Removed, creature));
+            return new(new OperationResult<ICreature>(Operation.Removed, creature));
         }
         public Result<OperationResult<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)
         {

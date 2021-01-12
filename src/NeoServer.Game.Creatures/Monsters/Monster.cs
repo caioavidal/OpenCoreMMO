@@ -146,8 +146,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (creature is Monster monster && !monster.IsSummon) return;
             if (!enemy.CanBeAttacked) return;
 
-            var canSeeInvisible = !creature.IsInvisible || (creature.IsInvisible && CanSeeInvisible);
-            var canSee = CanSee(creature.Location, 9, 7);// && canSeeInvisible;
+            var canSee = CanSee(creature.Location, 9, 7);
 
             if (State == MonsterState.Sleeping)
                 Awake();
