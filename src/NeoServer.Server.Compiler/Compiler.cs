@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Text;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Combat.Spells;
@@ -20,11 +21,11 @@ namespace NeoServer.Server.Compiler
         {
             using (var peStream = new MemoryStream())
             {
-                var result = GenerateCode(sourceCodes).Emit(peStream);
+                var result = GenerateCode(sourceCodes).Emit(peStream: peStream);
 
                 if (!result.Success)
                 {
-                    throw new Exception(string.Join("\n",result.Diagnostics.Select(x => x.GetMessage())));
+                    throw new Exception(string.Join("\n", result.Diagnostics.Select(x => x.GetMessage())));
                 }
 
                 peStream.Seek(0, SeekOrigin.Begin);
@@ -32,7 +33,7 @@ namespace NeoServer.Server.Compiler
                 return peStream.ToArray();
             }
         }
-        public byte[] Compile(params string [] filepaths)
+        public byte[] Compile(params string[] filepaths)
         {
             var sources = filepaths.Select(x => File.ReadAllText(x)).ToArray();
             return CompileSource(sources);
@@ -74,8 +75,9 @@ namespace NeoServer.Server.Compiler
               syntaxTrees,
                 references: references,
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                    optimizationLevel: OptimizationLevel.Release,
-                    assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default));
+                    optimizationLevel: OptimizationLevel.Debug,
+
+                    assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default).WithPlatform(Platform.AnyCpu));
         }
     }
 

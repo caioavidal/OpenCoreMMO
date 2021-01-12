@@ -18,10 +18,13 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(IWalkableCreature creature)
         {
+
             if (creature is IMonster)
             {
+
                 foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
                 {
+
                     if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
 
                     if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out byte stackPostion)) continue;
@@ -35,17 +38,6 @@ namespace NeoServer.Server.Events.Creature
                         connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPostion));
                         connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
                     }
-                }
-            }
-            if (creature is IPlayer)
-            {
-                if (creature.IsInvisible)
-                {
-                    creature.SetTemporaryOutfit(0, 0, 0, 0, 0, 0, 0);
-                }
-                else
-                {
-                    creature.DisableTemporaryOutfit();
                 }
             }
         }

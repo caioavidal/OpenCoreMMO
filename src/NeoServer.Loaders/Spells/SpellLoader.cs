@@ -4,19 +4,23 @@ using NeoServer.Server.Compiler;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace NeoServer.Loaders.Spells
 {
     public class SpellLoader
     {
         private readonly ServerConfiguration serverConfiguration;
-        public SpellLoader(ServerConfiguration serverConfiguration)
+        private readonly Logger logger;
+        public SpellLoader(ServerConfiguration serverConfiguration, Logger logger)
         {
             this.serverConfiguration = serverConfiguration;
+            this.logger = logger;
         }
         public void Load()
         {
@@ -28,9 +32,15 @@ namespace NeoServer.Loaders.Spells
             var jsonString = File.ReadAllText(path);
             var spells = JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString);
 
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => typeof(ISpell).IsAssignableFrom(x));
+
             foreach (var spell in spells)
             {
-                var type = ScriptList.Assemblies.FirstOrDefault(x => x.Key == spell["script"].ToString()).Value;
+                if (spell is null) continue;
+
+                var type = types.FirstOrDefault(x => x.Name == spell["script"].ToString());
+                if (type is null) continue;
+
                 var spellInstance = Activator.CreateInstance(type, true) as ISpell;
 
                 spellInstance.Name = spell["name"].ToString();
@@ -41,6 +51,7 @@ namespace NeoServer.Loaders.Spells
 
                 SpellList.Add(spell["words"].ToString(), spellInstance);
             }
+            logger.Information("{spells} spells loaded", spells.Count);
         }
     }
 }

@@ -148,7 +148,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (!enemy.CanBeAttacked) return;
 
             var canSeeInvisible = !creature.IsInvisible || (creature.IsInvisible && CanSeeInvisible);
-            var canSee = CanSee(creature.Location, 9, 7) && canSeeInvisible;
+            var canSee = CanSee(creature.Location, 9, 7);// && canSeeInvisible;
+
+            if (State == MonsterState.Sleeping)
+                Awake();
 
             if (IsDead || creature.IsRemoved || !canSee)
             {
@@ -156,26 +159,28 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return;
             }
 
-            if (State == MonsterState.Sleeping)
-                State = MonsterState.Awake;
-
-            
             AddToTargetList(enemy);
         }
 
         public bool IsInCombat => State == MonsterState.InCombat;
         public bool IsSleeping => State == MonsterState.Sleeping;
 
+        public void Awake()
+        {
+            State = MonsterState.Awake;
+            Cooldowns.Start(CooldownType.Awaken, 10000);
+        }
+
         public void ChangeState()
         {
             searchTarget();
 
-            if (!Targets.Any())
+            if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken))
             {
                 State = MonsterState.Sleeping;
                 return;
             }
-
+         
             if (Targets.Any() && !CanReachAnyTarget)
             {
                 State = MonsterState.LookingForEnemy;
@@ -241,6 +246,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             foreach (var target in Targets)
             {
                 if (PathAccess.FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
+                {
+                    target.Value.SetAsUnreachable();
+                    continue;
+                }
+
+                if (target.Value.Creature.IsInvisible && !CanSeeInvisible)
                 {
                     target.Value.SetAsUnreachable();
                     continue;

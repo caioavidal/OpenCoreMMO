@@ -7,17 +7,8 @@ namespace NeoServer.Server.Compiler
 {
     internal class Runner
     {
-        public void Execute(byte[] compiledAssembly, params string[] args)
-        {
-            var assemblyLoadContextWeakRef = LoadAndExecute(compiledAssembly);
-        }
-        public IEnumerable<TypeInfo> GetAssemblies(byte[] compiledAssembly)
-        {
-            return LoadAndExecute(compiledAssembly);
-        }
-
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static IEnumerable<TypeInfo> LoadAndExecute(byte[] compiledAssembly)
+        public static IEnumerable<TypeInfo> LoadAndExecute(byte[] compiledAssembly)
         {
             using (var asm = new MemoryStream(compiledAssembly))
             {

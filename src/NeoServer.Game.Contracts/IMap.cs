@@ -40,8 +40,8 @@ namespace NeoServer.Game.Contracts
         void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
         void MoveCreature(IWalkableCreature creature);
         void CreateBloodPool(ILiquid liquid, IDynamicTile tile);
-        ITile GetTileDestination(IDynamicTile tile);
-        bool TryMoveCreature(ICreature creature, Location toLocation, byte amount =1);
+        ITile GetTileDestination(ITile tile);
+        bool TryMoveCreature(ICreature creature, Location toLocation);
         bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
         void RemoveCreature(ICreature creature);
         void SwapCreatureBetweenSectors(ICreature creature, Location fromLocation, Location toLocation);

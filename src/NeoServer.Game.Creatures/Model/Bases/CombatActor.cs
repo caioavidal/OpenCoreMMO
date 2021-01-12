@@ -122,7 +122,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public bool Attack(ITile tile, IUseableAttackOnTile item)
         {
-           if(!CanSee(tile.Location)) return false;
+            if (!CanSee(tile.Location)) return false;
 
             if (!item.Use(this, tile, out var combat)) return false;
             var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
@@ -173,7 +173,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 StopAttack();
                 StopFollowing();
             }
-          
+
             OnTargetChanged?.Invoke(this, oldAttackTarget, target?.CreatureId ?? default);
         }
 
@@ -203,11 +203,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void TurnInvisible()
         {
             IsInvisible = true;
+            SetTemporaryOutfit(0, 0, 0, 0, 0, 0, 0);
+
             OnChangedVisibility?.Invoke(this);
         }
         public void TurnVisible()
         {
             IsInvisible = false;
+            DisableTemporaryOutfit();
             OnChangedVisibility?.Invoke(this);
         }
         public void StartSpellCooldown(ISpell spell) => Cooldowns.Start(spell.Name, (int)spell.Cooldown);

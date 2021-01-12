@@ -16,7 +16,6 @@ namespace NeoServer.Game.Items.Items
         public event AddItem OnItemAdded;
         public event UpdateItem OnItemUpdated;
         public event Move OnContainerMoved;
-        public event SendTo OnSentTo;
 
         public byte SlotsUsed { get; private set; }
         public bool IsFull => SlotsUsed >= Capacity;
@@ -340,6 +339,7 @@ namespace NeoServer.Game.Items.Items
             if (destination is IContainer && destination == this && toPosition is not null && GetContainerAt(toPosition.Value, out var container)) return SendTo(container, thing, amount, fromPosition, null);
 
             return Store.SendTo(destination, thing, amount, fromPosition, toPosition);
+            
         }
 
         public Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)=>Store.ReceiveFrom(source, thing, toPosition);

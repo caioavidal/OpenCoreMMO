@@ -69,5 +69,13 @@
 		"mana": 0,
 		"cooldown":"0",
 		"level":1
+	},
+	,{
+		"name":"Teleport",
+		"words":"/a",
+		"script": "TeleportCommand",
+		"mana": 0,
+		"cooldown":"0",
+		"level":1
 	}
 ]

@@ -3,13 +3,11 @@ using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Game.Contracts
 {
-    public delegate void SendTo(IStore source, IStore destination, byte amount);
     /// <summary>
     /// A contract to represent anything that can store things
     /// </summary>
     public interface IStore
     {
-        public event SendTo OnSentTo;
         /// <summary>
         /// Checks if thing can be added to store
         /// </summary>

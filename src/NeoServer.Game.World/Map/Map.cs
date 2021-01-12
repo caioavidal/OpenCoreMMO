@@ -66,39 +66,48 @@ namespace NeoServer.Game.World.Map
         public ITile this[Location location] => world.TryGetTile(ref location, out ITile tile) ? tile : null;
         public ITile this[ushort x, ushort y, byte z] => this[new Location(x, y, z)];
 
-        public bool TryMoveCreature(ICreature creature, Location toLocation, byte amount = 1)
+        public bool TryMoveCreature(ICreature creature, Location toLocation)
         {
+            if (creature is not IWalkableCreature walkableCreature) return false;
+
             if (this[creature.Location] is not IDynamicTile fromTile)
             {
                 OnThingMovedFailed(creature, InvalidOperation.NotPossible);
                 return false;
             }
 
-            if (this[toLocation] is not IDynamicTile toTile)//immutable tiles cannot be modified
+            ITile tileDestination = GetDestinationTile(toLocation);
+
+            if (tileDestination is not IDynamicTile toTile)//immutable tiles cannot be modified
             {
                 OnThingMovedFailed(creature, InvalidOperation.NotEnoughRoom);
                 return false;
             }
 
-            if (creature is IWalkableCreature walkableCreature)
+
+            var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out ICylinder cylinder);
+            if (result.IsSuccess is false)
             {
-                var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, amount, out ICylinder cylinder);
-                if (result.IsSuccess is false)
-                {
-                    return false;
-                }
-                walkableCreature.OnMoved(fromTile, toTile,cylinder.TileSpectators);//todo: needs optimization
-                OnCreatureMoved?.Invoke(walkableCreature, cylinder);
+                return false;
             }
+            walkableCreature.OnMoved(fromTile, toTile, cylinder.TileSpectators);
+            OnCreatureMoved?.Invoke(walkableCreature, cylinder);
 
-            var tileDestination = GetTileDestination(toTile);
+            return true;
+        }
 
-            if (tileDestination == toTile)
+        private ITile GetDestinationTile(Location toLocation)
+        {
+            var currentTile = this[toLocation];
+            ITile tileDestination = null;
+            do
             {
-                return true;
+                if (tileDestination is not null) currentTile = tileDestination;
+                tileDestination = GetTileDestination(currentTile);
             }
+            while (tileDestination != currentTile);
 
-            return TryMoveCreature(creature, tileDestination.Location);
+            return tileDestination;
         }
 
         public void SwapCreatureBetweenSectors(ICreature creature, Location fromLocation, Location toLocation)
@@ -112,7 +121,7 @@ namespace NeoServer.Game.World.Map
                 newSector.AddCreature(creature);
             }
         }
-      
+
         public bool IsInRange(Location start, Location current, Location target, FindPathParams fpp)
         {
             if (fpp.FullPathSearch)
@@ -170,8 +179,13 @@ namespace NeoServer.Game.World.Map
             return true;
         }
 
-        public ITile GetTileDestination(IDynamicTile tile)
+        public ITile GetTileDestination(ITile tile)
         {
+            if (tile is not IDynamicTile toTile)
+            {
+                return tile;
+            }
+
             Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) => tile is IDynamicTile walkable ? walkable.FloorDirection == direction : false;
 
             var x = tile.Location.X;
@@ -232,7 +246,7 @@ namespace NeoServer.Game.World.Map
 
                 return this[x, y, z] ?? tile;
             }
-            if (tile.FloorDirection != default) //has any floor destination check
+            if (toTile.FloorDirection != default) //has any floor destination check
             {
                 z--;
 
@@ -280,7 +294,7 @@ namespace NeoServer.Game.World.Map
             }
         }
         public HashSet<ICreature> GetSpectators(Location fromLocation, bool onlyPlayers = false) => GetSpectators(fromLocation, fromLocation, onlyPlayer: onlyPlayers);
-        
+
         public HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayer = false)
         {
             if (fromLocation.Z == toLocation.Z)
@@ -426,6 +440,19 @@ namespace NeoServer.Game.World.Map
         {
             if (this[creature.Location] is IDynamicTile tile)
             {
+
+                if (tile.HasCreature)
+                {
+                    foreach (var location in tile.Location.Neighbours)
+                    {
+                        if (this[location] is IDynamicTile t && !t.HasCreature)
+                        {
+                            tile = t;
+                            break;
+                        }
+                    }
+                }
+
                 if (CylinderOperation.AddCreature(creature, tile, out ICylinder cylinder).IsSuccess is false) return;
 
                 var sector = world.GetSector(creature.Location.X, creature.Location.Y);
@@ -441,6 +468,7 @@ namespace NeoServer.Game.World.Map
             {
                 CylinderOperation.RemoveCreature(creature, out var cylinder);
 
+                world.GetSector(tile.Location.X, tile.Location.Y).RemoveCreature(creature);
                 if (creature is IWalkableCreature walkableCreature) OnThingRemovedFromTile?.Invoke(walkableCreature, cylinder);
             }
         }

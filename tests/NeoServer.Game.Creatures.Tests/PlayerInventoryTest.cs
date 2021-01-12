@@ -9,6 +9,7 @@ using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;
+using NeoServer.Game.Tests;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players;
 using System;

@@ -11,7 +11,7 @@ namespace NeoServer.Scripts
 
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 20000;
-        public override ConditionType ConditionType => ConditionType.Haste;
+        public override ConditionType ConditionType => ConditionType.Invisible;
 
         public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {

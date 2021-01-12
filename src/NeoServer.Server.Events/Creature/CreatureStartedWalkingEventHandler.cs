@@ -17,7 +17,7 @@ namespace NeoServer.Server.Events.Creature
             {
                 return;
             }
-
+            
             creature.EventWalk = game.Scheduler.AddEvent(new SchedulerEvent(creature.StepDelayMilliseconds, () => Move(creature)));
         }
         private void Move(IWalkableCreature creature)

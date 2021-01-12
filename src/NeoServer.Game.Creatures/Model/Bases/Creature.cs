@@ -104,6 +104,7 @@ namespace NeoServer.Game.Creatures.Model
         {
             OldOutfit = null;
             Outfit.Change(lookType, id, head, body, legs, feet, addon);
+
             OnChangedOutfit?.Invoke(this, Outfit);
         }
         public void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
@@ -184,35 +185,29 @@ namespace NeoServer.Game.Creatures.Model
         }
         public bool CanSee(Location pos)
         {
-            if (Location.Z <= 7)
+            var viewPortX = 9;
+            var viewPortY = 7;
+
+            if (Location.IsSurface || Location.IsAboveSurface)
             {
-                // we are on ground level or above (7 -> 0)
-                // view is from 7 -> 0
-                if (pos.Z > 7)
-                {
-                    return false;
-                }
+                if (pos.IsUnderground) return false;
             }
-            else if (Location.Z >= 8)
+            else if (Location.IsUnderground)
             {
-                // we are underground (8 -> 15)
-                // view is +/- 2 from the floor we stand on
-                if (Math.Abs(Location.Z - pos.Z) > 2)
-                {
-                    return false;
-                }
+                if (Math.Abs(Location.Z - pos.Z) > 2) return false;
             }
 
             var offsetZ = Location.Z - pos.Z;
 
-            if ((pos.X >= Location.X - 8 + offsetZ) && (pos.X <= Location.X + 9 + offsetZ) &&
-                (pos.Y >= Location.Y - 6 + offsetZ) && (pos.Y <= Location.Y + 7 + offsetZ))
+            if (pos.X >= Location.X - (viewPortX - 1) + offsetZ && pos.X <= Location.X + viewPortX + offsetZ &&
+                pos.Y >= Location.Y - (viewPortY - 1) + offsetZ && pos.Y <= Location.Y + viewPortY + offsetZ)
             {
                 return true;
             }
 
             return false;
         }
+
 
         public byte Skull { get; protected set; } // TODO: implement.
 

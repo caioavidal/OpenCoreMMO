@@ -43,7 +43,7 @@ namespace NeoServer.Server.Events.Combat
                         SendEffect(attack, connection, coordinate.Location);
                     }
                 }
-                else if (!attack.Missed)
+                else if (!attack.Missed && victim is not null)
                 {
                     SendEffect(attack, connection,victim.Location);
                 }

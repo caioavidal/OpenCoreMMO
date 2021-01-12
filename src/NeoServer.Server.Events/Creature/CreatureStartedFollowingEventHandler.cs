@@ -19,9 +19,8 @@ namespace NeoServer.Server.Events.Creature
                 return;
             }
 
-            Follow(creature, following, fpp);
-
-            creature.FollowEvent = game.Scheduler.AddEvent(new SchedulerEvent(1000, () => Follow(creature, following, fpp)));
+            var interval = creature.FirstStep ? 0 : 1000;
+            creature.FollowEvent = game.Scheduler.AddEvent(new SchedulerEvent(interval, () => Follow(creature, following, fpp)));
         }
 
         private void Follow(IWalkableCreature creature, ICreature following, FindPathParams fpp)
