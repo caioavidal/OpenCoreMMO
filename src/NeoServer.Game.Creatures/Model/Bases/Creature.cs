@@ -71,10 +71,9 @@ namespace NeoServer.Game.Creatures.Model
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
         public IThing Corpse { get; set; }
         public virtual BloodType Blood => BloodType.Blood;
-
+        public virtual bool CanBeSeen => true;
         public abstract IOutfit Outfit { get; protected set; }
         public IOutfit OldOutfit { get; private set; }
-
         public Direction Direction { get; protected set; }
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
         public Direction ClientSafeDirection
@@ -124,7 +123,7 @@ namespace NeoServer.Game.Creatures.Model
         public byte LightColor { get; protected set; }
         public uint Flags { get; private set; }
         public bool IsInvisible { get; protected set; } // TODO: implement.
-        public bool CanSeeInvisible { get; } // TODO: implement.
+        public virtual bool CanSeeInvisible { get; } 
 
         public HashSet<uint> Hostiles { get; }
 

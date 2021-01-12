@@ -18,26 +18,22 @@ namespace NeoServer.Server.Events.Creature
         }
         public void Execute(IWalkableCreature creature)
         {
-
-            if (creature is IMonster)
+            foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
             {
+                if (spectator == creature || spectator.CanSee(creature)) continue;//myself
 
-                foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
+                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
+
+                if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out byte stackPostion)) continue;
+
+                if (creature.IsInvisible)
                 {
-
-                    if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
-
-                    if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out byte stackPostion)) continue;
-
-                    if (creature.IsInvisible)
-                    {
-                        connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPostion));
-                    }
-                    else
-                    {
-                        connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPostion));
-                        connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
-                    }
+                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPostion));
+                }
+                else
+                {
+                    connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPostion));
+                    connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
                 }
             }
         }

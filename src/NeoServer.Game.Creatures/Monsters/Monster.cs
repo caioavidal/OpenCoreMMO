@@ -52,7 +52,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public ConcurrentDictionary<ICreature, ushort> Damages;
 
         public void RecordDamage(ICreature enemy, ushort damage) => Damages.AddOrUpdate(enemy, damage, (key, oldValue) => (ushort)(oldValue + damage));
-
+        
         private void GiveExperience()
         {
             var totalDamage = Damages.Sum(x => x.Value);
@@ -96,7 +96,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public byte TargetDistance => (byte)Metadata.Flags[CreatureFlagAttribute.TargetDistance];
         public bool KeepDistance => TargetDistance > 1;
-
         public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
         public ICombatDefense[] Defenses => Metadata.Defenses;
 

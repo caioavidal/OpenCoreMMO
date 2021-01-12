@@ -78,4 +78,12 @@
 		"cooldown":"0",
 		"level":1
 	}
+	,{
+		"name":"Hide",
+		"words":"/hide",
+		"script": "HideCommand",
+		"mana": 0,
+		"cooldown":"0",
+		"level":1
+	}
 ]

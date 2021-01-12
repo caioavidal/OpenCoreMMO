@@ -407,7 +407,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var creature in Creatures)
             {
-                if (creature.Value is IMonster monster && !playerRequesting.CanSee(monster)) continue;
+                if (!playerRequesting.CanSee(creature.Value)) continue;
                 if (countThings == 9)
                 {
                     break;

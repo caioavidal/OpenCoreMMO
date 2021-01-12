@@ -48,6 +48,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IThing Corpse { get; set; }
         IOutfit OldOutfit { get; }
         IDynamicTile Tile { get; set; }
+        bool CanBeSeen { get; }
 
         event RemoveCreature OnCreatureRemoved;
         event GainExperience OnGainedExperience;

@@ -252,7 +252,20 @@ namespace NeoServer.Server.Model.Players
             Containers.CloseDistantContainers();
             base.OnMoved(fromTile, toTile, spectators);
         }
-
+        public override bool CanSee(ICreature otherCreature)
+        {
+            return !otherCreature.IsInvisible || (otherCreature is IPlayer && otherCreature.CanBeSeen) || (CanSeeInvisible);
+        }
+        public override void TurnInvisible()
+        {
+            SetTemporaryOutfit(0, 0, 0, 0, 0, 0, 0);
+            base.TurnInvisible();
+        }
+        public override void TurnVisible()
+        {
+            DisableTemporaryOutfit();
+            base.TurnVisible();
+        }
         public override void SetAsEnemy(ICreature creature)
         {
             if (creature is not IMonster) return;
