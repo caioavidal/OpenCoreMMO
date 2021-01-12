@@ -6,7 +6,6 @@ namespace NeoServer.Game.Contracts.Bases
 {
     public abstract class Store : IStore
     {
-        public event SendTo OnSentTo;
 
         public abstract Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null);
         public abstract Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
@@ -50,11 +49,13 @@ namespace NeoServer.Game.Contracts.Bases
 
             var result = destination.ReceiveFrom(this, removedThing, toPosition);
 
-            if (result.IsSuccess) OnSentTo?.Invoke(this, destination, amount);
+            if (result.IsSuccess && thing is IMoveableThing moveableThing) moveableThing.OnMoved();
 
             if (amount - possibleAmountToAdd > 0)
+            {
                 return SendTo(destination, thing, (byte)(amount - possibleAmountToAdd), fromPosition, toPosition);
-
+             
+            }
 
             return result;
         }
