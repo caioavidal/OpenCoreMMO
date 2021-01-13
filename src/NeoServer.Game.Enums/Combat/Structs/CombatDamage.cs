@@ -11,7 +11,13 @@ namespace NeoServer.Game.Common.Combat.Structs
             Type = type;
             Effect = EffectT.None;
         }
-     
+        public CombatDamage(ushort damage, DamageType type, EffectT effect)
+        {
+            Damage = damage;
+            Type = type;
+            Effect = effect;
+        }
+
         /// <summary>
         /// Check if damage is elemental
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;

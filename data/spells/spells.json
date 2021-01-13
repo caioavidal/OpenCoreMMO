@@ -43,7 +43,6 @@
 		"name":"Create Item",
 		"words":"/i",
 		"script": "ItemCreator",
-		"vocations": [8],
 		"mana": 0,
 		"cooldown":"0",
 		"level":1
@@ -63,7 +62,7 @@
 		"cooldown":"0",
 		"level":1
 	},{
-		"name":"Up",
+		"name":"Down",
 		"words":"/down",
 		"script": "UpDownCommand",
 		"mana": 0,

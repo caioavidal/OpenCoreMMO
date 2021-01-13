@@ -17,6 +17,11 @@ namespace NeoServer.Game.Creatures.Events
                 if (spectator is ICombatActor actor) actor.SetAsEnemy(creature);
                 if (creature is ICombatActor a) a.SetAsEnemy(spectator);
             }
+
+            if(creature is ICombatActor combatActor)
+            {
+                combatActor.Tile.MagicField?.CauseDamage(combatActor);
+            }
         }
     }
 }

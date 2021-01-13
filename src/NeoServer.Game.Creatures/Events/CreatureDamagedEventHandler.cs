@@ -16,7 +16,7 @@ namespace NeoServer.Game.Creatures.Events
             this.map = map;
             this.liquidPoolFactory = liquidPoolFactory;
         }
-        public void Execute(ICreature enemy, ICreature victim, CombatDamage damage)
+        public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
         { 
             CreateBlood(victim, damage);
         }

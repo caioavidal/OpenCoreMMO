@@ -71,6 +71,7 @@ namespace NeoServer.Game.Items
 
             if (_defaultAttributes.TryGetValue(attribute, out var value))
             {
+                if (value.Item1 is not Array) return default;
                 return value.Item1;
             }
 
@@ -82,6 +83,7 @@ namespace NeoServer.Game.Items
 
             if (_customAttributes.TryGetValue(attribute, out var value))
             {
+                if (value.Item1 is not Array) return default;
                 return value.Item1;
             }
 

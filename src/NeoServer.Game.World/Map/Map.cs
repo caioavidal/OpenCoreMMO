@@ -472,6 +472,7 @@ namespace NeoServer.Game.World.Map
                 if (creature is IWalkableCreature walkableCreature) OnThingRemovedFromTile?.Invoke(walkableCreature, cylinder);
             }
         }
+
         public bool ArePlayersAround(Location location)
         {
             foreach (var player in GetPlayersAtPositionZone(location))

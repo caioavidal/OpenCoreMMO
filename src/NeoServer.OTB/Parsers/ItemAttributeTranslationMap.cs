@@ -140,7 +140,8 @@ namespace NeoServer.OTB.Parsers
                 case "formula": return ItemAttribute.Formula;
                 case "damage": return ItemAttribute.Damage;
                 case "area": return ItemAttribute.Area;
-
+                case "ticks": return ItemAttribute.Ticks;
+                case "count": return ItemAttribute.Count;
                 default:
                     success = false;
                     return ItemAttribute.None; // Just return the first

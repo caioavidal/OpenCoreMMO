@@ -31,6 +31,7 @@ namespace NeoServer.Game.Common.Parsers
                 "physical" => DamageType.Physical,
                 "energy" => DamageType.Energy,
                 "fire" => DamageType.Fire,
+                "firefield" => DamageType.FireField,
                 "manadrain" => DamageType.ManaDrain,
                 "firearea" => DamageType.Fire,
                 "poison" => DamageType.Earth,

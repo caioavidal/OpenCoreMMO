@@ -2328,11 +2328,11 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "damage",
-                   "value": "20"
+                   "value": [20,10]
                 },
                 {
                    "key": "ticks",
@@ -2341,10 +2341,6 @@
                 {
                    "key": "count",
                    "value": "7"
-                },
-                {
-                   "key": "damage",
-                   "value": "10"
                 }
              ]
           }
@@ -2369,7 +2365,7 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "ticks",
@@ -2406,7 +2402,7 @@
           },
           {
              "key": "field",
-             "value": "fire"
+             "value": "firefield"
           }
        ]
     },
@@ -2436,12 +2432,8 @@
                    "value": "5000"
                 },
                 {
-                   "key": "start",
-                   "value": "5"
-                },
-                {
                    "key": "damage",
-                   "value": "100"
+                   "value": [5,1]
                 }
              ]
           }
@@ -2470,15 +2462,11 @@
              "attributes": [
                 {
                    "key": "damage",
-                   "value": "30"
+                   "value": [30,25]
                 },
                 {
                    "key": "ticks",
                    "value": "10000"
-                },
-                {
-                   "key": "damage",
-                   "value": "25"
                 }
              ]
           }
@@ -2499,11 +2487,11 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "damage",
-                   "value": "20"
+                   "value": [20,10]
                 },
                 {
                    "key": "ticks",
@@ -2512,10 +2500,6 @@
                 {
                    "key": "count",
                    "value": "7"
-                },
-                {
-                   "key": "damage",
-                   "value": "10"
                 }
              ]
           }
@@ -2536,7 +2520,7 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "ticks",
@@ -2569,7 +2553,7 @@
           },
           {
              "key": "field",
-             "value": "fire"
+             "value": "firefield"
           }
        ]
     },
@@ -2709,7 +2693,7 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "damage",
@@ -2750,7 +2734,7 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "ticks",
@@ -2787,7 +2771,7 @@
           },
           {
              "key": "field",
-             "value": "fire"
+             "value": "firefield"
           }
        ]
     },
@@ -73408,7 +73392,7 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "damage",
@@ -73445,7 +73429,7 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "damage",
@@ -73482,7 +73466,7 @@
           },
           {
              "key": "field",
-             "value": "fire",
+             "value": "firefield",
              "attributes": [
                 {
                    "key": "damage",
