@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
@@ -22,7 +23,7 @@ namespace NeoServer.Scripts.Players
         public override bool CanBeAttacked => false;
         public override void GainExperience(uint exp) { } //tutor do not gain experience
       
-        public override void OnDamage(ICombatActor enemy, CombatDamage damage) { }
+        public override void OnDamage(IThing enemy, CombatDamage damage) { }
         public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators) { }
         public override void OnCreatureAppear(Location location, ICylinderSpectator[] spectators) { }
     }

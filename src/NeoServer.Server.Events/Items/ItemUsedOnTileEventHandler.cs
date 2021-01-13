@@ -24,6 +24,7 @@ namespace NeoServer.Server.Events
                 }
 
                 if (item.Metadata.ShootType != default) connection.OutgoingPackets.Enqueue(new DistanceEffectPacket(usedBy.Location, onTile.Location, (byte)item.Metadata.ShootType));
+                connection.Send();
             }
         }
     }

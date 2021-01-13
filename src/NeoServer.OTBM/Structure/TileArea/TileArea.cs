@@ -21,7 +21,7 @@ namespace NeoServer.OTBM.Structure
 
             var tileArea = this;
 
-            var tileNodes = node.Children.AsParallel().Select<OTBNode, TileNode>(child =>
+            var tileNodes = node.Children.Select(child =>
              {
                  if (child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
                  {

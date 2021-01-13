@@ -16,6 +16,7 @@ namespace NeoServer.Game.Contracts.Items
         string GetAttribute(ItemAttribute attribute);
         T GetAttribute<T>(ItemAttribute attribute) where T : struct;
         dynamic[] GetAttributeArray(string attribute);
+        dynamic[] GetAttributeArray(ItemAttribute attribute);
         EffectT GetEffect();
         FloorChangeDirection GetFloorChangeDirection();
         IItemAttributeList GetInnerAttributes(ItemAttribute attribute);

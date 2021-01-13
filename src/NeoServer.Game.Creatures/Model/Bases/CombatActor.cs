@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Contracts.World;
@@ -213,21 +214,22 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool SpellCooldownHasExpired(ISpell spell) => Cooldowns.Expired(spell.Name);
         public bool CooldownHasExpired(CooldownType type) => Cooldowns.Expired(type);
 
-        public abstract void OnDamage(ICombatActor enemy, CombatDamage damage);
+        public abstract void OnDamage(IThing enemy, CombatDamage damage);
 
-        private void OnDamage(ICombatActor enemy, ICombatActor actor, CombatDamage damage)
+        private void OnDamage(IThing enemy, ICombatActor actor, CombatDamage damage)
         {
             OnDamage(enemy, damage);
             OnDamaged?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath();
         }
-
-        public virtual bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
+     
+        public virtual bool ReceiveAttack(IThing enemy, CombatDamage damage)
         {
             if (!CanBeAttacked) return false;
             if (IsDead) return false;
 
-            SetAsEnemy(enemy);
+            if(this is ICreature c) SetAsEnemy(c);
+
             damage = ReduceDamage(damage);
             if (damage.Damage <= 0)
             {

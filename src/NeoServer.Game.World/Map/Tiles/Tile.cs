@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common;
+﻿using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
@@ -61,6 +62,8 @@ namespace NeoServer.Game.World.Map.Tiles
                         return magicField;
                     }
                 }
+
+                RemoveFlag(TileFlags.MagicField);
                 return null;
             }
         }
@@ -329,6 +332,8 @@ namespace NeoServer.Game.World.Map.Tiles
                         operations.Add(Operation.Added, item);
 
                     }
+
+                    if (item.Metadata.Attributes.HasAttribute(ItemAttribute.Field)) SetFlag(TileFlags.MagicField);
                 }
             }
 
@@ -337,8 +342,11 @@ namespace NeoServer.Game.World.Map.Tiles
         }
 
 
-        private byte flags;
+        private uint flags;
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
+        private void SetFlag(TileFlags flag) => flags |= (uint)flag;
+        private void RemoveFlag(TileFlags flag) => flags &= ~(uint)flag;
+
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
         {

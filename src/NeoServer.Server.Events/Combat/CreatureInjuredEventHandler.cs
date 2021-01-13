@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
@@ -20,7 +21,7 @@ namespace NeoServer.Server.Events
             this.map = map;
             this.game = game;
         }
-        public void Execute(ICreature enemy, ICreature victim, CombatDamage damage)
+        public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
         {
             foreach (var spectator in map.GetPlayersAtPositionZone(victim.Location))
             {
@@ -52,6 +53,9 @@ namespace NeoServer.Server.Events
                 {
                     var damageEffect = damage.Effect == EffectT.None ? DamageEffectParser.Parse(damage.Type) : damage.Effect;
                     if(damageEffect != EffectT.None) connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+                }else if (damage.Effect !=  EffectT.None)
+                {
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damage.Effect));
                 }
 
                 connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor, damageString));

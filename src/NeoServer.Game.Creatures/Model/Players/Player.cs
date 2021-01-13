@@ -486,7 +486,7 @@ namespace NeoServer.Server.Model.Players
             Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
         }
 
-        public override void OnDamage(ICombatActor enemy, CombatDamage damage)
+        public override void OnDamage(IThing enemy, CombatDamage damage)
         {
             if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);
             else

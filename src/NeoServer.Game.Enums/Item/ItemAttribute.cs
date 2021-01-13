@@ -203,6 +203,7 @@
         NeedTarget,
         Formula,
         Damage,
-        Area
+        Area,
+        Ticks
     }
 }

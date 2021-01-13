@@ -15,7 +15,7 @@ namespace NeoServer.OTBM.Enums
         FireFieldPvpSmall = 1489,           // ITEM_FIREFIELD_PVP_SMALL = 1489,
         FireFieldPersistentLarge = 1492,    // ITEM_FIREFIELD_PERSISTENT_FULL = 1492,
         FireFieldPersistentMedium = 1493,   // ITEM_FIREFIELD_PERSISTENT_MEDIUM = 1493,
-        FireFieldPersistentSmall = 1994,    // ITEM_FIREFIELD_PERSISTENT_SMALL = 1494,
+        FireFieldPersistentSmall = 1494,    // ITEM_FIREFIELD_PERSISTENT_SMALL = 1494,
         FireFieldNoPvp = 1500,              // ITEM_FIREFIELD_NOPVP = 1500,
 
         PoisonFieldPvp = 1490,              // ITEM_POISONFIELD_PVP = 1490,
@@ -23,7 +23,7 @@ namespace NeoServer.OTBM.Enums
         PoisonFieldNoPvp = 1503,            // ITEM_POISONFIELD_NOPVP = 1503,
 
         EnergyFieldPvp = 1491,              // ITEM_ENERGYFIELD_PVP = 1491,
-        EnergyFieldPersistent = 1945,       // ITEM_ENERGYFIELD_PERSISTENT = 1495,
+        EnergyFieldPersistent = 1495,       // ITEM_ENERGYFIELD_PERSISTENT = 1495,
         EnergyFieldNoPvp = 1504,            // ITEM_ENERGYFIELD_NOPVP = 1504,
 
         MagicWall = 1497,                   // ITEM_MAGICWALL = 1497,

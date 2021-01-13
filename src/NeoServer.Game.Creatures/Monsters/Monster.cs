@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Monsters.Loots;
@@ -51,7 +52,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public ConcurrentDictionary<ICreature, ushort> Damages;
 
-        public void RecordDamage(ICreature enemy, ushort damage) => Damages.AddOrUpdate(enemy, damage, (key, oldValue) => (ushort)(oldValue + damage));
+        public void RecordDamage(IThing enemy, ushort damage)
+        {
+            if (enemy is not ICreature creature) return;
+            Damages.AddOrUpdate(creature, damage, (key, oldValue) => (ushort)(oldValue + damage));
+        }
         
         private void GiveExperience()
         {
@@ -437,7 +442,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return damage;
         }
 
-        public override void OnDamage(ICombatActor enemy, CombatDamage damage) => ReduceHealth( damage);
+        public override void OnDamage(IThing enemy, CombatDamage damage) => ReduceHealth( damage);
         
     }
 }

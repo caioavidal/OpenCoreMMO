@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Contracts.Items
 {
@@ -7,6 +8,7 @@ namespace NeoServer.Game.Contracts.Items
     {
         Location Location { get; }
         IItemType Metadata { get; }
-        MagicFieldType Type { get; }
+
+        void CauseDamage(ICreature toCreature);
     }
 }
