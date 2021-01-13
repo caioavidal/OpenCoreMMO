@@ -9911,6 +9911,14 @@
              "key": "weight",
              "value": "105"
           },
+		  {
+		  "key":"field",
+		  "value": 1491
+		  },
+		  {
+		  "key":"area",
+		  "value": "AREA_SQUARE1x1"
+		  },
           {
              "key": "charges",
              "value": "2"
