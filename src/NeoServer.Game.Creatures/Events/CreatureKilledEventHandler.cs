@@ -30,8 +30,8 @@ namespace NeoServer.Game.Creatures.Events
 
             if (creature is IWalkableCreature walkable)
             {
-                map.RemoveCreature(creature);
                 walkable.Tile.AddItem(corpse);
+                map.RemoveCreature(creature);
             }
         }
         private void CreateBlood(ICreature creature)

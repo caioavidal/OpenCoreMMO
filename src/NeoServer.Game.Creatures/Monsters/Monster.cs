@@ -243,6 +243,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
+                if (target.Value.Creature.IsDead || target.Value.Creature.IsRemoved)
+                {
+                    RemoveFromTargetList(target.Value.Creature);
+                    continue;
+                }
+
                 if (PathAccess.FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
@@ -412,6 +418,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
 
             if(attacked) TurnTo(Location.DirectionTo(enemy.Location));
+
+            if (enemy.IsDead || enemy.IsRemoved) RemoveFromTargetList(enemy);
 
             return attacked;
         }

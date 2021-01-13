@@ -35,19 +35,16 @@ namespace NeoServer.Server.Events
                     continue;
                 }
 
-                if (!(creature is IPlayer player))
-                {
-                    continue;
-                }
+                if (creature is not IPlayer player) continue;
 
-                if (player.IsDead)
+                if (player.IsDead && thing != player)
                 {
                     continue;
                 }
 
                 var stackPosition = spectator.FromStackPosition;
 
-                if (thing is IPlayer || (thing is IMonster monsterRemoved && monsterRemoved.IsSummon))
+                if ((thing is IPlayer p && !p.IsDead) || (thing is IMonster monsterRemoved && monsterRemoved.IsSummon))
                 {
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
                 }

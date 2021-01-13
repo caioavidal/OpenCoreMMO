@@ -180,7 +180,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         protected void ReduceHealth(CombatDamage damage)
         {
             HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
-            if (IsDead) OnDeath();
         }
         public virtual void OnDeath()
         {
@@ -220,6 +219,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             OnDamage(enemy, damage);
             OnDamaged?.Invoke(enemy, this, damage);
+            if (IsDead) OnDeath();
         }
 
         public virtual bool ReceiveAttack(ICombatActor enemy, CombatDamage damage)
