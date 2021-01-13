@@ -42,7 +42,11 @@ namespace NeoServer.Game.Creatures.Model
             CreatureId = RandomIdGenerator.Generate();
             Outfit = outfit ?? new Outfit()
             {
-                LookType = type.Look[LookType.Type]
+                LookType = type.Look[LookType.Type],
+                Body = (byte)type.Look[LookType.Body],
+                Feet = (byte)type.Look[LookType.Feet],
+                Head = (byte)type.Look[LookType.Head],
+                Legs = (byte)type.Look[LookType.Legs],
             };
             Hostiles = new HashSet<uint>();
             Friendly = new HashSet<uint>();
@@ -123,7 +127,7 @@ namespace NeoServer.Game.Creatures.Model
         public byte LightColor { get; protected set; }
         public uint Flags { get; private set; }
         public bool IsInvisible { get; protected set; } // TODO: implement.
-        public virtual bool CanSeeInvisible { get; } 
+        public virtual bool CanSeeInvisible { get; }
 
         public HashSet<uint> Hostiles { get; }
 

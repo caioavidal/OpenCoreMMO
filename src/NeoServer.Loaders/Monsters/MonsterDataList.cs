@@ -70,6 +70,16 @@ namespace NeoServer.Loaders.Monsters
 
             [JsonProperty("corpse")]
             public ushort Corpse { get; set; }
+            [JsonProperty("body")]
+            public ushort Body { get; set; }
+            [JsonProperty("legs")]
+            public ushort Legs { get; set; }
+            [JsonProperty("feet")]
+            public ushort Feet { get; set; }
+            [JsonProperty("head")]
+            public ushort Head { get; set; }
+            [JsonProperty("addons")]
+            public ushort Addons { get; set; }
         }
 
         public class TargetchangeData

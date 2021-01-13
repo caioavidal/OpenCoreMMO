@@ -20,13 +20,14 @@ namespace NeoServer.Server.Events.Creature
         {
             foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
             {
-                if (spectator == creature || spectator.CanSee(creature)) continue;//myself
+                if (spectator == creature) continue; 
+                
 
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
 
                 if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out byte stackPostion)) continue;
 
-                if (creature.IsInvisible)
+                if (creature.IsInvisible && !spectator.CanSee(creature))
                 {
                     connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPostion));
                 }
@@ -35,6 +36,8 @@ namespace NeoServer.Server.Events.Creature
                     connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPostion));
                     connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
                 }
+
+                connection.Send();
             }
         }
     }

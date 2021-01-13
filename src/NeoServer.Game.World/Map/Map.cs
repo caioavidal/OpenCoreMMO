@@ -487,6 +487,8 @@ namespace NeoServer.Game.World.Map
                 var tile = this[coordinates.Location];
                 if (tile is IDynamicTile walkableTile)
                 {
+                    if (walkableTile.Creatures is null) continue;
+
                     foreach (var target in walkableTile.Creatures.Values)
                     {
                         if (actor == target) continue;

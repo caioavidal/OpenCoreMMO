@@ -42,3 +42,6 @@ msbuild.wrn
 /data/world/realmap-spawn.xml
 /data/world/realmap-spawn.json
 *.db
+*.exe
+*.db-shm
+*.db-wal

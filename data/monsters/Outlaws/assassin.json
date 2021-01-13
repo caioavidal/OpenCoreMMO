@@ -10,8 +10,13 @@
     "now": 175
   },
   "look": {
-    "type": 129,
-    "corpse": 6080
+    "type": 152,
+    "corpse": 6080,
+	"head": 114,
+	"body":95,
+	"legs":95,
+	"feet":95,
+	"addons":3
   },
   "targetChange": {
     "interval": 2000,

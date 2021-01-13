@@ -97,7 +97,6 @@ namespace NeoServer.Server.Events
 
                 if (spectator.CanSee(creature) && spectator.CanSee(fromLocation)) //spectator can see old position but not the new
                 {
-                    Console.WriteLine($"{spectator.Name} can see old but not new {cylinderSpectator.FromStackPosition}");
                     //happens when player leaves spectator's view area
                     connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile, cylinderSpectator.FromStackPosition));
                     connection.Send();
@@ -107,7 +106,6 @@ namespace NeoServer.Server.Events
 
                 if (spectator.CanSee(creature) && spectator.CanSee(toLocation)) //spectator can't see old position but the new
                 {
-                    Console.WriteLine($"{spectator.Name} cant see old but new {cylinderSpectator.ToStackPosition}");
                     //happens when player enters spectator's view area
                     connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, cylinderSpectator.ToStackPosition));
                     connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));

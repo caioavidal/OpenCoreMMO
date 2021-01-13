@@ -18,7 +18,8 @@ namespace NeoServer.Loaders.Monsters
             {
                 Name = data.Name,
                 MaxHealth = data.Health.Max,
-                Look = new Dictionary<LookType, ushort>() { { LookType.Type, data.Look.Type }, { LookType.Corpse, data.Look.Corpse } },
+                Look = new Dictionary<LookType, ushort>() { { LookType.Type, data.Look.Type }, { LookType.Corpse, data.Look.Corpse }, { LookType.Body, data.Look.Body}, { LookType.Legs, data.Look.Legs}, { LookType.Head, data.Look.Head },
+                { LookType.Feet, data.Look.Feet},{ LookType.Addon, data.Look.Addons}},
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defense = ushort.Parse(data.Defense.Defense),
