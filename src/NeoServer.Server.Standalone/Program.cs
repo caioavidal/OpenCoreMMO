@@ -2,6 +2,7 @@
 using NeoServer.Data;
 using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Effects;
+using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
 using NeoServer.Loaders.Spawns;
@@ -20,7 +21,9 @@ using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -67,9 +70,10 @@ public class Program
         container.Resolve<MonsterLoader>().Load();
         container.Resolve<VocationLoader>().Load();
         container.Resolve<SpellLoader>().Load();
-        container.Resolve<AreaTypeLoader>().Load();
 
         container.Resolve<SpawnManager>().StartSpawn();
+
+        container.Resolve<IEnumerable<ICustomLoader>>().ToList().ForEach(x=>x.Load());
 
         var listeningTask = StartListening(container, cancellationToken);
 

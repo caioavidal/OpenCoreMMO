@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.DataStore;
 using NeoServer.Game.Effects;
+using NeoServer.Loaders.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Loaders.Effects
 {
-    public class AreaTypeLoader
+    public class AreaTypeLoader: ICustomLoader
     {
         public void Load()
         {

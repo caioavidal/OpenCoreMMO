@@ -50,7 +50,7 @@ using System.Reflection;
 
 namespace NeoServer.Server.Standalone.IoC
 {
-    public class Container
+    public static class Container
     {
         private static ContainerBuilder builder;
 
@@ -90,18 +90,18 @@ namespace NeoServer.Server.Standalone.IoC
                 return new CreaturePathAccess(c.Resolve<IPathFinder>().Find, c.Resolve<IMap>().CanGoToDirection);
             }).SingleInstance();
 
-            RegisterPacketHandlers(builder);
+            builder.RegisterPacketHandlers();
 
             builder.RegisterType<Scheduler>().As<IScheduler>().SingleInstance();
             //commands
             builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
 
-            RegisterServerEvents(builder);
-            RegisterGameEvents(builder);
-            RegisterEventSubscribers(builder);
+            builder.RegisterServerEvents();
+            builder.RegisterGameEvents();
+            builder.RegisterEventSubscribers();
 
-            RegisterIncomingPacketFactory(builder);
-            RegisterPlayerFactory(builder);
+            builder.RegisterIncomingPacketFactory();
+            builder.RegisterPlayerFactory();
 
             //world
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
@@ -113,8 +113,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
-            builder.RegisterType<AreaTypeLoader>().SingleInstance();
-            RegisterPlayerLoaders(builder);
+            builder.RegisterPlayerLoaders();
+            builder.RegisterCustomLoaders();
             builder.RegisterType<SpellLoader>().SingleInstance();
 
 
@@ -133,7 +133,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameItemJob>().SingleInstance();
 
             //Database
-            RegisterContext<NeoContext>(builder);
+            builder.RegisterContext<NeoContext>();
 
             return builder.Build();
         }
@@ -147,18 +147,18 @@ namespace NeoServer.Server.Standalone.IoC
             return logger;
         }
 
-        private static void RegisterPacketHandlers(ContainerBuilder builder)
+        private static void RegisterPacketHandlers(this ContainerBuilder builder)
         {
             var assemblies = Assembly.GetAssembly(typeof(PacketHandler));
             builder.RegisterAssemblyTypes(assemblies).SingleInstance();
         }
 
-        private static void RegisterServerEvents(ContainerBuilder builder)
+        private static void RegisterServerEvents(this ContainerBuilder builder)
         {
             var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
             builder.RegisterAssemblyTypes(assembly);
         }
-        private static void RegisterGameEvents(ContainerBuilder builder)
+        private static void RegisterGameEvents(this ContainerBuilder builder)
         {
             var interfaceType = typeof(IGameEventHandler);
             var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => interfaceType.IsAssignableFrom(x));
@@ -170,19 +170,24 @@ namespace NeoServer.Server.Standalone.IoC
                 ;
             }
         }
-        private static void RegisterEventSubscribers(ContainerBuilder builder)
+        private static void RegisterEventSubscribers(this ContainerBuilder builder)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies();
             builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
             builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
         }
-        private static void RegisterPlayerLoaders(ContainerBuilder builder)
+        private static void RegisterPlayerLoaders(this ContainerBuilder builder)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies();
             builder.RegisterAssemblyTypes(types).As<IPlayerLoader>().SingleInstance();
         }
+        private static void RegisterCustomLoaders(this ContainerBuilder builder)
+        {
+            var types = AppDomain.CurrentDomain.GetAssemblies();
+            builder.RegisterAssemblyTypes(types).As<ICustomLoader>().SingleInstance();
+        }
 
-        private static void RegisterPlayerFactory(ContainerBuilder builder)
+        private static void RegisterPlayerFactory(this ContainerBuilder builder)
         {
             builder.Register((c, p) =>
             {
@@ -192,7 +197,7 @@ namespace NeoServer.Server.Standalone.IoC
             });
         }
 
-        private static void RegisterIncomingPacketFactory(ContainerBuilder builder)
+        private static void RegisterIncomingPacketFactory(this ContainerBuilder builder)
         {
             builder.Register((c, p) =>
             {
@@ -250,7 +255,7 @@ namespace NeoServer.Server.Standalone.IoC
             return serverConfiguration;
         }
 
-        private static void RegisterContext<TContext>(ContainerBuilder builder) where TContext : DbContext
+        private static void RegisterContext<TContext>(this ContainerBuilder builder) where TContext : DbContext
         {
 
             DatabaseConfiguration2 config = new(null, DatabaseType.INMEMORY);
