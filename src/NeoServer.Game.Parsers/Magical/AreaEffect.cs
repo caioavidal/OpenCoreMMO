@@ -6,24 +6,17 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Effects.Magical
 {
-    public class AreaEffect
+    public partial class AreaEffect
     {
-        public static Dictionary<AreaType, (byte, byte)> originPoints = new Dictionary<AreaType, (byte, byte)>();
-        public static byte[,] Circle3x3 = new byte[,]
-      {
-            {0, 0, 1, 1, 1, 0, 0},
-            {0, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 3, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1},
-            {0, 1, 1, 1, 1, 1, 0},
-            {0, 0, 1, 1, 1, 0, 0}
-      };
+        public static Dictionary<string, (byte, byte)> originPoints = new Dictionary<string, (byte, byte)>();
 
-        public static Coordinate[] Create(AreaType area)
+       
+        public static Coordinate[] Create(string areaType)
         {
-            var array = AreaTypeParser.Parse(area);
-            var origin = FindOriginPoint(area, array);
+            var array = AreaTypeParser.Parse(areaType);
+            if (array is null) return default;
+
+            var origin = FindOriginPoint(areaType, array);
 
             var pool = ArrayPool<Coordinate>.Shared;
             var points = pool.Rent(array.Length * array.GetLength(0));
@@ -45,11 +38,11 @@ namespace NeoServer.Game.Effects.Magical
             return points[0..count];
         }
 
-        public static Coordinate[] Create(Location location, AreaType area)
+        public static Coordinate[] Create(Location location, string areaType)
         {
             var i = 0;
 
-            var affectedLocations = Create(area);
+            var affectedLocations = Create(areaType);
             var affectedArea = new Coordinate[affectedLocations.Length];
 
             foreach (var affectedlocation in affectedLocations)
@@ -59,9 +52,9 @@ namespace NeoServer.Game.Effects.Magical
             return affectedArea;
         }
 
-        private static (byte, byte) FindOriginPoint(AreaType area, byte[,] array)
+        private static (byte, byte) FindOriginPoint(string areaType, byte[,] array)
         {
-            if (originPoints.TryGetValue(area, out var origin)) return origin;
+            if (originPoints.TryGetValue(areaType, out var origin)) return origin;
 
             var length = array.GetLength(0);
 
@@ -73,7 +66,7 @@ namespace NeoServer.Game.Effects.Magical
                     if (value == 3)
                     {
                         origin = ((byte)i, (byte)y);
-                        originPoints.TryAdd(area, origin);
+                        originPoints.TryAdd(areaType, origin);
                         return origin;
                     }
                 }

@@ -24,6 +24,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
         public virtual DamageType DamageType => Metadata.DamageType;
         public virtual ShootType ShootType => Metadata.ShootType;
         public virtual EffectT Effect => Metadata.EffectT;
+        public string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
 
         public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
 
@@ -72,7 +73,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             var damage = (ushort)GameRandom.Random.Next(minValue: minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
             combatAttackType.DamageType = DamageType;
-            combatAttackType.Area = AreaEffect.Create(tile.Location, Effects.AreaType.AreaCircle3x3);
+            combatAttackType.Area = AreaEffect.Create(tile.Location, Area);
             combatAttackType.EffectT = Effect;
 
             player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType));

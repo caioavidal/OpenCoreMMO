@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.Items.Types.Runes;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Effects.Magical;
 using System;
 using System.Collections.Generic;
 
@@ -26,16 +27,15 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
         public override ushort Duration => 2;
         public ushort Field => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Field);
 
+        public virtual string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
+
         public bool Use(ICreature usedBy, ITile tile)
         {
             if (tile is not IDynamicTile onTile) return false;
-            var field = ItemFactory.Instance.Create(Field, onTile.Location, null);
-
-            tile.AddItem(field);
-
-            Reduce();
 
             OnUsedOnTile?.Invoke(usedBy, tile, this);
+
+            Reduce();
 
             return true;
         }

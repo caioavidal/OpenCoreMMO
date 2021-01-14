@@ -10,4 +10,8 @@
     <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NeoServer.Game.DataStore\NeoServer.Game.DataStore.csproj" />
+  </ItemGroup>
+
 </Project>
