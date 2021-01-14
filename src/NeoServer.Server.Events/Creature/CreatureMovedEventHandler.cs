@@ -4,7 +4,6 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
 
 namespace NeoServer.Server.Events
 {

@@ -10300,6 +10300,10 @@
           {
              "key": "charges",
              "value": "4"
+          },
+		  {
+             "key": "area",
+             "value": "AREADIAGONAL_WALLFIELD"
           }
        ]
     },

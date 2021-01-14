@@ -1,12 +1,6 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Tests;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.World.Tests.TestData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NeoServer.Game.World.Tests

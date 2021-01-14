@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Text;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Combat.Spells;

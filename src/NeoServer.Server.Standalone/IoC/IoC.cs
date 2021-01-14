@@ -19,7 +19,6 @@ using NeoServer.Game.Items.Factories;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Spawns;
-using NeoServer.Loaders.Effects;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
