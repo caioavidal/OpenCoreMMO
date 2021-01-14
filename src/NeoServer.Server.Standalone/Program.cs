@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using NeoServer.Data;
 using NeoServer.Game.World.Spawns;
+using NeoServer.Loaders.Effects;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
 using NeoServer.Loaders.Spawns;
@@ -66,7 +67,8 @@ public class Program
         container.Resolve<MonsterLoader>().Load();
         container.Resolve<VocationLoader>().Load();
         container.Resolve<SpellLoader>().Load();
-        
+        container.Resolve<AreaTypeLoader>().Load();
+
         container.Resolve<SpawnManager>().StartSpawn();
 
         var listeningTask = StartListening(container, cancellationToken);

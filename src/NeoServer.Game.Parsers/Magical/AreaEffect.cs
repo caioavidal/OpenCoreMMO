@@ -6,30 +6,16 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Effects.Magical
 {
-    public class AreaEffect
+    public partial class AreaEffect
     {
         public static Dictionary<string, (byte, byte)> originPoints = new Dictionary<string, (byte, byte)>();
-        public static byte[,] Circle3x3 = new byte[,]
-      {
-            {0, 0, 1, 1, 1, 0, 0},
-            {0, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 3, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1},
-            {0, 1, 1, 1, 1, 1, 0},
-            {0, 0, 1, 1, 1, 0, 0}
-      };
 
-        public static byte[,] Square1x1 = new byte[,]
-     {
-        {1, 1, 1},
-        {1, 3, 1},
-        {1, 1, 1}
-     };
-
+       
         public static Coordinate[] Create(string areaType)
         {
             var array = AreaTypeParser.Parse(areaType);
+            if (array is null) return default;
+
             var origin = FindOriginPoint(areaType, array);
 
             var pool = ArrayPool<Coordinate>.Shared;

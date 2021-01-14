@@ -10289,6 +10289,14 @@
              "key": "weight",
              "value": "52"
           },
+		    {
+             "key": "field",
+             "value": "1491"
+          },
+		    {
+             "key": "area",
+             "value": "1491"
+          },
           {
              "key": "charges",
              "value": "4"

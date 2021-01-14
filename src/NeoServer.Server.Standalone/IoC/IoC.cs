@@ -19,6 +19,7 @@ using NeoServer.Game.Items.Factories;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Spawns;
+using NeoServer.Loaders.Effects;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -112,6 +113,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<SpawnLoader>().SingleInstance();
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
+            builder.RegisterType<AreaTypeLoader>().SingleInstance();
             RegisterPlayerLoaders(builder);
             builder.RegisterType<SpellLoader>().SingleInstance();
 
