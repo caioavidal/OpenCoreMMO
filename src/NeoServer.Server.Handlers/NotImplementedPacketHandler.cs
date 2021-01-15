@@ -1,9 +1,6 @@
-﻿using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Server.Tasks;
 using Serilog.Core;
-using System;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
