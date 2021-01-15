@@ -2,15 +2,18 @@
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Standalone;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
     public class AccountLoginHandler : PacketHandler
     {
         private readonly IAccountRepositoryNeo _repositoryNeo;
-        public AccountLoginHandler(IAccountRepositoryNeo repositoryNeo)
+        private readonly ServerConfiguration serverConfiguration;
+        public AccountLoginHandler(IAccountRepositoryNeo repositoryNeo, ServerConfiguration serverConfiguration)
         {
             _repositoryNeo = repositoryNeo;
+            this.serverConfiguration = serverConfiguration;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -39,7 +42,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            connection.Send(new CharacterListPacket(foundedAccount));
+            connection.Send(new CharacterListPacket(foundedAccount, serverConfiguration.ServerName));
         }
     }
 }

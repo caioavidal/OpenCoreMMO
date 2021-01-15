@@ -242,7 +242,7 @@ namespace NeoServer.Server.Standalone.IoC
                 builder.AddUserSecrets<Program>();
             }
             configuration = builder.Build();
-            ServerConfiguration serverConfiguration = new(0, null, null, null);
+            ServerConfiguration serverConfiguration = new(0, null, null, null, "");
             GameConfiguration gameConfiguration = new();
 
             configuration.GetSection("server").Bind(serverConfiguration);
