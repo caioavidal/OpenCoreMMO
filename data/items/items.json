@@ -10564,7 +10564,9 @@
           {
             "key":"shootType",
             "value":"earth"
-          }
+          },
+		  { "key":"x", "value": [0.8,1.6]},{ "key":"y", "value": [5,10]}
+
        ]
     },
     {
@@ -10728,6 +10730,10 @@
           },
           {
             "key":"shootType",
+            "value":"fire"
+          },
+		  {
+            "key":"area",
             "value":"fire"
           },
           { "key":"x", "value": [1.8,3]},{ "key":"y", "value": [12,17]}
