@@ -9946,6 +9946,12 @@
        "article": "an",
        "name": "intense healing rune",
        "attributes": [
+	    { "key":"script", "value":"HealingRune" },
+          {
+             "key": "type",
+             "value": "rune"
+          },
+		  { "key":"x", "value": [3.184,5.59]},{ "key":"y", "value": [20,35]},
           {
              "key": "type",
              "value": "rune"
@@ -10149,7 +10155,7 @@
              "key": "type",
              "value": "rune"
           },
-		  { "key":"x", "value": [1.8,3]},{ "key":"y", "value": [12,17]},
+		  { "key":"x", "value": [7.22,12.79]},{ "key":"y", "value": [44,79]},
 
           {
              "key": "runeSpellName",
