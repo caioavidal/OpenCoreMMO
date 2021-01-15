@@ -1,5 +1,4 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Model.Players.Contracts;

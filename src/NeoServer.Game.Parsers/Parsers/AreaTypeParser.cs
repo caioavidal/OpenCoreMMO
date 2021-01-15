@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.DataStore;
-using NeoServer.Game.Effects.Magical;
 
 namespace NeoServer.Game.Effects.Parsers
 {

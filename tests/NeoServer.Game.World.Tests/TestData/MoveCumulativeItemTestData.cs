@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace NeoServer.Game.World.Tests.TestData
 {
 
-  
+
     public class MoveCumulativeItemTestData : IEnumerable<object[]>
     {
         public class Data

@@ -1,10 +1,4 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Effects.Parsers;
-using System;
-using System.Buffers;
-using System.Collections.Generic;
-
-namespace NeoServer.Game.Effects.Magical
+﻿namespace NeoServer.Game.Effects.Magical
 {
     public partial class AreaEffect
     {

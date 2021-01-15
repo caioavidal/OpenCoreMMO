@@ -6,7 +6,6 @@ using NeoServer.Game.Contracts.Items.Types.Runes;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Effects.Magical;
 using System;
 using System.Collections.Generic;
 

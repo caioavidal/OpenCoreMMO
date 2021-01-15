@@ -204,6 +204,7 @@
         Formula,
         Damage,
         Area,
-        Ticks
+        Ticks,
+        Script
     }
 }

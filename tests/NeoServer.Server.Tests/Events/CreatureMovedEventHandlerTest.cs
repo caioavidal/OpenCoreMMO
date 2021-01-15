@@ -5,15 +5,11 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Tests;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map;
-using NeoServer.Networking;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Events;
 using NeoServer.Server.Instances;
-using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Text;
 using Xunit;
 
 namespace NeoServer.Server.Tests.Events

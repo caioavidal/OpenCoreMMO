@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using NeoServer.Data;
 using NeoServer.Game.World.Spawns;
-using NeoServer.Loaders.Effects;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
