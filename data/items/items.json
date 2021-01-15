@@ -10144,10 +10144,13 @@
        "article": "an",
        "name": "ultimate healing rune",
        "attributes": [
+	   	  { "key":"script", "value":"HealingRune" },
           {
              "key": "type",
              "value": "rune"
           },
+		  { "key":"x", "value": [1.8,3]},{ "key":"y", "value": [12,17]},
+
           {
              "key": "runeSpellName",
              "value": "adura vita"

@@ -18,6 +18,8 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="neo.db" />
+	  <None Remove="neo.db-shm" />
+	  <None Remove="neo.db-wal" />
 	</ItemGroup>
 
 	<ItemGroup>

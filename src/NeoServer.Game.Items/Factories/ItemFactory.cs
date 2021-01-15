@@ -10,6 +10,7 @@ using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace NeoServer.Game.Items
 {
@@ -27,8 +28,17 @@ namespace NeoServer.Game.Items
 
         public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            var createdItem = CreateItem(typeId, location, attributes);
+            if (!ItemTypeData.InMemory.TryGetValue(typeId, out var itemType)) return null;
 
+            var createdItem = CreateItem(itemType, location, attributes);
+
+            SubscribeEvents(createdItem);
+
+            return createdItem;
+        }
+
+        private void SubscribeEvents(IItem createdItem)
+        {
             foreach (var gameSubscriber in ItemEventSubscribers.Where(x => x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
             {
                 gameSubscriber.Subscribe(createdItem);
@@ -38,30 +48,31 @@ namespace NeoServer.Game.Items
             {
                 subscriber.Subscribe(createdItem);
             }
-
-            return createdItem;
         }
 
         public IItem Create(string name, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
             var item = ItemTypeData.InMemory.Values.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
             if (item is null) return null;
 
             return Create(item.TypeId, location, attributes);
         }
 
-        private IItem CreateItem(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+        private IItem CreateItem(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            if (typeId < 100 || !ItemTypeData.InMemory.ContainsKey(typeId))
-            {
-                return null;
-            }
-
-            var itemType = ItemTypeData.InMemory[typeId];
+            if (itemType is null || itemType.TypeId < 100) return null;
 
             if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED)
             {
                 return null;
+            }
+
+            if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is string script && !string.IsNullOrWhiteSpace(script))
+            {
+                var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).FirstOrDefault(x => x.Name.Equals(script));
+
+                if (type is not null && Activator.CreateInstance(type, itemType, location, attributes) is IItem instance) return instance;
             }
 
             if (GroundItem.IsApplicable(itemType))
@@ -157,13 +168,13 @@ namespace NeoServer.Game.Items
                 }
                 if (TransformerUsableItem.IsApplicable(itemType))
                 {
-                    return new TransformerUsableItem(itemType, location); 
+                    return new TransformerUsableItem(itemType, location);
                 }
-           
+
                 //return new UseableOnItem(itemType, location);
             }
 
-            return new Item(ItemTypeData.InMemory[typeId], location);
+            return new Item(itemType, location);
         }
     }
 }
