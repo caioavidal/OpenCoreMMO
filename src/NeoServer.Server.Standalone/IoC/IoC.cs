@@ -33,6 +33,7 @@ using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Events;
 using NeoServer.Server.Handlers;
+using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Instances;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
@@ -212,16 +213,15 @@ namespace NeoServer.Server.Standalone.IoC
 
                 if (!InputHandlerMap.Data.TryGetValue(packet, out Type handlerType))
                 {
-                    Console.WriteLine($"Incoming Packet not handled: {packet}");
-                    return null;
+                    return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());
                 }
-                // Console.WriteLine($"Incoming Packet: {packet}");
 
                 if (c.TryResolve(handlerType, out object instance))
                 {
                     return (IPacketHandler)instance;
                 }
-                return null;
+
+                return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());
             });
         }
         private static IConfigurationRoot configuration;
@@ -242,7 +242,7 @@ namespace NeoServer.Server.Standalone.IoC
                 builder.AddUserSecrets<Program>();
             }
             configuration = builder.Build();
-            ServerConfiguration serverConfiguration = new(0, null, null, null);
+            ServerConfiguration serverConfiguration = new(0, null, null, null, "");
             GameConfiguration gameConfiguration = new();
 
             configuration.GetSection("server").Bind(serverConfiguration);

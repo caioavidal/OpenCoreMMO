@@ -7,9 +7,11 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class CharacterListPacket : OutgoingPacket
     {
         private readonly AccountModel _acountModel;
-        public CharacterListPacket(AccountModel account)
+        private readonly string serverName;
+        public CharacterListPacket(AccountModel account, string serverName)
         {
             _acountModel = account;
+            this.serverName = serverName;
         }
 
         public override void WriteToMessage(INetworkMessage message)
@@ -24,7 +26,7 @@ namespace NeoServer.Networking.Packets.Outgoing
             foreach (var player in _acountModel.Players)
             {
                 message.AddString(player.Name);
-                message.AddString("NeoServer"); //todo change to const
+                message.AddString(serverName ?? string.Empty);
                 message.AddByte(127);
                 message.AddByte(0);
                 message.AddByte(0);
@@ -33,15 +35,5 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
             message.AddUInt16((ushort)_acountModel.PremiumTime);
         }
-
-        // private void AddWorlds()
-        // {
-        //     message.AddByte(1); // number of worlds
-        //     message.AddByte(0); // world id
-        //     message.AddString("NeoServer"); //todo change to const
-        //     message.AddString("localhost");
-        //     message.AddUInt16(7171);
-        //     message.AddByte(0);
-        // }
     }
 }
