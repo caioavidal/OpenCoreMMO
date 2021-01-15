@@ -11,6 +11,5 @@ namespace NeoServer.Game.Combat.Spells
         public override EffectT Effect => EffectT.GlitterRed;
         public override uint Duration => 0;
         public override ConditionType ConditionType => ConditionType.None;
-
     }
 }

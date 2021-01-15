@@ -18,10 +18,15 @@ namespace NeoServer.Game.Contracts.Spells
         byte[] Vocations { get; set; }
         bool Invoke(ICombatActor actor, string words, out InvalidOperation error);
         bool InvokeOn(ICombatActor actor, ICombatActor onCreature, string words, out InvalidOperation error);
+        /// <summary>
+        /// Indicates if should train magic level when spell is cast
+        /// </summary>
+        bool IncreaseSkill => true;
     }
 
     public interface ICommandSpell:ISpell
     {
         public object[] Params { get; set; }
+        new bool IncreaseSkill => false;
     }
 }

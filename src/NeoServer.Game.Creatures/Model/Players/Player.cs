@@ -86,13 +86,16 @@ namespace NeoServer.Server.Model.Players
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
-            var levelDiff = toLevel - fromLevel;
-            MaxHealthPoints += (uint)(levelDiff * Vocation.GainHp);
-            MaxMana += (ushort)(levelDiff * Vocation.GainMana);
-            TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
-            ResetHealthPoints();
-            ResetMana();
-            ChangeSpeed(Speed);
+            if (type == SkillType.Level)
+            {
+                var levelDiff = toLevel - fromLevel;
+                MaxHealthPoints += (uint)(levelDiff * Vocation.GainHp);
+                MaxMana += (ushort)(levelDiff * Vocation.GainMana);
+                TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
+                ResetHealthPoints();
+                ResetMana();
+                ChangeSpeed(Speed);
+            }
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
 
@@ -216,7 +219,7 @@ namespace NeoServer.Server.Model.Players
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
         public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
-       
+
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
         const int KnownCreatureLimit = 250; //todo: for version 8.60
 
@@ -246,7 +249,7 @@ namespace NeoServer.Server.Model.Players
 
         public void ChangeOutfit(IOutfit outfit) => Outfit = outfit;
 
-        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator [] spectators)
+        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {
             TogglePacifiedCondition(fromTile, toTile);
             Containers.CloseDistantContainers();
@@ -372,7 +375,11 @@ namespace NeoServer.Server.Model.Players
                     return;
                 }
                 talkType = TalkType.MonsterSay;
+
                 Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
+
+                if (spell.IncreaseSkill) IncreaseSkillCounter(SkillType.Magic, spell.Mana);
+
                 if (!spell.ShouldSay) return;
             }
 
@@ -512,7 +519,7 @@ namespace NeoServer.Server.Model.Players
                 else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, onCreature.Tile);
             }
 
-            if(result) OnUsedItem?.Invoke(this, onCreature, item);
+            if (result) OnUsedItem?.Invoke(this, onCreature, item);
         }
         public void Use(IUseableOn item, IItem onItem)
         {
@@ -540,10 +547,10 @@ namespace NeoServer.Server.Model.Players
             var result = false;
 
             if (item is IUseableAttackOnTile useableAttackOnTile) result = Attack(onTile, useableAttackOnTile);
-            else if (item is IUseableOnTile useableOnTile) result= useableOnTile.Use(this, onTile);
-            else if (item is IUseableOnItem useableOnItem) result= useableOnItem.Use(this, onItem);
+            else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, onTile);
+            else if (item is IUseableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
 
-            if(result) OnUsedItem?.Invoke(this, onItem, item);
+            if (result) OnUsedItem?.Invoke(this, onItem, item);
         }
         public bool Feed(IFood food)
         {
@@ -584,7 +591,7 @@ namespace NeoServer.Server.Model.Players
         public override void SetAttackTarget(ICreature target)
         {
             base.SetAttackTarget(target);
-            if(target.CreatureId != 0 && ChaseMode == ChaseMode.Follow)
+            if (target.CreatureId != 0 && ChaseMode == ChaseMode.Follow)
             {
                 StartFollowing(target, PathSearchParams);
             }
