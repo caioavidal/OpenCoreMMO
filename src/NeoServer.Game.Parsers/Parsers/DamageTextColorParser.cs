@@ -16,6 +16,8 @@ namespace NeoServer.Game.Parsers.Effects
             DamageType.Earth => TextColor.Green,
             DamageType.Death => TextColor.DarkRed,
             DamageType.AbsorbPercentPhysical => TextColor.DarkRed,
+            DamageType.Ice => TextColor.LightBlue,
+            DamageType.Holy => TextColor.Yellow,
             _ => TextColor.None
         };
     }

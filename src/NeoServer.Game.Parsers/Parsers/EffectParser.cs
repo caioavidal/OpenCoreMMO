@@ -47,7 +47,7 @@ namespace NeoServer.Game.Effects.Parsers
                 "fireattack" => EffectT.Fireattack,
                 "energyarea" => EffectT.Energyarea,
                 "smallclouds" => EffectT.Smallclouds,
-                "holydamage" => EffectT.Holydamage,
+                "holydamage" => EffectT.HolyDamage,
                 "bigclouds" => EffectT.BigClouds,
                 "icearea" => EffectT.IceArea,
                 "icetornado" => EffectT.IceRornado,

@@ -44,7 +44,7 @@
 		Fireattack = 37,
 		Energyarea = 38,
 		Smallclouds = 39,
-		Holydamage = 40,
+		HolyDamage = 40,
 		BigClouds = 41,
 		IceArea = 42,
 		IceRornado = 43,

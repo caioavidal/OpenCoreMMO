@@ -28,7 +28,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
         public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
 
-        public bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combatAttackType)
+        public virtual bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combatAttackType)
         {
             if (NeedTarget == false ) return AttackArea(usedBy, creature.Tile, out combatAttackType);
 
@@ -53,11 +53,11 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             return false;
         }
 
-        public bool Use(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
+        public virtual bool Use(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
         {
             return AttackArea(usedBy, tile, out combatAttackType);
         }
-        public bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
+        private bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
         {
             combatAttackType = CombatAttackType.None;
 
