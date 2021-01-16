@@ -44,6 +44,7 @@
         FloorChangeDown = 0xBF,
         OutfitWindow = 0xC8,
         ReLoginWindow = 0x28,
-        ChangeSpeed = 0x8F
+        ChangeSpeed = 0x8F,
+        OpenPrivateChannel = 0xAD
     }
 }

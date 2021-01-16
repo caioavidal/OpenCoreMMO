@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace NeoServer.Server
 {
@@ -80,6 +81,21 @@ namespace NeoServer.Server
                 player = creature as IPlayer;
                 return true;
             }
+            return false;
+        }
+        public bool TryGetPlayer(string name, out IPlayer player)
+        {
+            player = default;
+            if (string.IsNullOrWhiteSpace(name)) return false;
+            
+            var creature = creatureInstances.All().FirstOrDefault(x => x is IPlayer player && player.Name.Trim().Equals(name.Trim(), StringComparison.InvariantCultureIgnoreCase));
+
+            if(creature is IPlayer p)
+            {
+                player = p;
+                return true;
+            }
+
             return false;
         }
         public bool TryGetLoggedPlayer(uint playerId, out IPlayer player) => creatureInstances.TryGetPlayer(playerId, out player);
