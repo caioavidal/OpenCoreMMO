@@ -18,10 +18,7 @@ namespace NeoServer.Game.Items.Items
             Metadata = type;
             Location = location;
         }
-
         public Location Location { get; set; }
-
-
         public IItemType Metadata { get; }
         public byte DamageCount => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Field)?.GetAttribute<byte>(ItemAttribute.Count) ?? 0;
         public DamageType DamageType => DamageTypeParser.Parse(Metadata.Attributes.GetAttribute(ItemAttribute.Field));
@@ -42,10 +39,7 @@ namespace NeoServer.Game.Items.Items
             }
         }
 
-
         public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type) == "magicfield";
-
-
 
         public void CauseDamage(ICreature toCreature)
         {
