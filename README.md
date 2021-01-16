@@ -60,7 +60,7 @@ dotnet run -p "NeoServer.Server.Standalone"
 - [ ] PvP Combat
 - [ ] Load NPC
 - [ ] Lua Scripting
-- [ ] C# Scripting
+- [x] C# Scripting
 
 ## Technologies
 
