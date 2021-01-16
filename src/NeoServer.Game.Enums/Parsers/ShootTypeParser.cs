@@ -39,6 +39,7 @@ namespace NeoServer.Game.Common.Parsers
                 "shiverarrow" => ShootType.ShiverArrow,
                 "flammingarrow" => ShootType.FlammingArrow,
                 "explosion" => ShootType.Explosion,
+                "smallholy" => ShootType.SmallHoly,
                 _ => ShootType.None
             };
 

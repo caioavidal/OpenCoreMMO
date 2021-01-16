@@ -16,6 +16,8 @@ namespace NeoServer.Game.Parsers.Effects
             DamageType.AbsorbPercentPhysical => EffectT.GlitterRed,
             DamageType.ManaDrain => EffectT.GlitterRed,
             DamageType.Death => EffectT.BubbleBlack,
+            DamageType.Holy => EffectT.HolyDamage,
+            DamageType.Ice => EffectT.IceAttack,
             _ => EffectT.None
         };
     }
