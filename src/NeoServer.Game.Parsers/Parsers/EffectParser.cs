@@ -44,7 +44,7 @@ namespace NeoServer.Game.Effects.Parsers
                 "watercreature" => EffectT.Watercreature,
                 "groundshaker" => EffectT.GroundShaker,
                 "hearts" => EffectT.Hearts,
-                "fireattack" => EffectT.Fireattack,
+                "fireattack" => EffectT.FireAttack,
                 "energyarea" => EffectT.Energyarea,
                 "smallclouds" => EffectT.Smallclouds,
                 "holydamage" => EffectT.HolyDamage,

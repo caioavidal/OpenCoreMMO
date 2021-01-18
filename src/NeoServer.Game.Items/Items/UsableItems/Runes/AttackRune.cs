@@ -10,6 +10,7 @@ using NeoServer.Game.Contracts.Items.Types.Runes;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Effects.Magical;
+using NeoServer.Game.Parsers.Effects;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
         public virtual DamageType DamageType => Metadata.DamageType;
         public virtual ShootType ShootType => Metadata.ShootType;
         public virtual EffectT Effect => Metadata.EffectT;
+        public bool HasNoInjureEffect => Metadata.Attributes.HasAttribute("hasnoinjureEffect");
         public string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
 
         public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
@@ -40,7 +42,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             var minMaxDamage = Formula(player, player.Level, player.Skills[Common.Creatures.SkillType.Magic].Level);
             var damage = (ushort)GameRandom.Random.Next(minValue: minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
-            if (enemy.ReceiveAttack(player, new CombatDamage(damage, DamageType) { Effect = Effect }))
+            if (enemy.ReceiveAttack(player, new CombatDamage(damage, DamageType, HasNoInjureEffect)))
             {
                 combatAttackType.ShootType = ShootType;
                 combatAttackType.DamageType = DamageType;
@@ -76,7 +78,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             combatAttackType.Area = AreaEffect.Create(tile.Location, Area);
             combatAttackType.EffectT = Effect;
 
-            player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType));
+            player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType, HasNoInjureEffect));
 
             Reduce();
             return true;
