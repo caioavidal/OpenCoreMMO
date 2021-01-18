@@ -14,7 +14,7 @@ namespace NeoServer.Game.Creatures
             var cache = new List<byte>();
 
             var known = playerRequesting.KnowsCreatureWithId(creature.CreatureId);
-            Console.WriteLine(known);
+
             if (known)
             {
                 cache.AddRange(BitConverter.GetBytes((ushort)0x62));

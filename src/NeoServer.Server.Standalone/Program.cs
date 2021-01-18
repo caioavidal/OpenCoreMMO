@@ -38,18 +38,20 @@ public class Program
         var cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = cancellationTokenSource.Token;
 
-        var logger = Container.RegisterLogger();
+        var (serverConfiguration, gameConfiguration, logConfiguration) = Container.LoadConfigurations();
+
+        var (logger, loggerConfiguration) = Container.RegisterLogger();
+
         logger.Information("Welcome to OpenCoreMMO Server!");
 
-        var serverConfiguration = Container.LoadConfigurations();
+        logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
         logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
         logger.Information("Compiling scripts...");
         ScriptCompiler.Compile(serverConfiguration.Data);
 
-        var container = Container.CompositionRoot();        
+        var container = Container.CompositionRoot();
         var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
-
 
         logger.Information("Loading database: {db}", databaseConfiguration.active);
 
@@ -57,7 +59,6 @@ public class Program
         context.Database.EnsureCreated();
 
         RSA.LoadPem(serverConfiguration.Data);
-
 
         container.Resolve<ItemTypeLoader>().Load();
 
@@ -72,7 +73,7 @@ public class Program
 
         container.Resolve<SpawnManager>().StartSpawn();
 
-        container.Resolve<IEnumerable<ICustomLoader>>().ToList().ForEach(x=>x.Load());
+        container.Resolve<IEnumerable<ICustomLoader>>().ToList().ForEach(x => x.Load());
 
         var listeningTask = StartListening(container, cancellationToken);
 
@@ -99,7 +100,7 @@ public class Program
         logger.Information("Memory usage: {mem} MB", Math.Round((Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2));
 
 
-        logger.Information("Server is {up}! {time} ms","up", sw.ElapsedMilliseconds);
+        logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
 
         listeningTask.Wait(cancellationToken);
     }

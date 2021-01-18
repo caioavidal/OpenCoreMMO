@@ -38,7 +38,7 @@ namespace NeoServer.Networking.Listeners
         {
             var socket = await AcceptSocketAsync().ConfigureAwait(false);
 
-            var connection = new Connection(socket);
+            var connection = new Connection(socket, logger);
 
             connection.OnCloseEvent += OnConnectionClose;
             connection.OnProcessEvent += protocol.ProcessMessage;
