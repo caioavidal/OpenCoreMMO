@@ -364,6 +364,9 @@ namespace NeoServer.Server.Model.Players
 
             return canUse;
         }
+        public void SendMessageTo(IPlayer player)
+        {   
+        }
 
         public override void Say(string message, TalkType talkType)
         {

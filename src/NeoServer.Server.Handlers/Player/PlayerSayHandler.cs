@@ -15,6 +15,7 @@ namespace NeoServer.Server.Handlers.Player
         {
             var playerSay = new PlayerSayPacket(message);
             if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+
             
             game.Dispatcher.AddEvent(new Event(() => player.Say(playerSay.Message, playerSay.Talk)));
             
