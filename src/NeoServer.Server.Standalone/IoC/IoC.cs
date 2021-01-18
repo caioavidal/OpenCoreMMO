@@ -44,6 +44,7 @@ using Serilog.Core;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -138,13 +139,16 @@ namespace NeoServer.Server.Standalone.IoC
             return builder.Build();
         }
 
-        public static Logger RegisterLogger()
+        public static (Logger, LoggerConfiguration) RegisterLogger()
         {
-            var logger = new LoggerConfiguration()
-              .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-              .CreateLogger();
+            var loggerConfig = new LoggerConfiguration()
+              .ReadFrom.Configuration(configuration, sectionName: "Log")
+              .WriteTo.Console(theme: AnsiConsoleTheme.Code);
+              
+            var logger = loggerConfig.CreateLogger();
+
             Builder.RegisterInstance(logger).SingleInstance();
-            return logger;
+            return (logger, loggerConfig);
         }
 
         private static void RegisterPacketHandlers(this ContainerBuilder builder)
@@ -225,9 +229,9 @@ namespace NeoServer.Server.Standalone.IoC
             });
         }
         private static IConfigurationRoot configuration;
-        public static ServerConfiguration LoadConfigurations()
+        public static (ServerConfiguration, GameConfiguration, LogConfiguration) LoadConfigurations()
         {
-            
+
             var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
             var builder = new ConfigurationBuilder()
@@ -244,14 +248,17 @@ namespace NeoServer.Server.Standalone.IoC
             configuration = builder.Build();
             ServerConfiguration serverConfiguration = new(0, null, null, null, "");
             GameConfiguration gameConfiguration = new();
+            LogConfiguration logConfiguration = new(null);
 
             configuration.GetSection("server").Bind(serverConfiguration);
             configuration.GetSection("game").Bind(gameConfiguration);
+            configuration.GetSection("log").Bind(logConfiguration);
 
             Builder.RegisterInstance(serverConfiguration).SingleInstance();
             Builder.RegisterInstance(gameConfiguration).SingleInstance();
+            Builder.RegisterInstance(logConfiguration).SingleInstance();
 
-            return serverConfiguration;
+            return (serverConfiguration, gameConfiguration, logConfiguration);
         }
 
         private static void RegisterContext<TContext>(this ContainerBuilder builder) where TContext : DbContext

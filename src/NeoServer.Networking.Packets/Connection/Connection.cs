@@ -3,6 +3,7 @@ using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,8 +42,9 @@ namespace NeoServer.Networking
         public string IP { get; }
 
         public bool Closed => !Stream.CanRead || !Socket.Connected;
+        private Logger logger;
 
-        public Connection(Socket socket)
+        public Connection(Socket socket, Logger logger)
         {
             Socket = socket;
             IP = socket.RemoteEndPoint.ToString();
@@ -52,7 +54,7 @@ namespace NeoServer.Networking
             InMessage = new ReadOnlyNetworkMessage(new byte[16394], 0);
             writeLock = new object();
             connectionLock = new object();
-
+            this.logger = logger;
         }
         public void BeginStreamRead()
         {
@@ -252,7 +254,7 @@ namespace NeoServer.Networking
 
             while (OutgoingPackets.TryDequeue(out var packet))
             {
-                //Console.WriteLine($"{packet.GetType().Name}"); //debug
+                logger.Debug("To {PlayerId}: {name}", PlayerId, packet.GetType().Name);
                 packet.WriteToMessage(message);
             }
 

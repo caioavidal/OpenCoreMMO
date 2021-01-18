@@ -32,12 +32,10 @@ namespace NeoServer.Server.Events
             {
                 var spectator = cylinderSpectator.Spectator;
 
+                if (spectator is not IPlayer spectatorPlayer) continue;
                 if (creature == spectator) continue;
 
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
-
-                if (!(spectator is IPlayer spectatorPlayer)) continue;
-
 
                 SendPacketsToSpectator(spectatorPlayer, creature, connection, cylinderSpectator.ToStackPosition);
 
@@ -51,7 +49,5 @@ namespace NeoServer.Server.Events
             connection.OutgoingPackets.Enqueue(new AddCreaturePacket(playerToSend, creatureAdded));
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(creatureAdded.Location, EffectT.BubbleBlue));
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿#define GAME_FEATURE_MESSAGE_LEVEL
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;

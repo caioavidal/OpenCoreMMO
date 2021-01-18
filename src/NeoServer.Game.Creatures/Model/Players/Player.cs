@@ -368,24 +368,33 @@ namespace NeoServer.Server.Model.Players
         {   
         }
 
-        public override void Say(string message, TalkType talkType)
+        public virtual bool CastSpell(string message)
         {
             if (SpellList.TryGet(message.Trim(), out var spell))
             {
                 if (!spell.Invoke(this, message, out var error))
                 {
                     OnCannotUseSpell?.Invoke(this, spell, error);
-                    return;
+                    return true;
                 }
-                talkType = TalkType.MonsterSay;
+
+                var talkType = TalkType.MonsterSay;
 
                 Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
 
                 if (spell.IncreaseSkill) IncreaseSkillCounter(SkillType.Magic, spell.Mana);
 
-                if (!spell.ShouldSay) return;
+                if (!spell.ShouldSay) return true;
+
+                base.Say(message, talkType);
+
+                return true;
             }
 
+            return false;
+        }
+        public override void Say(string message, TalkType talkType)
+        {
             base.Say(message, talkType);
         }
 

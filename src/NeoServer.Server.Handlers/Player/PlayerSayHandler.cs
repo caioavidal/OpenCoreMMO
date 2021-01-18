@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 
@@ -16,9 +17,9 @@ namespace NeoServer.Server.Handlers.Player
             var playerSay = new PlayerSayPacket(message);
             if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
 
-            
-            game.Dispatcher.AddEvent(new Event(() => player.Say(playerSay.Message, playerSay.Talk)));
-            
+
+            game.Dispatcher.AddEvent(new Event(() => new PlayerSayCommand(player,connection, playerSay, game).Execute()));
+
         }
     }
 }
