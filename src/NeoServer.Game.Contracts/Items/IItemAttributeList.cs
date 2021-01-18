@@ -24,6 +24,7 @@ namespace NeoServer.Game.Contracts.Items
         ushort GetTransformationItem();
         Tuple<DamageType, byte> GetWeaponElementDamage();
         bool HasAttribute(ItemAttribute attribute);
+        bool HasAttribute(string attribute);
         void SetAttribute(ItemAttribute attribute, IConvertible attributeValue);
         void SetAttribute(ItemAttribute attribute, int attributeValue);
         void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs);

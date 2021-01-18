@@ -10,14 +10,24 @@ namespace NeoServer.Game.Common.Combat.Structs
             Damage = damage;
             Type = type;
             Effect = EffectT.None;
+            NoEffect = default;
         }
         public CombatDamage(ushort damage, DamageType type, EffectT effect)
         {
             Damage = damage;
             Type = type;
             Effect = effect;
-        }
+            NoEffect = default;
 
+        }
+        public CombatDamage(ushort damage, DamageType type, bool noEffect)
+        {
+            Damage = damage;
+            Type = type;
+            Effect = EffectT.None;
+            NoEffect = noEffect;
+        }
+        public bool NoEffect { get; }
         /// <summary>
         /// Check if damage is elemental
         /// </summary>

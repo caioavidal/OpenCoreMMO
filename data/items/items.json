@@ -10733,8 +10733,8 @@
             "value":"fire"
           },
 		  {
-            "key":"area",
-            "value":"fire"
+            "key":"effect",
+            "value":"fireattack"
           },
           { "key":"x", "value": [1.8,3]},{ "key":"y", "value": [12,17]}
        ]
@@ -10949,6 +10949,10 @@
            "key":"damage",
            "value":"energy"
          },
+		 {
+		    "key": "hasNoInjureEffect",
+			"value": null
+		 },
          {
            "key":"shootType",
            "value":"energy"

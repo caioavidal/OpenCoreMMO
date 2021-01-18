@@ -41,7 +41,7 @@
 		Watercreature = 34,
 		Groundshaker = 35,
 		Hearts = 36,
-		Fireattack = 37,
+		FireAttack = 37,
 		Energyarea = 38,
 		Smallclouds = 39,
 		HolyDamage = 40,

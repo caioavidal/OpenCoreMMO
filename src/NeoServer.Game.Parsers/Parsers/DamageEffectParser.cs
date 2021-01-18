@@ -7,7 +7,7 @@ namespace NeoServer.Game.Parsers.Effects
     {
         public static EffectT Parse(DamageType damageType) => damageType switch
         {
-            DamageType.Fire => EffectT.AreaFlame,
+            DamageType.Fire => EffectT.Flame,
             DamageType.FireField => EffectT.Flame,
             DamageType.Energy => EffectT.DamageEnergy,
             DamageType.Melee => EffectT.XBlood,
