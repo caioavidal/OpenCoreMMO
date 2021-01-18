@@ -50,7 +50,6 @@ namespace NeoServer.Server.Events
                 var spectator = cylinderSpectator.Spectator;
 
                 if (spectator is not IPlayer player) continue;
-                if (!cylinderSpectator.Spectator.CanSee(creature.Location)) continue;
 
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
 

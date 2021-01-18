@@ -21,7 +21,7 @@ namespace NeoServer.Game.Creatures.Events
             {
                 foreach (var neighbour in location.Neighbours)
                 {
-                    if (map[neighbour] is IDynamicTile toTile)
+                    if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
                     {
                         map.TryMoveCreature(creature, toTile.Location);
                         return;

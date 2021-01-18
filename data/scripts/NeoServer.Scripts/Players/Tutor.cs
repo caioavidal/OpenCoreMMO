@@ -16,7 +16,7 @@ namespace NeoServer.Scripts.Players
     public class Tutor : Player
     {
         public Tutor(uint id, string characterName, byte vocation, Gender gender, bool online, IDictionary<SkillType, ISkill> skills, IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed, Location location, IPathAccess pathAccess) :
-            base(id, characterName, ChaseMode.Follow, uint.MaxValue, ushort.MaxValue, ushort.MaxValue, vocation, gender, online, ushort.MaxValue, ushort.MaxValue, FightMode.Balanced, 100, 100, skills, 60, outfit, inventory, speed, location, pathAccess)
+            base(id, characterName, ChaseMode.Follow, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, vocation, gender, online, ushort.MaxValue, ushort.MaxValue, FightMode.Balanced, 100, 100, skills, 60, outfit, inventory, speed, location, pathAccess)
         {
 
         }

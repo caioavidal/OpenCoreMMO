@@ -252,7 +252,7 @@ namespace NeoServer.Networking
 
             while (OutgoingPackets.TryDequeue(out var packet))
             {
-                //Console.WriteLine($"{packet.GetType().Name}"); //debug
+                Console.WriteLine($"To {PlayerId}: {packet.GetType().Name}"); //debug
                 packet.WriteToMessage(message);
             }
 
