@@ -21,15 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.Enums\NeoServer.Game.Common.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.Parsers\NeoServer.Game.Effects.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Server\NeoServer.Server.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+    <ProjectReference Include="..\..\src\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
+    <ProjectReference Include="..\..\src\Server\NeoServer.Server\NeoServer.Server.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\..\Game\NeoServer.Game.DataStore\NeoServer.Game.DataStore.csproj" />
+    <ProjectReference Include="..\..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
+    <ProjectReference Include="..\..\Loaders\NeoServer.OTB\NeoServer.OTB.csproj" />
+    <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+    <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+    <ProjectReference Include="..\..\Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj" />
+    <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="serilog" Version="2.10.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+</Project>

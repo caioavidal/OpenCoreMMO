@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
+    <ProjectReference Include="..\..\Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
+    <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+  </ItemGroup>
+
+</Project>

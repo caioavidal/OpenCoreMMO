@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Nullable>disable</Nullable>
-    <IsTestProject>false</IsTestProject>
+    <LangVersion>Latest</LangVersion>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -21,12 +24,13 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-    <ProjectReference Include="..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
-    <ProjectReference Include="..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+    <ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+    <ProjectReference Include="..\..\Server\NeoServer.Server.Security\NeoServer.Server.Security.csproj" />
+    <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
   </ItemGroup>
 
 </Project>
