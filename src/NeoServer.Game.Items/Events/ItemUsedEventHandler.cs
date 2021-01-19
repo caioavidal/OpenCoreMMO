@@ -48,7 +48,7 @@ namespace NeoServer.Game.Items.Events
         {
             if (item is IConsumable consumable && !string.IsNullOrWhiteSpace(consumable.Sentence))
             {
-                creature.Say(consumable.Sentence, Common.Talks.TalkType.MonsterSay);
+                creature.Say(consumable.Sentence, Common.Talks.SpeechType.MonsterSay);
             }          
         }
     }

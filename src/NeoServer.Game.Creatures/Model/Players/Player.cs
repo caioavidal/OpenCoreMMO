@@ -378,7 +378,7 @@ namespace NeoServer.Server.Model.Players
                     return true;
                 }
 
-                var talkType = TalkType.MonsterSay;
+                var talkType = SpeechType.MonsterSay;
 
                 Cooldowns.Start(CooldownType.Spell, 1000); //todo: 1000 should be a const
 
@@ -393,7 +393,7 @@ namespace NeoServer.Server.Model.Players
 
             return false;
         }
-        public override void Say(string message, TalkType talkType)
+        public override void Say(string message, SpeechType talkType)
         {
             base.Say(message, talkType);
         }

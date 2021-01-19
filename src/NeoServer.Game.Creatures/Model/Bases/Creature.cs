@@ -246,7 +246,7 @@ namespace NeoServer.Game.Creatures.Model
         public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
         public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
 
-        public virtual void Say(string message, TalkType talkType)
+        public virtual void Say(string message, SpeechType talkType)
         {
             OnSay?.Invoke(this, talkType, message);
         }

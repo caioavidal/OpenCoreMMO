@@ -25,7 +25,6 @@
     <ProjectReference Include="..\..\src\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\..\src\NeoServer.Game.Enums\NeoServer.Game.Common.csproj" />
     <ProjectReference Include="..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.Parsers\NeoServer.Game.Effects.csproj" />
     <ProjectReference Include="..\..\src\NeoServer.Game.World\NeoServer.Game.World.csproj" />
   </ItemGroup>
 

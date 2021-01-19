@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Game.Common.Talks
 {
-    public enum TalkType : byte
+    public enum SpeechType : byte
     {
         None = 0,
         Say = 1,

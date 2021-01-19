@@ -356,7 +356,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var voiceIndex = GameRandom.Random.Next(minValue: 0, maxValue: Metadata.Voices.Length - 1);
 
-            Say(Metadata.Voices[voiceIndex], TalkType.MonsterYell);
+            Say(Metadata.Voices[voiceIndex], SpeechType.MonsterYell);
         }
 
         public void UpdateLastTargetChance()

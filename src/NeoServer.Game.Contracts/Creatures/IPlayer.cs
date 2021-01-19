@@ -123,7 +123,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ResetIdleTime();
         void CancelWalk();
         bool CanMoveThing(Location location);
-        void Say(string message, TalkType talkType);
+        void Say(string message, SpeechType talkType);
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);

@@ -5,31 +5,31 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class PlayerSayPacket : IncomingPacket
     {
-        public TalkType Talk { get; }
+        public SpeechType Talk { get; }
         public string Receiver{ get; set; }
         public string Message { get; }
         public ushort ChannelId { get; set; }
 
         public PlayerSayPacket(IReadOnlyNetworkMessage message)
         {
-            Talk = (TalkType) message.GetByte();
+            Talk = (SpeechType) message.GetByte();
 
             switch (Talk)
             {
-                case TalkType.None:
+                case SpeechType.None:
                     return;
 
-                case TalkType.Private:
-                case TalkType.PrivateRed:
+                case SpeechType.Private:
+                case SpeechType.PrivateRed:
                 #if GAME_FEATURE_RULEVIOLATION
 		        case TALKTYPE_RVR_ANSWER:
                 #endif
                     Receiver = message.GetString();
                     break;
 
-                case TalkType.ChannelY:
-                case TalkType.ChannelR1:
-                case TalkType.ChannelO:
+                case SpeechType.ChannelY:
+                case SpeechType.ChannelR1:
+                case SpeechType.ChannelO:
                     ChannelId = message.GetUInt16();
                     break;
                 default:

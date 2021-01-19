@@ -11,7 +11,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class PlayerSendPrivateMessagePacket : OutgoingPacket
     {
-        public PlayerSendPrivateMessagePacket(IPlayer from, TalkType talkType, string message)
+        public PlayerSendPrivateMessagePacket(IPlayer from, SpeechType talkType, string message)
         {
             From = from;
             TalkType = talkType;
@@ -19,11 +19,11 @@ namespace NeoServer.Networking.Packets.Outgoing
         }
 
         public IPlayer From { get;  }
-        public TalkType TalkType { get; }
+        public SpeechType TalkType { get; }
         public string Message { get; }
         public override void WriteToMessage(INetworkMessage message)
         {
-			if (TalkType == TalkType.None) return;
+			if (TalkType == SpeechType.None) return;
 
 		
 			message.AddByte((byte)GameOutgoingPacketType.SendPrivateMessage);

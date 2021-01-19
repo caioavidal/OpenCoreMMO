@@ -1,13 +1,14 @@
-﻿namespace NeoServer.Game.Common.Talks
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NeoServer.Game.Common.Talks.Chat
 {
-    public enum ChatChannel : ushort
+    public class ChatChannel
     {
-        RuleViolations = 0x03,
-        Game = 0x04,
-        Trade = 0x05,
-        RealLife = 0x06,
-        Help = 0x08,
-        Private = 0xFFFF,
-        None = 0xAAAA
+        public ushort Id { get; set; }
+        public string Name { get; set; }
     }
 }

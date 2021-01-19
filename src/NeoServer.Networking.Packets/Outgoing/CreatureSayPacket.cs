@@ -8,10 +8,10 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class CreatureSayPacket : OutgoingPacket
     {
         private readonly ICreature creature;
-        private readonly TalkType talkType;
+        private readonly SpeechType talkType;
         private readonly string textMessage;
 
-        public CreatureSayPacket(ICreature creature, TalkType talkType, string textMessage)
+        public CreatureSayPacket(ICreature creature, SpeechType talkType, string textMessage)
         {
             this.creature = creature;
             this.talkType = talkType;

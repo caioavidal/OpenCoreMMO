@@ -12,7 +12,7 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
-        public void Execute(ICreature creature, TalkType type, string message)
+        public void Execute(ICreature creature, SpeechType type, string message)
         {
             creature.ThrowIfNull();
 

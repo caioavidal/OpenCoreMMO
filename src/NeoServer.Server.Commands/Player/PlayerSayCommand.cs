@@ -36,37 +36,37 @@ namespace NeoServer.Server.Commands.Player
             
             switch (playerSayPacket.Talk)
             {
-                case NeoServer.Game.Common.Talks.TalkType.None:
+                case NeoServer.Game.Common.Talks.SpeechType.None:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.Say:
+                case NeoServer.Game.Common.Talks.SpeechType.Say:
                     player.Say(playerSayPacket.Message, playerSayPacket.Talk);
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.Whisper:
+                case NeoServer.Game.Common.Talks.SpeechType.Whisper:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.Yell:
+                case NeoServer.Game.Common.Talks.SpeechType.Yell:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.PrivatePn:
+                case NeoServer.Game.Common.Talks.SpeechType.PrivatePn:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.PrivateNp:
+                case NeoServer.Game.Common.Talks.SpeechType.PrivateNp:
 
                 
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.ChannelY:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelY:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.ChannelW:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelW:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.RvrChannel:
+                case NeoServer.Game.Common.Talks.SpeechType.RvrChannel:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.RvrAnswer:
+                case NeoServer.Game.Common.Talks.SpeechType.RvrAnswer:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.RvrContinue:
+                case NeoServer.Game.Common.Talks.SpeechType.RvrContinue:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.Broadcast:
+                case NeoServer.Game.Common.Talks.SpeechType.Broadcast:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.ChannelR1:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelR1:
                     break;
-                    case NeoServer.Game.Common.Talks.TalkType.Private:
-                case NeoServer.Game.Common.Talks.TalkType.PrivateRed:
+                    case NeoServer.Game.Common.Talks.SpeechType.Private:
+                case NeoServer.Game.Common.Talks.SpeechType.PrivateRed:
 #if GAME_FEATURE_RULEVIOLATION
 		        case TALKTYPE_RVR_ANSWER:
 #endif
@@ -74,13 +74,13 @@ namespace NeoServer.Server.Commands.Player
 
 
                         break;
-                case NeoServer.Game.Common.Talks.TalkType.ChannelO:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelO:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.ChannelR2:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelR2:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.MonsterSay:
+                case NeoServer.Game.Common.Talks.SpeechType.MonsterSay:
                     break;
-                case NeoServer.Game.Common.Talks.TalkType.MonsterYell:
+                case NeoServer.Game.Common.Talks.SpeechType.MonsterYell:
                     break;
                 default:
                     break;
