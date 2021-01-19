@@ -9,6 +9,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Runes;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Effects.Magical;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Server.Model.Players.Contracts;
@@ -32,7 +33,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
         public virtual bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combatAttackType)
         {
-            if (NeedTarget == false ) return AttackArea(usedBy, creature.Tile, out combatAttackType);
+            if (NeedTarget == false) return AttackArea(usedBy, creature.Tile, out combatAttackType);
 
             combatAttackType = CombatAttackType.None;
 
@@ -65,7 +66,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
             if (NeedTarget == true)
             {
-                if(tile is IDynamicTile t && t.HasCreature) return Use(usedBy, t.TopCreatureOnStack, out combatAttackType);
+                if (tile is IDynamicTile t && t.HasCreature) return Use(usedBy, t.TopCreatureOnStack, out combatAttackType);
                 return false;
             }
 
@@ -75,7 +76,10 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             var damage = (ushort)GameRandom.Random.Next(minValue: minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
             combatAttackType.DamageType = DamageType;
-            combatAttackType.Area = AreaEffect.Create(tile.Location, Area);
+
+            var template = AreaTypeStore.Get(Area);
+            combatAttackType.Area = AreaEffect.Create(tile.Location, Area, template);
+
             combatAttackType.EffectT = Effect;
 
             player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType, HasNoInjureEffect));

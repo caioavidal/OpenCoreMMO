@@ -40,7 +40,9 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.Attack, typeof(PlayerAttackHandler)},
             { GameIncomingPacketType.LookAt, typeof(PlayerLookAtHandler)},
             { GameIncomingPacketType.Speech, typeof(PlayerSayHandler)},
-            { GameIncomingPacketType.ChannelOpenPrivate, typeof(PlayerOpenPrivateChannelHandler)}
+            { GameIncomingPacketType.ChannelOpenPrivate, typeof(PlayerOpenPrivateChannelHandler)},
+            { GameIncomingPacketType.ChannelListRequest, typeof(PlayerChannelListRequestHandler)},
+            
         };
     }
 }

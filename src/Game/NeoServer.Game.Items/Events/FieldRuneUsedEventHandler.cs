@@ -5,6 +5,7 @@ using NeoServer.Game.Contracts.Items.Types.Runes;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Effects.Magical;
 
 namespace NeoServer.Game.Items.Events
@@ -25,7 +26,8 @@ namespace NeoServer.Game.Items.Events
 
             if (!string.IsNullOrWhiteSpace(rune.Area))
             {
-                foreach (var coordinate in AreaEffect.Create(onTile.Location, rune.Area))
+                var template = AreaTypeStore.Get(rune.Area);
+                foreach (var coordinate in AreaEffect.Create(onTile.Location, rune.Area, template))
                 {
                     var location = coordinate.Location;
                     var field = ItemFactory.Instance.Create(rune.Field, location, null);

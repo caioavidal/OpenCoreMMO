@@ -11,9 +11,9 @@ namespace NeoServer.Game.Effects.Magical
         public static Dictionary<string, (byte, byte)> originPoints = new Dictionary<string, (byte, byte)>();
 
        
-        public static Coordinate[] Create(string areaType)
+        public static Coordinate[] Create(string areaType, byte[,] areaTemplate)
         {
-            var array = AreaTypeParser.Parse(areaType);
+            var array = areaTemplate;
             if (array is null) return default;
 
             var origin = FindOriginPoint(areaType, array);
@@ -38,11 +38,11 @@ namespace NeoServer.Game.Effects.Magical
             return points[0..count];
         }
 
-        public static Coordinate[] Create(Location location, string areaType)
+        public static Coordinate[] Create(Location location, string areaType, byte[,] areaTemplate)
         {
             var i = 0;
 
-            var affectedLocations = Create(areaType);
+            var affectedLocations = Create(areaType, areaTemplate);
             var affectedArea = new Coordinate[affectedLocations.Length];
 
             foreach (var affectedlocation in affectedLocations)
