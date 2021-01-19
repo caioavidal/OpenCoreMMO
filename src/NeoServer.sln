@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data", "Data\NeoS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Data", "3 - Data", "{C859BCB0-ED88-4607-9687-6CE2B309643F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Standalone", "Server\NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj", "{853B0EBF-1BE1-4999-8574-45943790FF7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Standalone", "NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj", "{853B0EBF-1BE1-4999-8574-45943790FF7D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Security", "Server\NeoServer.Server.Security\NeoServer.Server.Security.csproj", "{BDD1E97A-0A19-482A-B211-320809D40167}"
 EndProject
@@ -57,7 +57,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Loaders", "5 - Loaders"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Jobs", "Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj", "{966C5E69-B1DF-4594-8C6F-C7F32C02866F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Benchmarks", "NeoServer.Benchmarks\NeoServer.Benchmarks.csproj", "{96C4E3BF-842D-4132-9A23-0BA35F2660F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Benchmarks", "..\benchmarks\NeoServer.Benchmarks\NeoServer.Benchmarks.csproj", "{96C4E3BF-842D-4132-9A23-0BA35F2660F2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{D181B6D8-1703-48CD-803F-71C9512037AA}"
 EndProject
