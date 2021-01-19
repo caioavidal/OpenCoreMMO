@@ -67,6 +67,7 @@ dotnet run -p "NeoServer.Server.Standalone"
 * C#
 * .Net 5
 * Database support: InMemory, MySQL, SQL Server and SQLite
+* Console Debug Logging
 * XUnit Testing
 
 ## Author
