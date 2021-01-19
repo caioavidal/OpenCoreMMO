@@ -37,19 +37,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Data\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj" />
-		<ProjectReference Include="..\..\Data\NeoServer.Data\NeoServer.Data.csproj" />
-		<ProjectReference Include="..\..\Networking\NeoServer.Networking\NeoServer.Networking.csproj" />
-		<ProjectReference Include="..\..\Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj" />
-		<ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
-		<ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-		<ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-		<ProjectReference Include="..\..\Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
-		<ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
-		<ProjectReference Include="..\..\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
-		<ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-		<ProjectReference Include="..\..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
-		<ProjectReference Include="..\..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
+		<ProjectReference Include="..\Data\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj" />
+		<ProjectReference Include="..\Data\NeoServer.Data\NeoServer.Data.csproj" />
+		<ProjectReference Include="..\Networking\NeoServer.Networking\NeoServer.Networking.csproj" />
+		<ProjectReference Include="..\Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj" />
+		<ProjectReference Include="..\Server\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+		<ProjectReference Include="..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+		<ProjectReference Include="..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+		<ProjectReference Include="..\Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
+		<ProjectReference Include="..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+		<ProjectReference Include="..\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
+		<ProjectReference Include="..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+		<ProjectReference Include="..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
+		<ProjectReference Include="..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
