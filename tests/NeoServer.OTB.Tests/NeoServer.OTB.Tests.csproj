@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NeoServer.OTB\NeoServer.OTB.csproj" />
+    <ProjectReference Include="..\..\src\Loaders\NeoServer.OTB\NeoServer.OTB.csproj" />
   </ItemGroup>
 
 </Project>

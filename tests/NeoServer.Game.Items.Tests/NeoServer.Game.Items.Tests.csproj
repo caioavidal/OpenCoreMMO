@@ -30,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
   </ItemGroup>
 

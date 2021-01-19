@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NeoServer.Game.Enums\NeoServer.Game.Common.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
   </ItemGroup>
 
 </Project>

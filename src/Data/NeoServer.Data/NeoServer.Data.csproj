@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+    <ProjectReference Include="..\..\Game\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

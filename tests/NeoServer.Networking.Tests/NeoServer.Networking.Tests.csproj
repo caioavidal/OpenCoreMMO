@@ -28,9 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
-    <ProjectReference Include="..\..\src\NeoServer.Networking\NeoServer.Networking.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+    <ProjectReference Include="..\..\src\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+    <ProjectReference Include="..\..\src\Networking\NeoServer.Networking\NeoServer.Networking.csproj" />
   </ItemGroup>
 
 </Project>
