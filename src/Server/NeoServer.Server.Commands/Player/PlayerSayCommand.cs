@@ -70,12 +70,9 @@ namespace NeoServer.Server.Commands.Player
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.Broadcast:
                     break;
-                
-                
                 case NeoServer.Game.Common.Talks.SpeechType.Private:
                 case NeoServer.Game.Common.Talks.SpeechType.PrivateRed:
                     SendMessageToPlayer(message);
-                    break;
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.MonsterSay:
                     break;
