@@ -26,7 +26,7 @@ namespace NeoServer.Scripts.Players.Loaders
             var newPlayer = new Tutor(
                 (uint)player.PlayerId,
                 player.Name,
-                4,
+                player.Vocation,
                 player.Gender,
                 player.Online,
                 ConvertToSkills(player),

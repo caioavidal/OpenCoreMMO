@@ -2,10 +2,12 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Chats;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.DataStore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,6 +63,8 @@ namespace NeoServer.Server.Compiler
                 MetadataReference.CreateFromFile(typeof(ICreature).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(Creature).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(BaseSpell).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(ChatChannel).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(ChatChannelStore).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(InvalidOperation).Assembly.Location)
 
 

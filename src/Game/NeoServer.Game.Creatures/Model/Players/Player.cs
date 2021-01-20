@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -23,6 +24,7 @@ using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Spells;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -82,6 +84,8 @@ namespace NeoServer.Server.Model.Players
         public event UseItem OnUsedItem;
         public event LogIn OnLoggedIn;
         public event LogOut OnLoggedOut;
+        public event PlayerJoinChannel OnJoinedChannel;
+        public event PlayerExitChannel OnExitedChannel;
 
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -607,6 +611,52 @@ namespace NeoServer.Server.Model.Players
             {
                 StartFollowing(target, PathSearchParams);
             }
+        }
+
+        public bool CanEnterOnChannel(ushort channelId)
+        {
+            var channel = ChatChannelStore.Data.Get(channelId);
+            return channel.PlayerCanJoin(this);
+        }
+        public bool JoinChannel(IChatChannel channel)
+        {
+            if (channel.HasUser(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You've already joined this chat channel");
+                return false;
+            }
+            if (!channel.AddUser(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You cannot join this chat channel");
+                return false;
+            }
+            
+            OnJoinedChannel?.Invoke(this, channel);
+            return true;
+        }
+        public bool ExitChannel(IChatChannel channel)
+        {
+            if (!channel.HasUser(this))
+            {
+                return false;
+            }
+            if (!channel.RemoveUser(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You cannot exit this chat channel");
+                return false;
+            }
+
+            OnExitedChannel?.Invoke(this, channel);
+            return true;
+        }
+        public bool SendMessage(IChatChannel channel, string message)
+        {
+            if(!channel.WriteMessage(this, message, out var cancelMessage))
+            {
+                OnOperationFailed?.Invoke(CreatureId, cancelMessage);
+                return false;
+            }
+            return true;
         }
     }
 }

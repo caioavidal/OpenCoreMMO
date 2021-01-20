@@ -1,14 +1,15 @@
-﻿using NeoServer.Server.Jobs.Creatures;
+﻿using NeoServer.Game.DataStore;
+using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Jobs.Items
 {
-    public class GameItemJob
+    public class GameChatChannelJob
     {
-        private const ushort EVENT_CHECK_ITEM_INTERVAL = 5000;
+        private const ushort EVENT_CHECK_ITEM_INTERVAL = 10000;
         private readonly Game game;
 
-        public GameItemJob(Game game)
+        public GameChatChannelJob(Game game)
         {
             this.game = game;
         }
@@ -17,12 +18,10 @@ namespace NeoServer.Server.Jobs.Items
         {
             game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_ITEM_INTERVAL, StartChecking));
 
-            foreach (var item in game.DecayableItemManager.Items) 
+            foreach (var channel in ChatChannelStore.Data.All)
             {
-                LiquidPoolJob.Execute(item, game);
+                ChatUserCleanupJob.Execute(channel);
             }
-
-            game.DecayableItemManager.Clean();
         }
     }
 }
