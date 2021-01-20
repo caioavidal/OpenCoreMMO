@@ -26,6 +26,7 @@ namespace NeoServer.Game.Contracts.Chats
         bool PlayerCanJoin(IPlayer player);
         bool PlayerCanWrite(IPlayer player);
         bool PlayerIsMuted(IPlayer player, out string cancelMessage);
+        bool RemoveUser(IPlayer player);
         bool WriteMessage(IPlayer player, string message, out string cancelMessage);
     }
 }

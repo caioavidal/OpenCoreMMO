@@ -2,7 +2,6 @@
 	{
 		"name": "World Chat",
 		"opened": true,
-		"can-close": false,
 		"enabled": true
 	},
 	{

@@ -85,6 +85,7 @@ namespace NeoServer.Server.Model.Players
         public event LogIn OnLoggedIn;
         public event LogOut OnLoggedOut;
         public event PlayerJoinChannel OnJoinedChannel;
+        public event PlayerExitChannel OnExitedChannel;
 
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -631,6 +632,21 @@ namespace NeoServer.Server.Model.Players
             }
             
             OnJoinedChannel?.Invoke(this, channel);
+            return true;
+        }
+        public bool ExitChannel(IChatChannel channel)
+        {
+            if (!channel.HasUser(this))
+            {
+                return false;
+            }
+            if (!channel.RemoveUser(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You cannot exit this chat channel");
+                return false;
+            }
+
+            OnExitedChannel?.Invoke(this, channel);
             return true;
         }
         public bool SendMessage(IChatChannel channel, string message)

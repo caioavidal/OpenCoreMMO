@@ -12,12 +12,14 @@ namespace NeoServer.Game.Creatures.Events
         private readonly CreatureTeleportedEventHandler creatureTeleportedEventHandler;
         private readonly PlayerDisappearedEventHandler playerDisappearedEventHandler;
         private readonly CreatureMovedEventHandler creatureMovedEventHandler;
-        private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler;
+        private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler; 
+        private readonly PlayerLoggedOutEventHandler  playerLoggedOutEventHandler;
+
 
         public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureDamagedEventHandler creatureDamagedEventHandler, CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler,
             CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler,
-            CreatureMovedEventHandler creatureMovedEventHandler, PlayerLoggedInEventHandler playerLoggedInEventHandler)
+            CreatureMovedEventHandler creatureMovedEventHandler, PlayerLoggedInEventHandler playerLoggedInEventHandler, PlayerLoggedOutEventHandler playerLoggedOutEventHandler)
         {
             this.creatureKilledEventHandler = creatureKilledEventHandler;
             this.creatureDamagedEventHandler = creatureDamagedEventHandler;
@@ -26,6 +28,7 @@ namespace NeoServer.Game.Creatures.Events
             this.playerDisappearedEventHandler = playerDisappearedEventHandler;
             this.creatureMovedEventHandler = creatureMovedEventHandler;
             this.playerLoggedInEventHandler = playerLoggedInEventHandler;
+            this.playerLoggedOutEventHandler = playerLoggedOutEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -45,6 +48,7 @@ namespace NeoServer.Game.Creatures.Events
             {
                 player.OnLoggedOut += playerDisappearedEventHandler.Execute;
                 player.OnLoggedIn += playerLoggedInEventHandler.Execute;
+                player.OnLoggedOut += playerLoggedOutEventHandler.Execute;
             }
          
         }
@@ -66,6 +70,8 @@ namespace NeoServer.Game.Creatures.Events
             if (creature is IPlayer player)
             {
                 player.OnLoggedOut -= playerDisappearedEventHandler.Execute;
+                player.OnLoggedIn -= playerLoggedInEventHandler.Execute;
+                player.OnLoggedOut -= playerLoggedOutEventHandler.Execute;
             }
         }
     }

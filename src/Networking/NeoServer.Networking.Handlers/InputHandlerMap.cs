@@ -43,6 +43,7 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.ChannelOpenPrivate, typeof(PlayerOpenPrivateChannelHandler)},
             { GameIncomingPacketType.ChannelListRequest, typeof(PlayerChannelListRequestHandler)},
             { GameIncomingPacketType.ChannelOpen, typeof(PlayerOpenChannelHandler)},
+            { GameIncomingPacketType.ChannelClose, typeof(PlayerCloseChannelHandler)},
         };
     }
 }

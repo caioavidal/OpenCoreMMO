@@ -34,10 +34,20 @@ namespace NeoServer.Game.Chats
 
             return ChatColor;
         }
-        public bool HasUser(IPlayer player) => users.ContainsKey(player.Id);
+        public bool HasUser(IPlayer player) => users.TryGetValue(player.Id, out var user) && user.Removed == false;
         public bool AddUser(IPlayer player)
         {
             if (!PlayerCanJoin(player)) return false;
+
+            if (users.TryGetValue(player.Id, out var user))
+            {
+                if (user.Removed == true)
+                {
+                    user.MarkAsAdded();
+                    return true;
+                }
+                return false;
+            }
             return users.TryAdd(player.Id, new ChatUser { Player = player });
         }
         public IEnumerable<IPlayer> Users => users.Values.Select(x => x.Player); //todo: optimize
@@ -45,7 +55,15 @@ namespace NeoServer.Game.Chats
         public string Description { get; init; }
         public bool Opened { get; init; }
 
-        public bool RemoveUser(IPlayer player) => users.Remove(player.Id);
+        public bool RemoveUser(IPlayer player)
+        {
+            if (users.TryGetValue(player.Id, out var user))
+            {
+                if (!user.IsMuted) users.Remove(player.Id);
+                else user.MarkAsRemoved();
+            }
+            return true;
+        }
         public ChatUser[] GetAllUsers() => users.Values.ToArray();
         public bool PlayerCanJoin(IPlayer player) => Validate(JoinRule, player);
         public bool PlayerCanWrite(IPlayer player) => users.ContainsKey(player.Id) && Validate(WriteRule, player);
@@ -54,7 +72,7 @@ namespace NeoServer.Game.Chats
             cancelMessage = default;
             if (users.TryGetValue(player.Id, out var user) && user.IsMuted)
             {
-                cancelMessage = string.IsNullOrWhiteSpace(MuteRule.CancelMessage) ? $"You're muted for {user.RemainingMutedSeconds} seconds" : MuteRule.CancelMessage;
+                cancelMessage = string.IsNullOrWhiteSpace(MuteRule.CancelMessage) ? $"You are muted for {user.RemainingMutedSeconds} seconds" : MuteRule.CancelMessage;
                 return true;
             }
             return false;
@@ -62,18 +80,21 @@ namespace NeoServer.Game.Chats
 
         public bool WriteMessage(IPlayer player, string message, out string cancelMessage)
         {
-            if (users.TryGetValue(player.Id, out var user))
-            {
-                user.UpdateLastMessage(MuteRule);
-            }
-
             cancelMessage = default;
             if (!PlayerCanWrite(player))
             {
                 cancelMessage = "You cannot send message to this channel";
                 return false;
             }
+
             if (PlayerIsMuted(player, out cancelMessage)) return false;
+
+            if (users.TryGetValue(player.Id, out var user))
+            {
+                user.UpdateLastMessage(MuteRule);
+            }
+
+           
 
             OnMessageAdded?.Invoke(player, this, GetTextColor(player.VocationType), message);
             return true;
@@ -105,7 +126,7 @@ namespace NeoServer.Game.Chats
         public long LastMessage { get; private set; }
         public ushort MutedForSeconds { get; set; }
         private ushort lastMutedForSeconds;
-
+        public bool Removed { get; private set; }
         private long firstMessageBeforeMuted;
         public ushort MessagesCount { get; private set; }
         public int RemainingMutedSeconds => MutedForSeconds == 0 ? 0 : TimeSpan.FromTicks((LastMessage + (TimeSpan.TicksPerSecond * MutedForSeconds)) - DateTime.Now.Ticks).Seconds;
@@ -115,7 +136,7 @@ namespace NeoServer.Game.Chats
         {
             ushort secondsSinceFirstMessage = (ushort)TimeSpan.FromTicks(DateTime.Now.Ticks - firstMessageBeforeMuted).Seconds;
 
-            if (secondsSinceFirstMessage > rule.TimeToBlock) MessagesCount = 0;
+            if (secondsSinceFirstMessage > 0 && secondsSinceFirstMessage > rule.TimeToBlock) MessagesCount = 0;
 
             if (!IsMuted)
             {
@@ -133,12 +154,16 @@ namespace NeoServer.Game.Chats
                 MessagesCount = 0;
             }
 
-            if (MessagesCount > rule.MessagesCount && secondsSinceFirstMessage <= rule.TimeToBlock)
+            if (MessagesCount >= rule.MessagesCount && secondsSinceFirstMessage <= rule.TimeToBlock)
             {
                 var waitTime = lastMutedForSeconds == 0 ? (rule.WaitTime == default ? 1 : rule.WaitTime) : lastMutedForSeconds * (rule.TimeMultiplier == 0 ? 1 : rule.TimeMultiplier);
                 MutedForSeconds = (ushort)waitTime;
             }
         }
+
+        public void MarkAsRemoved() => Removed = true;
+        public void MarkAsAdded() => Removed = false;
+
     }
     public struct ChannelRule
     {

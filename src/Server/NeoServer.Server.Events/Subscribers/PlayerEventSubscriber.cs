@@ -25,7 +25,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerUsedItemEventHandler playerUsedItemEventHandler;
         private readonly PlayerSelfAppearOnMapEventHandler  playerSelfAppearOnMapEventHandler;
         private readonly PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler;
-
+        private readonly PlayerExitedChannelEventHandler playerExitedChannelEventHandler;
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
             PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
             ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler,
@@ -34,7 +34,7 @@ namespace NeoServer.Server.Events
             PlayerConditionChangedEventHandler playerConditionChangedEventHandler, PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler,
             PlayerOperationFailedEventHandler playerOperationFailedEventHandler, PlayerLookedAtEventHandler playerLookedAtEventHandler,
             PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler,
-            PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler, PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler)
+            PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler, PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler, PlayerExitedChannelEventHandler playerExitedChannelEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -55,6 +55,7 @@ namespace NeoServer.Server.Events
             this.playerUsedItemEventHandler = playerUsedItemEventHandler;
             this.playerSelfAppearOnMapEventHandler = playerSelfAppearOnMapEventHandler;
             this.playerJoinedChannelEventHandler = playerJoinedChannelEventHandler;
+            this.playerExitedChannelEventHandler = playerExitedChannelEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -93,6 +94,7 @@ namespace NeoServer.Server.Events
             player.OnUsedItem += playerUsedItemEventHandler.Execute;
             player.OnLoggedIn += playerSelfAppearOnMapEventHandler.Execute;
             player.OnJoinedChannel += playerJoinedChannelEventHandler.Execute;
+            player.OnExitedChannel += playerExitedChannelEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -131,6 +133,8 @@ namespace NeoServer.Server.Events
             player.OnUsedItem -= playerUsedItemEventHandler.Execute;
             player.OnLoggedIn -= playerSelfAppearOnMapEventHandler.Execute;
             player.OnJoinedChannel -= playerJoinedChannelEventHandler.Execute;
+            player.OnExitedChannel -= playerExitedChannelEventHandler.Execute;
+
         }
     }
 }

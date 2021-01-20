@@ -48,7 +48,8 @@
         OpenChannel = 0xAC,
         OpenPrivateChannel = 0xAD,
         SendPrivateMessage = 0xAA,
-        ChannelList = 0xAB
+        ChannelList = 0xAB,
+        CloseChannel = 0xB3
 
     }
 }
