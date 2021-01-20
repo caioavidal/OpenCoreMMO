@@ -45,6 +45,7 @@
         OutfitWindow = 0xC8,
         ReLoginWindow = 0x28,
         ChangeSpeed = 0x8F,
+        OpenChannel = 0xAC,
         OpenPrivateChannel = 0xAD,
         SendPrivateMessage = 0xAA,
         ChannelList = 0xAB

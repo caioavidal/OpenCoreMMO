@@ -30,16 +30,13 @@ namespace NeoServer.Game.Chats
 
             return ChatColor;
         }
-        public void Join(IPlayer player)
+
+        public bool AddUser(IPlayer player)
         {
-            AddUser(player);
+            if (!PlayerCanJoin(player)) return false;
+            return users.TryAdd(player.Id, new ChatUser { Player = player });
         }
-        public void Exit(IPlayer player)
-        {
-            RemoveUser(player);
-        }
-        protected bool AddUser(IPlayer player) => users.TryAdd(player.Id, new ChatUser { Player = player });
-        protected bool RemoveUser(IPlayer player) => users.Remove(player.Id);
+        public bool RemoveUser(IPlayer player) => users.Remove(player.Id);
         public ChatUser[] GetAllUsers() => users.Values.ToArray();
         public bool PlayerCanJoin(IPlayer player) => Validate(JoinRule, player);
         public bool PlayerCanWrite(IPlayer player) => Validate(WriteRule, player);

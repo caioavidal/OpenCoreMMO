@@ -13,6 +13,7 @@ namespace NeoServer.Game.Contracts.Chats
         ushort Id { get; }
         string Name { get; }
 
+        bool AddUser(IPlayer player);
         TextColor GetTextColor(byte vocation);
         bool PlayerCanJoin(IPlayer player);
         bool PlayerCanWrite(IPlayer player);

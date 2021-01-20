@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -83,6 +84,7 @@ namespace NeoServer.Server.Model.Players
         public event UseItem OnUsedItem;
         public event LogIn OnLoggedIn;
         public event LogOut OnLoggedOut;
+        public event PlayerJoinChannel OnJoinedChannel;
 
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -614,6 +616,17 @@ namespace NeoServer.Server.Model.Players
         {
             var channel = ChatChannelStore.Data.Get(channelId);
             return channel.PlayerCanJoin(this);
+        }
+        public bool JoinChannel(IChatChannel channel)
+        {
+            if (!channel.AddUser(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You cannot join this chat channel");
+                return false;
+            }
+            
+            OnJoinedChannel?.Invoke(this, channel);
+            return true;
         }
     }
 }

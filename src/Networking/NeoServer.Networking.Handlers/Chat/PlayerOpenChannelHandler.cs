@@ -1,4 +1,6 @@
-﻿using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.DataStore;
+using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
@@ -15,12 +17,12 @@ namespace NeoServer.Server.Handlers.Player
         }
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            var channel = new OpenPrivateChannelPacket(message);
+            var channelPacket = new OpenChannelPacket(message);
             if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
 
+            if(ChatChannelStore.Data.Get(channelPacket.ChannelId) is not IChatChannel channel) return;
 
-            //connection.OutgoingPackets.Enqueue(new PlayerOpenPrivateChannelPacket(receiver.Name));
-            //connection.Send();
+            game.Dispatcher.AddEvent(new Event(() => player.JoinChannel(channel)));            
         }
     }
 }

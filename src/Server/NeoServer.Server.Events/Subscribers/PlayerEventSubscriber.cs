@@ -24,6 +24,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler;
         private readonly PlayerUsedItemEventHandler playerUsedItemEventHandler;
         private readonly PlayerSelfAppearOnMapEventHandler  playerSelfAppearOnMapEventHandler;
+        private readonly PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler;
 
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
             PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
@@ -32,8 +33,8 @@ namespace NeoServer.Server.Events
             PlayerManaChangedEventHandler playerManaReducedEventHandler, SpellInvokedEventHandler playerUsedSpellEventHandler, PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler,
             PlayerConditionChangedEventHandler playerConditionChangedEventHandler, PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler,
             PlayerOperationFailedEventHandler playerOperationFailedEventHandler, PlayerLookedAtEventHandler playerLookedAtEventHandler,
-            PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler, 
-            PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler)
+            PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler,
+            PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler, PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -53,6 +54,7 @@ namespace NeoServer.Server.Events
             this.playerGainedSkillPointsEventHandler = playerGainedSkillPointsEventHandler;
             this.playerUsedItemEventHandler = playerUsedItemEventHandler;
             this.playerSelfAppearOnMapEventHandler = playerSelfAppearOnMapEventHandler;
+            this.playerJoinedChannelEventHandler = playerJoinedChannelEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -90,6 +92,7 @@ namespace NeoServer.Server.Events
             player.OnGainedSkillPoint += playerGainedSkillPointsEventHandler.Execute;
             player.OnUsedItem += playerUsedItemEventHandler.Execute;
             player.OnLoggedIn += playerSelfAppearOnMapEventHandler.Execute;
+            player.OnJoinedChannel += playerJoinedChannelEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -127,6 +130,7 @@ namespace NeoServer.Server.Events
             player.OnGainedSkillPoint -= playerGainedSkillPointsEventHandler.Execute;
             player.OnUsedItem -= playerUsedItemEventHandler.Execute;
             player.OnLoggedIn -= playerSelfAppearOnMapEventHandler.Execute;
+            player.OnJoinedChannel -= playerJoinedChannelEventHandler.Execute;
         }
     }
 }
