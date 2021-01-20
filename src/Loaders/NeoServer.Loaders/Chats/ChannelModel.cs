@@ -48,7 +48,7 @@ namespace NeoServer.Loaders.Chats
             [JsonProperty("wait-time")]
             public ushort WaitTime { get; set; }
             [JsonProperty("time-multiplier")]
-            public byte TimeMultiplier { get; set; }
+            public double TimeMultiplier { get; set; }
             [JsonProperty("cancel-message")]
             public string CancelMessage { get; set; }
         }
