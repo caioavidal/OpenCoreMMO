@@ -17,9 +17,9 @@ namespace NeoServer.Server.Jobs.Creatures
             this.spawnManager = spawnManager;
         }
 
-        public void StartCheckingCreatures()
+        public void StartChecking()
         {
-            game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartCheckingCreatures));
+            game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartChecking));
 
             foreach (var creature in game.CreatureManager.GetCreatures()) 
             {

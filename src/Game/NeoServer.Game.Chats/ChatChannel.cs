@@ -50,7 +50,7 @@ namespace NeoServer.Game.Chats
             }
             return users.TryAdd(player.Id, new ChatUser { Player = player });
         }
-        public IEnumerable<IPlayer> Users => users.Values.Select(x => x.Player); //todo: optimize
+        public IEnumerable<IChatUser> Users => users.Values; 
 
         public string Description { get; init; }
         public bool Opened { get; init; }
@@ -120,7 +120,7 @@ namespace NeoServer.Game.Chats
         public double TimeMultiplier { get; set; }
         public string CancelMessage { get; set; }
     }
-    public class ChatUser
+    public class ChatUser: IChatUser
     {
         public IPlayer Player { get; init; }
         public long LastMessage { get; private set; }

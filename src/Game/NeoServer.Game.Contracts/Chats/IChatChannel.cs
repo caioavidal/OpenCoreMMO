@@ -14,7 +14,7 @@ namespace NeoServer.Game.Contracts.Chats
     {
         ushort Id { get; }
         string Name { get; }
-        IEnumerable<IPlayer> Users { get; }
+        IEnumerable<IChatUser> Users { get; }
         string Description { get; }
         bool Opened { get; }
 
@@ -28,5 +28,12 @@ namespace NeoServer.Game.Contracts.Chats
         bool PlayerIsMuted(IPlayer player, out string cancelMessage);
         bool RemoveUser(IPlayer player);
         bool WriteMessage(IPlayer player, string message, out string cancelMessage);
+    }
+
+    public interface IChatUser
+    {
+        bool Removed { get; }
+        bool IsMuted { get; }
+        IPlayer Player { get; init; }
     }
 }

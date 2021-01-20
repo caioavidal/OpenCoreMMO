@@ -28,7 +28,7 @@ namespace NeoServer.Server.Events.Chat
 
             foreach (var user in chatChannel.Users)
             {
-                if (!game.CreatureManager.GetPlayerConnection(user.CreatureId, out IConnection connection)) continue;
+                if (!game.CreatureManager.GetPlayerConnection(user.Player.CreatureId, out IConnection connection)) continue;
                 connection.OutgoingPackets.Enqueue(new MessageToChannelPacket(player, speechType, message, chatChannel.Id));
                 connection.Send();
             }

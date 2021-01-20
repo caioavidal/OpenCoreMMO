@@ -132,9 +132,12 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
             builder.RegisterType<EventSubscriber>().SingleInstance();
+
+            //todo: inherit these jobs from interface and register by implementation
             builder.RegisterType<GameCreatureJob>().SingleInstance();
             builder.RegisterType<GameItemJob>().SingleInstance();
-
+            builder.RegisterType<GameChatChannelJob>().SingleInstance();
+            
             //Database
             builder.RegisterContext<NeoContext>();
 
