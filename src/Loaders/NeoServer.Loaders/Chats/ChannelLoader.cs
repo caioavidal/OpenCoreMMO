@@ -30,7 +30,7 @@ namespace NeoServer.Scripts.Chats
 
             var channels = JsonConvert.DeserializeObject<List<ChannelModel>>(jsonString);
 
-            foreach (var channel in channels)
+            foreach (var channel in channels.Where(x=>x.Enabled))
             {
                 var createdChannel = chatChannelFactory.Create(channel.Name, channel.Description,
                     ParseColor(channel.Color?.Default),

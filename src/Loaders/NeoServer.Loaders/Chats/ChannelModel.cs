@@ -11,6 +11,7 @@ namespace NeoServer.Loaders.Chats
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool Enabled { get; set; } = true;
         [JsonProperty("allowed-vocations")]
         public byte[] Vocations { get; set; }
         [JsonProperty("allowed-levels")]

@@ -1,6 +1,9 @@
 [
 	{
-		"name": "World Chat"
+		"name": "World Chat",
+		"opened": true,
+		"can-close": false,
+		"enabled": false
 	},
 	{
 	    "name": "English Chat"
@@ -54,9 +57,8 @@ It goes without saying that all advertisements must conform to the Tibia Rules, 
 		"mute-rule":{
 			"messages-count": 1,
 			"time-to-block": 5,
-			"wait-time": 120,
+			"wait-time": 10,
 			"time-multiplier": 1,
-			"cancel-message":"You may only place one offer in two minutes."
 		}
 	}
 ]
