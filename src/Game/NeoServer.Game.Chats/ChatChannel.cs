@@ -41,6 +41,9 @@ namespace NeoServer.Game.Chats
             return users.TryAdd(player.Id, new ChatUser { Player = player });
         }
         public IEnumerable<IPlayer> Users => users.Values.Select(x => x.Player); //todo: optimize
+
+        public string Description { get; set; }
+
         public bool RemoveUser(IPlayer player) => users.Remove(player.Id);
         public ChatUser[] GetAllUsers() => users.Values.ToArray();
         public bool PlayerCanJoin(IPlayer player) => Validate(JoinRule, player);
@@ -87,7 +90,7 @@ namespace NeoServer.Game.Chats
     }
     public struct MuteRule
     {
-        public static MuteRule Default => new MuteRule { MessagesCount = 5, TimeMultiplier = 2.5, TimeToBlock = 10, WaitTime = 5 };
+        public static MuteRule Default => new MuteRule { MessagesCount = 5, TimeMultiplier = 4, TimeToBlock = 10, WaitTime = 5 };
         public bool None => MessagesCount == default && TimeToBlock == default && WaitTime == default && TimeMultiplier == default && CancelMessage == default;
         public ushort MessagesCount { get; set; }
         public ushort TimeToBlock { get; set; }
@@ -129,7 +132,7 @@ namespace NeoServer.Game.Chats
                 MessagesCount = 0;
             }
 
-            if (MessagesCount >= rule.MessagesCount && secondsSinceFirstMessage <= rule.TimeToBlock)
+            if (MessagesCount > rule.MessagesCount && secondsSinceFirstMessage <= rule.TimeToBlock)
             {
                 var waitTime = lastMutedForSeconds == 0 ? (rule.WaitTime == default ? 1 : rule.WaitTime) : lastMutedForSeconds * (rule.TimeMultiplier == 0 ? 1 : rule.TimeMultiplier);
                 MutedForSeconds = (ushort)waitTime;

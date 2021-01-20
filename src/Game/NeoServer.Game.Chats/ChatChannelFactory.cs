@@ -14,12 +14,13 @@ namespace NeoServer.Game.Chats
 {
     public class ChatChannelFactory
     {
-        public IChatChannel Create(string name, SpeechType chatColor, Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule, MuteRule muteRule)
+        public IChatChannel Create(string name,string description, SpeechType chatColor, Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule, MuteRule muteRule)
         {
             var id = GenerateUniqueId();
 
             var channel = new ChatChannel(id, name)
             {
+                Description = description,
                 ChatColor = chatColor == SpeechType.None ? SpeechType.ChannelY : chatColor,
                 ChatColorByVocation = chatColorByVocation ?? default,
                 JoinRule = joinRule,

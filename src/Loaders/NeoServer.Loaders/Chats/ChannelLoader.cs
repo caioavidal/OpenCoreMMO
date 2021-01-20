@@ -32,7 +32,7 @@ namespace NeoServer.Scripts.Chats
 
             foreach (var channel in channels)
             {
-                var createdChannel = chatChannelFactory.Create(channel.Name,
+                var createdChannel = chatChannelFactory.Create(channel.Name, channel.Description,
                     ParseColor(channel.Color?.Default),
                     channel.Color?.ByVocation?.ToDictionary(x => (byte)x.Key, x => ParseColor(x.Value)) ?? default,
                     new ChannelRule

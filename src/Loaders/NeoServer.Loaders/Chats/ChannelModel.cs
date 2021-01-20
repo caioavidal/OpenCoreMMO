@@ -10,6 +10,7 @@ namespace NeoServer.Loaders.Chats
     public class ChannelModel
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         [JsonProperty("allowed-vocations")]
         public byte[] Vocations { get; set; }
         [JsonProperty("allowed-levels")]

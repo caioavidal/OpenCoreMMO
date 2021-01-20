@@ -21,8 +21,6 @@ namespace NeoServer.Networking.Packets.Outgoing
         public ushort ChannelId { get; }
         public override void WriteToMessage(INetworkMessage message)
         {
-            if (From is null) return;
-
             message.AddByte((byte)GameOutgoingPacketType.SendPrivateMessage);
             message.AddUInt32(0x00);
 
@@ -35,7 +33,14 @@ namespace NeoServer.Networking.Packets.Outgoing
             }
             else
             {
-                message.AddString(From.Name);
+                if (From is not null)
+                {
+                    message.AddString(From.Name);
+                }
+                else
+                {
+                    message.AddString(string.Empty);
+                }
                 //Add level only for players
                 if (From is IPlayer player)
                 {

@@ -15,6 +15,7 @@ namespace NeoServer.Game.Contracts.Chats
         ushort Id { get; }
         string Name { get; }
         IEnumerable<IPlayer> Users { get; }
+        string Description { get; set; }
 
         event AddMessage OnMessageAdded;
 
