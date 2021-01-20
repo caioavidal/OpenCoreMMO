@@ -42,7 +42,8 @@ namespace NeoServer.Game.Chats
         }
         public IEnumerable<IPlayer> Users => users.Values.Select(x => x.Player); //todo: optimize
 
-        public string Description { get; set; }
+        public string Description { get; init; }
+        public bool Opened { get; init; }
 
         public bool RemoveUser(IPlayer player) => users.Remove(player.Id);
         public ChatUser[] GetAllUsers() => users.Values.ToArray();

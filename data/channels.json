@@ -3,7 +3,7 @@
 		"name": "World Chat",
 		"opened": true,
 		"can-close": false,
-		"enabled": false
+		"enabled": true
 	},
 	{
 	    "name": "English Chat"

@@ -12,11 +12,12 @@ namespace NeoServer.Game.Creatures.Events
         private readonly CreatureTeleportedEventHandler creatureTeleportedEventHandler;
         private readonly PlayerDisappearedEventHandler playerDisappearedEventHandler;
         private readonly CreatureMovedEventHandler creatureMovedEventHandler;
+        private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler;
 
         public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureDamagedEventHandler creatureDamagedEventHandler, CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler,
-            CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler, 
-            CreatureMovedEventHandler creatureMovedEventHandler)
+            CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler,
+            CreatureMovedEventHandler creatureMovedEventHandler, PlayerLoggedInEventHandler playerLoggedInEventHandler)
         {
             this.creatureKilledEventHandler = creatureKilledEventHandler;
             this.creatureDamagedEventHandler = creatureDamagedEventHandler;
@@ -24,6 +25,7 @@ namespace NeoServer.Game.Creatures.Events
             this.creatureTeleportedEventHandler = creatureTeleportedEventHandler;
             this.playerDisappearedEventHandler = playerDisappearedEventHandler;
             this.creatureMovedEventHandler = creatureMovedEventHandler;
+            this.playerLoggedInEventHandler = playerLoggedInEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -42,6 +44,7 @@ namespace NeoServer.Game.Creatures.Events
             if (creature is IPlayer player)
             {
                 player.OnLoggedOut += playerDisappearedEventHandler.Execute;
+                player.OnLoggedIn += playerLoggedInEventHandler.Execute;
             }
          
         }
