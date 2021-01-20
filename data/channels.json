@@ -6,7 +6,14 @@
 	    "name": "English Chat"
 	},
 	{
-	    "name": "Advertising"
+	    "name": "Advertising",
+		"mute-rule":{
+			"messages-count": 1,
+			"time-to-block": 120,
+			"wait-time": 120,
+			"time-multiplier": 1,
+			"cancel-message":"You may only place one offer in two minutes."
+		}
 	},
 	{
 	    "name": "Help"
@@ -37,6 +44,13 @@
 			  "7": 1,
 			  "8": 2
 			}
+		},
+		"mute-rule":{
+			"messages-count": 1,
+			"time-to-block": 5,
+			"wait-time": 120,
+			"time-multiplier": 1,
+			"cancel-message":"You may only place one offer in two minutes."
 		}
 	}
 ]

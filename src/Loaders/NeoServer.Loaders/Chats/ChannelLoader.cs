@@ -44,6 +44,14 @@ namespace NeoServer.Scripts.Chats
                     {
                         AllowedVocations = channel.Write?.Vocations ?? default,
                         MinMaxAllowedLevel = (channel.Write?.Level?.BiggerThan ?? 0, channel.Write?.Level?.LowerThan ?? 0)
+                    },
+                    MuleRule = channel.MuteRule is null ? default : new MuteRule
+                    {
+                        CancelMessage = channel.MuteRule.CancelMessage,
+                        MessagesCount = channel.MuteRule.MessagesCount,
+                        TimeMultiplier = channel.MuteRule.TimeMultiplier,
+                        TimeToBlock = channel.MuteRule.TimeToBlock,
+                        WaitTime = channel.MuteRule.WaitTime
                     }
                 });
             }

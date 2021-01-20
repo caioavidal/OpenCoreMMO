@@ -17,6 +17,8 @@ namespace NeoServer.Loaders.Chats
         [JsonProperty("write-rules")]
         public WriteModel Write { get; set; }
         public ColorModel Color { get; set; }
+        [JsonProperty("mute-rule")]
+        public MuteRuleModel MuteRule { get; set; }
         public class LevelModel
         {
             [JsonProperty("bigger-than")]
@@ -37,7 +39,19 @@ namespace NeoServer.Loaders.Chats
             [JsonProperty("by-vocation")]
             public Dictionary<int, int> ByVocation { get; set; }
         }
-        
+        public class MuteRuleModel
+        {
+            [JsonProperty("messages-count")]
+            public ushort MessagesCount { get; set; }
+            [JsonProperty("time-to-block")]
+            public ushort TimeToBlock { get; set; }
+            [JsonProperty("wait-time")]
+            public ushort WaitTime { get; set; }
+            [JsonProperty("time-multiplier")]
+            public byte TimeMultiplier { get; set; }
+            [JsonProperty("cancel-message")]
+            public string CancelMessage { get; set; }
+        }
         
     }
 }

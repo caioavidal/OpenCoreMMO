@@ -21,6 +21,7 @@ namespace NeoServer.Game.Chats
         public string Name { get; }
         public ChannelRule JoinRule { get; init; }
         public ChannelRule WriteRule { get; init; }
+        public MuteRule MuleRule { get; init; }
         public TextColor ChatColor { get; init; }
         public Dictionary<byte, TextColor> ChatColorByVocation { private get; init; }
 
@@ -50,7 +51,15 @@ namespace NeoServer.Game.Chats
             return true;
         }
     }
-
+    public struct MuteRule
+    {
+        public bool None => MessagesCount == default && TimeToBlock == default && WaitTime == default && TimeMultiplier == default && CancelMessage == default;
+        public ushort MessagesCount { get; set; }
+        public ushort TimeToBlock { get; set; }
+        public ushort WaitTime { get; set; }
+        public byte TimeMultiplier { get; set; }
+        public string CancelMessage { get; set; }
+    }
     public struct ChatUser
     {
         public IPlayer Player { get; init; }
