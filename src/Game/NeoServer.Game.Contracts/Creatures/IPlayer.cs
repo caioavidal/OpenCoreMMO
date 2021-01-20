@@ -149,6 +149,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void SendMessageTo(IPlayer player);
         bool CastSpell(string message);
         bool JoinChannel(IChatChannel channel);
+        bool SendMessage(IChatChannel channel, string message);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";

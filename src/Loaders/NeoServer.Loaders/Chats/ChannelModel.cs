@@ -35,9 +35,9 @@ namespace NeoServer.Loaders.Chats
         }
         public class ColorModel
         {
-            public int Default { get; set; }
+            public string Default { get; set; }
             [JsonProperty("by-vocation")]
-            public Dictionary<int, int> ByVocation { get; set; }
+            public Dictionary<int, string> ByVocation { get; set; }
         }
         public class MuteRuleModel
         {

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.DataStore\NeoServer.Game.DataStore.csproj" />
   </ItemGroup>
 
 </Project>

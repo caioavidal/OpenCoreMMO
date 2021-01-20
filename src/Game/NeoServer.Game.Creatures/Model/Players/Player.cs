@@ -619,6 +619,11 @@ namespace NeoServer.Server.Model.Players
         }
         public bool JoinChannel(IChatChannel channel)
         {
+            if (channel.HasUser(this))
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You've already joined this chat channel");
+                return false;
+            }
             if (!channel.AddUser(this))
             {
                 OnOperationFailed?.Invoke(CreatureId, "You cannot join this chat channel");
@@ -626,6 +631,15 @@ namespace NeoServer.Server.Model.Players
             }
             
             OnJoinedChannel?.Invoke(this, channel);
+            return true;
+        }
+        public bool SendMessage(IChatChannel channel, string message)
+        {
+            if(!channel.WriteMessage(this, message, out var cancelMessage))
+            {
+                OnOperationFailed?.Invoke(CreatureId, cancelMessage);
+                return false;
+            }
             return true;
         }
     }

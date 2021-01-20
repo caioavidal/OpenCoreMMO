@@ -7,6 +7,7 @@ using NeoServer.Data.Providers.InMemoryDB.Extensions;
 using NeoServer.Data.Providers.MySQL.Extensions;
 using NeoServer.Data.Providers.SQLite.Extensions;
 using NeoServer.Data.Repositories;
+using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -121,6 +122,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
+            builder.RegisterType<ChatChannelFactory>().OnActivated(e => e.Instance.ChannelEventSubscribers = e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>()).SingleInstance();
             builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
 
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
@@ -179,6 +181,8 @@ namespace NeoServer.Server.Standalone.IoC
             var types = AppDomain.CurrentDomain.GetAssemblies();
             builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
             builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
+            builder.RegisterAssemblyTypes(types).As<IChatChannelEventSubscriber>().SingleInstance();
+
         }
         private static void RegisterPlayerLoaders(this ContainerBuilder builder)
         {

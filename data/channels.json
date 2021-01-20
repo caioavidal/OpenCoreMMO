@@ -16,7 +16,11 @@
 		}
 	},
 	{
-	    "name": "Help"
+	    "name": "Help",
+		"color":{
+			"default":"white"
+		}
+			
 	},
 	{
 		"name":"Rookgaard",
@@ -39,10 +43,10 @@
 	{
 		"name":"Channel X",
 		"color":{
-			"default":1,
+			"default":"yellow",
 			"by-vocation":{
-			  "7": 1,
-			  "8": 2
+			  "4": "red",
+			  "8": "orange"
 			}
 		},
 		"mute-rule":{

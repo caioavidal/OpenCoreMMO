@@ -1,4 +1,6 @@
-﻿using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.DataStore;
+using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
@@ -33,7 +35,7 @@ namespace NeoServer.Server.Commands.Player
             var message = playerSayPacket.Message.Trim();
 
             if (player.CastSpell(message)) return;
-            
+
             switch (playerSayPacket.Talk)
             {
                 case NeoServer.Game.Common.Talks.SpeechType.None:
@@ -48,10 +50,15 @@ namespace NeoServer.Server.Commands.Player
                 case NeoServer.Game.Common.Talks.SpeechType.PrivatePn:
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.PrivateNp:
-
-                
                     break;
+
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelO:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelR1:
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelY:
+                    SendMessageToChannel(playerSayPacket.ChannelId, message);
+                    break;
+
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelR2:
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelW:
                     break;
@@ -63,20 +70,12 @@ namespace NeoServer.Server.Commands.Player
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.Broadcast:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelR1:
-                    break;
-                    case NeoServer.Game.Common.Talks.SpeechType.Private:
+                
+                
+                case NeoServer.Game.Common.Talks.SpeechType.Private:
                 case NeoServer.Game.Common.Talks.SpeechType.PrivateRed:
-#if GAME_FEATURE_RULEVIOLATION
-		        case TALKTYPE_RVR_ANSWER:
-#endif
                     SendMessageToPlayer(message);
-
-
-                        break;
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelO:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelR2:
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.MonsterSay:
                     break;
@@ -99,6 +98,11 @@ namespace NeoServer.Server.Commands.Player
 
             receiverConnection.OutgoingPackets.Enqueue(new PlayerSendPrivateMessagePacket(player, playerSayPacket.Talk, message));
             receiverConnection.Send();
+        }
+        private void SendMessageToChannel(ushort channelId, string message)
+        {
+            if (ChatChannelStore.Data.Get(channelId) is not IChatChannel channel) return;
+            player.SendMessage(channel, message);
         }
     }
 }

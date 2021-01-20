@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Chats;
 using NeoServer.Loaders.Interfaces;
@@ -16,10 +17,12 @@ namespace NeoServer.Scripts.Chats
     {
         private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
-        public ChannelLoader(ServerConfiguration serverConfiguration, Logger logger)
+        private readonly ChatChannelFactory chatChannelFactory;
+        public ChannelLoader(ServerConfiguration serverConfiguration, Logger logger, ChatChannelFactory chatChannelFactory)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
+            this.chatChannelFactory = chatChannelFactory;
         }
         public void Load()
         {
@@ -29,34 +32,44 @@ namespace NeoServer.Scripts.Chats
 
             foreach (var channel in channels)
             {
-                var id = RandomIdGenerator.Generate(ushort.MaxValue);
-
-                ChatChannelStore.Data.Add(id, new ChatChannel(id, channel.Name)
-                {
-                    ChatColor = (TextColor?)channel.Color?.Default ?? TextColor.Black,
-                    ChatColorByVocation = channel.Color?.ByVocation?.ToDictionary(x => (byte)x.Key, x => (TextColor)x.Value) ?? default,
-                    JoinRule = new ChannelRule
+                var createdChannel = chatChannelFactory.Create(channel.Name,
+                    ParseColor(channel.Color?.Default),
+                    channel.Color?.ByVocation?.ToDictionary(x => (byte)x.Key, x => ParseColor(x.Value)) ?? default,
+                    new ChannelRule
                     {
                         AllowedVocations = channel.Vocations,
                         MinMaxAllowedLevel = (channel.Level?.BiggerThan ?? 0, channel.Level?.LowerThan ?? 0)
                     },
-                    WriteRule = new ChannelRule
-                    {
-                        AllowedVocations = channel.Write?.Vocations ?? default,
-                        MinMaxAllowedLevel = (channel.Write?.Level?.BiggerThan ?? 0, channel.Write?.Level?.LowerThan ?? 0)
-                    },
-                    MuleRule = channel.MuteRule is null ? default : new MuteRule
-                    {
-                        CancelMessage = channel.MuteRule.CancelMessage,
-                        MessagesCount = channel.MuteRule.MessagesCount,
-                        TimeMultiplier = channel.MuteRule.TimeMultiplier,
-                        TimeToBlock = channel.MuteRule.TimeToBlock,
-                        WaitTime = channel.MuteRule.WaitTime
-                    }
-                });
+                     new ChannelRule
+                     {
+                         AllowedVocations = channel.Write?.Vocations ?? default,
+                         MinMaxAllowedLevel = (channel.Write?.Level?.BiggerThan ?? 0, channel.Write?.Level?.LowerThan ?? 0)
+                     },
+                     channel.MuteRule is null ? default : new MuteRule
+                     {
+                         CancelMessage = channel.MuteRule.CancelMessage,
+                         MessagesCount = channel.MuteRule.MessagesCount,
+                         TimeMultiplier = channel.MuteRule.TimeMultiplier,
+                         TimeToBlock = channel.MuteRule.TimeToBlock,
+                         WaitTime = channel.MuteRule.WaitTime
+                     });
+
+                ChatChannelStore.Data.Add(createdChannel.Id, createdChannel);
             }
 
             logger.Verbose("Channels loaded!");
+        }
+
+        private SpeechType ParseColor(string color)
+        {
+            return color switch
+            {
+                "red" => SpeechType.ChannelR1,
+                "yellow" => SpeechType.ChannelY,
+                "white" => SpeechType.ChannelW,
+                "orange" => SpeechType.ChannelO,
+                _ => SpeechType.ChannelY
+            };
         }
     }
 }
