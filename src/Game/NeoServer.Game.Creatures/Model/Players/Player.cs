@@ -23,6 +23,7 @@ using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Spells;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -607,6 +608,12 @@ namespace NeoServer.Server.Model.Players
             {
                 StartFollowing(target, PathSearchParams);
             }
+        }
+
+        public bool CanEnterOnChannel(ushort channelId)
+        {
+            var channel = ChatChannelStore.Data.Get(channelId);
+            return channel.PlayerCanJoin(this);
         }
     }
 }

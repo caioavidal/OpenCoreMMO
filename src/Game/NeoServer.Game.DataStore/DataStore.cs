@@ -22,7 +22,7 @@ namespace NeoServer.Game.DataStore
 
         public virtual void Add(TKey key, TValue value) => values.TryAdd(key, value);
 
-        public virtual TValue Get(TKey name) => values.TryGetValue(name, out var value) ? value : default;
+        public virtual TValue Get(TKey key) => values.TryGetValue(key, out var value) ? value : default;
         public virtual IEnumerable<TValue> All => values.Values;
 
     }

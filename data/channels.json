@@ -1,0 +1,42 @@
+[
+	{
+		"name": "World Chat"
+	},
+	{
+	    "name": "English Chat"
+	},
+	{
+	    "name": "Advertising"
+	},
+	{
+	    "name": "Help"
+	},
+	{
+		"name":"Rookgaard",
+		"allowed-vocations": [0]
+	},
+	{
+		"name":"Only Level 300+",
+		"allowed-vocations": [1,2,3,4],
+		"allowed-levels": {
+			"bigger-than": 700
+		}
+	},
+	{
+		"name":"Events",
+		"write-rules":
+		{
+			"allowed-vocations": [7]
+		}
+	},
+	{
+		"name":"Channel X",
+		"color":{
+			"default":1,
+			"by-vocation":{
+			  "7": 1,
+			  "8": 2
+			}
+		}
+	}
+]

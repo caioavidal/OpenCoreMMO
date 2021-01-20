@@ -7,6 +7,5 @@ namespace NeoServer.Game.DataStore
 {
     public class ChatChannelStore : DataStore<ushort, IChatChannel>
     {
-
     }
 }

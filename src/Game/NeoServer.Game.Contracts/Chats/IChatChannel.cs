@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NeoServer.Game.Common;
+using NeoServer.Server.Model.Players.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +12,9 @@ namespace NeoServer.Game.Contracts.Chats
     {
         ushort Id { get; }
         string Name { get; }
+
+        TextColor GetTextColor(byte vocation);
+        bool PlayerCanJoin(IPlayer player);
+        bool PlayerCanWrite(IPlayer player);
     }
 }
