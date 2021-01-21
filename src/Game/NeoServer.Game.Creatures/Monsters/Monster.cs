@@ -33,7 +33,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Damages = new ConcurrentDictionary<ICreature, ushort>();
             State = MonsterState.Sleeping;
             OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
-            OnKilled += (enemy) => GiveExperience();
+            OnKilled += (enemy, by) => GiveExperience();
 
         }
 
@@ -366,12 +366,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
         public void StopDefending() => Defending = false;
 
-        public override void OnDeath()
+        public override void OnDeath(IThing by)
         {
             Targets?.Clear();
 
             StopDefending();
-            base.OnDeath();
+            base.OnDeath(by);
 
             DropLoot();
         }

@@ -14,7 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void OnTurnedToDirection(IWalkableCreature creature, Direction direction);
     public delegate void RemoveCreature(ICreature creature);
     public delegate void StopWalk(IWalkableCreature creature);
-    public delegate void Die(ICombatActor creature);
+    public delegate void Die(ICombatActor creature, IThing by);
     public delegate void GainExperience(ICreature creature, uint exp);
     public delegate void StartWalk(IWalkableCreature creature);
     public delegate void Heal(ICombatActor creature, ushort amount);

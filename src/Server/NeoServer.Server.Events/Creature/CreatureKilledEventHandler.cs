@@ -18,7 +18,7 @@ namespace NeoServer.Server.Events.Creature
             this.game = game;
             this.itemFactory = itemFactory;
         }
-        public void Execute(ICombatActor creature)
+        public void Execute(ICombatActor creature, IThing by)
         {
             game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
             {

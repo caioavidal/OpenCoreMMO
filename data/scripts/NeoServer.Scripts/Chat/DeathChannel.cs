@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Scripts.Chat
 {
-    //public class LootChannel : PersonalChatChannel
-    //{
-    //    public LootChannel(ushort id, string name) : base(id, name)
-    //    {
-    //    }
+    public class DeathChannel : ChatChannel
+    {
+        public DeathChannel(ushort id, string name) : base(id, name)
+        {
+        }
 
-    //    public override string Name => "Loot";
-    //    public override bool Opened { get => false; init => base.Opened = value; }
-    //    public override SpeechType ChatColor { get => SpeechType.ChannelW; init => base.ChatColor = SpeechType.ChannelW; }
-    //    public override ChannelRule WriteRule
-    //    {
-    //        get => new ChannelRule
-    //        {
-    //            AllowedVocations = new byte[] { byte.MaxValue }
-    //        }; init => base.WriteRule = value;
-    //    }
-    //}
+        public override string Name => "Deaths";
+        public override bool Opened { get => false; init => base.Opened = value; }
+        public override SpeechType ChatColor { get => SpeechType.ChannelW; init => base.ChatColor = SpeechType.ChannelW; }
+        public override ChannelRule WriteRule
+        {
+            get => new ChannelRule
+            {
+                AllowedVocations = new byte[] { byte.MaxValue }
+            }; init => base.WriteRule = value;
+        }
+    }
 }

@@ -25,7 +25,7 @@ namespace NeoServer.Game.Chats
         public ChannelRule JoinRule { get; init; }
         public virtual ChannelRule WriteRule { get; init; }
         public MuteRule MuteRule { get; init; }
-        public virtual SpeechType ChatColor { get; init; }
+        public virtual SpeechType ChatColor { get; init; } = SpeechType.ChannelY;
         public string Description { get; init; }
         public virtual bool Opened { get; init; }
 
@@ -85,12 +85,14 @@ namespace NeoServer.Game.Chats
         /// <param name="message"></param>
         /// <param name="cancelMessage"></param>
         /// <returns></returns>
-        public bool WriteMessage(string message, out string cancelMessage)
+        public bool WriteMessage(string message, out string cancelMessage, SpeechType speechType = SpeechType.None)
         {
             cancelMessage = default;
             if (!(users?.Any() ?? false)) return false;
 
-            OnMessageAdded?.Invoke(null, this, ChatColor, message);
+            var color = speechType == SpeechType.None ? ChatColor : speechType;
+
+            OnMessageAdded?.Invoke(null, this, color, message);
             return true;
         }
 

@@ -17,7 +17,7 @@ namespace NeoServer.Server.Handlers.Player
             if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
 
             var channels = ChatChannelStore.Data.All.Where(x => x.PlayerCanJoin(player));
-            channels = channels.Concat(player.PersonalChannels);
+            channels = player.PersonalChannels is null ? channels : channels.Concat(player.PersonalChannels);
             
             connection.OutgoingPackets.Enqueue(new PlayerChannelListPacket(channels.ToArray()));
             connection.Send();

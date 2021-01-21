@@ -183,13 +183,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
         }
-        public virtual void OnDeath()
+        public virtual void OnDeath(IThing by)
         {
             StopAttack();
             StopFollowing();
             StopWalking();
             Conditions.Clear();
-            OnKilled?.Invoke(this);
+            OnKilled?.Invoke(this, by);
         }
         public void Heal(ushort increasing)
         {
@@ -221,7 +221,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             OnDamage(enemy, damage);
             OnDamaged?.Invoke(enemy, this, damage);
-            if (IsDead) OnDeath();
+            if (IsDead) OnDeath(enemy);
         }
      
         public virtual bool ReceiveAttack(IThing enemy, CombatDamage damage)

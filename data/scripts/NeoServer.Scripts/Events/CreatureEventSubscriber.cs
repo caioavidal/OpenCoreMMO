@@ -12,10 +12,11 @@ namespace NeoServer.Scripts.Events
     public class CreatureEventSubscriber : ICreatureEventSubscriber, IGameEventSubscriber
     {
         private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
-
-        public CreatureEventSubscriber(CreatureDroppedLootEventHandler creatureDroppedLootEventHandler)
+        private readonly CreatureKilledEventHandler creatureKilledEventHandler;
+        public CreatureEventSubscriber(CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreatureKilledEventHandler creatureKilledEventHandler)
         {
             this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
+            this.creatureKilledEventHandler = creatureKilledEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -23,6 +24,10 @@ namespace NeoServer.Scripts.Events
             if(creature is IMonster monster)
             {
                 monster.OnDropLoot += creatureDroppedLootEventHandler.Execute;
+            }
+            if(creature is ICombatActor actor)
+            {
+                actor.OnKilled += creatureKilledEventHandler.Execute;
             }
         }
 
