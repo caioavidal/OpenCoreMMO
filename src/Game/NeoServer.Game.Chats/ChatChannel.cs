@@ -12,7 +12,7 @@ namespace NeoServer.Game.Chats
     {
         public event AddMessage OnMessageAdded;
 
-        private IDictionary<uint, ChatUser> users = new Dictionary<uint, ChatUser>();
+        private IDictionary<uint, UserChat> users = new Dictionary<uint, UserChat>();
 
         public ChatChannel(ushort id, string name)
         {
@@ -48,9 +48,9 @@ namespace NeoServer.Game.Chats
                 }
                 return false;
             }
-            return users.TryAdd(player.Id, new ChatUser { Player = player });
+            return users.TryAdd(player.Id, new UserChat { Player = player });
         }
-        public IEnumerable<IChatUser> Users => users.Values; 
+        public IEnumerable<IUserChat> Users => users.Values; 
 
         public string Description { get; init; }
         public bool Opened { get; init; }
@@ -64,7 +64,7 @@ namespace NeoServer.Game.Chats
             }
             return true;
         }
-        public ChatUser[] GetAllUsers() => users.Values.ToArray();
+        public UserChat[] GetAllUsers() => users.Values.ToArray();
         public bool PlayerCanJoin(IPlayer player) => Validate(JoinRule, player);
         public bool PlayerCanWrite(IPlayer player) => users.ContainsKey(player.Id) && Validate(WriteRule, player);
         public bool PlayerIsMuted(IPlayer player, out string cancelMessage)
@@ -94,8 +94,6 @@ namespace NeoServer.Game.Chats
                 user.UpdateLastMessage(MuteRule);
             }
 
-           
-
             OnMessageAdded?.Invoke(player, this, GetTextColor(player.VocationType), message);
             return true;
         }
@@ -109,66 +107,5 @@ namespace NeoServer.Game.Chats
             if (rule.MinMaxAllowedLevel.Item2 > 0 && player.Level > rule.MinMaxAllowedLevel.Item2) return false;
             return true;
         }
-    }
-    public struct MuteRule
-    {
-        public static MuteRule Default => new MuteRule { MessagesCount = 5, TimeMultiplier = 4, TimeToBlock = 10, WaitTime = 5 };
-        public bool None => MessagesCount == default && TimeToBlock == default && WaitTime == default && TimeMultiplier == default && CancelMessage == default;
-        public ushort MessagesCount { get; set; }
-        public ushort TimeToBlock { get; set; }
-        public ushort WaitTime { get; set; }
-        public double TimeMultiplier { get; set; }
-        public string CancelMessage { get; set; }
-    }
-    public class ChatUser: IChatUser
-    {
-        public IPlayer Player { get; init; }
-        public long LastMessage { get; private set; }
-        public ushort MutedForSeconds { get; set; }
-        private ushort lastMutedForSeconds;
-        public bool Removed { get; private set; }
-        private long firstMessageBeforeMuted;
-        public ushort MessagesCount { get; private set; }
-        public int RemainingMutedSeconds => MutedForSeconds == 0 ? 0 : TimeSpan.FromTicks((LastMessage + (TimeSpan.TicksPerSecond * MutedForSeconds)) - DateTime.Now.Ticks).Seconds;
-
-        public bool IsMuted => RemainingMutedSeconds > 0;
-        public void UpdateLastMessage(MuteRule rule)
-        {
-            ushort secondsSinceFirstMessage = (ushort)TimeSpan.FromTicks(DateTime.Now.Ticks - firstMessageBeforeMuted).Seconds;
-
-            if (secondsSinceFirstMessage > 0 && secondsSinceFirstMessage > rule.TimeToBlock) MessagesCount = 0;
-
-            if (!IsMuted)
-            {
-                MessagesCount += 1;
-                LastMessage = DateTime.Now.Ticks;
-                if (MessagesCount == 1)
-                {
-                    firstMessageBeforeMuted = LastMessage;
-                    lastMutedForSeconds = MutedForSeconds;
-                    MutedForSeconds = 0;
-                }
-            }
-            else
-            {
-                MessagesCount = 0;
-            }
-
-            if (MessagesCount >= rule.MessagesCount && secondsSinceFirstMessage <= rule.TimeToBlock)
-            {
-                var waitTime = lastMutedForSeconds == 0 ? (rule.WaitTime == default ? 1 : rule.WaitTime) : lastMutedForSeconds * (rule.TimeMultiplier == 0 ? 1 : rule.TimeMultiplier);
-                MutedForSeconds = (ushort)waitTime;
-            }
-        }
-
-        public void MarkAsRemoved() => Removed = true;
-        public void MarkAsAdded() => Removed = false;
-
-    }
-    public struct ChannelRule
-    {
-        public bool None => AllowedVocations?.Length == 0 && (MinMaxAllowedLevel.Item1 == 0 && MinMaxAllowedLevel.Item2 == 0);
-        public byte[] AllowedVocations { get; set; }
-        public (ushort, ushort) MinMaxAllowedLevel { get; set; }
     }
 }
