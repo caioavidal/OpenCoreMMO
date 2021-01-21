@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Chats;
@@ -48,9 +49,14 @@ namespace NeoServer.Server.Compiler
             foreach (var source in sourceCodes)
             {
                 var codeString = SourceText.From(source);
-                var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp8);
+                var rewriter = new ScriptRewriter();
+                var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Latest);
 
-                syntaxTrees[i++] = SyntaxFactory.ParseSyntaxTree(codeString, options);
+                var syntaxTree = SyntaxFactory.ParseSyntaxTree(codeString, options);
+                var result = rewriter.Visit(syntaxTree.GetRoot());
+
+                syntaxTrees[i++] = result.SyntaxTree;
+
             }
 
             var references = new List<MetadataReference>
@@ -73,15 +79,14 @@ namespace NeoServer.Server.Compiler
             Assembly.GetEntryAssembly().GetReferencedAssemblies()
                 .ToList()
                 .ForEach(a => references.Add(MetadataReference.CreateFromFile(Assembly.Load(a).Location)));
-
             return CSharpCompilation.Create("Scripts.dll",
               syntaxTrees,
                 references: references,
+
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                    optimizationLevel: OptimizationLevel.Debug,
+                    optimizationLevel: OptimizationLevel.Release,
 
                     assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default).WithPlatform(Platform.AnyCpu));
         }
     }
-
 }

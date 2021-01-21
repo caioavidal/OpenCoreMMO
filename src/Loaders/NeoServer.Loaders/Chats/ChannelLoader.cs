@@ -1,7 +1,9 @@
 ﻿using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Talks;
+using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.DataStore;
+using NeoServer.Loaders;
 using NeoServer.Loaders.Chats;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Standalone;
@@ -30,29 +32,41 @@ namespace NeoServer.Scripts.Chats
 
             var channels = JsonConvert.DeserializeObject<List<ChannelModel>>(jsonString);
 
-            foreach (var channel in channels.Where(x=>x.Enabled))
+            foreach (var channel in channels.Where(x => x.Enabled))
             {
-                var createdChannel = chatChannelFactory.Create(channel.Name, channel.Description, channel.Opened,
-                    ParseColor(channel.Color?.Default),
-                    channel.Color?.ByVocation?.ToDictionary(x => (byte)x.Key, x => ParseColor(x.Value)) ?? default,
-                    new ChannelRule
-                    {
-                        AllowedVocations = channel.Vocations,
-                        MinMaxAllowedLevel = (channel.Level?.BiggerThan ?? 0, channel.Level?.LowerThan ?? 0)
-                    },
-                     new ChannelRule
-                     {
-                         AllowedVocations = channel.Write?.Vocations ?? default,
-                         MinMaxAllowedLevel = (channel.Write?.Level?.BiggerThan ?? 0, channel.Write?.Level?.LowerThan ?? 0)
-                     },
-                     channel.MuteRule is null ? default : new MuteRule
-                     {
-                         CancelMessage = channel.MuteRule.CancelMessage,
-                         MessagesCount = channel.MuteRule.MessagesCount,
-                         TimeMultiplier = channel.MuteRule.TimeMultiplier,
-                         TimeToBlock = channel.MuteRule.TimeToBlock,
-                         WaitTime = channel.MuteRule.WaitTime
-                     });
+                IChatChannel createdChannel = null;
+                if (!string.IsNullOrWhiteSpace(channel.Script))
+                {
+                    var type = ScriptSearch.Get(channel.Script);
+                    createdChannel = chatChannelFactory.Create(type, channel.Name);
+                }
+                else
+                {
+
+                    createdChannel = chatChannelFactory.Create(channel.Name, channel.Description, channel.Opened,
+                        ParseColor(channel.Color?.Default),
+                        channel.Color?.ByVocation?.ToDictionary(x => (byte)x.Key, x => ParseColor(x.Value)) ?? default,
+                        new ChannelRule
+                        {
+                            AllowedVocations = channel.Vocations,
+                            MinMaxAllowedLevel = (channel.Level?.BiggerThan ?? 0, channel.Level?.LowerThan ?? 0)
+                        },
+                         new ChannelRule
+                         {
+                             AllowedVocations = channel.Write?.Vocations ?? default,
+                             MinMaxAllowedLevel = (channel.Write?.Level?.BiggerThan ?? 0, channel.Write?.Level?.LowerThan ?? 0)
+                         },
+                         channel.MuteRule is null ? default : new MuteRule
+                         {
+                             CancelMessage = channel.MuteRule.CancelMessage,
+                             MessagesCount = channel.MuteRule.MessagesCount,
+                             TimeMultiplier = channel.MuteRule.TimeMultiplier,
+                             TimeToBlock = channel.MuteRule.TimeToBlock,
+                             WaitTime = channel.MuteRule.WaitTime
+                         });
+                }
+
+                if (createdChannel is null) continue;
 
                 ChatChannelStore.Data.Add(createdChannel.Id, createdChannel);
             }

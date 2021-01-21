@@ -12,7 +12,7 @@ namespace NeoServer.Game.Chats
     {
         public event AddMessage OnMessageAdded;
 
-        private IDictionary<uint, UserChat> users = new Dictionary<uint, UserChat>();
+        protected IDictionary<uint, UserChat> users = new Dictionary<uint, UserChat>();
 
         public ChatChannel(ushort id, string name)
         {
@@ -23,10 +23,15 @@ namespace NeoServer.Game.Chats
         public ushort Id { get; }
         public string Name { get; }
         public ChannelRule JoinRule { get; init; }
-        public ChannelRule WriteRule { get; init; }
+        public virtual ChannelRule WriteRule { get; init; }
         public MuteRule MuteRule { get; init; }
         public SpeechType ChatColor { get; init; }
+        public string Description { get; init; }
+        public bool Opened { get; init; }
+
         public Dictionary<byte, SpeechType> ChatColorByVocation { private get; init; }
+        public virtual IEnumerable<IUserChat> Users => users.Values;
+
 
         public SpeechType GetTextColor(byte vocation)
         {
@@ -34,8 +39,8 @@ namespace NeoServer.Game.Chats
 
             return ChatColor;
         }
-        public bool HasUser(IPlayer player) => users.TryGetValue(player.Id, out var user) && user.Removed == false;
-        public bool AddUser(IPlayer player)
+        public virtual bool HasUser(IPlayer player) => users.TryGetValue(player.Id, out var user) && user.Removed == false;
+        public virtual bool AddUser(IPlayer player)
         {
             if (!PlayerCanJoin(player)) return false;
 
@@ -50,12 +55,9 @@ namespace NeoServer.Game.Chats
             }
             return users.TryAdd(player.Id, new UserChat { Player = player });
         }
-        public IEnumerable<IUserChat> Users => users.Values; 
 
-        public string Description { get; init; }
-        public bool Opened { get; init; }
 
-        public bool RemoveUser(IPlayer player)
+        public virtual bool RemoveUser(IPlayer player)
         {
             if (users.TryGetValue(player.Id, out var user))
             {
@@ -64,7 +66,6 @@ namespace NeoServer.Game.Chats
             }
             return true;
         }
-        public UserChat[] GetAllUsers() => users.Values.ToArray();
         public bool PlayerCanJoin(IPlayer player) => Validate(JoinRule, player);
         public bool PlayerCanWrite(IPlayer player) => users.ContainsKey(player.Id) && Validate(WriteRule, player);
         public bool PlayerIsMuted(IPlayer player, out string cancelMessage)

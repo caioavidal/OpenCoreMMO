@@ -16,12 +16,11 @@ namespace NeoServer.Server.Compiler
 
                 var assembly = assemblyLoadContext.LoadFromStream(asm);
 
-                var entry = assembly.EntryPoint;
-                var assemblies = assembly.DefinedTypes;
-
                 assemblyLoadContext.Unload();
-                return assemblies;
+                return assembly.DefinedTypes;
             }
         }
+
+     
     }
 }
