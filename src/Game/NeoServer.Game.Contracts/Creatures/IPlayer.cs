@@ -154,6 +154,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool JoinChannel(IChatChannel channel);
         bool SendMessage(IChatChannel channel, string message);
         bool ExitChannel(IChatChannel channel);
+        void AddPersonalChannel(IChatChannel channel);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
@@ -161,5 +162,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         uint TotalCapacity { get; }
         bool Recovering { get; }
         IVocation Vocation { get; }
+        IEnumerable<IChatChannel> PersonalChannels { get; }
     }
 }

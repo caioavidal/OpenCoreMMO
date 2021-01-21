@@ -31,7 +31,7 @@ namespace NeoServer.Loaders.Spells
             var spells = JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString);
 
             var types = ScriptSearch.All.Where(x => typeof(ISpell).IsAssignableFrom(x));
-
+            
             foreach (var spell in spells)
             {
                 if (spell is null) continue;

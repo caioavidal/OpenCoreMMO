@@ -9,7 +9,6 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface IMonster : IWalkableMonster, ICombatActor
     {
         event Born OnWasBorn;
-        event DropLoot OnDropLoot;
         event MonsterChangeState OnChangedState;
 
         void Reborn();

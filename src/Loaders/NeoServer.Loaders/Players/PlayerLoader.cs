@@ -1,4 +1,5 @@
 ﻿using NeoServer.Data.Model;
+using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
@@ -9,6 +10,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
@@ -23,14 +25,32 @@ namespace NeoServer.Loaders.Players
         private CreaturePathAccess _creaturePathAccess;
         private IItemFactory itemFactory;
         private readonly ICreatureFactory creatureFactory;
-
+        private readonly ChatChannelFactory chatChannelFactory;
         public virtual bool IsApplicable(PlayerModel player) => player.PlayerType == 1;
 
-        public PlayerLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory)
+        public PlayerLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory)
         {
             _creaturePathAccess = creaturePathAccess;
             this.itemFactory = itemFactory;
             this.creatureFactory = creatureFactory;
+            this.chatChannelFactory = chatChannelFactory;
+        }
+
+        /// <summary>
+        /// Adds all PersonalChatChannel assemblies to Player
+        /// </summary>
+        public virtual void AddExistingPersonalChannels(IPlayer player)
+        {
+            if (player is null) return;
+
+            var personalChannels = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => typeof(PersonalChatChannel).IsAssignableFrom(x));
+            foreach (var channel in personalChannels)
+            {
+                if (channel == typeof(PersonalChatChannel)) continue;
+
+                var createdChannel = chatChannelFactory.Create(channel, null);
+                player.AddPersonalChannel(createdChannel);
+            }
         }
         public virtual IPlayer Load(PlayerModel player)
         {
@@ -62,6 +82,8 @@ namespace NeoServer.Loaders.Players
                 new Location((ushort)player.PosX, (ushort)player.PosY, (byte)player.PosZ),
                _creaturePathAccess
                 );
+
+            AddExistingPersonalChannels(newPlayer);
 
             return creatureFactory.CreatePlayer(newPlayer);
         }

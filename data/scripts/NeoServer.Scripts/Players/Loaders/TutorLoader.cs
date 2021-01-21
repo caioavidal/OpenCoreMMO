@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Chats;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creature.Model;
@@ -14,8 +15,8 @@ namespace NeoServer.Scripts.Players.Loaders
     {
         private CreaturePathAccess _creaturePathAccess;
         private readonly ICreatureFactory creatureFactory;
-        public TutorLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory
-          ) : base(creaturePathAccess, itemFactory, creatureFactory)
+        public TutorLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory
+          ) : base(creaturePathAccess, itemFactory, creatureFactory, chatChannelFactory)
         {
             _creaturePathAccess = creaturePathAccess;
             this.creatureFactory = creatureFactory;

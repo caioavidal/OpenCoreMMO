@@ -21,5 +21,8 @@
     <ProjectReference Include="..\..\..\src\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
     <ProjectReference Include="..\..\..\src\Server\NeoServer.Server\NeoServer.Server.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Players\Events\" />
+  </ItemGroup>
 
 </Project>

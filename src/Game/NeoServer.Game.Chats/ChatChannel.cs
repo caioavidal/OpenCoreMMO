@@ -21,13 +21,13 @@ namespace NeoServer.Game.Chats
         }
 
         public ushort Id { get; }
-        public string Name { get; }
+        public virtual string Name { get; }
         public ChannelRule JoinRule { get; init; }
         public virtual ChannelRule WriteRule { get; init; }
         public MuteRule MuteRule { get; init; }
-        public SpeechType ChatColor { get; init; }
+        public virtual SpeechType ChatColor { get; init; }
         public string Description { get; init; }
-        public bool Opened { get; init; }
+        public virtual bool Opened { get; init; }
 
         public Dictionary<byte, SpeechType> ChatColorByVocation { private get; init; }
         public virtual IEnumerable<IUserChat> Users => users.Values;
@@ -77,6 +77,21 @@ namespace NeoServer.Game.Chats
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Write a message on channel without identification, useful for server message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancelMessage"></param>
+        /// <returns></returns>
+        public bool WriteMessage(string message, out string cancelMessage)
+        {
+            cancelMessage = default;
+            if (!(users?.Any() ?? false)) return false;
+
+            OnMessageAdded?.Invoke(null, this, ChatColor, message);
+            return true;
         }
 
         public bool WriteMessage(IPlayer player, string message, out string cancelMessage)

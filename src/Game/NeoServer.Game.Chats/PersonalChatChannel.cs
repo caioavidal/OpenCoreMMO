@@ -8,12 +8,12 @@ using System.Linq;
 
 namespace NeoServer.Game.Chats
 {
-    public class PersonalChatChannel : ChatChannel, IChatChannel
+    public abstract class PersonalChatChannel : ChatChannel, IChatChannel
     {
         public PersonalChatChannel(ushort id, string name) : base(id, name)
         {
         }
-
+        public abstract new string Name { get; }
         public override bool AddUser(IPlayer player)
         {
             if (users.Count == 1) return false;

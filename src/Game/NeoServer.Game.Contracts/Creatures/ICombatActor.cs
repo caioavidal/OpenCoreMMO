@@ -5,6 +5,8 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -16,7 +18,8 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void UseSpell(ICreature creature, ISpell spell);
     public delegate void ChangeVisibility(ICombatActor actor);
     public delegate void OnPropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
-    public delegate void DropLoot(ICombatActor actor, ILoot loot);
+    public delegate void DropLoot(ICombatActor actor, ILoot loot, IEnumerable<ICreature> owners );
+
     public interface ICombatActor : IWalkableCreature
     {
         event Attack OnAttackEnemy;
@@ -28,6 +31,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event OnAttackTargetChange OnTargetChanged;
         event ChangeVisibility OnChangedVisibility;
         event OnPropagateAttack OnPropagateAttack;
+        event DropLoot OnDropLoot;
 
         ushort ArmorRating { get; }
         bool Attacking { get; }

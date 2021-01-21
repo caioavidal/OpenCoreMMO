@@ -27,6 +27,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event OnAttackTargetChange OnTargetChanged;
         public event ChangeVisibility OnChangedVisibility;
         public event OnPropagateAttack OnPropagateAttack;
+        public abstract event DropLoot OnDropLoot;
         #endregion
 
         #region Properties

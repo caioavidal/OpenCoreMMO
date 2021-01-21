@@ -12,7 +12,6 @@ namespace NeoServer.Networking.Packets.Outgoing
             this.chatChannels = chatChannels;
         }
 
-        //todo: this code is duplicated?
         public override void WriteToMessage(INetworkMessage message)
         {
             message.AddByte((byte)GameOutgoingPacketType.ChannelList);
