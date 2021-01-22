@@ -59,5 +59,9 @@ It goes without saying that all advertisements must conform to the Tibia Rules, 
 			"wait-time": 10,
 			"time-multiplier": 1,
 		}
+	},
+	{
+		"name":"Deaths",
+		"script": "DeathChannel"
 	}
 ]

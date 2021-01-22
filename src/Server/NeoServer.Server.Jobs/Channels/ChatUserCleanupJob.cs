@@ -10,7 +10,6 @@ namespace NeoServer.Server.Jobs.Creatures
     {
         public static void Execute(IChatChannel channel)
         {
-
             var removedUsers = channel.Users.Where(x => x.Removed && !x.IsMuted);
 
             foreach (var user in removedUsers)

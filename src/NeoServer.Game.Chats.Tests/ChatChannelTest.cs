@@ -42,21 +42,7 @@ namespace NeoServer.Game.Chats.Tests
             Assert.False(sut.PlayerIsMuted(player, out cancelMessage));
         }
 
-        [Theory]        
-        [InlineData(20,3,16)]
-        [InlineData(5, 1, 3)]
-        [InlineData(5, 5, 0)]
-        [InlineData(5, 6, -1)]
-        public void RemainingMutedSeconds_Returns_Seconds(ushort mutedForSeconds, int sleepSeconds, int expected)
-        {
-            var sup = new ChatUser();
 
-            sup.UpdateLastMessage(new MuteRule());
-            sup.MutedForSeconds = mutedForSeconds;
-
-            Thread.Sleep(sleepSeconds * 1000);
-            Assert.Equal(expected, sup.RemainingMutedSeconds);
-        }
 
     }
 }

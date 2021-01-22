@@ -22,6 +22,7 @@ namespace NeoServer.Loaders.Chats
         public ColorModel Color { get; set; }
         [JsonProperty("mute-rule")]
         public MuteRuleModel MuteRule { get; set; }
+        public string Script { get; set; }
         public class LevelModel
         {
             [JsonProperty("bigger-than")]

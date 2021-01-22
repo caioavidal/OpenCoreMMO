@@ -14,12 +14,14 @@ namespace NeoServer.Game.Creatures.Events
         private readonly CreatureMovedEventHandler creatureMovedEventHandler;
         private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler; 
         private readonly PlayerLoggedOutEventHandler  playerLoggedOutEventHandler;
+        private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
 
 
         public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureDamagedEventHandler creatureDamagedEventHandler, CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler,
             CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler,
-            CreatureMovedEventHandler creatureMovedEventHandler, PlayerLoggedInEventHandler playerLoggedInEventHandler, PlayerLoggedOutEventHandler playerLoggedOutEventHandler)
+            CreatureMovedEventHandler creatureMovedEventHandler, PlayerLoggedInEventHandler playerLoggedInEventHandler, 
+            PlayerLoggedOutEventHandler playerLoggedOutEventHandler, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler)
         {
             this.creatureKilledEventHandler = creatureKilledEventHandler;
             this.creatureDamagedEventHandler = creatureDamagedEventHandler;
@@ -29,6 +31,7 @@ namespace NeoServer.Game.Creatures.Events
             this.creatureMovedEventHandler = creatureMovedEventHandler;
             this.playerLoggedInEventHandler = playerLoggedInEventHandler;
             this.playerLoggedOutEventHandler = playerLoggedOutEventHandler;
+            this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -38,6 +41,7 @@ namespace NeoServer.Game.Creatures.Events
                 combatActor.OnKilled += creatureKilledEventHandler.Execute;
                 combatActor.OnDamaged += creatureDamagedEventHandler.Execute;
                 combatActor.OnPropagateAttack += creaturePropagatedAttackEventHandler.Execute;
+                combatActor.OnDropLoot += creatureDroppedLootEventHandler.Execute;
             }
             if (creature is IWalkableCreature walkableCreature)
             {
@@ -60,6 +64,7 @@ namespace NeoServer.Game.Creatures.Events
                 combatActor.OnKilled -= creatureKilledEventHandler.Execute;
                 combatActor.OnDamaged -= creatureDamagedEventHandler.Execute;
                 combatActor.OnPropagateAttack -= creaturePropagatedAttackEventHandler.Execute;
+                combatActor.OnDropLoot -= creatureDroppedLootEventHandler.Execute;
             }
             if (creature is IWalkableCreature walkableCreature)
             {

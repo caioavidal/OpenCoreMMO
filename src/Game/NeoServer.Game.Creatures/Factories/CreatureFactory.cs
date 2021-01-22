@@ -41,12 +41,12 @@ namespace NeoServer.Game.Creatures
         {
             foreach (var gameSubscriber in creatureEventSubscribers.Where(x => x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
             {
-                gameSubscriber.Subscribe(creature);
+                gameSubscriber?.Subscribe(creature);
             }
 
             foreach (var subscriber in creatureEventSubscribers.Where(x => !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
             {
-                subscriber.Subscribe(creature);
+                subscriber?.Subscribe(creature);
             }
 
             return creature;

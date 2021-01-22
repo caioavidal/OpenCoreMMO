@@ -30,8 +30,8 @@ namespace NeoServer.Loaders.Spells
             var jsonString = File.ReadAllText(path);
             var spells = JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString);
 
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => typeof(ISpell).IsAssignableFrom(x));
-
+            var types = ScriptSearch.All.Where(x => typeof(ISpell).IsAssignableFrom(x));
+            
             foreach (var spell in spells)
             {
                 if (spell is null) continue;

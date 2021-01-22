@@ -22,7 +22,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
     public class Monster : WalkableMonster, IMonster
     {
         public event Born OnWasBorn;
-        public event DropLoot OnDropLoot;
+        public override event DropLoot OnDropLoot;
         public event MonsterChangeState OnChangedState;
         public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
         {
@@ -33,7 +33,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Damages = new ConcurrentDictionary<ICreature, ushort>();
             State = MonsterState.Sleeping;
             OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
-            OnKilled += (enemy) => GiveExperience();
+            OnKilled += (enemy, by) => GiveExperience();
 
         }
 
@@ -57,7 +57,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (enemy is not ICreature creature) return;
             Damages.AddOrUpdate(creature, damage, (key, oldValue) => (ushort)(oldValue + damage));
         }
-        
+
         private void GiveExperience()
         {
             var totalDamage = Damages.Sum(x => x.Value);
@@ -183,7 +183,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 State = MonsterState.Sleeping;
                 return;
             }
-         
+
             if (Targets.Any() && !CanReachAnyTarget)
             {
                 State = MonsterState.LookingForEnemy;
@@ -366,20 +366,45 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
         public void StopDefending() => Defending = false;
 
-        public override void OnDeath()
+        public override void OnDeath(IThing by)
         {
             Targets?.Clear();
 
             StopDefending();
-            base.OnDeath();
+            base.OnDeath(by);
 
             DropLoot();
         }
         public void DropLoot()
         {
             var loot = Metadata.Loot?.Drop();
-            OnDropLoot?.Invoke(this, new Loot(loot));
+
+            List<ICreature> maxDamages = GetLootOwners();
+
+            OnDropLoot?.Invoke(this, new Loot(loot), maxDamages);
         }
+
+        private List<ICreature> GetLootOwners()
+        {
+            List<ICreature> maxDamages = new List<ICreature>(50);
+            ushort maxDamage = 0;
+
+            foreach (var damage in Damages)
+            {
+                if (damage.Value > maxDamage)
+                {
+                    maxDamages.Clear();
+                    maxDamages.Add(damage.Key);
+                }
+                if (damage.Value == maxDamage)
+                {
+                    maxDamages.Add(damage.Key);
+                }
+            }
+
+            return maxDamages;
+        }
+
         public ushort Defend()
         {
             if (IsDead || !Defenses.Any())
@@ -422,7 +447,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 attacked = true;
             }
 
-            if(attacked) TurnTo(Location.DirectionTo(enemy.Location));
+            if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
 
             if (enemy.IsDead || enemy.IsRemoved) RemoveFromTargetList(enemy);
 
@@ -442,7 +467,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return damage;
         }
 
-        public override void OnDamage(IThing enemy, CombatDamage damage) => ReduceHealth( damage);
-        
+        public override void OnDamage(IThing enemy, CombatDamage damage) => ReduceHealth(damage);
+
     }
 }

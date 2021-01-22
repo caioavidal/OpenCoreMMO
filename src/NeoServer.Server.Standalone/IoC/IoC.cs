@@ -176,7 +176,7 @@ namespace NeoServer.Server.Standalone.IoC
             {
                 if (type == interfaceType) continue;
                 builder.RegisterType(type).SingleInstance();
-                ;
+                
             }
         }
         private static void RegisterEventSubscribers(this ContainerBuilder builder)

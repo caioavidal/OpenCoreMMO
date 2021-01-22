@@ -22,7 +22,6 @@ namespace NeoServer.Server.Events.Chat
 
         public void Execute(IPlayer player, IChatChannel chatChannel, SpeechType speechType, string message)
         {
-            if (player is null) return;
             if (chatChannel is null) return;
             if (string.IsNullOrWhiteSpace(message)) return;
 

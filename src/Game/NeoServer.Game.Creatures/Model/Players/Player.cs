@@ -86,7 +86,7 @@ namespace NeoServer.Server.Model.Players
         public event LogOut OnLoggedOut;
         public event PlayerJoinChannel OnJoinedChannel;
         public event PlayerExitChannel OnExitedChannel;
-
+        public override event DropLoot OnDropLoot;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -122,7 +122,7 @@ namespace NeoServer.Server.Model.Players
         public ushort Mana { get; private set; }
         public ushort MaxMana { get; private set; }
         public FightMode FightMode { get; private set; }
-
+        private IDictionary<ushort, IChatChannel> personalChannels;
         private byte soulPoints;
         public byte SoulPoints
         {
@@ -145,6 +145,12 @@ namespace NeoServer.Server.Model.Players
                 }
                 return 0;
             }
+        }
+        public IEnumerable<IChatChannel> PersonalChannels => personalChannels?.Values;
+        public void AddPersonalChannel(IChatChannel channel)
+        {
+            personalChannels = personalChannels ?? new Dictionary<ushort, IChatChannel>();
+            personalChannels.Add(channel.Id, channel);
         }
         public void ResetMana() => HealMana(MaxMana);
         public byte LevelPercent => GetSkillPercent(SkillType.Level);

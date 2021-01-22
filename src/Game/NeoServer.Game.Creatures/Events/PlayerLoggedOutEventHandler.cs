@@ -18,6 +18,13 @@ namespace NeoServer.Game.Creatures.Events
             {
                 player.ExitChannel(channel);
             }
+
+            if (player.PersonalChannels is null) return;
+
+            foreach (var channel in player.PersonalChannels)
+            {
+                player.ExitChannel(channel);
+            }
         }
     }
 }

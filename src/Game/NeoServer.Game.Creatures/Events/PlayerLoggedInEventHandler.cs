@@ -8,13 +8,14 @@ namespace NeoServer.Game.Creatures.Events
 {
     public class PlayerLoggedInEventHandler : IGameEventHandler
     {
-        public PlayerLoggedInEventHandler()
-        {
-        }
-
         public void Execute(IPlayer player)
         {
-            foreach (var channel in ChatChannelStore.Data.All.Where(x=>x.Opened))
+            if (player is null) return;
+
+            var channels = ChatChannelStore.Data.All.Where(x => x.Opened);
+            channels = player.PersonalChannels is null ? channels : channels.Concat(player.PersonalChannels?.Where(x => x.Opened));
+
+            foreach (var channel in channels)
             {
                 player.JoinChannel(channel);
             }

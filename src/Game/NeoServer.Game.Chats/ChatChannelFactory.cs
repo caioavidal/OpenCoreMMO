@@ -14,7 +14,19 @@ namespace NeoServer.Game.Chats
 {
     public class ChatChannelFactory
     {
-        public IChatChannel Create(string name,string description, bool opened, SpeechType chatColor, Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule, MuteRule muteRule)
+        public IChatChannel Create(Type type, string name)
+        {
+            if (!typeof(IChatChannel).IsAssignableFrom(type)) return default;
+
+            var id = GenerateUniqueId();
+
+            var channel = (IChatChannel) Activator.CreateInstance(type: type, id, name);
+
+            SubscribeEvents(channel);
+
+            return channel;
+        }
+        public IChatChannel Create(string name, string description, bool opened, SpeechType chatColor, Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule, MuteRule muteRule)
         {
             var id = GenerateUniqueId();
 
@@ -25,7 +37,7 @@ namespace NeoServer.Game.Chats
                 ChatColorByVocation = chatColorByVocation ?? default,
                 JoinRule = joinRule,
                 WriteRule = writeRule,
-                MuteRule = muteRule.None ? MuteRule.Default : muteRule, 
+                MuteRule = muteRule.None ? MuteRule.Default : muteRule,
                 Opened = opened
             };
 
