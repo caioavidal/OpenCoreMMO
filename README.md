@@ -57,6 +57,10 @@ dotnet run -p "NeoServer.Server.Standalone"
 - [x] Spawn and Respawn Monsters
 - [x] PvM Combat
 - [x] Depot
+- [x] Chats
+  - [x] Public Channels
+  - [x] Loot and Death Channels
+  - [ ] Vip List
 - [ ] PvP Combat
 - [ ] Load NPC
 - [ ] Lua Scripting
