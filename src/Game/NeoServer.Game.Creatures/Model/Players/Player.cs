@@ -103,6 +103,19 @@ namespace NeoServer.Server.Model.Players
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
 
+        private ulong flags;
+
+        public void SetFlag(PlayerFlag flag) => flags &= (ulong)flag;
+        public void SetFlags(params PlayerFlag[] flags)
+        {
+            foreach (var flag in flags)
+            {
+                this.flags &= (ulong)flag;
+            }
+        }
+
+        public bool HasFlag(PlayerFlag flag) => (flags & (ulong)flag) != 0;
+
         private uint IdleTime;
         public string CharacterName { get; private set; }
         public override IOutfit Outfit { get; protected set; }
@@ -375,7 +388,7 @@ namespace NeoServer.Server.Model.Players
             return canUse;
         }
         public void SendMessageTo(IPlayer player)
-        {   
+        {
         }
 
         public virtual bool CastSpell(string message)
@@ -636,7 +649,7 @@ namespace NeoServer.Server.Model.Players
                 OnOperationFailed?.Invoke(CreatureId, "You cannot join this chat channel");
                 return false;
             }
-            
+
             OnJoinedChannel?.Invoke(this, channel);
             return true;
         }
@@ -657,7 +670,7 @@ namespace NeoServer.Server.Model.Players
         }
         public bool SendMessage(IChatChannel channel, string message)
         {
-            if(!channel.WriteMessage(this, message, out var cancelMessage))
+            if (!channel.WriteMessage(this, message, out var cancelMessage))
             {
                 OnOperationFailed?.Invoke(CreatureId, cancelMessage);
                 return false;
