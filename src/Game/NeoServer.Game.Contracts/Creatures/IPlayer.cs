@@ -31,6 +31,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void PlayerJoinChannel(IPlayer player, IChatChannel channel);
     public delegate void PlayerExitChannel(IPlayer player, IChatChannel channel);
     public delegate void AddToVipList(IPlayer player, uint vipPlayerId, string vipPlayerName);
+    public delegate void PlayerLoadVipList(IPlayer player, IEnumerable<(uint, string)> vipList);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -67,6 +68,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event PlayerJoinChannel OnJoinedChannel;
         event PlayerExitChannel OnExitedChannel;
         event AddToVipList OnAddedToVipList;
+        event PlayerLoadVipList OnLoadedVipList;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -158,6 +160,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void AddPersonalChannel(IChatChannel channel);
         bool AddToVip(uint playerId, string name);
         void RemoveFromVip(uint playerId);
+        void LoadVipList(IEnumerable<(uint, string)> vips);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
@@ -166,5 +169,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool Recovering { get; }
         IVocation Vocation { get; }
         IEnumerable<IChatChannel> PersonalChannels { get; }
+        uint AccountId { get; init; }
     }
 }

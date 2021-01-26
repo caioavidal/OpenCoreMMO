@@ -9,7 +9,8 @@ namespace NeoServer.Data.Interfaces
         Task<AccountModel> GetById(int id);
         Task<AccountModel> GetByName(string name);
         Task<AccountModel> GetByEmail(string email);
-        Task<AccountModel> Login(string name, string password);
+        Task<AccountModel> GetAccount(string name, string password);
         Task<PlayerModel> GetPlayer(string name);
+        Task AddPlayerToVipList(int accountId, int playerId);
     }
 }

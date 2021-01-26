@@ -26,7 +26,8 @@ namespace NeoServer.Server.Events
         private readonly PlayerSelfAppearOnMapEventHandler  playerSelfAppearOnMapEventHandler;
         private readonly PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler;
         private readonly PlayerExitedChannelEventHandler playerExitedChannelEventHandler;
-        private readonly PlayerAddedToVipListEventHandler playerAddedToVipListEventHandler;
+        private readonly PlayerAddToVipListEventHandler playerAddedToVipListEventHandler;
+        private readonly PlayerLoadedVipListEventHandler playerLoadedVipListEvent;
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
             PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
             ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler,
@@ -36,7 +37,8 @@ namespace NeoServer.Server.Events
             PlayerOperationFailedEventHandler playerOperationFailedEventHandler, PlayerLookedAtEventHandler playerLookedAtEventHandler,
             PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler,
             PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler, PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler,
-            PlayerExitedChannelEventHandler playerExitedChannelEventHandler, PlayerAddedToVipListEventHandler playerAddedToVipListEventHandler)
+            PlayerExitedChannelEventHandler playerExitedChannelEventHandler, PlayerAddToVipListEventHandler playerAddedToVipListEventHandler,
+            PlayerLoadedVipListEventHandler playerLoadedVipListEvent)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -59,6 +61,7 @@ namespace NeoServer.Server.Events
             this.playerJoinedChannelEventHandler = playerJoinedChannelEventHandler;
             this.playerExitedChannelEventHandler = playerExitedChannelEventHandler;
             this.playerAddedToVipListEventHandler = playerAddedToVipListEventHandler;
+            this.playerLoadedVipListEvent = playerLoadedVipListEvent;
         }
 
         public void Subscribe(ICreature creature)
@@ -99,6 +102,7 @@ namespace NeoServer.Server.Events
             player.OnJoinedChannel += playerJoinedChannelEventHandler.Execute;
             player.OnExitedChannel += playerExitedChannelEventHandler.Execute;
             player.OnAddedToVipList += playerAddedToVipListEventHandler.Execute;
+            player.OnLoadedVipList += playerLoadedVipListEvent.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -139,6 +143,7 @@ namespace NeoServer.Server.Events
             player.OnJoinedChannel -= playerJoinedChannelEventHandler.Execute;
             player.OnExitedChannel -= playerExitedChannelEventHandler.Execute;
             player.OnAddedToVipList -= playerAddedToVipListEventHandler.Execute;
+            player.OnLoadedVipList -= playerLoadedVipListEvent.Execute;
         }
     }
 }

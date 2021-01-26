@@ -20,7 +20,7 @@ using System.Linq;
 
 namespace NeoServer.Loaders.Players
 {
-    public class PlayerLoader: IPlayerLoader
+    public class PlayerLoader : IPlayerLoader
     {
         private CreaturePathAccess _creaturePathAccess;
         private IItemFactory itemFactory;
@@ -76,12 +76,16 @@ namespace NeoServer.Loaders.Players
                 vocation.SoulMax,
                 ConvertToSkills(player),
                 player.StaminaMinutes,
-                new Outfit() { Addon = (byte) player.LookAddons, Body = (byte)player.LookBody, Feet  = (byte) player.LookFeet,  Head = (byte)player.LookHead, Legs = (byte) player.LookLegs, LookType = (byte) player.LookType}, 
+                new Outfit() { Addon = (byte)player.LookAddons, Body = (byte)player.LookBody, Feet = (byte)player.LookFeet, Head = (byte)player.LookHead, Legs = (byte)player.LookLegs, LookType = (byte)player.LookType },
                 ConvertToInventory(player),
                 player.Speed,
                 new Location((ushort)player.PosX, (ushort)player.PosY, (byte)player.PosZ),
                _creaturePathAccess
-                );
+                )
+            {
+                AccountId = (uint)player.AccountId
+            };
+
 
             AddExistingPersonalChannels(newPlayer);
 

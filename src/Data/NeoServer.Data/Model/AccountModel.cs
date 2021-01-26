@@ -26,6 +26,7 @@ namespace NeoServer.Data.Model
 
 
         public virtual ICollection<PlayerModel> Players { get; set; }
+        public virtual ICollection<AccountVipListModel> VipList { get; set; }
 
         public DateTime Creation
         {

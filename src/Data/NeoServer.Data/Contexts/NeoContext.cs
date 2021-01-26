@@ -16,6 +16,8 @@ namespace NeoServer.Data
         public DbSet<PlayerItemModel> PlayerItems { get; set; }
         public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
         public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
+        public DbSet<AccountVipListModel> AccountsVipList { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,8 +37,9 @@ namespace NeoServer.Data
                 modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
-                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
+                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());                
             }
+            modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }
