@@ -694,5 +694,9 @@ namespace NeoServer.Server.Model.Players
             OnAddedToVipList?.Invoke(this, playerId, name);
             return true;
         }
+        public void RemoveFromVip(uint playerId)
+        {
+            VipList?.Remove(playerId);
+        }
     }
 }

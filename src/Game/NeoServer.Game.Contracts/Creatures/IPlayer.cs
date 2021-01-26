@@ -157,6 +157,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool ExitChannel(IChatChannel channel);
         void AddPersonalChannel(IChatChannel channel);
         bool AddToVip(uint playerId, string name);
+        void RemoveFromVip(uint playerId);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
