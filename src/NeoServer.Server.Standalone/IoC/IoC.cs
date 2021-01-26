@@ -70,7 +70,7 @@ namespace NeoServer.Server.Standalone.IoC
             var builder = Builder;
             //server
 
-            builder.RegisterType<AccountRepositoryNeo>().As<IAccountRepositoryNeo>().SingleInstance();
+            builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
             builder.RegisterType<PlayerDepotItemRepositoryNeo>().As<IPlayerDepotItemRepositoryNeo>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();

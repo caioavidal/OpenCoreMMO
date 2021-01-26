@@ -62,7 +62,6 @@ namespace NeoServer.Server.Model.Players
             Containers = new PlayerContainerList(this);
 
             KnownCreatures = new Dictionary<uint, long>();//todo
-            VipList = new Dictionary<string, bool>(); //todo
 
             foreach (var skill in Skills.Values)
             {
@@ -87,6 +86,7 @@ namespace NeoServer.Server.Model.Players
         public event PlayerJoinChannel OnJoinedChannel;
         public event PlayerExitChannel OnExitedChannel;
         public override event DropLoot OnDropLoot;
+        public event AddToVipList OnAddedToVipList;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -124,7 +124,7 @@ namespace NeoServer.Server.Model.Players
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }
-        public Dictionary<string, bool> VipList { get; }
+        
         public IVocation Vocation => VocationStore.TryGetValue(VocationType, out var vocation) ? vocation : null;
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
@@ -134,6 +134,7 @@ namespace NeoServer.Server.Model.Players
         public bool Online { get; private set; }
         public ushort Mana { get; private set; }
         public ushort MaxMana { get; private set; }
+        public HashSet<uint> VipList { get; set; } = new HashSet<uint>();
         public FightMode FightMode { get; private set; }
         private IDictionary<ushort, IChatChannel> personalChannels;
         private byte soulPoints;
@@ -675,6 +676,22 @@ namespace NeoServer.Server.Model.Players
                 OnOperationFailed?.Invoke(CreatureId, cancelMessage);
                 return false;
             }
+            return true;
+        }
+        public bool AddToVip(uint playerId, string name)
+        {
+            if(VipList?.Count > 200)
+            {
+                OnOperationFailed?.Invoke(CreatureId, "You cannot add more buddies.");
+                return false;
+            }
+            if (!VipList.Add(playerId))
+            {
+                OnOperationFailed?.Invoke(CreatureId, "This player is already in your list.");
+                return false;
+            }
+
+            OnAddedToVipList?.Invoke(this, playerId, name);
             return true;
         }
     }

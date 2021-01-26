@@ -15,14 +15,14 @@ namespace NeoServer.Server.Handlers.Authentication
     public class PlayerLogInHandler : PacketHandler
     {
         //private readonly IAccountRepository repository;
-        private readonly IAccountRepositoryNeo repositoryNeo;
+        private readonly IAccountRepository repositoryNeo;
         private readonly ServerConfiguration serverConfiguration;
         private readonly Game game;
         private CreaturePathAccess _creaturePathAccess;
         private readonly IItemFactory _itemFactory;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
 
-        public PlayerLogInHandler(/*IAccountRepository repository,*/ IAccountRepositoryNeo repositoryNeo,
+        public PlayerLogInHandler(/*IAccountRepository repository,*/ IAccountRepository repositoryNeo,
          Game game, ServerConfiguration serverConfiguration, CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, IEnumerable<IPlayerLoader> playerLoaders)
         {
             this.repositoryNeo = repositoryNeo;

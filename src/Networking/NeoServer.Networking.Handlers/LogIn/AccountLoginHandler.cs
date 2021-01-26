@@ -8,9 +8,9 @@ namespace NeoServer.Server.Handlers.Authentication
 {
     public class AccountLoginHandler : PacketHandler
     {
-        private readonly IAccountRepositoryNeo _repositoryNeo;
+        private readonly IAccountRepository _repositoryNeo;
         private readonly ServerConfiguration serverConfiguration;
-        public AccountLoginHandler(IAccountRepositoryNeo repositoryNeo, ServerConfiguration serverConfiguration)
+        public AccountLoginHandler(IAccountRepository repositoryNeo, ServerConfiguration serverConfiguration)
         {
             _repositoryNeo = repositoryNeo;
             this.serverConfiguration = serverConfiguration;
