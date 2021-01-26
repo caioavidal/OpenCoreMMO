@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
@@ -17,8 +18,10 @@ namespace NeoServer.Scripts.Players
         public God(uint id, string characterName, byte vocation, Gender gender, bool online, IDictionary<SkillType, ISkill> skills, IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed, Location location, IPathAccess pathAccess) : 
             base(id, characterName, vocation, gender, online, skills, outfit, inventory, speed, location, pathAccess)
         {
+            SetFlags(PlayerFlag.CanSeeInvisibility);
         }
-        public override bool CanSeeInvisible => true;
+        public override bool CanSeeInvisible => HasFlag(PlayerFlag.CanSeeInvisibility);
+        
         public override bool CanBeSeen => false;
         public override void GainExperience(uint exp) { } //tutor do not gain experience
         public override bool ReceiveAttack(IThing enemy, CombatDamage damage)

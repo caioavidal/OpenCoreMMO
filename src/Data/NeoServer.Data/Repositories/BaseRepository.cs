@@ -11,7 +11,7 @@ namespace NeoServer.Data.Repositories
     /// This class represents the generic repository base from application.
     /// </summary>
     /// <typeparam name="TEntity">Generic type for repository entity.</typeparam>
-    public class BaseRepositoryNeo<TEntity, TContext> : IDisposable, IBaseRepositoryNeo<TEntity> where TEntity : class where TContext : DbContext
+    public class BaseRepository<TEntity, TContext> : IDisposable, IBaseRepositoryNeo<TEntity> where TEntity : class where TContext : DbContext
     {
         #region private members
 
@@ -35,7 +35,7 @@ namespace NeoServer.Data.Repositories
 
         #region constructors
 
-        public BaseRepositoryNeo(DbContext dbContext)
+        public BaseRepository(DbContext dbContext)
         {
             DbContext = dbContext;
             _entity = DbContext.Set<TEntity>();

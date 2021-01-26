@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Data.Repositories
 {
-    public class PlayerDepotItemRepositoryNeo : BaseRepositoryNeo<PlayerDepotItemModel, NeoContext>, IPlayerDepotItemRepositoryNeo
+    public class PlayerDepotItemRepositoryNeo : BaseRepository<PlayerDepotItemModel, NeoContext>, IPlayerDepotItemRepositoryNeo
     {
         #region constructors
 

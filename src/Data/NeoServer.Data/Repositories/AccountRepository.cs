@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
+using NeoServer.Server.Model.Players;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace NeoServer.Data.Repositories
 {
-    public class AccountRepositoryNeo : BaseRepositoryNeo<AccountModel, NeoContext>, IAccountRepositoryNeo
+    public class AccountRepository : BaseRepository<AccountModel, NeoContext>, IAccountRepository
     {
         #region constructors
 
-        public AccountRepositoryNeo(NeoContext context) : base(context) { }
+        public AccountRepository(NeoContext context) : base(context) { }
 
         #endregion
 
@@ -99,6 +100,11 @@ namespace NeoServer.Data.Repositories
                     //.Include(x => x.AccountBanHistory)
                     //    .ThenInclude(x => x.BannedBy)
                     .SingleOrDefaultAsync();
+        }
+
+        public async Task<PlayerModel> GetPlayer(string playerName)
+        {
+            return await Context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
         }
 
         #endregion

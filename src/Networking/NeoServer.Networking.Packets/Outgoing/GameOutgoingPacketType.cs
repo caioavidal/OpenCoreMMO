@@ -49,7 +49,8 @@
         OpenPrivateChannel = 0xAD,
         SendPrivateMessage = 0xAA,
         ChannelList = 0xAB,
-        CloseChannel = 0xB3
+        CloseChannel = 0xB3,
+        AddVip = 0xD2
 
     }
 }
