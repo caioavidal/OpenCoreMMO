@@ -30,7 +30,7 @@ namespace NeoServer.Networking
         public IReadOnlyNetworkMessage InMessage { get; private set; }
 
         public uint[] XteaKey { get; private set; }
-        public uint PlayerId { get; private set; }
+        public uint CreatureId { get; private set; }
         public bool IsAuthenticated { get; private set; } = false;
 
         public bool Disconnected { get; private set; } = false;
@@ -254,7 +254,7 @@ namespace NeoServer.Networking
 
             while (OutgoingPackets.TryDequeue(out var packet))
             {
-                logger.Debug("To {PlayerId}: {name}", PlayerId, packet.GetType().Name);
+                logger.Debug("To {PlayerId}: {name}", CreatureId, packet.GetType().Name);
                 packet.WriteToMessage(message);
             }
 
@@ -282,7 +282,7 @@ namespace NeoServer.Networking
 
         public void SetConnectionOwner(IPlayer player)
         {
-            if (PlayerId != 0)
+            if (CreatureId != 0)
             {
                 throw new InvalidOperationException("Connection already has a Player Id");
             }
@@ -290,7 +290,7 @@ namespace NeoServer.Networking
 
             OutgoingPackets = new Queue<IOutgoingPacket>();
 
-            PlayerId = player.CreatureId;
+            CreatureId = player.CreatureId;
         }
     }
 }

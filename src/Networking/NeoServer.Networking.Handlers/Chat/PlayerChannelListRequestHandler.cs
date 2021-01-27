@@ -14,7 +14,7 @@ namespace NeoServer.Server.Handlers.Player
         }
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             var channels = ChatChannelStore.Data.All.Where(x => x.PlayerCanJoin(player));
             channels = player.PersonalChannels is null ? channels : channels.Concat(player.PersonalChannels);

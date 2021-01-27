@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
@@ -86,6 +87,8 @@ namespace NeoServer.Data.Repositories
             Context.AccountsVipList.Remove(item);
             await CommitChanges();
         }
+
+  
         #endregion
     }
 }

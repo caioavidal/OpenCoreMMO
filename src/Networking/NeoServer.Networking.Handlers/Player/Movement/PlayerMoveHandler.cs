@@ -19,7 +19,7 @@ namespace NeoServer.Server.Handlers.Players
         {
             Direction direction = ParseMovementPacket(message.IncomingPacket);
 
-            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
+            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player))
             {
                 game.Dispatcher.AddEvent(new Event(() => player.TryWalkTo(direction)));
             }

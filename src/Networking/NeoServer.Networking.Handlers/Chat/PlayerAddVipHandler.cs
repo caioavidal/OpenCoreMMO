@@ -26,7 +26,7 @@ namespace NeoServer.Server.Handlers.Player
             var addVipPacket = new AddVipPacket(message);
 
             if (addVipPacket.Name?.Length > 20) return;
-            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             var vipPlayerModel = await accountRepository.GetPlayer(addVipPacket.Name);
 

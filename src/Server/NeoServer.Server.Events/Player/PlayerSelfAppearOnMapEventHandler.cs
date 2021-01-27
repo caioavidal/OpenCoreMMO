@@ -1,4 +1,5 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using NeoServer.Data.Interfaces;
+using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -13,24 +14,33 @@ namespace NeoServer.Server.Events
     {
         private readonly IMap map;
         private readonly Game game;
+        private readonly IAccountRepository accountRepository;
 
-        public PlayerSelfAppearOnMapEventHandler(IMap map, Game game)
+        public PlayerSelfAppearOnMapEventHandler(IMap map, Game game, IAccountRepository accountRepository)
         {
             this.map = map;
             this.game = game;
+            this.accountRepository = accountRepository;
         }
         public void Execute(IWalkableCreature creature)
         {
-         
-
             creature.ThrowIfNull();
+
+            if (creature is not IPlayer player) return;
 
             if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
 
-            SendPacketsToPlayer(creature as IPlayer, connection);
+            SendPacketsToPlayer(player, connection);
 
-            connection.Send();
 
+            foreach (var loggedPlayer in game.CreatureManager.GetAllLoggedPlayers())
+            {
+                if (!loggedPlayer.HasInVipList(player.Id)) continue;
+                if (!game.CreatureManager.GetPlayerConnection(loggedPlayer.CreatureId, out var friendConnection)) continue;
+
+                friendConnection.OutgoingPackets.Enqueue(new PlayerUpdateVipStatusPacket(player.Id, true));
+                friendConnection.Send();
+            }
         }
 
         private void SendPacketsToPlayer(IPlayer player, IConnection connection)

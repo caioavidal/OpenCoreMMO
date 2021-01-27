@@ -17,7 +17,7 @@ namespace NeoServer.Server.Handlers.Player
         {
             var lookAtPacket = new LookAtPacket(message);
 
-            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player))
+            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
             {
                 if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Ground)
                 {

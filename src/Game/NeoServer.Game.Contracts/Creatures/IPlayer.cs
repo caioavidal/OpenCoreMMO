@@ -161,6 +161,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool AddToVip(uint playerId, string name);
         void RemoveFromVip(uint playerId);
         void LoadVipList(IEnumerable<(uint, string)> vips);
+        bool HasInVipList(uint playerId);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";

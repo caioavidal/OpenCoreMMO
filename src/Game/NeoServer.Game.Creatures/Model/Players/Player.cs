@@ -715,5 +715,6 @@ namespace NeoServer.Server.Model.Players
         {
             VipList?.Remove(playerId);
         }
+        public bool HasInVipList(uint playerId) => VipList.Contains(playerId);
     }
 }
