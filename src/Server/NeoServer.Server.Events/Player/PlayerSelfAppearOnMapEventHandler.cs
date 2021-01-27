@@ -14,13 +14,11 @@ namespace NeoServer.Server.Events
     {
         private readonly IMap map;
         private readonly Game game;
-        private readonly IAccountRepository accountRepository;
 
-        public PlayerSelfAppearOnMapEventHandler(IMap map, Game game, IAccountRepository accountRepository)
+        public PlayerSelfAppearOnMapEventHandler(IMap map, Game game)
         {
             this.map = map;
             this.game = game;
-            this.accountRepository = accountRepository;
         }
         public void Execute(IWalkableCreature creature)
         {
@@ -32,15 +30,6 @@ namespace NeoServer.Server.Events
 
             SendPacketsToPlayer(player, connection);
 
-
-            foreach (var loggedPlayer in game.CreatureManager.GetAllLoggedPlayers())
-            {
-                if (!loggedPlayer.HasInVipList(player.Id)) continue;
-                if (!game.CreatureManager.GetPlayerConnection(loggedPlayer.CreatureId, out var friendConnection)) continue;
-
-                friendConnection.OutgoingPackets.Enqueue(new PlayerUpdateVipStatusPacket(player.Id, true));
-                friendConnection.Send();
-            }
         }
 
         private void SendPacketsToPlayer(IPlayer player, IConnection connection)

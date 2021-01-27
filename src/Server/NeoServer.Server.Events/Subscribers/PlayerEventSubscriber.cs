@@ -28,6 +28,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerExitedChannelEventHandler playerExitedChannelEventHandler;
         private readonly PlayerAddToVipListEventHandler playerAddedToVipListEventHandler;
         private readonly PlayerLoadedVipListEventHandler playerLoadedVipListEvent;
+        private readonly PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler;
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
             PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
             ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler,
@@ -38,7 +39,7 @@ namespace NeoServer.Server.Events
             PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler,
             PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler, PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler,
             PlayerExitedChannelEventHandler playerExitedChannelEventHandler, PlayerAddToVipListEventHandler playerAddedToVipListEventHandler,
-            PlayerLoadedVipListEventHandler playerLoadedVipListEvent)
+            PlayerLoadedVipListEventHandler playerLoadedVipListEvent, PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -62,6 +63,7 @@ namespace NeoServer.Server.Events
             this.playerExitedChannelEventHandler = playerExitedChannelEventHandler;
             this.playerAddedToVipListEventHandler = playerAddedToVipListEventHandler;
             this.playerLoadedVipListEvent = playerLoadedVipListEvent;
+            this.playerChangedOnlineStatusEventHandler = playerChangedOnlineStatusEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -103,6 +105,7 @@ namespace NeoServer.Server.Events
             player.OnExitedChannel += playerExitedChannelEventHandler.Execute;
             player.OnAddedToVipList += playerAddedToVipListEventHandler.Execute;
             player.OnLoadedVipList += playerLoadedVipListEvent.Execute;
+            player.OnChangedOnlineStatus += playerChangedOnlineStatusEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -144,6 +147,7 @@ namespace NeoServer.Server.Events
             player.OnExitedChannel -= playerExitedChannelEventHandler.Execute;
             player.OnAddedToVipList -= playerAddedToVipListEventHandler.Execute;
             player.OnLoadedVipList -= playerLoadedVipListEvent.Execute;
+            player.OnChangedOnlineStatus -= playerChangedOnlineStatusEventHandler.Execute;
         }
     }
 }

@@ -32,6 +32,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void PlayerExitChannel(IPlayer player, IChatChannel channel);
     public delegate void AddToVipList(IPlayer player, uint vipPlayerId, string vipPlayerName);
     public delegate void PlayerLoadVipList(IPlayer player, IEnumerable<(uint, string)> vipList);
+    public delegate void ChangeOnlineStatus(IPlayer player, bool online);
     public interface IPlayer : ICombatActor
     {
         event UseSpell OnUsedSpell;
@@ -69,6 +70,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event PlayerExitChannel OnExitedChannel;
         event AddToVipList OnAddedToVipList;
         event PlayerLoadVipList OnLoadedVipList;
+        event ChangeOnlineStatus OnChangedOnlineStatus;
 
         IInventory Inventory { get; }
         ushort Mana { get; }

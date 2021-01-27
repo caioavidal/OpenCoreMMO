@@ -88,6 +88,7 @@ namespace NeoServer.Server.Model.Players
         public override event DropLoot OnDropLoot;
         public event AddToVipList OnAddedToVipList;
         public event PlayerLoadVipList OnLoadedVipList;
+        public event ChangeOnlineStatus OnChangedOnlineStatus;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -115,7 +116,7 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public void LoadVipList(IEnumerable<(uint,string)> vips)
+        public void LoadVipList(IEnumerable<(uint, string)> vips)
         {
             var vipList = new HashSet<(uint, string)>();
             foreach (var vip in vips)
@@ -125,7 +126,7 @@ namespace NeoServer.Server.Model.Players
                 VipList.Add(vip.Item1);
                 vipList.Add(vip);
             }
-            
+
             OnLoadedVipList?.Invoke(this, vipList);
         }
         public bool HasFlag(PlayerFlag flag) => (flags & (ulong)flag) != 0;
@@ -493,6 +494,7 @@ namespace NeoServer.Server.Model.Players
             StopFollowing();
             StopWalking();
             Containers.CloseAll();
+            ChangeOnlineStatus(online: false);
 
             OnLoggedOut?.Invoke(this);
             return true;
@@ -502,12 +504,16 @@ namespace NeoServer.Server.Model.Players
             StopAttack();
             StopFollowing();
             StopWalking();
+            ChangeOnlineStatus(true);
 
             KnownCreatures.Clear();
-
             OnLoggedIn?.Invoke(this);
+
             return true;
         }
+
+        public void ChangeOnlineStatus(bool online) => OnChangedOnlineStatus?.Invoke(this, online);
+
         public override bool CanBlock(DamageType damage)
         {
             if (!Inventory.HasShield) return false;
