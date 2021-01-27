@@ -16,7 +16,7 @@ namespace NeoServer.Server.Handlers.Player
         {
             var targetId = message.GetUInt32();
 
-            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player)) return;
 
             if(targetId == 0)
             {

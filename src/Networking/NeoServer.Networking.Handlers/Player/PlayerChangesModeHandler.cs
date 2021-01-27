@@ -17,7 +17,7 @@ namespace NeoServer.Server.Handlers.Authentication
         {
             var changeMode = new ChangeModePacket(message);
 
-            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             game.Dispatcher.AddEvent(new Event(() =>
             {

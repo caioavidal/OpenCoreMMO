@@ -13,7 +13,7 @@ namespace NeoServer.Server.Commands
         private readonly Game game;
         private readonly IConnection connection;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
-        
+
         public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection, IEnumerable<IPlayerLoader> playerLoader)
         {
             this.account = account;
@@ -34,7 +34,7 @@ namespace NeoServer.Server.Commands
                 return;
             }
 
-            if(!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.PlayerId, out var player))
+            if (!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.PlayerId, out var player))
             {
                 if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader) return;
 
@@ -44,6 +44,7 @@ namespace NeoServer.Server.Commands
             game.CreatureManager.AddPlayer(player, connection);
 
             player.Login();
+            player.LoadVipList(account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
         }
     }
 }

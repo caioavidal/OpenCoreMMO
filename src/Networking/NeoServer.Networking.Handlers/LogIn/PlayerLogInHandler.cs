@@ -34,7 +34,7 @@ namespace NeoServer.Server.Handlers.Authentication
             this.playerLoaders = playerLoaders;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+        public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             if (game.State == GameState.Stopped)
             {
@@ -51,8 +51,7 @@ namespace NeoServer.Server.Handlers.Authentication
 
             //todo: ip ban validation
 
-            //var accountRecord = repository.FirstOrDefault(a => a.AccountName == packet.Account && a.Password == packet.Password);
-            var accountRecord = repositoryNeo.Login(packet.Account, packet.Password).Result;
+            var accountRecord = await repositoryNeo.GetAccount(packet.Account, packet.Password);
 
             if (accountRecord == null)
             {

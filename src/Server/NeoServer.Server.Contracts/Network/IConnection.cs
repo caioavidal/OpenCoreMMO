@@ -9,7 +9,7 @@ namespace NeoServer.Server.Contracts.Network
     {
         IReadOnlyNetworkMessage InMessage { get; }
         uint[] XteaKey { get; }
-        uint PlayerId { get; }
+        uint CreatureId { get; }
         bool IsAuthenticated { get; }
         bool Disconnected { get; }
         Queue<IOutgoingPacket> OutgoingPackets { get; }

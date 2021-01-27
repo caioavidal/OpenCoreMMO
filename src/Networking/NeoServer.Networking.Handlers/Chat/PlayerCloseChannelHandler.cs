@@ -17,7 +17,7 @@ namespace NeoServer.Server.Handlers.Player
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var channelPacket = new OpenChannelPacket(message);
-            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             IChatChannel channel = null;
 

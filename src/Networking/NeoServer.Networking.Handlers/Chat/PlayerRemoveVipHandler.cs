@@ -23,12 +23,14 @@ namespace NeoServer.Server.Handlers.Player
         }
         public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             var removeVipPacket = new RemoveVipPacket(message);
             
 
             game.Dispatcher.AddEvent(new Event(() => player.RemoveFromVip(removeVipPacket.PlayerId)));
+
+            await accountRepository.RemoveFromVipList((int)player.AccountId, (int)removeVipPacket.PlayerId);
         }
     }
 }

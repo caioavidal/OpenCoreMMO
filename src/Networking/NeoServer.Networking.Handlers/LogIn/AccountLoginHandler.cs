@@ -34,7 +34,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            var foundedAccount = _repositoryNeo.Login(account.Account, account.Password).Result;
+            var foundedAccount = _repositoryNeo.GetAccount(account.Account, account.Password).Result;
 
             if (foundedAccount == null)
             {

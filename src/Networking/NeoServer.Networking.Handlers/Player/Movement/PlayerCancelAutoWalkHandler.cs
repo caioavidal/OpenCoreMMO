@@ -18,7 +18,7 @@ namespace NeoServer.Server.Handlers.Players
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            if (game.CreatureManager.TryGetPlayer(connection.PlayerId, out IPlayer player))
+            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player))
             {
                 game.Dispatcher.AddEvent(new Event(player.CancelWalk));
             }

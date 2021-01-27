@@ -101,7 +101,7 @@ namespace NeoServer.Data.Repositories
         /// This method is responsible for save changes in database.
         /// </summary>
         /// <returns></returns>
-        private async Task CommitChanges() => await DbContext?.SaveChangesAsync();
+        protected async Task CommitChanges() => await DbContext?.SaveChangesAsync();
 
         #endregion
     }

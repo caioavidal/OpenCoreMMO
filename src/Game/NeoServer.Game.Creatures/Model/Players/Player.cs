@@ -87,6 +87,8 @@ namespace NeoServer.Server.Model.Players
         public event PlayerExitChannel OnExitedChannel;
         public override event DropLoot OnDropLoot;
         public event AddToVipList OnAddedToVipList;
+        public event PlayerLoadVipList OnLoadedVipList;
+        public event ChangeOnlineStatus OnChangedOnlineStatus;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -114,9 +116,23 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
+        public void LoadVipList(IEnumerable<(uint, string)> vips)
+        {
+            var vipList = new HashSet<(uint, string)>();
+            foreach (var vip in vips)
+            {
+                if (string.IsNullOrWhiteSpace(vip.Item2)) continue;
+
+                VipList.Add(vip.Item1);
+                vipList.Add(vip);
+            }
+
+            OnLoadedVipList?.Invoke(this, vipList);
+        }
         public bool HasFlag(PlayerFlag flag) => (flags & (ulong)flag) != 0;
 
         private uint IdleTime;
+        public uint AccountId { get; init; }
         public string CharacterName { get; private set; }
         public override IOutfit Outfit { get; protected set; }
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
@@ -124,7 +140,7 @@ namespace NeoServer.Server.Model.Players
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }
-        
+
         public IVocation Vocation => VocationStore.TryGetValue(VocationType, out var vocation) ? vocation : null;
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
@@ -478,6 +494,7 @@ namespace NeoServer.Server.Model.Players
             StopFollowing();
             StopWalking();
             Containers.CloseAll();
+            ChangeOnlineStatus(online: false);
 
             OnLoggedOut?.Invoke(this);
             return true;
@@ -487,12 +504,16 @@ namespace NeoServer.Server.Model.Players
             StopAttack();
             StopFollowing();
             StopWalking();
+            ChangeOnlineStatus(true);
 
             KnownCreatures.Clear();
-
             OnLoggedIn?.Invoke(this);
+
             return true;
         }
+
+        public void ChangeOnlineStatus(bool online) => OnChangedOnlineStatus?.Invoke(this, online);
+
         public override bool CanBlock(DamageType damage)
         {
             if (!Inventory.HasShield) return false;
@@ -680,7 +701,9 @@ namespace NeoServer.Server.Model.Players
         }
         public bool AddToVip(uint playerId, string name)
         {
-            if(VipList?.Count > 200)
+            if (string.IsNullOrWhiteSpace(name)) return false;
+
+            if (VipList?.Count > 200)
             {
                 OnOperationFailed?.Invoke(CreatureId, "You cannot add more buddies.");
                 return false;
@@ -698,5 +721,6 @@ namespace NeoServer.Server.Model.Players
         {
             VipList?.Remove(playerId);
         }
+        public bool HasInVipList(uint playerId) => VipList.Contains(playerId);
     }
 }

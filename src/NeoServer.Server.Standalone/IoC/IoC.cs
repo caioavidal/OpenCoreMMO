@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using NeoServer.Data;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Providers.InMemoryDB.Extensions;
@@ -151,8 +152,12 @@ namespace NeoServer.Server.Standalone.IoC
               .WriteTo.Console(theme: AnsiConsoleTheme.Code);
               
             var logger = loggerConfig.CreateLogger();
-
+            
             Builder.RegisterInstance(logger).SingleInstance();
+            var loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog());
+
+            Builder.RegisterInstance(loggerFactory).As<ILoggerFactory>();
+
             return (logger, loggerConfig);
         }
 

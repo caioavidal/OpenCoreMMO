@@ -15,7 +15,7 @@ namespace NeoServer.Server.Handlers.Player
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var playerSay = new PlayerSayPacket(message);
-            if (!game.CreatureManager.TryGetPlayer(connection.PlayerId, out var player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
 
             game.Dispatcher.AddEvent(new Event(() => new PlayerSayCommand(player,connection, playerSay, game).Execute()));

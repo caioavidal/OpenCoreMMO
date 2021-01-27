@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,17 +28,7 @@ namespace NeoServer.Data.Repositories
         {
             return await Context.Accounts
                 .Where(c => c.AccountId.Equals(id))
-                //.Where(c => c.AccountId.Equals(id))
-                //.Include(c => c.Players)
-                //.Include(x => x.AccountIdentity)
-                //.Include(c => c.AccountBan)
-                //    .ThenInclude(c => c.Account)
-                //.Include(c => c.AccountBan)
-                //    .ThenInclude(c => c.BannedBy)
-                //.Include(c => c.AccountBanHistory)
-                //    .ThenInclude(c => c.Account)
-                //.Include(c => c.AccountBanHistory)
-                //    .ThenInclude(c => c.BannedBy)
+
                 .SingleOrDefaultAsync();
         }
 
@@ -49,17 +41,8 @@ namespace NeoServer.Data.Repositories
         {
             return await Context.Accounts
                 .Where(x => x.Name.Equals(name))
-                //.Where(x => x.Name == name)
                 .Include(x => x.Players)
-                //    .Include(x => x.AccountIdentity)
-                //    .Include(x => x.AccountBan)
-                //        .ThenInclude(x => x.Account)
-                //    .Include(x => x.AccountBan)
-                //        .ThenInclude(x => x.BannedBy)
-                //    .Include(x => x.AccountBanHistory)
-                //        .ThenInclude(x => x.Account)
-                //    .Include(x => x.AccountBanHistory)
-                //        .ThenInclude(x => x.BannedBy)
+
                 .SingleOrDefaultAsync();
         }
 
@@ -67,38 +50,20 @@ namespace NeoServer.Data.Repositories
         {
             return await Context.Accounts
                     .Where(x => x.Email.Equals(email))
-                    //.Where(x => x.Email == email)
                     .Include(x => x.Players)
-                    //.Include(x => x.AccountIdentity)
-                    //.Include(x => x.AccountBan)
-                    //    .ThenInclude(x => x.Account)
-                    //.Include(x => x.AccountBan)
-                    //    .ThenInclude(x => x.BannedBy)
-                    //.Include(x => x.AccountBanHistory)
-                    //    .ThenInclude(x => x.Account)
-                    //.Include(x => x.AccountBanHistory)
-                    //    .ThenInclude(x => x.BannedBy)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<AccountModel> Login(string name, string password)
+        public async Task<AccountModel> GetAccount(string name, string password)
         {
             return await Context.Accounts
-                    .Include(x=>x.Players)
-                    .ThenInclude(x=>x.PlayerItems)
-                    .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
-                    //.Where(x => x.Email == email)
                     .Include(x => x.Players)
-                        .ThenInclude(x => x.PlayerInventoryItems)
-                    //.Include(x => x.AccountIdentity)
-                    //.Include(x => x.AccountBan)
-                    //    .ThenInclude(x => x.Account)
-                    //.Include(x => x.AccountBan)
-                    //    .ThenInclude(x => x.BannedBy)
-                    //.Include(x => x.AccountBanHistory)
-                    //    .ThenInclude(x => x.Account)
-                    //.Include(x => x.AccountBanHistory)
-                    //    .ThenInclude(x => x.BannedBy)
+                    .ThenInclude(x => x.PlayerItems)
+                    .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
+                    .Include(x => x.Players)
+                    .ThenInclude(x => x.PlayerInventoryItems)
+                    .Include(x => x.VipList)
+                    .ThenInclude(x => x.Player)
                     .SingleOrDefaultAsync();
         }
 
@@ -106,7 +71,24 @@ namespace NeoServer.Data.Repositories
         {
             return await Context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
         }
+        public async Task AddPlayerToVipList(int accountId, int playerId)
+        {
+            await Context.AccountsVipList.AddAsync(new AccountVipListModel()
+            {
+                AccountId = accountId,
+                PlayerId = playerId,
+            });
 
+            await CommitChanges();
+        }
+        public async Task RemoveFromVipList(int accountId, int playerId)
+        {
+            var item = await Context.AccountsVipList.SingleOrDefaultAsync(x => x.PlayerId == playerId && x.AccountId == accountId);
+            Context.AccountsVipList.Remove(item);
+            await CommitChanges();
+        }
+
+  
         #endregion
     }
 }

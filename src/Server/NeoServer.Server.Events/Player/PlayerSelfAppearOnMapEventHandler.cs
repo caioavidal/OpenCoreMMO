@@ -1,4 +1,5 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using NeoServer.Data.Interfaces;
+using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -21,15 +22,13 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IWalkableCreature creature)
         {
-         
-
             creature.ThrowIfNull();
+
+            if (creature is not IPlayer player) return;
 
             if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
 
-            SendPacketsToPlayer(creature as IPlayer, connection);
-
-            connection.Send();
+            SendPacketsToPlayer(player, connection);
 
         }
 

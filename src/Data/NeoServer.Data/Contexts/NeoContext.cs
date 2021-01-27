@@ -1,26 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NeoServer.Data.Configurations;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
+using Serilog.Core;
 
 namespace NeoServer.Data
 {
     public class NeoContext : DbContext
     {
-        public NeoContext(DbContextOptions<NeoContext> options)
+        private readonly ILoggerFactory logger;
+        public NeoContext(DbContextOptions<NeoContext> options, ILoggerFactory logger)
             : base(options)
-        { }
+        {
+            this.logger = logger;
+        }
 
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<PlayerModel> Players { get; set; }
         public DbSet<PlayerItemModel> PlayerItems { get; set; }
         public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
         public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
+        public DbSet<AccountVipListModel> AccountsVipList { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLoggerFactory(logger);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(AccountModelConfiguration)));
-
             if (Database.IsSqlite())
             {
                 modelBuilder.ApplyConfiguration(new ForSQLitePlayerInventoryItemModelConfiguration());
@@ -35,8 +45,9 @@ namespace NeoServer.Data
                 modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
-                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
+                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());                
             }
+            modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

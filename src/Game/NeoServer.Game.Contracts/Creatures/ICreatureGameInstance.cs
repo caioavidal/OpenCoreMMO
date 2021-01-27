@@ -17,5 +17,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void AddPlayer(IPlayer player);
         bool TryGetPlayer(uint playerId, out IPlayer player);
         bool TryRemoveFromLoggedPlayers(uint id);
+        IEnumerable<IPlayer> AllLoggedPlayers();
     }
 }
