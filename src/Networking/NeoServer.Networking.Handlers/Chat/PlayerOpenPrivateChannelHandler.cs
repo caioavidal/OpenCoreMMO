@@ -23,11 +23,13 @@ namespace NeoServer.Server.Handlers.Player
             if (string.IsNullOrWhiteSpace(channel.Receiver) || !game.CreatureManager.TryGetPlayer(channel.Receiver, out receiver))
             {
                 connection.Send(new TextMessagePacket("A player with this name does not exist.", TextMessageOutgoingType.Small));
+                return;
             }
 
             if (channel.Receiver.Trim().Equals(player.Name.Trim(), System.StringComparison.InvariantCultureIgnoreCase))
             {
                 connection.Send(new TextMessagePacket("You cannot set up a private message channel with yourself.", TextMessageOutgoingType.Small));
+                return;
             }
 
             if (receiver is null) return;
