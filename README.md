@@ -74,14 +74,19 @@ dotnet run -p "NeoServer.Server.Standalone"
 * Console Debug Logging
 * XUnit Testing
 
+## Links
+
+* Discord Invite: https://discord.gg/Kazq9z2
+* Trello Board: https://trello.com/b/JnOJ9yn5/opencoremmo
+* TibiaKing Topic: https://tibiaking.com/forums/topic/101402-open-source-tibia-server-c-net-5/
+
 ## Author
 
 👤 **Caio Vidal**
 
 * Github: [@caioavidal](https://github.com/caioavidal)
 * LinkedIn: [https:\/\/www.linkedin.com\/in\/caiovidal](https:\/\/www.linkedin.com\/in\/caiovidal)
-* Discord Invite: https://discord.gg/Kazq9z2
-* TibiaKing Topic: https://tibiaking.com/forums/topic/101402-open-source-tibia-server-c-net-5/
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
