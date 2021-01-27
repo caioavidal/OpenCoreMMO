@@ -62,7 +62,7 @@ namespace NeoServer.Data.Repositories
                     .Include(x => x.Players)
                     .ThenInclude(x => x.PlayerInventoryItems)
                     .Include(x => x.VipList)
-                    .ThenInclude(x=>x.Player)
+                    .ThenInclude(x => x.Player)
                     .SingleOrDefaultAsync();
         }
 
@@ -78,6 +78,12 @@ namespace NeoServer.Data.Repositories
                 PlayerId = playerId,
             });
 
+            await CommitChanges();
+        }
+        public async Task RemoveFromVipList(int accountId, int playerId)
+        {
+            var item = await Context.AccountsVipList.SingleOrDefaultAsync(x => x.PlayerId == playerId && x.AccountId == accountId);
+            Context.AccountsVipList.Remove(item);
             await CommitChanges();
         }
         #endregion

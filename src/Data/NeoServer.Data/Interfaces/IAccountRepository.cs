@@ -12,5 +12,6 @@ namespace NeoServer.Data.Interfaces
         Task<AccountModel> GetAccount(string name, string password);
         Task<PlayerModel> GetPlayer(string name);
         Task AddPlayerToVipList(int accountId, int playerId);
+        Task RemoveFromVipList(int accountId, int playerId);
     }
 }

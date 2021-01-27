@@ -29,6 +29,8 @@ namespace NeoServer.Server.Handlers.Player
             
 
             game.Dispatcher.AddEvent(new Event(() => player.RemoveFromVip(removeVipPacket.PlayerId)));
+
+            await accountRepository.RemoveFromVipList((int)player.AccountId, (int)removeVipPacket.PlayerId);
         }
     }
 }
