@@ -108,14 +108,15 @@ namespace NeoServer.Server.Model.Players
         private ulong flags;
 
         public void SetFlag(PlayerFlag flag) => flags &= (ulong)flag;
-        public void SetFlags(params PlayerFlag[] flags)
+        public virtual void SetFlags(params PlayerFlag[] flags)
         {
             foreach (var flag in flags)
             {
-                this.flags &= (ulong)flag;
+                this.flags |= (ulong)flag;
             }
         }
-
+    
+     
         public void LoadVipList(IEnumerable<(uint, string)> vips)
         {
             var vipList = new HashSet<(uint, string)>();
@@ -699,22 +700,31 @@ namespace NeoServer.Server.Model.Players
             }
             return true;
         }
-        public bool AddToVip(uint playerId, string name)
+        public bool AddToVip(IPlayer player)
         {
-            if (string.IsNullOrWhiteSpace(name)) return false;
+            if (string.IsNullOrWhiteSpace(player.Name)) return false;
 
             if (VipList?.Count > 200)
             {
                 OnOperationFailed?.Invoke(CreatureId, "You cannot add more buddies.");
                 return false;
             }
-            if (!VipList.Add(playerId))
+            if (player.HasFlag(PlayerFlag.SpecialVIP))
+            {
+                if (!HasFlag(PlayerFlag.SpecialVIP))
+                {
+                    OnOperationFailed?.Invoke(CreatureId, "You cannot add this player to your vip list.");
+                    return false;
+                }
+            }
+            if (!VipList.Add(player.Id))
             {
                 OnOperationFailed?.Invoke(CreatureId, "This player is already in your list.");
                 return false;
             }
+          
 
-            OnAddedToVipList?.Invoke(this, playerId, name);
+            OnAddedToVipList?.Invoke(this, player.Id, player.Name);
             return true;
         }
         public void RemoveFromVip(uint playerId)

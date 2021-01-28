@@ -18,7 +18,7 @@ namespace NeoServer.Scripts.Players
         public God(uint id, string characterName, byte vocation, Gender gender, bool online, IDictionary<SkillType, ISkill> skills, IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed, Location location, IPathAccess pathAccess) : 
             base(id, characterName, vocation, gender, online, skills, outfit, inventory, speed, location, pathAccess)
         {
-            SetFlags(PlayerFlag.CanSeeInvisibility);
+            SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVIP);
         }
         public override bool CanSeeInvisible => HasFlag(PlayerFlag.CanSeeInvisibility);
         

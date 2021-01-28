@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
@@ -160,10 +161,11 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool SendMessage(IChatChannel channel, string message);
         bool ExitChannel(IChatChannel channel);
         void AddPersonalChannel(IChatChannel channel);
-        bool AddToVip(uint playerId, string name);
+        bool AddToVip(IPlayer player);
         void RemoveFromVip(uint playerId);
         void LoadVipList(IEnumerable<(uint, string)> vips);
         bool HasInVipList(uint playerId);
+        bool HasFlag(PlayerFlag flag);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
