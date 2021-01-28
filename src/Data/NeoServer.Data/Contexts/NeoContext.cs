@@ -22,6 +22,7 @@ namespace NeoServer.Data
         public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
         public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
         public DbSet<AccountVipListModel> AccountsVipList { get; set; }
+        public DbSet<GuildModel> Guilds { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

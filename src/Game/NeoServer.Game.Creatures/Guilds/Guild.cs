@@ -32,8 +32,8 @@ namespace NeoServer.Game.Creatures.Guilds
 
     public enum GuildRank
     {
-        Leader,
-        ViceLeader,
-        Member = default
+        Leader = 1,
+        ViceLeader = 2,
+        Member = 3
     }
 }

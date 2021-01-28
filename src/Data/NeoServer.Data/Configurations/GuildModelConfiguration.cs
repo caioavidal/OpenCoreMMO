@@ -22,6 +22,9 @@ namespace NeoServer.Data.Configurations
             builder.Property(e => e.OwnerId).HasColumnName("ownerid");
             builder.Property(e => e.CreationDate).HasColumnName("creation_date");
             builder.Property(e => e.Modt).HasColumnName("modt");
+
+            builder.HasMany(x => x.Members).WithOne().HasForeignKey("GuildId");
+
         }
     }
 }

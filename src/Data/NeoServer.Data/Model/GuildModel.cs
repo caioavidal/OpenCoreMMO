@@ -15,5 +15,6 @@ namespace NeoServer.Data.Model
         public DateTime CreationDate { get; set; }
         public string Modt { get; set; }
         public virtual PlayerModel Owner { get; set; }
+        public virtual ICollection<GuildMembershipModel> Members { get; set; }
     }
 }
