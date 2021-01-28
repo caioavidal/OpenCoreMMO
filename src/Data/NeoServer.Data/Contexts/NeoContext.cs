@@ -22,6 +22,7 @@ namespace NeoServer.Data
         public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
         public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
         public DbSet<AccountVipListModel> AccountsVipList { get; set; }
+        public DbSet<GuildModel> Guilds { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,6 +39,8 @@ namespace NeoServer.Data
                 modelBuilder.ApplyConfiguration(new ForSQLitePlayerItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new ForSQLitePlayerModelConfiguration());
                 modelBuilder.ApplyConfiguration(new ForSQLiteAccountModelConfiguration());
+                modelBuilder.ApplyConfiguration(new ForSQLiteGuildModelConfiguration());
+                modelBuilder.ApplyConfiguration(new ForSQLiteGuildRankModelConfiguration());
             }
             else
             {
@@ -45,9 +48,14 @@ namespace NeoServer.Data
                 modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
-                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());                
+                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
+                modelBuilder.ApplyConfiguration(new GuildModelConfiguration());
+                modelBuilder.ApplyConfiguration(new GuildRankModelConfiguration());
             }
+
             modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());
+            modelBuilder.ApplyConfiguration(new GuildMembershipModelConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }

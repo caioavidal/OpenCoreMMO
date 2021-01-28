@@ -90,6 +90,8 @@ namespace NeoServer.Server.Model.Players
         public event PlayerLoadVipList OnLoadedVipList;
         public event ChangeOnlineStatus OnChangedOnlineStatus;
 
+        public ushort GuildId { get; init; }
+
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
             if (type == SkillType.Level)

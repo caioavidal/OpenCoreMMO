@@ -175,5 +175,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         IVocation Vocation { get; }
         IEnumerable<IChatChannel> PersonalChannels { get; }
         uint AccountId { get; init; }
+        ushort GuildId { get; init; }
     }
 }

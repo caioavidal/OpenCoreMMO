@@ -1,4 +1,5 @@
 ﻿#define GAME_FEATURE_MESSAGE_LEVEL
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -68,7 +69,20 @@ namespace NeoServer.Game.Creatures
 
             if (!known)
             {
-                cache.Add(0x00); //guild emblem
+                if (creature is IPlayer player)
+                {
+                    if (playerRequesting.GuildId == player.GuildId)
+                    {
+                        cache.Add((byte)GuildEmblem.Ally);
+                    }
+                    else if (player.GuildId == 0) cache.Add((byte)GuildEmblem.None); //guild emblem
+                    else cache.Add((byte)GuildEmblem.Neutral); //guild emblem
+                }
+                else
+                {
+
+                    cache.Add((byte)GuildEmblem.None);
+                }
             }
 
             cache.Add(0x01);
