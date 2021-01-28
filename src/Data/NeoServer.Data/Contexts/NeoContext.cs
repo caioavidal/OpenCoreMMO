@@ -45,9 +45,14 @@ namespace NeoServer.Data
                 modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
                 modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
-                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());                
+                modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
+                modelBuilder.ApplyConfiguration(new GuildModelConfiguration());
+                modelBuilder.ApplyConfiguration(new GuildRankModelConfiguration());
             }
+
             modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());
+            modelBuilder.ApplyConfiguration(new GuildMembershipModelConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }
