@@ -71,11 +71,8 @@ namespace NeoServer.Game.Creatures
             {
                 if (creature is IPlayer player)
                 {
-                    if (playerRequesting.GuildId == player.GuildId)
-                    {
-                        cache.Add((byte)GuildEmblem.Ally);
-                    }
-                    else if (player.GuildId == 0) cache.Add((byte)GuildEmblem.None); //guild emblem
+                    if (player.GuildId == 0) cache.Add((byte)GuildEmblem.None); //guild emblem
+                    else if (playerRequesting.GuildId == player.GuildId) cache.Add((byte)GuildEmblem.Ally);
                     else cache.Add((byte)GuildEmblem.Neutral); //guild emblem
                 }
                 else

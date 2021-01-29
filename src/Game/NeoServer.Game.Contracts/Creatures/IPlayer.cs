@@ -46,7 +46,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte SoulPoints { get; }
 
         float CarryStrength { get; }
-        public string Guild { get; }
+        
         IDictionary<SkillType, ISkill> Skills { get; }
         ushort StaminaMinutes { get; }
 
@@ -168,7 +168,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool HasFlag(PlayerFlag flag);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
-        private string GuildText => string.IsNullOrWhiteSpace(Guild) ? string.Empty : $". He is a member of {Guild}";
+        private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
 
         uint TotalCapacity { get; }
         bool Recovering { get; }
@@ -176,5 +176,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         IEnumerable<IChatChannel> PersonalChannels { get; }
         uint AccountId { get; init; }
         ushort GuildId { get; init; }
+        IEnumerable<IChatChannel> PrivateChannels { get; }
+        IGuild Guild { get; }
+        bool HasGuild { get; }
     }
 }

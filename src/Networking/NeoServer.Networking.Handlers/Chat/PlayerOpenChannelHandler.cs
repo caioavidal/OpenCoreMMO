@@ -24,6 +24,7 @@ namespace NeoServer.Server.Handlers.Player
             IChatChannel channel = null;
             if (ChatChannelStore.Data.Get(channelPacket.ChannelId) is IChatChannel publicChannel) channel = publicChannel;
             if (player.PersonalChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is IChatChannel personalChannel) channel = personalChannel;
+            if (player.PrivateChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is IChatChannel privateChannel) channel = privateChannel;
 
             if (channel is null) return;
 

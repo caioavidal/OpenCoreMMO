@@ -91,6 +91,8 @@ namespace NeoServer.Server.Model.Players
         public event ChangeOnlineStatus OnChangedOnlineStatus;
 
         public ushort GuildId { get; init; }
+        public bool HasGuild => GuildId > 0;
+        public IGuild Guild => GuildStore.Data.Get(GuildId);
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -117,8 +119,8 @@ namespace NeoServer.Server.Model.Players
                 this.flags |= (ulong)flag;
             }
         }
-    
-     
+
+
         public void LoadVipList(IEnumerable<(uint, string)> vips)
         {
             var vipList = new HashSet<(uint, string)>();
@@ -155,6 +157,13 @@ namespace NeoServer.Server.Model.Players
         public ushort MaxMana { get; private set; }
         public HashSet<uint> VipList { get; set; } = new HashSet<uint>();
         public FightMode FightMode { get; private set; }
+        public IEnumerable<IChatChannel> PrivateChannels
+        {
+            get
+            {
+                if (HasGuild) yield return Guild.Channel;
+            }
+        }
         private IDictionary<ushort, IChatChannel> personalChannels;
         private byte soulPoints;
         public byte SoulPoints
@@ -253,8 +262,6 @@ namespace NeoServer.Server.Model.Players
         public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
-
-        public string Guild { get; }
         public bool Recovering { get; private set; }
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
@@ -724,7 +731,7 @@ namespace NeoServer.Server.Model.Players
                 OnOperationFailed?.Invoke(CreatureId, "This player is already in your list.");
                 return false;
             }
-          
+
 
             OnAddedToVipList?.Invoke(this, player.Id, player.Name);
             return true;

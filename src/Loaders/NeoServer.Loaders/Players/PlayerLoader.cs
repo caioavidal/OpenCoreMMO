@@ -83,7 +83,8 @@ namespace NeoServer.Loaders.Players
                _creaturePathAccess
                 )
             {
-                AccountId = (uint)player.AccountId
+                AccountId = (uint)player.AccountId,
+                GuildId = GuildStore.Data.All.FirstOrDefault(x => x.HasMember((uint)player.PlayerId))?.Id ?? 0
             };
 
 

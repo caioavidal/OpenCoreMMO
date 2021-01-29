@@ -1,13 +1,10 @@
 ﻿using NeoServer.Data.Interfaces;
+using NeoServer.Game.Chats;
 using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using Serilog.Core;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Loaders.Guilds
 {
@@ -15,11 +12,13 @@ namespace NeoServer.Loaders.Guilds
     {
         private readonly IGuildRepository guildRepository;
         private readonly Logger logger;
+        private readonly ChatChannelFactory chatChannelFactory;
 
-        public GuildLoader(IGuildRepository guildRepository, Logger logger)
+        public GuildLoader(IGuildRepository guildRepository, Logger logger, ChatChannelFactory chatChannelFactory)
         {
             this.guildRepository = guildRepository;
             this.logger = logger;
+            this.chatChannelFactory = chatChannelFactory;
         }
 
         public async void Load()
@@ -31,18 +30,14 @@ namespace NeoServer.Loaders.Guilds
                 var guild = new Guild
                 {
                     Id = (ushort)guildModel.Id,
-                    Name = guildModel.Name
+                    Name = guildModel.Name,
+                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
                 };
                 guild.GuildMembers = new HashSet<Game.Contracts.Creatures.IGuildMember>();
 
                 foreach (var member in guildModel.Members)
                 {
-                    guild.GuildMembers.Add(new GuildMember()
-                    {
-                        PlayerId = (uint)member.PlayerId,
-                        Level = (GuildRank)member.Rank.Level,
-                        LevelName = member.Rank.Name
-                    });
+                    guild.GuildMembers.Add(new GuildMember((uint)member.PlayerId, (GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
                 }
 
                 GuildStore.Data.Add(guild.Id, guild);
