@@ -1,5 +1,6 @@
 using Autofac;
 using NeoServer.Loaders.Attributes;
+using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
@@ -14,11 +15,12 @@ namespace NeoServer.Server.Commands
     {
         private readonly Game game;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
-
-        public PlayerLogInCommand(Game game, IEnumerable<IPlayerLoader> playerLoaders)
+        private readonly GuildLoader guildLoader;
+        public PlayerLogInCommand(Game game, IEnumerable<IPlayerLoader> playerLoaders, GuildLoader guildLoader)
         {
             this.game = game;
             this.playerLoaders = playerLoaders;
+            this.guildLoader = guildLoader;
         }
 
         public void Execute(PlayerModel playerRecord, string characterName, IConnection connection)
@@ -32,6 +34,8 @@ namespace NeoServer.Server.Commands
             if (!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.PlayerId, out var player))
             {
                 if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader) return;
+
+                guildLoader.Load(playerRecord?.GuildMember?.Guild);
                 player = playerLoader.Load(playerRecord);
             }
 

@@ -13,42 +13,53 @@ using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Guilds
 {
-    //public class GuildLoader : ICustomLoader
-    //{
-    //    private readonly IGuildRepository guildRepository;
-    //    private readonly Logger logger;
-    //    private readonly ChatChannelFactory chatChannelFactory;
+    public class GuildLoader: ICustomLoader
+    {
+        private readonly Logger logger;
+        private readonly ChatChannelFactory chatChannelFactory;
 
-    //    public GuildLoader(IGuildRepository guildRepository, Logger logger, ChatChannelFactory chatChannelFactory)
-    //    {
-    //        this.guildRepository = guildRepository;
-    //        this.logger = logger;
-    //        this.chatChannelFactory = chatChannelFactory;
-    //    }
+        public GuildLoader(Logger logger, ChatChannelFactory chatChannelFactory)
+        {
+            this.logger = logger;
+            this.chatChannelFactory = chatChannelFactory;
+        }
 
-    //    public async void Load()
-    //    {
-    //        var guilds = await guildRepository.GetAll();
+        public void Load(GuildModel guildModel)
+        {
+            if (guildModel is not GuildModel) return;
 
-    //        foreach (var guildModel in guilds)
-    //        {
-    //            var guild = new Guild
-    //            {
-    //                Id = (ushort)guildModel.Id,
-    //                Name = guildModel.Name,
-    //                Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
-    //            };
-    //            guild.GuildMembers = new HashSet<Game.Contracts.Creatures.IGuildMember>();
+            var guild = GuildStore.Data.Get((ushort)guildModel.Id);
 
-    //            foreach (var member in guildModel.Members)
-    //            {
-    //                guild.GuildMembers.Add(new GuildMember((uint)member.PlayerId, (GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
-    //            }
+            var shouldAddToStore = false;
+            if (guild is null)
+            {
+                shouldAddToStore = true;
+                guild = new Guild
+                {
+                    Id = (ushort)guildModel.Id,
+                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
+                };
+            }
 
-    //            GuildStore.Data.Add(guild.Id, guild);
+            guild.Name = guildModel.Name;
+            guild.GuildLevels?.Clear();
 
-    //            logger.Debug("Guilds loaded!");
-    //        }
-    //    }
-    //}
+            if ((guildModel.Ranks?.Count ?? 0) > 0)
+                guild.GuildLevels = new Dictionary<ushort, IGuildLevel>();
+
+            foreach (var member in guildModel.Members)
+            {
+                if (member.Rank is null) continue;
+                guild.GuildLevels.Add((ushort)member.Rank.Id, new GuildLevel((GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
+            }
+
+            if (shouldAddToStore)
+            {
+                GuildStore.Data.Add(guild.Id, guild);
+                return;
+            }
+
+            logger.Debug("Guild {guild} loaded", guildModel.Name);
+        }
+    }
 }

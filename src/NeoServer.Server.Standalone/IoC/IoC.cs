@@ -108,6 +108,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterCommands();
             builder.RegisterIncomingPacketFactory();
             builder.RegisterPlayerFactory();
+            builder.RegisterCustomLoaders();
 
             //world
             builder.RegisterType<Map>().As<IMap>().SingleInstance();
@@ -120,9 +121,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<MonsterLoader>().SingleInstance();
             builder.RegisterType<VocationLoader>().SingleInstance();
             builder.RegisterPlayerLoaders();
-            builder.RegisterCustomLoaders();
+            builder.RegisterStartupLoaders();
             builder.RegisterType<SpellLoader>().SingleInstance();
-
+            
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
@@ -141,7 +142,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameCreatureJob>().SingleInstance();
             builder.RegisterType<GameItemJob>().SingleInstance();
             builder.RegisterType<GameChatChannelJob>().SingleInstance();
-
+            
             //Database
             builder.RegisterContext<NeoContext>();
 
@@ -206,12 +207,14 @@ namespace NeoServer.Server.Standalone.IoC
             var types = AppDomain.CurrentDomain.GetAssemblies();
             builder.RegisterAssemblyTypes(types).As<IPlayerLoader>().SingleInstance();
         }
-        private static void RegisterCustomLoaders(this ContainerBuilder builder)
+        private static void RegisterStartupLoaders(this ContainerBuilder builder)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies();
-            builder.RegisterAssemblyTypes(types).As<ICustomLoader>().SingleInstance();
+            builder.RegisterAssemblyTypes(types).As<IStartupLoader>().SingleInstance();
         }
+        private static void RegisterCustomLoaders(this ContainerBuilder builder) => RegisterAssembliesByInterface(typeof(ICustomLoader));
 
+        
         private static void RegisterPlayerFactory(this ContainerBuilder builder)
         {
             builder.Register((c, p) =>
