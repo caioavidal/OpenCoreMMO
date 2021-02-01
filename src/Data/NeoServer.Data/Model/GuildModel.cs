@@ -16,5 +16,6 @@ namespace NeoServer.Data.Model
         public string Modt { get; set; }
         public virtual PlayerModel Owner { get; set; }
         public virtual ICollection<GuildMembershipModel> Members { get; set; }
+        public virtual ICollection<GuildRankModel> Ranks { get; set; }
     }
 }

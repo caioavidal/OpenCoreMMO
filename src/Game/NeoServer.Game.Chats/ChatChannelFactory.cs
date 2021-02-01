@@ -26,6 +26,14 @@ namespace NeoServer.Game.Chats
 
             return channel;
         }
+
+        public IChatChannel CreateGuildChannel(string name, ushort guildId)
+        {
+            var id = GenerateUniqueId();
+            var channel = new GuildChatChannel(id, name, guildId);
+            SubscribeEvents(channel);
+            return channel;
+        }
         public IChatChannel Create(string name, string description, bool opened, SpeechType chatColor, Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule, MuteRule muteRule)
         {
             var id = GenerateUniqueId();
@@ -33,7 +41,7 @@ namespace NeoServer.Game.Chats
             var channel = new ChatChannel(id, name)
             {
                 Description = description,
-                ChatColor = chatColor == SpeechType.None ? SpeechType.ChannelY : chatColor,
+                ChatColor = chatColor == SpeechType.None ? SpeechType.ChannelYellowText : chatColor,
                 ChatColorByVocation = chatColorByVocation ?? default,
                 JoinRule = joinRule,
                 WriteRule = writeRule,

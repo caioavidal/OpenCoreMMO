@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Creatures.Guilds;
+using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -8,32 +10,56 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Guilds
 {
-    public class Guild: IGuild
+    public class Guild : IGuild
     {
-        public ushort Id { get; set; }
+        public ushort Id { get; init; }
         public string Name { get; set; }
-        public HashSet<IGuildMember> GuildMembers { get; set; }
+        public IDictionary<ushort, IGuildLevel> GuildLevels { get; set; }
+        public IChatChannel Channel { get; set; }
+        public bool HasMember(IPlayer player) => player.GuildId == Id;
+        public IGuildLevel GetMemberLevel(IPlayer player) => GuildLevels is null ? null : GuildLevels.TryGetValue(player.Level, out var level) ? level : null;
     }
 
-    public struct GuildMember : IGuildMember, IEquatable<GuildMember>
+    public class GuildLevel : IGuildLevel, IEquatable<GuildLevel>
     {
-        public uint PlayerId { get; set; }
-        public GuildRank Level { get; set; }
-        public string LevelName { get; set; }
+        public ushort Id { get; init; }
+        public GuildRank Level { get; private set; }
+        private string levelName;
 
-        public bool Equals(GuildMember other)
+        public GuildLevel(GuildRank level = GuildRank.Member, string levelName = null)
         {
-            return other.PlayerId == PlayerId;
+            Level = level;
+            LevelName = levelName;
         }
-        public override bool Equals(object obj) => obj is GuildMember member && member.PlayerId == member.PlayerId;
 
-        public override int GetHashCode() => HashCode.Combine(PlayerId);
+        public string LevelName
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(levelName)) return levelName;
+                return Level switch
+                {
+                    GuildRank.Leader => "Leader",
+                    GuildRank.ViceLeader => "Vice-Leader",
+                    _ => "Member"
+                };
+            }
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value)) return;
+                levelName = value;
+            }
+        }
+
+        public bool Equals(GuildLevel other)
+        {
+            return other.Id == Id;
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
     }
 
-    public enum GuildRank
-    {
-        Leader = 1,
-        ViceLeader = 2,
-        Member = 3
-    }
+
 }

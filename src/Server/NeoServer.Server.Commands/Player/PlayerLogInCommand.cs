@@ -1,34 +1,29 @@
-using NeoServer.Data.Model;
+using Autofac;
+using NeoServer.Loaders.Attributes;
 using NeoServer.Loaders.Interfaces;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Server.Commands
 {
-    public class PlayerLogInCommand : Command
+    public class PlayerLogInCommand: ICommand
     {
-        private readonly AccountModel account;
-        private readonly string characterName;
         private readonly Game game;
-        private readonly IConnection connection;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
 
-        public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection, IEnumerable<IPlayerLoader> playerLoader)
+        public PlayerLogInCommand(Game game, IEnumerable<IPlayerLoader> playerLoaders)
         {
-            this.account = account;
-            this.characterName = characterName;
-
             this.game = game;
-            this.connection = connection;
-            this.playerLoaders = playerLoader;
+            this.playerLoaders = playerLoaders;
         }
 
-        public override void Execute()
+        public void Execute(PlayerModel playerRecord, string characterName, IConnection connection)
         {
-            var playerRecord = account.Players.FirstOrDefault(p => p.Name.Equals(characterName));
-
-            if (playerRecord == null)
+            if (playerRecord is null)
             {
                 //todo validations here
                 return;
@@ -37,14 +32,13 @@ namespace NeoServer.Server.Commands
             if (!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.PlayerId, out var player))
             {
                 if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader) return;
-
                 player = playerLoader.Load(playerRecord);
             }
 
             game.CreatureManager.AddPlayer(player, connection);
 
             player.Login();
-            player.LoadVipList(account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
+            player.LoadVipList(playerRecord.Account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
         }
     }
 }

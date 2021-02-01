@@ -14,16 +14,31 @@ namespace NeoServer.Game.Creatures.Events
 
         public void Execute(IPlayer player)
         {
-            foreach (var channel in ChatChannelStore.Data.All.Where(x=>x.HasUser(player)))
+            ExitChannels(player);
+        }
+
+        private void ExitChannels(IPlayer player)
+        {
+            foreach (var channel in ChatChannelStore.Data.All.Where(x => x.HasUser(player)))
             {
                 player.ExitChannel(channel);
             }
 
-            if (player.PersonalChannels is null) return;
-
-            foreach (var channel in player.PersonalChannels)
+            if (player.PersonalChannels is not null)
             {
-                player.ExitChannel(channel);
+
+                foreach (var channel in player.PersonalChannels)
+                {
+                    player.ExitChannel(channel);
+                }
+            }
+            if (player.PrivateChannels is not null)
+            {
+
+                foreach (var channel in player.PrivateChannels)
+                {
+                    player.ExitChannel(channel);
+                }
             }
         }
     }

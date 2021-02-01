@@ -19,52 +19,47 @@ namespace NeoServer.Data.Repositories
 
         #region public methods implementation
 
-        /// <summary>
-        /// This method is responsible for get account by id in database.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Account</returns>
-        public async Task<AccountModel> GetById(int id)
+        public IQueryable<AccountModel> GetAccount(string name, string password)
         {
-            return await Context.Accounts
-                .Where(c => c.AccountId.Equals(id))
+            return Context.Accounts.Where(x => x.Name.Equals(name) && x.Password.Equals(password)).AsQueryable();
+            //.Include(x => x.Players)
+            //.ThenInclude(x => x.PlayerItems)
 
-                .SingleOrDefaultAsync();
+            //.Include(x => x.Players)
+            //.ThenInclude(x => x.PlayerInventoryItems)
+            //.Include(x => x.VipList)
+            //.ThenInclude(x => x.Player)
+            //.SingleOrDefaultAsync();
         }
 
-        /// <summary>
-        /// This method is responsible for get account by name in database.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Account</returns>
-        public async Task<AccountModel> GetByName(string name)
+        public async Task<PlayerModel> GetPlayer(string accountName, string password, string charName)
         {
-            return await Context.Accounts
-                .Where(x => x.Name.Equals(name))
-                .Include(x => x.Players)
+            //if (Context.Database.IsRelational())
+            //{
+            //    var sql = @"select * from players p
+            //                    inner join accounts a on a.id = p.account_id
+            //                    left join player_items pi on pi.player_id = p.id
+            //                    left join player_inventory_items pii on pii.player_id = p.id
+            //                    left join account_viplist vip on vip.account_id = a.id
+            //                    left join guild_membership gm on gm.player_id = p.id
+            //                    left join guilds g on g.id = gm.guild_id
+            //                    left join guild_ranks gr on gr.guild_id = g.id
+            //                where a.name = @accountName and a.password = @password and p.name = @charName";
 
-                .SingleOrDefaultAsync();
-        }
+            //    var rows = await Context.Database.GetDbConnection().QueryAsync(sql, new { accountName = accountName, password, charName });
+            //}
+            
+            return await Context.Players.Where(x => x.Account.Name.Equals(accountName, System.StringComparison.InvariantCultureIgnoreCase) &&
+                                         x.Account.Password.Equals(password) &&
+                                         x.Name.Equals(charName, System.StringComparison.InvariantCultureIgnoreCase))
+                                       .Include(x => x.PlayerItems)
+                                       .Include(x => x.PlayerInventoryItems)
+                                       .Include(x => x.Account)
+                                       .ThenInclude(x => x.VipList)
+                                       .ThenInclude(x => x.Player)
+                                       .Include(x => x.GuildMember)
+                                       .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
 
-        public async Task<AccountModel> GetByEmail(string email)
-        {
-            return await Context.Accounts
-                    .Where(x => x.Email.Equals(email))
-                    .Include(x => x.Players)
-                .SingleOrDefaultAsync();
-        }
-
-        public async Task<AccountModel> GetAccount(string name, string password)
-        {
-            return await Context.Accounts
-                    .Include(x => x.Players)
-                    .ThenInclude(x => x.PlayerItems)
-                    .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
-                    .Include(x => x.Players)
-                    .ThenInclude(x => x.PlayerInventoryItems)
-                    .Include(x => x.VipList)
-                    .ThenInclude(x => x.Player)
-                    .SingleOrDefaultAsync();
         }
 
         public async Task<PlayerModel> GetPlayer(string playerName)
@@ -88,7 +83,7 @@ namespace NeoServer.Data.Repositories
             await CommitChanges();
         }
 
-  
+
         #endregion
     }
 }

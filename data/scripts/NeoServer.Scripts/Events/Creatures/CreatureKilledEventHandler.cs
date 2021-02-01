@@ -27,7 +27,7 @@ namespace NeoServer.Scripts.Events.Creatures
             if (actor is not IPlayer player) return;
 
             var message = $"{actor.Name} was KILLED at level {player.Level} by {by.Name}";
-            deathChannel.WriteMessage(message, out var cancelMessage, SpeechType.ChannelO);
+            deathChannel.WriteMessage(message, out var cancelMessage, SpeechType.ChannelOrangeText);
         }
     }
 }

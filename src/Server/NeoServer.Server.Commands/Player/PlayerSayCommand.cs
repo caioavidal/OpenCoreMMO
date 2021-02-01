@@ -52,9 +52,9 @@ namespace NeoServer.Server.Commands.Player
                 case NeoServer.Game.Common.Talks.SpeechType.PrivateNp:
                     break;
 
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelO:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelOrangeText:
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelR1:
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelY:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelYellowText:
                     SendMessageToChannel(playerSayPacket.ChannelId, message);
                     break;
 
@@ -98,7 +98,12 @@ namespace NeoServer.Server.Commands.Player
         }
         private void SendMessageToChannel(ushort channelId, string message)
         {
-            if (ChatChannelStore.Data.Get(channelId) is not IChatChannel channel) return;
+            var channel = ChatChannelStore.Data.Get(channelId);
+
+            if (channel is not IChatChannel) channel = player.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
+
+            if (channel is not IChatChannel) return;
+
             player.SendMessage(channel, message);
         }
     }
