@@ -27,9 +27,9 @@ namespace NeoServer.Networking.Packets.Incoming
                     Receiver = message.GetString();
                     break;
 
-                case SpeechType.ChannelY:
+                case SpeechType.ChannelYellowText:
                 case SpeechType.ChannelR1:
-                case SpeechType.ChannelO:
+                case SpeechType.ChannelOrangeText:
                     ChannelId = message.GetUInt16();
                     break;
                 default:

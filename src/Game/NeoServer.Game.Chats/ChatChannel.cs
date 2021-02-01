@@ -25,7 +25,7 @@ namespace NeoServer.Game.Chats
         public ChannelRule JoinRule { get; init; }
         public virtual ChannelRule WriteRule { get; init; }
         public MuteRule MuteRule { get; init; }
-        public virtual SpeechType ChatColor { get; init; } = SpeechType.ChannelY;
+        public virtual SpeechType ChatColor { get; init; } = SpeechType.ChannelYellowText;
         public string Description { get; init; }
         public virtual bool Opened { get; init; }
 
@@ -33,9 +33,9 @@ namespace NeoServer.Game.Chats
         public virtual IEnumerable<IUserChat> Users => users.Values;
 
 
-        public SpeechType GetTextColor(byte vocation)
+        public virtual SpeechType GetTextColor(IPlayer player)
         {
-            if (ChatColorByVocation is not null && ChatColorByVocation.TryGetValue(vocation, out var color)) return color;
+            if (ChatColorByVocation is not null && ChatColorByVocation.TryGetValue(player.VocationType, out var color)) return color;
 
             return ChatColor;
         }
@@ -112,7 +112,7 @@ namespace NeoServer.Game.Chats
                 user.UpdateLastMessage(MuteRule);
             }
 
-            OnMessageAdded?.Invoke(player, this, GetTextColor(player.VocationType), message);
+            OnMessageAdded?.Invoke(player, this, GetTextColor(player), message);
             return true;
         }
 

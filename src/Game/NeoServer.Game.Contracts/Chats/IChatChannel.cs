@@ -21,7 +21,7 @@ namespace NeoServer.Game.Contracts.Chats
         event AddMessage OnMessageAdded;
 
         bool AddUser(IPlayer player);
-        SpeechType GetTextColor(byte vocation);
+        SpeechType GetTextColor(IPlayer player);
         bool HasUser(IPlayer player);
         bool PlayerCanJoin(IPlayer player);
         bool PlayerCanWrite(IPlayer player);

@@ -1,5 +1,6 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Game.Chats;
+using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;

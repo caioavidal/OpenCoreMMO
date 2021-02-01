@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Chats;
+﻿using NeoServer.Game.Common.Creatures.Guilds;
+using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -17,7 +18,7 @@ namespace NeoServer.Game.Creatures.Guilds
         public IChatChannel Channel { get; set; }
         public bool HasMember(IPlayer player) => GuildMembers?.Contains(new GuildMember(player.Id)) ?? false;
         public bool HasMember(uint playerId) => GuildMembers?.Contains(new GuildMember(playerId)) ?? false;
-
+        public IGuildMember GetMember(uint playerId) => GuildMembers is null ? null : GuildMembers.TryGetValue(new GuildMember(playerId), out var guildMember) ? guildMember : null;
     }
 
     public struct GuildMember : IGuildMember, IEquatable<GuildMember>
@@ -61,10 +62,5 @@ namespace NeoServer.Game.Creatures.Guilds
         public override int GetHashCode() => HashCode.Combine(PlayerId);
     }
 
-    public enum GuildRank
-    {
-        Leader = 1,
-        ViceLeader = 2,
-        Member = 3
-    }
+ 
 }

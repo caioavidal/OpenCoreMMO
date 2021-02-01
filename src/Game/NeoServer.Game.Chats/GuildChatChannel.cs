@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
@@ -10,7 +11,7 @@ using System.Linq;
 
 namespace NeoServer.Game.Chats
 {
-    public  class GuildChatChannel : ChatChannel, IChatChannel
+    public class GuildChatChannel : ChatChannel, IChatChannel
     {
         public GuildChatChannel(ushort id, string name, ushort guildId) : base(id, name)
         {
@@ -27,6 +28,17 @@ namespace NeoServer.Game.Chats
             if (!Guild.HasMember(player)) return false;
 
             return base.AddUser(player);
+        }
+        public override SpeechType GetTextColor(IPlayer player)
+        {
+            if (Guild.GetMember(player.Id) is not IGuildMember guildMember) return SpeechType.ChannelYellowText;
+
+            return guildMember.Level switch
+            {
+                GuildRank.Leader => SpeechType.ChannelOrangeText,
+                _ => SpeechType.ChannelYellowText
+            };
+
         }
     }
 }

@@ -41,7 +41,7 @@ namespace NeoServer.Game.Chats
             var channel = new ChatChannel(id, name)
             {
                 Description = description,
-                ChatColor = chatColor == SpeechType.None ? SpeechType.ChannelY : chatColor,
+                ChatColor = chatColor == SpeechType.None ? SpeechType.ChannelYellowText : chatColor,
                 ChatColorByVocation = chatColorByVocation ?? default,
                 JoinRule = joinRule,
                 WriteRule = writeRule,
