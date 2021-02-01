@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace NeoServer.Loaders.Effects
 {
-    public class AreaTypeLoader: ICustomLoader
+    public class AreaTypeLoader: IStartupLoader
     {
         public void Load()
         {

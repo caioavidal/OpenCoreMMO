@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace NeoServer.Scripts.Chats
 {
-    public class ChannelLoader : ICustomLoader
+    public class ChannelLoader : IStartupLoader
     {
         private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;

@@ -73,7 +73,7 @@ public class Program
 
         container.Resolve<SpawnManager>().StartSpawn();
 
-        container.Resolve<IEnumerable<ICustomLoader>>().ToList().ForEach(x => x.Load());
+        container.Resolve<IEnumerable<IStartupLoader>>().ToList().ForEach(x => x.Load());
 
         var listeningTask = StartListening(container, cancellationToken);
 

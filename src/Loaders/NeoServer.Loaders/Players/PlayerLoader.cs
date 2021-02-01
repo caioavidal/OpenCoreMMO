@@ -56,42 +56,7 @@ namespace NeoServer.Loaders.Players
             }
         }
 
-        public void ReloadPlayerGuild(PlayerModel playerModel)
-        {
-            if (playerModel?.GuildMember?.Guild is not GuildModel guildModel) return;
-
-            var guild = GuildStore.Data.Get((ushort)guildModel.Id);
-
-            var shouldAddToStore = false;
-            if (guild is null)
-            {
-                shouldAddToStore = true;
-                guild = new Guild
-                {
-                    Id = (ushort)guildModel.Id,
-                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
-                };
-
-            }
-
-            guild.Name = guildModel.Name;
-            guild.GuildLevels?.Clear();
-
-            if ((guildModel.Ranks?.Count ?? 0) > 0)
-                guild.GuildLevels = new Dictionary<ushort, IGuildLevel>();
-
-            foreach (var member in guildModel.Members)
-            {
-                if (member.Rank is null) continue;
-                guild.GuildLevels.Add((ushort)member.Rank.Id, new GuildLevel((GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
-            }
-
-            if (shouldAddToStore)
-            {
-                GuildStore.Data.Add(guild.Id, guild);
-                return;
-            }
-        }
+      
 
         public virtual IPlayer Load(PlayerModel playerModel)
         {
@@ -100,7 +65,6 @@ namespace NeoServer.Loaders.Players
                 throw new Exception("Player vocation not found");
             }
 
-            ReloadPlayerGuild(playerModel);
 
             var player = new Player(
                 (uint)playerModel.PlayerId,
