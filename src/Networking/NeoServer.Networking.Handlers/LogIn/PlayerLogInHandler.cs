@@ -1,4 +1,5 @@
-﻿using NeoServer.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Interfaces;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures;
 using NeoServer.Loaders.Interfaces;
@@ -9,6 +10,7 @@ using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
@@ -51,15 +53,20 @@ namespace NeoServer.Server.Handlers.Authentication
 
             //todo: ip ban validation
 
-            var accountRecord = await repositoryNeo.GetAccount(packet.Account, packet.Password);
+            var playerRecord = await repositoryNeo.GetPlayer(packet.Account, packet.Password, packet.CharacterName)
+            .Include(x => x.PlayerItems)
+            .Include(x => x.PlayerInventoryItems)
+            .Include(x => x.Account)
+            .ThenInclude(x => x.VipList)
+            .ThenInclude(x => x.Player).SingleOrDefaultAsync();
 
-            if (accountRecord == null)
+            if (playerRecord is null)
             {
                 connection.Send(new GameServerDisconnectPacket($"Account name or password is not correct."));
                 return;
             }
 
-            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(accountRecord, packet.CharacterName, game, connection, playerLoaders).Execute));
+            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(playerRecord, packet.CharacterName, game, connection, playerLoaders).Execute));
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)

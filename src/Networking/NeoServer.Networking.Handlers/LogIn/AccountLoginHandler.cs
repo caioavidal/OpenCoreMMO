@@ -1,8 +1,10 @@
-﻿using NeoServer.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Standalone;
+using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
@@ -16,7 +18,7 @@ namespace NeoServer.Server.Handlers.Authentication
             this.serverConfiguration = serverConfiguration;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+        public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var account = new AccountLoginPacket(message);
 
@@ -34,7 +36,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            var foundedAccount = _repositoryNeo.GetAccount(account.Account, account.Password).Result;
+            var foundedAccount = await _repositoryNeo.GetAccount(account.Account, account.Password).Include(x=>x.Players).SingleOrDefaultAsync();
 
             if (foundedAccount == null)
             {

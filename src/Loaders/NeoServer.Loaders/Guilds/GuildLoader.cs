@@ -1,6 +1,8 @@
 ﻿using NeoServer.Data.Interfaces;
+using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Creatures.Guilds;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
@@ -45,6 +47,21 @@ namespace NeoServer.Loaders.Guilds
 
                 logger.Debug("Guilds loaded!");
             }
+        }
+        public void PartialLoad(GuildModel guildModel)
+        {
+            var guild = GuildStore.Data.Get((ushort)guildModel.Id);
+
+            guild.Name = guildModel.Name;
+            guild.GuildMembers.Clear();
+
+            foreach (var member in guildModel.Members)
+            {
+                guild.GuildMembers.Add(new GuildMember((uint)member.PlayerId, (GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
+            }
+
+            logger.Debug("Guild {guildName} updated!", guildModel.Name);
+
         }
     }
 }

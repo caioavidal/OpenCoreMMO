@@ -54,17 +54,24 @@ namespace NeoServer.Data.Repositories
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<AccountModel> GetAccount(string name, string password)
+        public IQueryable<AccountModel> GetAccount(string name, string password)
         {
-            return await Context.Accounts
-                    .Include(x => x.Players)
-                    .ThenInclude(x => x.PlayerItems)
-                    .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
-                    .Include(x => x.Players)
-                    .ThenInclude(x => x.PlayerInventoryItems)
-                    .Include(x => x.VipList)
-                    .ThenInclude(x => x.Player)
-                    .SingleOrDefaultAsync();
+            return Context.Accounts.Where(x => x.Name.Equals(name) && x.Password.Equals(password)).AsQueryable();
+            //.Include(x => x.Players)
+            //.ThenInclude(x => x.PlayerItems)
+
+            //.Include(x => x.Players)
+            //.ThenInclude(x => x.PlayerInventoryItems)
+            //.Include(x => x.VipList)
+            //.ThenInclude(x => x.Player)
+            //.SingleOrDefaultAsync();
+        }
+
+        public IQueryable<PlayerModel> GetPlayer(string accountName, string password, string charName)
+        {
+            return Context.Players.Where(x => x.Account.Name.Equals(accountName, System.StringComparison.InvariantCultureIgnoreCase) &&
+                                         x.Account.Password.Equals(password) &&
+                                         x.Name.Equals(charName, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
         public async Task<PlayerModel> GetPlayer(string playerName)
@@ -88,7 +95,7 @@ namespace NeoServer.Data.Repositories
             await CommitChanges();
         }
 
-  
+
         #endregion
     }
 }

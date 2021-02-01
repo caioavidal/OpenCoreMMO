@@ -1,6 +1,7 @@
 using NeoServer.Data.Model;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Model.Players;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,15 +9,15 @@ namespace NeoServer.Server.Commands
 {
     public class PlayerLogInCommand : Command
     {
-        private readonly AccountModel account;
+        private readonly PlayerModel playerRecord;
         private readonly string characterName;
         private readonly Game game;
         private readonly IConnection connection;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
 
-        public PlayerLogInCommand(AccountModel account, string characterName, Game game, IConnection connection, IEnumerable<IPlayerLoader> playerLoader)
+        public PlayerLogInCommand(PlayerModel player, string characterName, Game game, IConnection connection, IEnumerable<IPlayerLoader> playerLoader)
         {
-            this.account = account;
+            this.playerRecord = player;
             this.characterName = characterName;
 
             this.game = game;
@@ -26,9 +27,7 @@ namespace NeoServer.Server.Commands
 
         public override void Execute()
         {
-            var playerRecord = account.Players.FirstOrDefault(p => p.Name.Equals(characterName));
-
-            if (playerRecord == null)
+            if (playerRecord is null)
             {
                 //todo validations here
                 return;
@@ -44,7 +43,7 @@ namespace NeoServer.Server.Commands
             game.CreatureManager.AddPlayer(player, connection);
 
             player.Login();
-            player.LoadVipList(account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
+            player.LoadVipList(playerRecord.Account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
         }
     }
 }
