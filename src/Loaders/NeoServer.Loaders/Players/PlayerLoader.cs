@@ -2,6 +2,7 @@
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
@@ -9,8 +10,10 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures;
+using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.DataStore;
+using NeoServer.Loaders.Attributes;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
@@ -52,46 +55,89 @@ namespace NeoServer.Loaders.Players
                 player.AddPersonalChannel(createdChannel);
             }
         }
-        public virtual IPlayer Load(PlayerModel player)
+
+        public void ReloadPlayerGuild(PlayerModel playerModel)
         {
-            if (!VocationStore.TryGetValue(player.Vocation, out var vocation))
+            if (playerModel?.GuildMember?.Guild is not GuildModel guildModel) return;
+
+            var guild = GuildStore.Data.Get((ushort)guildModel.Id);
+
+            var shouldAddToStore = false;
+            if (guild is null)
+            {
+                shouldAddToStore = true;
+                guild = new Guild
+                {
+                    Id = (ushort)guildModel.Id,
+                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
+                };
+
+            }
+
+            guild.Name = guildModel.Name;
+            guild.GuildLevels?.Clear();
+
+            if ((guildModel.Ranks?.Count ?? 0) > 0)
+                guild.GuildLevels = new Dictionary<ushort, IGuildLevel>();
+
+            foreach (var member in guildModel.Members)
+            {
+                if (member.Rank is null) continue;
+                guild.GuildLevels.Add((ushort)member.Rank.Id, new GuildLevel((GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
+            }
+
+            if (shouldAddToStore)
+            {
+                GuildStore.Data.Add(guild.Id, guild);
+                return;
+            }
+        }
+
+        public virtual IPlayer Load(PlayerModel playerModel)
+        {
+            if (!VocationStore.TryGetValue(playerModel.Vocation, out var vocation))
             {
                 throw new Exception("Player vocation not found");
             }
 
-            var newPlayer = new Player(
-                (uint)player.PlayerId,
-                player.Name,
-                player.ChaseMode,
-                player.Capacity,
-                player.Health,
-                player.MaxHealth,
-                player.Vocation,
-                player.Gender,
-                player.Online,
-                player.Mana,
-                player.MaxMana,
-                player.FightMode,
-                player.Soul,
+            ReloadPlayerGuild(playerModel);
+
+            var player = new Player(
+                (uint)playerModel.PlayerId,
+                playerModel.Name,
+                playerModel.ChaseMode,
+                playerModel.Capacity,
+                playerModel.Health,
+                playerModel.MaxHealth,
+                playerModel.Vocation,
+                playerModel.Gender,
+                playerModel.Online,
+                playerModel.Mana,
+                playerModel.MaxMana,
+                playerModel.FightMode,
+                playerModel.Soul,
                 vocation.SoulMax,
-                ConvertToSkills(player),
-                player.StaminaMinutes,
-                new Outfit() { Addon = (byte)player.LookAddons, Body = (byte)player.LookBody, Feet = (byte)player.LookFeet, Head = (byte)player.LookHead, Legs = (byte)player.LookLegs, LookType = (byte)player.LookType },
-                ConvertToInventory(player),
-                player.Speed,
-                new Location((ushort)player.PosX, (ushort)player.PosY, (byte)player.PosZ),
+                ConvertToSkills(playerModel),
+                playerModel.StaminaMinutes,
+                new Outfit() { Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody, Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead, Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType },
+                ConvertToInventory(playerModel),
+                playerModel.Speed,
+                new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
                _creaturePathAccess
                 )
             {
-                AccountId = (uint)player.AccountId,
-                GuildId = GuildStore.Data.All.FirstOrDefault(x => x.HasMember((uint)player.PlayerId))?.Id ?? 0
+                AccountId = (uint)playerModel.AccountId,
+                GuildId = (ushort)(playerModel?.GuildMember?.GuildId ?? 0),
+                GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
             };
 
 
-            AddExistingPersonalChannels(newPlayer);
+            AddExistingPersonalChannels(player);
 
-            return creatureFactory.CreatePlayer(newPlayer);
+            return creatureFactory.CreatePlayer(player);
         }
+
+
 
         protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
         {

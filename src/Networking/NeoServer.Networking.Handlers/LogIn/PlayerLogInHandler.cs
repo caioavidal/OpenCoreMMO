@@ -16,24 +16,18 @@ namespace NeoServer.Server.Handlers.Authentication
 {
     public class PlayerLogInHandler : PacketHandler
     {
-        //private readonly IAccountRepository repository;
-        private readonly IAccountRepository repositoryNeo;
+        private readonly IAccountRepository accountRepository;
         private readonly ServerConfiguration serverConfiguration;
         private readonly Game game;
-        private CreaturePathAccess _creaturePathAccess;
-        private readonly IItemFactory _itemFactory;
-        private readonly IEnumerable<IPlayerLoader> playerLoaders;
+        private readonly PlayerLogInCommand playerLogInCommand;
 
-        public PlayerLogInHandler(/*IAccountRepository repository,*/ IAccountRepository repositoryNeo,
-         Game game, ServerConfiguration serverConfiguration, CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, IEnumerable<IPlayerLoader> playerLoaders)
+        public PlayerLogInHandler(IAccountRepository repositoryNeo,
+         Game game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand)
         {
-            this.repositoryNeo = repositoryNeo;
-            // this.repository = repository;
+            this.accountRepository = repositoryNeo;
             this.game = game;
             this.serverConfiguration = serverConfiguration;
-            _creaturePathAccess = creaturePathAccess;
-            _itemFactory = itemFactory;
-            this.playerLoaders = playerLoaders;
+            this.playerLogInCommand = playerLogInCommand;
         }
 
         public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -53,12 +47,10 @@ namespace NeoServer.Server.Handlers.Authentication
 
             //todo: ip ban validation
 
-            var playerRecord = await repositoryNeo.GetPlayer(packet.Account, packet.Password, packet.CharacterName)
-            .Include(x => x.PlayerItems)
-            .Include(x => x.PlayerInventoryItems)
-            .Include(x => x.Account)
-            .ThenInclude(x => x.VipList)
-            .ThenInclude(x => x.Player).SingleOrDefaultAsync();
+            var playerRecord = await accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
+
+            await accountRepository.Reload(playerRecord.GuildMember);
+            await accountRepository.Reload(playerRecord);
 
             if (playerRecord is null)
             {
@@ -66,7 +58,7 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            game.Dispatcher.AddEvent(new Event(new PlayerLogInCommand(playerRecord, packet.CharacterName, game, connection, playerLoaders).Execute));
+            game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, packet.CharacterName, connection)));
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)

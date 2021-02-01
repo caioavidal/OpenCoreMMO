@@ -12,24 +12,22 @@ namespace NeoServer.Game.Creatures.Guilds
 {
     public class Guild : IGuild
     {
-        public ushort Id { get; set; }
+        public ushort Id { get; init; }
         public string Name { get; set; }
-        public HashSet<IGuildMember> GuildMembers { get; set; }
+        public IDictionary<ushort, IGuildLevel> GuildLevels { get; set; }
         public IChatChannel Channel { get; set; }
-        public bool HasMember(IPlayer player) => GuildMembers?.Contains(new GuildMember(player.Id)) ?? false;
-        public bool HasMember(uint playerId) => GuildMembers?.Contains(new GuildMember(playerId)) ?? false;
-        public IGuildMember GetMember(uint playerId) => GuildMembers is null ? null : GuildMembers.TryGetValue(new GuildMember(playerId), out var guildMember) ? guildMember : null;
+        public bool HasMember(IPlayer player) => player.GuildId == Id;
+        public IGuildLevel GetMemberLevel(IPlayer player) => GuildLevels is null ? null : GuildLevels.TryGetValue(player.Level, out var level) ? level : null;
     }
 
-    public struct GuildMember : IGuildMember, IEquatable<GuildMember>
+    public class GuildLevel : IGuildLevel, IEquatable<GuildLevel>
     {
-        public uint PlayerId { get; private set; }
+        public ushort Id { get; init; }
         public GuildRank Level { get; private set; }
         private string levelName;
 
-        public GuildMember(uint playerId, GuildRank level = GuildRank.Member, string levelName = null) : this()
+        public GuildLevel(GuildRank level = GuildRank.Member, string levelName = null)
         {
-            PlayerId = playerId;
             Level = level;
             LevelName = levelName;
         }
@@ -53,14 +51,15 @@ namespace NeoServer.Game.Creatures.Guilds
             }
         }
 
-        public bool Equals(GuildMember other)
+        public bool Equals(GuildLevel other)
         {
-            return other.PlayerId == PlayerId;
+            return other.Id == Id;
         }
-        public override bool Equals(object obj) => obj is GuildMember member && member.PlayerId == member.PlayerId;
-
-        public override int GetHashCode() => HashCode.Combine(PlayerId);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
     }
 
- 
+
 }

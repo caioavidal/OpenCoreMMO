@@ -93,6 +93,12 @@ namespace NeoServer.Data.Repositories
             DbContext.Dispose();
         }
 
+        public async Task Reload(object entity)
+        {
+            if (entity is null) return;
+            await DbContext.Entry(entity).ReloadAsync();
+        }
+       
         #endregion
 
         #region private methods implementation

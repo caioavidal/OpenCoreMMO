@@ -31,7 +31,7 @@ namespace NeoServer.Game.Chats
         }
         public override SpeechType GetTextColor(IPlayer player)
         {
-            if (Guild.GetMember(player.Id) is not IGuildMember guildMember) return SpeechType.ChannelYellowText;
+            if (Guild.GetMemberLevel(player) is not IGuildLevel guildMember) return SpeechType.ChannelYellowText;
 
             return guildMember.Level switch
             {

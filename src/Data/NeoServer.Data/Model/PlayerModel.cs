@@ -80,7 +80,7 @@ namespace NeoServer.Server.Model.Players
         public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
         public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
         public virtual ICollection<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
-        
+        public virtual GuildMembershipModel GuildMember { get; set; }
         public bool IsMounted()
         {
             return false;

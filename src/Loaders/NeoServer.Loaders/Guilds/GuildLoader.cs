@@ -5,63 +5,50 @@ using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
+using NeoServer.Loaders.Attributes;
 using NeoServer.Loaders.Interfaces;
+using NeoServer.Server.Model.Players;
 using Serilog.Core;
 using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Guilds
 {
-    public class GuildLoader : ICustomLoader
-    {
-        private readonly IGuildRepository guildRepository;
-        private readonly Logger logger;
-        private readonly ChatChannelFactory chatChannelFactory;
+    //public class GuildLoader : ICustomLoader
+    //{
+    //    private readonly IGuildRepository guildRepository;
+    //    private readonly Logger logger;
+    //    private readonly ChatChannelFactory chatChannelFactory;
 
-        public GuildLoader(IGuildRepository guildRepository, Logger logger, ChatChannelFactory chatChannelFactory)
-        {
-            this.guildRepository = guildRepository;
-            this.logger = logger;
-            this.chatChannelFactory = chatChannelFactory;
-        }
+    //    public GuildLoader(IGuildRepository guildRepository, Logger logger, ChatChannelFactory chatChannelFactory)
+    //    {
+    //        this.guildRepository = guildRepository;
+    //        this.logger = logger;
+    //        this.chatChannelFactory = chatChannelFactory;
+    //    }
 
-        public async void Load()
-        {
-            var guilds = await guildRepository.GetAll();
+    //    public async void Load()
+    //    {
+    //        var guilds = await guildRepository.GetAll();
 
-            foreach (var guildModel in guilds)
-            {
-                var guild = new Guild
-                {
-                    Id = (ushort)guildModel.Id,
-                    Name = guildModel.Name,
-                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
-                };
-                guild.GuildMembers = new HashSet<Game.Contracts.Creatures.IGuildMember>();
+    //        foreach (var guildModel in guilds)
+    //        {
+    //            var guild = new Guild
+    //            {
+    //                Id = (ushort)guildModel.Id,
+    //                Name = guildModel.Name,
+    //                Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
+    //            };
+    //            guild.GuildMembers = new HashSet<Game.Contracts.Creatures.IGuildMember>();
 
-                foreach (var member in guildModel.Members)
-                {
-                    guild.GuildMembers.Add(new GuildMember((uint)member.PlayerId, (GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
-                }
+    //            foreach (var member in guildModel.Members)
+    //            {
+    //                guild.GuildMembers.Add(new GuildMember((uint)member.PlayerId, (GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
+    //            }
 
-                GuildStore.Data.Add(guild.Id, guild);
+    //            GuildStore.Data.Add(guild.Id, guild);
 
-                logger.Debug("Guilds loaded!");
-            }
-        }
-        public void PartialLoad(GuildModel guildModel)
-        {
-            var guild = GuildStore.Data.Get((ushort)guildModel.Id);
-
-            guild.Name = guildModel.Name;
-            guild.GuildMembers.Clear();
-
-            foreach (var member in guildModel.Members)
-            {
-                guild.GuildMembers.Add(new GuildMember((uint)member.PlayerId, (GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
-            }
-
-            logger.Debug("Guild {guildName} updated!", guildModel.Name);
-
-        }
-    }
+    //            logger.Debug("Guilds loaded!");
+    //        }
+    //    }
+    //}
 }

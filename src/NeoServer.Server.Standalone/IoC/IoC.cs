@@ -30,6 +30,8 @@ using NeoServer.Loaders.Vocations;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
+using NeoServer.Server.Commands;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Contracts.Tasks;
@@ -103,7 +105,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterServerEvents();
             builder.RegisterGameEvents();
             builder.RegisterEventSubscribers();
-
+            builder.RegisterCommands();
             builder.RegisterIncomingPacketFactory();
             builder.RegisterPlayerFactory();
 
@@ -139,7 +141,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameCreatureJob>().SingleInstance();
             builder.RegisterType<GameItemJob>().SingleInstance();
             builder.RegisterType<GameChatChannelJob>().SingleInstance();
-            
+
             //Database
             builder.RegisterContext<NeoContext>();
 
@@ -151,14 +153,11 @@ namespace NeoServer.Server.Standalone.IoC
             var loggerConfig = new LoggerConfiguration()
               .ReadFrom.Configuration(configuration, sectionName: "Log")
               .WriteTo.Console(theme: AnsiConsoleTheme.Code);
-              
+
             var logger = loggerConfig.CreateLogger();
-            
+
             Builder.RegisterInstance(logger).SingleInstance();
-            var loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog());
-
-            Builder.RegisterInstance(loggerFactory).As<ILoggerFactory>();
-
+          
             return (logger, loggerConfig);
         }
 
@@ -173,18 +172,8 @@ namespace NeoServer.Server.Standalone.IoC
             var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
             builder.RegisterAssemblyTypes(assembly);
         }
-        private static void RegisterGameEvents(this ContainerBuilder builder)
-        {
-            var interfaceType = typeof(IGameEventHandler);
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => interfaceType.IsAssignableFrom(x));
+        private static void RegisterGameEvents(this ContainerBuilder builder) => RegisterAssembliesByInterface(typeof(IGameEventHandler));
 
-            foreach (var type in types)
-            {
-                if (type == interfaceType) continue;
-                builder.RegisterType(type).SingleInstance();
-                
-            }
-        }
         private static void RegisterEventSubscribers(this ContainerBuilder builder)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies();
@@ -193,6 +182,25 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(types).As<IChatChannelEventSubscriber>().SingleInstance();
 
         }
+
+        private static void RegisterAssembliesByInterface(Type interfaceType)
+        {
+            
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => interfaceType.IsAssignableFrom(x));
+
+            foreach (var type in types)
+            {
+                if (type == interfaceType) continue;
+                builder.RegisterType(type).SingleInstance();
+
+            }
+        }
+        private static void RegisterCommands(this ContainerBuilder builder)
+        {
+            var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommand));
+            builder.RegisterAssemblyTypes(assembly);
+        }
+        
         private static void RegisterPlayerLoaders(this ContainerBuilder builder)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies();

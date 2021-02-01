@@ -24,7 +24,7 @@ namespace NeoServer.Data.Configurations
             builder.Property(e => e.Modt).HasColumnName("modt");
 
             builder.HasMany(x => x.Members).WithOne().HasForeignKey("GuildId");
-
+            builder.HasMany(x => x.Ranks).WithOne().HasForeignKey("GuildId");
         }
     }
 }

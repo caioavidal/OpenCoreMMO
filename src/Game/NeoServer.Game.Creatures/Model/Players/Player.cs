@@ -263,6 +263,7 @@ namespace NeoServer.Server.Model.Players
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
         public bool Recovering { get; private set; }
+        public ushort GuildLevel { get; set; }
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
