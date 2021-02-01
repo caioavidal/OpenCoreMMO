@@ -58,9 +58,11 @@ dotnet run -p "NeoServer.Server.Standalone"
 - [x] PvM Combat
 - [x] Depot
 - [x] Chats
+- [x] Guilds
+- [ ] War System
   - [x] Public Channels
   - [x] Loot and Death Channels
-  - [ ] Vip List
+  - [x] Vip List
 - [ ] PvP Combat
 - [ ] Load NPC
 - [ ] Lua Scripting
