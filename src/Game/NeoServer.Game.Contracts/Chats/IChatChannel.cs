@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Talks;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Chats
 {
-    public delegate void AddMessage(IPlayer player, IChatChannel channel, SpeechType speechType, string message );
+    public delegate void AddMessage(ISociableCreature creature, IChatChannel channel, SpeechType speechType, string message );
     public interface IChatChannel
     {
         ushort Id { get; }
@@ -27,7 +28,7 @@ namespace NeoServer.Game.Contracts.Chats
         bool PlayerCanWrite(IPlayer player);
         bool PlayerIsMuted(IPlayer player, out string cancelMessage);
         bool RemoveUser(IPlayer player);
-        bool WriteMessage(IPlayer player, string message, out string cancelMessage);
+        bool WriteMessage(ISociableCreature creature, string message, out string cancelMessage, SpeechType speechType = SpeechType.None);
         bool WriteMessage(string message, out string cancelMessage, SpeechType speechType = SpeechType.None);
     }
 

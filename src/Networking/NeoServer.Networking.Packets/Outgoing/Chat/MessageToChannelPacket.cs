@@ -21,6 +21,10 @@ namespace NeoServer.Networking.Packets.Outgoing
         public ushort ChannelId { get; }
         public override void WriteToMessage(INetworkMessage message)
         {
+            if (TalkType == SpeechType.None) return;
+            if (string.IsNullOrWhiteSpace(Message)) return;
+            if (ChannelId == default) return;
+
             message.AddByte((byte)GameOutgoingPacketType.SendPrivateMessage);
             message.AddUInt32(0x00);
 

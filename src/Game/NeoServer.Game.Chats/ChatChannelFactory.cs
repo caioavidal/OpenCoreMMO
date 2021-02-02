@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.DataStore;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,18 +15,21 @@ namespace NeoServer.Game.Chats
 {
     public class ChatChannelFactory
     {
-        public IChatChannel Create(Type type, string name)
+        public IChatChannel Create(Type type, string name, IPlayer player = null)
         {
             if (!typeof(IChatChannel).IsAssignableFrom(type)) return default;
 
-            var id = GenerateUniqueId();
-
+            var id = typeof(PersonalChatChannel).IsAssignableTo(type) && player is not null ? GeneratePlayerUniqueId(player) : GenerateUniqueId();
+         
             var channel = (IChatChannel) Activator.CreateInstance(type: type, id, name);
 
             SubscribeEvents(channel);
 
             return channel;
         }
+
+
+     
 
         public IChatChannel CreateGuildChannel(string name, ushort guildId)
         {
@@ -63,6 +67,17 @@ namespace NeoServer.Game.Chats
                 id = RandomIdGenerator.Generate(ushort.MaxValue);
             }
             while (ChatChannelStore.Data.Contains(id));
+
+            return id;
+        }
+        private static ushort GeneratePlayerUniqueId(IPlayer player)
+        {
+            ushort id;
+            do
+            {
+                id = GenerateUniqueId();
+            }
+            while ((player.PersonalChannels?.Any(x=>x.Id == id) ?? false) || (player.PrivateChannels?.Any(x=>x.Id == id)?? false));
 
             return id;
         }

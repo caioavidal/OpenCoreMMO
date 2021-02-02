@@ -5,16 +5,16 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class PlayerSayPacket : IncomingPacket
     {
-        public SpeechType Talk { get; }
+        public SpeechType TalkType { get; }
         public string Receiver{ get; set; }
         public string Message { get; }
         public ushort ChannelId { get; set; }
 
         public PlayerSayPacket(IReadOnlyNetworkMessage message)
         {
-            Talk = (SpeechType) message.GetByte();
+            TalkType = (SpeechType) message.GetByte();
 
-            switch (Talk)
+            switch (TalkType)
             {
                 case SpeechType.None:
                     return;

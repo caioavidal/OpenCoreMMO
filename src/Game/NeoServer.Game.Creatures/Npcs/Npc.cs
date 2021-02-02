@@ -1,5 +1,9 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Talks;
+using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Bases;
+using NeoServer.Game.DataStore;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +23,9 @@ namespace NeoServer.Game.Creatures.Npcs
 
         IDictionary<uint, List<string>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<string>>();
 
+        public event Hear OnHear;
+
+      
         public void ReceiveMessage(uint playerId, string message)
         {
             //INpcDialog dialog = GetDialog(playerId);
@@ -43,7 +50,29 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public void Answer()
         {
-            
+
+        }
+
+        public void SendMessageTo(ISociableCreature to, SpeechType type, string message)
+        { 
+            if (to is null || string.IsNullOrWhiteSpace(message)) return;
+
+            if(to is IPlayer )
+            {
+                Say(message, type, to);
+            }
+        }
+
+        public void Hear(ICreature from, SpeechType speechType, string message)
+        {
+            if (from is null || speechType == SpeechType.None || string.IsNullOrWhiteSpace(message)) return;
+
+            OnHear?.Invoke(from, this, speechType, message);
+
+            if (from is ISociableCreature sociableCreature)
+            {
+                SendMessageTo(sociableCreature, SpeechType.PrivateNp, "hi");
+            }
         }
     }
 }

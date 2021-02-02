@@ -34,9 +34,11 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void AddToVipList(IPlayer player, uint vipPlayerId, string vipPlayerName);
     public delegate void PlayerLoadVipList(IPlayer player, IEnumerable<(uint, string)> vipList);
     public delegate void ChangeOnlineStatus(IPlayer player, bool online);
-    public interface IPlayer : ICombatActor
+    public delegate void SendMessageTo(ISociableCreature from, ISociableCreature to, SpeechType speechType, string message);
+    public interface IPlayer : ICombatActor, ISociableCreature
     {
         event UseSpell OnUsedSpell;
+        event SendMessageTo OnSentMessage;
 
         ushort Level { get; }
 
@@ -125,16 +127,10 @@ namespace NeoServer.Server.Model.Players.Contracts
         byte GetSkillPercent(SkillType type);
 
         void AddKnownCreature(uint creatureId);
-        /// <summary>
-        /// Sets where player is turned to
-        /// </summary>
-        /// <param name="direction"></param>
-        void SetDirection(Direction direction);
 
         void ResetIdleTime();
         void CancelWalk();
         bool CanMoveThing(Location location);
-        void Say(string message, SpeechType talkType);
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);
@@ -155,11 +151,9 @@ namespace NeoServer.Server.Model.Players.Contracts
         void Use(IUseable item);
         void Use(IUseableOn item, IItem onItem);
         bool Login();
-        void SendMessageTo(IPlayer player);
+        
         bool CastSpell(string message);
-        bool JoinChannel(IChatChannel channel);
-        bool SendMessage(IChatChannel channel, string message);
-        bool ExitChannel(IChatChannel channel);
+   
         void AddPersonalChannel(IChatChannel channel);
         bool AddToVip(IPlayer player);
         void RemoveFromVip(uint playerId);
@@ -169,7 +163,10 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
-
+        void SendMessageTo(ISociableCreature creature, SpeechType type, string message);
+        bool JoinChannel(IChatChannel channel);
+        bool SendMessage(IChatChannel channel, string message);
+        bool ExitChannel(IChatChannel channel);
         uint TotalCapacity { get; }
         bool Recovering { get; }
         IVocation Vocation { get; }

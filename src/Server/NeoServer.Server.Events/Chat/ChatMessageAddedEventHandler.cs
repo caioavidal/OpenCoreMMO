@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
@@ -20,7 +21,7 @@ namespace NeoServer.Server.Events.Chat
             this.game = game;
         }
 
-        public void Execute(IPlayer player, IChatChannel chatChannel, SpeechType speechType, string message)
+        public void Execute(ISociableCreature player, IChatChannel chatChannel, SpeechType speechType, string message)
         {
             if (chatChannel is null) return;
             if (string.IsNullOrWhiteSpace(message)) return;

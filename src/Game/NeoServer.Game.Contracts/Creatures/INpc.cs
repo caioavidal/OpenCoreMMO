@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
-    public interface INpc: IWalkableCreature
+    public interface INpc: IWalkableCreature, ISociableCreature
     {
     }
 }

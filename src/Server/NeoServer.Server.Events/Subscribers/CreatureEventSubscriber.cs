@@ -4,7 +4,7 @@ using NeoServer.Server.Events.Creature;
 
 namespace NeoServer.Server.Events
 {
-    public class CreatureEventSubscriber: ICreatureEventSubscriber
+    public class CreatureEventSubscriber : ICreatureEventSubscriber
     {
         private readonly CreatureInjuredEventHandler _creatureReceiveDamageEventHandler;
         private readonly CreatureKilledEventHandler _creatureKilledEventHandler;
@@ -17,17 +17,18 @@ namespace NeoServer.Server.Events
         private readonly CreatureChangedAttackTargetEventHandler _creatureChangedAttackTargetEventHandler;
         private readonly CreatureStartedFollowingEventHandler _creatureStartedFollowingEventHandler;
         private readonly CreatureChangedSpeedEventHandler _creatureChangedSpeedEventHandler;
-        private readonly CreatureSayEventHandler _creatureSayEventHandler;
+        private readonly CreatureHearEventHandler creatureHearEventHandler;
         private readonly CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler;
         private readonly CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler;
-
+        private readonly PlayerSentMessageEventHandler creatureSentMessageEventHandler;
         public CreatureEventSubscriber(CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler,
-            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, CreatureAttackEventHandler creatureAttackEventHandler, 
-            CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler, CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler, 
-            CreatureHealedEventHandler creatureHealedEventHandler, CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler, 
-            CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler, CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler, 
-            CreatureSayEventHandler creatureSayEventHandler, 
-            CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler, CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler)
+            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
+            CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler, CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler,
+            CreatureHealedEventHandler creatureHealedEventHandler, CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler,
+            CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler, CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler,
+            CreatureHearEventHandler creatureHearEventHandler,
+            CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler,
+            CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler, PlayerSentMessageEventHandler creatureSentMessageEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -40,16 +41,21 @@ namespace NeoServer.Server.Events
             _creatureChangedAttackTargetEventHandler = creatureChangedAttackTargetEventHandler;
             _creatureStartedFollowingEventHandler = creatureStartedFollowingEventHandler;
             _creatureChangedSpeedEventHandler = creatureChangedSpeedEventHandler;
-            _creatureSayEventHandler = creatureSayEventHandler;
+            this.creatureHearEventHandler = creatureHearEventHandler;
             this.creatureTurnedInvisibleEventHandler = creatureTurnedInvisibleEventHandler;
             this.creatureChangedOutfitEventHandler = creatureChangedOutfitEventHandler;
+            this.creatureSentMessageEventHandler = creatureSentMessageEventHandler;
         }
 
         public void Subscribe(ICreature creature)
         {
             creature.OnChangedOutfit += creatureChangedOutfitEventHandler.Execute;
-            creature.OnSay += _creatureSayEventHandler.Execute;
+            
 
+            if (creature is ISociableCreature sociableCreature)
+            {
+                sociableCreature.OnHear += creatureHearEventHandler.Execute;
+            }
             if (creature is ICombatActor combatActor)
             {
                 combatActor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
@@ -75,7 +81,6 @@ namespace NeoServer.Server.Events
         public void Unsubscribe(ICreature creature)
         {
             creature.OnChangedOutfit -= creatureChangedOutfitEventHandler.Execute;
-            creature.OnSay -= _creatureSayEventHandler.Execute;
 
             if (creature is ICombatActor combatActor)
             {
@@ -90,11 +95,15 @@ namespace NeoServer.Server.Events
                 combatActor.OnChangedVisibility -= creatureTurnedInvisibleEventHandler.Execute;
             }
 
-            
+
             if (creature is IWalkableCreature walkableCreature)
             {
                 walkableCreature.OnStartedFollowing -= _creatureStartedFollowingEventHandler.Execute;
                 walkableCreature.OnChangedSpeed -= _creatureChangedSpeedEventHandler.Execute;
+            }
+            if (creature is ISociableCreature sociableCreature)
+            {
+                sociableCreature.OnHear -= creatureHearEventHandler.Execute;
             }
         }
     }

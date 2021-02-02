@@ -89,10 +89,13 @@ namespace NeoServer.Server.Model.Players
         public event AddToVipList OnAddedToVipList;
         public event PlayerLoadVipList OnLoadedVipList;
         public event ChangeOnlineStatus OnChangedOnlineStatus;
+        public event SendMessageTo OnSentMessage;
+        public event Hear OnHear;
 
         public ushort GuildId { get; init; }
         public bool HasGuild => GuildId > 0;
         public IGuild Guild => GuildStore.Data.Get(GuildId);
+        public IChatChannel NpcsChannel { get; init; }
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -415,8 +418,11 @@ namespace NeoServer.Server.Model.Players
 
             return canUse;
         }
-        public void SendMessageTo(IPlayer player)
+        public void SendMessageTo(ISociableCreature to, SpeechType speechType, string message)
         {
+            if (string.IsNullOrWhiteSpace(message)) return;
+
+            OnSentMessage?.Invoke(this, to, speechType, message);
         }
 
         public virtual bool CastSpell(string message)
@@ -444,9 +450,9 @@ namespace NeoServer.Server.Model.Players
 
             return false;
         }
-        public override void Say(string message, SpeechType talkType)
+        public override void Say(string message, SpeechType talkType, ICreature receiver = null)
         {
-            base.Say(message, talkType);
+            base.Say(message, talkType, receiver);
         }
 
         public bool HasEnoughMana(ushort mana) => Mana >= mana;
@@ -672,6 +678,8 @@ namespace NeoServer.Server.Model.Players
         }
         public bool JoinChannel(IChatChannel channel)
         {
+            if (channel is null) return false;
+
             if (channel.HasUser(this))
             {
                 OnOperationFailed?.Invoke(CreatureId, "You've already joined this chat channel");
@@ -742,5 +750,12 @@ namespace NeoServer.Server.Model.Players
             VipList?.Remove(playerId);
         }
         public bool HasInVipList(uint playerId) => VipList.Contains(playerId);
+
+        public void Hear(ICreature from, SpeechType speechType, string message)
+        {
+            if (from is null || speechType == SpeechType.None || string.IsNullOrWhiteSpace(message)) return;
+
+            OnHear?.Invoke(from, this, speechType, message);
+        }
     }
 }
