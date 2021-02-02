@@ -31,7 +31,7 @@ namespace NeoServer.Loaders.Npcs
             var npcs = ConvertNpcs();
 
             foreach (var npc in npcs) NpcStore.Data.Add(npc.Name, npc);
-            
+
             logger.Information("{n} NPCs loaded!", npcs.Count());
         }
         private IEnumerable<INpcType> ConvertNpcs()
@@ -45,6 +45,14 @@ namespace NeoServer.Loaders.Npcs
                 if (npc is null) continue;
                 if (string.IsNullOrWhiteSpace(npc.Name)) continue;
 
+
+                var dialogs = new List<INpcDialog>();
+
+                foreach (var dialog in npc.Dialog)
+                {
+                    dialogs.Add(ConvertDialog(dialog));
+                }
+
                 yield return new NpcType()
                 {
                     MaxHealth = npc.Health?.Max ?? 100,
@@ -52,9 +60,24 @@ namespace NeoServer.Loaders.Npcs
                     Speed = 280,
                     Look = new Dictionary<LookType, ushort>() { { LookType.Type, npc.Look.Type }, { LookType.Corpse, npc.Look.Corpse }, { LookType.Body, npc.Look.Body}, { LookType.Legs, npc.Look.Legs}, { LookType.Head, npc.Look.Head },
                 { LookType.Feet, npc.Look.Feet},{ LookType.Addon, npc.Look.Addons}},
+                    Dialog = dialogs.ToArray()
                 };
             }
 
+        }
+
+        private static INpcDialog ConvertDialog(NpcData.DialogData dialog)
+        {
+            if (dialog is null) return null;
+            var d = new NpcDialogType
+            {
+                Answers = dialog.Answers,
+                Exec = dialog.Exec,
+                OnWords = dialog.OnWords,
+                End = dialog.End,
+                Then = dialog.Then?.Select(x=> ConvertDialog(x))?.ToArray() ?? null
+            };
+            return d;
         }
     }
 
@@ -68,6 +91,17 @@ namespace NeoServer.Loaders.Npcs
         public HealthData Health { get; set; }
         [JsonProperty("look")]
         public LookData Look { get; set; }
+        public string[] Marketings { get; set; }
+        public DialogData[] Dialog { get; set; }
+        public class DialogData
+        {
+            [JsonProperty("words")]
+            public string[] OnWords { get; set; }
+            public string[] Answers { get; set; }
+            public DialogData[] Then { get; set; }
+            public string Exec { get; set; }
+            public bool End { get; set; }
+        }
         public class HealthData
         {
             [JsonProperty("now")]

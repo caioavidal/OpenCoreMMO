@@ -21,43 +21,78 @@ namespace NeoServer.Game.Creatures.Npcs
         public override IOutfit Outfit { get; protected set; }
         public INpcType Type { get; }
 
-        IDictionary<uint, List<string>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<string>>();
+        IDictionary<uint, List<byte>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
 
         public event Hear OnHear;
 
-      
-        public void ReceiveMessage(uint playerId, string message)
+        private INpcDialog GetNextAnswer(uint creatureId, string message)
         {
-            //INpcDialog dialog = GetDialog(playerId);
+            if (creatureId == 0 || string.IsNullOrWhiteSpace(message)) return null;
 
-            //var dialog = Type.Dialog.FirstOrDefault(x => x.OnWords.Contains(message, StringComparer.InvariantCultureIgnoreCase));
-            //PlayerDialogTree.Add()
-            //Answer(dialog.Answer);
-        }
-
-        private INpcDialog GetDialog(uint playerId, INpcDialog dialog = null)
-        {
-            foreach (var treePoint in PlayerDialogTree[playerId])
+            List<byte> positions = null;
+            if (!PlayerDialogTree.TryGetValue(creatureId, out positions))
             {
-                if (dialog is null)
-                {
-                    dialog = Type.Dialog[treePoint];
-                }
+                positions = new List<byte>() { 0 };
             }
+
+            var dialog = GetAnwser(positions, message);
+
+            if (dialog is null) return default;
+
+            if (dialog.End) PlayerDialogTree.Remove(creatureId);
+            else PlayerDialogTree.TryAdd(creatureId, positions);
 
             return dialog;
         }
 
-        public void Answer()
+        private INpcDialog GetAnwser(List<byte> positions, string message)
         {
+            INpcDialog[] dialogs = null;
+            var i = 0;
+            foreach (var position in positions)
+            {
+                dialogs = i++ == 0 ? Type.Dialog : dialogs[position].Then;
+            }
 
+            i = 0;
+
+            foreach (var dialog in dialogs)
+            {
+                if(dialog.OnWords.Any(x => x.Equals(message, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    if(dialog.Then is not null) positions.Add((byte)i);
+                    return dialog;
+                }
+
+                i++;
+            }
+            return null;
+        }
+
+        public void Answer(ICreature from, SpeechType speechType, string message)
+        {
+            if (from is null || string.IsNullOrWhiteSpace(message)) return;
+
+            if (from is not ISociableCreature sociableCreature) return;
+
+            //if is not first message to npc and player send from any other channel than NPC
+            if (PlayerDialogTree.ContainsKey(from.CreatureId) && speechType != SpeechType.PrivatePlayerToNpc) return;
+
+            var dialog = GetNextAnswer(from.CreatureId, message);
+
+            if (dialog is null || dialog?.Answers is null) return;
+
+            foreach (var answer in dialog.Answers)
+            {
+                SendMessageTo(sociableCreature, SpeechType.PrivateNpcToPlayer, ReplaceKeywords(answer, from));
+            }
         }
 
         public void SendMessageTo(ISociableCreature to, SpeechType type, string message)
-        { 
+        {
             if (to is null || string.IsNullOrWhiteSpace(message)) return;
 
-            if(to is IPlayer )
+            if (to is IPlayer)
             {
                 Say(message, type, to);
             }
@@ -69,10 +104,13 @@ namespace NeoServer.Game.Creatures.Npcs
 
             OnHear?.Invoke(from, this, speechType, message);
 
-            if (from is ISociableCreature sociableCreature)
-            {
-                SendMessageTo(sociableCreature, SpeechType.PrivateNp, "hi");
-            }
+            Answer(from, speechType, message);
+        }
+
+        private string ReplaceKeywords(string message, ICreature creature)
+        {
+            message = message.Replace("|PLAYERNAME|", creature.Name);
+            return message;
         }
     }
 }
