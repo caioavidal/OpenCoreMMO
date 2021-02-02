@@ -7,7 +7,7 @@
 	"dialog":[
 		{
 			"words": ["hi"],
-			"answers": ["Hi {PLAYER_NAME}, I sell everything"],
+			"answers": ["Hi |PLAYER_NAME|, I sell everything"],
 			"then": [{
 				"words": ["trade"],
 				"exec": "market",
@@ -15,7 +15,7 @@
 			},
 			{
 				"words": ["offer"],
-				"answers": ["My offers are weapons, armors, helmets, legs, and shields. If you'd like to see my offers, ask me for a |trade|."],
+				"answers": ["My offers are weapons, armors, helmets, legs, and shields. If you'd like to see my offers, ask me for a {trade}."],
 			},
 			{
 				"words": ["bye"],

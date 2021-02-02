@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
@@ -48,6 +49,7 @@ namespace NeoServer.Server.Commands.Player
                 case NeoServer.Game.Common.Talks.SpeechType.Yell:
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.PrivatePlayerToNpc:
+                    SendMessageToNpc(message);
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.PrivateNpcToPlayer:
                     break;
@@ -92,6 +94,17 @@ namespace NeoServer.Server.Commands.Player
             }
 
             receiver.SendMessageTo(receiver, playerSayPacket.TalkType, message);
+        }
+        private void SendMessageToNpc(string message)
+        {
+            foreach (var creature in game.Map.GetCreaturesAtPositionZone(player.Location))
+            {
+                if(creature is INpc npc)
+                {
+                    npc.Hear(player, playerSayPacket.TalkType, message);
+                    return;
+                }
+            }
         }
         private void SendMessageToChannel(ushort channelId, string message)
         {
