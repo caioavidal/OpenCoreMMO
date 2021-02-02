@@ -7,7 +7,7 @@
 	"dialog":[
 		{
 			"words": ["hi"],
-			"answers": ["Hi |PLAYER_NAME|, I sell everything"],
+			"answers": ["Hi |PLAYERNAME|, I sell everything"],
 			"then": [{
 				"words": ["trade"],
 				"exec": "market",
@@ -19,7 +19,7 @@
 			},
 			{
 				"words": ["bye"],
-				"answers": ["Good bye and come again, |PLAYER_NAME|."],
+				"answers": ["Good bye and come again, |PLAYERNAME|."],
 				"end": true
 			}]
 		}

@@ -84,7 +84,7 @@ namespace NeoServer.Game.Creatures.Npcs
 
             foreach (var answer in dialog.Answers)
             {
-                SendMessageTo(sociableCreature, SpeechType.PrivateNpcToPlayer, answer);
+                SendMessageTo(sociableCreature, SpeechType.PrivateNpcToPlayer, ReplaceKeywords(answer, from));
             }
         }
 
@@ -105,6 +105,12 @@ namespace NeoServer.Game.Creatures.Npcs
             OnHear?.Invoke(from, this, speechType, message);
 
             Answer(from, speechType, message);
+        }
+
+        private string ReplaceKeywords(string message, ICreature creature)
+        {
+            message = message.Replace("|PLAYERNAME|", creature.Name);
+            return message;
         }
     }
 }
