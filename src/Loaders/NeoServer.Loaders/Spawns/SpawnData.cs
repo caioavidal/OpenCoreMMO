@@ -4,7 +4,7 @@ namespace NeoServer.Loaders.Spawns
 {
     public class SpawnData
     {
-        public class Monster
+        public class Creature
         {
             public string Name { get; set; }
             public int X { get; set; }
@@ -17,6 +17,8 @@ namespace NeoServer.Loaders.Spawns
         public ushort Centery { get; set; }
         public byte Centerz { get; set; }
         public byte Radius { get; set; }
-        public IEnumerable<Monster> Monsters { get; set; }
+        public IEnumerable<Creature> Monsters { get; set; }
+        public IEnumerable<Creature> Npcs { get; set; }
+
     }
 }

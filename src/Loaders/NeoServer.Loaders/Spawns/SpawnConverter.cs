@@ -13,22 +13,35 @@ namespace NeoServer.Loaders.Spawns
                 Location = new Location(spawnData.Centerx, spawnData.Centery, spawnData.Centerz),
                 Radius = spawnData.Radius,
             };
-
-            if (spawnData.Monsters == null)
+            //todo: remove code duplucation
+            if (spawnData.Monsters is not null)
             {
-                return spawn;
+                spawn.Monsters = new Spawn.Creature[spawnData.Monsters.Count()];
+
+                var i = 0;
+                foreach (var monster in spawnData.Monsters)
+                {
+                    spawn.Monsters[i++] = new Spawn.Creature
+                    {
+                        Name = monster.Name,
+                        Spawn = new SpawnPoint(new Location((ushort)(monster.X + spawn.Location.X), (ushort)(monster.Y + spawn.Location.Y), monster.Z), monster.Spawntime)
+                    };
+                }
             }
 
-            spawn.Monsters = new Spawn.Monster[spawnData.Monsters.Count()];
-
-            var i = 0;
-            foreach (var monster in spawnData.Monsters)
+            if (spawnData.Npcs is not null)
             {
-                spawn.Monsters[i++] = new Spawn.Monster
+                spawn.Npcs = new Spawn.Creature[spawnData.Npcs.Count()];
+
+                var i = 0;
+                foreach (var npc in spawnData.Npcs)
                 {
-                    Name = monster.Name,
-                    Spawn = new SpawnPoint(new Location((ushort)(monster.X + spawn.Location.X), (ushort)(monster.Y + spawn.Location.Y), monster.Z), monster.Spawntime)
-                };
+                    spawn.Npcs[i++] = new Spawn.Creature
+                    {
+                        Name = npc.Name,
+                        Spawn = new SpawnPoint(new Location((ushort)(npc.X + spawn.Location.X), (ushort)(npc.Y + spawn.Location.Y), npc.Z), npc.Spawntime)
+                    };
+                }
             }
 
             return spawn;

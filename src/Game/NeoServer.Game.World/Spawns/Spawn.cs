@@ -9,12 +9,13 @@ namespace NeoServer.Game.World.Spawns
         public Location Location { get; set; }
         public byte Radius { get; set; }
 
-        public class Monster : ISpawn.IMonster
+        public class Creature : ISpawn.ICreature
         {
             public string Name { get; set; }
             public ISpawnPoint Spawn { get; set; }
         }
-        public ISpawn.IMonster[] Monsters { get; set; }
+        public ISpawn.ICreature[] Monsters { get; set; }
+        public ISpawn.ICreature[] Npcs { get; set; }
     }
 
     public class SpawnPoint : ISpawnPoint

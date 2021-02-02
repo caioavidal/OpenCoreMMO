@@ -18,7 +18,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void GainExperience(ICreature creature, uint exp);
     public delegate void StartWalk(IWalkableCreature creature);
     public delegate void Heal(ICombatActor creature, ushort amount);
-    public delegate void Say(ICreature creature, SpeechType type, string message);
+    public delegate void Say(ICreature creature, SpeechType type, string message, ICreature receiver = null);
     public delegate void AddCondition(ICreature creature, ICondition condition);
     public delegate void RemoveCondition(ICreature creature, ICondition condition);
     public delegate void ChangeOutfit(ICreature creature, IOutfit outfit);
@@ -69,7 +69,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool HasFlag(CreatureFlag flag);
         void OnCreatureAppear(Location location, ICylinderSpectator[] spectators);
         void RemoveCondition(ICondition condition);
-        void Say(string message, SpeechType talkType);
+        void Say(string message, SpeechType talkType, ICreature receiver = null);
         void SetAsRemoved();
         void SetDirection(Direction direction);
         void SetFlag(CreatureFlag flag);

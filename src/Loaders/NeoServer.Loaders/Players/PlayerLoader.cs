@@ -51,7 +51,7 @@ namespace NeoServer.Loaders.Players
             {
                 if (channel == typeof(PersonalChatChannel)) continue;
 
-                var createdChannel = chatChannelFactory.Create(channel, null);
+                var createdChannel = chatChannelFactory.Create(channel, null, player);
                 player.AddPersonalChannel(createdChannel);
             }
         }

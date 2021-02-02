@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Talks;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -11,14 +12,14 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class PlayerSendPrivateMessagePacket : OutgoingPacket
     {
-        public PlayerSendPrivateMessagePacket(IPlayer from, SpeechType talkType, string message)
+        public PlayerSendPrivateMessagePacket(ISociableCreature from, SpeechType talkType, string message)
         {
             From = from;
             TalkType = talkType;
             Message = message;
         }
 
-        public IPlayer From { get;  }
+        public ISociableCreature From { get;  }
         public SpeechType TalkType { get; }
         public string Message { get; }
         public override void WriteToMessage(INetworkMessage message)
@@ -34,7 +35,8 @@ namespace NeoServer.Networking.Packets.Outgoing
 			if (From is not null)
 			{
 				message.AddString(From.Name);
-				message.AddUInt16(From.Level);	
+				if(From is IPlayer player) message.AddUInt16(player.Level);	
+				else message.AddUInt16(0x00);
 			}
 			else
 			{

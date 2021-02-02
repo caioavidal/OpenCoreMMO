@@ -1,0 +1,7 @@
+{
+ "name": "Eryn",
+	"walk-interval": 2000,
+	"health": {"now":100, "max":100},
+	"look":{"type":130, "head":39, "body":122, "legs":125, "feet":57, "addons": 0}
+}
+	

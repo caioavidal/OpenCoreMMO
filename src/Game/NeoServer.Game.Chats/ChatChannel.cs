@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace NeoServer.Game.Chats
 
         public virtual SpeechType GetTextColor(IPlayer player)
         {
+            if (player is null) return ChatColor;
             if (ChatColorByVocation is not null && ChatColorByVocation.TryGetValue(player.VocationType, out var color)) return color;
 
             return ChatColor;
@@ -67,10 +69,12 @@ namespace NeoServer.Game.Chats
             return true;
         }
         public bool PlayerCanJoin(IPlayer player) => Validate(JoinRule, player);
-        public bool PlayerCanWrite(IPlayer player) => users.ContainsKey(player.Id) && Validate(WriteRule, player);
+        public bool PlayerCanWrite(IPlayer player) => player is null ? true : player is not null && users.ContainsKey(player.Id) && Validate(WriteRule, player);
         public bool PlayerIsMuted(IPlayer player, out string cancelMessage)
         {
             cancelMessage = default;
+            if (player is null) return false;
+
             if (users.TryGetValue(player.Id, out var user) && user.IsMuted)
             {
                 cancelMessage = string.IsNullOrWhiteSpace(MuteRule.CancelMessage) ? $"You are muted for {user.RemainingMutedSeconds} seconds" : MuteRule.CancelMessage;
@@ -96,9 +100,12 @@ namespace NeoServer.Game.Chats
             return true;
         }
 
-        public bool WriteMessage(IPlayer player, string message, out string cancelMessage)
+        public bool WriteMessage(ISociableCreature creature, string message, out string cancelMessage, SpeechType speechType = SpeechType.None)
         {
             cancelMessage = default;
+
+            IPlayer player = creature is IPlayer ? (IPlayer) creature : null;
+
             if (!PlayerCanWrite(player))
             {
                 cancelMessage = "You cannot send message to this channel";
@@ -107,12 +114,14 @@ namespace NeoServer.Game.Chats
 
             if (PlayerIsMuted(player, out cancelMessage)) return false;
 
-            if (users.TryGetValue(player.Id, out var user))
+            if (users.TryGetValue(player?.Id ?? 0, out var user))
             {
                 user.UpdateLastMessage(MuteRule);
             }
 
-            OnMessageAdded?.Invoke(player, this, GetTextColor(player), message);
+            var color = speechType == SpeechType.None ? GetTextColor(player) : speechType;
+
+            OnMessageAdded?.Invoke(creature, this, color, message);
             return true;
         }
 

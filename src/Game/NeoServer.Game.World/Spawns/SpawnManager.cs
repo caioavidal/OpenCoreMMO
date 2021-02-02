@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
 using System;
 using System.Linq;
 
@@ -44,7 +45,6 @@ namespace NeoServer.Game.World.Spawns
               
                 if (_creatureGameInstance.TryRemoveFromKilledMonsters(monster.CreatureId))
                 {
-                  //  _creatureGameInstance.Add(monster);
                     monster.Reborn();
                 }
             }
@@ -57,12 +57,22 @@ namespace NeoServer.Game.World.Spawns
                 var monster = _creatureFactory.CreateMonster(monsterToSpawn.Name, monsterToSpawn.Spawn);
 
                 if (monster == null) continue;
-
-                monster.SetNewLocation(monsterToSpawn.Spawn.Location);
-                _map.PlaceCreature(monster);
-
-                //_creatureGameInstance.Add(monster);
+                PlaceCreature(monsterToSpawn, monster);
             }
+
+            foreach (var npcToSpawn in _world.Spawns.SelectMany(x => x.Npcs).ToList())
+            {
+                var npc = _creatureFactory.CreateNpc(npcToSpawn.Name, npcToSpawn.Spawn);
+                if (npc is null) continue;
+
+                PlaceCreature(npcToSpawn, npc);
+            }
+        }
+
+        private void PlaceCreature(ISpawn.ICreature monsterToSpawn, ICreature creature)
+        {
+            creature.SetNewLocation(monsterToSpawn.Spawn.Location);
+            _map.PlaceCreature(creature);
         }
     }
 }

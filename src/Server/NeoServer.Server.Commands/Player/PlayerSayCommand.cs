@@ -36,12 +36,12 @@ namespace NeoServer.Server.Commands.Player
 
             if (player.CastSpell(message)) return;
 
-            switch (playerSayPacket.Talk)
+            switch (playerSayPacket.TalkType)
             {
                 case NeoServer.Game.Common.Talks.SpeechType.None:
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.Say:
-                    player.Say(playerSayPacket.Message, playerSayPacket.Talk);
+                    player.Say(playerSayPacket.Message, playerSayPacket.TalkType);
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.Whisper:
                     break;
@@ -91,10 +91,7 @@ namespace NeoServer.Server.Commands.Player
                 return;
             }
 
-            if (!game.CreatureManager.GetPlayerConnection(receiver.CreatureId, out var receiverConnection)) return;
-
-            receiverConnection.OutgoingPackets.Enqueue(new PlayerSendPrivateMessagePacket(player, playerSayPacket.Talk, message));
-            receiverConnection.Send();
+            receiver.SendMessageTo(receiver, playerSayPacket.TalkType, message);
         }
         private void SendMessageToChannel(ushort channelId, string message)
         {
