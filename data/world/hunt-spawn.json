@@ -12,7 +12,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1028,
@@ -27,7 +28,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1016,
@@ -42,7 +44,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1019,
@@ -57,7 +60,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1025,
@@ -72,7 +76,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1021,
@@ -87,7 +92,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1025,
@@ -102,7 +108,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1030,
@@ -117,7 +124,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1012,
@@ -132,7 +140,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1023,
@@ -147,7 +156,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1015,
@@ -162,7 +172,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1010,
@@ -177,7 +188,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1031,
@@ -199,7 +211,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1012,
@@ -214,7 +227,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1028,
@@ -229,7 +243,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1021,
@@ -244,7 +259,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1012,
@@ -259,7 +275,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1015,
@@ -274,7 +291,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1019,
@@ -289,7 +307,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1023,
@@ -304,7 +323,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1027,
@@ -319,7 +339,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1033,
@@ -334,7 +355,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1021,
@@ -349,7 +371,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1012,
@@ -364,7 +387,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1029,
@@ -379,7 +403,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1011,
@@ -394,7 +419,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1020,
@@ -409,7 +435,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1024,
@@ -424,7 +451,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1015,
@@ -439,7 +467,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1018,
@@ -454,7 +483,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1025,
@@ -469,7 +499,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1028,
@@ -484,7 +515,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1023,
@@ -499,7 +531,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1027,
@@ -521,7 +554,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1014,
@@ -543,7 +577,8 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   },
   {
     "centerx": 1018,
@@ -558,6 +593,7 @@
         "z": 7,
         "spawntime": 60
       }
-    ]
+    ],
+    "npcs": []
   }
 ]

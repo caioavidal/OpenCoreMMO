@@ -11,16 +11,17 @@ namespace NeoServer.Game.Creatures
     {
         //factories
         private readonly IMonsterFactory _monsterFactory;
+        private readonly INpcFactory npcFactory;
         private readonly IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers;
         public CreatureFactory(
            IMonsterFactory monsterFactory,
-            IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers)
+            IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers, INpcFactory npcFactory)
         {
-           
-            _monsterFactory = monsterFactory;
 
+            _monsterFactory = monsterFactory;
             this.creatureEventSubscribers = creatureEventSubscribers;
             Instance = this;
+            this.npcFactory = npcFactory;
         }
         public static ICreatureFactory Instance { get; private set; }
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
@@ -31,10 +32,18 @@ namespace NeoServer.Game.Creatures
             AttachEvents(monster);
             return monster;
         }
+        public INpc CreateNpc(string name, ISpawnPoint spawn = null)
+        {
+            var npc = npcFactory.Create(name, spawn);
+            if (npc is null) return null;
+
+            AttachEvents(npc);
+            return npc;
+
+        }
         public IPlayer CreatePlayer(IPlayer player)
         {
             return AttachEvents(player) as IPlayer;
-            //return playerModel;
         }
 
         private ICreature AttachEvents(ICreature creature)

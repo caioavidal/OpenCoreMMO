@@ -71,9 +71,9 @@ public class Program
         container.Resolve<VocationLoader>().Load();
         container.Resolve<SpellLoader>().Load();
 
-        container.Resolve<SpawnManager>().StartSpawn();
-
         container.Resolve<IEnumerable<IStartupLoader>>().ToList().ForEach(x => x.Load());
+
+        container.Resolve<SpawnManager>().StartSpawn();
 
         var listeningTask = StartListening(container, cancellationToken);
 

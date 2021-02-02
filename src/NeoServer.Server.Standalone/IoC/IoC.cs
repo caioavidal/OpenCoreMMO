@@ -132,6 +132,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
             builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
+            builder.RegisterType<NpcFactory>().As<INpcFactory>().SingleInstance();
 
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();

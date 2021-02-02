@@ -7,12 +7,13 @@ namespace NeoServer.Game.Contracts.World
         Location Location { get; set; }
         byte Radius { get; set; }
 
-        public interface IMonster
+        public interface ICreature
         {
             string Name { get; set; }
             ISpawnPoint Spawn { get; set; }
         }
-        IMonster[] Monsters { get; set; }
+        ICreature[] Monsters { get; set; }
+        ICreature[] Npcs { get; set; }
     }
 
     public interface ISpawnPoint

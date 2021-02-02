@@ -60,8 +60,15 @@ namespace NeoServer.Game.World.Spawns
 
                 monster.SetNewLocation(monsterToSpawn.Spawn.Location);
                 _map.PlaceCreature(monster);
+            }
+            foreach (var npcToSpawn in _world.Spawns.SelectMany(x => x.Npcs).ToList())
+            {
+                var npc = _creatureFactory.CreateNpc(npcToSpawn.Name, npcToSpawn.Spawn);
 
-                //_creatureGameInstance.Add(monster);
+                if (npc is null) continue;
+
+                npc.SetNewLocation(npcToSpawn.Spawn.Location);
+                _map.PlaceCreature(npc);
             }
         }
     }
