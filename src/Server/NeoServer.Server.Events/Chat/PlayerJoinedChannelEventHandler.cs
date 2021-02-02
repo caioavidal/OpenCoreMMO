@@ -28,7 +28,7 @@ namespace NeoServer.Server.Events
 
             if (!string.IsNullOrWhiteSpace(channel.Description))
             {
-                connection.OutgoingPackets.Enqueue(new MessageToChannelPacket(null, NeoServer.Game.Common.Talks.SpeechType.ChannelW, channel.Description, channel.Id));
+                connection.OutgoingPackets.Enqueue(new MessageToChannelPacket(null, NeoServer.Game.Common.Talks.SpeechType.ChannelWhiteText, channel.Description, channel.Id));
             }
 
             connection.Send();

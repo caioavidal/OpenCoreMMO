@@ -16,7 +16,7 @@ namespace NeoServer.Scripts.Chat
 
         public override string Name => "Loot";
         public override bool Opened { get => false; init => base.Opened = value; }
-        public override SpeechType ChatColor { get => SpeechType.ChannelW; init => base.ChatColor = SpeechType.ChannelW; }
+        public override SpeechType ChatColor { get => SpeechType.ChannelWhiteText; init => base.ChatColor = SpeechType.ChannelWhiteText; }
         public override ChannelRule WriteRule
         {
             get => new ChannelRule

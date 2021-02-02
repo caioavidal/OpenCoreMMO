@@ -8,15 +8,15 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public interface INpcType:ICreatureType
     {
-        public Dictionary<string, INpcDialog> Dialog { get; set; }
+        public INpcDialog[] Dialog { get; init; }
     }
 
     public interface INpcDialog
     {
-        public string[] OnWords { get; set; }
-        public string[] Answer { get; set; }
-        public string[] OnDecline { get; set; }
-        public string Exec { get; set; }
-        public INpcDialog Then { get; set; }
+        public string[] OnWords { get; init; }
+        public string[] Answers { get; init; }
+        public string Exec { get; init; }
+        public bool End { get; init; }
+        public INpcDialog[] Then { get; init; }
     }
 }

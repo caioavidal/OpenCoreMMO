@@ -78,9 +78,9 @@ namespace NeoServer.Scripts.Chats
         {
             return color switch
             {
-                "red" => SpeechType.ChannelR1,
+                "red" => SpeechType.ChannelRed1Text,
                 "yellow" => SpeechType.ChannelYellowText,
-                "white" => SpeechType.ChannelW,
+                "white" => SpeechType.ChannelWhiteText,
                 "orange" => SpeechType.ChannelOrangeText,
                 _ => SpeechType.ChannelYellowText
             };

@@ -47,20 +47,20 @@ namespace NeoServer.Server.Commands.Player
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.Yell:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.PrivatePn:
+                case NeoServer.Game.Common.Talks.SpeechType.PrivatePlayerToNpc:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.PrivateNp:
+                case NeoServer.Game.Common.Talks.SpeechType.PrivateNpcToPlayer:
                     break;
 
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelOrangeText:
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelR1:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelRed1Text:
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelYellowText:
                     SendMessageToChannel(playerSayPacket.ChannelId, message);
                     break;
 
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelR2:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelRed2Text:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.ChannelW:
+                case NeoServer.Game.Common.Talks.SpeechType.ChannelWhiteText:
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.RvrChannel:
                     break;

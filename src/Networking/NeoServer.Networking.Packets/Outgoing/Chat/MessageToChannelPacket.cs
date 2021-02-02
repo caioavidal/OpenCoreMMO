@@ -30,10 +30,10 @@ namespace NeoServer.Networking.Packets.Outgoing
 
             var speechType = TalkType;
 
-            if (speechType == SpeechType.ChannelR2)
+            if (speechType == SpeechType.ChannelRed2Text)
             {
                 message.AddString(string.Empty);
-                speechType = SpeechType.ChannelR1;
+                speechType = SpeechType.ChannelRed1Text;
             }
             else
             {
