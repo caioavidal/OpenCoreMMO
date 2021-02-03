@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Scripts.Events.Creatures;
+using NeoServer.Scripts.Npcs.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,10 @@ namespace NeoServer.Scripts.Events
             {
                 actor.OnKilled += creatureKilledEventHandler.Execute;
             }
+            if(creature is INpc npc)
+            {
+                npc.OnAnswer += NpcActionHandler.OnAnswer;
+            }
         }
 
         public void Unsubscribe(ICreature creature)
@@ -36,6 +41,10 @@ namespace NeoServer.Scripts.Events
             if (creature is IMonster monster)
             {
                 monster.OnDropLoot -= creatureDroppedLootEventHandler.Execute;
+            }
+            if (creature is INpc npc)
+            {
+                npc.OnAnswer -= NpcActionHandler.OnAnswer;
             }
         }
     }

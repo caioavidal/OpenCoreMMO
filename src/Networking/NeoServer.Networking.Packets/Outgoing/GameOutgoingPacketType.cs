@@ -26,6 +26,7 @@
         ContainerRemoveItem = 0x72,
         InventoryItem = 0x78,
         InventoryEmpty = 0x79,
+        OpenShop = 0x7A,
         WorldLight = 0x82,
         MagicEffect = 0x83,
         AnimatedText = 0x84,

@@ -25,16 +25,21 @@ namespace NeoServer.Loaders.Npcs
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
         }
-
+        public event Action<INpcType, string> OnLoad;
         public void Load()
         {
             var npcs = ConvertNpcs();
 
-            foreach (var npc in npcs) NpcStore.Data.Add(npc.Name, npc);
+            foreach (var npcLoaded in npcs)
+            {
+                var (jsonContent, npc) = npcLoaded;
+                NpcStore.Data.Add(npc.Name, npc);
+                OnLoad?.Invoke(npc, jsonContent);
+            }
 
             logger.Information("{n} NPCs loaded!", npcs.Count());
         }
-        private IEnumerable<INpcType> ConvertNpcs()
+        private IEnumerable<(string,INpcType)> ConvertNpcs()
         {
             var basePath = $"{serverConfiguration.Data}/npcs";
             foreach (var file in Directory.GetFiles(basePath, "*.json"))
@@ -53,15 +58,16 @@ namespace NeoServer.Loaders.Npcs
                     dialogs.Add(ConvertDialog(dialog));
                 }
 
-                yield return new NpcType()
+                yield return (jsonContent, new NpcType()
                 {
+                    Script = npc.Script,
                     MaxHealth = npc.Health?.Max ?? 100,
                     Name = npc.Name,
                     Speed = 280,
                     Look = new Dictionary<LookType, ushort>() { { LookType.Type, npc.Look.Type }, { LookType.Corpse, npc.Look.Corpse }, { LookType.Body, npc.Look.Body}, { LookType.Legs, npc.Look.Legs}, { LookType.Head, npc.Look.Head },
                 { LookType.Feet, npc.Look.Feet},{ LookType.Addon, npc.Look.Addons}},
                     Dialog = dialogs.ToArray()
-                };
+                });
             }
 
         }
@@ -72,7 +78,7 @@ namespace NeoServer.Loaders.Npcs
             var d = new NpcDialogType
             {
                 Answers = dialog.Answers,
-                Exec = dialog.Exec,
+                Action = dialog.Action,
                 OnWords = dialog.OnWords,
                 End = dialog.End,
                 Then = dialog.Then?.Select(x=> ConvertDialog(x))?.ToArray() ?? null
@@ -81,53 +87,5 @@ namespace NeoServer.Loaders.Npcs
         }
     }
 
-    public class NpcData
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        [JsonProperty("walk-interval")]
-        public int WalkInterval { get; set; }
-        [JsonProperty("health")]
-        public HealthData Health { get; set; }
-        [JsonProperty("look")]
-        public LookData Look { get; set; }
-        public string[] Marketings { get; set; }
-        public DialogData[] Dialog { get; set; }
-        public class DialogData
-        {
-            [JsonProperty("words")]
-            public string[] OnWords { get; set; }
-            public string[] Answers { get; set; }
-            public DialogData[] Then { get; set; }
-            public string Exec { get; set; }
-            public bool End { get; set; }
-        }
-        public class HealthData
-        {
-            [JsonProperty("now")]
-            public uint Now { get; set; }
-
-            [JsonProperty("max")]
-            public uint Max { get; set; }
-        }
-
-        public class LookData
-        {
-            [JsonProperty("type")]
-            public ushort Type { get; set; }
-
-            [JsonProperty("corpse")]
-            public ushort Corpse { get; set; }
-            [JsonProperty("body")]
-            public ushort Body { get; set; }
-            [JsonProperty("legs")]
-            public ushort Legs { get; set; }
-            [JsonProperty("feet")]
-            public ushort Feet { get; set; }
-            [JsonProperty("head")]
-            public ushort Head { get; set; }
-            [JsonProperty("addons")]
-            public ushort Addons { get; set; }
-        }
-    }
+   
 }
