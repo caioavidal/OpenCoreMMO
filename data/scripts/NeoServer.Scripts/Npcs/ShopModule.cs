@@ -1,8 +1,10 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Loaders.Npcs;
 using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Server.Items;
+using NeoServer.Server.Model.Players.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,27 +22,31 @@ namespace NeoServer.Scripts.Npcs
 
             var npc = JsonConvert.DeserializeObject<NpcData>(jsonContent);
 
-            if (npc is null) return;
+            if (npc is null || npc.Shop is null) return;
 
-            type.CustomAttributes.Add("shop", npc.Shop.Select(x => (x.Item, x.Buy, x.Sell)).ToArray());
+            var items = new List<ShopItem>(npc.Shop.Length);
+            foreach (var item in npc.Shop)
+            {
+                if (!ItemTypeData.InMemory.TryGetValue(item.Item, out var itemType)) continue;
+                items.Add(new ShopItem(itemType, item.Buy, item.Sell));
+            }
+
+            type.CustomAttributes.Add("shop", items.ToArray());
         }
 
         public static void OpenShop(INpc npc, ICreature creature)
         {
+            if (creature is not IPlayer player) return;
+            if (npc is null) return;
+
             if (!Server.Game.Instance.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
 
             if (!npc.Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return;
 
-            if (shop is not (ushort, uint, uint)[] itemsShop) return;
+            if (shop is not ShopItem[] shopItems) return;
 
-            var items = new List<(IItemType, uint, uint)>(itemsShop.Length);
-            foreach (var item in itemsShop)
-            {
-                if (!ItemTypeData.InMemory.TryGetValue(item.Item1, out var itemType)) continue;
-                items.Add((itemType, item.Item2, item.Item3));
-            }
-
-            connection.OutgoingPackets.Enqueue(new OpenShopPacket(items.ToArray()));
+            connection.OutgoingPackets.Enqueue(new OpenShopPacket(shopItems));
+            connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, shopItems));
             connection.Send();
         }
     }

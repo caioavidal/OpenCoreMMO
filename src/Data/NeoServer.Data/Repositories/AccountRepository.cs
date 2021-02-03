@@ -49,9 +49,9 @@ namespace NeoServer.Data.Repositories
             //    var rows = await Context.Database.GetDbConnection().QueryAsync(sql, new { accountName = accountName, password, charName });
             //}
             
-            return await Context.Players.Where(x => x.Account.Name.Equals(accountName, System.StringComparison.InvariantCultureIgnoreCase) &&
+            return await Context.Players.Where(x => x.Account.Name.Equals(accountName) &&
                                          x.Account.Password.Equals(password) &&
-                                         x.Name.Equals(charName, System.StringComparison.InvariantCultureIgnoreCase))
+                                         x.Name.Equals(charName))
                                        .Include(x => x.PlayerItems)
                                        .Include(x => x.PlayerInventoryItems)
                                        .Include(x => x.Account)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {
@@ -43,5 +44,9 @@ namespace NeoServer.Game.Contracts.Items.Types
         void RemoveId();
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
+        /// <summary>
+        /// A map of all items in container
+        /// </summary>
+        ImmutableDictionary<ushort, uint> Map { get; }
     }
 }

@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Server.Model.Players.Contracts;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -24,6 +25,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IWeapon Weapon { get; }
         bool HasShield { get; }
         float TotalWeight { get; }
+        IDictionary<ushort, uint> Map { get; }
 
         IItem this[Slot slot] { get; }
 
@@ -34,5 +36,6 @@ namespace NeoServer.Game.Contracts.Creatures
         Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
         bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
         Result<bool> CanAddItemToSlot(Slot slot, IItem item);
+        uint GetTotalMoney(IDictionary<ushort, uint> inventoryMap);
     }
 }

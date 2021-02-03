@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Server.Contracts.Network;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,13 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
 {
     public class OpenShopPacket : OutgoingPacket
     {
-        public (IItemType, uint, uint)[] Items { get; }
+        public ShopItem[] Items { get; }
 
-        public OpenShopPacket((IItemType, uint, uint)[] items)
+        public OpenShopPacket(ShopItem[] items)
         {
             Items = items;
         }
+
 
         public override void WriteToMessage(INetworkMessage message)
         {
@@ -30,11 +32,12 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
             }
         }
 
-        private void SendShopItem(INetworkMessage message, (IItemType, uint, uint) itemShop)
+        private void SendShopItem(INetworkMessage message, ShopItem shopItem)
         {
-            var (item, buyPrice, sellPrice) = itemShop;
 
-            message.AddUInt16(item.ClientId);
+            if (shopItem is null) return;
+
+            message.AddUInt16(shopItem.Item.ClientId);
 
             //if (it.isSplash() || it.isFluidContainer())
             //{
@@ -45,10 +48,10 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
                 message.AddByte(0x00);
             }
 
-            message.AddString(item.Name);
-            message.AddUInt32((uint)item.Weight * 100);
-            message.AddUInt32(buyPrice);
-            message.AddUInt32(sellPrice);
+            message.AddString(shopItem.Item.Name);
+            message.AddUInt32((uint)shopItem.Item.Weight * 100);
+            message.AddUInt32(shopItem.BuyPrice);
+            message.AddUInt32(shopItem.SellPrice);
         }
     }
 }
