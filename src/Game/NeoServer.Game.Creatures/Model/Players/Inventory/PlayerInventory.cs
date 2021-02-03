@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts;
@@ -66,6 +67,27 @@ namespace NeoServer.Server.Model.Players
         public IDefenseEquipmentItem Shield => Inventory.ContainsKey(Slot.Right) ? Inventory[Slot.Right].Item1 as IDefenseEquipmentItem : null;
 
         public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
+
+        public IDictionary<ushort, uint> Map
+        {
+            get
+            {
+                if (BackpackSlot is null) return null;
+                return BackpackSlot.Map;
+            }
+        }
+        public uint GetTotalMoney(IDictionary<ushort,uint> inventoryMap)
+        {
+            uint total = 0;
+
+            if(inventoryMap.TryGetValue((ushort)CoinType.Gold, out var gold)) total += gold;
+            
+            if (inventoryMap.TryGetValue((ushort)CoinType.Platinum, out var platinum)) total += platinum * 100;
+            
+            if (inventoryMap.TryGetValue((ushort)CoinType.Crystal, out var crystal)) total += crystal * 10_000;
+
+            return total;
+        }
 
         public bool HasShield => Inventory.ContainsKey(Slot.Right);
         public byte TotalArmor

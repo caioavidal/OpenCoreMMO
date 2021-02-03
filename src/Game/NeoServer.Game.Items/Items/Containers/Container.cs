@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace NeoServer.Game.Items.Items
@@ -40,6 +41,24 @@ namespace NeoServer.Game.Items.Items
         }
 
         public override void OnMoved() => OnContainerMoved?.Invoke(this);
+
+        public ImmutableDictionary<ushort, uint> Map => GetContainerMap().ToImmutableDictionary();
+        private IDictionary<ushort, uint> GetContainerMap(IContainer container = null, Dictionary<ushort, uint> map = null)
+        {
+            map = map ?? new Dictionary<ushort, uint>();
+            if (container is null) container = this;
+
+            foreach (var item in container.Items)
+            {
+
+                if (map.TryGetValue(item.Metadata.TypeId, out var val)) map[item.Metadata.TypeId] = val + item.Amount;
+                else map.Add(item.Metadata.TypeId, item.Amount);
+
+                if (item is IContainer child) GetContainerMap(child, map);
+            }
+
+            return map;
+        }
 
         public Container(IItemType type, Location location) : base(type, location)
         {
@@ -339,10 +358,10 @@ namespace NeoServer.Game.Items.Items
             if (destination is IContainer && destination == this && toPosition is not null && GetContainerAt(toPosition.Value, out var container)) return SendTo(container, thing, amount, fromPosition, null);
 
             return Store.SendTo(destination, thing, amount, fromPosition, toPosition);
-            
+
         }
 
-        public Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)=>Store.ReceiveFrom(source, thing, toPosition);
-        
+        public Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition) => Store.ReceiveFrom(source, thing, toPosition);
+
     }
 }

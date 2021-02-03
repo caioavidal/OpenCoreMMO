@@ -27,6 +27,7 @@
         InventoryItem = 0x78,
         InventoryEmpty = 0x79,
         OpenShop = 0x7A,
+        SaleItemList = 0x7B,
         WorldLight = 0x82,
         MagicEffect = 0x83,
         AnimatedText = 0x84,
