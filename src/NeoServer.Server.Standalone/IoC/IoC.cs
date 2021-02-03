@@ -31,6 +31,7 @@ using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Commands;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
@@ -146,6 +147,9 @@ namespace NeoServer.Server.Standalone.IoC
             
             //Database
             builder.RegisterContext<NeoContext>();
+
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IStartup>().SingleInstance();
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IRunBeforeLoaders>().SingleInstance();
 
             return builder.Build();
         }

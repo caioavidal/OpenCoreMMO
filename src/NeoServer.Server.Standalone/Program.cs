@@ -11,6 +11,7 @@ using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.Server;
 using NeoServer.Server.Compiler;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Events;
 using NeoServer.Server.Jobs.Creatures;
@@ -60,9 +61,11 @@ public class Program
 
         RSA.LoadPem(serverConfiguration.Data);
 
+        container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());
+
         container.Resolve<ItemTypeLoader>().Load();
 
-        logger.Information("Loading world...");
+        
         container.Resolve<WorldLoader>().Load();
 
         container.Resolve<SpawnLoader>().Load();
@@ -88,6 +91,7 @@ public class Program
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameChatChannelJob>().StartChecking));
 
         container.Resolve<EventSubscriber>().AttachEvents();
+
 
         container.Resolve<Game>().Open();
 

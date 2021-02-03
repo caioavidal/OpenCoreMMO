@@ -16,10 +16,11 @@ namespace NeoServer.Game.Creatures.Npcs
     {
         public Npc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
         {
-            Type = type;
+            Metadata = type;
         }
+        public event Answer OnAnswer;
         public override IOutfit Outfit { get; protected set; }
-        public INpcType Type { get; }
+        public INpcType Metadata { get; }
 
         IDictionary<uint, List<byte>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
 
@@ -51,7 +52,7 @@ namespace NeoServer.Game.Creatures.Npcs
             var i = 0;
             foreach (var position in positions)
             {
-                dialogs = i++ == 0 ? Type.Dialog : dialogs[position].Then;
+                dialogs = i++ == 0 ? Metadata.Dialog : dialogs[position].Then;
             }
 
             i = 0;
@@ -81,6 +82,8 @@ namespace NeoServer.Game.Creatures.Npcs
             var dialog = GetNextAnswer(from.CreatureId, message);
 
             if (dialog is null || dialog?.Answers is null) return;
+
+            OnAnswer?.Invoke(this, from, dialog, message, speechType);
 
             foreach (var answer in dialog.Answers)
             {

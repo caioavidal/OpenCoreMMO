@@ -1,5 +1,5 @@
 {
- "name": "Eryn",
+	"name": "Eryn",
 	"walk-interval": 2000,
 	"health": {"now":100, "max":100},
 	"look":{"type":130, "head":39, "body":122, "legs":125, "feet":57, "addons": 0},
@@ -7,14 +7,15 @@
 	"dialog":[
 		{
 			"words": ["hi"],
-			"answers": ["Hi |PLAYERNAME|, I sell everything"],
+			"answers": ["Welcome to my shop, adventurer |PLAYERNAME|! I {trade} with weapons and armor."],
 			"then": [{
 				"words": ["trade"],
-				"exec": "market",
+				"action": "shop",
 				"answers": [" Of course, just browse through my wares."],
 			},
 			{
 				"words": ["offer"],
+				"action": "teleport",
 				"answers": ["My offers are weapons, armors, helmets, legs, and shields. If you'd like to see my offers, ask me for a {trade}."],
 			},
 			{
@@ -23,6 +24,9 @@
 				"end": true
 			}]
 		}
+	],
+	"shop":[
+		{ "item": 2392, "sell":1000, "buy":10000}
 	]
 	
 }

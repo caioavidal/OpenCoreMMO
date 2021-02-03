@@ -52,8 +52,11 @@ namespace NeoServer.Server
             Scheduler = scheduler;
             CreatureManager = creatureManager;
             DecayableItemManager = decayableBag;
-        }
 
+            Instance = this;
+
+        }
+        public static Game Instance { get; private set; }
         /// <summary>
         /// Sets game state as opened
         /// </summary>
