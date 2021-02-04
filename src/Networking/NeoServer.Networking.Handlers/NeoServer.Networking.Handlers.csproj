@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shop\" />
+  </ItemGroup>
+
 </Project>

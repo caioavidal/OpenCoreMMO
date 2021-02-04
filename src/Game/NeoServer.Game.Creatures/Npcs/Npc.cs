@@ -114,5 +114,10 @@ namespace NeoServer.Game.Creatures.Npcs
             message = message.Replace("|PLAYERNAME|", creature.Name);
             return message;
         }
+
+        public void StopTalkingToPlayer(IPlayer player)
+        {
+            PlayerDialogTree.Remove(player.CreatureId);
+        }
     }
 }
