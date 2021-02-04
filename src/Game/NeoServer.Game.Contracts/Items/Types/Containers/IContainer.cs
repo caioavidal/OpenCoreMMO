@@ -45,8 +45,8 @@ namespace NeoServer.Game.Contracts.Items.Types
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
         /// <summary>
-        /// A map of all items in container
+        /// A map of all items in container and their amount
         /// </summary>
-        ImmutableDictionary<ushort, uint> Map { get; }
+        IDictionary<ushort, uint> Map { get; }
     }
 }
