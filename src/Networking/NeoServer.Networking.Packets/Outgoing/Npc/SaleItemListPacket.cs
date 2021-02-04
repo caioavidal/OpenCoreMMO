@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Creatures.Npcs;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -11,14 +12,14 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
 {
     public class SaleItemListPacket : OutgoingPacket
     {
-        public SaleItemListPacket(IPlayer player, IEnumerable<ShopItem> shopItem)
+        public SaleItemListPacket(IPlayer player, IEnumerable<IShopItem> shopItem)
         {
             Player = player;
             ShopItems = shopItem;
         }
 
         public IPlayer Player { get; }
-        public IEnumerable<ShopItem> ShopItems { get; }
+        public IEnumerable<IShopItem> ShopItems { get; }
       
         public override void WriteToMessage(INetworkMessage message)
         {

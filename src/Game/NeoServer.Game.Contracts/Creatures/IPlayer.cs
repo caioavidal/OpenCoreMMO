@@ -167,6 +167,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool JoinChannel(IChatChannel channel);
         bool SendMessage(IChatChannel channel, string message);
         bool ExitChannel(IChatChannel channel);
+        void SetAsShopping(bool value = true);
+
         uint TotalCapacity { get; }
         bool Recovering { get; }
         IVocation Vocation { get; }
@@ -176,5 +178,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         IEnumerable<IChatChannel> PrivateChannels { get; }
         IGuild Guild { get; }
         bool HasGuild { get; }
+        bool Shopping { get; }
     }
 }

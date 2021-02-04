@@ -5,9 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeoServer.Game.Creatures.Npcs
+namespace NeoServer.Game.Contracts.Creatures
 {
-    public record ShopItem(IItemType Item, uint BuyPrice, uint SellPrice)
+    public interface IShopItem
     {
+        IItemType Item { get; } 
+        uint BuyPrice { get; }
+        uint SellPrice { get; }
     }
 }

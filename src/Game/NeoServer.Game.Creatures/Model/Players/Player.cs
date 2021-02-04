@@ -160,6 +160,7 @@ namespace NeoServer.Server.Model.Players
         public ushort MaxMana { get; private set; }
         public HashSet<uint> VipList { get; set; } = new HashSet<uint>();
         public FightMode FightMode { get; private set; }
+        public bool Shopping { get; private set; }
         public IEnumerable<IChatChannel> PrivateChannels
         {
             get
@@ -339,7 +340,7 @@ namespace NeoServer.Server.Model.Players
             }
             AddCondition(new Condition(ConditionType.InFight, 60000));
         }
-
+        public void SetAsShopping(bool value = true) => Shopping = value;
         private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
         {
             if (fromTile.ProtectionZone is false && toTile.ProtectionZone is true)

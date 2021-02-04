@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Server.Contracts.Network;
 using System;
@@ -11,9 +12,9 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
 {
     public class OpenShopPacket : OutgoingPacket
     {
-        public ShopItem[] Items { get; }
+        public IShopItem[] Items { get; }
 
-        public OpenShopPacket(ShopItem[] items)
+        public OpenShopPacket(IShopItem[] items)
         {
             Items = items;
         }
@@ -32,7 +33,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
             }
         }
 
-        private void SendShopItem(INetworkMessage message, ShopItem shopItem)
+        private void SendShopItem(INetworkMessage message, IShopItem shopItem)
         {
 
             if (shopItem is null) return;

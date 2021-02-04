@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
+using NeoServer.Server.Items;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
@@ -45,34 +46,50 @@ namespace NeoServer.Loaders.Npcs
             foreach (var file in Directory.GetFiles(basePath, "*.json"))
             {
                 var jsonContent = File.ReadAllText(file);
-                var npc = JsonConvert.DeserializeObject<NpcData>(jsonContent, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
+                var npcData = JsonConvert.DeserializeObject<NpcData>(jsonContent, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
 
-                if (npc is null) continue;
-                if (string.IsNullOrWhiteSpace(npc.Name)) continue;
-
+                if (npcData is null) continue;
+                if (string.IsNullOrWhiteSpace(npcData.Name)) continue;
 
                 var dialogs = new List<INpcDialog>();
 
-                foreach (var dialog in npc.Dialog)
+                foreach (var dialog in npcData.Dialog)
                 {
                     dialogs.Add(ConvertDialog(dialog));
                 }
 
-                yield return (jsonContent, new NpcType()
+                var npcType = (jsonContent, new NpcType()
                 {
-                    Script = npc.Script,
-                    MaxHealth = npc.Health?.Max ?? 100,
-                    Name = npc.Name,
+                    Script = npcData.Script,
+                    MaxHealth = npcData.Health?.Max ?? 100,
+                    Name = npcData.Name,
                     Speed = 280,
-                    Look = new Dictionary<LookType, ushort>() { { LookType.Type, npc.Look.Type }, { LookType.Corpse, npc.Look.Corpse }, { LookType.Body, npc.Look.Body}, { LookType.Legs, npc.Look.Legs}, { LookType.Head, npc.Look.Head },
-                { LookType.Feet, npc.Look.Feet},{ LookType.Addon, npc.Look.Addons}},
+                    Look = new Dictionary<LookType, ushort>() { { LookType.Type, npcData.Look.Type }, { LookType.Corpse, npcData.Look.Corpse }, { LookType.Body, npcData.Look.Body}, { LookType.Legs, npcData.Look.Legs}, { LookType.Head, npcData.Look.Head },
+                { LookType.Feet, npcData.Look.Feet},{ LookType.Addon, npcData.Look.Addons}},
                     Dialog = dialogs.ToArray()
                 });
-            }
 
+                LoadShopData(npcType.Item2, npcData);
+
+                yield return npcType;
+            }
         }
 
-        private static INpcDialog ConvertDialog(NpcData.DialogData dialog)
+        private  void LoadShopData(INpcType type, NpcData npcData)
+        {
+            if (type is null || npcData is null || npcData.Shop is null) return;
+
+            var items = new List<ShopItem>(npcData.Shop.Length);
+            foreach (var item in npcData.Shop)
+            {
+                if (!ItemTypeData.InMemory.TryGetValue(item.Item, out var itemType)) continue;
+                items.Add(new ShopItem(itemType, item.Buy, item.Sell));
+            }
+
+            type.CustomAttributes.Add("shop", items.ToArray());
+        }
+
+        private  INpcDialog ConvertDialog(NpcData.DialogData dialog)
         {
             if (dialog is null) return null;
             var d = new NpcDialogType
