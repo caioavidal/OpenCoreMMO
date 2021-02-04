@@ -16,7 +16,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         event Answer OnAnswer;
 
-        void StopTalkingToPlayer(IPlayer player);
+        void StopTalkingToCustomer(IPlayer player);
     }
     
 }

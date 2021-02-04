@@ -22,6 +22,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         TurnSouth = 0x71, // turn south
         TurnWest = 0x72, // turn west
         ItemThrow = 0x78, // throw item
+        CloseShop = 0x7C, //close shop
         TradeRequest = 0x7D, // Request trade
         TradeLook = 0x7E, // Look at an item in trade
         TradeAccept = 0x7F, // Accept trade

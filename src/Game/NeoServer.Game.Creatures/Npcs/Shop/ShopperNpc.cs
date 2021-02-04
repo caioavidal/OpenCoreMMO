@@ -30,17 +30,18 @@ namespace NeoServer.Game.Creatures.Npcs
         {
             if (to is not IPlayer player) return;
 
-            //if (!Server.Game.Instance.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
-
             if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return;
 
             if (shop is not IShopItem[] shopItems) return;
-            player.SetAsShopping();
+
+            player.StartShopping(this);
+
             OnShowShop?.Invoke(this, to, shopItems);
+        }
+
+        public virtual void StopSellingToCustomer(ISociableCreature creature)
+        {
             
-            //connection.OutgoingPackets.Enqueue(new OpenShopPacket(shopItems));
-            //connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, shopItems));
-            //connection.Send();
         }
     }
 }

@@ -115,7 +115,7 @@ namespace NeoServer.Game.Creatures.Npcs
             return message;
         }
 
-        public void StopTalkingToPlayer(IPlayer player)
+        public void StopTalkingToCustomer(IPlayer player)
         {
             PlayerDialogTree.Remove(player.CreatureId);
         }

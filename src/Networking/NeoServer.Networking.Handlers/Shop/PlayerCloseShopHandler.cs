@@ -6,10 +6,10 @@ using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Player
 {
-    public class PlayerCloseNpcChannelHandler : PacketHandler
+    public class PlayerCloseShopHandler : PacketHandler
     {
         private readonly Game game;
-        public PlayerCloseNpcChannelHandler(Game game)
+        public PlayerCloseShopHandler(Game game)
         {
             this.game = game;
         }
@@ -17,11 +17,7 @@ namespace NeoServer.Server.Handlers.Player
         {
             var playerSay = new PlayerSayPacket(message);
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-
-            foreach (var creature in game.Map.GetCreaturesAtPositionZone(player.Location))
-            {
-                if (creature is INpc npc) game.Dispatcher.AddEvent(new Event(() => npc.StopTalkingToCustomer(player)));
-            }
+            game.Dispatcher.AddEvent(new Event(() => player.StopShopping()));
         }
     }
 }

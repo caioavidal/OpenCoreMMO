@@ -167,7 +167,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool JoinChannel(IChatChannel channel);
         bool SendMessage(IChatChannel channel, string message);
         bool ExitChannel(IChatChannel channel);
-        void SetAsShopping(bool value = true);
+        void StartShopping(IShopperNpc npc);
+        void StopShopping();
 
         uint TotalCapacity { get; }
         bool Recovering { get; }

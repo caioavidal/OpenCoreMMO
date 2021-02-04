@@ -10,5 +10,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface IShopperNpc : INpc
     {
         event ShowShop OnShowShop;
+
+        void StopSellingToCustomer(ISociableCreature creature);
     }
 }
