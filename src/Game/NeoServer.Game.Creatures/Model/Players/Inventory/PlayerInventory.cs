@@ -72,18 +72,35 @@ namespace NeoServer.Server.Model.Players
         {
             get
             {
-                if (BackpackSlot is null) return null;
-                return BackpackSlot.Map;
+                var map = BackpackSlot?.Map ?? new Dictionary<ushort, uint>();
+
+                Action<IItem> addOrUpdate = (item) =>
+                {
+                    if (item is null) return;
+                    if (map.TryGetValue(item.Metadata.TypeId, out var val)) map[item.Metadata.TypeId] = val + item.Amount;
+                    else map.Add(item.Metadata.TypeId, item.Amount);
+                };
+
+                addOrUpdate(this[Slot.Head]);
+                addOrUpdate(this[Slot.Necklace]);
+                addOrUpdate(this[Slot.Body]);
+                addOrUpdate(this[Slot.Right]);
+                addOrUpdate(this[Slot.Left]);
+                addOrUpdate(this[Slot.Legs]);
+                addOrUpdate(this[Slot.Ring]);
+                addOrUpdate(this[Slot.Ammo]);
+
+                return map;
             }
         }
-        public uint GetTotalMoney(IDictionary<ushort,uint> inventoryMap)
+        public uint GetTotalMoney(IDictionary<ushort, uint> inventoryMap)
         {
             uint total = 0;
 
-            if(inventoryMap.TryGetValue((ushort)CoinType.Gold, out var gold)) total += gold;
-            
+            if (inventoryMap.TryGetValue((ushort)CoinType.Gold, out var gold)) total += gold;
+
             if (inventoryMap.TryGetValue((ushort)CoinType.Platinum, out var platinum)) total += platinum * 100;
-            
+
             if (inventoryMap.TryGetValue((ushort)CoinType.Crystal, out var crystal)) total += crystal * 10_000;
 
             return total;
@@ -384,11 +401,11 @@ namespace NeoServer.Server.Model.Players
         }
 
         #region Store Methods
-        public override Result CanAddItem(IItem thing,byte amount = 1, byte? slot = null)
+        public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
         {
             if (thing is not IPickupable item) return Result.NotPossible;
             if (!CanCarryItem(item, (Slot)slot, amount)) return new Result(InvalidOperation.TooHeavy);
-            
+
             return CanAddItemToSlot((Slot)slot, item).ResultValue;
         }
 
@@ -398,7 +415,7 @@ namespace NeoServer.Server.Model.Players
 
             var slot = (Slot)toPosition;
 
-            if(slot == Slot.Backpack)
+            if (slot == Slot.Backpack)
             {
                 if (this[slot] is null) return 1;
                 if (this[slot] is IContainer container) return container.PossibleAmountToAdd(item);
@@ -407,7 +424,7 @@ namespace NeoServer.Server.Model.Players
             if (slot != Slot.Left && slot != Slot.Ammo) return 1;
 
             if (item is not ICumulative) return 1;
-            if (item is ICumulative c1 && this[slot] is IItem i  && c1.ClientId != i.ClientId) return 100;
+            if (item is ICumulative c1 && this[slot] is IItem i && c1.ClientId != i.ClientId) return 100;
             if (item is ICumulative && this[slot] is null) return 100;
             if (item is ICumulative cumulative) return 100 - this[slot].Amount;
 

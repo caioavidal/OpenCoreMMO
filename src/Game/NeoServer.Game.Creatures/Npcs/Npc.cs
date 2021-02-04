@@ -59,9 +59,9 @@ namespace NeoServer.Game.Creatures.Npcs
 
             foreach (var dialog in dialogs)
             {
-                if(dialog.OnWords.Any(x => x.Equals(message, StringComparison.InvariantCultureIgnoreCase)))
+                if (dialog.OnWords.Any(x => x.Equals(message, StringComparison.InvariantCultureIgnoreCase)))
                 {
-                    if(dialog.Then is not null) positions.Add((byte)i);
+                    if (dialog.Then is not null) positions.Add((byte)i);
                     return dialog;
                 }
 
@@ -70,34 +70,33 @@ namespace NeoServer.Game.Creatures.Npcs
             return null;
         }
 
-        public void Answer(ICreature from, SpeechType speechType, string message)
+        public virtual void Answer(ICreature from, SpeechType speechType, string message)
         {
             if (from is null || string.IsNullOrWhiteSpace(message)) return;
 
             if (from is not ISociableCreature sociableCreature) return;
 
-            //if is not first message to npc and player send from any other channel than NPC
+            //if it is not the first message to npc and player sent it from any other channel
             if (PlayerDialogTree.ContainsKey(from.CreatureId) && speechType != SpeechType.PrivatePlayerToNpc) return;
 
             var dialog = GetNextAnswer(from.CreatureId, message);
 
             if (dialog is null || dialog?.Answers is null) return;
 
+            SendMessageTo(sociableCreature, speechType, dialog);
+
             OnAnswer?.Invoke(this, from, dialog, message, speechType);
+        }
+
+        public virtual void SendMessageTo(ISociableCreature to, SpeechType type, INpcDialog dialog)
+        {
+            if (dialog is null || dialog.Answers is null || to is null) return;
 
             foreach (var answer in dialog.Answers)
             {
-                SendMessageTo(sociableCreature, SpeechType.PrivateNpcToPlayer, ReplaceKeywords(answer, from));
-            }
-        }
+                if (string.IsNullOrWhiteSpace(answer) || to is not IPlayer) continue;
 
-        public void SendMessageTo(ISociableCreature to, SpeechType type, string message)
-        {
-            if (to is null || string.IsNullOrWhiteSpace(message)) return;
-
-            if (to is IPlayer)
-            {
-                Say(message, type, to);
+                Say(answer, SpeechType.PrivateNpcToPlayer, to);
             }
         }
 
@@ -114,6 +113,11 @@ namespace NeoServer.Game.Creatures.Npcs
         {
             message = message.Replace("|PLAYERNAME|", creature.Name);
             return message;
+        }
+
+        public void StopTalkingToCustomer(IPlayer player)
+        {
+            PlayerDialogTree.Remove(player.CreatureId);
         }
     }
 }

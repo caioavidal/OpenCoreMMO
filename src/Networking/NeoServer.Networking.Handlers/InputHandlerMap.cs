@@ -46,6 +46,8 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.ChannelClose, typeof(PlayerCloseChannelHandler)},
             { GameIncomingPacketType.AddVip, typeof(PlayerAddVipHandler)},
             { GameIncomingPacketType.RemoveVip, typeof(PlayerRemoveVipHandler)},
+            { GameIncomingPacketType.NpcChannelClose, typeof(PlayerCloseNpcChannelHandler)},
+            { GameIncomingPacketType.CloseShop, typeof(PlayerCloseShopHandler)},
         };
     }
 }

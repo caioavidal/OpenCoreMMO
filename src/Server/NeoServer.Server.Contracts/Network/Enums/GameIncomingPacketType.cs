@@ -22,6 +22,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         TurnSouth = 0x71, // turn south
         TurnWest = 0x72, // turn west
         ItemThrow = 0x78, // throw item
+        CloseShop = 0x7C, //close shop
         TradeRequest = 0x7D, // Request trade
         TradeLook = 0x7E, // Look at an item in trade
         TradeAccept = 0x7F, // Accept trade
@@ -43,6 +44,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         ReportProcess = 0x9B, // process report
         ReportClose = 0x9C, // gm closes report
         ReportCancel = 0x9D, // player cancels report
+        NpcChannelClose = 0x9E, // player cancels report
         ChangeModes = 0xA0, // set attack and follow mode
         Attack = 0xA1, // attack
         Follow = 0xA2, // follow

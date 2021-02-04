@@ -21,10 +21,9 @@ namespace NeoServer.Scripts
 
         public void Run()
         {
-            if (loaders.SingleOrDefault(x => x is NpcLoader) is NpcLoader npcLoader)
-            {
-                npcLoader.OnLoad += ShopModule.LoadShopData;
-            }
+            //if (loaders.SingleOrDefault(x => x is NpcLoader) is NpcLoader npcLoader)
+            //{
+            //}
         }
     }
 }

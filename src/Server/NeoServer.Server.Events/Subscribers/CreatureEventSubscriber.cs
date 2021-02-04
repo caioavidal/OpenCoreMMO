@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
+using NeoServer.Server.Events.Creature.Npcs;
 
 namespace NeoServer.Server.Events
 {
@@ -21,6 +22,7 @@ namespace NeoServer.Server.Events
         private readonly CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler;
         private readonly CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler;
         private readonly PlayerSentMessageEventHandler creatureSentMessageEventHandler;
+        private readonly NpcShowShopEventHandler  npcShowShopEventHandler;
         public CreatureEventSubscriber(CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler, CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler,
@@ -28,7 +30,9 @@ namespace NeoServer.Server.Events
             CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler, CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler,
             CreatureHearEventHandler creatureHearEventHandler,
             CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler,
-            CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler, PlayerSentMessageEventHandler creatureSentMessageEventHandler)
+            CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler, 
+            PlayerSentMessageEventHandler creatureSentMessageEventHandler, 
+            NpcShowShopEventHandler npcShowShopEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
             _creatureKilledEventHandler = creatureKilledEventHandler;
@@ -45,6 +49,7 @@ namespace NeoServer.Server.Events
             this.creatureTurnedInvisibleEventHandler = creatureTurnedInvisibleEventHandler;
             this.creatureChangedOutfitEventHandler = creatureChangedOutfitEventHandler;
             this.creatureSentMessageEventHandler = creatureSentMessageEventHandler;
+            this.npcShowShopEventHandler = npcShowShopEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -67,6 +72,10 @@ namespace NeoServer.Server.Events
                 combatActor.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
                 combatActor.OnHeal += _creatureHealedEventHandler.Execute;
                 combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
+            }
+            if(creature is IShopperNpc shopperNpc)
+            {
+                shopperNpc.OnShowShop += npcShowShopEventHandler.Execute;
             }
 
             #region WalkableEvents
@@ -104,6 +113,10 @@ namespace NeoServer.Server.Events
             if (creature is ISociableCreature sociableCreature)
             {
                 sociableCreature.OnHear -= creatureHearEventHandler.Execute;
+            }
+            if (creature is IShopperNpc shopperNpc)
+            {
+                shopperNpc.OnShowShop -= npcShowShopEventHandler.Execute;
             }
         }
     }

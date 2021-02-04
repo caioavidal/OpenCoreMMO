@@ -42,7 +42,7 @@ namespace NeoServer.Game.Items.Items
 
         public override void OnMoved() => OnContainerMoved?.Invoke(this);
 
-        public ImmutableDictionary<ushort, uint> Map => GetContainerMap().ToImmutableDictionary();
+        public IDictionary<ushort, uint> Map => GetContainerMap();
         private IDictionary<ushort, uint> GetContainerMap(IContainer container = null, Dictionary<ushort, uint> map = null)
         {
             map = map ?? new Dictionary<ushort, uint>();

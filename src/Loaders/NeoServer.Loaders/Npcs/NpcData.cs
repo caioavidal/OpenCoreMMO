@@ -20,6 +20,7 @@ namespace NeoServer.Loaders.Npcs
         public string[] Marketings { get; set; }
         public DialogData[] Dialog { get; set; }
         public string Script { get; set; }
+        public ShopData[] Shop { get; set; }
 
         public class DialogData
         {
@@ -56,6 +57,15 @@ namespace NeoServer.Loaders.Npcs
             public ushort Head { get; set; }
             [JsonProperty("addons")]
             public ushort Addons { get; set; }
+        }
+
+        public class ShopData
+        {
+          
+                public ushort Item { get; set; }
+                public uint Sell { get; set; }
+                public uint Buy { get; set; }
+            
         }
     }
 }

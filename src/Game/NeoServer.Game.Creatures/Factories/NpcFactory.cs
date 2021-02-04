@@ -32,7 +32,7 @@ namespace NeoServer.Game.Creatures
                 return null;
             }
 
-            var npc = new Npc(npcType, pathAccess, new Outfit()
+            var outfit = new Outfit()
             {
                 Addon = (byte)npcType.Look[Common.Creatures.LookType.Addon],
                 LookType = (byte)npcType.Look[Common.Creatures.LookType.Type],
@@ -40,9 +40,14 @@ namespace NeoServer.Game.Creatures
                 Feet = (byte)npcType.Look[Common.Creatures.LookType.Feet],
                 Head = (byte)npcType.Look[Common.Creatures.LookType.Head],
                 Legs = (byte)npcType.Look[Common.Creatures.LookType.Legs]
-            }, npcType.MaxHealth);
+            };
 
-            return npc;
+            if (npcType.CustomAttributes.ContainsKey("shop"))
+            {
+                return new ShopperNpc(npcType, pathAccess, outfit, npcType.MaxHealth);
+            }
+
+            return new Npc(npcType, pathAccess, outfit, npcType.MaxHealth);
         }
 
     }

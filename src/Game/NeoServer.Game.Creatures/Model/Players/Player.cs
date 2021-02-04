@@ -148,7 +148,7 @@ namespace NeoServer.Server.Model.Players
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }
-
+        public IShopperNpc TradingWithNpc { get; private set; }
         public IVocation Vocation => VocationStore.TryGetValue(VocationType, out var vocation) ? vocation : null;
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
@@ -160,6 +160,7 @@ namespace NeoServer.Server.Model.Players
         public ushort MaxMana { get; private set; }
         public HashSet<uint> VipList { get; set; } = new HashSet<uint>();
         public FightMode FightMode { get; private set; }
+        public bool Shopping => TradingWithNpc is not null;
         public IEnumerable<IChatChannel> PrivateChannels
         {
             get
@@ -340,6 +341,15 @@ namespace NeoServer.Server.Model.Players
             AddCondition(new Condition(ConditionType.InFight, 60000));
         }
 
+        public void StopShopping()
+        {
+            TradingWithNpc?.StopSellingToCustomer(this);
+            TradingWithNpc = null;
+        }
+        public void StartShopping(IShopperNpc npc)
+        {
+            TradingWithNpc = npc;
+        }
         private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
         {
             if (fromTile.ProtectionZone is false && toTile.ProtectionZone is true)
