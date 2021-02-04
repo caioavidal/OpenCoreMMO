@@ -1,6 +1,7 @@
 ﻿using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using Serilog.Core;
+using System;
 
 namespace NeoServer.Server.Handlers.Authentication
 {
@@ -16,7 +17,10 @@ namespace NeoServer.Server.Handlers.Authentication
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            logger.Error("Incoming Packet not handled: {packet}", packet);
+            var enumText = Enum.GetName(typeof(GameIncomingPacketType), packet);
+
+            enumText = string.IsNullOrWhiteSpace(enumText) ? packet.ToString("x") : enumText;
+            logger.Error("Incoming Packet not handled: {packet}", enumText);
         }
     }
 }

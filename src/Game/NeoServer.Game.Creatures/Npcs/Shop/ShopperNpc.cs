@@ -41,7 +41,9 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public virtual void StopSellingToCustomer(ISociableCreature creature)
         {
-            
+            //todo: invoke event here
         }
+
+
     }
 }
