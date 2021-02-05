@@ -83,6 +83,7 @@ dotnet run -p "NeoServer.Server.Standalone"
 
 ## Links
 
+* Documentation: caioavidal.gitbook.io/opencoremmo/
 * Discord Invite: https://discord.gg/Kazq9z2
 * Trello Board: https://trello.com/b/JnOJ9yn5/opencoremmo
 * TibiaKing Topic: https://tibiaking.com/forums/topic/101402-open-source-tibia-server-c-net-5/
