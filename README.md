@@ -1,3 +1,5 @@
+<p align="center"><img align="center" width="120px" src="https://github.com/caioavidal/OpenCoreMMO/blob/develop/ocmsquare.png?raw=true" target="_blank"  /></p>
+
 <h1 align="center">OpenCoreMMO</h1>
 <p align="center">
   <a href="https://ci.appveyor.com/project/caioavidal/opencoremmo">
