@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NeoServer.Game.Common;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace NeoServer.Game.Contracts.Items.Types
@@ -48,6 +49,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         /// <param name="itemToRemove"></param>
         /// <param name="amount"></param>
         void RemoveItem(IItemType itemToRemove, byte amount);
+        Result<OperationResult<IItem>> AddItem(IItem item, bool addToAnyChild);
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
         /// <summary>

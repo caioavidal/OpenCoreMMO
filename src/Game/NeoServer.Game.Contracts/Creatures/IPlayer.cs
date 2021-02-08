@@ -170,7 +170,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void StartShopping(IShopperNpc npc);
         void StopShopping();
         bool Sell(IItemType item, byte amount, bool ignoreEquipped);
-        void ReceivePayment(IEnumerable<IItem> coins);
+        void ReceivePayment(IEnumerable<IItem> coins, uint total);
         bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
 
         uint TotalCapacity { get; }

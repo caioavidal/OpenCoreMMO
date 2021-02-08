@@ -387,6 +387,24 @@ namespace NeoServer.Game.Items.Items
 
             return stringBuilder.ToString();
         }
+        public Result<OperationResult<IItem>> AddItem(IItem item, bool includeChildren)
+        {
+            Result<OperationResult<IItem>> result = new(TryAddItem(item, null).Error);
+            if (result.IsSuccess) return result;
+
+            if (includeChildren)
+            {
+                foreach (var currentItem in Items)
+                {
+                    if (currentItem is not IContainer container) continue;
+                    result = container.AddItem(item, includeChildren);
+
+                    if (result.IsSuccess) return result;
+                }
+            }
+
+            return result;
+        }
 
 
 

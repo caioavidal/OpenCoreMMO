@@ -26,7 +26,7 @@ namespace NeoServer.Scripts.Spells.Support
 
             if (item is null) return false;
 
-            if (actor is IPlayer player && player.Inventory.BackpackSlot is IContainer container && container.AddItem(item).IsSuccess) return true;
+            if (actor is IPlayer player && player.Inventory.BackpackSlot is IContainer container && container.AddItem(item, true).IsSuccess) return true;
 
             if (actor.Tile is ITile tile && tile.AddItem(item).IsSuccess) return true;
             else

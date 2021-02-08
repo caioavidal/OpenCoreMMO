@@ -77,7 +77,7 @@ namespace NeoServer.Game.Creatures.Npcs
                 items[i++] = item;
             }
 
-            player.ReceivePayment(items);
+            player.ReceivePayment(items, value);
 
             return true;
         }
