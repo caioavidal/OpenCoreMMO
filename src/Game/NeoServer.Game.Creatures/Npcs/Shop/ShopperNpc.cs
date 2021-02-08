@@ -1,6 +1,9 @@
-﻿using NeoServer.Game.Common.Talks;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
@@ -32,16 +35,51 @@ namespace NeoServer.Game.Creatures.Npcs
 
             if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return;
 
-            if (shop is not IShopItem[] shopItems) return;
+            if (shop is not IDictionary<ushort, IShopItem> shopItems) return;
 
             player.StartShopping(this);
 
-            OnShowShop?.Invoke(this, to, shopItems);
+            OnShowShop?.Invoke(this, to, shopItems.Values);
         }
 
         public virtual void StopSellingToCustomer(ISociableCreature creature)
         {
-            
+            //todo: invoke event here
+        }
+
+        public bool BuyFromCustomer(ISociableCreature creature, IItemType item, byte amount)
+        {
+            if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return false;
+            if (shop is not IDictionary<ushort, IShopItem> shopItems) return false;
+
+            if (!shopItems.TryGetValue(item.TypeId, out var shopItem)) return false;
+
+            return Pay(creature, shopItem.SellPrice * amount);
+        }
+
+        public bool Pay(ISociableCreature to, uint value)
+        {
+            if (to is not IPlayer player) return false;
+            if (value == 0) return false;
+
+            var coins = CoinCalculator.Calculate(value);
+
+            IItem[] items = new IItem[coins.Count()];
+
+            var i = 0;
+            foreach (var coin in coins)
+            {
+                var (coinType, amount) = coin;
+
+                var item = CreateNewItem(coinType, Common.Location.Structs.Location.Inventory(Common.Players.Slot.Backpack), new Dictionary<ItemAttribute, IConvertible>() { { ItemAttribute.Count, amount } });
+
+                if (item is null) continue;
+                items[i++] = item;
+            }
+
+            player.ReceivePayment(items, value);
+
+            return true;
         }
     }
 }

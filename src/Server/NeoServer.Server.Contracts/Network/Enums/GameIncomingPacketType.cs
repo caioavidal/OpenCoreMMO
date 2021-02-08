@@ -22,6 +22,8 @@ namespace NeoServer.Server.Contracts.Network.Enums
         TurnSouth = 0x71, // turn south
         TurnWest = 0x72, // turn west
         ItemThrow = 0x78, // throw item
+        PlayerPurchase = 0x7A,
+        PlayerSale = 0x7B,
         CloseShop = 0x7C, //close shop
         TradeRequest = 0x7D, // Request trade
         TradeLook = 0x7E, // Look at an item in trade
@@ -36,6 +38,8 @@ namespace NeoServer.Server.Contracts.Network.Enums
         WindowText = 0x89,
         WindowHouse = 0x8A,
         LookAt = 0x8C, // look at item
+        LookInBattleList = 0x8D,
+        JoinAgression = 0x8E,
         Speech = 0x96,  // say something
         ChannelListRequest = 0x97, // request Channels
         ChannelOpen = 0x98, // open Channel
@@ -53,6 +57,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         PartyRevoke = 0xA5,
         PartyPassLeadership = 0xA6,
         PartyLeave = 0xA7,
+        EnableSharedExp = 0xA8,
         ChannelCreatePrivate = 0xAA,
         ChannelInvite = 0xAB,
         ChannelExclude = 0xAC,

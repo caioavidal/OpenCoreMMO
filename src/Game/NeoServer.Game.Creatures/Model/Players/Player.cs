@@ -96,6 +96,7 @@ namespace NeoServer.Server.Model.Players
         public bool HasGuild => GuildId > 0;
         public IGuild Guild => GuildStore.Data.Get(GuildId);
         public IChatChannel NpcsChannel { get; init; }
+        public ulong BankAmount { get; private set; }
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -766,6 +767,46 @@ namespace NeoServer.Server.Model.Players
             if (from is null || speechType == SpeechType.None || string.IsNullOrWhiteSpace(message)) return;
 
             OnHear?.Invoke(from, this, speechType, message);
+        }
+
+        public bool Sell(IItemType item, byte amount, bool ignoreEquipped)
+        {
+            if (ignoreEquipped)
+            {
+                if (Inventory.BackpackSlot is null || Inventory.BackpackSlot.Map is null) return false;
+                if (!Inventory.BackpackSlot.Map.TryGetValue(item.TypeId, out var itemTotalAmount)) return false;
+
+                if (itemTotalAmount < amount) return false;
+
+                Inventory.BackpackSlot.RemoveItem(item, amount);
+
+                TradingWithNpc.BuyFromCustomer(this, item, amount);
+            }
+
+            return true;
+        }
+        public void ReceivePayment(IEnumerable<IItem> coins, uint total)
+        {
+            if (CanReceiveInCashPayment(coins))
+            {
+                foreach (var coin in coins)
+                {
+                    Inventory.BackpackSlot.AddItem(coin, true);
+                }
+            }
+            else
+            {
+                BankAmount += total;
+            }
+        }
+        public bool CanReceiveInCashPayment(IEnumerable<IItem> coins)
+        {
+            var totalWeight = coins.Sum(x => x is ICumulative cumulative ? cumulative.Weight : 0);
+            var totalFreeSlots = Inventory.BackpackSlot?.TotalFreeSlots ?? 0;
+
+            if (totalWeight > CarryStrength || totalFreeSlots < coins.Count()) return false;
+
+            return true;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Chats;
@@ -9,9 +8,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.DataStore;
-using NeoServer.Loaders.Npcs;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Items;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -73,17 +70,13 @@ namespace NeoServer.Server.Compiler
                 MetadataReference.CreateFromFile(typeof(ICreature).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(Creature).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(BaseSpell).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(ItemTypeData).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(ChatChannel).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(ChatChannelStore).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(IncomingPacket).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(InvalidOperation).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(JsonConvert).Assembly.Location),
             };
-            foreach (var assembly in typeof(ItemTypeData).Assembly.GetReferencedAssemblies())
-            {
-                references.Add(MetadataReference.CreateFromFile(Assembly.Load(assembly.FullName).Location));
-            }
+         
             foreach (var assembly in typeof(JsonConvert).Assembly.GetReferencedAssemblies())
             {
                 references.Add(MetadataReference.CreateFromFile(Assembly.Load(assembly.FullName).Location));

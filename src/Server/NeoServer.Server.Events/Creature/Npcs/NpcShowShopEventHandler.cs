@@ -18,7 +18,7 @@ namespace NeoServer.Server.Events.Creature.Npcs
             this.game = game;
         }
 
-        public void Execute(INpc npc, ISociableCreature to, IShopItem[] shopItems)
+        public void Execute(INpc npc, ISociableCreature to, IEnumerable<IShopItem> shopItems)
         {
             if (!game.CreatureManager.GetPlayerConnection(to.CreatureId, out var connection)) return;
 

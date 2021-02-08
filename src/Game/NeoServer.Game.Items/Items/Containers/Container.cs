@@ -253,6 +253,55 @@ namespace NeoServer.Game.Items.Items
             OnItemRemoved?.Invoke(slotIndex, item);
             return item;
         }
+
+        public int TotalFreeSlots
+        {
+            get
+            {
+                var total = 0;
+                foreach (var item in Items)
+                {
+                    if (item is IContainer container) total += container.TotalFreeSlots;
+                }
+
+                total += FreeSlotsCount;
+                return total;
+            }
+        }
+        public void RemoveItem(IItemType itemToRemove, byte amount)
+        {
+            sbyte slotIndex = -1;
+            var slotsToRemove = new Stack<(IItem, byte, byte)>();// slot and amount
+            foreach (var item in Items)
+            {
+                if (item is IContainer innerContainer)
+                {
+                    innerContainer.RemoveItem(itemToRemove, amount);
+                }
+
+                slotIndex++;
+                if (item.Metadata.TypeId != itemToRemove.TypeId) continue;
+                if (amount == 0) break;
+
+                slotsToRemove.Push((item, (byte)slotIndex, Math.Min(item.Amount, amount)));
+
+                if (item.Amount > amount)
+                {
+                    amount = 0;
+                    break;
+                }
+                amount -= item.Amount;
+
+                
+            }
+
+            while(slotsToRemove.TryPop(out var slot))
+            {
+                var (item, slotIndexToRemove, amountToRemove) = slot;
+
+                RemoveItem(item, amountToRemove, slotIndexToRemove, out var removedThing);
+            }
+        }
         private IItem RemoveItem(byte slotIndex, byte amount)
         {
             var item = Items[slotIndex];
@@ -338,6 +387,26 @@ namespace NeoServer.Game.Items.Items
 
             return stringBuilder.ToString();
         }
+        public Result<OperationResult<IItem>> AddItem(IItem item, bool includeChildren)
+        {
+            Result<OperationResult<IItem>> result = new(TryAddItem(item, null).Error);
+            if (result.IsSuccess) return result;
+
+            if (includeChildren)
+            {
+                foreach (var currentItem in Items)
+                {
+                    if (currentItem is not IContainer container) continue;
+                    result = container.AddItem(item, includeChildren);
+
+                    if (result.IsSuccess) return result;
+                }
+            }
+
+            return result;
+        }
+
+
 
         public Result CanAddItem(IItem item, byte amount = 1, byte? slot = null) => CanAddItem(item, slot);
         public int PossibleAmountToAdd(IItem item, byte? toPosition = null) => PossibleAmountToAdd(item);

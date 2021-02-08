@@ -23,6 +23,7 @@ namespace NeoServer.Game.DataStore
         public virtual void Add(TKey key, TValue value) => values.TryAdd(key, value);
 
         public virtual TValue Get(TKey key) => values.TryGetValue(key, out var value) ? value : default;
+        public virtual bool TryGetValue(TKey key, out TValue value) => values.TryGetValue(key, out value);
         public virtual IEnumerable<TValue> All => values.Values;
         public virtual bool Contains(TKey key) => values.ContainsKey(key);
 

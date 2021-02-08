@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Items;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
@@ -11,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Loaders.Npcs
 {
@@ -40,7 +37,7 @@ namespace NeoServer.Loaders.Npcs
 
             logger.Information("{n} NPCs loaded!", npcs.Count());
         }
-        private IEnumerable<(string,INpcType)> ConvertNpcs()
+        private IEnumerable<(string, INpcType)> ConvertNpcs()
         {
             var basePath = $"{serverConfiguration.Data}/npcs";
             foreach (var file in Directory.GetFiles(basePath, "*.json"))
@@ -75,21 +72,21 @@ namespace NeoServer.Loaders.Npcs
             }
         }
 
-        private  void LoadShopData(INpcType type, NpcData npcData)
+        private void LoadShopData(INpcType type, NpcData npcData)
         {
             if (type is null || npcData is null || npcData.Shop is null) return;
 
-            var items = new List<ShopItem>(npcData.Shop.Length);
+            var items = new Dictionary<ushort,IShopItem>(npcData.Shop.Length);
             foreach (var item in npcData.Shop)
             {
-                if (!ItemTypeData.InMemory.TryGetValue(item.Item, out var itemType)) continue;
-                items.Add(new ShopItem(itemType, item.Buy, item.Sell));
+                if (!ItemTypeStore.Data.TryGetValue(item.Item, out var itemType)) continue;
+                items.Add(itemType.TypeId, new ShopItem(itemType, item.Buy, item.Sell));
             }
 
-            type.CustomAttributes.Add("shop", items.ToArray());
+            type.CustomAttributes.Add("shop", items);
         }
 
-        private  INpcDialog ConvertDialog(NpcData.DialogData dialog)
+        private INpcDialog ConvertDialog(NpcData.DialogData dialog)
         {
             if (dialog is null) return null;
             var d = new NpcDialogType
@@ -98,11 +95,11 @@ namespace NeoServer.Loaders.Npcs
                 Action = dialog.Action,
                 OnWords = dialog.OnWords,
                 End = dialog.End,
-                Then = dialog.Then?.Select(x=> ConvertDialog(x))?.ToArray() ?? null
+                Then = dialog.Then?.Select(x => ConvertDialog(x))?.ToArray() ?? null
             };
             return d;
         }
     }
 
-   
+
 }
