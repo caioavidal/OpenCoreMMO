@@ -1,6 +1,6 @@
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.DataStore;
 using NeoServer.OTB.Parsers;
-using NeoServer.Server.Items;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
@@ -29,7 +29,12 @@ namespace NeoServer.Loaders.Items
             var itemTypes = LoadOTB(basePath);
 
             LoadItemsJson(basePath, itemTypes);
-            ItemTypeData.Load(itemTypes);
+        
+            foreach (var item in itemTypes)
+            {
+                ItemTypeStore.Data.Add(item.Key, item.Value);
+            }
+
             logger.Information("{n} items loaded", itemTypes.Count);
         }
 

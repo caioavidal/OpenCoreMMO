@@ -2,8 +2,8 @@
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
-using NeoServer.Server.Items;
 
 namespace NeoServer.Game.Items.Factories
 {
@@ -13,7 +13,7 @@ namespace NeoServer.Game.Items.Factories
 
         public ILiquid Create(Location location, LiquidColor color)
         {
-            if (!ItemTypeData.InMemory.TryGetValue(2016, out var itemType)) return null;
+            if (!ItemTypeStore.Data.TryGetValue(2016, out var itemType)) return null;
 
             if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED)
             {
@@ -27,7 +27,7 @@ namespace NeoServer.Game.Items.Factories
         }
         public ILiquid CreateDamageLiquidPool(Location location, LiquidColor color)
         {
-            if (!ItemTypeData.InMemory.TryGetValue(2019, out var itemType)) return null;
+            if (!ItemTypeStore.Data.TryGetValue(2019, out var itemType)) return null;
 
             if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED)
             {

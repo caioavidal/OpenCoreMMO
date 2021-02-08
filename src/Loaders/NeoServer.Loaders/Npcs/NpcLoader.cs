@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Items;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
@@ -11,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Loaders.Npcs
 {
@@ -82,7 +79,7 @@ namespace NeoServer.Loaders.Npcs
             var items = new Dictionary<ushort,IShopItem>(npcData.Shop.Length);
             foreach (var item in npcData.Shop)
             {
-                if (!ItemTypeData.InMemory.TryGetValue(item.Item, out var itemType)) continue;
+                if (!ItemTypeStore.Data.TryGetValue(item.Item, out var itemType)) continue;
                 items.Add(itemType.TypeId, new ShopItem(itemType, item.Buy, item.Sell));
             }
 

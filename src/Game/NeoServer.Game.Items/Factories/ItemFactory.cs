@@ -2,11 +2,11 @@
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
-using NeoServer.Server.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace NeoServer.Game.Items
 
         public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            if (!ItemTypeData.InMemory.TryGetValue(typeId, out var itemType)) return null;
+            if (!ItemTypeStore.Data.TryGetValue(typeId, out var itemType)) return null;
 
             var createdItem = CreateItem(itemType, location, attributes);
 
@@ -51,7 +51,7 @@ namespace NeoServer.Game.Items
 
         public IItem Create(string name, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            var item = ItemTypeData.InMemory.Values.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            var item = ItemTypeStore.Data.All.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
             if (item is null) return null;
 

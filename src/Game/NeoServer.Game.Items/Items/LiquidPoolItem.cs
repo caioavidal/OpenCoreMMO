@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Server.Items;
+using NeoServer.Game.DataStore;
 using System;
 using System.Collections.Generic;
 
@@ -78,7 +78,7 @@ namespace NeoServer.Game.Items.Items
         public bool Decay()
         {
             if (DecaysTo <= 0) return false;
-            if (!ItemTypeData.InMemory.TryGetValue((ushort)DecaysTo, out var newItem)) return false;
+            if (!ItemTypeStore.Data.TryGetValue((ushort)DecaysTo, out var newItem)) return false;
 
             Metadata = newItem;
             StartedToDecayTime = DateTime.Now.Ticks;

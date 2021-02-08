@@ -1,10 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.DataStore;
-using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming.Shop;
-using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Items;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Player
@@ -23,7 +19,7 @@ namespace NeoServer.Server.Handlers.Player
 
             var serverId = ItemIdMapStore.Data.Get(playerSalePacket.ItemClientId);
 
-            if (!ItemTypeData.InMemory.TryGetValue(serverId, out var itemType)) return;
+            if (!ItemTypeStore.Data.TryGetValue(serverId, out var itemType)) return;
 
             game.Dispatcher.AddEvent(new Event(() => player.Sell(itemType, playerSalePacket.Amount, playerSalePacket.IgnoreEquipped)));
         }
