@@ -767,5 +767,41 @@ namespace NeoServer.Server.Model.Players
 
             OnHear?.Invoke(from, this, speechType, message);
         }
+
+        public bool Sell(IItemType item, byte amount, bool ignoreEquipped)
+        {
+            if (ignoreEquipped)
+            {
+                if (Inventory.BackpackSlot is null || Inventory.BackpackSlot.Map is null) return false;
+                if (!Inventory.BackpackSlot.Map.TryGetValue(item.TypeId, out var itemTotalAmount)) return false;
+
+                if (itemTotalAmount < amount) return false;
+
+                Inventory.BackpackSlot.RemoveItem(item, amount);
+
+                TradingWithNpc.BuyFromCustomer(this, item, amount);
+            }
+
+            return true;
+        }
+        public void ReceivePayment(IEnumerable<IItem> coins)
+        {
+            if (CanReceiveInCashPayment(coins))
+            {
+                foreach (var coin in coins)
+                {
+                    Inventory.BackpackSlot.AddItem(coin);
+                }
+            }
+        }
+        public bool CanReceiveInCashPayment(IEnumerable<IItem> coins)
+        {
+            var totalWeight = coins.Sum(x => x is ICumulative cumulative ? cumulative.Weight : 0);
+            var totalFreeSlots = Inventory.BackpackSlot?.TotalFreeSlots ?? 0;
+
+            if (totalWeight > CarryStrength || totalFreeSlots < coins.Count()) return false;
+
+            return true;
+        }
     }
 }

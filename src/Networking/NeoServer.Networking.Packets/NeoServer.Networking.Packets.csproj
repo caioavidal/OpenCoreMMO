@@ -33,8 +33,4 @@
     <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Incoming\Shop\" />
-  </ItemGroup>
-
 </Project>

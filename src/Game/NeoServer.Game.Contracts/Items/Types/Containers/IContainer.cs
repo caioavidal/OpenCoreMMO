@@ -42,11 +42,21 @@ namespace NeoServer.Game.Contracts.Items.Types
         void Clear();
         void UpdateId(byte id);
         void RemoveId();
+        /// <summary>
+        /// Remove item on container
+        /// </summary>
+        /// <param name="itemToRemove"></param>
+        /// <param name="amount"></param>
+        void RemoveItem(IItemType itemToRemove, byte amount);
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
         /// <summary>
-        /// A map of all items in container and their amount
+        /// A map of all items in container and their total amount
         /// </summary>
         IDictionary<ushort, uint> Map { get; }
+        /// <summary>
+        /// Number of free slots of this and inner containers
+        /// </summary>
+        int TotalFreeSlots { get; }
     }
 }

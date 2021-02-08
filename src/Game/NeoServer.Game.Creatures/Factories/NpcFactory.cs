@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Model.Monsters;
@@ -11,17 +12,18 @@ namespace NeoServer.Game.Creatures
     public class NpcFactory : INpcFactory
     {
         private readonly IPathAccess pathAccess;
+        private readonly IItemFactory itemFactory;
         private readonly Logger logger;
 
         public static INpcFactory Instance { get; private set; }
 
         public NpcFactory(CreaturePathAccess creaturePathAccess,
-            Logger logger)
+            Logger logger, IItemFactory itemFactory)
         {
             pathAccess = creaturePathAccess;
             this.logger = logger;
             Instance = this;
-
+            this.itemFactory = itemFactory;
         }
         public INpc Create(string name, ISpawnPoint spawn = null)
         {
@@ -44,7 +46,10 @@ namespace NeoServer.Game.Creatures
 
             if (npcType.CustomAttributes.ContainsKey("shop"))
             {
-                return new ShopperNpc(npcType, pathAccess, outfit, npcType.MaxHealth);
+                return new ShopperNpc(npcType, pathAccess, outfit, npcType.MaxHealth)
+                {
+                    CreateNewItem = itemFactory.Create
+                };
             }
 
             return new Npc(npcType, pathAccess, outfit, npcType.MaxHealth);

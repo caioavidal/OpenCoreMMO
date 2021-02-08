@@ -169,6 +169,9 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool ExitChannel(IChatChannel channel);
         void StartShopping(IShopperNpc npc);
         void StopShopping();
+        bool Sell(IItemType item, byte amount, bool ignoreEquipped);
+        void ReceivePayment(IEnumerable<IItem> coins);
+        bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
 
         uint TotalCapacity { get; }
         bool Recovering { get; }

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.DataStore;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
@@ -23,6 +24,12 @@ namespace NeoServer.Server.Items
             {
                 InMemory = items.ToImmutableDictionary();
             }
+
+            foreach (var item in items)
+            {
+                ItemIdMapStore.Data.Add(item.Value.ClientId, item.Value.TypeId);
+            }
+            
         }
     }
 }

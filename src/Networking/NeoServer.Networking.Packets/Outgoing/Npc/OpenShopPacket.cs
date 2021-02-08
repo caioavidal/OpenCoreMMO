@@ -12,9 +12,9 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
 {
     public class OpenShopPacket : OutgoingPacket
     {
-        public IShopItem[] Items { get; }
+        public IEnumerable<IShopItem> Items { get; }
 
-        public OpenShopPacket(IShopItem[] items)
+        public OpenShopPacket(IEnumerable<IShopItem> items)
         {
             Items = items;
         }
@@ -24,7 +24,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
         {
             message.AddByte((byte)GameOutgoingPacketType.OpenShop);
 
-            var itemsCount = (ushort) Math.Min(Items.Length, ushort.MaxValue);
+            var itemsCount = (ushort) Math.Min(Items.Count(), ushort.MaxValue);
             message.AddByte((byte)itemsCount);
 
             foreach (var item in Items)

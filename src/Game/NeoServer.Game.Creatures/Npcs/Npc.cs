@@ -21,6 +21,7 @@ namespace NeoServer.Game.Creatures.Npcs
         public event Answer OnAnswer;
         public override IOutfit Outfit { get; protected set; }
         public INpcType Metadata { get; }
+        public CreateItem CreateNewItem { protected get; init; }
 
         IDictionary<uint, List<byte>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
 
