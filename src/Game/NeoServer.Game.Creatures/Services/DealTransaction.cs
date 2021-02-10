@@ -32,7 +32,10 @@ namespace NeoServer.Game.Creatures.Events
             var cost = seller.CalculateCost(itemType, amount);
             if (buyer.TotalMoney < cost) return false;
 
-            RemoveCoins(buyer, cost);
+            var removedAmount = RemoveCoins(buyer, cost);
+
+            if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
+
             AddItems(buyer, seller, itemType.TypeId, amount);
 
             return true;
@@ -105,7 +108,7 @@ namespace NeoServer.Game.Creatures.Events
                 {
                     if (amount == 0) break;
 
-                    foreach(var coin in money.Value)
+                    foreach (var coin in money.Value)
                     {
                         if (amount == 0) break;
 

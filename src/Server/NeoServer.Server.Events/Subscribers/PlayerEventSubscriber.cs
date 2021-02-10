@@ -11,7 +11,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
         private readonly ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler;
-        private readonly ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler;
+        private readonly PlayerChangedInventoryEventHandler itemAddedToInventoryEventHandler;
         private readonly InvalidOperationEventHandler invalidOperationEventHandler;
         private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
@@ -33,7 +33,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerSentMessageEventHandler playerSentMessageEventHandler;
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
             PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
-            ItemAddedToInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler,
+            PlayerChangedInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler,
             CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler, PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler,
             PlayerManaChangedEventHandler playerManaReducedEventHandler, SpellInvokedEventHandler playerUsedSpellEventHandler, PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler,
             PlayerConditionChangedEventHandler playerConditionChangedEventHandler, PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler,

@@ -174,6 +174,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
 
         void ReceivePurchasedItems(INpc from, params IItem[] items);
+        void WithdrawFromBank(ulong amount);
 
         uint TotalCapacity { get; }
         bool Recovering { get; }

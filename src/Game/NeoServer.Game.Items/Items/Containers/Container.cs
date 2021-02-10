@@ -25,7 +25,7 @@ namespace NeoServer.Game.Items.Items
         public bool HasParent => Parent != null;
         public byte Capacity => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Capacity);
         public List<IItem> Items { get; }
-        public IItem this[int index] => Items[index];
+        public IItem this[int index] => Items.Count > index ? Items[index] : null;
         public bool HasItems => SlotsUsed > 0;
         public byte LastFreeSlot => IsFull ? 0 : SlotsUsed;
         public int FreeSlotsCount => Capacity - SlotsUsed;

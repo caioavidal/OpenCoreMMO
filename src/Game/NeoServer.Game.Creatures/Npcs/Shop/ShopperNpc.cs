@@ -18,9 +18,23 @@ namespace NeoServer.Game.Creatures.Npcs
 {
     public class ShopperNpc : Npc, IShopperNpc
     {
+        
+
         public event ShowShop OnShowShop;
         public ShopperNpc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
         {
+        }
+
+        public IDictionary<ushort, IShopItem> ShopItems
+        {
+            get
+            {
+                if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return null;
+
+                if (shop is not IDictionary<ushort, IShopItem> shopItems) return null;
+
+                return shopItems;
+            }
         }
 
         public override void SendMessageTo(ISociableCreature to, SpeechType type, INpcDialog dialog)
@@ -34,13 +48,11 @@ namespace NeoServer.Game.Creatures.Npcs
         {
             if (to is not IPlayer player) return;
 
-            if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return;
-
-            if (shop is not IDictionary<ushort, IShopItem> shopItems) return;
+            if (ShopItems?.Values is not IEnumerable<IShopItem> shopItems) return;
 
             player.StartShopping(this);
 
-            OnShowShop?.Invoke(this, to, shopItems.Values);
+            OnShowShop?.Invoke(this, to, shopItems);
         }
 
         public virtual void StopSellingToCustomer(ISociableCreature creature)
@@ -50,8 +62,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public bool BuyFromCustomer(ISociableCreature creature, IItemType item, byte amount)
         {
-            if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return false;
-            if (shop is not IDictionary<ushort, IShopItem> shopItems) return false;
+            var shopItems = ShopItems;
+            if (shopItems is null) return false;
 
             if (!shopItems.TryGetValue(item.TypeId, out var shopItem)) return false;
 
@@ -85,8 +97,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public ulong CalculateCost(IItemType itemType, byte amount)
         {
-            if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return 0;
-            if (shop is not IDictionary<ushort, IShopItem> shopItems) return 0;
+            var shopItems = ShopItems;
+            if (shopItems is null) return 0;
 
             if (!shopItems.TryGetValue(itemType.TypeId, out var shopItem)) return 0;
 

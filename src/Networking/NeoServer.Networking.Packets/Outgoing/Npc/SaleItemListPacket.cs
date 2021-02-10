@@ -23,7 +23,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            if (Player is null) return;
+            if (Player is null || ShopItems is null) return;
 
             var map = Player.Inventory.Map;
             var totalMoney = Player.Inventory.GetTotalMoney(map) + Player.BankAmount;

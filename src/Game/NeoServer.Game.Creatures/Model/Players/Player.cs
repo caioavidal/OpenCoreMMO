@@ -96,7 +96,7 @@ namespace NeoServer.Server.Model.Players
         public bool HasGuild => GuildId > 0;
         public IGuild Guild => GuildStore.Data.Get(GuildId);
         public IChatChannel NpcsChannel { get; init; }
-        public ulong BankAmount { get; private set; }
+        public ulong BankAmount { get; private set; } = 1000;
         public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -799,6 +799,10 @@ namespace NeoServer.Server.Model.Players
             {
                 BankAmount += total;
             }
+        }
+        public void WithdrawFromBank(ulong amount)
+        {
+            if (BankAmount >= amount) BankAmount = BankAmount - amount;
         }
         public bool CanReceiveInCashPayment(IEnumerable<IItem> coins)
         {
