@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
@@ -28,6 +29,11 @@ namespace NeoServer.Server.Events
                     case ContainerOperation.ItemUpdated:
                         connection.OutgoingPackets.Enqueue(new UpdateItemContainerPacket(containerId, slotIndex, item));
                         break;
+                }
+
+                if(player.Containers[containerId]?.Parent == player && player.Shopping)
+                {
+                    connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, player.TradingWithNpc?.ShopItems?.Values));
                 }
 
                 connection.Send();
