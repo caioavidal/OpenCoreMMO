@@ -292,16 +292,36 @@ namespace NeoServer.Game.Items.Items
                 }
                 amount -= item.Amount;
 
-                
+
             }
 
-            while(slotsToRemove.TryPop(out var slot))
+            while (slotsToRemove.TryPop(out var slot))
             {
                 var (item, slotIndexToRemove, amountToRemove) = slot;
 
                 RemoveItem(item, amountToRemove, slotIndexToRemove, out var removedThing);
             }
         }
+        public void RemoveItem(IItem item, byte amount)
+        {
+            var containers = new Queue<IContainer>();
+            containers.Enqueue(this);
+
+            while (containers.TryDequeue(out var container))
+            {
+                byte slotIndex = 0;
+                foreach (var containerItem in container.Items)
+                {
+                    if (containerItem is IContainer innerContainer) containers.Enqueue(innerContainer);
+                    if (containerItem == item)
+                    {
+                        RemoveItem(item, amount, slotIndex++, out var removedThing);
+                        return;
+                    }
+                }
+            }
+        }
+
         private IItem RemoveItem(byte slotIndex, byte amount)
         {
             var item = Items[slotIndex];

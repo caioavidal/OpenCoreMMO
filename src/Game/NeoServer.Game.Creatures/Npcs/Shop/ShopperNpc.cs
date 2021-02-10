@@ -83,32 +83,6 @@ namespace NeoServer.Game.Creatures.Npcs
             return true;
         }
 
-        public void Sell(ISociableCreature to, IItemType itemType, byte amount)
-        {
-            if (to is not IPlayer player) return;
-
-            var totalCost = CalculateCost(itemType, amount);
-            var item = CreateNewItem(itemType.TypeId, Common.Location.Structs.Location.Inventory(Common.Players.Slot.Backpack), null);
-
-            if (item is ICumulative cumulative)
-            {
-                cumulative.Amount = amount;
-                player.ReceivePurchasedItems(this, totalCost, item);
-            }
-            else
-            {
-                var items = new IItem[amount];
-                items[0] = item;
-
-                for (int i = 1; i < amount; i++)
-                {
-                    items[i] = CreateNewItem(itemType.TypeId, Common.Location.Structs.Location.Inventory(Common.Players.Slot.Backpack), null);
-                }
-
-                player.ReceivePurchasedItems(this, totalCost, items);
-            }
-        }
-
         public ulong CalculateCost(IItemType itemType, byte amount)
         {
             if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return 0;

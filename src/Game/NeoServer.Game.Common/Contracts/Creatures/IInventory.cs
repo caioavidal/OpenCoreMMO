@@ -38,6 +38,5 @@ namespace NeoServer.Game.Contracts.Creatures
         bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
         Result<bool> CanAddItemToSlot(Slot slot, IItem item);
         ulong GetTotalMoney(IDictionary<ushort, uint> inventoryMap);
-        ulong RemoveCoins(ulong amount);
     }
 }

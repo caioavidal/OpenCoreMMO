@@ -199,68 +199,7 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public ulong RemoveCoins(ulong amount)
-        {
-            ulong removedAmount = 0;
-            if (BackpackSlot is null) return removedAmount;
-            var moneyMap = new SortedList<uint,Stack<(byte, ICoin)>>(); //slot and item
-
-            var containers = new Queue<IContainer>();
-            containers.Enqueue(BackpackSlot);
-
-            while (containers.TryDequeue(out var container) && amount > 0)
-            {
-                byte slotIndex = 0;
-                foreach (var item in container.Items)
-                {
-                    if (item is IContainer childContainer)
-                    {
-                        containers.Enqueue(childContainer);
-                        continue;
-                    }
-                    if (item is not ICoin coin) continue;
-
-                    if (moneyMap.TryGetValue(coin.Worth, out var coinSlots))
-                    {
-                        coinSlots.Push((slotIndex++, coin));
-                        continue;
-                    }
-
-                    var stack = new Stack<(byte, ICoin)>();
-
-                    stack.Push((slotIndex++, coin));
-                    moneyMap.Add(coin.Worth, stack);
-                }
-
-                foreach (var money in moneyMap)
-                {
-                    if (amount == 0) break;
-                    while (money.Value.TryPop(out var coinSlot) && amount > 0)
-                    {
-                        var (slot, coin) = coinSlot;
-
-                        if (coin.Worth < amount)
-                        {
-                            container.RemoveItem(coin, coin.Amount, slot, out var removedItem);
-                            amount -= coin.Worth;
-                            removedAmount += coin.Worth;
-                        }
-                        else if(coin.Worth > amount)
-                        {
-                            uint worth = coin.Worth / coin.Amount;
-                            uint removeCount = (uint) Math.Ceiling((decimal)(coin.Worth / worth));
-                        }
-                        else
-                        {
-                            container.RemoveItem(coin, coin.Amount, slot, out var removedItem);
-                            removedAmount += coin.Worth;
-                        }
-                    }
-                }
-            }
-
-            return removedAmount;
-        }
+      
 
         public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
         {

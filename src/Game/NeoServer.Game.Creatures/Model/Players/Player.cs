@@ -810,21 +810,9 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-        public void Buy(IItemType itemType, byte amount)
-        {
-            if (itemType is null || amount == 0 || TradingWithNpc is null) return;
-
-            var cost = TradingWithNpc.CalculateCost(itemType, amount);
-            if (TotalMoney < cost) return;
-
-            TradingWithNpc.Sell(this, itemType, amount);
-        }
-
-        public void ReceivePurchasedItems(INpc from, ulong cost, params IItem[] items)
+        public void ReceivePurchasedItems(INpc from, params IItem[] items)
         {
             if (items is null) return;
-
-            Inventory?.RemoveCoins(cost);
 
             foreach (var item in items)
             {
