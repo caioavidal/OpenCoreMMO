@@ -205,6 +205,7 @@
         Damage,
         Area,
         Ticks,
-        Script
+        Script,
+        Worth
     }
 }

@@ -10,12 +10,14 @@ using NeoServer.Data.Providers.SQLite.Extensions;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.Creatures;
+using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Game.World;
@@ -137,6 +139,9 @@ namespace NeoServer.Server.Standalone.IoC
 
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
+
+            //services
+            builder.RegisterType<DealTransaction>().As<IDealTransaction>().SingleInstance();
 
             builder.RegisterType<EventSubscriber>().SingleInstance();
 

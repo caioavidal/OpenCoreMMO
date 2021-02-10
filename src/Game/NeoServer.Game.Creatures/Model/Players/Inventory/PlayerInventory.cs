@@ -9,6 +9,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Contracts.Items.Types.Containers;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -93,17 +94,29 @@ namespace NeoServer.Server.Model.Players
                 return map;
             }
         }
-        public uint GetTotalMoney(IDictionary<ushort, uint> inventoryMap)
+        public ulong GetTotalMoney(IDictionary<ushort, uint> inventoryMap)
         {
             uint total = 0;
 
-            if (inventoryMap.TryGetValue((ushort)CoinType.Gold, out var gold)) total += gold;
+            foreach (var coinType in CoinTypeStore.Data.All)
+            {
+                if (coinType is null) continue;
+                if (!inventoryMap.TryGetValue(coinType.TypeId, out var coinAmount)) continue;
 
-            if (inventoryMap.TryGetValue((ushort)CoinType.Platinum, out var platinum)) total += platinum * 100;
-
-            if (inventoryMap.TryGetValue((ushort)CoinType.Crystal, out var crystal)) total += crystal * 10_000;
+                var worthMultiplier = coinType?.Attributes?.GetAttribute<uint>(ItemAttribute.Worth) ?? 0;
+                total += worthMultiplier * coinAmount;
+            }
 
             return total;
+        }
+
+        public ulong TotalMoney
+        {
+            get
+            {
+                if (BackpackSlot?.Map is null) return 0;
+                return GetTotalMoney(BackpackSlot.Map);
+            }
         }
 
         public bool HasShield => Inventory.ContainsKey(Slot.Right);
@@ -185,6 +198,8 @@ namespace NeoServer.Server.Model.Players
                 return sum;
             }
         }
+
+      
 
         public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
         {

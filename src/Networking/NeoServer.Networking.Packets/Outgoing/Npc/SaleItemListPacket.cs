@@ -20,16 +20,16 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
 
         public IPlayer Player { get; }
         public IEnumerable<IShopItem> ShopItems { get; }
-      
+
         public override void WriteToMessage(INetworkMessage message)
         {
             if (Player is null) return;
 
             var map = Player.Inventory.Map;
-            var totalMoney = Player.Inventory.GetTotalMoney(map);
+            var totalMoney = Player.Inventory.GetTotalMoney(map) + Player.BankAmount;
 
             message.AddByte((byte)GameOutgoingPacketType.SaleItemList);
-            message.AddUInt32(Math.Min(totalMoney, uint.MaxValue));
+            message.AddUInt32((uint)Math.Min(totalMoney, uint.MaxValue));
 
             byte itemsToSend = 0;
 

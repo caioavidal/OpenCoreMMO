@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NeoServer.Game.DataStore
 {
-    public class ChatChannelStore : DataStore<ushort, IChatChannel>
+    public class ChatChannelStore : DataStore<ChatChannelStore, ushort, IChatChannel>
     {
     }
 }

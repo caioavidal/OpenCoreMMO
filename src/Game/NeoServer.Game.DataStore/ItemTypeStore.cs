@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NeoServer.Game.DataStore
 {
-    public class ItemTypeStore : DataStore<ushort, IItemType>
+    public class ItemTypeStore : DataStore<ItemTypeStore, ushort, IItemType>
     {
     }
 }

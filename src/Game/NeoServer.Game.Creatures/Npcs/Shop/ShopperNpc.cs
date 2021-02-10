@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
@@ -62,7 +63,7 @@ namespace NeoServer.Game.Creatures.Npcs
             if (to is not IPlayer player) return false;
             if (value == 0) return false;
 
-            var coins = CoinCalculator.Calculate(value);
+            var coins = CoinCalculator.Calculate(CoinTypeStore.Data.Map, value);
 
             IItem[] items = new IItem[coins.Count()];
 
@@ -80,6 +81,17 @@ namespace NeoServer.Game.Creatures.Npcs
             player.ReceivePayment(items, value);
 
             return true;
+        }
+
+        public ulong CalculateCost(IItemType itemType, byte amount)
+        {
+            if (!Metadata.CustomAttributes.TryGetValue("shop", out var shop)) return 0;
+            if (shop is not IDictionary<ushort, IShopItem> shopItems) return 0;
+
+            if (!shopItems.TryGetValue(itemType.TypeId, out var shopItem)) return 0;
+
+
+            return (shopItem?.BuyPrice ?? 0) * amount;
         }
     }
 }

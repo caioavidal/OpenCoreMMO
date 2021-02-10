@@ -1,4 +1,6 @@
 ﻿using NeoServer.Game.Common.Item;
+using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +39,34 @@ namespace NeoServer.Game.Common.Tests.Items
 
         public void Calculate(uint value, (CoinType, byte)[] expected)
         {
-            var result = CoinCalculator.Calculate(value);
+            var goldType = new ItemType();
+            goldType.SetId((ushort)CoinType.Gold).Attributes.SetAttribute(ItemAttribute.Worth, 1);
+
+            var platinumType = new ItemType();
+            platinumType.SetId((ushort)CoinType.Platinum).Attributes.SetAttribute(ItemAttribute.Worth, 100);
+
+            var crystalType = new ItemType();
+            crystalType.SetId((ushort)CoinType.Crystal).Attributes.SetAttribute(ItemAttribute.Worth, 10_000);
+
+            var coinTypes = new Dictionary<ushort, IItemType>()
+            {
+                { (ushort)CoinType.Gold, goldType },
+                { (ushort)CoinType.Platinum, platinumType},
+                { (ushort)CoinType.Crystal, crystalType }
+            };
+
+            var result = CoinCalculator.Calculate(coinTypes, value);
 
             var expecteds = expected.Select(x => ((ushort)(x.Item1), x.Item2));
 
             Assert.Equal(expecteds, result);
         }
 
+        public enum CoinType
+        {
+            Gold = 2148,
+            Platinum = 2152,
+            Crystal = 2160,
+        }
     }
 }

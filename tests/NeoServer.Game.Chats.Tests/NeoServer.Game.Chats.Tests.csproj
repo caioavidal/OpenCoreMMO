@@ -17,10 +17,9 @@
 	  </PackageReference>  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\tests\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
-    <ProjectReference Include="..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
-    <ProjectReference Include="..\Game\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
-    <ProjectReference Include="..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+    <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
+    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
   </ItemGroup>
 
 </Project>

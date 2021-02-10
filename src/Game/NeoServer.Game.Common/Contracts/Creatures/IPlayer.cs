@@ -173,6 +173,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ReceivePayment(IEnumerable<IItem> coins, uint total);
         bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
 
+        void ReceivePurchasedItems(INpc from, params IItem[] items);
+
         uint TotalCapacity { get; }
         bool Recovering { get; }
         IVocation Vocation { get; }
@@ -183,5 +185,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         IGuild Guild { get; }
         bool HasGuild { get; }
         bool Shopping { get; }
+        ulong BankAmount { get; }
+        ulong TotalMoney { get; }
+        IShopperNpc TradingWithNpc { get; }
     }
 }
