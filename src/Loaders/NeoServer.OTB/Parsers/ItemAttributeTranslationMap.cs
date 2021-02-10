@@ -143,6 +143,7 @@ namespace NeoServer.OTB.Parsers
                 case "ticks": return ItemAttribute.Ticks;
                 case "count": return ItemAttribute.Count;
                 case "script": return ItemAttribute.Script;
+                case "worth": return ItemAttribute.Worth;
                 default:
                     success = false;
                     return ItemAttribute.None; // Just return the first

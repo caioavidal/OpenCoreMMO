@@ -406,8 +406,6 @@ namespace NeoServer.Game.Items.Items
             return result;
         }
 
-
-
         public Result CanAddItem(IItem item, byte amount = 1, byte? slot = null) => CanAddItem(item, slot);
         public int PossibleAmountToAdd(IItem item, byte? toPosition = null) => PossibleAmountToAdd(item);
 

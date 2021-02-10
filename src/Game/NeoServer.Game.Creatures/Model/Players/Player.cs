@@ -97,6 +97,7 @@ namespace NeoServer.Server.Model.Players
         public IGuild Guild => GuildStore.Data.Get(GuildId);
         public IChatChannel NpcsChannel { get; init; }
         public ulong BankAmount { get; private set; }
+        public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
 
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -807,6 +808,29 @@ namespace NeoServer.Server.Model.Players
             if (totalWeight > CarryStrength || totalFreeSlots < coins.Count()) return false;
 
             return true;
+        }
+
+        public void Buy(IItemType itemType, byte amount)
+        {
+            if (itemType is null || amount == 0 || TradingWithNpc is null) return;
+
+            var cost = TradingWithNpc.CalculateCost(itemType, amount);
+            if (TotalMoney < cost) return;
+
+            TradingWithNpc.Sell(this, itemType, amount);
+        }
+
+        public void ReceivePurchasedItems(INpc from, ulong cost, params IItem[] items)
+        {
+            if (items is null) return;
+
+            Inventory?.RemoveCoins(cost);
+
+            foreach (var item in items)
+            {
+                if (item is null) continue;
+                Inventory.BackpackSlot.AddItem(item, true);
+            }
         }
     }
 }

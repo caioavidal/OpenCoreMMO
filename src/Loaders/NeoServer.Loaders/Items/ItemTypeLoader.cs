@@ -33,6 +33,12 @@ namespace NeoServer.Loaders.Items
             foreach (var item in itemTypes)
             {
                 ItemTypeStore.Data.Add(item.Key, item.Value);
+                ItemIdMapStore.Data.Add(item.Value.ClientId, item.Key);
+
+                if(item.Value.Attributes.GetAttribute(Game.Common.ItemAttribute.Type)?.Equals("coin", StringComparison.InvariantCultureIgnoreCase) ?? false)
+                {
+                    CoinTypeStore.Data.Add(item.Key, item.Value);
+                }
             }
 
             logger.Information("{n} items loaded", itemTypes.Count);

@@ -49,14 +49,16 @@ namespace NeoServer.Server.Handlers.Authentication
 
             var playerRecord = await accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
 
-            await accountRepository.Reload(playerRecord.GuildMember);
-            await accountRepository.Reload(playerRecord);
-
             if (playerRecord is null)
             {
                 connection.Send(new GameServerDisconnectPacket($"Account name or password is not correct."));
                 return;
             }
+
+            await accountRepository.Reload(playerRecord.GuildMember);
+            await accountRepository.Reload(playerRecord);
+
+         
 
             game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, packet.CharacterName, connection)));
         }

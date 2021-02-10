@@ -26,6 +26,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool HasShield { get; }
         float TotalWeight { get; }
         IDictionary<ushort, uint> Map { get; }
+        ulong TotalMoney { get; }
 
         IItem this[Slot slot] { get; }
 
@@ -36,6 +37,7 @@ namespace NeoServer.Game.Contracts.Creatures
         Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
         bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
         Result<bool> CanAddItemToSlot(Slot slot, IItem item);
-        uint GetTotalMoney(IDictionary<ushort, uint> inventoryMap);
+        ulong GetTotalMoney(IDictionary<ushort, uint> inventoryMap);
+        ulong RemoveCoins(ulong amount);
     }
 }

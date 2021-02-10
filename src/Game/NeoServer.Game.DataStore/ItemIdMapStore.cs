@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NeoServer.Game.DataStore
 {
-    public class ItemIdMapStore : DataStore<ushort, ushort>
+    public class ItemIdMapStore : DataStore<ItemIdMapStore,ushort, ushort>
     {
     }
 }

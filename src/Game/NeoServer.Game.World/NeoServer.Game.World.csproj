@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
   </ItemGroup>
 

@@ -7973,7 +7973,16 @@
        "attributes": [{
           "key": "weight",
           "value": "10"
-       }]
+       },
+	   {
+          "key": "type",
+          "value": "coin"
+       },
+	   {
+          "key": "worth",
+          "value": "1"
+       }
+	   ]
     },
     {
        "id": "2149",
@@ -8015,6 +8024,14 @@
        "attributes": [{
           "key": "weight",
           "value": "10"
+       },
+	    {
+          "key": "type",
+          "value": "coin"
+       },
+	   {
+          "key": "worth",
+          "value": 100
        }]
     },
     {
@@ -8087,6 +8104,13 @@
        "attributes": [{
           "key": "weight",
           "value": "10"
+       }, {
+          "key": "type",
+          "value": "coin"
+       },
+	   {
+          "key": "worth",
+          "value": 10000
        }]
     },
     {

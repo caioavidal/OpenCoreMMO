@@ -118,6 +118,10 @@ namespace NeoServer.Game.Items
             }
             if (Cumulative.IsApplicable(itemType))
             {
+                if (Coin.IsApplicable(itemType))
+                {
+                    return new Coin(itemType, location, attributes);
+                }
                 if (ThrowableDistanceWeapon.IsApplicable(itemType))
                 {
                     return new ThrowableDistanceWeapon(itemType, location, attributes);

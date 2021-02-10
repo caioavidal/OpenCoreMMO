@@ -126,11 +126,13 @@ namespace NeoServer.Game.Items
             WareId = wareId;
         }
 
-        public void SetId(ushort typeId)
+        public IItemType SetId(ushort typeId)
         {
             ThrowIfLocked();
 
             TypeId = typeId;
+
+            return this;
         }
 
         public void SetClientId(ushort clientId)

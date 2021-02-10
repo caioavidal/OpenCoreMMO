@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
-    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Contracts\NeoServer.Game.Contracts.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />

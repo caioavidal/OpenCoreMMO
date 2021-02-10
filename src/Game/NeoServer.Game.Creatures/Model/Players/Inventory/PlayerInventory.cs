@@ -9,6 +9,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Contracts.Items.Types.Containers;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -93,17 +94,29 @@ namespace NeoServer.Server.Model.Players
                 return map;
             }
         }
-        public uint GetTotalMoney(IDictionary<ushort, uint> inventoryMap)
+        public ulong GetTotalMoney(IDictionary<ushort, uint> inventoryMap)
         {
             uint total = 0;
 
-            if (inventoryMap.TryGetValue((ushort)CoinType.Gold, out var gold)) total += gold;
+            foreach (var coinType in CoinTypeStore.Data.All)
+            {
+                if (coinType is null) continue;
+                if (!inventoryMap.TryGetValue(coinType.TypeId, out var coinAmount)) continue;
 
-            if (inventoryMap.TryGetValue((ushort)CoinType.Platinum, out var platinum)) total += platinum * 100;
-
-            if (inventoryMap.TryGetValue((ushort)CoinType.Crystal, out var crystal)) total += crystal * 10_000;
+                var worthMultiplier = coinType?.Attributes?.GetAttribute<uint>(ItemAttribute.Worth) ?? 0;
+                total += worthMultiplier * coinAmount;
+            }
 
             return total;
+        }
+
+        public ulong TotalMoney
+        {
+            get
+            {
+                if (BackpackSlot?.Map is null) return 0;
+                return GetTotalMoney(BackpackSlot.Map);
+            }
         }
 
         public bool HasShield => Inventory.ContainsKey(Slot.Right);
@@ -184,6 +197,69 @@ namespace NeoServer.Server.Model.Players
                 }
                 return sum;
             }
+        }
+
+        public ulong RemoveCoins(ulong amount)
+        {
+            ulong removedAmount = 0;
+            if (BackpackSlot is null) return removedAmount;
+            var moneyMap = new SortedList<uint,Stack<(byte, ICoin)>>(); //slot and item
+
+            var containers = new Queue<IContainer>();
+            containers.Enqueue(BackpackSlot);
+
+            while (containers.TryDequeue(out var container) && amount > 0)
+            {
+                byte slotIndex = 0;
+                foreach (var item in container.Items)
+                {
+                    if (item is IContainer childContainer)
+                    {
+                        containers.Enqueue(childContainer);
+                        continue;
+                    }
+                    if (item is not ICoin coin) continue;
+
+                    if (moneyMap.TryGetValue(coin.Worth, out var coinSlots))
+                    {
+                        coinSlots.Push((slotIndex++, coin));
+                        continue;
+                    }
+
+                    var stack = new Stack<(byte, ICoin)>();
+
+                    stack.Push((slotIndex++, coin));
+                    moneyMap.Add(coin.Worth, stack);
+                }
+
+                foreach (var money in moneyMap)
+                {
+                    if (amount == 0) break;
+                    while (money.Value.TryPop(out var coinSlot) && amount > 0)
+                    {
+                        var (slot, coin) = coinSlot;
+
+                        if (coin.Worth < amount)
+                        {
+                            container.RemoveItem(coin, coin.Amount, slot, out var removedItem);
+                            amount -= coin.Worth;
+                            removedAmount += coin.Worth;
+                        }
+                        else if(coin.Worth > amount)
+                        {
+                            uint worth = coin.Worth / coin.Amount;
+                            uint removeCount = (uint) Math.Ceiling((decimal)(coin.Worth / worth));
+                        }
+                        else
+                        {
+                            container.RemoveItem(coin, coin.Amount, slot, out var removedItem);
+                            removedAmount += coin.Worth;
+                        }
+                    }
+                }
+            }
+
+            return removedAmount;
         }
 
         public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
