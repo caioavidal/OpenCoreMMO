@@ -25,8 +25,11 @@ namespace NeoServer.Server.Commands.Movement
                 player.WalkTo(itemThrow.FromLocation);
             }
 
-            if (player.Containers[itemThrow.ToLocation.ContainerId][itemThrow.ToLocation.ContainerSlot] is not IContainer container) return;
+            IContainer container = player.Containers[itemThrow.ToLocation.ContainerId];
+            if (container is null) return;
 
+            if(container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
+           
             player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
         }
 
