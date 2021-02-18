@@ -573,6 +573,11 @@ namespace NeoServer.Game.World.Map.Tiles
             return new(operations);
         }
 
+        public override Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
     }

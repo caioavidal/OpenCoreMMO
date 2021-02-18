@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -291,7 +292,7 @@ namespace NeoServer.Game.Creatures.Tests
             var head = ItemTestData.CreateBodyEquipmentItem(100, "head");
             var necklace = ItemTestData.CreateBodyEquipmentItem(100, "necklace");
             var ring = ItemTestData.CreateBodyEquipmentItem(100, "ring");
-            var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
+            var shield = ItemTestData.CreateBodyEquipmentItem(100, "shield", "shield");
             var ammo = ItemTestData.CreateAmmoItem(100, 100);
             var weapon = ItemTestData.CreateWeaponItem(100, "club", false);
 
@@ -612,6 +613,108 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(20, backpack.FreeSlotsCount);
             Assert.Equal(ammo, sut[Slot.Ammo]);
             Assert.Equal(1, sut[Slot.Ammo].Amount);
+        }
+
+        [InlineData("head")]
+        [InlineData("body")]
+        [InlineData("weapon")]
+        [InlineData("shield")]
+        [InlineData("necklace")]
+        [InlineData("ring")]
+        [InlineData("backpack")]
+        [InlineData("feet")]
+        [InlineData("ammo")]
+        [Theory]
+        public void CanAddItem_When_Slot_Is_Empty_And_Adding_Regular_Item_Returns_Success(string bodyPosition)
+        {
+            var item = ItemTestData.CreateBodyEquipmentItem(1, bodyPosition);
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal((uint)1, result.Value);
+        }
+
+        [Fact]
+        public void CanAddItem_When_Slot_Is_Not_Empty_And_Adding_Regular_Item_Returns_Not_Enough_Room()
+        {
+            var bodyItem = ItemTestData.CreateBodyEquipmentItem(1, "body");
+            var weapon = ItemTestData.CreateBodyEquipmentItem(3, "weapon");
+
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                {Slot.Body, new Tuple<IPickupable,ushort>(bodyItem,1) },
+                {Slot.Left, new Tuple<IPickupable,ushort>(weapon,3) },
+            });
+
+            var bodyItemToAdd = ItemTestData.CreateBodyEquipmentItem(1, "body");
+            var weaponToAdd = ItemTestData.CreateBodyEquipmentItem(2, "weapon");
+
+            var result1 = sut.CanAddItem(bodyItemToAdd.Metadata);
+            var result2 = sut.CanAddItem(weaponToAdd.Metadata);
+
+            Assert.False(result1.IsSuccess);
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result1.Error);
+
+            Assert.False(result2.IsSuccess);
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result2.Error);
+        }
+
+        [InlineData("head")]
+        [InlineData("body")]
+        [InlineData("weapon")]
+        [InlineData("shield")]
+        [InlineData("necklace")]
+        [InlineData("ring")]
+        [InlineData("backpack")]
+        [InlineData("feet")]
+        [InlineData("ammo")]
+        [Theory]
+        public void CanAddItem_When_Slot_Is_Empty_And_Adding_Cumulative_Item_Returns_Success(string bodyPosition)
+        {
+            var item = ItemTestData.CreateCumulativeItem(1, 100, bodyPosition);
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal((uint)100, result.Value);
+        }
+
+        [InlineData(40, 60)]
+        [InlineData(70, 30)]
+        [InlineData(99, 1)]
+        [InlineData(1, 99)]
+        [InlineData(5, 95)]
+        [InlineData(50, 50)]
+        [Theory]
+        public void CanAddItem_When_Slot_Has_Same_Culative_Item_And_Adding_Cumulative_Item_Returns_Success(byte amount, uint expected)
+        {
+            var item = ItemTestData.CreateAmmoItem(1, 100);
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                { Slot.Ammo, new Tuple<IPickupable, ushort>( ItemTestData.CreateAmmoItem(1, amount), 1) }
+            });
+
+            var result = sut.CanAddItem(item.Metadata, 100);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(expected, result.Value);
+        }
+        [Fact]
+        public void CanAddItem_When_Slot_Has_Different_Culative_Item_And_Adding_Cumulative_Item_Returns_Not_Enough_Room()
+        {
+            var item = ItemTestData.CreateAmmoItem(2, 100);
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                { Slot.Ammo, new Tuple<IPickupable, ushort>( ItemTestData.CreateAmmoItem(1, 50), 1) }
+            });
+
+            var result = sut.CanAddItem(item.Metadata, 50);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
         }
     }
 }

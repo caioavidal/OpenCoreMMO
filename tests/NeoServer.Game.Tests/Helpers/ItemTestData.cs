@@ -34,11 +34,13 @@ namespace NeoServer.Game.Items.Tests
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
 
-        public static ICumulative CreateCumulativeItem(ushort id, byte amount)
+        public static ICumulative CreateCumulativeItem(ushort id, byte amount, string slot = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetName("item");
+            type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, slot);
+            type.Flags.Add(Common.ItemFlag.Stackable);
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
 
             return new Cumulative(type, new Location(100, 100, 7), amount);
@@ -107,6 +109,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, slot);
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, weaponType);
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
@@ -119,10 +122,13 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, "ammunition");
             type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "ammo");
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
+            type.Flags.Add(Common.ItemFlag.Stackable);
+
 
             return new AmmoItem(type, new Location(100, 100, 7), amount);
         }

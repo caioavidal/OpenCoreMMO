@@ -21,5 +21,7 @@
         string IThing.InspectionText => LookText;
         string Subject => HasMany ? "They weigh" : "It weighs";
         string IThing.CloseInspectionText => $"{InspectionText}.\n{Subject} {Weight} oz";
+        public static bool IsApplicable(IItemType type) => type.Flags.Contains(Common.ItemFlag.Stackable);
+
     }
 }

@@ -22,7 +22,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
       
         public event Use OnUsed;
 
-        public static new bool IsApplicable(IItemType type) => (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && Cumulative.IsApplicable(type) && UseableOnItem.IsApplicable(type);
+        public static new bool IsApplicable(IItemType type) => (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && ICumulative.IsApplicable(type) && UseableOnItem.IsApplicable(type);
 
         public void Use(IPlayer usedBy, ICreature creature)
         {

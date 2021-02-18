@@ -199,7 +199,7 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-      
+
 
         public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
         {
@@ -378,7 +378,7 @@ namespace NeoServer.Server.Model.Players
                 return Inventory.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
             }
 
-            if (!(item is IInventoryItem inventoryItem))
+            if (item is not IInventoryItem inventoryItem)
             {
                 return cannotDressFail;
             }
@@ -422,6 +422,32 @@ namespace NeoServer.Server.Model.Players
             if (!CanCarryItem(item, (Slot)slot, amount)) return new Result(InvalidOperation.TooHeavy);
 
             return CanAddItemToSlot((Slot)slot, item).ResultValue;
+        }
+        public override Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        {
+            if (itemType is null || amount == 0) return Result<uint>.NotPossible;
+            if (itemType.BodyPosition == Slot.WhereEver) return Result<uint>.NotPossible;
+
+            var itemOnSlot = this[itemType.BodyPosition];
+            if (itemOnSlot is not null && itemType.TypeId != itemOnSlot.Metadata.TypeId) return new Result<uint>(InvalidOperation.NotEnoughRoom);
+
+            byte possibleAmountToAdd = 0;
+
+            if (ICumulative.IsApplicable(itemType))
+            {
+                var amountOnSlot = this[itemType.BodyPosition]?.Amount ?? 0;
+                var amountToAdd = Math.Min((byte)100, amount);
+                possibleAmountToAdd = (byte)Math.Abs(100 - amountOnSlot);
+            }
+            else
+            {
+                if (itemOnSlot is not null) return new Result<uint>(InvalidOperation.NotEnoughRoom);
+                possibleAmountToAdd = 1;
+            }
+
+            if (possibleAmountToAdd == 0) return new Result<uint>(InvalidOperation.NotEnoughRoom);
+
+            return new Result<uint>(possibleAmountToAdd);
         }
 
         public override int PossibleAmountToAdd(IItem item, byte? toPosition = null)

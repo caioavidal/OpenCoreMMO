@@ -63,6 +63,6 @@ namespace NeoServer.Game.Contracts
         /// <param name="toPosition">destination position where thing will be stored</param>
         /// <returns></returns>
         Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition);
-
+        Result<uint> CanAddItem(IItemType itemType, byte amount = 1);
     }
 }

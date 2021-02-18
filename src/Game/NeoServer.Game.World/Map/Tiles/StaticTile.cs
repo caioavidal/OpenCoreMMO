@@ -86,6 +86,11 @@ namespace NeoServer.Game.World.Map.Tiles
             return Result<OperationResult<IItem>>.NotPossible;
         }
         public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null) => Result<OperationResult<IItem>>.NotPossible;
+
+        public override Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
     }

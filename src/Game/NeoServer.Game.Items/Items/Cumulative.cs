@@ -38,7 +38,6 @@ namespace NeoServer.Game.Items.Items
 
             return cache.ToArray();
         }
-        public static bool IsApplicable(IItemType type) => type.Flags.Contains(Common.ItemFlag.Stackable);
 
         public ICumulative Clone(byte amount)
         {

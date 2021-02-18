@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
@@ -116,7 +117,7 @@ namespace NeoServer.Game.Items
             {
                 return new Wand(itemType, location);
             }
-            if (Cumulative.IsApplicable(itemType))
+            if (ICumulative.IsApplicable(itemType))
             {
                 if (Coin.IsApplicable(itemType))
                 {
