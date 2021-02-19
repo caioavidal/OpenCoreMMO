@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
         {
         }
 
-        public static bool IsApplicable(IItemType type) => UseableOnItem.IsApplicable(type) && Cumulative.IsApplicable(type);
+        public static bool IsApplicable(IItemType type) => UseableOnItem.IsApplicable(type) && ICumulative.IsApplicable(type);
 
         public abstract bool Use(ICreature usedBy, IItem item);
     }

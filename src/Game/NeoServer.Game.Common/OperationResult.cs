@@ -17,6 +17,11 @@ namespace NeoServer.Game.Common
             Operations = new();
             Operations.Add((thing, operation, position));
         }
+        public OperationResult(T value)
+        {
+            Operations = new();
+            Operations.Add((value, Operation.None, 0));
+        }
 
         public bool HasAnyOperation => Operations?.Any() ?? false;
     }

@@ -27,7 +27,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
 
             OnUsed?.Invoke(usedBy, creature, this);
         }
-        public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type) == "food" && Cumulative.IsApplicable(type);
+        public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type) == "food" && ICumulative.IsApplicable(type);
 
     }
 }

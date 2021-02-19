@@ -450,5 +450,9 @@ namespace NeoServer.Game.Items.Items
 
         public Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition) => Store.ReceiveFrom(source, thing, toPosition);
 
+        public Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

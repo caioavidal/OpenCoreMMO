@@ -9,6 +9,8 @@ namespace NeoServer.Game.Contracts.Bases
 
         public abstract Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null);
         public abstract Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
+        public abstract Result<uint> CanAddItem(IItemType itemType, byte amount = 1);
+
 
         public abstract bool CanRemoveItem(IItem item);
 
