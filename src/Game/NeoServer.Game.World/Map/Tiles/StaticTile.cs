@@ -79,7 +79,7 @@ namespace NeoServer.Game.World.Map.Tiles
         #region Store Methods
         public override Result CanAddItem(IItem item, byte amount=1, byte? slot = null) => new Result(InvalidOperation.NotEnoughRoom);
         public override bool CanRemoveItem(IItem item) => false;
-        public override int PossibleAmountToAdd(IItem item, byte? toPosition = null) => 0;
+        public override uint PossibleAmountToAdd(IItem item, byte? toPosition = null) => 0;
         public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
         {
             removedThing = null;
@@ -87,7 +87,7 @@ namespace NeoServer.Game.World.Map.Tiles
         }
         public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null) => Result<OperationResult<IItem>>.NotPossible;
 
-        public override Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        public override Result<uint> CanAddItem(IItemType itemType)
         {
             throw new NotImplementedException();
         }

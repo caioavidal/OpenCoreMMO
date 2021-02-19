@@ -60,6 +60,6 @@ namespace NeoServer.Game.Contracts.Items.Types
         /// <summary>
         /// Number of free slots of this and inner containers
         /// </summary>
-        int TotalFreeSlots { get; }
+        uint TotalFreeSlots { get; }
     }
 }

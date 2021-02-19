@@ -591,7 +591,7 @@ namespace NeoServer.Game.Creatures.Tests
             var result = container.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal(2, container.FreeSlotsCount);
+            Assert.Equal((uint)2, container.FreeSlotsCount);
             Assert.Equal(ammo, sut[Slot.Ammo]);
             Assert.Equal(1, sut[Slot.Ammo].Amount);
         }
@@ -610,7 +610,7 @@ namespace NeoServer.Game.Creatures.Tests
             var result = backpack.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal(20, backpack.FreeSlotsCount);
+            Assert.Equal((uint)20, backpack.FreeSlotsCount);
             Assert.Equal(ammo, sut[Slot.Ammo]);
             Assert.Equal(1, sut[Slot.Ammo].Amount);
         }
@@ -697,7 +697,7 @@ namespace NeoServer.Game.Creatures.Tests
                 { Slot.Ammo, new Tuple<IPickupable, ushort>( ItemTestData.CreateAmmoItem(1, amount), 1) }
             });
 
-            var result = sut.CanAddItem(item.Metadata, 100);
+            var result = sut.CanAddItem(item.Metadata);
 
             Assert.True(result.IsSuccess);
             Assert.Equal(expected, result.Value);
@@ -711,7 +711,7 @@ namespace NeoServer.Game.Creatures.Tests
                 { Slot.Ammo, new Tuple<IPickupable, ushort>( ItemTestData.CreateAmmoItem(1, 50), 1) }
             });
 
-            var result = sut.CanAddItem(item.Metadata, 50);
+            var result = sut.CanAddItem(item.Metadata);
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);

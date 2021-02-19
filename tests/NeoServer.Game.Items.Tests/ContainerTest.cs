@@ -117,11 +117,11 @@ namespace NeoServer.Game.Items.Tests
             var item = ItemTestData.CreateRegularItem(100);
 
             var result = sut.PossibleAmountToAdd(item);
-            Assert.Equal(1, result);
+            Assert.Equal(1u, result);
 
             sut.AddItem(item);
             result = sut.PossibleAmountToAdd(item);
-            Assert.Equal(0, result);
+            Assert.Equal(0u, result);
         }
         [Fact]
         public void PossibleAmountToAdd_When_Passing_Cumulative_Item_Should_Return_Amount_Count()
@@ -130,30 +130,30 @@ namespace NeoServer.Game.Items.Tests
             var item = ItemTestData.CreateAmmoItem(100, 100);
 
             var result = sut.PossibleAmountToAdd(item);
-            Assert.Equal(300, result);
+            Assert.Equal(300u, result);
 
             sut.AddItem(item);
 
             result = sut.PossibleAmountToAdd(item);
-            Assert.Equal(200, result);
+            Assert.Equal(200u, result);
 
             var item2 = ItemTestData.CreateAmmoItem(100, 30);
 
             sut.AddItem(item2);
             result = sut.PossibleAmountToAdd(item);
-            Assert.Equal(170, result);
+            Assert.Equal(170u, result);
 
             var item3 = ItemTestData.CreateAmmoItem(200, 100);
 
             sut.AddItem(item3);
             result = sut.PossibleAmountToAdd(item);
-            Assert.Equal(70, result);
+            Assert.Equal(70u, result);
 
             var item4 = ItemTestData.CreateAmmoItem(100, 70);
 
             sut.AddItem(item4);
             result = sut.PossibleAmountToAdd(item);
-            Assert.Equal(0, result);
+            Assert.Equal(0u, result);
         }
 
         [Fact]
@@ -667,7 +667,83 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(Location.Container(0, 0), item.Location);
         }
 
+        [Fact]
+        public void CanAddItem_Adding_Regular_Item_With_No_Free_Slots_Returns_Error()
+        {
+            var sut = CreateContainer(0);
+            var item = ItemTestData.CreateWeaponItem(100, "axe");
+            var result = sut.CanAddItem(item.Metadata);
 
-    
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
+        }
+        [Fact]
+        public void CanAddItem_Adding_Cumulative_Item_With_No_Free_Slots_Returns_Error()
+        {
+            var sut = CreateContainer(0);
+            var item = ItemTestData.CreateCumulativeItem(1,100);
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
+        }
+        [Fact]
+        public void CanAddItem_Adding_Regular_Item_With_Free_Slots_Returns_Success()
+        {
+            var sut = CreateContainer(1);
+            var item = ItemTestData.CreateWeaponItem(1, "axe");
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.Equal(1u, result.Value);
+        }
+        [Fact]
+        public void CanAddItem_Adding_Regular_Item_With_Free_Slots_On_Child_Returns_Success()
+        {
+            var sut = CreateContainer(1);
+            var child = CreateContainer(1);
+
+            sut.AddItem(child);
+
+            var item = ItemTestData.CreateWeaponItem(1, "axe");
+
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.Equal(1u, result.Value);
+        }
+        [Fact]
+        public void CanAddItem_Adding_Cumulative_Item_With_Free_Slots_Returns_Success()
+        {
+            var sut = CreateContainer(1);
+
+            var item = ItemTestData.CreateAmmoItem(1, 100);
+
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.Equal(100u, result.Value);
+        }
+        [Fact]
+        public void CanAddItem_Adding_Cumulative_Item_With_Partial_Free_Slots_Returns_Success()
+        {
+            var sut = CreateContainer(1);
+
+            sut.AddItem(ItemTestData.CreateAmmoItem(1, 50));
+
+            var item = ItemTestData.CreateAmmoItem(1, 100);
+
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.Equal(50u, result.Value);
+        }
+        [Fact]
+        public void CanAddItem_Adding_Cumulative_Item_With_Partial_Free_Slots_With_Diff_Type_Returns_Error()
+        {
+            var sut = CreateContainer(1);
+
+            sut.AddItem(ItemTestData.CreateAmmoItem(2, 50));
+
+            var item = ItemTestData.CreateAmmoItem(1, 100);
+
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
+        }
     }
 }

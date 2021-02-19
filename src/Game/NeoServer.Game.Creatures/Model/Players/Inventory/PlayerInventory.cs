@@ -423,9 +423,9 @@ namespace NeoServer.Server.Model.Players
 
             return CanAddItemToSlot((Slot)slot, item).ResultValue;
         }
-        public override Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        public override Result<uint> CanAddItem(IItemType itemType)
         {
-            if (itemType is null || amount == 0) return Result<uint>.NotPossible;
+            if (itemType is null) return Result<uint>.NotPossible;
             if (itemType.BodyPosition == Slot.WhereEver) return Result<uint>.NotPossible;
 
             var itemOnSlot = this[itemType.BodyPosition];
@@ -436,7 +436,6 @@ namespace NeoServer.Server.Model.Players
             if (ICumulative.IsApplicable(itemType))
             {
                 var amountOnSlot = this[itemType.BodyPosition]?.Amount ?? 0;
-                var amountToAdd = Math.Min((byte)100, amount);
                 possibleAmountToAdd = (byte)Math.Abs(100 - amountOnSlot);
             }
             else
@@ -450,7 +449,7 @@ namespace NeoServer.Server.Model.Players
             return new Result<uint>(possibleAmountToAdd);
         }
 
-        public override int PossibleAmountToAdd(IItem item, byte? toPosition = null)
+        public override uint PossibleAmountToAdd(IItem item, byte? toPosition = null)
         {
             if (toPosition is null) return 0;
 
@@ -467,7 +466,7 @@ namespace NeoServer.Server.Model.Players
             if (item is not ICumulative) return 1;
             if (item is ICumulative c1 && this[slot] is IItem i && c1.ClientId != i.ClientId) return 100;
             if (item is ICumulative && this[slot] is null) return 100;
-            if (item is ICumulative cumulative) return 100 - this[slot].Amount;
+            if (item is ICumulative cumulative) return (uint)(100 - this[slot].Amount);
 
             return 0;
         }
