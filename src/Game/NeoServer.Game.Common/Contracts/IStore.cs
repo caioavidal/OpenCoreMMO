@@ -20,7 +20,7 @@ namespace NeoServer.Game.Contracts
         /// </summary>
         /// <param name="thing"></param>
         /// <returns></returns>
-        int PossibleAmountToAdd(IItem thing, byte? toPosition = null);
+        uint PossibleAmountToAdd(IItem thing, byte? toPosition = null);
         /// <summary>
         /// Checks if thing can be removed from store
         /// </summary>
@@ -63,6 +63,6 @@ namespace NeoServer.Game.Contracts
         /// <param name="toPosition">destination position where thing will be stored</param>
         /// <returns></returns>
         Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition);
-        Result<uint> CanAddItem(IItemType itemType, byte amount = 1);
+        Result<uint> CanAddItem(IItemType itemType);
     }
 }

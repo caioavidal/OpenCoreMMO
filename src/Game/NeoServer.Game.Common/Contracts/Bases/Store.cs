@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
+using System;
 
 namespace NeoServer.Game.Contracts.Bases
 {
@@ -9,12 +10,12 @@ namespace NeoServer.Game.Contracts.Bases
 
         public abstract Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null);
         public abstract Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
-        public abstract Result<uint> CanAddItem(IItemType itemType, byte amount = 1);
+        public abstract Result<uint> CanAddItem(IItemType itemType);
 
 
         public abstract bool CanRemoveItem(IItem item);
 
-        public abstract int PossibleAmountToAdd(IItem thing, byte? toPosition = null);
+        public abstract uint PossibleAmountToAdd(IItem thing, byte? toPosition = null);
 
         public virtual Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
         {
@@ -44,7 +45,7 @@ namespace NeoServer.Game.Contracts.Bases
             }
             else
             {
-                var amountToAdd = (byte)(possibleAmountToAdd < amount ? possibleAmountToAdd : amount);
+                var amountToAdd = (byte)Math.Min(amount, possibleAmountToAdd);
 
                 RemoveItem(thing, amountToAdd, fromPosition, out removedThing);
             }
@@ -53,9 +54,11 @@ namespace NeoServer.Game.Contracts.Bases
 
             if (result.IsSuccess && thing is IMoveableThing moveableThing) moveableThing.OnMoved();
 
-            if (amount - possibleAmountToAdd > 0)
+
+            var amountResult = (byte) Math.Max(0, amount - (int)possibleAmountToAdd);
+            if (amountResult > 0)
             {
-                return SendTo(destination, thing, (byte)(amount - possibleAmountToAdd), fromPosition, toPosition);
+                return SendTo(destination, thing, amountResult, fromPosition, toPosition);
              
             }
 

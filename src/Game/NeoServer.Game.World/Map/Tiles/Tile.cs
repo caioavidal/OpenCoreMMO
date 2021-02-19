@@ -541,19 +541,19 @@ namespace NeoServer.Game.World.Map.Tiles
             return true;
         }
 
-        public override int PossibleAmountToAdd(IItem thing, byte? toPosition = null)
+        public override uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
         {
             var freeSpace = 10 - (DownItems?.Count ?? 0);
             if (thing is not ICumulative cumulative)
             {
                 if (freeSpace <= 0) return 0;
-                return freeSpace;
+                return (uint)freeSpace;
             }
 
             var possibleAmountToAdd = freeSpace * 100;
             if (TopItemOnStack is ICumulative c && TopItemOnStack.ClientId == cumulative.ClientId) possibleAmountToAdd += c.AmountToComplete;
 
-            return possibleAmountToAdd;
+            return (uint)possibleAmountToAdd;
         }
 
         public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
@@ -573,7 +573,7 @@ namespace NeoServer.Game.World.Map.Tiles
             return new(operations);
         }
 
-        public override Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        public override Result<uint> CanAddItem(IItemType itemType)
         {
             throw new NotImplementedException();
         }

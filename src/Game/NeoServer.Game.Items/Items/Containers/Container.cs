@@ -28,7 +28,7 @@ namespace NeoServer.Game.Items.Items
         public IItem this[int index] => Items.Count > index ? Items[index] : null;
         public bool HasItems => SlotsUsed > 0;
         public byte LastFreeSlot => IsFull ? 0 : SlotsUsed;
-        public int FreeSlotsCount => Capacity - SlotsUsed;
+        public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
         private ContainerStore Store;
         public IThing Root
         {
@@ -71,7 +71,7 @@ namespace NeoServer.Game.Items.Items
             if (Parent is IPlayer player) Location = new Location(Common.Players.Slot.Backpack);
         }
         public static bool IsApplicable(IItemType type) => type.Group == ItemGroup.GroundContainer || type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
-        private int PossibleAmountToAdd(IItem item)
+        private uint PossibleAmountToAdd(IItem item)
         {
             if (item is not ICumulative cumulative) return IsFull ? 0 : FreeSlotsCount;
 
@@ -254,11 +254,11 @@ namespace NeoServer.Game.Items.Items
             return item;
         }
 
-        public int TotalFreeSlots
+        public uint TotalFreeSlots
         {
             get
             {
-                var total = 0;
+                uint total = 0;
                 foreach (var item in Items)
                 {
                     if (item is IContainer container) total += container.TotalFreeSlots;
@@ -427,7 +427,7 @@ namespace NeoServer.Game.Items.Items
         }
 
         public Result CanAddItem(IItem item, byte amount = 1, byte? slot = null) => CanAddItem(item, slot);
-        public int PossibleAmountToAdd(IItem item, byte? toPosition = null) => PossibleAmountToAdd(item);
+        public uint PossibleAmountToAdd(IItem item, byte? toPosition = null) => PossibleAmountToAdd(item);
 
         public bool CanRemoveItem(IItem item) => true;
 
@@ -450,9 +450,32 @@ namespace NeoServer.Game.Items.Items
 
         public Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition) => Store.ReceiveFrom(source, thing, toPosition);
 
-        public Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
+        /// <summary>
+        /// Checks if item cam be added to any containers within current container
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="amount"></param>
+        /// <returns>Returns true when any amount is possible to add</returns>
+        public Result<uint> CanAddItem(IItemType itemType)
         {
-            throw new NotImplementedException();
+            if (!ICumulative.IsApplicable(itemType) && TotalFreeSlots > 0)
+            {
+                return new Result<uint>(TotalFreeSlots);
+            }
+
+            var containers = new Queue<IContainer>();
+
+            containers.Enqueue(this);
+
+            var amountPossibleToAdd = TotalFreeSlots * 100;
+
+            if (Map.TryGetValue(itemType.TypeId, out var totalAmount))
+            {
+                var next100 = Math.Ceiling((decimal)totalAmount / 100) * 100;
+                amountPossibleToAdd += (uint)(next100 - totalAmount);
+            }
+
+            return amountPossibleToAdd > 0 ? new Result<uint>(amountPossibleToAdd) : new Result<uint>(InvalidOperation.NotEnoughRoom);
         }
     }
 }

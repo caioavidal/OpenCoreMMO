@@ -18,14 +18,11 @@ namespace NeoServer.Game.Items.Items
         public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null) => container.AddItem(thing, position);
         public override Result CanAddItem(IItem item, byte amount = 1, byte? slot = null) => container.CanAddItem(item, amount, slot);
 
-        public override Result<uint> CanAddItem(IItemType itemType, byte amount = 1)
-        {
-            throw new System.NotImplementedException();
-        }
+        public override Result<uint> CanAddItem(IItemType itemType) => container.CanAddItem(itemType);
 
         public override bool CanRemoveItem(IItem item) => container.CanRemoveItem(item);
 
-        public override int PossibleAmountToAdd(IItem thing, byte? toPosition = null) => container.PossibleAmountToAdd(thing, toPosition);
+        public override uint PossibleAmountToAdd(IItem thing, byte? toPosition = null) => container.PossibleAmountToAdd(thing, toPosition);
 
         public override Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition) => base.ReceiveFrom(source, thing, toPosition);
 
