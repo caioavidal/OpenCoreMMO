@@ -833,9 +833,6 @@ namespace NeoServer.Server.Model.Players
                     {
                         if (!result.Value.HasAnyOperation) continue;
                         if (result.Value.Operations[0].Item2 != Operation.Removed) continue;
-
-                      //  Inventory.BackpackSlot?.AddItem(result.Value.Operations[0].Item1, true);
-                     //   continue;
                     }
                 }
 
