@@ -204,5 +204,108 @@ namespace NeoServer.Game.Creatures.Tests.Services
             Assert.Equal(expected, player.Inventory[itemToBuy.Metadata.BodyPosition].Amount);
         }
 
+
+        [InlineData("head")]
+        [InlineData("body")]
+        [InlineData("weapon")]
+        [InlineData("shield")]
+        [InlineData("necklace")]
+        [InlineData("ring")]
+        [InlineData("feet")]
+        [InlineData("ammo")]
+        [Theory]
+        public void Buy_Equipment_When_Slot_Is_Full_Adds_To_Backpack(string slot)
+        {
+            var itemFactoryMock = new Mock<IItemFactory>();
+            var sut = new DealTransaction(itemFactoryMock.Object);
+
+            var itemToBuy = ItemTestData.CreateBodyEquipmentItem(10, slot);
+
+            itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
+
+            var container = ItemTestData.CreateBackpack();
+         
+            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) },
+             { itemToBuy.Metadata.BodyPosition, new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(10, slot),10) }});
+
+            player.LoadBank(5000);
+
+            var shopperMock = new Mock<IShopperNpc>();
+            shopperMock.Setup(x => x.CalculateCost(itemToBuy.Metadata, 1)).Returns(400);
+
+            var result = sut.Buy(player, shopperMock.Object, itemToBuy.Metadata, 1);
+
+            Assert.Equal(itemToBuy, player.Inventory.BackpackSlot.Items[0]);
+        }
+        [InlineData("head")]
+        [InlineData("body")]
+        [InlineData("weapon")]
+        [InlineData("shield")]
+        [InlineData("necklace")]
+        [InlineData("ring")]
+        [InlineData("feet")]
+        [InlineData("ammo")]
+        [Theory]
+        public void Buy_5_Equipment_When_Slot_Is_Full_Adds_To_Backpack(string slot)
+        {
+            var itemFactoryMock = new Mock<IItemFactory>();
+            var sut = new DealTransaction(itemFactoryMock.Object);
+
+            var itemToBuy = ItemTestData.CreateBodyEquipmentItem(10, slot);
+
+            itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
+
+            var container = ItemTestData.CreateBackpack();
+
+            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) }});
+
+            player.LoadBank(5000);
+
+            var shopperMock = new Mock<IShopperNpc>();
+            shopperMock.Setup(x => x.CalculateCost(It.IsAny<IItemType>(), It.IsAny<byte>())).Returns(400);
+
+            var result = sut.Buy(player, shopperMock.Object, itemToBuy.Metadata, 5);
+
+            Assert.Equal(itemToBuy, player.Inventory[itemToBuy.Metadata.BodyPosition]);
+
+            Assert.Equal(4, player.Inventory.BackpackSlot.Items.Count);
+
+            Assert.Equal(itemToBuy, player.Inventory.BackpackSlot.Items[0]);
+            Assert.Equal(itemToBuy, player.Inventory.BackpackSlot.Items[1]);
+            Assert.Equal(itemToBuy, player.Inventory.BackpackSlot.Items[2]);
+            Assert.Equal(itemToBuy, player.Inventory.BackpackSlot.Items[3]);
+        }
+
+        [InlineData(30, 100,30)]
+        [InlineData(100, 100, 100)]
+        [InlineData(100, 1, 1)]
+        [InlineData(99, 2, 1)]
+        [InlineData(100, 99, 99)]
+        [Theory]
+        public void Buy_Ammo_When_Slot_Is_Partial_Adds_To_Backpack(byte currentOnInventory, byte bought, byte expectedOnBackpack)
+        {
+            var itemFactoryMock = new Mock<IItemFactory>();
+            var sut = new DealTransaction(itemFactoryMock.Object);
+
+            var itemToBuy = ItemTestData.CreateAmmoItem(10, bought);
+
+            itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
+
+            var container = ItemTestData.CreateBackpack();
+
+            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) },
+             { itemToBuy.Metadata.BodyPosition, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(10, currentOnInventory),10) }});
+
+            player.LoadBank(5000);
+
+            var shopperMock = new Mock<IShopperNpc>();
+            shopperMock.Setup(x => x.CalculateCost(itemToBuy.Metadata, 1)).Returns(400);
+
+            var result = sut.Buy(player, shopperMock.Object, itemToBuy.Metadata, bought);
+
+            Assert.Equal(itemToBuy.ClientId, player.Inventory.BackpackSlot.Items[0].ClientId);
+            Assert.Equal(expectedOnBackpack, player.Inventory.BackpackSlot.Items[0].Amount);
+        }
+
     }
 }

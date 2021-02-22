@@ -827,12 +827,19 @@ namespace NeoServer.Server.Model.Players
 
                 if (possibleAmountOnInventory > 0)
                 {
-                    possibleAmountOnInventory -= item.Amount;
+                    possibleAmountOnInventory = (uint)Math.Max(0, (int)possibleAmountOnInventory - item.Amount);
                     var result = Inventory.AddItem(item);
-                    if(result.IsSuccess) continue;
+                    if (result.IsSuccess)
+                    {
+                        if (!result.Value.HasAnyOperation) continue;
+                        if (result.Value.Operations[0].Item2 != Operation.Removed) continue;
+
+                      //  Inventory.BackpackSlot?.AddItem(result.Value.Operations[0].Item1, true);
+                     //   continue;
+                    }
                 }
 
-                Inventory.BackpackSlot.AddItem(item, true);
+                Inventory.BackpackSlot?.AddItem(item, true);
             }
         }
     }
