@@ -16,7 +16,11 @@ namespace NeoServer.Game.Items.Items
         public Coin(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
         {
         }
-      
+
+        public Coin(IItemType type, Location location, byte amount) : base(type, location, amount)
+        {
+        }
+
         public uint WorthMultiplier => Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Worth);
         public uint Worth => Amount * WorthMultiplier;
         public static new bool IsApplicable(IItemType type) => ICumulative.IsApplicable(type) && (type.Attributes.GetAttribute(Common.ItemAttribute.Type)?.Equals("coin", StringComparison.InvariantCultureIgnoreCase) ?? false);

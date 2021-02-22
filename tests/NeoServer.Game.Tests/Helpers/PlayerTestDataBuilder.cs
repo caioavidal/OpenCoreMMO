@@ -14,14 +14,15 @@ namespace NeoServer.Game.Tests
 {
     public  class PlayerTestDataBuilder
     {
-        public static IPlayer BuildPlayer(uint capacity = 100, ushort hp = 100, ushort mana = 30)
+        public static IPlayer BuildPlayer(uint capacity = 100, ushort hp = 100, ushort mana = 30, Dictionary<Slot, Tuple<IPickupable, ushort>> inventory = null)
         {
+            inventory = inventory ?? new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             var sut = new Player(1,"PlayerA", ChaseMode.Stand, capacity: capacity, healthPoints: hp, maxHealthPoints: 100, vocation: 1, Gender.Male, online: true, mana: mana, maxMana: 30, fightMode: FightMode.Attack,
               soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
               {
                     { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
 
-              }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null, null));
+              }, staminaMinutes: 300, outfit: new Outfit(), inventory: inventory, speed: 300, new Location(100, 100, 7), pathAccess: new CreaturePathAccess(null, null));
             return sut;
         }
     }

@@ -70,6 +70,12 @@ namespace NeoServer.Game.Items.Items
             Parent = thing;
             if (Parent is IPlayer player) Location = new Location(Common.Players.Slot.Backpack);
         }
+
+        public void AddItem(object createCoin)
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool IsApplicable(IItemType type) => type.Group == ItemGroup.GroundContainer || type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
         private uint PossibleAmountToAdd(IItem item)
         {
