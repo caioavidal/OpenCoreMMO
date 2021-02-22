@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
@@ -72,6 +73,9 @@ namespace NeoServer.Game.Items.Tests
 
             if (twoHanded)
                 type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "two-handed");
+            else
+                type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "weapon");
+
             return new MeleeWeapon(type, new Location(100, 100, 7));
         }
         public static IPickupable CreateThrowableDistanceItem(ushort id, byte amount, bool twoHanded = false)
@@ -125,12 +129,26 @@ namespace NeoServer.Game.Items.Tests
             type.SetId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, "ammunition");
-            type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "ammo");
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "ammo");
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
             type.Flags.Add(Common.ItemFlag.Stackable);
 
 
             return new AmmoItem(type, new Location(100, 100, 7), amount);
+        }
+        public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)
+        {
+            var type = new ItemType();
+            type.SetClientId(id);
+            type.SetId(id);
+            type.SetName("coin");
+            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "coin");
+            type.Attributes.SetAttribute(ItemAttribute.Worth, multiplier);
+            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
+            type.Flags.Add(Common.ItemFlag.Stackable);
+
+
+            return new Coin(type, new Location(100, 100, 7), amount);
         }
 
         public static IItem CreateTopItem(ushort id, byte topOrder)

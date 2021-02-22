@@ -426,13 +426,12 @@ namespace NeoServer.Server.Model.Players
         public override Result<uint> CanAddItem(IItemType itemType)
         {
             if (itemType is null) return Result<uint>.NotPossible;
-            if (itemType.BodyPosition == Slot.WhereEver) return Result<uint>.NotPossible;
+            if (itemType.BodyPosition == Slot.None) return new Result<uint>(InvalidOperation.NotEnoughRoom);
 
             var itemOnSlot = this[itemType.BodyPosition];
             if (itemOnSlot is not null && itemType.TypeId != itemOnSlot.Metadata.TypeId) return new Result<uint>(InvalidOperation.NotEnoughRoom);
 
-            byte possibleAmountToAdd = 0;
-
+            byte possibleAmountToAdd;
             if (ICumulative.IsApplicable(itemType))
             {
                 var amountOnSlot = this[itemType.BodyPosition]?.Amount ?? 0;
@@ -476,6 +475,10 @@ namespace NeoServer.Server.Model.Players
         public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
         {
             if (thing is not IPickupable item) return Result<OperationResult<IItem>>.NotPossible;
+
+            position = position ?? (byte)thing.Metadata.BodyPosition;
+
+            if (position is null) return Result<OperationResult<IItem>>.NotPossible; 
 
             var swappedItem = TryAddItemToSlot((Slot)position, item);
 

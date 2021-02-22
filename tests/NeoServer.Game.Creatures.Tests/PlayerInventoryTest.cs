@@ -615,6 +615,18 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(1, sut[Slot.Ammo].Amount);
         }
 
+        [Fact]
+        public void CanAddItem_When_Item_Is_Not_Dressable_Returns_Error()
+        {
+            var item = ItemTestData.CreateRegularItem(1);
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+            var result = sut.CanAddItem(item.Metadata);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
+        }
+
         [InlineData("head")]
         [InlineData("body")]
         [InlineData("weapon")]

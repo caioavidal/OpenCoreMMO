@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts;
@@ -32,11 +33,20 @@ namespace NeoServer.Game.Creatures.Events
             var cost = seller.CalculateCost(itemType, amount);
             if (buyer.TotalMoney < cost) return false;
 
+            
+            var amountToAddToInventory = buyer.Inventory.CanAddItem(itemType).Value;
+            var amountToAddToBackpack = buyer.Inventory.BackpackSlot?.CanAddItem(itemType).Value ?? 0;
+
+            if (amount > amountToAddToBackpack + amountToAddToInventory) return false;
+
+            var saleContract = new SaleContract(itemType.TypeId, amount, amountToAddToInventory, amountToAddToBackpack);
+
+            AddItems(buyer, seller, saleContract);
+
+            //first add items than remove coins
             var removedAmount = RemoveCoins(buyer, cost);
 
             if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
-
-            AddItems(buyer, seller, itemType.TypeId, amount);
 
             return true;
         }
@@ -46,26 +56,27 @@ namespace NeoServer.Game.Creatures.Events
 
         }
 
-        private void AddItems(IPlayer player, INpc seller, ushort typeId, byte amount)
+        private void AddItems(IPlayer player, INpc seller, SaleContract saleContract)
         {
-            var item = itemFactory.Create(typeId, Location.Inventory(Common.Players.Slot.Backpack), null);
+            
+            var item = itemFactory.Create(saleContract.TypeId, Location.Inventory(Common.Players.Slot.Backpack), null);
 
             if (item is ICumulative cumulative)
             {
-                cumulative.Amount = amount;
-                player.ReceivePurchasedItems(seller, item);
+                cumulative.Amount = saleContract.Amount;
+                player.ReceivePurchasedItems(seller, saleContract, item);
             }
             else
             {
-                var items = new IItem[amount];
+                var items = new IItem[saleContract.Amount];
                 items[0] = item;
 
-                for (int i = 1; i < amount; i++)
+                for (int i = 1; i < saleContract.Amount; i++)
                 {
-                    items[i] = itemFactory.Create(typeId, Location.Inventory(Common.Players.Slot.Backpack), null);
+                    items[i] = itemFactory.Create(saleContract.TypeId, Location.Inventory(Common.Players.Slot.Backpack), null);
                 }
 
-                player.ReceivePurchasedItems(seller, items);
+                player.ReceivePurchasedItems(seller, saleContract, items);
             }
         }
         private ulong RemoveCoins(IPlayer player, ulong amount)
@@ -149,4 +160,6 @@ namespace NeoServer.Game.Creatures.Events
             return removedAmount;
         }
     }
+
+  
 }

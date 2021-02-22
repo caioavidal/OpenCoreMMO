@@ -13,6 +13,6 @@
         Feet = 0x08,
         Ring = 0x09,
         Ammo = 0x0A,
-        WhereEver = 0x0B
+        None = 0x0B
     }
 }
