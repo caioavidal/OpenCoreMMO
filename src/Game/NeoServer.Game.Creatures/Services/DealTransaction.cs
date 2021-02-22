@@ -39,13 +39,14 @@ namespace NeoServer.Game.Creatures.Events
 
             if (amount > amountToAddToBackpack + amountToAddToInventory) return false;
 
-            var removedAmount = RemoveCoins(buyer, cost);
-
-            if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
-
             var saleContract = new SaleContract(itemType.TypeId, amount, amountToAddToInventory, amountToAddToBackpack);
 
             AddItems(buyer, seller, saleContract);
+
+            //first add items than remove coins
+            var removedAmount = RemoveCoins(buyer, cost);
+
+            if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
 
             return true;
         }
