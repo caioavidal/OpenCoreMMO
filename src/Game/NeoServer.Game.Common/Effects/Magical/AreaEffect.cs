@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Effects.Parsers;
 using System;
 using System.Buffers;
 using System.Collections.Generic;

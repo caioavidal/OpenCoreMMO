@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Common.Talks;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Incoming
 {

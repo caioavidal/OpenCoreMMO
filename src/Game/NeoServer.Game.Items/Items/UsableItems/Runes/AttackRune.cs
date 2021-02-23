@@ -11,7 +11,6 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Effects.Magical;
-using NeoServer.Game.Parsers.Effects;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;

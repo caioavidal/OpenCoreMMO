@@ -1,16 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NeoServer.Data.Interfaces;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Creatures;
-using NeoServer.Loaders.Interfaces;
+﻿using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {

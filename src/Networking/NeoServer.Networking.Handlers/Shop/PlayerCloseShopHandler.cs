@@ -1,7 +1,4 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Player;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Player

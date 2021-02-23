@@ -1,10 +1,4 @@
 ﻿using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

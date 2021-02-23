@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts;

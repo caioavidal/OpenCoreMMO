@@ -2,7 +2,6 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.DataStore;
 using Serilog.Core;
