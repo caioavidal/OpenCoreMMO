@@ -58,6 +58,9 @@ namespace NeoServer.Data.Configurations
                 .HasColumnType("int(11)")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
 
+            builder.HasMany(x => x.VipList).WithOne().HasForeignKey("AccountId");
+
+
             builder.Ignore(i => i.Creation);
 
             builder.Ignore(i => i.LastDay);
