@@ -39,7 +39,5 @@ namespace NeoServer.Game.Chats.Tests
             Assert.False(sut.PlayerIsMuted(player, out cancelMessage));
         }
 
-
-
     }
 }

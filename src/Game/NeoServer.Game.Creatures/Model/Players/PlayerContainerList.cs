@@ -116,7 +116,6 @@ namespace NeoServer.Game.Creatures.Model.Players
                 playerContainer = new PlayerContainer(container, player);
             }
 
-
             var containerAlreadyOpened = openedContainers.Values.FirstOrDefault(v => v.Equals(playerContainer))?.Id;
             if (containerAlreadyOpened.HasValue) //if container is already opened
             {
@@ -131,7 +130,6 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             return;
         }
-
 
         private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
         {

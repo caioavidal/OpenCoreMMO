@@ -121,7 +121,6 @@ namespace NeoServer.Game.World.Map
         public static ICylinderSpectator[] GetSpectators(IThing thing, ITile tile)
         {
 
-
             var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
             return GetSpectatorsStackPositions(thing, tile, spectators);
         }

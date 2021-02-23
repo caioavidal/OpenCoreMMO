@@ -32,7 +32,6 @@ namespace NeoServer.Game.World
             LoadedTilesCount++;
         }
 
-
         public void LoadSpawns(IEnumerable<ISpawn> spawns)
         {
             spawns.ThrowIfNull();

@@ -28,7 +28,6 @@ namespace NeoServer.Server.Handlers.Player
             if (addVipPacket.Name?.Length > 20) return;
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-
             if (!game.CreatureManager.TryGetPlayer(addVipPacket.Name, out var vipPlayer))
             {
                 var playerRecord = await accountRepository.GetPlayer(addVipPacket.Name);
@@ -36,7 +35,6 @@ namespace NeoServer.Server.Handlers.Player
 
                 vipPlayer = playerLoader.Load(playerRecord);
             }
-            
 
             if (vipPlayer is null)
             {

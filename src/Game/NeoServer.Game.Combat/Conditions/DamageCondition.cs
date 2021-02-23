@@ -146,7 +146,6 @@ namespace NeoServer.Game.Common.Conditions
             }
         }
 
-   
     }
 }
 

@@ -21,7 +21,6 @@ namespace NeoServer.Server.Handlers.Player
             var channel = new OpenPrivateChannelPacket(message);
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-
             if (string.IsNullOrWhiteSpace(channel.Receiver) || (await accountRepository.GetPlayer(channel.Receiver)) is null)
             {
                 connection.Send(new TextMessagePacket("A player with this name does not exist.", TextMessageOutgoingType.Small));

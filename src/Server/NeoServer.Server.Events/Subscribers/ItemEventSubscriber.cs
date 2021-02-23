@@ -20,7 +20,6 @@ namespace NeoServer.Server.Events
             }
         }
 
-  
         public void Unsubscribe(IItem item)
         {
             if (item is IUseableOnTile useableOnTile)

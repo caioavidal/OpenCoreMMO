@@ -104,8 +104,6 @@ namespace NeoServer.Data.Configurations
                 .HasColumnType("int(11)")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("-1");
 
-            
-
             entity.Property(e => e.OfflineTrainingTime)
                 .HasColumnName("offlinetraining_time")
                 .HasColumnType("smallint(5) unsigned")
@@ -216,7 +214,5 @@ namespace NeoServer.Data.Configurations
             PlayerModelSeed.Seed(entity);
         }
 
-
-     
     }
 }

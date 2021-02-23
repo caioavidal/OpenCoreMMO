@@ -126,7 +126,6 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-
         public void LoadVipList(IEnumerable<(uint, string)> vips)
         {
             var vipList = new HashSet<(uint, string)>();
@@ -276,7 +275,6 @@ namespace NeoServer.Server.Model.Players
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
         public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
-
 
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
         const int KnownCreatureLimit = 250; //todo: for version 8.60
@@ -753,7 +751,6 @@ namespace NeoServer.Server.Model.Players
                 OnOperationFailed?.Invoke(CreatureId, "This player is already in your list.");
                 return false;
             }
-
 
             OnAddedToVipList?.Invoke(this, player.Id, player.Name);
             return true;

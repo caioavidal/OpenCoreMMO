@@ -21,7 +21,6 @@ namespace NeoServer.Networking.Packets.Outgoing
         {
 			if (TalkType == SpeechType.None) return;
 
-		
 			message.AddByte((byte)GameOutgoingPacketType.SendPrivateMessage);
 			uint statementId = 0;
 

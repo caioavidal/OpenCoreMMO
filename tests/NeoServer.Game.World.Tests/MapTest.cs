@@ -37,6 +37,5 @@ namespace NeoServer.Game.World.Tests
 
         }
 
-        
     }
 }

@@ -193,13 +193,10 @@ namespace NeoServer.Data.Configurations
                 .HasForeignKey(d => d.AccountId)
                 .HasConstraintName("players_ibfk_1");
 
-
             entity.HasOne(x => x.GuildMember).WithOne(x => x.Player);
 
             PlayerModelSeed.Seed(entity);
         }
 
-
-   
     }
 }

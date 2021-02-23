@@ -141,7 +141,6 @@ namespace NeoServer.Game.Items.Tests
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
             type.Flags.Add(Common.ItemFlag.Stackable);
 
-
             return new AmmoItem(type, new Location(100, 100, 7), amount);
         }
         public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)
@@ -154,7 +153,6 @@ namespace NeoServer.Game.Items.Tests
             type.Attributes.SetAttribute(ItemAttribute.Worth, multiplier);
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
             type.Flags.Add(Common.ItemFlag.Stackable);
-
 
             return new Coin(type, new Location(100, 100, 7), amount);
         }

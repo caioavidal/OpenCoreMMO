@@ -29,7 +29,6 @@ namespace NeoServer.Game.Creatures.Events
             var cost = seller.CalculateCost(itemType, amount);
             if (buyer.TotalMoney < cost) return false;
 
-            
             var amountToAddToInventory = buyer.Inventory.CanAddItem(itemType).Value;
             var amountToAddToBackpack = buyer.Inventory.BackpackSlot?.CanAddItem(itemType).Value ?? 0;
 
@@ -177,8 +176,6 @@ namespace NeoServer.Game.Creatures.Events
             }
         }
 
-
     }
 
-  
 }

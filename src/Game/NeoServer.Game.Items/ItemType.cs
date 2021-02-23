@@ -254,6 +254,5 @@ namespace NeoServer.Game.Items
         public DamageType DamageType => DamageTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.Damage));
         public EffectT EffectT => EffectParser.Parse(Attributes?.GetAttribute(ItemAttribute.Effect));
 
-
     }
 }

@@ -29,7 +29,6 @@ namespace NeoServer.Server.Tests.Events
             var connectionMock = new Mock<IConnection>();
             connectionMock.Setup(x => x.OutgoingPackets).Returns(new Queue<IOutgoingPacket>());
             var connection = connectionMock.Object;
-            
 
             var gameCreatureManagerMock = new Mock<GameCreatureManager>(creatureGameInstanceMock.Object, map);
             gameCreatureManagerMock.Setup(x => x.GetPlayerConnection(It.IsAny<uint>(), out connection)).Returns(true);

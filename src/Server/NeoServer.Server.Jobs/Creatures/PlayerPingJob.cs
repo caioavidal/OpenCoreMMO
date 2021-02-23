@@ -19,7 +19,6 @@ namespace NeoServer.Server.Jobs
 
             var now = DateTime.Now.Ticks;
 
-
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
                 return;
@@ -34,7 +33,6 @@ namespace NeoServer.Server.Jobs
                 connection.Send(new PingPacket());
             }
 
-         
             var noPongTime = TimeSpan.FromTicks(now - connection.LastPingResponse).TotalMilliseconds;
 
             if (noPongTime >= CONNECTION_LOST_INTERVAL && connection.LastPingResponse > 0)

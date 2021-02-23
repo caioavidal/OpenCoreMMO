@@ -20,7 +20,6 @@ namespace NeoServer.Server.Handlers.Player
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             var removeVipPacket = new RemoveVipPacket(message);
-            
 
             game.Dispatcher.AddEvent(new Event(() => player.RemoveFromVip(removeVipPacket.PlayerId)));
 

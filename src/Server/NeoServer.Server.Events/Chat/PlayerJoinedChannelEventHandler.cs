@@ -20,8 +20,6 @@ namespace NeoServer.Server.Events
             if (player is null) return;
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out IConnection connection)) return;
 
-            
-            
             connection.OutgoingPackets.Enqueue(new PlayerOpenChannelPacket(channel.Id, channel.Name));
 
             if (!string.IsNullOrWhiteSpace(channel.Description))

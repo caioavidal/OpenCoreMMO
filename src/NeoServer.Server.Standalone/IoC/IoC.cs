@@ -123,7 +123,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterPlayerLoaders();
             builder.RegisterStartupLoaders();
             builder.RegisterType<SpellLoader>().SingleInstance();
-            
 
             //factories
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
@@ -221,7 +220,6 @@ namespace NeoServer.Server.Standalone.IoC
         }
         private static void RegisterCustomLoaders(this ContainerBuilder builder) => RegisterAssembliesByInterface(typeof(ICustomLoader));
 
-        
         private static void RegisterPlayerFactory(this ContainerBuilder builder)
         {
             builder.Register((c, p) =>
@@ -244,7 +242,6 @@ namespace NeoServer.Server.Standalone.IoC
                 {
                     packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
                 }
-
 
                 if (!InputHandlerMap.Data.TryGetValue(packet, out Type handlerType))
                 {
@@ -309,7 +306,6 @@ namespace NeoServer.Server.Standalone.IoC
             };
 
             builder.RegisterInstance(config).SingleInstance();
-
 
             builder.RegisterType<TContext>()
                    .WithParameter("options", options)

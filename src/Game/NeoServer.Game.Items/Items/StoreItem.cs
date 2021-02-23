@@ -26,7 +26,6 @@ namespace NeoServer.Game.Items.Items
 
         public override Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition) => base.ReceiveFrom(source, thing, toPosition);
 
-
         public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing) => container.RemoveItem(thing, amount, fromPosition, out removedThing);
 
         public override Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition) => base.SendTo(destination, thing, amount, fromPosition, toPosition);

@@ -58,5 +58,4 @@ namespace NeoServer.Game.Creatures.Guilds
         }
     }
 
-
 }

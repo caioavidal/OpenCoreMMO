@@ -297,7 +297,6 @@ namespace NeoServer.Game.Items.Items
                 }
                 amount -= item.Amount;
 
-
             }
 
             while (slotsToRemove.TryPop(out var slot))
@@ -437,7 +436,6 @@ namespace NeoServer.Game.Items.Items
         public bool CanRemoveItem(IItem item) => true;
 
         public Result<OperationResult<IItem>> AddItem(IItem item, byte? position = null) => new(TryAddItem(item, position).Error);
-
 
         public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
         {

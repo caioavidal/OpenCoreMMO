@@ -211,7 +211,6 @@ namespace NeoServer.Game.Creatures.Model
             return false;
         }
 
-
         public byte Skull { get; protected set; } // TODO: implement.
 
         public byte Shield { get; protected set; } // TODO: implement.
@@ -258,7 +257,6 @@ namespace NeoServer.Game.Creatures.Model
             //if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
             //return item;
         }
-
 
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == CreatureId;
 

@@ -35,7 +35,6 @@ namespace NeoServer.Game.Contracts.Creatures
         void MoveAroundEnemy();
         void UpdateLastTargetChance();
 
-      
         void Sleep();
 
         /// <summary>

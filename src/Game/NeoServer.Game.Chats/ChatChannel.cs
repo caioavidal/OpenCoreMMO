@@ -32,7 +32,6 @@ namespace NeoServer.Game.Chats
         public Dictionary<byte, SpeechType> ChatColorByVocation { private get; init; }
         public virtual IEnumerable<IUserChat> Users => users.Values;
 
-
         public virtual SpeechType GetTextColor(IPlayer player)
         {
             if (player is null) return ChatColor;
@@ -56,7 +55,6 @@ namespace NeoServer.Game.Chats
             }
             return users.TryAdd(player.Id, new UserChat { Player = player });
         }
-
 
         public virtual bool RemoveUser(IPlayer player)
         {

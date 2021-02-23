@@ -46,7 +46,6 @@ namespace NeoServer.Server.Commands.Player
 
             if (onItem is not IItem && onTile is not ITile) return;
 
-
             Action action = null;
 
             IUseableOn itemToUse = null;

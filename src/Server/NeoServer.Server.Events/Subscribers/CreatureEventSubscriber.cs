@@ -55,7 +55,6 @@ namespace NeoServer.Server.Events
         public void Subscribe(ICreature creature)
         {
             creature.OnChangedOutfit += creatureChangedOutfitEventHandler.Execute;
-            
 
             if (creature is ISociableCreature sociableCreature)
             {
@@ -103,7 +102,6 @@ namespace NeoServer.Server.Events
                 combatActor.OnHeal -= _creatureHealedEventHandler.Execute;
                 combatActor.OnChangedVisibility -= creatureTurnedInvisibleEventHandler.Execute;
             }
-
 
             if (creature is IWalkableCreature walkableCreature)
             {

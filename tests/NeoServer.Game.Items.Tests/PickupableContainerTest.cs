@@ -127,7 +127,6 @@ namespace NeoServer.Game.Items.Tests
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
             child.AddItem(shield);
 
-            
             sut.SendTo(sut, child,1, 1, 0);
 
             Assert.Equal(100, sut.Weight);

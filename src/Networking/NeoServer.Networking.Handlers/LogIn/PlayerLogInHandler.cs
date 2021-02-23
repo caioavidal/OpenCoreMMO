@@ -53,8 +53,6 @@ namespace NeoServer.Server.Handlers.Authentication
             await accountRepository.Reload(playerRecord.GuildMember);
             await accountRepository.Reload(playerRecord);
 
-         
-
             game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, connection)));
         }
 

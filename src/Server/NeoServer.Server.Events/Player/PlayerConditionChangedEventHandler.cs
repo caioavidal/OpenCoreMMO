@@ -29,6 +29,5 @@ namespace NeoServer.Server.Events.Player
             }
         }
 
-   
     }
 }

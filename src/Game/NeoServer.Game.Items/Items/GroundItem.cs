@@ -12,7 +12,6 @@ namespace NeoServer.Game.Items.Items
         public IItemType Metadata { get; }
         public Location Location { get; set; }
 
-
         public GroundItem(IItemType type, Location location)
         {
             Metadata = type;

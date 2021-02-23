@@ -45,7 +45,6 @@ namespace NeoServer.Game.Items
         
         public bool HasAttribute(string attribute) => _customAttributes.ContainsKey(attribute);
 
-
         public T GetAttribute<T>(ItemAttribute attribute) where T : struct
         {
             if (_defaultAttributes is null) return default;
