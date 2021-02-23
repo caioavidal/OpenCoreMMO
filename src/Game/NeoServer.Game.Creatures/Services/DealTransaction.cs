@@ -39,14 +39,17 @@ namespace NeoServer.Game.Creatures.Events
 
             if (amount > amountToAddToBackpack + amountToAddToInventory) return false;
 
+            var removedAmount = RemoveCoins(buyer, cost, out var change);
+
+            if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
+
             var saleContract = new SaleContract(itemType.TypeId, amount, amountToAddToInventory, amountToAddToBackpack);
 
             AddItems(buyer, seller, saleContract);
 
-            //first add items than remove coins
-            var removedAmount = RemoveCoins(buyer, cost);
+            var changeCoins = CreateCoins(change).ToList();
 
-            if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
+            buyer.ReceivePayment(changeCoins, change);
 
             return true;
         }
@@ -79,8 +82,9 @@ namespace NeoServer.Game.Creatures.Events
                 player.ReceivePurchasedItems(seller, saleContract, items);
             }
         }
-        private ulong RemoveCoins(IPlayer player, ulong amount)
+        private ulong RemoveCoins(IPlayer player, ulong amount, out ulong change)
         {
+            change = 0;
             if (player is null || amount == 0) return 0;
 
             var backpackSlot = player.Inventory?.BackpackSlot;
@@ -134,17 +138,18 @@ namespace NeoServer.Game.Creatures.Events
                             uint worth = coin.Worth / coin.Amount;
                             uint removeCount = (uint)Math.Ceiling((decimal)(coin.Worth / worth));
 
-                            var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, (worth * removeCount) - amount);
+                            change += (worth * removeCount) - amount;
+                            //var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, (worth * removeCount) - amount);
 
                             container.RemoveItem(coin, coin.Amount);
 
-                            foreach (var coinToAdd in coinsToAdd)
-                            {
-                                var createdCoin = itemFactory.Create(coinToAdd.Item1, Location.Inventory(Common.Players.Slot.Backpack), null);
-                                if (createdCoin is not ICoin newCoin) continue;
-                                newCoin.Amount = coinToAdd.Item2;
-                                backpackSlot.AddItem(newCoin, true);
-                            }
+                            //foreach (var coinToAdd in coinsToAdd)
+                            //{
+                            //    var createdCoin = itemFactory.Create(coinToAdd.Item1, Location.Inventory(Common.Players.Slot.Backpack), null);
+                            //    if (createdCoin is not ICoin newCoin) continue;
+                            //    newCoin.Amount = coinToAdd.Item2;
+                            //    backpackSlot.AddItem(newCoin, true);
+                            //}
 
                             return removedAmount + amount;
                         }
@@ -159,6 +164,22 @@ namespace NeoServer.Game.Creatures.Events
 
             return removedAmount;
         }
+
+        public IEnumerable<IItem> CreateCoins(ulong amount)
+        {
+            var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, amount);
+
+            foreach (var coinToAdd in coinsToAdd)
+            {
+                var createdCoin = itemFactory.Create(coinToAdd.Item1, Location.Inventory(Common.Players.Slot.Backpack), null);
+                if (createdCoin is not ICoin newCoin) continue;
+                newCoin.Amount = coinToAdd.Item2;
+
+                yield return newCoin;
+            }
+        }
+
+
     }
 
   

@@ -20,5 +20,6 @@ namespace NeoServer.Game.Common.Creatures
         public byte Amount { get; }
         public uint PossibleAmountOnInventory { get; }
         public uint PossibleAmountOnBackpack { get; }
+
     }
 }

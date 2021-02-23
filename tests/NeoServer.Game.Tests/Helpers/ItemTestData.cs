@@ -39,6 +39,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, slot);
             type.Flags.Add(Common.ItemFlag.Stackable);
@@ -51,6 +52,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.SetName("item");
 
             return new Item(type, new Location(100, 100, 7));
@@ -59,6 +61,8 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
+
             type.SetName("item");
 
             return new MeleeWeapon(type, new Location(100, 100, 7));
@@ -67,6 +71,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.SetName("item");
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, weaponType);
             type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
@@ -82,6 +87,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.SetName("item");
 
             type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, "distance");
@@ -94,6 +100,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "ring");
             type.SetName("item");
 
@@ -103,6 +110,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "necklace");
             type.SetName("item");
 
@@ -155,6 +163,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(id);
+            type.SetId(id);
             type.SetName("item");
 
             if (topOrder == 1)
