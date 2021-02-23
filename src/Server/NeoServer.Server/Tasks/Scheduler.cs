@@ -9,10 +9,12 @@ namespace NeoServer.Server.Tasks
 
     public class Scheduler : IScheduler
     {
-        private readonly ChannelWriter<ISchedulerEvent> writer;
-        private readonly ChannelReader<ISchedulerEvent> reader;
+        protected readonly ChannelWriter<ISchedulerEvent> writer;
+        protected readonly ChannelReader<ISchedulerEvent> reader;
 
-        private ConcurrentDictionary<uint, byte> activeEventIds = new ConcurrentDictionary<uint, byte>();
+        protected ConcurrentDictionary<uint, byte> activeEventIds = new ConcurrentDictionary<uint, byte>();
+
+        public bool Empty => activeEventIds.IsEmpty;
 
         private uint lastEventId = 0;
 
@@ -52,7 +54,7 @@ namespace NeoServer.Server.Tasks
         /// </summary>
         /// <param name="token"></param>
 
-        public void Start(CancellationToken token)
+        public virtual void Start(CancellationToken token)
         {
             Task.Run(async () =>
             {
@@ -71,12 +73,21 @@ namespace NeoServer.Server.Tasks
                 }
             });
         }
+      
+      
 
-        private async ValueTask DispatchEvent(ISchedulerEvent evt)
+        private void DispatchEvent(ISchedulerEvent evt)
         {
-            await Task.Delay(evt.ExpirationDelay);
+            if (!evt.HasExpired)
+            {
+                Thread.Sleep(1);
+                activeEventIds.TryRemove(evt.EventId, out _);
+                AddEvent(evt);
+                return;
+            }
+
             evt.SetToNotExpire();
-          
+
             if (!EventIsCancelled(evt.EventId))
             {
                 activeEventIds.TryRemove(evt.EventId, out _);

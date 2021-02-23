@@ -20,7 +20,7 @@ namespace NeoServer.Benchmarks.Tasks
         [Benchmark]
         public void Scheduler()
         {
-            DoManyJobs(new Scheduler());
+            DoManyJobs(new SchedulerQueue());
 
         }
 
@@ -46,7 +46,7 @@ namespace NeoServer.Benchmarks.Tasks
         void Start();
     }
 
-    public class Scheduler : ISchedulerQueue<ISchedulerEvent>
+    public class SchedulerQueue : ISchedulerQueue<ISchedulerEvent>
     {
 
         private readonly ChannelWriter<ISchedulerEvent> writer;
@@ -55,7 +55,7 @@ namespace NeoServer.Benchmarks.Tasks
 
         private ConcurrentDictionary<uint, byte> cancelledEventIds = new ConcurrentDictionary<uint, byte>();
 
-        public Scheduler()
+        public SchedulerQueue()
         {
             var channel = Channel.CreateUnbounded<ISchedulerEvent>(new UnboundedChannelOptions() { SingleReader = true });
             reader = channel.Reader;
