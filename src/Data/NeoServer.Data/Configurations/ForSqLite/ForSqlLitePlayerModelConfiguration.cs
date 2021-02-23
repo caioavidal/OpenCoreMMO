@@ -13,15 +13,15 @@ namespace NeoServer.Data.Configurations
 
             entity.HasKey(e => e.PlayerId);
 
-            //entity.HasIndex(e => e.AccountId)
-            //    .HasDatabaseName("account_id");
+            entity.HasIndex(e => e.AccountId)
+                .HasDatabaseName("account_id");
 
-            //entity.HasIndex(e => e.Name)
-            //    .HasDatabaseName("name")
-            //    .IsUnique();
+            entity.HasIndex(e => e.Name)
+                .HasDatabaseName("name")
+                .IsUnique();
 
-            //entity.HasIndex(e => e.Vocation)
-            //    .HasDatabaseName("vocation");
+            entity.HasIndex(e => e.Vocation)
+                .HasDatabaseName("vocation");
 
             entity.Property(e => e.PlayerId)
                 .ValueGeneratedOnAdd()
@@ -192,6 +192,9 @@ namespace NeoServer.Data.Configurations
                 .WithMany(p => p.Players)
                 .HasForeignKey(d => d.AccountId)
                 .HasConstraintName("players_ibfk_1");
+
+
+            entity.HasOne(x => x.GuildMember).WithOne(x => x.Player);
 
             PlayerModelSeed.Seed(entity);
         }

@@ -22,21 +22,26 @@ namespace NeoServer.Scripts.Players.Loaders
             this.creatureFactory = creatureFactory;
         }
         public override bool IsApplicable(PlayerModel player) => player.PlayerType == 2;
-        public override IPlayer Load(PlayerModel player)
+        public override IPlayer Load(PlayerModel playerModel)
         {
             var newPlayer = new Tutor(
-                (uint)player.PlayerId,
-                player.Name,
-                player.Vocation,
-                player.Gender,
-                player.Online,
-                ConvertToSkills(player),
-                new Outfit() { Addon = (byte)player.LookAddons, Body = (byte)player.LookBody, Feet = (byte)player.LookFeet, Head = (byte)player.LookHead, Legs = (byte)player.LookLegs, LookType = (byte)player.LookType },
-                ConvertToInventory(player),
-                player.Speed,
-                new Location((ushort)player.PosX, (ushort)player.PosY, (byte)player.PosZ),
+                (uint)playerModel.PlayerId,
+                playerModel.Name,
+                playerModel.Vocation,
+                playerModel.Gender,
+                playerModel.Online,
+                ConvertToSkills(playerModel),
+                new Outfit() { Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody, Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead, Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType },
+                ConvertToInventory(playerModel),
+                playerModel.Speed,
+                new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
                _creaturePathAccess
-                );
+                )
+            {
+                AccountId = (uint)playerModel.AccountId,
+                GuildId = (ushort)(playerModel?.GuildMember?.GuildId ?? 0),
+                GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
+            };
 
             var tutor = creatureFactory.CreatePlayer(newPlayer);
 
