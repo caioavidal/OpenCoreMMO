@@ -54,7 +54,7 @@ namespace NeoServer.Server.Handlers.Authentication
 
          
 
-            game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, packet.CharacterName, connection)));
+            game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, connection)));
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)

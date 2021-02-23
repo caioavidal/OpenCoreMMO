@@ -20,7 +20,7 @@ namespace NeoServer.Server.Commands
             this.guildLoader = guildLoader;
         }
 
-        public void Execute(PlayerModel playerRecord, string characterName, IConnection connection)
+        public void Execute(PlayerModel playerRecord, IConnection connection)
         {
             if (playerRecord is null)
             {
