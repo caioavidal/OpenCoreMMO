@@ -1,11 +1,12 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Server.Contracts;
 
 namespace NeoServer.Server.Events
 {
     public class ItemCreatedEventHandler
     {
-        private readonly Game game;
-        public ItemCreatedEventHandler(Game game)
+        private readonly IGameServer game;
+        public ItemCreatedEventHandler(IGameServer game)
         {
             this.game = game;
         }

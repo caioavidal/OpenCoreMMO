@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming.Shop;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 
@@ -8,9 +9,9 @@ namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerPurchaseHandler : PacketHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IDealTransaction dealTransaction;
-        public PlayerPurchaseHandler(Game game, IDealTransaction dealTransaction)
+        public PlayerPurchaseHandler(IGameServer game, IDealTransaction dealTransaction)
         {
             this.game = game;
             this.dealTransaction = dealTransaction;

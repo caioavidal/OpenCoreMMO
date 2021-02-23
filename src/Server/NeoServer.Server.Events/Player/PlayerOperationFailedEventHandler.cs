@@ -1,11 +1,12 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 
 namespace NeoServer.Server.Events
 {
     public class PlayerOperationFailedEventHandler
     {
-        private readonly Game game;
-        public PlayerOperationFailedEventHandler(Game game) => this.game = game;
+        private readonly IGameServer game;
+        public PlayerOperationFailedEventHandler(IGameServer game) => this.game = game;
         public void Execute(uint playerId, string message)
         {
             if (game.CreatureManager.GetPlayerConnection(playerId, out var connection))

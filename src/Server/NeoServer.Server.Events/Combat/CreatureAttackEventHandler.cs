@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
 
@@ -12,9 +13,9 @@ namespace NeoServer.Server.Events.Combat
 {
     public class CreatureAttackEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureAttackEventHandler(Game game)
+        public CreatureAttackEventHandler(IGameServer game)
         {
             this.game = game;
         }

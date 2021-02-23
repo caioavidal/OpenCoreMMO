@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Location;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Model.Players.Contracts;
@@ -8,9 +9,9 @@ namespace NeoServer.Server.Handlers.Players
 {
     public class PlayerMoveHandler : PacketHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerMoveHandler(Game game)
+        public PlayerMoveHandler(IGameServer game)
         {
             this.game = game;
         }

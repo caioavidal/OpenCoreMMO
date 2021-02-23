@@ -1,6 +1,7 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -8,9 +9,9 @@ namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerOpenPrivateChannelHandler : PacketHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IAccountRepository accountRepository;
-        public PlayerOpenPrivateChannelHandler(Game game, IAccountRepository accountRepository)
+        public PlayerOpenPrivateChannelHandler(IGameServer game, IAccountRepository accountRepository)
         {
             this.game = game;
             this.accountRepository = accountRepository;

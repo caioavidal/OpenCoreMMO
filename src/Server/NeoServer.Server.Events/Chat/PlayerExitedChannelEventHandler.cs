@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Chats;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -7,9 +8,9 @@ namespace NeoServer.Server.Events
 {
     public class PlayerExitedChannelEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerExitedChannelEventHandler(Game game)
+        public PlayerExitedChannelEventHandler(IGameServer game)
         {
             this.game = game;
         }

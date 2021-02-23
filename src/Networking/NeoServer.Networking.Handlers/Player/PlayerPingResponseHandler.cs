@@ -1,4 +1,5 @@
-﻿using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 using System;
 
@@ -6,8 +7,8 @@ namespace NeoServer.Server.Handlers.Player
 {
     public sealed class PlayerPingResponseHandler : PacketHandler
     {
-        private readonly Game game;
-        public PlayerPingResponseHandler(Game game)
+        private readonly IGameServer game;
+        public PlayerPingResponseHandler(IGameServer game)
         {
             this.game = game;
         }

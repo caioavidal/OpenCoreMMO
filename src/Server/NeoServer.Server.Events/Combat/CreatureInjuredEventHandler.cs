@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -14,9 +15,9 @@ namespace NeoServer.Server.Events
     public class CreatureInjuredEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureInjuredEventHandler(IMap map, Game game)
+        public CreatureInjuredEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;

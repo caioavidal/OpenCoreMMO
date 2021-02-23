@@ -5,6 +5,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,10 +15,10 @@ namespace NeoServer.Server.Events
     public class PlayerClosedContainerEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IPlayerDepotItemRepositoryNeo playerDepotItemRepository;
 
-        public PlayerClosedContainerEventHandler(IMap map, Game game, IPlayerDepotItemRepositoryNeo playerDepotItemRepository)
+        public PlayerClosedContainerEventHandler(IMap map, IGameServer game, IPlayerDepotItemRepositoryNeo playerDepotItemRepository)
         {
             this.map = map;
             this.game = game;

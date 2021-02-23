@@ -1,14 +1,15 @@
 ﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 
 namespace NeoServer.Server.Events.Creature
 {
     public class PlayerSentMessageEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerSentMessageEventHandler(Game game)
+        public PlayerSentMessageEventHandler(IGameServer game)
         {
             this.game = game;
         }

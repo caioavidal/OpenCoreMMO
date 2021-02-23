@@ -1,4 +1,5 @@
-﻿using NeoServer.Server.Jobs.Creatures;
+﻿using NeoServer.Server.Contracts;
+using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Jobs.Items
@@ -6,9 +7,9 @@ namespace NeoServer.Server.Jobs.Items
     public class GameItemJob
     {
         private const ushort EVENT_CHECK_ITEM_INTERVAL = 5000;
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public GameItemJob(Game game)
+        public GameItemJob(IGameServer game)
         {
             this.game = game;
         }

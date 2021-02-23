@@ -82,8 +82,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameProtocol>().SingleInstance();
             builder.RegisterType<GameListener>().SingleInstance();
 
-            builder.RegisterType<Game>().SingleInstance();
-            builder.RegisterType<GameCreatureManager>().SingleInstance();
+            builder.RegisterType<GameServer>().As<IGameServer>().SingleInstance();
+            builder.RegisterType<GameCreatureManager>().As<IGameCreatureManager>().SingleInstance();
             builder.RegisterType<DecayableItemManager>().SingleInstance();
 
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();

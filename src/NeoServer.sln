@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Standalone
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Security", "Server\NeoServer.Server.Security\NeoServer.Server.Security.csproj", "{BDD1E97A-0A19-482A-B211-320809D40167}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Contracts", "Server\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj", "{A5D60E73-9D23-4191-9F69-9B31651C2BDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Common", "Server\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj", "{A5D60E73-9D23-4191-9F69-9B31651C2BDB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Tests", "..\tests\NeoServer.Networking.Tests\NeoServer.Networking.Tests.csproj", "{47360B5F-31E4-409A-9BD7-157374089392}"
 EndProject

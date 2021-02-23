@@ -1,15 +1,16 @@
 ﻿using NeoServer.Game.Common.Players;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Npc;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events.Player
 {
     public class PlayerChangedInventoryEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerChangedInventoryEventHandler(Game game)
+        public PlayerChangedInventoryEventHandler(IGameServer game)
         {
             this.game = game;
         }

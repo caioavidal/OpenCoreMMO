@@ -1,9 +1,11 @@
 ﻿using NeoServer.Game.Contracts.Items;
+using NeoServer.Server.Contracts;
 using System.Collections.Generic;
 
 namespace NeoServer.Server.Instances
 {
-    public class DecayableItemManager
+   
+    public class DecayableItemManager : IDecayableItemManager
     {
         public List<IDecayable> Items { get; private set; } = new List<IDecayable>();
 

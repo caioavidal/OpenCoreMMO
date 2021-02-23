@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
@@ -10,9 +11,9 @@ namespace NeoServer.Server.Events.Creature
     public class CreatureKilledEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IItemFactory itemFactory;
-        public CreatureKilledEventHandler(IMap map, Game game, IItemFactory itemFactory)
+        public CreatureKilledEventHandler(IMap map, IGameServer game, IItemFactory itemFactory)
         {
             this.map = map;
             this.game = game;

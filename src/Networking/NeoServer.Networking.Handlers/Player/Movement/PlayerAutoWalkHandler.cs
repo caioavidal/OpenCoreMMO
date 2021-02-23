@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
@@ -7,9 +8,9 @@ namespace NeoServer.Server.Handlers.Players
 {
     public class PlayerAutoWalkHandler : PacketHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerAutoWalkHandler(Game game)
+        public PlayerAutoWalkHandler(IGameServer game)
         {
             this.game = game;
         }

@@ -1,13 +1,14 @@
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands
 {
     public class PlayerLogOutCommand : Command
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IPlayer player;
         private readonly bool forced;
-        public PlayerLogOutCommand(IPlayer player, Game game, bool forced = false)
+        public PlayerLogOutCommand(IPlayer player, IGameServer game, bool forced = false)
         {
             this.player = player;
             this.game = game;

@@ -1,13 +1,14 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {
     public class PlayerWalkCancelledEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerWalkCancelledEventHandler(Game game)
+        public PlayerWalkCancelledEventHandler(IGameServer game)
         {
             this.game = game;
         }

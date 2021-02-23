@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace NeoServer.Server.Commands.Player
     {
         private readonly IPlayer player;
         private readonly PlayerSayPacket playerSayPacket;
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IConnection connection;
 
-        public PlayerSayCommand(IPlayer player, IConnection connection, PlayerSayPacket playerSayPacket, Game game)
+        public PlayerSayCommand(IPlayer player, IConnection connection, PlayerSayPacket playerSayPacket, IGameServer game)
         {
             this.player = player;
             this.playerSayPacket = playerSayPacket;
@@ -89,7 +90,7 @@ namespace NeoServer.Server.Commands.Player
                 return;
             }
 
-            receiver.SendMessageTo(receiver, playerSayPacket.TalkType, message);
+            player.SendMessageTo(receiver, playerSayPacket.TalkType, message);
         }
         private void SendMessageToNpc(string message)
         {

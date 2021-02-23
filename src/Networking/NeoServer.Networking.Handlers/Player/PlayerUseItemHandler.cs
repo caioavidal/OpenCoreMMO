@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Player;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 
@@ -7,8 +8,8 @@ namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerUseItemHandler : PacketHandler
     {
-        private readonly Game game;
-        public PlayerUseItemHandler(Game game)
+        private readonly IGameServer game;
+        public PlayerUseItemHandler(IGameServer game)
         {
             this.game = game;
         }

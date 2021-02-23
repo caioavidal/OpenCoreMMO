@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
@@ -9,7 +10,7 @@ namespace NeoServer.Server.Jobs
     {
         private const int PING_INTERVAL = 5000;
         private const int CONNECTION_LOST_INTERVAL = 60000;
-        public static void Execute(IPlayer player, Game game)
+        public static void Execute(IPlayer player, IGameServer game)
         {
             if (player.IsDead)
             {

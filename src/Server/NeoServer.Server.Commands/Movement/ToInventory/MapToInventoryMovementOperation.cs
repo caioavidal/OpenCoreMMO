@@ -4,13 +4,14 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Movement
 {
     public sealed class MapToInventoryMovementOperation
     {
-        public static void Execute(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow) => WalkToMechanism.DoOperation(player, () => FromMapToInventory(player, map, itemThrow), itemThrow.FromLocation, game);
+        public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow) => WalkToMechanism.DoOperation(player, () => FromMapToInventory(player, map, itemThrow), itemThrow.FromLocation, game);
 
         private static void FromMapToInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {

@@ -93,7 +93,7 @@ public class Program
         container.Resolve<EventSubscriber>().AttachEvents();
 
 
-        container.Resolve<Game>().Open();
+        container.Resolve<IGameServer>().Open();
 
         sw.Stop();
 

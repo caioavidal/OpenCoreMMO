@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -9,9 +10,9 @@ namespace NeoServer.Server.Events
 {
     public class CreatureMovedEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureMovedEventHandler(Game game)
+        public CreatureMovedEventHandler(IGameServer game)
         {
             this.game = game;
         }

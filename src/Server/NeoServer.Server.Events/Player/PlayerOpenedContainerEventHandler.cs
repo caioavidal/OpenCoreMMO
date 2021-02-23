@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
 
@@ -11,11 +12,11 @@ namespace NeoServer.Server.Events
 {
     public class PlayerOpenedContainerEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IPlayerDepotItemRepositoryNeo playerDepotItemRepository;
 
         private readonly IItemFactory itemFactory;
-        public PlayerOpenedContainerEventHandler(Game game, IPlayerDepotItemRepositoryNeo playerDepotItemRepository, IItemFactory itemFactory)
+        public PlayerOpenedContainerEventHandler(IGameServer game, IPlayerDepotItemRepositoryNeo playerDepotItemRepository, IItemFactory itemFactory)
         {
             this.game = game;
             this.playerDepotItemRepository = playerDepotItemRepository;

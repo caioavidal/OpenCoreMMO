@@ -25,9 +25,6 @@ namespace NeoServer.Game.Chats
             return channel;
         }
 
-
-     
-
         public IChatChannel CreateGuildChannel(string name, ushort guildId)
         {
             var id = GenerateUniqueId();

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 
@@ -6,9 +7,9 @@ namespace NeoServer.Server.Handlers.Authentication
 {
     public class PlayerChangesModeHandler : PacketHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerChangesModeHandler(Game game)
+        public PlayerChangesModeHandler(IGameServer game)
         {
             this.game = game;
         }

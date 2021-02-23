@@ -1,15 +1,16 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {
     public class InvalidOperationEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public InvalidOperationEventHandler(Game game)
+        public InvalidOperationEventHandler(IGameServer game)
         {
             this.game = game;
         }

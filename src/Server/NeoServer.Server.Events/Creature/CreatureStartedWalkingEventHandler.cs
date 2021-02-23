@@ -1,13 +1,14 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Creature
 {
     public class CreatureStartedWalkingEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureStartedWalkingEventHandler(Game game)
+        public CreatureStartedWalkingEventHandler(IGameServer game)
         {
             this.game = game;
         }

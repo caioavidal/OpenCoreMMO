@@ -1,5 +1,6 @@
 using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
@@ -10,10 +11,10 @@ namespace NeoServer.Server.Commands
 {
     public class PlayerLogInCommand: ICommand
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
         private readonly GuildLoader guildLoader;
-        public PlayerLogInCommand(Game game, IEnumerable<IPlayerLoader> playerLoaders, GuildLoader guildLoader)
+        public PlayerLogInCommand(IGameServer game, IEnumerable<IPlayerLoader> playerLoaders, GuildLoader guildLoader)
         {
             this.game = game;
             this.playerLoaders = playerLoaders;

@@ -1,14 +1,15 @@
 ﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {
     public class PlayerLevelAdvancedEventHandler
     {
-        private readonly Game game;
-        public PlayerLevelAdvancedEventHandler(Game game) => this.game = game;
+        private readonly IGameServer game;
+        public PlayerLevelAdvancedEventHandler(IGameServer game) => this.game = game;
         public void Execute(IPlayer player, SkillType type, int fromLevel, int toLevel)
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))

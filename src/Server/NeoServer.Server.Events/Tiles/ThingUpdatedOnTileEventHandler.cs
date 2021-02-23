@@ -1,15 +1,16 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events
 {
     public class ThingUpdatedOnTileEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public ThingUpdatedOnTileEventHandler(Game game)
+        public ThingUpdatedOnTileEventHandler(IGameServer game)
         {
             this.game = game;
         }

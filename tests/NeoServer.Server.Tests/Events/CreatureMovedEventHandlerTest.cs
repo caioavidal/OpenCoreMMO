@@ -36,7 +36,7 @@ namespace NeoServer.Server.Tests.Events
 
             var decayableItemManagerMock = new Mock<DecayableItemManager>();
 
-            var game = new Game(map, dispatcherMock.Object, schedulerMock.Object, gameCreatureManagerMock.Object, decayableItemManagerMock.Object);
+            var game = new GameServer(map, dispatcherMock.Object, schedulerMock.Object, gameCreatureManagerMock.Object, decayableItemManagerMock.Object);
 
             var sup = new CreatureMovedEventHandler(game);
             var player = PlayerTestDataBuilder.BuildPlayer();

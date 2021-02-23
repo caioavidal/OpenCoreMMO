@@ -2,6 +2,7 @@
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Networking.Packets.Incoming.Chat;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerAddVipHandler : PacketHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IAccountRepository accountRepository;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
-        public PlayerAddVipHandler(Game game, IAccountRepository accountRepository, IEnumerable<IPlayerLoader> playerLoaders)
+        public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository, IEnumerable<IPlayerLoader> playerLoaders)
         {
             this.game = game;
             this.accountRepository = accountRepository;
