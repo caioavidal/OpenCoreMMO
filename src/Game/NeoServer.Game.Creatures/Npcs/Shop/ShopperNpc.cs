@@ -1,18 +1,13 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Npcs
 {

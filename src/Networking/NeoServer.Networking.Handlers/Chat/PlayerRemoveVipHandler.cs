@@ -1,14 +1,7 @@
 ﻿using NeoServer.Data.Interfaces;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.DataStore;
-using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Incoming.Chat;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Player
 {

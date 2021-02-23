@@ -1,11 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Events.Creature.Npcs
 {

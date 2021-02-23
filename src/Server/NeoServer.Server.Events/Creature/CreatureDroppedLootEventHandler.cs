@@ -1,11 +1,5 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts.Network;
-using System;
 using System.Collections.Generic;
 
 namespace NeoServer.Server.Events.Creature

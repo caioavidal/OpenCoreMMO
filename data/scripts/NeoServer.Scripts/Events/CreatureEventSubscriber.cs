@@ -2,11 +2,6 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Scripts.Events.Creatures;
 using NeoServer.Scripts.Npcs.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Scripts.Events
 {

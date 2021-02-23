@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 
 namespace NeoServer.Game.Contracts.Items.Types
 {

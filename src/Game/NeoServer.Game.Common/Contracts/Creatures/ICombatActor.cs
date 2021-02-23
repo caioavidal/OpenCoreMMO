@@ -5,7 +5,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures

@@ -1,11 +1,8 @@
-using Autofac;
-using NeoServer.Loaders.Attributes;
 using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

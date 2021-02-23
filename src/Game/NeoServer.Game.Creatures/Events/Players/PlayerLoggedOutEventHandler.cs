@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;

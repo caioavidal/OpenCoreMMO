@@ -1,7 +1,4 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Contracts.Chats;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;

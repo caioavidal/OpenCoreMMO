@@ -2,7 +2,6 @@
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
@@ -10,10 +9,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures;
-using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.DataStore;
-using NeoServer.Loaders.Attributes;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;

@@ -1,5 +1,4 @@
-﻿using NeoServer.Data.Interfaces;
-using NeoServer.Enums.Creatures.Enums;
+﻿using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;

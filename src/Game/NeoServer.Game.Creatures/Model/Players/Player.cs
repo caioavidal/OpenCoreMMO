@@ -787,7 +787,7 @@ namespace NeoServer.Server.Model.Players
 
             return true;
         }
-        public void ReceivePayment(IEnumerable<IItem> coins, uint total)
+        public void ReceivePayment(IEnumerable<IItem> coins, ulong total)
         {
             if (CanReceiveInCashPayment(coins))
             {
@@ -838,6 +838,7 @@ namespace NeoServer.Server.Model.Players
 
                 Inventory.BackpackSlot?.AddItem(item, true);
             }
+
         }
     }
 }

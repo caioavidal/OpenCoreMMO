@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Server.Events.Chat;
 
 namespace NeoServer.Server.Events

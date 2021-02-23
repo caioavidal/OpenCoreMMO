@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
@@ -170,7 +169,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void StartShopping(IShopperNpc npc);
         void StopShopping();
         bool Sell(IItemType item, byte amount, bool ignoreEquipped);
-        void ReceivePayment(IEnumerable<IItem> coins, uint total);
+        void ReceivePayment(IEnumerable<IItem> coins, ulong total);
         bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
 
         void ReceivePurchasedItems(INpc from, SaleContract saleContract, params IItem[] items);

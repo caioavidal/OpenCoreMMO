@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Chats;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.DataStore;

@@ -1,14 +1,10 @@
 ﻿using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
@@ -31,8 +27,7 @@ namespace NeoServer.Game.Creatures.Npcs
         {
             if (creatureId == 0 || string.IsNullOrWhiteSpace(message)) return null;
 
-            List<byte> positions = null;
-            if (!PlayerDialogTree.TryGetValue(creatureId, out positions))
+            if (!PlayerDialogTree.TryGetValue(creatureId, out List<byte> positions))
             {
                 positions = new List<byte>() { 0 };
             }

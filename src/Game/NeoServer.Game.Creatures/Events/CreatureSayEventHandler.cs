@@ -1,9 +1,6 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Talks;
+﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Creatures.Events
 {

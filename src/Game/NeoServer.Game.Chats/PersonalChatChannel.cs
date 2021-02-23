@@ -1,10 +1,5 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
+﻿using NeoServer.Game.Contracts.Chats;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Chats
 {

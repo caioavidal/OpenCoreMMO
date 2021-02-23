@@ -1,13 +1,10 @@
-﻿using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
+﻿using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
-using NeoServer.Loaders.Attributes;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Model.Players;
 using Serilog.Core;
 using System.Collections.Generic;
 

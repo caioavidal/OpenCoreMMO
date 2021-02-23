@@ -4,7 +4,6 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Standalone;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Authentication
 {

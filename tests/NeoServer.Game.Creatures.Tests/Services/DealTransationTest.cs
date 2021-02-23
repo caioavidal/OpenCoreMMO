@@ -12,9 +12,6 @@ using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services
@@ -309,30 +306,42 @@ namespace NeoServer.Game.Creatures.Tests.Services
             Assert.Equal(expectedOnBackpack, player.Inventory.BackpackSlot.Items[0].Amount);
         }
 
-        //[Fact]
-        //public void Buy_Item_When_Backpack_Is_Full_Keep_Change_On_Bank()
-        //{
-        //    var itemFactoryMock = new Mock<IItemFactory>();
-        //    var sut = new DealTransaction(itemFactoryMock.Object);
+        [Fact]
+        public void Buy_Item_When_Backpack_Is_Full_Keep_Change_On_Bank()
+        {
+            var itemFactoryMock = new Mock<IItemFactory>();
+            var sut = new DealTransaction(itemFactoryMock.Object);
 
-        //    var itemToBuy = ItemTestData.CreateWeaponItem(10, "sword");
+            var itemToBuy = ItemTestData.CreateWeaponItem(10, "sword");
 
-        //    itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
+            itemFactoryMock.Setup(x => x.Create(10, It.IsAny<Location>(), null)).Returns(itemToBuy);
 
-        //    var container = ItemTestData.CreatePickupableContainer();
+            var platinum = ItemTestData.CreateCoin(1, 2, 100);
+            var gold = ItemTestData.CreateCoin(2, 1, 1);
 
-        //    var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) }});
+            itemFactoryMock.Setup(x => x.Create(1, It.IsAny<Location>(), null)).Returns(platinum);
+            itemFactoryMock.Setup(x => x.Create(2, It.IsAny<Location>(), null)).Returns(gold);
 
-        //    player.LoadBank(5000);
+            CoinTypeStore.Data.Add(1, platinum.Metadata);
+            CoinTypeStore.Data.Add(2, gold.Metadata);
 
-        //    var shopperMock = new Mock<IShopperNpc>();
-        //    shopperMock.Setup(x => x.CalculateCost(itemToBuy.Metadata, 1)).Returns(400);
+            var container = ItemTestData.CreatePickupableContainer(2);
+            container.AddItem(ItemTestData.CreateWeaponItem(11, "axe"));
+            container.AddItem(platinum);
 
-        //    var result = sut.Buy(player, shopperMock.Object, itemToBuy.Metadata, bought);
+            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { 
+                { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 1) }});
 
-        //    Assert.Equal(itemToBuy.ClientId, player.Inventory.BackpackSlot.Items[0].ClientId);
-        //    Assert.Equal(expectedOnBackpack, player.Inventory.BackpackSlot.Items[0].Amount);
-        //}
+            player.LoadBank(5000);
+
+            var shopperMock = new Mock<IShopperNpc>();
+            shopperMock.Setup(x => x.CalculateCost(itemToBuy.Metadata, 1)).Returns(30);
+
+            var result = sut.Buy(player, shopperMock.Object, itemToBuy.Metadata, 1);
+
+            Assert.Single(player.Inventory.BackpackSlot.Items);
+            Assert.Equal(5170ul, player.BankAmount);
+        }
 
     }
 }

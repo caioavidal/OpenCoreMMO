@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using NeoServer.Data.Configurations;
 using NeoServer.Data.Model;
 using NeoServer.Server.Model.Players;
 using Serilog.Core;
-using System;
 
 namespace NeoServer.Data
 {
