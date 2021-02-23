@@ -8,17 +8,19 @@ namespace NeoServer.Server.Handlers.Authentication
     public class PlayerLogOutHandler : PacketHandler
     {
         private readonly IGameServer game;
+        private readonly PlayerLogOutCommand playerLogOutCommand;
 
-        public PlayerLogOutHandler(IGameServer game)
+        public PlayerLogOutHandler(IGameServer game, PlayerLogOutCommand playerLogOutCommand)
         {
             this.game = game;
+            this.playerLogOutCommand = playerLogOutCommand;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
             {
-                game.Dispatcher.AddEvent(new Event(new PlayerLogOutCommand(player, game).Execute));
+                game.Dispatcher.AddEvent(new Event(() => playerLogOutCommand.Execute(player)));
             }
         }
     }

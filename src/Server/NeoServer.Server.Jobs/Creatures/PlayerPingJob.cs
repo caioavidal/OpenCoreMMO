@@ -10,7 +10,7 @@ namespace NeoServer.Server.Jobs
     {
         private const int PING_INTERVAL = 5000;
         private const int CONNECTION_LOST_INTERVAL = 60000;
-        public static void Execute(IPlayer player, IGameServer game)
+        public static void Execute(IPlayer player, PlayerLogOutCommand playerLogOutCommand, IGameServer game)
         {
             if (player.IsDead)
             {
@@ -37,7 +37,7 @@ namespace NeoServer.Server.Jobs
 
             if (noPongTime >= CONNECTION_LOST_INTERVAL && connection.LastPingResponse > 0)
             {
-                new PlayerLogOutCommand(player, game, true).Execute();
+                playerLogOutCommand.Execute(player, forced: true);
             }
         }
     }
