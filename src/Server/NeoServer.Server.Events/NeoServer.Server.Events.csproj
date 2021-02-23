@@ -8,7 +8,7 @@
     <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
     <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
     <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
-    <ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+    <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
     <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
   </ItemGroup>
 

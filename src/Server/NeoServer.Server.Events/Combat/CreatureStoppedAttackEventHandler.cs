@@ -1,14 +1,15 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events
 {
     public class CreatureStoppedAttackEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureStoppedAttackEventHandler(Game game)
+        public CreatureStoppedAttackEventHandler(IGameServer game)
         {
             this.game = game;
         }

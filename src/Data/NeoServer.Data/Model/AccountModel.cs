@@ -24,7 +24,6 @@ namespace NeoServer.Data.Model
         public string Secret { get; set; }
         public AccountType Type { get; set; }
 
-
         public virtual ICollection<PlayerModel> Players { get; set; }
         public virtual ICollection<AccountVipListModel> VipList { get; set; }
 

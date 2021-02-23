@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Chats;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -7,9 +8,9 @@ namespace NeoServer.Server.Events
 {
     public class PlayerJoinedChannelEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerJoinedChannelEventHandler(Game game)
+        public PlayerJoinedChannelEventHandler(IGameServer game)
         {
             this.game = game;
         }
@@ -19,8 +20,6 @@ namespace NeoServer.Server.Events
             if (player is null) return;
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out IConnection connection)) return;
 
-            
-            
             connection.OutgoingPackets.Enqueue(new PlayerOpenChannelPacket(channel.Id, channel.Name));
 
             if (!string.IsNullOrWhiteSpace(channel.Description))

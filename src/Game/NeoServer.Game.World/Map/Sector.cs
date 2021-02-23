@@ -58,7 +58,6 @@ namespace NeoServer.Game.World.Map
             return Tiles[location.Z, location.X & SECTOR_MASK, location.Y & SECTOR_MASK];
         }
 
-
         public void AddCreature(ICreature creature)
         {
             Creatures.Add(creature);
@@ -81,7 +80,6 @@ namespace NeoServer.Game.World.Map
         //public HashSet<ICreature> GetSpectators(ref SpectatorSearch search)
         //{
         //    if (search.CenterPosition.Z >= MAP_MAX_LAYERS) return null;
-
 
         //}
     }

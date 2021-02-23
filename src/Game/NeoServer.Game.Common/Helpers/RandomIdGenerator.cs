@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 public class RandomIdGenerator
 {
     private static Random _random = new Random();

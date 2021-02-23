@@ -2,15 +2,16 @@
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events
 {
     public class CreatureBlockedAttackEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureBlockedAttackEventHandler(Game game)
+        public CreatureBlockedAttackEventHandler(IGameServer game)
         {
             this.game = game;
         }

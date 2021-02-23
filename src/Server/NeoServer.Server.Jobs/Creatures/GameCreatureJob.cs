@@ -1,5 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.World.Spawns;
+using NeoServer.Server.Commands;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
@@ -8,13 +10,15 @@ namespace NeoServer.Server.Jobs.Creatures
     public class GameCreatureJob
     {
         private const ushort EVENT_CHECK_CREATURE_INTERVAL = 500;
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly SpawnManager spawnManager;
+        private readonly PlayerLogOutCommand playerLogOutCommand;
 
-        public GameCreatureJob(Game game, SpawnManager spawnManager)
+        public GameCreatureJob(IGameServer game, SpawnManager spawnManager, PlayerLogOutCommand playerLogOutCommand)
         {
             this.game = game;
             this.spawnManager = spawnManager;
+            this.playerLogOutCommand = playerLogOutCommand;
         }
 
         public void StartChecking()
@@ -27,7 +31,7 @@ namespace NeoServer.Server.Jobs.Creatures
 
                 if (creature is IPlayer player)
                 {
-                    PlayerPingJob.Execute(player, game);
+                    PlayerPingJob.Execute(player, playerLogOutCommand, game);
                     PlayerRecoveryJob.Execute(player, game);
                 }
 

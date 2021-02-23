@@ -9,7 +9,6 @@ namespace NeoServer.Game.Effects.Magical
     {
         public static Dictionary<string, (byte, byte)> originPoints = new Dictionary<string, (byte, byte)>();
 
-       
         public static Coordinate[] Create(string areaType, byte[,] areaTemplate)
         {
             var array = areaTemplate;

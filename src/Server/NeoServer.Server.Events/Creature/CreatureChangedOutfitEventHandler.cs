@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events.Creature
@@ -8,9 +9,9 @@ namespace NeoServer.Server.Events.Creature
     public class CreatureChangedOutfitEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureChangedOutfitEventHandler(IMap map, Game game)
+        public CreatureChangedOutfitEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;

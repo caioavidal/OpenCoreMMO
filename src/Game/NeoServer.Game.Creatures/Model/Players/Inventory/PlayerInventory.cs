@@ -198,8 +198,6 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-
-
         public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
         {
             removedItem = null;
@@ -295,7 +293,6 @@ namespace NeoServer.Server.Model.Players
             OnItemAddedToSlot?.Invoke(this, item, slot);
             return new Result<IPickupable>();
         }
-
 
         private void OnItemReduced(ICumulative item, Slot slot, byte amount)
         {

@@ -187,7 +187,6 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
-
             var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() {
                { Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(1, current), 1) },
                { Slot.Backpack, new Tuple<IPickupable, ushort>(ItemTestData.CreateBackpack(), 2) }  });
@@ -202,7 +201,6 @@ namespace NeoServer.Game.Creatures.Tests.Services
             Assert.Equal(itemToBuy.ClientId, player.Inventory[itemToBuy.Metadata.BodyPosition].ClientId);
             Assert.Equal(expected, player.Inventory[itemToBuy.Metadata.BodyPosition].Amount);
         }
-
 
         [InlineData("head")]
         [InlineData("body")]

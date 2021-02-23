@@ -40,7 +40,6 @@ namespace NeoServer.Game.World.Map
             return newSector;
         }
 
-
         public Sector GetSector(uint x, uint y)
         {
             var index = (x / SECTOR_SIZE) | ((y / SECTOR_SIZE) << 16);

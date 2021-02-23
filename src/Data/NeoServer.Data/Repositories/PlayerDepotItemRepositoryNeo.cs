@@ -38,7 +38,6 @@ namespace NeoServer.Data.Repositories
             await Context.Database.ExecuteSqlRawAsync($"delete from player_depot_items where player_id = {playerId}");
         }
 
-
         #endregion
     }
 }

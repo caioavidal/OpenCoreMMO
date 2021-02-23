@@ -1,20 +1,19 @@
+using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands
 {
-    public class PlayerLogOutCommand : Command
+    public class PlayerLogOutCommand : ICommand
     {
-        private readonly Game game;
-        private readonly IPlayer player;
-        private readonly bool forced;
-        public PlayerLogOutCommand(IPlayer player, Game game, bool forced = false)
+        private readonly IGameServer game;
+     
+        public PlayerLogOutCommand(IGameServer game)
         {
-            this.player = player;
             this.game = game;
-            this.forced = forced;
         }
 
-        public override void Execute()
+        public void Execute(IPlayer player, bool forced = false)
         {
             if (player.IsRemoved) return;
 

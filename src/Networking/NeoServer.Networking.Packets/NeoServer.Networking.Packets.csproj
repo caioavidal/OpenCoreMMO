@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Contracts.csproj" />
+    <ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
     <ProjectReference Include="..\..\Server\NeoServer.Server.Security\NeoServer.Server.Security.csproj" />
     <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
   </ItemGroup>

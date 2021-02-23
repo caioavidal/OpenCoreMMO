@@ -29,7 +29,6 @@ namespace NeoServer.Game.Common.Tests.Items
             new object[] { 1_015_790 , new (CoinType, byte)[] { (CoinType.Crystal, 100), (CoinType.Crystal, 1), (CoinType.Platinum, 57), (CoinType.Gold, 90) } }
       };
 
-
         [Theory]
         [MemberData(nameof(Data))]
 

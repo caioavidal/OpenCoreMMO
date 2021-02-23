@@ -3,15 +3,16 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events
 {
     public class PlayerCannotUseSpellEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerCannotUseSpellEventHandler(Game game)
+        public PlayerCannotUseSpellEventHandler(IGameServer game)
         {
             this.game = game;
         }

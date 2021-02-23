@@ -12,7 +12,6 @@ namespace NeoServer.Game.Creature
         private readonly Dictionary<uint, ICreature> _creatures;
         private readonly Dictionary<uint, IPlayer> _playersLogged;
 
-
         private Dictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
 
         public CreatureGameInstance()

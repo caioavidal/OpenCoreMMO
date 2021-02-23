@@ -13,7 +13,6 @@ namespace NeoServer.Game.Creatures.Npcs
 {
     public class ShopperNpc : Npc, IShopperNpc
     {
-        
 
         public event ShowShop OnShowShop;
         public ShopperNpc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
@@ -96,7 +95,6 @@ namespace NeoServer.Game.Creatures.Npcs
             if (shopItems is null) return 0;
 
             if (!shopItems.TryGetValue(itemType.TypeId, out var shopItem)) return 0;
-
 
             return (shopItem?.BuyPrice ?? 0) * amount;
         }

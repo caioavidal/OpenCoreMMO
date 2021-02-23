@@ -65,7 +65,6 @@ public class Program
 
         container.Resolve<ItemTypeLoader>().Load();
 
-        
         container.Resolve<WorldLoader>().Load();
 
         container.Resolve<SpawnLoader>().Load();
@@ -92,8 +91,7 @@ public class Program
 
         container.Resolve<EventSubscriber>().AttachEvents();
 
-
-        container.Resolve<Game>().Open();
+        container.Resolve<IGameServer>().Open();
 
         sw.Stop();
 
@@ -103,7 +101,6 @@ public class Program
         GC.WaitForPendingFinalizers();
 
         logger.Information("Memory usage: {mem} MB", Math.Round((Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2));
-
 
         logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
 
@@ -121,6 +118,4 @@ public class Program
         }
     }
 }
-
-
 

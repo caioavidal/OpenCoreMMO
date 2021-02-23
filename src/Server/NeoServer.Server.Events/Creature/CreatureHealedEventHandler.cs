@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -9,9 +10,9 @@ namespace NeoServer.Server.Events.Creature
     public class CreatureHealedEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureHealedEventHandler(IMap map, Game game)
+        public CreatureHealedEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Commands.Movement.ToInventory;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Player
@@ -8,11 +9,11 @@ namespace NeoServer.Server.Commands.Player
 
     public class PlayerThrowItemCommand : Command
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private ItemThrowPacket itemThrow;
         private readonly IPlayer player;
 
-        public PlayerThrowItemCommand(IPlayer player, ItemThrowPacket itemThrow, Game game)
+        public PlayerThrowItemCommand(IPlayer player, ItemThrowPacket itemThrow, IGameServer game)
         {
             this.itemThrow = itemThrow;
             this.game = game;

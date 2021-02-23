@@ -12,9 +12,9 @@ namespace NeoServer.Server.Events
     public class PlayerSelfAppearOnMapEventHandler : IEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerSelfAppearOnMapEventHandler(IMap map, Game game)
+        public PlayerSelfAppearOnMapEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;

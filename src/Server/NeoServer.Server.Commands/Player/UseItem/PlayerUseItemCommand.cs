@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
@@ -13,11 +14,11 @@ namespace NeoServer.Server.Commands.Player
 {
     public class PlayerUseItemCommand : Command
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private UseItemPacket useItemPacket;
         private readonly IPlayer player;
 
-        public PlayerUseItemCommand(IPlayer player, Game game, UseItemPacket useItemPacket)
+        public PlayerUseItemCommand(IPlayer player, IGameServer game, UseItemPacket useItemPacket)
         {
             this.game = game;
             this.player = player;

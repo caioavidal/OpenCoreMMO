@@ -1,14 +1,15 @@
 ﻿using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 
 namespace NeoServer.Server.Events.Player
 {
     public class PlayerConditionChangedEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerConditionChangedEventHandler(Game game)
+        public PlayerConditionChangedEventHandler(IGameServer game)
         {
             this.game = game;
         }
@@ -28,6 +29,5 @@ namespace NeoServer.Server.Events.Player
             }
         }
 
-   
     }
 }

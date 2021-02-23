@@ -17,7 +17,6 @@ namespace NeoServer.Scripts.Npcs.Modules
             }
         }
 
-     
         static void Teleport(ICreature creature)
         {
             if (creature is IPlayer player)

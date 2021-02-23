@@ -3,13 +3,14 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Movement
 {
     public class MapToContainerMovementOperation
     {
-        public static void Execute(IPlayer player, Game game, IMap map, ItemThrowPacket itemThrow)
+        public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow)
         {
             WalkToMechanism.DoOperation(player, () => MapToContainer(player, map, itemThrow), itemThrow.FromLocation, game);
         }

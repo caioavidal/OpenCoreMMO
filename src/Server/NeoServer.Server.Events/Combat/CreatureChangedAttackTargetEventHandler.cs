@@ -1,13 +1,14 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Combat
 {
     public class CreatureChangedAttackTargetEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureChangedAttackTargetEventHandler(Game game)
+        public CreatureChangedAttackTargetEventHandler(IGameServer game)
         {
             this.game = game;
         }

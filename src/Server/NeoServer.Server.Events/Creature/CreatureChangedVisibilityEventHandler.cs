@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 
@@ -9,9 +10,9 @@ namespace NeoServer.Server.Events.Creature
     public class CreatureChangedVisibilityEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public CreatureChangedVisibilityEventHandler(IMap map, Game game)
+        public CreatureChangedVisibilityEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;
@@ -21,7 +22,6 @@ namespace NeoServer.Server.Events.Creature
             foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
             {
                 if (spectator == creature) continue; 
-                
 
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out IConnection connection)) continue;
 

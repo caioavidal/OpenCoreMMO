@@ -429,7 +429,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             combat = new CombatAttackType();
 
-
             if (!Attacks.Any()) return false;
 
             var attacked = false;

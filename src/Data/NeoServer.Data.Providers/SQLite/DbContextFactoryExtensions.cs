@@ -9,7 +9,6 @@ namespace NeoServer.Data.Providers.SQLite.Extensions
             var builder = new DbContextOptionsBuilder<NeoContext>();
             builder.UseSqlite(name);
 
-             
             return builder.Options;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerOpenChannelHandler : PacketHandler
     {
-        private readonly Game game;
-        public PlayerOpenChannelHandler(Game game)
+        private readonly IGameServer game;
+        public PlayerOpenChannelHandler(IGameServer game)
         {
             this.game = game;
         }

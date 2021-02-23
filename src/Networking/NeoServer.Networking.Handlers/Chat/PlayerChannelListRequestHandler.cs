@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using System.Linq;
 
@@ -7,8 +8,8 @@ namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerChannelListRequestHandler : PacketHandler
     {
-        private readonly Game game;
-        public PlayerChannelListRequestHandler(Game game)
+        private readonly IGameServer game;
+        public PlayerChannelListRequestHandler(IGameServer game)
         {
             this.game = game;
         }

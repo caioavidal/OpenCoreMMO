@@ -15,7 +15,6 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
             Items = items;
         }
 
-
         public override void WriteToMessage(INetworkMessage message)
         {
             message.AddByte((byte)GameOutgoingPacketType.OpenShop);

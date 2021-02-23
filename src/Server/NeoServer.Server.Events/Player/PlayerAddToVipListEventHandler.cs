@@ -1,14 +1,15 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events.Player
 {
     public class PlayerAddToVipListEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IAccountRepository accountRepository;
-        public PlayerAddToVipListEventHandler(Game game, IAccountRepository accountRepository)
+        public PlayerAddToVipListEventHandler(IGameServer game, IAccountRepository accountRepository)
         {
             this.game = game;
             this.accountRepository = accountRepository;

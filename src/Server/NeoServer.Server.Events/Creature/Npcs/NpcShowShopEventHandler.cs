@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Npc;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 
@@ -7,9 +8,9 @@ namespace NeoServer.Server.Events.Creature.Npcs
 {
     public class NpcShowShopEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public NpcShowShopEventHandler(Game game)
+        public NpcShowShopEventHandler(IGameServer game)
         {
             this.game = game;
         }

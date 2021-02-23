@@ -52,15 +52,12 @@ namespace NeoServer.Loaders.Players
             }
         }
 
-      
-
         public virtual IPlayer Load(PlayerModel playerModel)
         {
             if (!VocationStore.TryGetValue(playerModel.Vocation, out var vocation))
             {
                 throw new Exception("Player vocation not found");
             }
-
 
             var player = new Player(
                 (uint)playerModel.PlayerId,
@@ -91,13 +88,10 @@ namespace NeoServer.Loaders.Players
                 GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
             };
 
-
             AddExistingPersonalChannels(player);
 
             return creatureFactory.CreatePlayer(player);
         }
-
-
 
         protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
         {
@@ -120,7 +114,6 @@ namespace NeoServer.Loaders.Players
 
             return skills;
         }
-
 
         protected IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel playerRecord)
         {

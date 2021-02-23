@@ -2,6 +2,7 @@
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Tasks;
@@ -12,11 +13,11 @@ namespace NeoServer.Server.Handlers.Authentication
     {
         private readonly IAccountRepository accountRepository;
         private readonly ServerConfiguration serverConfiguration;
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly PlayerLogInCommand playerLogInCommand;
 
         public PlayerLogInHandler(IAccountRepository repositoryNeo,
-         Game game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand)
+         IGameServer game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand)
         {
             this.accountRepository = repositoryNeo;
             this.game = game;
@@ -52,9 +53,7 @@ namespace NeoServer.Server.Handlers.Authentication
             await accountRepository.Reload(playerRecord.GuildMember);
             await accountRepository.Reload(playerRecord);
 
-         
-
-            game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, packet.CharacterName, connection)));
+            game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, connection)));
         }
 
         private void Verify(IConnection connection, PlayerLogInPacket packet)

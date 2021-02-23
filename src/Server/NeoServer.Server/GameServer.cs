@@ -1,10 +1,11 @@
 ﻿using NeoServer.Game.Contracts;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Instances;
 
 namespace NeoServer.Server
 {
-    public class Game
+    public class GameServer : IGameServer
     {
         /// <summary>
         /// Game's light level
@@ -28,8 +29,8 @@ namespace NeoServer.Server
         /// <value></value>
         public IMap Map { get; }
 
-        public GameCreatureManager CreatureManager { get; }
-        public DecayableItemManager DecayableItemManager { get; }
+        public IGameCreatureManager CreatureManager { get; }
+        public IDecayableItemManager DecayableItemManager { get; }
 
         /// <summary>
         /// Dispatcher instance
@@ -43,8 +44,8 @@ namespace NeoServer.Server
         /// <value></value>
         public IScheduler Scheduler { get; }
 
-        public Game(IMap map,
-            IDispatcher dispatcher, IScheduler scheduler, GameCreatureManager creatureManager, DecayableItemManager decayableBag)
+        public GameServer(IMap map,
+            IDispatcher dispatcher, IScheduler scheduler, IGameCreatureManager creatureManager, DecayableItemManager decayableBag)
         {
 
             Map = map;
@@ -56,7 +57,7 @@ namespace NeoServer.Server
             Instance = this;
 
         }
-        public static Game Instance { get; private set; }
+        public static IGameServer Instance { get; private set; }
         /// <summary>
         /// Sets game state as opened
         /// </summary>

@@ -52,8 +52,6 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             }
         }
 
-     
-
         public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type)?.Equals("rune", StringComparison.InvariantCultureIgnoreCase) ?? false;
     }
 }

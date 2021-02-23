@@ -1,4 +1,5 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 
@@ -6,9 +7,9 @@ namespace NeoServer.Server.Events.Player
 {
     public class PlayerLoadedVipListEventHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         
-        public PlayerLoadedVipListEventHandler(Game game)
+        public PlayerLoadedVipListEventHandler(IGameServer game)
         {
             this.game = game;
         }

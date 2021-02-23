@@ -340,12 +340,10 @@ namespace NeoServer.Game.World.Map.Tiles
             return operations;
         }
 
-
         private uint flags;
         private bool HasFlag(TileFlags flag) => ((uint)flag & flags) != 0;
         private void SetFlag(TileFlags flag) => flags |= (uint)flag;
         private void RemoveFlag(TileFlags flag) => flags &= ~(uint)flag;
-
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
         {

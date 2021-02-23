@@ -101,5 +101,4 @@ namespace NeoServer.Loaders.Npcs
         }
     }
 
-
 }

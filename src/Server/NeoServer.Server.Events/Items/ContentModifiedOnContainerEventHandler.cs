@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Npc;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
@@ -8,9 +9,9 @@ namespace NeoServer.Server.Events
     public class ContentModifiedOnContainerEventHandler
     {
 
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public ContentModifiedOnContainerEventHandler(Game game)
+        public ContentModifiedOnContainerEventHandler(IGameServer game)
         {
             this.game = game;
         }

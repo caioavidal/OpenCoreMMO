@@ -94,7 +94,6 @@ namespace NeoServer.Data.Seeds
                     Amount = 70,
                 }
 
-
             );
             }
         }

@@ -84,7 +84,6 @@ namespace NeoServer.Game.World.Map
                 return false;
             }
 
-
             var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out ICylinder cylinder);
             if (result.IsSuccess is false)
             {

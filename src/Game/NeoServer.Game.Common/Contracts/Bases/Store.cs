@@ -12,7 +12,6 @@ namespace NeoServer.Game.Contracts.Bases
         public abstract Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
         public abstract Result<uint> CanAddItem(IItemType itemType);
 
-
         public abstract bool CanRemoveItem(IItem item);
 
         public abstract uint PossibleAmountToAdd(IItem thing, byte? toPosition = null);
@@ -53,7 +52,6 @@ namespace NeoServer.Game.Contracts.Bases
             var result = destination.ReceiveFrom(this, removedThing, toPosition);
 
             if (result.IsSuccess && thing is IMoveableThing moveableThing) moveableThing.OnMoved();
-
 
             var amountResult = (byte) Math.Max(0, amount - (int)possibleAmountToAdd);
             if (amountResult > 0)

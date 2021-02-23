@@ -8,9 +8,9 @@ namespace NeoServer.Server.Events
     public class PlayerChangedOnlineStatusEventHandler : IEventHandler
     {
         private readonly IMap map;
-        private readonly Game game;
+        private readonly IGameServer game;
 
-        public PlayerChangedOnlineStatusEventHandler(IMap map, Game game)
+        public PlayerChangedOnlineStatusEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;

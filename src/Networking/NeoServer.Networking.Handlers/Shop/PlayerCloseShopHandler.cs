@@ -1,12 +1,13 @@
-﻿using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerCloseShopHandler : PacketHandler
     {
-        private readonly Game game;
-        public PlayerCloseShopHandler(Game game)
+        private readonly IGameServer game;
+        public PlayerCloseShopHandler(IGameServer game)
         {
             this.game = game;
         }

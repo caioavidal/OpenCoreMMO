@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Model.Players.Contracts;
@@ -9,10 +10,10 @@ namespace NeoServer.Server.Handlers.Players
 {
     public class PlayerTurnHandler : PacketHandler
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private readonly IMap map;
 
-        public PlayerTurnHandler(Game game, IMap map)
+        public PlayerTurnHandler(IGameServer game, IMap map)
         {
             this.game = game;
 

@@ -7,14 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-    <PackageReference Include="Moq" Version="4.15.2" />
+    <PackageReference Include="coverlet.msbuild" Version="3.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
+    <PackageReference Include="Moq" Version="4.16.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="1.3.0">
+    <PackageReference Include="coverlet.collector" Version="3.0.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -26,6 +30,7 @@
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+    <ProjectReference Include="..\..\src\Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
     <ProjectReference Include="..\..\src\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
     <ProjectReference Include="..\..\src\Server\NeoServer.Server\NeoServer.Server.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />

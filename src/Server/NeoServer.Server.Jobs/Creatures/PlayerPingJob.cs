@@ -1,5 +1,6 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
@@ -9,7 +10,7 @@ namespace NeoServer.Server.Jobs
     {
         private const int PING_INTERVAL = 5000;
         private const int CONNECTION_LOST_INTERVAL = 60000;
-        public static void Execute(IPlayer player, Game game)
+        public static void Execute(IPlayer player, PlayerLogOutCommand playerLogOutCommand, IGameServer game)
         {
             if (player.IsDead)
             {
@@ -17,7 +18,6 @@ namespace NeoServer.Server.Jobs
             }
 
             var now = DateTime.Now.Ticks;
-
 
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
@@ -33,12 +33,11 @@ namespace NeoServer.Server.Jobs
                 connection.Send(new PingPacket());
             }
 
-         
             var noPongTime = TimeSpan.FromTicks(now - connection.LastPingResponse).TotalMilliseconds;
 
             if (noPongTime >= CONNECTION_LOST_INTERVAL && connection.LastPingResponse > 0)
             {
-                new PlayerLogOutCommand(player, game, true).Execute();
+                playerLogOutCommand.Execute(player, forced: true);
             }
         }
     }

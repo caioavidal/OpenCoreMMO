@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -14,7 +15,7 @@ namespace NeoServer.Server
     /// <summary>
     /// Control creatures on game
     /// </summary>
-    public class GameCreatureManager
+    public class GameCreatureManager: IGameCreatureManager
     {
 
         private ICreatureGameInstance creatureInstances;
@@ -83,7 +84,7 @@ namespace NeoServer.Server
             }
             return false;
         }
-        public bool TryGetPlayer(string name, out IPlayer player)
+        public virtual bool TryGetPlayer(string name, out IPlayer player)
         {
             player = default;
             if (string.IsNullOrWhiteSpace(name)) return false;

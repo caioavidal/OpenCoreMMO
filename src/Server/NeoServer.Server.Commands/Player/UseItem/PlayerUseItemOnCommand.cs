@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
@@ -12,11 +13,11 @@ namespace NeoServer.Server.Commands.Player
 
     public class PlayerUseItemOnCommand : Command
     {
-        private readonly Game game;
+        private readonly IGameServer game;
         private UseItemOnPacket useItemPacket;
         private readonly IPlayer player;
 
-        public PlayerUseItemOnCommand(IPlayer player, Game game, UseItemOnPacket useItemPacket)
+        public PlayerUseItemOnCommand(IPlayer player, IGameServer game, UseItemOnPacket useItemPacket)
         {
             this.game = game;
             this.player = player;
@@ -44,7 +45,6 @@ namespace NeoServer.Server.Commands.Player
             }
 
             if (onItem is not IItem && onTile is not ITile) return;
-
 
             Action action = null;
 

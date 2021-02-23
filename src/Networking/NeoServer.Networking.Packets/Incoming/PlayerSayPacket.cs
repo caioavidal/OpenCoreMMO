@@ -5,10 +5,10 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class PlayerSayPacket : IncomingPacket
     {
-        public SpeechType TalkType { get; }
-        public string Receiver{ get; set; }
-        public string Message { get; }
-        public ushort ChannelId { get; set; }
+        public virtual SpeechType TalkType { get; }
+        public virtual string Receiver{ get; set; }
+        public virtual string Message { get; }
+        public virtual ushort ChannelId { get; set; }
 
         public PlayerSayPacket(IReadOnlyNetworkMessage message)
         {
