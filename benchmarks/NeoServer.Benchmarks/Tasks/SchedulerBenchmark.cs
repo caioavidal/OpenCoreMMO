@@ -16,25 +16,25 @@ namespace NeoServer.Benchmarks.Tasks
     [SimpleJob(RunStrategy.ColdStart, launchCount: 1)]
     public class SchedulerBenchmark
     {
-        [Benchmark]
-        public long WithThreadSleep()
-        {
-            var scheduler = new SchedulerWithNoDelayThread(null);
-            var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = cancellationTokenSource.Token;
+        //[Benchmark]
+        //public long WithThreadSleep()
+        //{
+        //    var scheduler = new SchedulerWithNoDelayThread(null);
+        //    var cancellationTokenSource = new CancellationTokenSource();
+        //    var cancellationToken = cancellationTokenSource.Token;
 
-            scheduler.Start(cancellationToken);
+        //    scheduler.Start(cancellationToken);
 
-            for (int i = 0; i < 10_000_000; i++)
-            {
-                scheduler.AddEvent(new SchedulerEvent(10, Action));
-            }
-            while (!scheduler.Empty)
-            {
+        //    for (int i = 0; i < 10_000_000; i++)
+        //    {
+        //        scheduler.AddEvent(new SchedulerEvent(10, Action));
+        //    }
+        //    while (!scheduler.Empty)
+        //    {
 
-            }
-            return scheduler.events;
-        }
+        //    }
+        //    return scheduler.events;
+        //}
         [Benchmark]
         public long WithoutDelay()
         {
@@ -44,7 +44,7 @@ namespace NeoServer.Benchmarks.Tasks
 
             scheduler.Start(cancellationToken);
 
-            for (int i = 0; i < 10_000_000; i++)
+            for (int i = 0; i < 1_000_000; i++)
             {
                 scheduler.AddEvent(new SchedulerEvent(10, Action));
             }
@@ -63,7 +63,7 @@ namespace NeoServer.Benchmarks.Tasks
 
             scheduler.Start(cancellationToken);
 
-            for (int i = 0; i < 10_000_000; i++)
+            for (int i = 0; i < 1_000_000; i++)
             {
                 scheduler.AddEvent(new SchedulerEvent(10, Action));
             }
@@ -149,7 +149,7 @@ namespace NeoServer.Benchmarks.Tasks
                         }
 
                         //await Task.Delay(1);
-                        await DispatchEvent2(evt);
+                        DispatchEvent2(evt);
                     }
                 }
             });

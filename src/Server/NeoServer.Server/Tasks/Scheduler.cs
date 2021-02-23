@@ -76,11 +76,11 @@ namespace NeoServer.Server.Tasks
       
       
 
-        private void DispatchEvent(ISchedulerEvent evt)
+        private async ValueTask DispatchEvent(ISchedulerEvent evt)
         {
             if (!evt.HasExpired)
             {
-                Thread.Sleep(1);
+                await Task.Delay(1);
                 activeEventIds.TryRemove(evt.EventId, out _);
                 AddEvent(evt);
                 return;
