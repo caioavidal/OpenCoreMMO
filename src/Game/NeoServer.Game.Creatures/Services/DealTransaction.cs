@@ -43,9 +43,11 @@ namespace NeoServer.Game.Creatures.Events
 
             AddItems(buyer, seller, saleContract);
 
-            var changeCoins = CreateCoins(change).ToList();
-
-            buyer.ReceivePayment(changeCoins, change);
+            if (change > 0)
+            {
+                var changeCoins = CreateCoins(change).ToList();
+                buyer.ReceivePayment(changeCoins, change);
+            }
 
             return true;
         }
