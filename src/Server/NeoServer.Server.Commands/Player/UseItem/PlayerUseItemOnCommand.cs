@@ -5,26 +5,22 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
 namespace NeoServer.Server.Commands.Player
 {
-
-    public class PlayerUseItemOnCommand : Command
+    public class PlayerUseItemOnCommand : ICommand
     {
         private readonly IGameServer game;
-        private UseItemOnPacket useItemPacket;
-        private readonly IPlayer player;
 
-        public PlayerUseItemOnCommand(IPlayer player, IGameServer game, UseItemOnPacket useItemPacket)
+        public PlayerUseItemOnCommand( IGameServer game)
         {
             this.game = game;
-            this.player = player;
-            this.useItemPacket = useItemPacket;
         }
 
-        public override void Execute()
+        public void Execute(IPlayer player, UseItemOnPacket useItemPacket)
         {
             IItem onItem = null;
             ITile onTile = null;
