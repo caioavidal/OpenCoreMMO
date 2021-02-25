@@ -5,26 +5,25 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
 namespace NeoServer.Server.Commands.Player
 {
 
-    public class PlayerUseItemOnCreatureCommand : Command
+    public class PlayerUseItemOnCreatureCommand : ICommand
     {
         private readonly IGameServer game;
         private UseItemOnCreaturePacket useItemPacket;
         private readonly IPlayer player;
 
-        public PlayerUseItemOnCreatureCommand(IPlayer player, IGameServer game, UseItemOnCreaturePacket useItemPacket)
+        public PlayerUseItemOnCreatureCommand(IGameServer game)
         {
             this.game = game;
-            this.player = player;
-            this.useItemPacket = useItemPacket;
         }
 
-        public override void Execute()
+        public void Execute(IPlayer player, UseItemOnCreaturePacket useItemPacket)
         {
             if (!game.CreatureManager.TryGetCreature(useItemPacket.CreatureId, out var creature)) return;
 
