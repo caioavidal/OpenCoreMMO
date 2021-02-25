@@ -4,28 +4,23 @@ using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
 
 namespace NeoServer.Server.Commands.Player
 {
-    public class PlayerSayCommand : Command
+    public class PlayerSayCommand : ICommand
     {
-        private readonly IPlayer player;
-        private readonly PlayerSayPacket playerSayPacket;
         private readonly IGameServer game;
-        private readonly IConnection connection;
 
-        public PlayerSayCommand(IPlayer player, IConnection connection, PlayerSayPacket playerSayPacket, IGameServer game)
+        public PlayerSayCommand(IGameServer game)
         {
-            this.player = player;
-            this.playerSayPacket = playerSayPacket;
             this.game = game;
-            this.connection = connection;
         }
 
-        public override void Execute()
+        public void Execute(IPlayer player, IConnection connection, PlayerSayPacket playerSayPacket)
         {
             if (string.IsNullOrWhiteSpace(playerSayPacket.Message) || (playerSayPacket.Message?.Length ?? 0) > 255) return;
             if ((playerSayPacket.Receiver?.Length ?? 0) > 30) return;
@@ -36,25 +31,25 @@ namespace NeoServer.Server.Commands.Player
 
             switch (playerSayPacket.TalkType)
             {
-                case NeoServer.Game.Common.Talks.SpeechType.None:
+                case Game.Common.Talks.SpeechType.None:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.Say:
+                case Game.Common.Talks.SpeechType.Say:
                     player.Say(playerSayPacket.Message, playerSayPacket.TalkType);
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.Whisper:
+                case Game.Common.Talks.SpeechType.Whisper:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.Yell:
+                case Game.Common.Talks.SpeechType.Yell:
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.PrivatePlayerToNpc:
-                    SendMessageToNpc(message);
+                case Game.Common.Talks.SpeechType.PrivatePlayerToNpc:
+                    SendMessageToNpc(player, playerSayPacket, message);
                     break;
-                case NeoServer.Game.Common.Talks.SpeechType.PrivateNpcToPlayer:
+                case Game.Common.Talks.SpeechType.PrivateNpcToPlayer:
                     break;
 
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelOrangeText:
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelRed1Text:
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelYellowText:
-                    SendMessageToChannel(playerSayPacket.ChannelId, message);
+                    SendMessageToChannel(player, playerSayPacket.ChannelId, message);
                     break;
 
                 case NeoServer.Game.Common.Talks.SpeechType.ChannelRed2Text:
@@ -71,7 +66,7 @@ namespace NeoServer.Server.Commands.Player
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.Private:
                 case NeoServer.Game.Common.Talks.SpeechType.PrivateRed:
-                    SendMessageToPlayer(message);
+                    SendMessageToPlayer(player, connection, playerSayPacket, message);
                     break;
                 case NeoServer.Game.Common.Talks.SpeechType.MonsterSay:
                     break;
@@ -81,7 +76,7 @@ namespace NeoServer.Server.Commands.Player
                     break;
             }
         }
-        private void SendMessageToPlayer(string message)
+        private void SendMessageToPlayer(IPlayer player, IConnection connection, PlayerSayPacket playerSayPacket, string message)
         {
             if (string.IsNullOrWhiteSpace(playerSayPacket.Receiver) || !game.CreatureManager.TryGetPlayer(playerSayPacket.Receiver, out var receiver))
             {
@@ -92,7 +87,7 @@ namespace NeoServer.Server.Commands.Player
 
             player.SendMessageTo(receiver, playerSayPacket.TalkType, message);
         }
-        private void SendMessageToNpc(string message)
+        private void SendMessageToNpc(IPlayer player, PlayerSayPacket playerSayPacket,string message)
         {
             foreach (var creature in game.Map.GetCreaturesAtPositionZone(player.Location))
             {
@@ -103,7 +98,7 @@ namespace NeoServer.Server.Commands.Player
                 }
             }
         }
-        private void SendMessageToChannel(ushort channelId, string message)
+        private void SendMessageToChannel(IPlayer player, ushort channelId, string message)
         {
             var channel = ChatChannelStore.Data.Get(channelId);
 
