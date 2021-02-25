@@ -33,9 +33,9 @@ namespace NeoServer.Server.Tests.Commands
             var game = new Mock<IGameServer>();
             game.Setup(x => x.CreatureManager.TryGetPlayer("receiver", out receiver)).Returns(true);
 
-            var sut = new PlayerSayCommand(player.Object, connection.Object, playerSayPacket.Object, game.Object);
+            var sut = new PlayerSayCommand(game.Object);
 
-            sut.Execute();
+            sut.Execute(player.Object, connection.Object, playerSayPacket.Object);
 
             player.Verify(x => x.SendMessageTo(receiver, NeoServer.Game.Common.Talks.SpeechType.Private, "hello"), Times.Once());
         }
