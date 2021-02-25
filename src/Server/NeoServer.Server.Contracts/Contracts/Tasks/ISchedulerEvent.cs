@@ -6,5 +6,6 @@ namespace NeoServer.Server.Contracts.Tasks
 
         void SetEventId(uint eventId);
         int ExpirationDelay { get; }
+        double RemainingTime { get; }
     }
 }

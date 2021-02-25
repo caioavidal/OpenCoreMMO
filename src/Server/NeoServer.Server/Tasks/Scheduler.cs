@@ -9,19 +9,26 @@ namespace NeoServer.Server.Tasks
 
     public class Scheduler : IScheduler
     {
-        private readonly ChannelWriter<ISchedulerEvent> writer;
-        private readonly ChannelReader<ISchedulerEvent> reader;
+        protected readonly ChannelWriter<ISchedulerEvent> writer;
+        protected readonly ChannelReader<ISchedulerEvent> reader;
 
-        private ConcurrentDictionary<uint, byte> activeEventIds = new ConcurrentDictionary<uint, byte>();
+        protected ulong _count;
+        public ulong Count => _count;
 
-        private uint lastEventId = 0;
+        protected ConcurrentDictionary<uint, byte> activeEventIds = new ConcurrentDictionary<uint, byte>();
+
+        protected Channel<ISchedulerEvent> channel;
+
+        public bool Empty => activeEventIds.IsEmpty;
+
+        protected uint lastEventId = 0;
 
         private IDispatcher dispatcher;
 
         public Scheduler(IDispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
-            var channel = Channel.CreateUnbounded<ISchedulerEvent>(new UnboundedChannelOptions() { SingleReader = true });
+            channel = Channel.CreateUnbounded<ISchedulerEvent>(new UnboundedChannelOptions() { SingleReader = true });
             reader = channel.Reader;
             writer = channel.Writer;
         }
@@ -31,7 +38,7 @@ namespace NeoServer.Server.Tasks
         /// </summary>
         /// <param name="evt"></param>
         /// <returns></returns>
-        public uint AddEvent(ISchedulerEvent evt)
+        public virtual uint AddEvent(ISchedulerEvent evt)
         {
 
             if (evt.EventId == default)
@@ -52,8 +59,9 @@ namespace NeoServer.Server.Tasks
         /// </summary>
         /// <param name="token"></param>
 
-        public void Start(CancellationToken token)
+        public virtual void Start(CancellationToken token)
         {
+
             Task.Run(async () =>
             {
                 while (await reader.WaitToReadAsync())
@@ -66,22 +74,35 @@ namespace NeoServer.Server.Tasks
                             continue;
                         }
 
+                        if (!evt.HasExpired)
+                        {
+                            ThreadPool.QueueUserWorkItem((o) => SendBack(evt));
+                            continue;
+                        }
                         DispatchEvent(evt);
                     }
                 }
             });
         }
-
-        private async ValueTask DispatchEvent(ISchedulerEvent evt)
+        private void SendBack(ISchedulerEvent evt)
         {
-            await Task.Delay(evt.ExpirationDelay);
+            Thread.Sleep(evt.ExpirationDelay);
+            activeEventIds.TryRemove(evt.EventId, out _);
+            AddEvent(evt);
+        }
+
+        public virtual bool DispatchEvent(ISchedulerEvent evt)
+        {
             evt.SetToNotExpire();
-          
+
             if (!EventIsCancelled(evt.EventId))
             {
+                Interlocked.Increment(ref _count);
                 activeEventIds.TryRemove(evt.EventId, out _);
                 dispatcher.AddEvent(evt); //send to dispatcher      
+                return true;
             }
+            return false;
         }
 
         /// <summary>
@@ -89,7 +110,7 @@ namespace NeoServer.Server.Tasks
         /// </summary>
         /// <param name="eventId"></param>
         /// <returns></returns>
-        public bool CancelEvent(uint eventId)
+        public virtual bool CancelEvent(uint eventId)
         {
             if (eventId == default)
             {

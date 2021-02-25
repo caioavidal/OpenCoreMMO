@@ -5,7 +5,7 @@ namespace NeoServer.Server.Tasks
 {
     public class Event : IEvent
     {
-        private TimeSpan expirationTime;
+        
         public Event(Action action)
         {
             Action = action;
@@ -14,8 +14,10 @@ namespace NeoServer.Server.Tasks
         public Event(int expirationMs, Action action)
         {
             Action = action;
-            expirationTime = DateTime.Now.AddMilliseconds(expirationMs).TimeOfDay;
+            ExpirationTime = DateTime.Now.AddMilliseconds(expirationMs).TimeOfDay;
         }
+
+        public TimeSpan ExpirationTime { get; }
 
         /// <summary>
         /// Action to be added on event
@@ -30,7 +32,7 @@ namespace NeoServer.Server.Tasks
         /// <summary>
         /// Indicates whether event has expired
         /// </summary>
-        public bool HasExpired => DateTime.Now.TimeOfDay > expirationTime;
+        public bool HasExpired => DateTime.Now.TimeOfDay > ExpirationTime;
 
         /// <summary>
         /// Sets event to not expire

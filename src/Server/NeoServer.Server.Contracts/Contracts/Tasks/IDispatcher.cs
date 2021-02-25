@@ -6,7 +6,6 @@ namespace NeoServer.Server.Contracts.Tasks
     {
 
         void AddEvent(IEvent evt);
-        ulong GetCycles();
 
         void Start(CancellationToken token);
     }
