@@ -17,7 +17,7 @@ namespace NeoServer.Server.Tests.Tasks
         [InlineData(5)]
         [InlineData(100)]
         [InlineData(500)]
-        [Theory(Skip ="Only runs manually"]
+        [Theory(Skip ="Only runs manually")]
         public void Start_Must_Execute_Events_After_Delay(int delay)
         {
             var dispatcher = new Mock<IDispatcher>();
