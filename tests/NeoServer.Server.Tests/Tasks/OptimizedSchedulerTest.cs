@@ -34,7 +34,6 @@ namespace NeoServer.Server.Tests.Tasks
             }
 
             Thread.Sleep(1_000);
-            //Thread.Sleep(delay * 10);
             Assert.Equal(5_000ul, sut.Count);
         }
         [Fact]
@@ -56,7 +55,6 @@ namespace NeoServer.Server.Tests.Tasks
             }
 
             Thread.Sleep(1_000);
-            //Thread.Sleep(delay * 10);
             Assert.Equal(5_000ul, sut.Count);
         }
 
