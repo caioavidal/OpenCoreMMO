@@ -7,25 +7,22 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 
 namespace NeoServer.Server.Commands.Player
 {
-    public class PlayerUseItemCommand : Command
+    public class PlayerUseItemCommand : ICommand
     {
         private readonly IGameServer game;
-        private UseItemPacket useItemPacket;
-        private readonly IPlayer player;
-
-        public PlayerUseItemCommand(IPlayer player, IGameServer game, UseItemPacket useItemPacket)
+        
+        public PlayerUseItemCommand(IGameServer game)
         {
             this.game = game;
-            this.player = player;
-            this.useItemPacket = useItemPacket;
         }
 
-        public override void Execute()
+        public  void Execute(IPlayer player, UseItemPacket useItemPacket)
         {
             IItem item = null;
             if (useItemPacket.Location.Type == LocationType.Ground)

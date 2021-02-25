@@ -17,7 +17,7 @@ namespace NeoServer.Server.Tests.Tasks
         [InlineData(5)]
         [InlineData(100)]
         [InlineData(500)]
-        [Theory]
+        [Theory(Skip ="Only runs manually")]
         public void Start_Must_Execute_Events_After_Delay(int delay)
         {
             var dispatcher = new Mock<IDispatcher>();
@@ -36,7 +36,7 @@ namespace NeoServer.Server.Tests.Tasks
             Thread.Sleep(1_000);
             Assert.Equal(5_000ul, sut.Count);
         }
-        [Fact]
+        [Fact(Skip="Only runs manually")]
         public void Start_Must_Execute_Random_Delayed_Events()
         {
             var dispatcher = new Mock<IDispatcher>();
@@ -50,7 +50,7 @@ namespace NeoServer.Server.Tests.Tasks
             Random random = new();
             for (int i = 0; i < 5_000; i++)
             {
-                var delay = random.Next(1, 1000);
+                var delay = random.Next(1, 500);
                 sut.AddEvent(new SchedulerEvent(delay, () => { }));
             }
 
