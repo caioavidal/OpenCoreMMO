@@ -2,25 +2,24 @@
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Commands.Movement.ToInventory;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Commands.Player
 {
 
-    public class PlayerThrowItemCommand : Command
+    public class PlayerThrowItemCommand : ICommand
     {
         private readonly IGameServer game;
-        private ItemThrowPacket itemThrow;
-        private readonly IPlayer player;
 
-        public PlayerThrowItemCommand(IPlayer player, ItemThrowPacket itemThrow, IGameServer game)
+        public PlayerThrowItemCommand(IGameServer game)
         {
-            this.itemThrow = itemThrow;
+            
             this.game = game;
-            this.player = player;
+            
         }
 
-        public override void Execute()
+        public void Execute(IPlayer player, ItemThrowPacket itemThrow)
         {
         
             if (ContainerToContainerMovementOperation.IsApplicable(itemThrow))
