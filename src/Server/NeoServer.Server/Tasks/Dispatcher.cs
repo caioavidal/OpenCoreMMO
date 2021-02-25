@@ -10,7 +10,6 @@ namespace NeoServer.Server.Tasks
     {
         private readonly ChannelWriter<IEvent> writer;
         private readonly ChannelReader<IEvent> reader;
-        private ulong cycles = 0;
 
         /// <summary>
         /// A queue responsible for process events
@@ -35,11 +34,6 @@ namespace NeoServer.Server.Tasks
 
         }
 
-        public ulong GetCycles()
-        {
-            return cycles;
-        }
-
         /// <summary>
         /// Starts dispatcher processing queue
         /// </summary>
@@ -59,10 +53,9 @@ namespace NeoServer.Server.Tasks
                     {
                         if (!evt.HasExpired || evt.HasNoTimeout)
                         {
-                            ++cycles;
                             try
                             {
-                                evt.Action.Invoke(); //execute event
+                                evt.Action?.Invoke(); //execute event
                             }
                             catch (Exception ex)
                             {

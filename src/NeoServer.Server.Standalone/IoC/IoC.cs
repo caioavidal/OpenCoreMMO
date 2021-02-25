@@ -98,7 +98,7 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterPacketHandlers();
 
-            builder.RegisterType<Scheduler>().As<IScheduler>().SingleInstance();
+            builder.RegisterType<OptimizedScheduler>().As<IScheduler>().SingleInstance();
             //commands
             builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
 
