@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
+    
     public class Npc : WalkableCreature, INpc
     {
         public Npc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
@@ -91,10 +92,11 @@ namespace NeoServer.Game.Creatures.Npcs
             foreach (var answer in dialog.Answers)
             {
                 if (string.IsNullOrWhiteSpace(answer) || to is not IPlayer) continue;
-
                 Say(answer, SpeechType.PrivateNpcToPlayer, to);
             }
         }
+
+     
 
         public void Hear(ICreature from, SpeechType speechType, string message)
         {

@@ -97,6 +97,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats", "Gam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats.Tests", "..\tests\NeoServer.Game.Chats.Tests\NeoServer.Game.Chats.Tests.csproj", "{7588730A-5787-4D61-A3B2-31D63AC10355}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Scripts.Lua", "NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj", "{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -385,6 +387,14 @@ Global
 		{7588730A-5787-4D61-A3B2-31D63AC10355}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7588730A-5787-4D61-A3B2-31D63AC10355}.Release|x64.ActiveCfg = Release|Any CPU
 		{7588730A-5787-4D61-A3B2-31D63AC10355}.Release|x64.Build.0 = Release|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Debug|x64.Build.0 = Debug|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Release|x64.ActiveCfg = Release|Any CPU
+		{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
