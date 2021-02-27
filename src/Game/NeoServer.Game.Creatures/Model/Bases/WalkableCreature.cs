@@ -209,7 +209,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             OnTeleported?.Invoke(this, location);
         }
-
+        public virtual void TeleportTo(ushort x, ushort y, byte z)
+        {
+            OnTeleported?.Invoke(this, new Location(x,y,z));
+        }
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);
         public void ChangeSpeed(int newSpeed)
         {

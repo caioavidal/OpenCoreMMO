@@ -53,5 +53,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool WalkTo(Location location);
         bool WalkTo(Location location, Action<ICreature> callbackAction);
         void TeleportTo(Location location);
+        void TeleportTo(ushort x, ushort y, byte z);
+
     }
 }
