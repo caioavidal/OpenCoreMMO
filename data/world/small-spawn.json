@@ -6,9 +6,9 @@
     "radius": 1,
     "monsters": [],
     "npcs": [
-      {
-        "name": "Eryn",
-        "x": 0,
+     {
+        "name": "Captain Bluebear",
+        "x": 1,
         "y": 0,
         "z": 7,
         "spawntime": 60

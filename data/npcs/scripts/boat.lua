@@ -1,12 +1,21 @@
-register(creature);
-
 function register(creature) 
-	creature.OnHear:Add(onHear)
+	creature.OnDialogAction:Add(onDialogAction)
 end
 
-function onHear(from, receiver, speechType, message)
-	print('oi');
-	if string.match(message, 'teleport') then
-		from:TeleportTo(from.Location.X + 1, from.Location.Y, 7)
+function onDialogAction(npc, player, dialog, action, lastWord)
+
+	if action == "travel" then
+		
+		local data = npc.Metadata.CustomAttributes['custom-data'];
+		
+		for i = 0, data.Length - 1 do
+			if lastWord == data[i].city then
+				local destination = data[i].destination;
+				player:TeleportTo(destination.x, destination.y, destination.z)
+			end
+		end
+	
 	end
 end
+
+register(creature)

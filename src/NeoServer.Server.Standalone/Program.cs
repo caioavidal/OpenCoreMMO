@@ -94,7 +94,7 @@ public class Program
 
         container.Resolve<IGameServer>().Open();
 
-        new Register();
+        new Init();
 
         sw.Stop();
 

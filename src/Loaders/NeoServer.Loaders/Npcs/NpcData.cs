@@ -17,6 +17,9 @@ namespace NeoServer.Loaders.Npcs
         public string Script { get; set; }
         public ShopData[] Shop { get; set; }
 
+        [JsonProperty("custom-data")]
+        public dynamic CustomData { get; set; }
+
         public class DialogData
         {
             [JsonProperty("words")]

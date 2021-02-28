@@ -63,10 +63,12 @@ namespace NeoServer.Loaders.Npcs
                     Speed = 280,
                     Look = new Dictionary<LookType, ushort>() { { LookType.Type, npcData.Look.Type }, { LookType.Corpse, npcData.Look.Corpse }, { LookType.Body, npcData.Look.Body}, { LookType.Legs, npcData.Look.Legs}, { LookType.Head, npcData.Look.Head },
                 { LookType.Feet, npcData.Look.Feet},{ LookType.Addon, npcData.Look.Addons}},
-                    Dialog = dialogs.ToArray()
+                    Dialogs = dialogs.ToArray()
                 });
 
                 LoadShopData(npcType.Item2, npcData);
+
+                NpcCustomAttributeLoader.LoadCustomData(npcType.Item2, npcData);
 
                 yield return npcType;
             }

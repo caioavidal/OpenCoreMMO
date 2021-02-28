@@ -15,6 +15,7 @@ namespace NeoServer.Game.Creatures.Npcs
         {
             Metadata = type;
         }
+        public event DialogAction OnDialogAction;
         public event Answer OnAnswer;
         public override IOutfit Outfit { get; protected set; }
         public INpcType Metadata { get; }
@@ -49,7 +50,7 @@ namespace NeoServer.Game.Creatures.Npcs
             var i = 0;
             foreach (var position in positions)
             {
-                dialogs = i++ == 0 ? Metadata.Dialog : dialogs[position].Then;
+                dialogs = i++ == 0 ? Metadata.Dialogs : dialogs[position].Then;
             }
 
             i = 0;
@@ -67,6 +68,7 @@ namespace NeoServer.Game.Creatures.Npcs
             return null;
         }
 
+ 
         public virtual void Answer(ICreature from, SpeechType speechType, string message)
         {
             if (from is null || string.IsNullOrWhiteSpace(message)) return;
@@ -78,11 +80,16 @@ namespace NeoServer.Game.Creatures.Npcs
 
             var dialog = GetNextAnswer(from.CreatureId, message);
 
-            if (dialog is null || dialog?.Answers is null) return;
+            if (dialog is null) return;
 
-            SendMessageTo(sociableCreature, speechType, dialog);
+            if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, "carlin");
 
-            OnAnswer?.Invoke(this, from, dialog, message, speechType);
+            if (dialog?.Answers is not null)
+            {
+                SendMessageTo(sociableCreature, speechType, dialog);
+
+                OnAnswer?.Invoke(this, from, dialog, message, speechType);
+            }
         }
 
         public virtual void SendMessageTo(ISociableCreature to, SpeechType type, INpcDialog dialog)
