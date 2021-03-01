@@ -11,7 +11,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         public readonly IItem item;
         public RemoveTileItemPacket(Location location, byte stackPosition, IItem item)
         {
-            item.ThrowIfNull();
+            if (item.IsNull()) return;
 
             this.location = location;
             this.stackPosition = stackPosition;

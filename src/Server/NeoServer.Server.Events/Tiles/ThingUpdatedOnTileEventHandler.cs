@@ -16,12 +16,10 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IThing thing, ICylinder cylinder)
         {
-            cylinder.ThrowIfNull();
-            cylinder.TileSpectators.ThrowIfNull();
-            thing.ThrowIfNull();
+            if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
 
             var tile = cylinder.ToTile;
-            tile.ThrowIfNull();
+            if(tile.IsNull()) return;
 
             foreach (var spectator in cylinder.TileSpectators)
             {

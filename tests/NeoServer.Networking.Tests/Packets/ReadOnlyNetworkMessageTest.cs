@@ -193,12 +193,12 @@ namespace NeoServer.Networking.Tests.Packets
         }
 
         [Fact]
-        public void ThrowArgumentExpecetion_When_Length_Less_Than_0_GetMessageInBytes()
+        public void GetMessageInBytes_When_Length_Less_Than_0_Returns_Empty()
         {
             var length = -1;
             var sut = new ReadOnlyNetworkMessage(new byte[4], length);
 
-            Assert.Throws<ArgumentOutOfRangeException>(sut.GetMessageInBytes);
+            Assert.Empty(sut.GetMessageInBytes());
         }
 
         [Fact]
@@ -242,35 +242,40 @@ namespace NeoServer.Networking.Tests.Packets
         }
 
         [Fact]
-        public void ThrowException_When_Buffer_Less_Than_9_Bytes_GetIncomingPacketType_Is_Authenticated()
+        public void GetIncomingPacketType_When_Is_Authenticated_And_Buffer_Less_Than_9_Bytes_Returns_None()
         {
             var data = new byte[3] { 0, 0, 0 };
 
             var sut = new ReadOnlyNetworkMessage(data, 3);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetIncomingPacketType(false));
+            Assert.Equal(GameIncomingPacketType.None, sut.GetIncomingPacketType(false));
         }
         [Fact]
-        public void ThrowException_When_Buffer_Less_Than_6_Bytes_GetIncomingPacketType_Is_Not_Authenticated()
+        public void GetIncomingPacketType_When_Is_Not_And_Buffer_Less_Than_6_Bytes_Returns_None()
         {
             var data = new byte[3] { 0, 0, 0 };
 
             var sut = new ReadOnlyNetworkMessage(data, 3);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetIncomingPacketType(false));
+            Assert.Equal(GameIncomingPacketType.None, sut.GetIncomingPacketType(false));
         }
 
         [Fact]
-        public void ThrowException_When_Buffer_Is_Null_Constructor()
+        public void Constructor_When_Buffer_Is_Null_Returns()
         {
-            Assert.Throws<NullReferenceException>(() => new ReadOnlyNetworkMessage(null, 3));
+            var sut = new ReadOnlyNetworkMessage(null, 3);
+            Assert.Null(sut.Buffer);
+            Assert.Equal(0, sut.Length);
         }
 
         [Fact]
-        public void ThrowException_When_Length_Less_Than_0_Resize()
+        public void Resize_When_Length_Less_Than_0_Do_Nothing()
         {
             var sut = new ReadOnlyNetworkMessage(new byte[3], 3);
-            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Resize(-1));
+            sut.Resize(-1);
+
+            Assert.Equal(3, sut.Buffer.Length);
+            Assert.Equal(3, sut.Length);
         }
 
         [Fact]

@@ -77,7 +77,7 @@ namespace NeoServer.Loaders.World
                     var tile = TileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
 
                     world.AddTile(tile);
-                   // return tile;
+                    // return tile;
                 });
         }
 
@@ -100,7 +100,7 @@ namespace NeoServer.Loaders.World
 
                 var item = itemFactory.Create(itemNode.ItemId, new Location(tileNode.Coordinate), attributes);
 
-                item.ThrowIfNull($"Failed to create item on {tileNode.Coordinate}");
+                if (item.IsNull()) logger.Error("Failed to create item on {tileNode.Coordinate}", tileNode.Coordinate);
 
                 // item.LoadedFromMap = true;
 

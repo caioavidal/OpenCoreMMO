@@ -34,7 +34,7 @@ namespace NeoServer.Game.World
 
         public void LoadSpawns(IEnumerable<ISpawn> spawns)
         {
-            spawns.ThrowIfNull();
+            if (spawns.IsNull()) return;
 
             Spawns = spawns.ToImmutableList();
         }
@@ -56,7 +56,7 @@ namespace NeoServer.Game.World
 
         public void AddTown(ITown town)
         {
-            town.ThrowIfNull();
+            if (town.IsNull()) return;
             towns[town.Coordinate] = town;
         }
 
@@ -64,7 +64,7 @@ namespace NeoServer.Game.World
 
         public void AddWaypoint(IWaypoint waypoint)
         {
-            waypoint.ThrowIfNull();
+            if (waypoint.IsNull()) return;
 
             waypoints[waypoint.Coordinate] = waypoint;
         }

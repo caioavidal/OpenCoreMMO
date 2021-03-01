@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Packets.Messages
         /// </summary>
         public byte[] GetMessageInBytes()
         {
-            Length.ThrowIfLessThanZero();
+            if (Length.IsLessThanZero()) return new byte[0];
             return Length == 0 ? Buffer : Buffer[0..Length];
         }
 
@@ -30,7 +30,7 @@ namespace NeoServer.Networking.Packets.Messages
 
             if (isAuthenticated)
             {
-                Buffer.Length.ThrowIfLessThan(9);
+                if (Buffer.Length.IsLessThan(9)) return GameIncomingPacketType.None;
 
                 SkipBytes(6);
                 var length = GetUInt16();
@@ -40,14 +40,14 @@ namespace NeoServer.Networking.Packets.Messages
                 return packetType;
             }
 
-            Buffer.Length.ThrowIfLessThan(6);
+            if (Buffer.Length.IsLessThan(6)) return GameIncomingPacketType.None;
             IncomingPacket = (GameIncomingPacketType)Buffer[6];
             return (GameIncomingPacketType)Buffer[6];
         }
 
         public ReadOnlyNetworkMessage(byte[] buffer, int length)
         {
-            buffer.ThrowIfNull();
+            if (buffer.IsNull()) return;
 
             Buffer = buffer;
             Length = length;
@@ -111,7 +111,7 @@ namespace NeoServer.Networking.Packets.Messages
 
         public void Resize(int length)
         {
-            length.ThrowIfLessThanZero();
+            if (length.IsLessThanZero()) return;
 
             Length = length;
             BytesRead = 0;

@@ -18,14 +18,14 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IWalkableCreature creature, ICylinder cylinder)
         {
-            cylinder.ThrowIfNull();
-            cylinder.TileSpectators.ThrowIfNull();
-            creature.ThrowIfNull();
+            if (cylinder.IsNull()) return;
+            if(cylinder.TileSpectators.IsNull()) return;
+            if(creature.IsNull()) return;
 
             var toTile = cylinder.ToTile;
             var fromTile = cylinder.FromTile;
-            toTile.ThrowIfNull();
-            fromTile.ThrowIfNull();
+            if(toTile.IsNull()) return;
+            if(fromTile.IsNull()) return;
 
             var toDirection = fromTile.Location.DirectionTo(toTile.Location, true);
 

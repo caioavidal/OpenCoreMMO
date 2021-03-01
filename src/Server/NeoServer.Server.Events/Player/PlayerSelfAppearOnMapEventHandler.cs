@@ -21,7 +21,7 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IWalkableCreature creature)
         {
-            creature.ThrowIfNull();
+            if(creature.IsNull()) return;
 
             if (creature is not IPlayer player) return;
 
