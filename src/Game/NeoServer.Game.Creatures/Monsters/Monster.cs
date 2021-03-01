@@ -26,7 +26,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public event MonsterChangeState OnChangedState;
         public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
         {
-            type.ThrowIfNull();
+            if (type.IsNull()) return;
 
             Metadata = type;
             Spawn = spawn;
@@ -239,7 +239,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         private CombatTarget searchTarget()
         {
-            Targets.ThrowIfNull();
+            if (Targets.IsNull()) return null;
 
             var nearest = ushort.MaxValue;
             CombatTarget nearestCombat = null;

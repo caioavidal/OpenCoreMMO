@@ -3,43 +3,23 @@ using System.Collections.Generic;
 
 public static class Validation
 {
-    public static void ThrowIfNull(this object value, string exception = null)
-    {
-        if (value is null)
-        {
-            throw new NullReferenceException(exception ?? nameof(value));
-        }
+    public static bool IsNull(this object value) => value is null;
+    public static bool IsNotNull(this object value) => value is not null;
 
-    }
-    public static void ThrowIfLessThanZero(this int value, string exception = null)
-    {
-        if (value < 0)
-        {
-            throw new ArgumentOutOfRangeException(exception ?? $"{nameof(value)} can't be less than 0");
-        }
+    public static bool IsLessThanZero(this int value) => value < 0;
+    public static bool IsLessThan<T>(this T value, T secondValue) => Comparer<T>.Default.Compare(value, secondValue) < 0;
+    public static bool ThrowIfBiggerThan<T>(this T value, T secondValue) => Comparer<T>.Default.Compare(value, secondValue) > 0;
+    public static bool ThrowIfNotEqualsTo<T>(this T value, T secondValue) => Comparer<T>.Default.Compare(value, secondValue) != 0;
+}
 
-    }
-    public static void ThrowIfLessThan<T>(this T value, T secondValue, string exception = null)
+public class Guard
+{
+    public static bool AnyNull(params object[] values)
     {
-        if (Comparer<T>.Default.Compare(value, secondValue) < 0)
+        foreach (var value in values)
         {
-            throw new ArgumentOutOfRangeException(exception ?? $"{nameof(value)} can't be less than {secondValue}");
+            if (value.IsNull()) return true;
         }
-
-    }
-    public static void ThrowIfBiggerThan<T>(this T value, T secondValue, string exception = null)
-    {
-        if (Comparer<T>.Default.Compare(value, secondValue) > 0)
-        {
-            throw new ArgumentOutOfRangeException(exception ?? $"{nameof(value)} can't be less than {secondValue}");
-        }
-
-    }
-    public static void ThrowIfNotEqualsTo<T>(this T value, T secondValue)
-    {
-        if (Comparer<T>.Default.Compare(value, secondValue) != 0)
-        {
-            throw new ArgumentException($"{nameof(value)} is not equal to {nameof(secondValue)}");
-        }
+        return false;
     }
 }
