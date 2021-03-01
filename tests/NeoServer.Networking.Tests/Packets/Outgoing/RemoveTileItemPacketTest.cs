@@ -19,10 +19,11 @@ namespace NeoServer.Networking.Tests.Packets.Outgoing
             return new Item(type, new Location(100, 100, 7));
         }
         [Fact]
-        public void Constructor_Item_Null_Throws()
+        public void Constructor_Item_Null_Returns()
         {
-            Action sut = () => new RemoveTileItemPacket(new Location(100, 100, 7), 1, null);
-            Assert.Throws<NullReferenceException>(sut);
+            var sut = new RemoveTileItemPacket(new Location(100, 100, 7), 1, null);
+            Assert.Equal(default, sut.location);
+            Assert.Equal(default, sut.stackPosition);
         }
         [Fact]
         public void WriteToMessage_Adds_Bytes_To_NetworkMessage()
