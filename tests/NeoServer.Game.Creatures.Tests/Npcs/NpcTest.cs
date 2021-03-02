@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,46 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             Assert.Equal("hi", result["greetings"]);
             Assert.Equal("trade", result["trade"]);
             Assert.Equal("ok", result["answer"]);
+        }
+
+
+        [Fact]
+        public void SendMessageTo_When_Has_Bind_Variables_Should_Replace_It()
+        {
+            var npcType = new Mock<INpcType>();
+            var outfit = new Mock<IOutfit>();
+            var pathAccess = new Mock<IPathAccess>();
+
+            npcType.Setup(x => x.Name).Returns("Eryn");
+            npcType.Setup(x => x.Dialogs).Returns(new INpcDialog[] { new NpcDialogType()
+            {
+                OnWords = new string[] { "hi" },
+                Answers = new string[]{ "what city?" },
+                Then =new INpcDialog[] { new NpcDialogType()
+                {
+                     OnWords = new string[] { "carlin","thais" },
+                     StoreAt = "city",
+                     Answers = new string[]{ "ok, you said {{city}}." }
+                } }
+            } });
+
+            var anwser = "";
+          
+
+            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            var creature = new Mock<IPlayer>();
+
+            sut.OnSay += (a, b, message, d) =>
+            {
+                anwser = message;
+            };
+
+            creature.SetupGet(x => x.CreatureId).Returns(1);
+
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "hi");
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "carlin");
+
+            Assert.Equal("ok, you said carlin.", anwser);
         }
     }
 }

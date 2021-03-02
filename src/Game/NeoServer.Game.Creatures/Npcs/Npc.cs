@@ -40,6 +40,15 @@ namespace NeoServer.Game.Creatures.Npcs
             playerStoredValues.TryAdd(creature.CreatureId, new Dictionary<string, string>() { { storeVariableName, value } });
         }
 
+        private string BindAnswerVariables(ISociableCreature creature, INpcDialog dialog, string answer)
+        {
+            var storedValues = GetPlayerStoredValues(creature);
+            if (string.IsNullOrWhiteSpace(dialog.StoreAt)) return answer;
+
+            if (!storedValues.TryGetValue(dialog.StoreAt, out var value)) return answer;
+            return answer.Replace($"{{{{{dialog.StoreAt}}}}}", value);
+        }
+
         private INpcDialog GetNextAnswer(uint creatureId, string message)
         {
             if (creatureId == 0 || string.IsNullOrWhiteSpace(message)) return null;
@@ -49,7 +58,7 @@ namespace NeoServer.Game.Creatures.Npcs
                 positions = new List<byte>() { 0 };
             }
 
-            var dialog = GetAnwser(positions, message);
+            var dialog = GetAnswer(positions, message);
 
             if (dialog is null) return default;
 
@@ -59,7 +68,7 @@ namespace NeoServer.Game.Creatures.Npcs
             return dialog;
         }
 
-        private INpcDialog GetAnwser(List<byte> positions, string message)
+        private INpcDialog GetAnswer(List<byte> positions, string message)
         {
             INpcDialog[] dialogs = null;
             var i = 0;
@@ -115,8 +124,9 @@ namespace NeoServer.Game.Creatures.Npcs
 
             foreach (var answer in dialog.Answers)
             {
-                if (string.IsNullOrWhiteSpace(answer) || to is not IPlayer) continue;
-                Say(answer, SpeechType.PrivateNpcToPlayer, to);
+                var bindedAnswer = BindAnswerVariables(to, dialog, answer);
+                if (string.IsNullOrWhiteSpace(bindedAnswer) || to is not IPlayer) continue;
+                Say(bindedAnswer, SpeechType.PrivateNpcToPlayer, to);
             }
         }
 

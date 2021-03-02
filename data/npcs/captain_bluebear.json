@@ -10,8 +10,8 @@
 			"words": ["hi"],
 			"answers": ["Welcome on board, Sir |PLAYERNAME|. Where can I sail you today?"],
 			"then": [{
-				"words": ["carlin"],
-				"answers": ["Do you want to sail to Carlin for |cost| gold coins?"],
+				"words": ["carlin", "venore"],
+				"answers": ["Do you want to sail to {{city}} for |cost| gold coins?"],
 				"store-at": "city",
 				"then":[
 				{ "words": ["yes"],"action":"travel" },
