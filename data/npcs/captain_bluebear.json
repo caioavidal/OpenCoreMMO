@@ -12,6 +12,7 @@
 			"then": [{
 				"words": ["carlin"],
 				"answers": ["Do you want to sail to Carlin for |cost| gold coins?"],
+				"store-at": "city",
 				"then":[
 				{ "words": ["yes"],"action":"travel" },
 				{ "words": ["no"], "answers":["Then stay here!"]}]

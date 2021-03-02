@@ -10,7 +10,7 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate string ReplaceKeyword(string message, object replace);
     public delegate void Answer(INpc from, ICreature to, INpcDialog dialog, string message, SpeechType type);
-    public delegate void DialogAction(INpc from, ICreature to, INpcDialog dialog, string action, string lastKeyword);
+    public delegate void DialogAction(INpc from, ICreature to, INpcDialog dialog, string action, Dictionary<string,string> lastKeywords);
     
     public delegate IItem CreateItem(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes);
     public interface INpc : IWalkableCreature, ISociableCreature
@@ -19,6 +19,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event Answer OnAnswer;
         event DialogAction OnDialogAction;
 
+        Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature);
         void StopTalkingToCustomer(IPlayer player);
     }
     

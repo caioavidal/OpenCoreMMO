@@ -28,6 +28,8 @@ namespace NeoServer.Loaders.Npcs
             public DialogData[] Then { get; set; }
             public string Action { get; set; }
             public bool End { get; set; }
+            [JsonProperty("store-at")]
+            public string StoreAt { get; set; }
         }
         public class HealthData
         {

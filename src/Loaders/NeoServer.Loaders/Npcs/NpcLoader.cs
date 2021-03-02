@@ -78,7 +78,7 @@ namespace NeoServer.Loaders.Npcs
         {
             if (type is null || npcData is null || npcData.Shop is null) return;
 
-            var items = new Dictionary<ushort,IShopItem>(npcData.Shop.Length);
+            var items = new Dictionary<ushort, IShopItem>(npcData.Shop.Length);
             foreach (var item in npcData.Shop)
             {
                 if (!ItemTypeStore.Data.TryGetValue(item.Item, out var itemType)) continue;
@@ -97,6 +97,7 @@ namespace NeoServer.Loaders.Npcs
                 Action = dialog.Action,
                 OnWords = dialog.OnWords,
                 End = dialog.End,
+                StoreAt = dialog.StoreAt,
                 Then = dialog.Then?.Select(x => ConvertDialog(x))?.ToArray() ?? null
             };
             return d;

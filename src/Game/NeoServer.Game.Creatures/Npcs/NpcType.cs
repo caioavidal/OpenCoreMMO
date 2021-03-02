@@ -28,6 +28,8 @@ namespace NeoServer.Game.Creatures.Npcs
         public string[] OnWords { get ; init; }
         public string[] Answers { get ; init; }
         public string Action { get; init; }
+        public string StoreAt { get; init; }
+
         public bool End { get; init; }
         public INpcDialog[] Then { get; init; }
     }

@@ -1,0 +1,93 @@
+﻿using Moq;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures.Npcs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace NeoServer.Game.Creatures.Tests.Npcs
+{
+    public class NpcTest
+    {
+        [Fact]
+        public void GetPlayerKeywordsHistory_When_Player_Has_Not_Talked_To_Npc_Returns_Null()
+        {
+            var sut = new Mock<INpc>();
+            var creature = new Mock<ISociableCreature>();
+            creature.SetupGet(x => x.CreatureId).Returns(1);
+            var result = sut.Object.GetPlayerStoredValues(creature.Object);
+            Assert.Null(result);
+        }
+        [Fact]
+        public void GetPlayerKeywordsHistory_When_Sends_Hi_Returns_Hi()
+        {
+            var npcType = new Mock<INpcType>();
+            var outfit = new Mock<IOutfit>();
+            var pathAccess = new Mock<IPathAccess>();
+
+            npcType.Setup(x => x.Name).Returns("Eryn");
+            npcType.Setup(x => x.Dialogs).Returns(new INpcDialog[] { new NpcDialogType()
+            {
+                OnWords = new string[] { "hi" },
+                StoreAt = "greetings",
+                Action = "ok"
+            } });
+
+            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            var creature = new Mock<ISociableCreature>();
+
+            creature.SetupGet(x => x.CreatureId).Returns(1);
+
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "hi");
+
+            var result = sut.GetPlayerStoredValues(creature.Object);
+            Assert.Single(result);
+            Assert.Equal("hi", result["greetings"]);
+
+        }
+        [Fact]
+        public void GetPlayerKeywordsHistory_When_Sends_Multiple_Words_Returns_Them()
+        {
+            var npcType = new Mock<INpcType>();
+            var outfit = new Mock<IOutfit>();
+            var pathAccess = new Mock<IPathAccess>();
+
+            npcType.Setup(x => x.Name).Returns("Eryn");
+            npcType.Setup(x => x.Dialogs).Returns(new INpcDialog[] { new NpcDialogType()
+            {
+                OnWords = new string[] { "hi" },
+                StoreAt = "greetings",
+                Then =new INpcDialog[] { new NpcDialogType()
+                {
+                     OnWords = new string[] { "trade" },
+                     StoreAt = "trade",
+                       Then =new INpcDialog[] { new NpcDialogType()
+                        {
+                             StoreAt = "answer",
+                             OnWords =new string[] { "ok" },
+                        } }
+                } }
+            } });
+
+            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            var creature = new Mock<ISociableCreature>();
+
+            creature.SetupGet(x => x.CreatureId).Returns(1);
+
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "hi");
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "blablabla");
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "trade");
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "blablabla");
+            sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "ok");
+
+            var result = sut.GetPlayerStoredValues(creature.Object);
+            Assert.Equal(3, result.Count);
+            Assert.Equal("hi", result["greetings"]);
+            Assert.Equal("trade", result["trade"]);
+            Assert.Equal("ok", result["answer"]);
+        }
+    }
+}

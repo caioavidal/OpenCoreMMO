@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
-    
+
     public class Npc : WalkableCreature, INpc
     {
         public Npc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
@@ -23,7 +23,22 @@ namespace NeoServer.Game.Creatures.Npcs
 
         IDictionary<uint, List<byte>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
 
+        private IDictionary<uint, Dictionary<string, string>> playerStoredValues = new Dictionary<uint, Dictionary<string, string>>();
+
         public event Hear OnHear;
+
+        public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature) => playerStoredValues.TryGetValue(sociableCreature.CreatureId, out var keywords) ? keywords : null;
+
+        private void StoreWords(ISociableCreature creature, string storeVariableName, string value)
+        {
+            if (creature is null || string.IsNullOrWhiteSpace(storeVariableName) || string.IsNullOrWhiteSpace(value)) return;
+
+            if (playerStoredValues.TryGetValue(creature.CreatureId, out var keywords))
+            {
+                keywords.Add(storeVariableName, value);
+            }
+            playerStoredValues.TryAdd(creature.CreatureId, new Dictionary<string, string>() { { storeVariableName, value } });
+        }
 
         private INpcDialog GetNextAnswer(uint creatureId, string message)
         {
@@ -68,7 +83,7 @@ namespace NeoServer.Game.Creatures.Npcs
             return null;
         }
 
- 
+
         public virtual void Answer(ICreature from, SpeechType speechType, string message)
         {
             if (from is null || string.IsNullOrWhiteSpace(message)) return;
@@ -82,7 +97,9 @@ namespace NeoServer.Game.Creatures.Npcs
 
             if (dialog is null) return;
 
-            if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, "carlin");
+            StoreWords(sociableCreature, dialog.StoreAt, message);
+
+            if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, GetPlayerStoredValues(sociableCreature));
 
             if (dialog?.Answers is not null)
             {
@@ -103,7 +120,7 @@ namespace NeoServer.Game.Creatures.Npcs
             }
         }
 
-     
+
 
         public void Hear(ICreature from, SpeechType speechType, string message)
         {

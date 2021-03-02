@@ -17,5 +17,6 @@ namespace NeoServer.Game.Contracts.Creatures
         public string Action { get; init; }
         public bool End { get; init; }
         public INpcDialog[] Then { get; init; }
+        string StoreAt { get; init; }
     }
 }
