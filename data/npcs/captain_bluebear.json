@@ -11,7 +11,7 @@
 			"answers": ["Welcome on board, Sir |PLAYERNAME|. Where can I sail you today?"],
 			"then": [{
 				"words": ["carlin", "venore"],
-				"answers": ["Do you want to sail to {{city}} for |cost| gold coins?"],
+				"answers": ["Do you want to sail to {{city}} for |COST| gold coins?"],
 				"store-at": "city",
 				"then":[
 				{ "words": ["yes"],"action":"travel" },

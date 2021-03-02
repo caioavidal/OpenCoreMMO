@@ -9,6 +9,7 @@ using System.Linq;
 namespace NeoServer.Game.Creatures.Npcs
 {
 
+    public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
     public class Npc : WalkableCreature, INpc
     {
         public Npc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
@@ -20,6 +21,8 @@ namespace NeoServer.Game.Creatures.Npcs
         public override IOutfit Outfit { get; protected set; }
         public INpcType Metadata { get; }
         public CreateItem CreateNewItem { protected get; init; }
+
+        public KeywordReplacement ReplaceKeywords { get; set; }
 
         IDictionary<uint, List<byte>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
 
@@ -124,13 +127,14 @@ namespace NeoServer.Game.Creatures.Npcs
 
             foreach (var answer in dialog.Answers)
             {
-                var bindedAnswer = BindAnswerVariables(to, dialog, answer);
+                var replacedAnswer = ReplaceKeywords?.Invoke(answer, this, to);
+                var bindedAnswer = BindAnswerVariables(to, dialog, replacedAnswer);
+
                 if (string.IsNullOrWhiteSpace(bindedAnswer) || to is not IPlayer) continue;
+
                 Say(bindedAnswer, SpeechType.PrivateNpcToPlayer, to);
             }
         }
-
-
 
         public void Hear(ICreature from, SpeechType speechType, string message)
         {
@@ -141,12 +145,7 @@ namespace NeoServer.Game.Creatures.Npcs
             Answer(from, speechType, message);
         }
 
-        private string ReplaceKeywords(string message, ICreature creature)
-        {
-            message = message.Replace("|PLAYERNAME|", creature.Name);
-            return message;
-        }
-
+     
         public void StopTalkingToCustomer(IPlayer player)
         {
             PlayerDialogTree.Remove(player.CreatureId);
