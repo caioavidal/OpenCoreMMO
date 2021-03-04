@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Standalone;
@@ -33,6 +34,9 @@ namespace NeoServer.Scripts.Lua
 
         public void Register()
         {
+            lua.LoadCLRPackage();
+
+
             lua["gameServer"] = gameServer;
             lua["map"] = gameServer.Map;
             lua["itemFactory"] = itemFactory;

@@ -13,7 +13,6 @@ end
 local function onDialogAction(npc, player, dialog, action, storedValues)
 
 	if action == "travel" then
-	
 		local city = getCityData(npc, storedValues['city'])
 		local destination = city.destination;
 		player:TeleportTo(destination.x, destination.y, destination.z)
