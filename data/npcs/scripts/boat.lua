@@ -38,5 +38,3 @@ function init(creature)
 	creature.OnDialogAction:Add(onDialogAction)
 	creature.ReplaceKeywords = keywordHandler
 end
-
---register(creature)
