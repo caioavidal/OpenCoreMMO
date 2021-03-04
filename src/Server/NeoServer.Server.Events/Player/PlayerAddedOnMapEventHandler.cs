@@ -21,12 +21,10 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IWalkableCreature creature, ICylinder cylinder)
         {
-            cylinder.ThrowIfNull();
-            cylinder.TileSpectators.ThrowIfNull();
-            creature.ThrowIfNull();
-
+            if (Guard.AnyNull(cylinder, cylinder.TileSpectators, creature)) return;
+          
             var tile = cylinder.ToTile;
-            tile.ThrowIfNull();
+            if(tile.IsNull()) return;
 
             foreach (var cylinderSpectator in cylinder.TileSpectators)
             {

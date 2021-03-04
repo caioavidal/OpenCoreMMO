@@ -17,7 +17,7 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IPlayer player, bool online)
         {
-            player.ThrowIfNull();
+            if(player.IsNull()) return;
 
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
 

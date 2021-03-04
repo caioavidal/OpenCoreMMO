@@ -11,7 +11,8 @@ namespace NeoServer.OTB.Tests
         [Fact]
         public void Instance_StreamNull_Throws()
         {
-            Assert.Throws<NullReferenceException>(() => new OTBParsingItemAttribute(null));
+           var sut = new OTBParsingItemAttribute(null);
+            Assert.Null(sut.Attributes);
         }
 
         [Fact]

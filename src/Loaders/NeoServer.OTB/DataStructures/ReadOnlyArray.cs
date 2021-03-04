@@ -56,7 +56,7 @@ namespace NeoServer.OTB.DataStructures
         /// </remarks>
         public static ReadOnlyArray<T> WrapCollection(T[] items)
         {
-            items.ThrowIfNull();
+            if (items.IsNull()) return null;
 
             return new ReadOnlyArray<T>(items);
         }

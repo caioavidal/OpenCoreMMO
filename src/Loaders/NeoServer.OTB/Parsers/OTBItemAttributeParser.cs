@@ -26,7 +26,7 @@ namespace NeoServer.OTB.Parsers
         /// <param name="stream"></param>
         public OTBParsingItemAttribute(OTBParsingStream stream)
         {
-            stream.ThrowIfNull();
+            if (stream.IsNull()) return;
             while (!stream.IsOver)
             {
                 Parse(stream);

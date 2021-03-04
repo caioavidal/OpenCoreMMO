@@ -23,16 +23,19 @@ namespace NeoServer.OTB.Tests
         }
 
         [Fact]
-        public void Instance_NegativePosition_Throws()
+        public void Instance_NegativePosition_Returns()
         {
             var buffer = new ReadOnlyMemory<byte>();
-            Assert.Throws<ArgumentOutOfRangeException>(() => new ReadOnlyMemoryStream(buffer, -1));
+            var sut = new ReadOnlyMemoryStream(buffer, -1);
+
+            Assert.Equal(default, sut.Position);
         }
         [Fact]
-        public void Instance_PositionBiggerThanBuffer_Throws()
+        public void Instance_PositionBiggerThanBuffer_()
         {
             var buffer = new ReadOnlyMemory<byte>(new byte[7]);
-            Assert.Throws<ArgumentOutOfRangeException>(() => new ReadOnlyMemoryStream(buffer, 15));
+            var sut = new ReadOnlyMemoryStream(buffer, 15);
+            Assert.Equal(default, sut.Position);
         }
 
         [Fact]

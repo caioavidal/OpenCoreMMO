@@ -10,7 +10,8 @@ namespace NeoServer.OTB.Tests
         [Fact]
         public void WrapCollection_NullItems_Throws()
         {
-            Assert.Throws<NullReferenceException>(() => ReadOnlyArray<int>.WrapCollection(null));
+            var sut = ReadOnlyArray<int>.WrapCollection(null);
+            Assert.Null(sut);
         }
 
         [Fact]
