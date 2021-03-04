@@ -1,19 +1,5 @@
-function register(creature) 
-	creature.OnDialogAction:Add(onDialogAction)
-	creature.ReplaceKeywords = keywordHandler
-end
 
-function onDialogAction(npc, player, dialog, action, storedValues)
-
-	if action == "travel" then
-	
-		local city = getCityData(npc, storedValues['city'])
-		local destination = city.destination;
-		player:TeleportTo(destination.x, destination.y, destination.z)
-	end
-end
-
-function getCityData(npc, city)
+local function getCityData(npc, city)
 
 	local data = npc.Metadata.CustomAttributes['custom-data'];
 		
@@ -24,16 +10,18 @@ function getCityData(npc, city)
 	end
 end
 
-function getStoredValues(npc, player, name) 
-	local storedValues = npc:GetPlayerStoredValues(player);
+local function onDialogAction(npc, player, dialog, action, storedValues)
+
+	if action == "travel" then
 	
-	if storedValues ~= nil and storedValues:ContainsKey(name) then
-		return storedValues[name]
+		local city = getCityData(npc, storedValues['city'])
+		local destination = city.destination;
+		player:TeleportTo(destination.x, destination.y, destination.z)
 	end
-	return nil
 end
 
-function keywordHandler(message, npc, player)
+
+local function keywordHandler(message, npc, player)
 	local replaced = message:gsub('|PLAYERNAME|', player.Name)
 	
 	local cityName = getStoredValues(npc, player, 'city')
@@ -46,4 +34,10 @@ function keywordHandler(message, npc, player)
 	return replaced
 end
 
-register(creature)
+
+function init(creature) 
+	creature.OnDialogAction:Add(onDialogAction)
+	creature.ReplaceKeywords = keywordHandler
+end
+
+--register(creature)

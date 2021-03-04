@@ -9,7 +9,7 @@ using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
-using NeoServer.Scripts.Luaa;
+using NeoServer.Scripts.Lua;
 using NeoServer.Server;
 using NeoServer.Server.Compiler;
 using NeoServer.Server.Contracts;
@@ -94,7 +94,7 @@ public class Program
 
         container.Resolve<IGameServer>().Open();
 
-        new Init();
+        container.Resolve<LuaGlobalRegister>().Register();
 
         sw.Stop();
 

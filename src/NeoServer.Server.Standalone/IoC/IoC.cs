@@ -31,6 +31,7 @@ using NeoServer.Loaders.Vocations;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
+using NeoServer.Scripts.Lua;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
@@ -78,7 +79,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GuildRepository>().As<IGuildRepository>().SingleInstance();
             builder.RegisterType<PlayerDepotItemRepositoryNeo>().As<IPlayerDepotItemRepositoryNeo>().SingleInstance();
 
-            builder.RegisterType<Lua>().SingleInstance();
+            builder.RegisterInstance(new Lua()).SingleInstance();
+            builder.RegisterType<LuaGlobalRegister>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();

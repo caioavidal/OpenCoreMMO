@@ -19,6 +19,7 @@ using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;
@@ -810,6 +811,20 @@ namespace NeoServer.Server.Model.Players
             if (totalWeight > CarryStrength || totalFreeSlots < coins.Count()) return false;
 
             return true;
+        }
+
+        public void Pay(ulong cost)
+        {
+            var removedAmount = DealTransaction.RemoveCoins(this, cost, out var change);//todo: code smell
+            if (removedAmount < cost) WithdrawFromBank(cost - removedAmount);
+        }
+        public void GetChange(ulong change)
+        {
+            if (change > 0)
+            {
+                //var changeCoins = DealTransaction.CreateCoins(change).ToList(); //todo: code smell
+                //ReceivePayment(changeCoins, change);
+            }
         }
 
         public void ReceivePurchasedItems(INpc from, SaleContract saleContract, params IItem[] items)

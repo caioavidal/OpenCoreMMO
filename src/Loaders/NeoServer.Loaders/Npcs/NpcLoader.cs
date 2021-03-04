@@ -17,6 +17,7 @@ namespace NeoServer.Loaders.Npcs
     {
         private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
+        
 
         public NpcLoader(ServerConfiguration serverConfiguration, Logger logger)
         {
@@ -74,6 +75,7 @@ namespace NeoServer.Loaders.Npcs
             }
         }
 
+   
         private void LoadShopData(INpcType type, NpcData npcData)
         {
             if (type is null || npcData is null || npcData.Shop is null) return;
