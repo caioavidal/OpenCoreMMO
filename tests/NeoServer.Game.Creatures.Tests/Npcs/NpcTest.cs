@@ -114,8 +114,9 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var anwser = "";
           
-
             var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+
+            sut.ReplaceKeywords = (m, a, b) => m;
             var creature = new Mock<IPlayer>();
 
             sut.OnSay += (a, b, message, d) =>
