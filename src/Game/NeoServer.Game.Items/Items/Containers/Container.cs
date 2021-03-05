@@ -26,7 +26,7 @@ namespace NeoServer.Game.Items.Items
         public List<IItem> Items { get; }
         public IItem this[int index] => Items.Count > index ? Items[index] : null;
         public bool HasItems => SlotsUsed > 0;
-        public byte LastFreeSlot => IsFull ? 0 : SlotsUsed;
+        public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
         public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
         private ContainerStore Store;
         public IThing Root
@@ -439,7 +439,7 @@ namespace NeoServer.Game.Items.Items
 
         public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
         {
-            amount = amount == 0 ? 1 : amount;
+            amount = amount == 0 ? (byte)1 : amount;
             removedThing = RemoveItem(fromPosition, amount);
             return new(new OperationResult<IItem>(Operation.Removed, removedThing, fromPosition));
         }

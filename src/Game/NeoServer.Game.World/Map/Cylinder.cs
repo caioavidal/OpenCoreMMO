@@ -146,7 +146,7 @@ namespace NeoServer.Game.World.Map
 
         public static Result<OperationResult<ICreature>> MoveCreature(ICreature creature, IDynamicTile fromTile, IDynamicTile toTile, byte amount, out ICylinder cylinder)
         {
-            amount = amount == 0 ? 1 : amount;
+            amount = amount == 0 ? (byte)1 : amount;
 
             cylinder = null;
 

@@ -16,7 +16,7 @@ namespace NeoServer.Data.Parsers
             var itemModel = new PlayerDepotItemModel()
             {
                 ServerId = (short)item.Metadata.TypeId,
-                Amount = item is ICumulative cumulative ? cumulative.Amount : 1,
+                Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1,
             };
 
             return itemModel;

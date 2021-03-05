@@ -21,7 +21,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
             message.AddUInt32(playerId);
             message.AddString(playerName);
-            message.AddByte(status ? 1 : 0);
+            message.AddByte(status ? (byte)1 : (byte)0);
         }
     }
 }

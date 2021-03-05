@@ -6,11 +6,27 @@
     "radius": 1,
     "monsters": [],
     "npcs": [
-      {
-        "name": "Eryn",
-        "x": 0,
+     {
+        "name": "Captain Bluebear",
+        "x": 1,
         "y": 0,
         "z": 7,
+        "spawntime": 60
+      }
+    ]
+  },
+  {
+    "centerx": 1027,
+    "centery": 1014,
+    "centerz": 8,
+    "radius": 1,
+    "monsters": [],
+    "npcs": [
+     {
+        "name": "Captain Sinbeard",
+        "x": 0,
+        "y": 0,
+        "z": 8,
         "spawntime": 60
       }
     ]

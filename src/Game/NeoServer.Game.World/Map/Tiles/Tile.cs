@@ -556,7 +556,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
         {
-            amount = amount == 0 ? 1 : amount;
+            amount = amount == 0 ? (byte)1 : amount;
             var result = RemoveItem(thing, amount, out removedThing);
             return result;
         }

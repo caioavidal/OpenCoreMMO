@@ -6,7 +6,7 @@ namespace NeoServer.Game.Creatures.Npcs
 {
     public sealed class NpcType : INpcType
     {
-        public INpcDialog[] Dialog { get; init; }
+        public INpcDialog[] Dialogs { get; init; }
 
         public string Name { get; set; }
 
@@ -18,6 +18,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public IDictionary<LookType, ushort> Look { get; set; }
         public string Script { get; set; }
+
+        public bool IsLuaScript => Script?.EndsWith(".lua") ?? false;
         public IDictionary<string, dynamic> CustomAttributes { get; } = new Dictionary<string, dynamic>();
     }
 
@@ -26,6 +28,8 @@ namespace NeoServer.Game.Creatures.Npcs
         public string[] OnWords { get ; init; }
         public string[] Answers { get ; init; }
         public string Action { get; init; }
+        public string StoreAt { get; init; }
+
         public bool End { get; init; }
         public INpcDialog[] Then { get; init; }
     }

@@ -5,8 +5,9 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface INpcType : ICreatureType
     {
         public string Script { get; set; }
-        public INpcDialog[] Dialog { get; init; }
+        public INpcDialog[] Dialogs { get; init; }
         public IDictionary<string, dynamic> CustomAttributes { get;  }
+        bool IsLuaScript { get; }
     }
 
     public interface INpcDialog
@@ -16,5 +17,6 @@ namespace NeoServer.Game.Contracts.Creatures
         public string Action { get; init; }
         public bool End { get; init; }
         public INpcDialog[] Then { get; init; }
+        string StoreAt { get; init; }
     }
 }

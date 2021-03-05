@@ -79,7 +79,7 @@ namespace NeoServer.Game.Creatures.Events
                 player.ReceivePurchasedItems(seller, saleContract, items);
             }
         }
-        private ulong RemoveCoins(IPlayer player, ulong amount, out ulong change)
+        public static ulong RemoveCoins(IPlayer player, ulong amount, out ulong change)
         {
             change = 0;
             if (player is null || amount == 0) return 0;
@@ -136,17 +136,8 @@ namespace NeoServer.Game.Creatures.Events
                             uint removeCount = (uint)Math.Ceiling((decimal)(coin.Worth / worth));
 
                             change += (worth * removeCount) - amount;
-                            //var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, (worth * removeCount) - amount);
 
                             container.RemoveItem(coin, coin.Amount);
-
-                            //foreach (var coinToAdd in coinsToAdd)
-                            //{
-                            //    var createdCoin = itemFactory.Create(coinToAdd.Item1, Location.Inventory(Common.Players.Slot.Backpack), null);
-                            //    if (createdCoin is not ICoin newCoin) continue;
-                            //    newCoin.Amount = coinToAdd.Item2;
-                            //    backpackSlot.AddItem(newCoin, true);
-                            //}
 
                             return removedAmount + amount;
                         }

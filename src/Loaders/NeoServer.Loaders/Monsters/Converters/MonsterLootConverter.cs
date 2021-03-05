@@ -37,7 +37,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                 }
             }
 
-            return new LootItem(id, amount ==0 ? 1 : amount, chance, items.ToArray());
+            return new LootItem(id, amount == 0 ? (byte)1 : amount, chance, items.ToArray());
         }
     }
 }

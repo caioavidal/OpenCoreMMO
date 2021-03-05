@@ -40,6 +40,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Data\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj" />
 		<ProjectReference Include="..\Data\NeoServer.Data\NeoServer.Data.csproj" />
+		<ProjectReference Include="..\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj" />
 		<ProjectReference Include="..\Networking\NeoServer.Networking\NeoServer.Networking.csproj" />
 		<ProjectReference Include="..\Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
 		<ProjectReference Include="..\Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj" />

@@ -31,6 +31,7 @@ using NeoServer.Loaders.Vocations;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
+using NeoServer.Scripts.Lua;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
@@ -44,6 +45,7 @@ using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Tasks;
+using NLua;
 using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -76,6 +78,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
             builder.RegisterType<GuildRepository>().As<IGuildRepository>().SingleInstance();
             builder.RegisterType<PlayerDepotItemRepositoryNeo>().As<IPlayerDepotItemRepositoryNeo>().SingleInstance();
+
+            builder.RegisterInstance(new Lua()).SingleInstance();
+            builder.RegisterType<LuaGlobalRegister>().SingleInstance();
 
             builder.RegisterType<LoginProtocol>().SingleInstance();
             builder.RegisterType<LoginListener>().SingleInstance();

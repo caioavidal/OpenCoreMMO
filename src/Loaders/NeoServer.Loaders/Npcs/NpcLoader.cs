@@ -17,6 +17,7 @@ namespace NeoServer.Loaders.Npcs
     {
         private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
+        
 
         public NpcLoader(ServerConfiguration serverConfiguration, Logger logger)
         {
@@ -63,20 +64,23 @@ namespace NeoServer.Loaders.Npcs
                     Speed = 280,
                     Look = new Dictionary<LookType, ushort>() { { LookType.Type, npcData.Look.Type }, { LookType.Corpse, npcData.Look.Corpse }, { LookType.Body, npcData.Look.Body}, { LookType.Legs, npcData.Look.Legs}, { LookType.Head, npcData.Look.Head },
                 { LookType.Feet, npcData.Look.Feet},{ LookType.Addon, npcData.Look.Addons}},
-                    Dialog = dialogs.ToArray()
+                    Dialogs = dialogs.ToArray()
                 });
 
                 LoadShopData(npcType.Item2, npcData);
+
+                NpcCustomAttributeLoader.LoadCustomData(npcType.Item2, npcData);
 
                 yield return npcType;
             }
         }
 
+   
         private void LoadShopData(INpcType type, NpcData npcData)
         {
             if (type is null || npcData is null || npcData.Shop is null) return;
 
-            var items = new Dictionary<ushort,IShopItem>(npcData.Shop.Length);
+            var items = new Dictionary<ushort, IShopItem>(npcData.Shop.Length);
             foreach (var item in npcData.Shop)
             {
                 if (!ItemTypeStore.Data.TryGetValue(item.Item, out var itemType)) continue;
@@ -95,6 +99,7 @@ namespace NeoServer.Loaders.Npcs
                 Action = dialog.Action,
                 OnWords = dialog.OnWords,
                 End = dialog.End,
+                StoreAt = dialog.StoreAt,
                 Then = dialog.Then?.Select(x => ConvertDialog(x))?.ToArray() ?? null
             };
             return d;
