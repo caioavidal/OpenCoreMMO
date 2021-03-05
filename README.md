@@ -70,7 +70,7 @@ dotnet run -p "NeoServer.Server.Standalone"
   - [x] Vip List
 - [ ] PvP Combat
 - [ ] NPC System
-- [ ] Lua Scripting
+- [x] Lua Scripting
 - [x] C# Scripting
 
 ## Technologies
