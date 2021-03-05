@@ -42,7 +42,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 var combatAttack = new MonsterCombatAttack()
                 {
-                    Chance = chance > 100 || chance <= 0 ? 100 : chance,
+                    Chance = chance > 100 || chance <= 0 ? (byte)100 : chance,
                     Interval = interval,
                     MaxDamage = (ushort)Math.Abs(max),
                     MinDamage = (ushort)Math.Abs(min),

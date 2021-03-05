@@ -15,7 +15,7 @@ namespace NeoServer.Game.Items.Items
         public GroundItem(IItemType type, Location location)
         {
             Metadata = type;
-            StepSpeed = type?.Speed != 0 ? type.Speed : 150;
+            StepSpeed = type?.Speed != 0 ? type.Speed : (ushort)150;
             Location = location;
             MovementPenalty = type.Attributes.GetAttribute<byte>(Common.ItemAttribute.Waypoints);
         }

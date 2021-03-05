@@ -44,7 +44,7 @@ namespace NeoServer.Game.Chats
                 MutedForSeconds = (ushort)rule.Formula(lastMutedForSeconds, mutedTimes);
 
                 lastMutedForSeconds = MutedForSeconds;
-                mutedTimes += mutedTimes < MAX_MUTED_TIMES ? 1 : 0;
+                mutedTimes += mutedTimes < MAX_MUTED_TIMES ? (byte)1 : (byte)0;
             }
         }
 
