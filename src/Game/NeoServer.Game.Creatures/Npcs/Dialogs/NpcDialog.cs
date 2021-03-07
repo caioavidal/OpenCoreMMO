@@ -29,9 +29,12 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
         {
             if (creature is null || string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(value)) return;
 
-            if (playerDialogStorage.TryGetValue(creature.CreatureId, out var map) && map.ContainsKey(key))
+            if (playerDialogStorage.TryGetValue(creature.CreatureId, out var map))
             {
-                map[key] = value;
+                if(map.ContainsKey(key)) map[key] = value;
+                else map.TryAdd(key, value);
+
+                return;
             }
             playerDialogStorage.TryAdd(creature.CreatureId, new Dictionary<string, string>() { { key, value } });
         }
