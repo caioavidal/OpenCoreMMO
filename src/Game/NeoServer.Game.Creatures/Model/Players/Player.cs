@@ -19,7 +19,6 @@ using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players;

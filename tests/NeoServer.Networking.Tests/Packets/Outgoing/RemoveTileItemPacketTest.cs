@@ -3,7 +3,6 @@ using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Outgoing;
-using System;
 using Xunit;
 
 namespace NeoServer.Networking.Tests.Packets.Outgoing

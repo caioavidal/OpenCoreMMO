@@ -7,9 +7,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Events
 {

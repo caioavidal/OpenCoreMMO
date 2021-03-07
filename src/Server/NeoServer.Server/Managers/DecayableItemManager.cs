@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Server.Instances
 {
-   
+
     public class DecayableItemManager : IDecayableItemManager
     {
         public List<IDecayable> Items { get; private set; } = new List<IDecayable>();
