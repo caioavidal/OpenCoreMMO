@@ -1,4 +1,5 @@
 ﻿using NeoServer.Server.Contracts.Tasks;
+using Serilog.Core;
 using System;
 using System.Threading;
 using System.Threading.Channels;
@@ -8,18 +9,19 @@ namespace NeoServer.Server.Tasks
 {
     public class Dispatcher : IDispatcher
     {
+        private readonly Logger logger;
         private readonly ChannelWriter<IEvent> writer;
         private readonly ChannelReader<IEvent> reader;
 
         /// <summary>
         /// A queue responsible for process events
         /// </summary>
-        public Dispatcher()
+        public Dispatcher(Logger logger)
         {
             var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions() { SingleReader = true });
             reader = channel.Reader;
             writer = channel.Writer;
-
+            this.logger = logger;
         }
 
         /// <summary>
@@ -59,7 +61,8 @@ namespace NeoServer.Server.Tasks
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine(ex.StackTrace);
+                                logger.Error(ex.Message);
+                                logger.Debug(ex.StackTrace);
                             }
                         }
                     }
