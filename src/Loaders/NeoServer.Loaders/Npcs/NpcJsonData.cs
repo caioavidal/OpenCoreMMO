@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Npcs
 {
-    public class NpcData
+    public class NpcJsonData
     {
         [JsonProperty("name")]
         public string Name { get; set; }

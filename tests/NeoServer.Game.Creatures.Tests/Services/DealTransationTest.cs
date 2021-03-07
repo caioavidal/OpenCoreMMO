@@ -1,10 +1,12 @@
 ﻿using Moq;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creatures.Events;
+using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests;
@@ -22,7 +24,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Player_Or_Seller_Or_ItemType_Is_Null_Or_Amount_Is_0_Returns_False()
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var playerMock = new Mock<IPlayer>();
             var shopperMock = new Mock<IShopperNpc>();
@@ -45,7 +49,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_TotalMoney_Is_Less_Than_Cost_Returns_False()
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var itemTypeMock = new Mock<IItemType>();
 
@@ -63,7 +69,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Remove_Coins_From_Backpack()
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new CoinTransaction(itemFactoryMock.Object);
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction);
 
             var itemToBuy = ItemTestData.CreateWeaponItem(10, "sword");
 
@@ -93,7 +101,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Remove_Coins_From_Backpack_And_Bank()
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new CoinTransaction(itemFactoryMock.Object);
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction);
 
             var itemToBuy = ItemTestData.CreateWeaponItem(10, "sword");
 
@@ -127,7 +137,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Equipment_When_Slot_Is_Empty_Adds_There(string slot)
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var itemToBuy = ItemTestData.CreateBodyEquipmentItem(10, slot);
 
@@ -153,7 +165,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Backpack_When_Slot_Is_Empty_Adds_There()
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var itemToBuy = ItemTestData.CreateBackpack();
 
@@ -181,7 +195,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Ammo_When_Slot_Is_Empty_Adds_There(byte current, byte bought, byte expected)
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var itemToBuy = ItemTestData.CreateAmmoItem(1, bought);
 
@@ -214,7 +230,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Equipment_When_Slot_Is_Full_Adds_To_Backpack(string slot)
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var itemToBuy = ItemTestData.CreateBodyEquipmentItem(10, slot);
 
@@ -246,7 +264,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_5_Equipment_When_Slot_Is_Full_Adds_To_Backpack(string slot)
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var itemToBuy = ItemTestData.CreateBodyEquipmentItem(10, slot);
 
@@ -282,7 +302,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Ammo_When_Slot_Is_Partial_Adds_To_Backpack(byte currentOnInventory, byte bought, byte expectedOnBackpack)
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new Mock<ICoinTransaction>();
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
             var itemToBuy = ItemTestData.CreateAmmoItem(10, bought);
 
@@ -308,7 +330,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Buy_Item_When_Backpack_Is_Full_Keep_Change_On_Bank()
         {
             var itemFactoryMock = new Mock<IItemFactory>();
-            var sut = new DealTransaction(itemFactoryMock.Object);
+            var coinTransaction = new CoinTransaction(itemFactoryMock.Object);
+
+            var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction);
 
             var itemToBuy = ItemTestData.CreateWeaponItem(10, "sword");
 
@@ -316,6 +340,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var platinum = ItemTestData.CreateCoin(1, 2, 100);
             var gold = ItemTestData.CreateCoin(2, 1, 1);
+
+
+            itemFactoryMock.Setup(x => x.CreateCoins(It.IsAny<ulong>())).Returns(new List<ICoin> { (ICoin)ItemTestData.CreateCoin(1, 1, 100), (ICoin)ItemTestData.CreateCoin(2, 70, 1) });
 
             itemFactoryMock.Setup(x => x.Create(1, It.IsAny<Location>(), null)).Returns(platinum);
             itemFactoryMock.Setup(x => x.Create(2, It.IsAny<Location>(), null)).Returns(gold);

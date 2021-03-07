@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures.Players;
+﻿using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Contracts;
@@ -19,10 +20,11 @@ namespace NeoServer.Scripts.Lua
         private readonly IItemFactory itemFactory;
         private readonly ICreatureFactory creatureFactory;
         private readonly ServerConfiguration serverConfiguration;
+        private readonly ICoinTransaction coinTransaction;
         private readonly Logger logger;
         private readonly NLua.Lua lua;
 
-        public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory, NLua.Lua lua, ServerConfiguration serverConfiguration, Logger logger)
+        public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory, NLua.Lua lua, ServerConfiguration serverConfiguration, Logger logger, ICoinTransaction coinTransaction)
         {
             this.gameServer = gameServer;
             this.itemFactory = itemFactory;
@@ -30,19 +32,21 @@ namespace NeoServer.Scripts.Lua
             this.lua = lua;
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
+            this.coinTransaction = coinTransaction;
         }
 
         public void Register()
         {
             lua.LoadCLRPackage();
 
-
             lua["gameServer"] = gameServer;
+            lua["scheduler"] = gameServer.Scheduler;
             lua["map"] = gameServer.Map;
             lua["itemFactory"] = itemFactory;
             lua["creatureFactory"] = creatureFactory;
             lua["load"] = new Action<string>((path) => DoFile(path));
             lua["logger"] = logger;
+            lua["coinTransaction"] = coinTransaction;
 
             ExecuteMainFiles();
 

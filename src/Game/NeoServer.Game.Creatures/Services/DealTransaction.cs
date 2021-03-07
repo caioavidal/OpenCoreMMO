@@ -15,11 +15,13 @@ namespace NeoServer.Game.Creatures.Events
 {
     public class DealTransaction : IDealTransaction
     {
+        private readonly ICoinTransaction coinTransaction;
         private readonly IItemFactory itemFactory;
 
-        public DealTransaction(IItemFactory itemFactory)
+        public DealTransaction(IItemFactory itemFactory, ICoinTransaction coinTransaction)
         {
             this.itemFactory = itemFactory;
+            this.coinTransaction = coinTransaction;
         }
 
         public bool Buy(IPlayer buyer, IShopperNpc seller, IItemType itemType, byte amount)
@@ -34,7 +36,7 @@ namespace NeoServer.Game.Creatures.Events
 
             if (amount > amountToAddToBackpack + amountToAddToInventory) return false;
 
-            var removedAmount = RemoveCoins(buyer, cost, out var change);
+            var removedAmount = coinTransaction.RemoveCoins(buyer, cost, out var change);
 
             if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
 
@@ -42,12 +44,8 @@ namespace NeoServer.Game.Creatures.Events
 
             AddItems(buyer, seller, saleContract);
 
-            if (change > 0)
-            {
-                var changeCoins = CreateCoins(change).ToList();
-                buyer.ReceivePayment(changeCoins, change);
-            }
-
+            coinTransaction.AddCoins(buyer, change);
+            
             return true;
         }
 
@@ -79,80 +77,7 @@ namespace NeoServer.Game.Creatures.Events
                 player.ReceivePurchasedItems(seller, saleContract, items);
             }
         }
-        public static ulong RemoveCoins(IPlayer player, ulong amount, out ulong change)
-        {
-            change = 0;
-            if (player is null || amount == 0) return 0;
-
-            var backpackSlot = player.Inventory?.BackpackSlot;
-
-            ulong removedAmount = 0;
-
-            if (backpackSlot is null) return removedAmount;
-
-            var moneyMap = new SortedList<uint, List<ICoin>>(); //slot and item
-
-            var containers = new Queue<IContainer>();
-            containers.Enqueue(backpackSlot);
-
-            while (containers.TryDequeue(out var container) && amount > 0)
-            {
-                foreach (var item in container.Items)
-                {
-                    if (item is IContainer childContainer)
-                    {
-                        containers.Enqueue(childContainer);
-                        continue;
-                    }
-                    if (item is not ICoin coin) continue;
-
-                    if (moneyMap.TryGetValue(coin.Worth, out var coinSlots))
-                    {
-                        coinSlots.Add(coin);
-                        continue;
-                    }
-
-                    coinSlots = new List<ICoin>() { coin };
-                    moneyMap.Add(coin.Worth, coinSlots);
-                }
-
-                foreach (var money in moneyMap)
-                {
-                    if (amount == 0) break;
-
-                    foreach (var coin in money.Value)
-                    {
-                        if (amount == 0) break;
-
-                        if (coin.Worth < amount)
-                        {
-                            container.RemoveItem(coin, coin.Amount);
-                            amount -= coin.Worth;
-                            removedAmount += coin.Worth;
-                        }
-                        else if (coin.Worth > amount)
-                        {
-                            uint worth = coin.Worth / coin.Amount;
-                            uint removeCount = (uint)Math.Ceiling((decimal)(coin.Worth / worth));
-
-                            change += (worth * removeCount) - amount;
-
-                            container.RemoveItem(coin, coin.Amount);
-
-                            return removedAmount + amount;
-                        }
-                        else
-                        {
-                            container.RemoveItem(coin, coin.Amount);
-                            removedAmount += coin.Worth;
-                        }
-                    }
-                }
-            }
-
-            return removedAmount;
-        }
-
+      
         public IEnumerable<IItem> CreateCoins(ulong amount)
         {
             var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, amount);

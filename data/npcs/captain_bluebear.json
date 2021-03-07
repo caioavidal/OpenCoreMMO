@@ -25,8 +25,9 @@
 		}
 	],
 	"custom-data": [
-	{ "city": "carlin", "min-level":0, "needsPremium": false, "cost":1000, "destination":{"x":1021, "y":1022, "z":7}}, 
-	{ "city": "venore", "min-level":0, "needsPremium": false, "cost":2000, "destination":{"x":32952, "y":32022, "z":6}}
+	{"key": "not_enough_money", "value": "Sorry, you do not have enough value"},
+	{ "key": "carlin", "value": { "min-level":0, "needsPremium": false, "cost":1000, "destination":{"x":1021, "y":1022, "z":7}}}, 
+	{ "key": "venore", "value": { "min-level":0, "needsPremium": false, "cost":2000, "destination":{"x":32952, "y":32022, "z":6}}}
 	]
 }
 	

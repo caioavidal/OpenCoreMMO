@@ -813,20 +813,6 @@ namespace NeoServer.Server.Model.Players
             return true;
         }
 
-        public void Pay(ulong cost)
-        {
-            var removedAmount = DealTransaction.RemoveCoins(this, cost, out var change);//todo: code smell
-            if (removedAmount < cost) WithdrawFromBank(cost - removedAmount);
-        }
-        public void GetChange(ulong change)
-        {
-            if (change > 0)
-            {
-                //var changeCoins = DealTransaction.CreateCoins(change).ToList(); //todo: code smell
-                //ReceivePayment(changeCoins, change);
-            }
-        }
-
         public void ReceivePurchasedItems(INpc from, SaleContract saleContract, params IItem[] items)
         {
             if (items is null) return;
