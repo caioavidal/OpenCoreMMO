@@ -1,5 +1,3 @@
-import ('NeoServer.Game.Common','NeoServer.Game.Common.Talks')
-
 function getStoredValues(npc, player, name) 
 	local storedValues = npc:GetPlayerStoredValues(player);
 	

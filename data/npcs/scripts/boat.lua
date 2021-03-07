@@ -1,4 +1,3 @@
-
 local function onDialogAction(npc, player, dialog, action, storedValues)
 
 	if action == "travel" then
