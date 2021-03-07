@@ -30,6 +30,7 @@ namespace NeoServer.Loaders.Npcs
             public bool End { get; set; }
             [JsonProperty("store-at")]
             public string StoreAt { get; set; }
+            public byte Back { get; set; }
         }
         public class HealthData
         {

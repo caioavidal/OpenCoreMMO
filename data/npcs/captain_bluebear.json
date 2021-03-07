@@ -15,7 +15,7 @@
 				"store-at": "city",
 				"then":[
 				{ "words": ["yes"],"action":"travel" },
-				{ "words": ["no"], "answers":["Then stay here!"]}]
+				{ "words": ["no"], "back":1, "answers":["Then stay here!"]}]
 			},
 			{
 				"words": ["bye"],

@@ -6,7 +6,7 @@ namespace NeoServer.Game.Creatures.Npcs
 {
     public sealed class NpcType : INpcType
     {
-        public INpcDialog[] Dialogs { get; init; }
+        public IDialog[] Dialogs { get; init; }
 
         public string Name { get; set; }
 
@@ -23,14 +23,18 @@ namespace NeoServer.Game.Creatures.Npcs
         public IDictionary<string, dynamic> CustomAttributes { get; } = new Dictionary<string, dynamic>();
     }
 
-    public sealed class NpcDialogType: INpcDialog
+    public sealed class Dialog: IDialog
     {
         public string[] OnWords { get ; init; }
         public string[] Answers { get ; init; }
         public string Action { get; init; }
+        /// <summary>
+        /// Indicated how many times to back in dialog
+        /// </summary>
+        public byte Back { get; init; }
         public string StoreAt { get; init; }
 
         public bool End { get; init; }
-        public INpcDialog[] Then { get; init; }
+        public IDialog[] Then { get; init; }
     }
 }

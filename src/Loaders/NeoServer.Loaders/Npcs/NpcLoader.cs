@@ -49,7 +49,7 @@ namespace NeoServer.Loaders.Npcs
                 if (npcData is null) continue;
                 if (string.IsNullOrWhiteSpace(npcData.Name)) continue;
 
-                var dialogs = new List<INpcDialog>();
+                var dialogs = new List<IDialog>();
 
                 foreach (var dialog in npcData.Dialog)
                 {
@@ -90,11 +90,12 @@ namespace NeoServer.Loaders.Npcs
             type.CustomAttributes.Add("shop", items);
         }
 
-        private INpcDialog ConvertDialog(NpcData.DialogData dialog)
+        private IDialog ConvertDialog(NpcData.DialogData dialog)
         {
             if (dialog is null) return null;
-            var d = new NpcDialogType
+            var d = new Dialog
             {
+                Back = dialog.Back,
                 Answers = dialog.Answers,
                 Action = dialog.Action,
                 OnWords = dialog.OnWords,

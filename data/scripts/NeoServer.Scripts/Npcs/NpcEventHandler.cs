@@ -7,7 +7,7 @@ namespace NeoServer.Scripts.Npcs.Modules
 {
     public class NpcActionHandler
     {
-        public static void OnAnswer(INpc to, ICreature from, INpcDialog dialog, string message, SpeechType type)
+        public static void OnAnswer(INpc to, ICreature from, IDialog dialog, string message, SpeechType type)
         {
             switch (dialog.Action)
             {

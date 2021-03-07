@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Bases;
+using NeoServer.Game.Creatures.Npcs.Dialogs;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -8,93 +9,39 @@ using System.Linq;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
-
     public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
     public class Npc : WalkableCreature, INpc
     {
         public Npc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
         {
             Metadata = type;
+            npcDialog = new NpcDialog(this);
         }
+
+        #region Events
         public event DialogAction OnDialogAction;
         public event Answer OnAnswer;
+        public event Hear OnHear;
+        #endregion
+
         public override IOutfit Outfit { get; protected set; }
         public INpcType Metadata { get; }
         public CreateItem CreateNewItem { protected get; init; }
 
         public KeywordReplacement ReplaceKeywords { get; set; }
 
-        IDictionary<uint, List<byte>> PlayerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
+        private NpcDialog npcDialog;
 
-        private IDictionary<uint, Dictionary<string, string>> playerStoredValues = new Dictionary<uint, Dictionary<string, string>>();
+        public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature) => npcDialog.GetDialogStoredValues(sociableCreature);
 
-        public event Hear OnHear;
-
-        public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature) => playerStoredValues.TryGetValue(sociableCreature.CreatureId, out var keywords) ? keywords : null;
-
-        private void StoreWords(ISociableCreature creature, string storeVariableName, string value)
+        private string BindAnswerVariables(ISociableCreature creature, IDialog dialog, string answer)
         {
-            if (creature is null || string.IsNullOrWhiteSpace(storeVariableName) || string.IsNullOrWhiteSpace(value)) return;
-
-            if (playerStoredValues.TryGetValue(creature.CreatureId, out var keywords))
-            {
-                keywords.Add(storeVariableName, value);
-            }
-            playerStoredValues.TryAdd(creature.CreatureId, new Dictionary<string, string>() { { storeVariableName, value } });
-        }
-
-        private string BindAnswerVariables(ISociableCreature creature, INpcDialog dialog, string answer)
-        {
-            var storedValues = GetPlayerStoredValues(creature);
+            var storedValues = npcDialog.GetDialogStoredValues(creature);
             if (string.IsNullOrWhiteSpace(dialog.StoreAt)) return answer;
 
             if (!storedValues.TryGetValue(dialog.StoreAt, out var value)) return answer;
             return answer.Replace($"{{{{{dialog.StoreAt}}}}}", value);
         }
-
-        private INpcDialog GetNextAnswer(uint creatureId, string message)
-        {
-            if (creatureId == 0 || string.IsNullOrWhiteSpace(message)) return null;
-
-            if (!PlayerDialogTree.TryGetValue(creatureId, out List<byte> positions))
-            {
-                positions = new List<byte>() { 0 };
-            }
-
-            var dialog = GetAnswer(positions, message);
-
-            if (dialog is null) return default;
-
-            if (dialog.End) PlayerDialogTree.Remove(creatureId);
-            else PlayerDialogTree.TryAdd(creatureId, positions);
-
-            return dialog;
-        }
-
-        private INpcDialog GetAnswer(List<byte> positions, string message)
-        {
-            INpcDialog[] dialogs = null;
-            var i = 0;
-            foreach (var position in positions)
-            {
-                dialogs = i++ == 0 ? Metadata.Dialogs : dialogs[position].Then;
-            }
-
-            i = 0;
-
-            foreach (var dialog in dialogs)
-            {
-                if (dialog.OnWords.Any(x => x.Equals(message, StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    if (dialog.Then is not null) positions.Add((byte)i);
-                    return dialog;
-                }
-
-                i++;
-            }
-            return null;
-        }
-
 
         public virtual void Answer(ICreature from, SpeechType speechType, string message)
         {
@@ -103,13 +50,13 @@ namespace NeoServer.Game.Creatures.Npcs
             if (from is not ISociableCreature sociableCreature) return;
 
             //if it is not the first message to npc and player sent it from any other channel
-            if (PlayerDialogTree.ContainsKey(from.CreatureId) && speechType != SpeechType.PrivatePlayerToNpc) return;
+            if (npcDialog.IsTalkingWith(from) && speechType != SpeechType.PrivatePlayerToNpc) return;
 
-            var dialog = GetNextAnswer(from.CreatureId, message);
+            var dialog = npcDialog.GetNextAnswer(from.CreatureId, message);
 
             if (dialog is null) return;
 
-            StoreWords(sociableCreature, dialog.StoreAt, message);
+            npcDialog.StoreWords(sociableCreature, dialog.StoreAt, message);
 
             if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, GetPlayerStoredValues(sociableCreature));
 
@@ -121,7 +68,7 @@ namespace NeoServer.Game.Creatures.Npcs
             }
         }
 
-        public virtual void SendMessageTo(ISociableCreature to, SpeechType type, INpcDialog dialog)
+        public virtual void SendMessageTo(ISociableCreature to, SpeechType type, IDialog dialog)
         {
             if (dialog is null || dialog.Answers is null || to is null) return;
 
@@ -145,10 +92,6 @@ namespace NeoServer.Game.Creatures.Npcs
             Answer(from, speechType, message);
         }
 
-     
-        public void StopTalkingToCustomer(IPlayer player)
-        {
-            PlayerDialogTree.Remove(player.CreatureId);
-        }
+        public void StopTalkingToCustomer(IPlayer player) => npcDialog.StopTalkingTo(player);
     }
 }

@@ -31,7 +31,7 @@ namespace NeoServer.Game.Creatures.Npcs
             }
         }
 
-        public override void SendMessageTo(ISociableCreature to, SpeechType type, INpcDialog dialog)
+        public override void SendMessageTo(ISociableCreature to, SpeechType type, IDialog dialog)
         {
             base.SendMessageTo(to, type, dialog);
             if (dialog.Action == "shop") ShowShopItems(to);

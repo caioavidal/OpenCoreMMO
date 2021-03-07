@@ -30,7 +30,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var pathAccess = new Mock<IPathAccess>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
-            npcType.Setup(x => x.Dialogs).Returns(new INpcDialog[] { new NpcDialogType()
+            npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog()
             {
                 OnWords = new string[] { "hi" },
                 StoreAt = "greetings",
@@ -57,15 +57,15 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var pathAccess = new Mock<IPathAccess>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
-            npcType.Setup(x => x.Dialogs).Returns(new INpcDialog[] { new NpcDialogType()
+            npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog()
             {
                 OnWords = new string[] { "hi" },
                 StoreAt = "greetings",
-                Then =new INpcDialog[] { new NpcDialogType()
+                Then =new IDialog[] { new Dialog()
                 {
                      OnWords = new string[] { "trade" },
                      StoreAt = "trade",
-                       Then =new INpcDialog[] { new NpcDialogType()
+                       Then =new IDialog[] { new Dialog()
                         {
                              StoreAt = "answer",
                              OnWords =new string[] { "ok" },
@@ -100,11 +100,11 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var pathAccess = new Mock<IPathAccess>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
-            npcType.Setup(x => x.Dialogs).Returns(new INpcDialog[] { new NpcDialogType()
+            npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog()
             {
                 OnWords = new string[] { "hi" },
                 Answers = new string[]{ "what city?" },
-                Then =new INpcDialog[] { new NpcDialogType()
+                Then =new IDialog[] { new Dialog()
                 {
                      OnWords = new string[] { "carlin","thais" },
                      StoreAt = "city",
