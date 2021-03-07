@@ -3,9 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Npcs.Dialogs;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
