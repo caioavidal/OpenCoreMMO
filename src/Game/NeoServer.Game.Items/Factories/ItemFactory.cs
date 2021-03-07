@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
@@ -47,6 +48,20 @@ namespace NeoServer.Game.Items
             foreach (var subscriber in ItemEventSubscribers.Where(x => !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
             {
                 subscriber.Subscribe(createdItem);
+            }
+        }
+
+        public IEnumerable<ICoin> CreateCoins(ulong amount)
+        {
+            var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, amount);
+
+            foreach (var coinToAdd in coinsToAdd)
+            {
+                var createdCoin = Create(coinToAdd.Item1, Location.Inventory(Common.Players.Slot.Backpack), null);
+                if (createdCoin is not ICoin newCoin) continue;
+                newCoin.Amount = coinToAdd.Item2;
+
+                yield return newCoin;
             }
         }
 

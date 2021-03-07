@@ -44,7 +44,7 @@ namespace NeoServer.Loaders.Npcs
             foreach (var file in Directory.GetFiles(basePath, "*.json"))
             {
                 var jsonContent = File.ReadAllText(file);
-                var npcData = JsonConvert.DeserializeObject<NpcData>(jsonContent, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
+                var npcData = JsonConvert.DeserializeObject<NpcJsonData>(jsonContent, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
 
                 if (npcData is null) continue;
                 if (string.IsNullOrWhiteSpace(npcData.Name)) continue;
@@ -76,7 +76,7 @@ namespace NeoServer.Loaders.Npcs
         }
 
    
-        private void LoadShopData(INpcType type, NpcData npcData)
+        private void LoadShopData(INpcType type, NpcJsonData npcData)
         {
             if (type is null || npcData is null || npcData.Shop is null) return;
 
@@ -90,7 +90,7 @@ namespace NeoServer.Loaders.Npcs
             type.CustomAttributes.Add("shop", items);
         }
 
-        private IDialog ConvertDialog(NpcData.DialogData dialog)
+        private IDialog ConvertDialog(NpcJsonData.DialogData dialog)
         {
             if (dialog is null) return null;
             var d = new Dialog

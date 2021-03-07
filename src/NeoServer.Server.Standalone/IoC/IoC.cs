@@ -17,6 +17,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.Creatures.Events;
+using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Game.World;
@@ -143,6 +144,8 @@ namespace NeoServer.Server.Standalone.IoC
 
             //services
             builder.RegisterType<DealTransaction>().As<IDealTransaction>().SingleInstance();
+            builder.RegisterType<CoinTransaction>().As<ICoinTransaction>().SingleInstance();
+            
 
             builder.RegisterType<EventSubscriber>().SingleInstance();
 

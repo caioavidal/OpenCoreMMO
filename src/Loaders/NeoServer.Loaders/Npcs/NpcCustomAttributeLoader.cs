@@ -13,7 +13,7 @@ namespace NeoServer.Loaders.Npcs
 {
     public class NpcCustomAttributeLoader
     {
-        public static void LoadCustomData(INpcType type, NpcData npcData)
+        public static void LoadCustomData(INpcType type, NpcJsonData npcData)
         {
             if (type is null || npcData is null || npcData.CustomData is null) return;
 
@@ -21,19 +21,20 @@ namespace NeoServer.Loaders.Npcs
 
             var converter = new ExpandoObjectConverter();
 
-        
-            if (npcData.CustomData is JArray)
+
+            var list = JsonConvert.DeserializeObject<ExpandoObject[]>(jsonString, converter);
+
+            var map = new Dictionary<string, dynamic>();
+
+            foreach (var item in list)
             {
-                type.CustomAttributes.Add("custom-data", JsonConvert.DeserializeObject<ExpandoObject[]>(jsonString, converter));
+                map.TryAdd(item.key, item.value);
+
             }
-            else if (npcData.CustomData is JObject)
-            {
-                type.CustomAttributes.Add("custom-data", JsonConvert.DeserializeObject<ExpandoObject>(jsonString, converter));
-            }
-            else
-            {
-                type.CustomAttributes.Add("custom-data", npcData.CustomData);
-            }
+
+            type.CustomAttributes.Add("custom-data", map);
+
+
         }
     }
 }

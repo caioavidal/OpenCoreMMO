@@ -43,6 +43,8 @@ namespace NeoServer.Game.Creatures.Npcs
             return answer.Replace($"{{{{{dialog.StoreAt}}}}}", value);
         }
 
+        public void BackInDialog(ISociableCreature creature, byte count) => npcDialog.Back(creature.CreatureId, count);
+
         public virtual void Answer(ICreature from, SpeechType speechType, string message)
         {
             if (from is null || string.IsNullOrWhiteSpace(message)) return;

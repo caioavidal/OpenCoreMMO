@@ -39,6 +39,16 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
             playerDialogStorage.TryAdd(creature.CreatureId, new Dictionary<string, string>() { { key, value } });
         }
 
+        public void Back(uint creatureId,byte count)
+        {
+            if (!playerDialogTree.TryGetValue(creatureId, out var dialogHistory)) return;
+
+            for (int i = 0; i < count; i++)
+            {
+                dialogHistory.RemoveAt(dialogHistory.Count - 1);
+            }
+        }
+
         public IDialog GetNextAnswer(uint creatureId, string message)
         {
             if (creatureId == 0 || string.IsNullOrWhiteSpace(message)) return null;
@@ -48,7 +58,7 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
                 positions = new List<byte>() { 0 };
             }
 
-            var dialog = GetAnswer(positions, message);
+            var dialog = GetAnswer(positions, creatureId, message);
 
             if (dialog is null) return default;
 
@@ -58,7 +68,7 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
             return dialog;
         }
 
-        private IDialog GetAnswer(List<byte> positions, string message)
+        private IDialog GetAnswer(List<byte> positions, uint creatureId, string message)
         {
             IDialog[] dialogs = null;
             var i = 0;
@@ -74,7 +84,7 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
                 if (dialog.OnWords.Any(x => x.Equals(message, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     if (dialog.Then is not null) positions.Add((byte)i);
-                    if (dialog.Back > 0) positions.RemoveAt(positions.Count - dialog.Back);
+                    if (dialog.Back > 0) Back(creatureId, dialog.Back);
                     return dialog;
                 }
 

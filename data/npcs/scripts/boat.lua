@@ -1,21 +1,17 @@
-
-local function getCityData(npc, city)
-
-	local data = npc.Metadata.CustomAttributes['custom-data'];
-		
-	for i = 0, data.Length - 1 do
-		if city == data[i].city then
-			return data[i]
-		end
-	end
-end
-
 local function onDialogAction(npc, player, dialog, action, storedValues)
 
 	if action == "travel" then
-		local city = getCityData(npc, storedValues['city'])
+		local cityName = storedValues['city']
+		local city = npc.Metadata.CustomAttributes['custom-data'][cityName];
 		local destination = city.destination;
-		player:TeleportTo(destination.x, destination.y, destination.z)
+		
+		if coinTransaction:RemoveCoins(player, city.cost, true) then
+			player:TeleportTo(destination.x, destination.y, destination.z)
+		else
+			npc:Say( npc.Metadata.CustomAttributes['custom-data']['not_enough_money'], SpeechType.PrivateNpcToPlayer, player)
+			npc:BackInDialog(player, 1)
+		end
+		
 	end
 end
 
@@ -26,7 +22,7 @@ local function keywordHandler(message, npc, player)
 	local cityName = getStoredValues(npc, player, 'city')
 	
 	if cityName ~= nil then
-		local city = getCityData(npc, cityName)
+		local city = npc.Metadata.CustomAttributes['custom-data'][cityName]
 		replaced = replaced:gsub('|COST|', city.cost)
 	end
 	
