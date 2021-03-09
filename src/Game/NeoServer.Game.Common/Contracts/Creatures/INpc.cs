@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface INpc : IWalkableCreature, ISociableCreature
     {
         INpcType Metadata { get; }
+        ISpawnPoint SpawnPoint { get; }
+
         event Answer OnAnswer;
         event DialogAction OnDialogAction;
 

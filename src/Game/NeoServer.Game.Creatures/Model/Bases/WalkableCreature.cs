@@ -38,7 +38,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
         public uint EventWalk { get; set; }
-       
+
+        public virtual ITileEnterRule TileEnterRule => CreatureEnterTileRule.Rule;
         public virtual ushort Speed { get; protected set; }
         public uint Following { get; private set; }
         public bool IsFollowing => Following > 0;
@@ -125,7 +126,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 OnCreatureDisappear(creature);
                 return;
             }
-            if (!PathAccess.FindPathToDestination(this, creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
+            if (!PathAccess.FindPathToDestination(this, creature.Location, PathSearchParams, TileEnterRule, out var directions))
             {
                 HasFollowPath = false;
                 return;
@@ -137,7 +138,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location)
         {
             StopWalking();
-            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
+            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, TileEnterRule, out var directions))
             {
                 return TryWalkTo(directions);
             }
@@ -146,7 +147,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location, Action<ICreature> callbackAction)
         {
             StopWalking();
-            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions))
+            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, TileEnterRule, out var directions))
             {
                 NextAction = callbackAction;
                 return TryWalkTo(directions);
@@ -189,7 +190,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             var direction = directions[randomIndex];
 
-            if (PathAccess.CanGoToDirection?.Invoke(Location, direction, CreatureEnterTileRule.Rule) is false) return Direction.None;
+            if (PathAccess.CanGoToDirection?.Invoke(this, Location, direction, TileEnterRule) is false) return Direction.None;
 
             return direction;
         }

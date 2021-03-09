@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Threading;
@@ -10,6 +11,10 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 {
     public class NpcTest
     {
+        private Mock<IOutfit> outfit = new Mock<IOutfit>();
+        private Mock<IPathAccess> pathAccess = new Mock<IPathAccess>();
+        private Mock<ISpawnPoint> spawnPoint = new Mock<ISpawnPoint>();
+
         [Fact]
         public void GetPlayerKeywordsHistory_When_Player_Has_Not_Talked_To_Npc_Returns_Null()
         {
@@ -23,8 +28,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         public void GetPlayerKeywordsHistory_When_Sends_Hi_Returns_Hi()
         {
             var npcType = new Mock<INpcType>();
-            var outfit = new Mock<IOutfit>();
-            var pathAccess = new Mock<IPathAccess>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog()
@@ -34,7 +37,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
                 Action = "ok"
             } });
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
             var creature = new Mock<ISociableCreature>();
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
@@ -50,8 +53,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         public void GetPlayerKeywordsHistory_When_Sends_Multiple_Words_Returns_Them()
         {
             var npcType = new Mock<INpcType>();
-            var outfit = new Mock<IOutfit>();
-            var pathAccess = new Mock<IPathAccess>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog()
@@ -70,7 +71,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
                 } }
             } });
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
             var creature = new Mock<ISociableCreature>();
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
@@ -93,8 +94,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         public void SendMessageTo_When_Has_Bind_Variables_Should_Replace_It()
         {
             var npcType = new Mock<INpcType>();
-            var outfit = new Mock<IOutfit>();
-            var pathAccess = new Mock<IPathAccess>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog()
@@ -110,8 +109,8 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             } });
 
             var anwser = "";
-          
-            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+
+            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
 
             sut.ReplaceKeywords = (m, a, b) => m;
             var creature = new Mock<IPlayer>();
@@ -133,17 +132,16 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         public void Advertise_Should_Call_Say_With_Message()
         {
             var npcType = new Mock<INpcType>();
-            var outfit = new Mock<IOutfit>();
-            var pathAccess = new Mock<IPathAccess>();
+
 
             npcType.Setup(x => x.Name).Returns("Eryn");
-            npcType.Setup(x => x.Marketings).Returns(new string[]{ "this is a advertise"});
+            npcType.Setup(x => x.Marketings).Returns(new string[] { "this is a advertise" });
 
             var advertise = "";
             var speechType = SpeechType.None;
-      
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+
+            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
             sut.OnSay += (a, b, message, d) =>
             {
                 advertise = message;
@@ -152,7 +150,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             Thread.Sleep(10_000);//todo: try remove this
             sut.Advertise();
-          
+
 
             Assert.Equal("this is a advertise", advertise);
             Assert.Equal(SpeechType.Say, speechType);
@@ -163,15 +161,13 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         public void WalkAround_Should_Emit_OnStartedWalking()
         {
             var npcType = new Mock<INpcType>();
-            var outfit = new Mock<IOutfit>();
-            var pathAccess = new Mock<IPathAccess>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Speed).Returns(200);
 
             var startedWalking = false;
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
             sut.OnStartedWalking += (a) => startedWalking = true;
 
             Thread.Sleep(5_000);//todo: try remove this

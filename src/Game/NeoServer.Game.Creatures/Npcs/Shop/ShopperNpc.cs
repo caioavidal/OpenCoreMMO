@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -15,7 +16,7 @@ namespace NeoServer.Game.Creatures.Npcs
     {
 
         public event ShowShop OnShowShop;
-        public ShopperNpc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
+        public ShopperNpc(INpcType type, IPathAccess pathAccess,ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, spawnPoint, outfit, healthPoints)
         {
         }
 

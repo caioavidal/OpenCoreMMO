@@ -187,7 +187,7 @@ namespace NeoServer.Game.World.Map
 
                     ITile tile = map[pos];
 
-                    if (!tileEnterRule.CanEnter(tile))
+                    if (!tileEnterRule.CanEnter(tile, creature))
                     {
                         continue;
                     }

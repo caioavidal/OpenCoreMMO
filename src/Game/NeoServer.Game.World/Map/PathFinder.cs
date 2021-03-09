@@ -91,7 +91,7 @@ namespace NeoServer.Game.World.Map
                 var nextLocation = startLocation.GetNextLocation(direction);
                 var nextDistance = nextLocation.GetMaxSqmDistance(target);
 
-                var canGoToDirection = Map.CanGoToDirection(creature.Location, direction, tileEnterRule);
+                var canGoToDirection = Map.CanGoToDirection(creature, creature.Location, direction, tileEnterRule);
                 var isDiagonalMovement = startLocation.IsDiagonalMovement(nextLocation);
 
                 if (!canGoToDirection)
