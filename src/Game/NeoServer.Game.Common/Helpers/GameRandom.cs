@@ -30,6 +30,12 @@ namespace NeoServer.Game.Common.Helpers
 
         }
 
+        public T Next<T>(T[] values)
+        {
+            var randomValue = Next(minValue: 0, maxValue: values.Length);
+            return values[randomValue];
+        }
+
         /// <summary>
         /// Random value in a interval using gaussian
         /// </summary>

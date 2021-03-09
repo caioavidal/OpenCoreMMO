@@ -17,7 +17,7 @@ namespace NeoServer.Loaders.Npcs
     {
         private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
-        
+
 
         public NpcLoader(ServerConfiguration serverConfiguration, Logger logger)
         {
@@ -61,6 +61,7 @@ namespace NeoServer.Loaders.Npcs
                     Script = npcData.Script,
                     MaxHealth = npcData.Health?.Max ?? 100,
                     Name = npcData.Name,
+                    Marketings = npcData.Marketings,
                     Speed = 280,
                     Look = new Dictionary<LookType, ushort>() { { LookType.Type, npcData.Look.Type }, { LookType.Corpse, npcData.Look.Corpse }, { LookType.Body, npcData.Look.Body}, { LookType.Legs, npcData.Look.Legs}, { LookType.Head, npcData.Look.Head },
                 { LookType.Feet, npcData.Look.Feet},{ LookType.Addon, npcData.Look.Addons}},
@@ -75,7 +76,7 @@ namespace NeoServer.Loaders.Npcs
             }
         }
 
-   
+
         private void LoadShopData(INpcType type, NpcJsonData npcData)
         {
             if (type is null || npcData is null || npcData.Shop is null) return;

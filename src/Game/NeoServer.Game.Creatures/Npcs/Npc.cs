@@ -1,5 +1,7 @@
-﻿using NeoServer.Game.Common.Talks;
+﻿using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Npcs.Dialogs;
 using NeoServer.Server.Model.Players.Contracts;
@@ -14,6 +16,8 @@ namespace NeoServer.Game.Creatures.Npcs
         {
             Metadata = type;
             npcDialog = new NpcDialog(this);
+
+            Cooldowns.Start(CooldownType.Advertise, 10_000);
         }
 
         #region Events
@@ -39,6 +43,13 @@ namespace NeoServer.Game.Creatures.Npcs
 
             if (!storedValues.TryGetValue(dialog.StoreAt, out var value)) return answer;
             return answer.Replace($"{{{{{dialog.StoreAt}}}}}", value);
+        }
+
+        public void Advertise()
+        {
+            if (!Cooldowns.Cooldowns[CooldownType.Advertise].Expired) return;
+            Say(GameRandom.Random.Next(Metadata.Marketings), SpeechType.Say);
+            Cooldowns.Start(CooldownType.Advertise, 10_000);
         }
 
         public void BackInDialog(ISociableCreature creature, byte count) => npcDialog.Back(creature.CreatureId, count);

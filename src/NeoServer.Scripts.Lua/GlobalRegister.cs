@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Contracts;
@@ -42,6 +43,7 @@ namespace NeoServer.Scripts.Lua
             lua["load"] = new Action<string>((path) => DoFile(path));
             lua["logger"] = logger;
             lua["coinTransaction"] = coinTransaction;
+            lua["random"] = GameRandom.Random;
 
             ExecuteMainFiles();
 

@@ -13,16 +13,18 @@ namespace NeoServer.Game.Creatures
         private readonly IPathAccess pathAccess;
         private readonly IItemFactory itemFactory;
         private readonly Logger logger;
+        private readonly ICreatureGameInstance creatureGameInstance;
 
         public static INpcFactory Instance { get; private set; }
 
         public NpcFactory(CreaturePathAccess creaturePathAccess,
-            Logger logger, IItemFactory itemFactory)
+            Logger logger, IItemFactory itemFactory, ICreatureGameInstance creatureGameInstance)
         {
             pathAccess = creaturePathAccess;
             this.logger = logger;
             Instance = this;
             this.itemFactory = itemFactory;
+            this.creatureGameInstance = creatureGameInstance;
         }
         public INpc Create(string name, ISpawnPoint spawn = null)
         {

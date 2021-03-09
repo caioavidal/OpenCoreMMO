@@ -21,6 +21,7 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public bool IsLuaScript => Script?.EndsWith(".lua") ?? false;
         public IDictionary<string, dynamic> CustomAttributes { get; } = new Dictionary<string, dynamic>();
+        public string[] Marketings { get; init; }
     }
 
     public sealed class Dialog: IDialog
