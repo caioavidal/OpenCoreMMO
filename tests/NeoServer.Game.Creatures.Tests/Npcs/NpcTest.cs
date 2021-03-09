@@ -1,7 +1,9 @@
 ﻿using Moq;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Server.Model.Players.Contracts;
+using System.Threading;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Npcs
@@ -125,6 +127,36 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             sut.Hear(creature.Object, Common.Talks.SpeechType.PrivatePlayerToNpc, "carlin");
 
             Assert.Equal("ok, you said carlin.", anwser);
+        }
+
+        [Fact]
+        public void Advertise_Should_Call_Say_With_Message()
+        {
+            var npcType = new Mock<INpcType>();
+            var outfit = new Mock<IOutfit>();
+            var pathAccess = new Mock<IPathAccess>();
+
+            npcType.Setup(x => x.Name).Returns("Eryn");
+            npcType.Setup(x => x.Marketings).Returns(new string[]{ "this is a advertise"});
+
+            var advertise = "";
+            var speechType = SpeechType.None;
+      
+
+            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            sut.OnSay += (a, b, message, d) =>
+            {
+                advertise = message;
+                speechType = b;
+            };
+
+            Thread.Sleep(10_000);//todo: try remove this
+            sut.Advertise();
+          
+
+            Assert.Equal("this is a advertise", advertise);
+            Assert.Equal(SpeechType.Say, speechType);
+
         }
     }
 }
