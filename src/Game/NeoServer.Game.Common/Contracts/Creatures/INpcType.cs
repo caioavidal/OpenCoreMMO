@@ -8,6 +8,7 @@ namespace NeoServer.Game.Contracts.Creatures
         public IDialog[] Dialogs { get; init; }
         public IDictionary<string, dynamic> CustomAttributes { get;  }
         bool IsLuaScript { get; }
+        string[] Marketings { init; get; }
     }
 
     public interface IDialog

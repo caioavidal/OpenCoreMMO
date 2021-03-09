@@ -19,6 +19,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event Answer OnAnswer;
         event DialogAction OnDialogAction;
 
+        void Advertise();
         void BackInDialog(ISociableCreature creature, byte count);
         Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature);
         void StopTalkingToCustomer(IPlayer player);

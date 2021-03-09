@@ -2,6 +2,7 @@
 using NeoServer.Game.World.Spawns;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Jobs.Creatures.Npc;
 using NeoServer.Server.Model.Players.Contracts;
 using NeoServer.Server.Tasks;
 
@@ -28,6 +29,7 @@ namespace NeoServer.Server.Jobs.Creatures
             foreach (var creature in game.CreatureManager.GetCreatures()) 
             {
                 if (creature is ICombatActor actor && actor.IsDead) continue;
+                if (creature is null) continue;
 
                 if (creature is IPlayer player)
                 {
@@ -35,13 +37,20 @@ namespace NeoServer.Server.Jobs.Creatures
                     PlayerRecoveryJob.Execute(player, game);
                 }
 
-                CreatureConditionJob.Execute(creature as ICombatActor);
+                if (creature is ICombatActor combatActor)
+                {
+                    CreatureConditionJob.Execute(combatActor);
+                }
 
                 if(creature is IMonster monster)
                 {
                     CreatureDefenseJob.Execute(monster, game);
                     MonsterStateJob.Execute(monster);
                     MonsterYellJob.Execute(monster);
+                }
+                if(creature is INpc npc)
+                {
+                    NpcJob.Execute(npc);
                 }
 
                 RespawnJob.Execute(spawnManager);

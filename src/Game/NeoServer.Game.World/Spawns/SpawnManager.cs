@@ -64,6 +64,7 @@ namespace NeoServer.Game.World.Spawns
                 var npc = _creatureFactory.CreateNpc(npcToSpawn.Name, npcToSpawn.Spawn);
                 if (npc is null) continue;
 
+                _creatureGameInstance.Add(npc);
                 PlaceCreature(npcToSpawn, npc);
             }
         }

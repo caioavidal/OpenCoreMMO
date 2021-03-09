@@ -4,9 +4,9 @@ namespace NeoServer.Server.Jobs.Creatures.Npc
 {
     public class NpcJob
     {
-        public void Execute(INpc npc)
+        public static void Execute(INpc npc)
         {
-            
+            npc.Advertise();
         }
     }
 }
