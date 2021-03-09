@@ -1,8 +1,11 @@
 ﻿using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
+using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Npcs.Dialogs;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
@@ -12,10 +15,11 @@ namespace NeoServer.Game.Creatures.Npcs
     public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
     public class Npc : WalkableCreature, INpc
     {
-        public Npc(INpcType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
+        public Npc(INpcType type, IPathAccess pathAccess, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
         {
             Metadata = type;
             npcDialog = new NpcDialog(this);
+            SpawnPoint = spawnPoint;
 
             Cooldowns.Start(CooldownType.Advertise, 10_000);
             Cooldowns.Start(CooldownType.WalkAround, 5_000);
@@ -27,9 +31,12 @@ namespace NeoServer.Game.Creatures.Npcs
         public event Hear OnHear;
         #endregion
 
+        public ISpawnPoint SpawnPoint { get; }
         public override IOutfit Outfit { get; protected set; }
         public INpcType Metadata { get; }
         public CreateItem CreateNewItem { protected get; init; }
+
+        public override ITileEnterRule TileEnterRule => NpcEnterTileRule.Rule;
 
         public KeywordReplacement ReplaceKeywords { get; set; }
 

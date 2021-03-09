@@ -47,13 +47,13 @@ namespace NeoServer.Game.Creatures
 
             if (npcType.CustomAttributes.ContainsKey("shop"))
             {
-                return new ShopperNpc(npcType, pathAccess, outfit, npcType.MaxHealth)
+                return new ShopperNpc(npcType, pathAccess, spawn, outfit, npcType.MaxHealth)
                 {
                     CreateNewItem = itemFactory.Create
                 };
             }
 
-            return new Npc(npcType, pathAccess, outfit, npcType.MaxHealth);
+            return new Npc(npcType, pathAccess, spawn, outfit, npcType.MaxHealth);
         }
 
     }

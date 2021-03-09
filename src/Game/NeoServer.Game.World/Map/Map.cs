@@ -526,10 +526,10 @@ namespace NeoServer.Game.World.Map
             //if (pool is null) return;
             //tile.AddItem(pool);
         }
-        public bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule)
+        public bool CanGoToDirection(ICreature creature, Location location, Direction direction, ITileEnterRule rule)
         {
             var tile = GetNextTile(location, direction);
-            return rule.CanEnter(tile);
+            return rule.CanEnter(tile, creature);
         }
     }
 

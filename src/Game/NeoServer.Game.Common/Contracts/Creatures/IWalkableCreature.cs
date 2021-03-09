@@ -11,7 +11,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate bool PathFinder(IWalkableCreature creature, Location target, FindPathParams options, ITileEnterRule tileEnterRule, out Direction[] directions);
     public delegate void StartFollow(IWalkableCreature creature, ICreature following, FindPathParams fpp);
     public delegate void ChangeSpeed(IWalkableCreature creature, ushort speed);
-    public delegate bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
+    public delegate bool CanGoToDirection(ICreature creature, Location location, Direction direction, ITileEnterRule rule);
     public delegate void TeleportTo(IWalkableCreature creature, Location location);
     public delegate void Moved(IWalkableCreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators);
     

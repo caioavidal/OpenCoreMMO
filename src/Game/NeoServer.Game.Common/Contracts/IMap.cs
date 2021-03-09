@@ -42,7 +42,7 @@ namespace NeoServer.Game.Contracts
         void CreateBloodPool(ILiquid liquid, IDynamicTile tile);
         ITile GetTileDestination(ITile tile);
         bool TryMoveCreature(ICreature creature, Location toLocation);
-        bool CanGoToDirection(Location location, Direction direction, ITileEnterRule rule);
+        bool CanGoToDirection(ICreature creature, Location location, Direction direction, ITileEnterRule rule);
         void RemoveCreature(ICreature creature);
         void SwapCreatureBetweenSectors(ICreature creature, Location fromLocation, Location toLocation);
         HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayers = false);
