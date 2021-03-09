@@ -12,18 +12,7 @@ namespace NeoServer.Game.Creatures.Monsters
         protected WalkableMonster(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints) { }
         public bool CanReachAnyTarget { get; protected set; } = false;
 
-        private Direction GetRandomStep()
-        {
-            int randomIndex = GameRandom.Random.Next(minValue: 0, maxValue: 4);
-
-            var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
-
-            var direction = directions[randomIndex];
-
-            if (PathAccess.CanGoToDirection?.Invoke(Location, direction, CreatureEnterTileRule.Rule) is false) return Direction.None;
-
-            return direction;
-        }
+       
         public bool LookForNewEnemy()
         {
             StopFollowing();

@@ -66,9 +66,7 @@ namespace NeoServer.Server.Events
                 combatActor.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
                 combatActor.OnKilled += _creatureKilledEventHandler.Execute;
                 combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
-                combatActor.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
                 combatActor.OnAttackEnemy += _creatureAttackEventHandler.Execute;
-                combatActor.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
                 combatActor.OnHeal += _creatureHealedEventHandler.Execute;
                 combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
             }
@@ -82,6 +80,10 @@ namespace NeoServer.Server.Events
             {
                 walkableCreature.OnStartedFollowing += _creatureStartedFollowingEventHandler.Execute;
                 walkableCreature.OnChangedSpeed += _creatureChangedSpeedEventHandler.Execute;
+                walkableCreature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
+                walkableCreature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
+
+
             }
             #endregion
         }
@@ -96,9 +98,7 @@ namespace NeoServer.Server.Events
                 combatActor.OnDamaged -= _creatureReceiveDamageEventHandler.Execute;
                 combatActor.OnKilled -= _creatureKilledEventHandler.Execute;
                 combatActor.OnBlockedAttack -= _creatureBlockedAttackEventHandler.Execute;
-                combatActor.OnTurnedToDirection -= _creatureTurnToDirectionEventHandler.Execute;
                 combatActor.OnAttackEnemy -= _creatureAttackEventHandler.Execute;
-                combatActor.OnStartedWalking -= _creatureStartedWalkingEventHandler.Execute;
                 combatActor.OnHeal -= _creatureHealedEventHandler.Execute;
                 combatActor.OnChangedVisibility -= creatureTurnedInvisibleEventHandler.Execute;
             }
@@ -107,6 +107,8 @@ namespace NeoServer.Server.Events
             {
                 walkableCreature.OnStartedFollowing -= _creatureStartedFollowingEventHandler.Execute;
                 walkableCreature.OnChangedSpeed -= _creatureChangedSpeedEventHandler.Execute;
+                walkableCreature.OnTurnedToDirection -= _creatureTurnToDirectionEventHandler.Execute;
+                walkableCreature.OnStartedWalking -= _creatureStartedWalkingEventHandler.Execute;
             }
             if (creature is ISociableCreature sociableCreature)
             {

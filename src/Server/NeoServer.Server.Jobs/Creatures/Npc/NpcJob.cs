@@ -7,6 +7,7 @@ namespace NeoServer.Server.Jobs.Creatures.Npc
         public static void Execute(INpc npc)
         {
             npc.Advertise();
+            npc.WalkRandomStep();
         }
     }
 }
