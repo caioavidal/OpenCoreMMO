@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
@@ -177,6 +178,30 @@ namespace NeoServer.Game.Creatures.Model.Bases
             if (WalkingQueue.IsEmpty) return true;
 
             OnStartedWalking?.Invoke(this);
+            return true;
+        }
+
+        protected Direction GetRandomStep()
+        {
+            int randomIndex = GameRandom.Random.Next(minValue: 0, maxValue: 4);
+
+            var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
+
+            var direction = directions[randomIndex];
+
+            if (PathAccess.CanGoToDirection?.Invoke(Location, direction, CreatureEnterTileRule.Rule) is false) return Direction.None;
+
+            return direction;
+        }
+
+        public virtual bool WalkRandomStep()
+        {
+            var direction = GetRandomStep();
+
+            if (direction == Direction.None) return false;
+
+            TryWalkTo(direction);
+
             return true;
         }
 

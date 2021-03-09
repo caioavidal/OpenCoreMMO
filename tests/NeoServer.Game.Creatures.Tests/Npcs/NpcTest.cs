@@ -158,5 +158,28 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             Assert.Equal(SpeechType.Say, speechType);
 
         }
+
+        [Fact]
+        public void WalkAround_Should_Emit_OnStartedWalking()
+        {
+            var npcType = new Mock<INpcType>();
+            var outfit = new Mock<IOutfit>();
+            var pathAccess = new Mock<IPathAccess>();
+
+            npcType.Setup(x => x.Name).Returns("Eryn");
+            npcType.Setup(x => x.Speed).Returns(200);
+
+            var startedWalking = false;
+
+            var sut = new Npc(npcType.Object, pathAccess.Object, outfit.Object, 100);
+            sut.OnStartedWalking += (a) => startedWalking = true;
+
+            Thread.Sleep(5_000);//todo: try remove this
+            var result = sut.WalkRandomStep();
+
+            Assert.True(startedWalking);
+            Assert.True(result);
+
+        }
     }
 }

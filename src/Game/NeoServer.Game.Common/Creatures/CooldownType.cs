@@ -21,6 +21,7 @@
         /// time that monster can be awaken without any target around
         /// </summary>
         Awaken,
-        Advertise
+        Advertise,
+        WalkAround
     }
 }

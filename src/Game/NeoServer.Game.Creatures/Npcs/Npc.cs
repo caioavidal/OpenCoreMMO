@@ -18,6 +18,7 @@ namespace NeoServer.Game.Creatures.Npcs
             npcDialog = new NpcDialog(this);
 
             Cooldowns.Start(CooldownType.Advertise, 10_000);
+            Cooldowns.Start(CooldownType.WalkAround, 5_000);
         }
 
         #region Events
@@ -92,6 +93,14 @@ namespace NeoServer.Game.Creatures.Npcs
 
                 Say(bindedAnswer, SpeechType.PrivateNpcToPlayer, to);
             }
+        }
+
+        public override bool WalkRandomStep()
+        {
+            if (!Cooldowns.Cooldowns[CooldownType.WalkAround].Expired) return false;
+            var result = base.WalkRandomStep();
+            Cooldowns.Start(CooldownType.WalkAround, 5_000);
+            return result;
         }
 
         public void Hear(ICreature from, SpeechType speechType, string message)
