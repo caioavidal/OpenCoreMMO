@@ -184,12 +184,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <param name="type"></param>
         /// <returns></returns>
         bool HasCondition(ConditionType type);
-        /// <summary>
-        /// Checks if creature has flag enabled
-        /// </summary>
-        /// <param name="flag"></param>
-        /// <returns></returns>
-        bool FlagIsEnabled(CreatureFlag flag);
+      
         void OnCreatureAppear(Location location, ICylinderSpectator[] spectators);
         /// <summary>
         /// Removes creature's condition
@@ -210,18 +205,8 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <param name="direction"></param>
         void TurnTo(Direction direction);
         /// <summary>
-        /// Enables flag
-        /// </summary>
-        /// <param name="flag"></param>
-        void EnableFlag(CreatureFlag flag);
-        /// <summary>
         /// Sets new outfit and store current as last outfit
         /// </summary>
         void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon);
-        /// <summary>
-        /// Disables flag
-        /// </summary>
-        /// <param name="flag"></param>
-        void DisableFlag(CreatureFlag flag);
     }
 }

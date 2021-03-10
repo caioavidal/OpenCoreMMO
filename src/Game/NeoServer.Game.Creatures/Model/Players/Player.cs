@@ -115,9 +115,9 @@ namespace NeoServer.Server.Model.Players
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
 
-        private ulong flags;
+        private ulong flags = 0b000000000000000000000;
 
-        public void SetFlag(PlayerFlag flag) => flags &= (ulong)flag;
+        public void SetFlag(PlayerFlag flag) => flags |= (ulong)flag;
         public virtual void SetFlags(params PlayerFlag[] flags)
         {
             foreach (var flag in flags)
@@ -270,6 +270,8 @@ namespace NeoServer.Server.Model.Players
         public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
         public bool Recovering { get; private set; }
         public ushort GuildLevel { get; set; }
+
+        public override bool CanSeeInvisible => HasFlag(PlayerFlag.CanSeeInvisibility);
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;

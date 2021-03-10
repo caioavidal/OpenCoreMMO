@@ -12,7 +12,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests
 {
-    public class PlayerTest
+    public partial class PlayerTest
     {
         [Theory]
         [InlineData(100, 111, true)]

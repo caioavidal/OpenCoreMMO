@@ -124,20 +124,11 @@ namespace NeoServer.Game.Creatures.Model
         }
         public byte LightBrightness { get; protected set; }
         public byte LightColor { get; protected set; }
-        public uint Flags { get; private set; }
-        public bool IsInvisible { get; protected set; } // TODO: implement.
-        public virtual bool CanSeeInvisible => FlagIsEnabled(CreatureFlag.SeeInvisible);
+        public  bool IsInvisible { get; protected set; } // TODO: implement.
+        public abstract bool CanSeeInvisible { get; }
 
         public bool IsRemoved { get; private set; }
 
-        public bool FlagIsEnabled(CreatureFlag flag)
-        {
-            var flagValue = (uint)flag;
-            return (Flags & flagValue) == flagValue;
-        }
-
-        public void EnableFlag(CreatureFlag flag) => Flags |= (uint)flag;
-        public void DisableFlag(CreatureFlag flag) => Flags &= ~(uint)flag;
         public virtual bool CanSee(ICreature otherCreature)
         {
             return !otherCreature.IsInvisible || CanSeeInvisible;

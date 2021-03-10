@@ -231,6 +231,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public bool IsSummon => false;
 
+        public override bool CanSeeInvisible => false; //todo: add invisibility flag
+
         public override void OnCreatureDisappear(ICreature creature)
         {
             RemoveFromTargetList(creature);
