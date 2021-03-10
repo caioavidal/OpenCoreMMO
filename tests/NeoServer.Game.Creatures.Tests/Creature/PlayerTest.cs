@@ -1,5 +1,8 @@
-﻿using NeoServer.Game.Common.Creatures.Players;
+﻿using Moq;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Tests;
 using NeoServer.Server.Model.Players;
@@ -114,5 +117,42 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             Assert.True(sut.CanSeeInvisible);
         } 
+
+        [Fact]
+        public void CanSee_When_Creature_Is_Invisible_And_Cant_See_Invisible_Returns_False()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+
+            var creature = new Mock<ICreature>();
+            creature.Setup(x => x.IsInvisible).Returns(true);
+
+            var result = sut.CanSee(creature.Object);
+            
+            Assert.False(result);
+        }
+        [Fact]
+        public void CanSee_When_Creature_Is_Invisible_And_Can_See_Invisible_Returns_True()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+
+            sut.SetFlag(PlayerFlag.CanSeeInvisibility);
+
+            var creature = new Mock<ICreature>();
+            creature.Setup(x => x.IsInvisible).Returns(true);
+
+            var result = sut.CanSee(creature.Object);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void SetAsRemoved_Sets_IsRemoved_As_True()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+
+            sut.SetAsRemoved();
+            Assert.True(sut.IsRemoved);
+        }
+
     }
 }
