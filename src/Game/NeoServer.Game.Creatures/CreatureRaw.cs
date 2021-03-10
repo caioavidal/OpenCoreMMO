@@ -33,7 +33,7 @@ namespace NeoServer.Game.Creatures
             }
 
             cache.Add((byte)Math.Min(100, creature.HealthPoints * 100 / creature.MaxHealthPoints));
-            cache.Add((byte)creature.ClientSafeDirection);
+            cache.Add((byte)creature.SafeDirection);
 
             if (playerRequesting.CanSee(creature))
             {
@@ -65,7 +65,7 @@ namespace NeoServer.Game.Creatures
             cache.AddRange(BitConverter.GetBytes(creature.Speed));
 
             cache.Add(creature.Skull);
-            cache.Add(creature.Shield);
+            cache.Add(creature.Emblem);
 
             if (!known)
             {

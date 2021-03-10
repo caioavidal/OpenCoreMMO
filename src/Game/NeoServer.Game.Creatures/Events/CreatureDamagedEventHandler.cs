@@ -27,7 +27,7 @@ namespace NeoServer.Game.Creatures.Events
 
             if (damage.IsElementalDamage) return;
 
-            var liquidColor = victim.Blood switch
+            var liquidColor = victim.BloodType switch
             {
                 BloodType.Blood => LiquidColor.Red,
                 BloodType.Slime => LiquidColor.Green

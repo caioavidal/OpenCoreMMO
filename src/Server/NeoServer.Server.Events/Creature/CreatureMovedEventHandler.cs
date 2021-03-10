@@ -43,7 +43,7 @@ namespace NeoServer.Server.Events
 
             if (creature is ICreature)
             {
-                creature.SetDirection(toDirection);
+                creature.TurnTo(toDirection);
             }
 
             foreach (var cylinderSpectator in cylinder.TileSpectators)

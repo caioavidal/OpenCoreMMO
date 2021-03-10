@@ -322,7 +322,7 @@ namespace NeoServer.Server.Model.Players
         }
         public override void TurnVisible()
         {
-            DisableTemporaryOutfit();
+            BackToOldOutfit();
             base.TurnVisible();
         }
         public override void SetAsEnemy(ICreature creature)

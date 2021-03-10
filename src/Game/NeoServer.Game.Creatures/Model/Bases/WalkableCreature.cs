@@ -67,7 +67,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public void TurnTo(Direction direction)
         {
             if (direction == Direction) return;
-            SetDirection(direction);
+            base.TurnTo(direction);
             OnTurnedToDirection?.Invoke(this, direction);
         }
         public int StepDelayMilliseconds
