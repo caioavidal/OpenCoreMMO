@@ -269,7 +269,7 @@ namespace NeoServer.Game.World.Map.Tiles
             Creatures = Creatures ?? new Dictionary<uint, IWalkableCreature>();
 
             Creatures.TryAdd(creature.CreatureId, walkableCreature);
-            walkableCreature.Tile = this;
+            walkableCreature.SetCurrentTile(this);
 
             SetCacheAsExpired();
 

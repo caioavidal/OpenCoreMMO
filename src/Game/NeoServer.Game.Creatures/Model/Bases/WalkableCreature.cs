@@ -135,6 +135,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
             TryUpdatePath(directions);
         }
 
+        public virtual bool WalkTo(params Direction[] directions)
+        {
+            return TryWalkTo(directions);
+        }
         public virtual bool WalkTo(Location location)
         {
             StopWalking();
@@ -205,6 +209,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             return true;
         }
+
+        public void SetCurrentTile(IDynamicTile tile) => Tile = tile;
 
         public bool TryUpdatePath(Direction[] newPath)
         {
