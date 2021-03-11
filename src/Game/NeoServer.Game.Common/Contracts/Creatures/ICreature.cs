@@ -199,11 +199,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Sets creature as removed
         /// </summary>
         void SetAsRemoved();
-        /// <summary>
-        /// Turn creature to direction
-        /// </summary>
-        /// <param name="direction"></param>
-        void TurnTo(Direction direction);
+  
         /// <summary>
         /// Sets new outfit and store current as last outfit
         /// </summary>

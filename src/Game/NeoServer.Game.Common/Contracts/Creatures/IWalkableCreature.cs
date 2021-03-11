@@ -104,5 +104,6 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         /// <param name="tile"></param>
         void SetCurrentTile(IDynamicTile tile);
+        void TurnTo(Direction direction);
     }
 }

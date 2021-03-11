@@ -204,7 +204,7 @@ namespace NeoServer.Game.Creatures.Model
         public bool IsHealthHidden { get; protected set; }
         public Location Location { get; set; }
 
-        public void TurnTo(Direction direction) => Direction = direction;
+        protected void SetDirection(Direction direction) => Direction = direction;
 
         public virtual void GainExperience(uint exp)
         {
