@@ -18,7 +18,6 @@ namespace NeoServer.Scripts.Spells.Support
         {
             error = InvalidOperation.None;
 
-            actor.CreateItem(2666, 100);
             return true;
         }
     }

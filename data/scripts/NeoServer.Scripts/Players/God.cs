@@ -20,7 +20,7 @@ namespace NeoServer.Scripts.Players
         {
             SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVIP);
         }
-        public override bool CanSeeInvisible => HasFlag(PlayerFlag.CanSeeInvisibility);
+        public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
         
         public override bool CanBeSeen => false;
         public override void GainExperience(uint exp) { } //tutor do not gain experience

@@ -117,6 +117,8 @@ namespace NeoServer.Server.Model.Players
 
         private ulong flags = 0b000000000000000000000;
 
+        public void UnsetFlag(PlayerFlag flag) => flags &= ~(ulong)flag;
+
         public void SetFlag(PlayerFlag flag) => flags |= (ulong)flag;
         public virtual void SetFlags(params PlayerFlag[] flags)
         {
@@ -139,7 +141,7 @@ namespace NeoServer.Server.Model.Players
 
             OnLoadedVipList?.Invoke(this, vipList);
         }
-        public bool HasFlag(PlayerFlag flag) => (flags & (ulong)flag) != 0;
+        public bool FlagIsEnabled(PlayerFlag flag) => (flags & (ulong)flag) != 0;
 
         private uint IdleTime;
         public uint AccountId { get; init; }
@@ -271,7 +273,9 @@ namespace NeoServer.Server.Model.Players
         public bool Recovering { get; private set; }
         public ushort GuildLevel { get; set; }
 
-        public override bool CanSeeInvisible => HasFlag(PlayerFlag.CanSeeInvisibility);
+        public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
+
+        public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
@@ -479,15 +483,7 @@ namespace NeoServer.Server.Model.Players
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
 
-        public override IItem CreateItem(ushort itemId, byte amount)
-        {
-            var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.AddItem(item).IsSuccess)
-            {
-                Tile.AddItem(item);
-            }
-            return item;
-        }
+
         public void LookAt(ITile tile)
         {
             var isClose = Location.IsNextTo(tile.Location);
@@ -740,9 +736,9 @@ namespace NeoServer.Server.Model.Players
                 OnOperationFailed?.Invoke(CreatureId, "You cannot add more buddies.");
                 return false;
             }
-            if (player.HasFlag(PlayerFlag.SpecialVIP))
+            if (player.FlagIsEnabled(PlayerFlag.SpecialVIP))
             {
-                if (!HasFlag(PlayerFlag.SpecialVIP))
+                if (!FlagIsEnabled(PlayerFlag.SpecialVIP))
                 {
                     OnOperationFailed?.Invoke(CreatureId, "You cannot add this player to your vip list.");
                     return false;

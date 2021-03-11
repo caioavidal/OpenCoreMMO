@@ -3,6 +3,8 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace NeoServer.Server
     {
 
         private ICreatureGameInstance creatureInstances;
+        private readonly Logger logger;
 
         /// <summary>
         /// Gets all creatures in game
@@ -30,11 +33,12 @@ namespace NeoServer.Server
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
         private IMap map;
-        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map)
+        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Logger logger)
         {
             this.creatureInstances = creatureInstances;
             this.map = map;
             playersConnection = new ConcurrentDictionary<uint, IConnection>();
+            this.logger = logger;
         }
 
         /// <summary>
@@ -118,18 +122,12 @@ namespace NeoServer.Server
         /// <returns></returns>
         public bool RemoveCreature(ICreature creature)
         {
-            if (creature.IsRemoved)
-            {
-                return false;
-            }
-
             if (creature is IWalkableCreature walkableCreature)
             {
                 map.RemoveCreature(walkableCreature);
             }
 
             creatureInstances.TryRemove(creature.CreatureId);
-            creature.SetAsRemoved();
 
             //todo remove summons
             return true;
@@ -173,6 +171,8 @@ namespace NeoServer.Server
             creatureInstances.TryRemoveFromLoggedPlayers(player.Id);
 
             RemoveCreature(player);
+
+            logger.Information("{player} removed from game", player.Name);
 
             return true;
         }

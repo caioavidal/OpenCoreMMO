@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -10,6 +11,7 @@ using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model.Bases
@@ -28,6 +30,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event ChangeVisibility OnChangedVisibility;
         public event OnPropagateAttack OnPropagateAttack;
         public abstract event DropLoot OnDropLoot;
+        public event GainExperience OnGainedExperience;
+        public event AddCondition OnAddedCondition;
+        public event RemoveCondition OnRemovedCondition;
         #endregion
 
         #region Properties
@@ -43,6 +48,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public abstract bool UsingDistanceWeapon { get; }
         public uint AttackEvent { get; set; }
         public virtual bool CanBeAttacked => true;
+        public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
+
         #endregion
 
         private byte blockCount = 0;
@@ -51,6 +58,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
         protected CombatActor(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
         {
         }
+
+
         public abstract int ShieldDefend(int attack);
         public abstract int ArmorDefend(int attack);
         public virtual bool CanBlock(DamageType damage)
@@ -74,8 +83,32 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             blockCount++;
         }
+        public void AddCondition(ICondition condition)
+        {
+            var result = Conditions.TryAdd(condition.Type, condition);
+            condition.Start(this);
+            if (result == false) return;
+
+            OnAddedCondition?.Invoke(this, condition);
+        }
+        public void RemoveCondition(ICondition condition)
+        {
+            Conditions.Remove(condition.Type);
+            OnRemovedCondition?.Invoke(this, condition);
+        }
+        public void RemoveCondition(ConditionType type)
+        {
+            if (Conditions.Remove(type, out var condition) is false) return;
+            OnRemovedCondition?.Invoke(this, condition);
+        }
+        public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
+        public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
         public void ResetHealthPoints() => Heal((ushort)MaxHealthPoints);
 
+        public virtual void GainExperience(uint exp)
+        {
+            OnGainedExperience?.Invoke(this, exp);
+        }
         public CombatDamage ReduceDamage(CombatDamage attack)
         {
             int damage = attack.Damage;
@@ -205,6 +238,12 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             IsInvisible = true;
             OnChangedVisibility?.Invoke(this);
+        }
+        public override bool TryGetNextStep(out Direction direction)
+        {
+            direction = Direction.None;
+            if (IsDead) return false;
+            return base.TryGetNextStep(out direction);
         }
         public virtual void TurnVisible()
         {

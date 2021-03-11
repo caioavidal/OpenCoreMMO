@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Tests;
@@ -144,14 +145,86 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             Assert.True(result);
         }
+        [Fact]
+
+        public void Say_Should_Emit_Event()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var messageEmitted = "";
+            var speechTypeEmitted = SpeechType.None;
+
+            sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+
+            sut.OnSay += (creature, type, message, receiver) =>
+            {
+                messageEmitted = message;
+                speechTypeEmitted = type;
+            };
+
+            sut.Say("Hello", SpeechType.Say);
+
+            Assert.Equal("Hello", messageEmitted);
+            Assert.Equal(SpeechType.Say, speechTypeEmitted);
+        }
+        [Fact]
+        public void Say_To_Receiver_Should_Emit_Event()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var receiver = new Mock<ICreature>();
+            var messageEmitted = "";
+            var speechTypeEmitted = SpeechType.None;
+            ICreature to = null;
+
+            sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+
+            sut.OnSay += (creature, type, message, receiver) =>
+            {
+                messageEmitted = message;
+                speechTypeEmitted = type;
+                to = receiver;
+            };
+
+            sut.Say("Hello", SpeechType.Private, receiver.Object);
+
+            Assert.Equal("Hello", messageEmitted);
+            Assert.Equal(SpeechType.Private, speechTypeEmitted);
+            Assert.Equal(receiver.Object, to);
+        }
+        [Fact]
+        public void Say_Empty_Message_Dont_Emit_Event()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var receiver = new Mock<ICreature>();
+            string messageEmitted = null;
+            var speechTypeEmitted = SpeechType.None;
+            ICreature to = null;
+
+            sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+
+            sut.OnSay += (creature, type, message, receiver) =>
+            {
+                messageEmitted = message;
+                speechTypeEmitted = type;
+                to = receiver;
+            };
+
+            sut.Say("", SpeechType.Private, receiver.Object);
+
+            Assert.Null(messageEmitted);
+            Assert.Equal(SpeechType.None, speechTypeEmitted);
+            Assert.Null(to);
+        }
 
         [Fact]
-        public void SetAsRemoved_Sets_IsRemoved_As_True()
+        public void CanBeSeen_Returns_True_Or_False_Depending_On_Flag_State()
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
 
-            sut.SetAsRemoved();
-            Assert.True(sut.IsRemoved);
+            sut.SetFlag(PlayerFlag.CanBeSeen);
+            Assert.True(sut.CanBeSeen);
+
+            sut.UnsetFlag(PlayerFlag.CanBeSeen);
+            Assert.False(sut.CanBeSeen);
         }
 
     }

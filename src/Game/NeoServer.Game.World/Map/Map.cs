@@ -501,18 +501,11 @@ namespace NeoServer.Game.World.Map
         }
         public void MoveCreature(IWalkableCreature creature)
         {
-            if (creature.TryGetNextStep(out var direction))
-            {
-                if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveCreature(creature, toTile.Location))
-                {
-                    if (creature is IPlayer player) player.CancelWalk();
-                    return;
-                }
-            }
+            if (!creature.TryGetNextStep(out var direction)) return;
 
-            if (creature.IsRemoved)
+            if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveCreature(creature, toTile.Location))
             {
-                creature.StopWalking();
+                if (creature is IPlayer player) player.CancelWalk();
                 return;
             }
         }

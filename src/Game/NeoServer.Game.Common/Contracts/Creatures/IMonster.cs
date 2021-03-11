@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.World;
+using System.Collections.Immutable;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -65,6 +66,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         bool IsSleeping { get; }
         bool IsSummon { get; }
+        ImmutableDictionary<ICreature, ushort> Damages { get; }
     }
 
 }

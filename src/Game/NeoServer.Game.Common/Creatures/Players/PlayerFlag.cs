@@ -40,5 +40,6 @@
         IgnoreWeaponCheck = 1 << 35,
         CannotBeMuted = 1 << 36,
         IsAlwaysPremium = 1 << 37,
+        CanBeSeen = 1 << 38
     }
 }

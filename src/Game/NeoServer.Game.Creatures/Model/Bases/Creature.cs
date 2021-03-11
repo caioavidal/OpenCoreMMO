@@ -19,9 +19,7 @@ namespace NeoServer.Game.Creatures.Model
     public abstract class Creature : IEquatable<Creature>, ICreature
     {
         public event RemoveCreature OnCreatureRemoved;
-        public event GainExperience OnGainedExperience;
-        public event AddCondition OnAddedCondition;
-        public event RemoveCondition OnRemovedCondition;
+
         public event ChangeOutfit OnChangedOutfit;
 
         public event Say OnSay;
@@ -73,11 +71,10 @@ namespace NeoServer.Game.Creatures.Model
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
         public IThing Corpse { get; set; }
         public virtual BloodType BloodType => BloodType.Blood;
-        public virtual bool CanBeSeen => true;
+        public abstract bool CanBeSeen { get; }
         public abstract IOutfit Outfit { get; protected set; }
         public IOutfit LastOutfit { get; private set; }
         public Direction Direction { get; protected set; }
-        public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
 
         public Direction SafeDirection
         {
@@ -127,13 +124,11 @@ namespace NeoServer.Game.Creatures.Model
         public  bool IsInvisible { get; protected set; } // TODO: implement.
         public abstract bool CanSeeInvisible { get; }
 
-        public bool IsRemoved { get; private set; }
-
         public virtual bool CanSee(ICreature otherCreature)
         {
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
-        public void SetAsRemoved() => IsRemoved = true;
+        
         public bool CanSee(Location pos, int viewPortX, int viewPortY)
         {
             if (Location.IsSurface || Location.IsAboveSurface)
@@ -206,45 +201,14 @@ namespace NeoServer.Game.Creatures.Model
 
         protected void SetDirection(Direction direction) => Direction = direction;
 
-        public virtual void GainExperience(uint exp)
-        {
-            OnGainedExperience?.Invoke(this, exp);
-        }
-
-        public void AddCondition(ICondition condition)
-        {
-            var result = Conditions.TryAdd(condition.Type, condition);
-            condition.Start(this);
-            if (result == false) return;
-
-            OnAddedCondition?.Invoke(this, condition);
-        }
-        public void RemoveCondition(ICondition condition)
-        {
-            Conditions.Remove(condition.Type);
-            OnRemovedCondition?.Invoke(this, condition);
-        }
-        public void RemoveCondition(ConditionType type)
-        {
-            if (Conditions.Remove(type, out var condition) is false) return;
-            OnRemovedCondition?.Invoke(this, condition);
-        }
-        public bool HasCondition(ConditionType type, out ICondition condition) => Conditions.TryGetValue(type, out condition);
-        public bool HasCondition(ConditionType type) => Conditions.ContainsKey(type);
+       
 
         public virtual void Say(string message, SpeechType talkType, ICreature receiver = null)
         {
+            if (string.IsNullOrWhiteSpace(message) || talkType == SpeechType.None) return;
             OnSay?.Invoke(this, talkType, message, receiver);
         }
     
-        public virtual IItem CreateItem(ushort itemId, byte amount)
-        {
-            throw new NotImplementedException();
-            //var item = ItemFactory.Create(itemId, Location, null);
-            //if (item is ICumulativeItem cumulativeItem) cumulativeItem.Increase((byte)(amount - 1));
-            //return item;
-        }
-
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == CreatureId;
 
         public override int GetHashCode() => HashCode.Combine(CreatureId);

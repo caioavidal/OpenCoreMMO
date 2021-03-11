@@ -42,6 +42,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public override bool CanSeeInvisible => false;
 
+        public override bool CanBeSeen => true;
+
         private NpcDialog npcDialog;
 
         public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature) => npcDialog.GetDialogStoredValues(sociableCreature);
