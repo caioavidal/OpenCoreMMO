@@ -17,17 +17,6 @@ namespace NeoServer.Game.Contracts.Creatures
     
     public interface IWalkableCreature: ICreature
     {
-        uint EventWalk { get; set; }
-        uint Following { get; }
-        bool HasNextStep { get; }
-        bool IsFollowing { get; }
-        ushort Speed { get; }
-        int StepDelayMilliseconds { get; }
-        ConcurrentQueue<Direction> WalkingQueue { get; }
-        bool FollowCreature { get; }
-        uint FollowEvent { get; set; }
-        bool FirstStep { get; }
-
         event StartWalk OnStartedWalking;
         event StopWalk OnStoppedWalking;
         event OnTurnedToDirection OnTurnedToDirection;
@@ -36,6 +25,17 @@ namespace NeoServer.Game.Contracts.Creatures
         event StopWalk OnCompleteWalking;
         event TeleportTo OnTeleported;
         event Moved OnCreatureMoved;
+
+        uint EventWalk { get; set; } //remove
+        uint Following { get; }
+        bool HasNextStep { get; }
+        bool IsFollowing { get; }
+        ushort Speed { get; }
+        int StepDelay { get; }
+        ConcurrentQueue<Direction> WalkingQueue { get; } //remove
+        bool FollowCreatureMode { get; }
+        uint FollowEvent { get; set; } //remove
+        bool FirstStep { get; } //remove
 
         /// <summary>
         /// Decreases creature speed
@@ -48,7 +48,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void IncreaseSpeed(ushort speed);
 
         byte[] GetRaw(IPlayer playerRequesting);
-        void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators);
+        void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators); //remove
         /// <summary>
         /// Follow creature
         /// </summary>
@@ -71,6 +71,12 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>        
         bool WalkTo(Location location, Action<ICreature> callbackAction);
         /// <summary>
+        /// Walks to a sequence of direction
+        /// </summary>
+        /// <param name="directions"></param>
+        /// <returns></returns>
+        bool WalkTo(params Direction[] directions);
+        /// <summary>
         /// Teleport creature to a given location
         /// </summary>
         /// <param name="location"></param>
@@ -86,18 +92,11 @@ namespace NeoServer.Game.Contracts.Creatures
         bool WalkRandomStep();
 
         /// <summary>
-        /// Walks to a sequence of direction
-        /// </summary>
-        /// <param name="directions"></param>
-        /// <returns></returns>
-        bool WalkTo(params Direction[] directions);
-
-        /// <summary>
         /// Get creature's next step direction
         /// </summary>
         /// <param name="direction"></param>
-        /// <returns></returns>
-        bool TryGetNextStep(out Direction direction);
+        /// <returns>Returns None when there is no next direction</returns>
+        Direction GetNextStep();
 
         /// <summary>
         /// Sets current tile which creature is on

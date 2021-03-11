@@ -45,7 +45,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool IsFollowing => Following > 0;
         public ConcurrentQueue<Direction> WalkingQueue { get; } = new ConcurrentQueue<Direction>();
         public bool HasNextStep => WalkingQueue.Count > 0;
-        public bool FollowCreature { get; protected set; }
+        public bool FollowCreatureMode { get; protected set; }
         public uint FollowEvent { get; set; }
         public bool HasFollowPath { get; private set; }
         public virtual FindPathParams PathSearchParams => new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
@@ -70,7 +70,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             SetDirection(direction);
             OnTurnedToDirection?.Invoke(this, direction);
         }
-        public int StepDelayMilliseconds
+        public int StepDelay
         {
             get
             {
@@ -224,12 +224,18 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return true;
         }
 
-        public virtual bool TryGetNextStep(out Direction direction)
+        public virtual Direction GetNextStep()
+        {
+            if (!TryGetNextStep(out var direction)) return Direction.None;
+         
+            return direction;
+        }
+        private bool TryGetNextStep(out Direction direction)
         {
             if (WalkingQueue.TryDequeue(out direction))
             {
                 FirstStep = false;
-                Cooldowns.Start(CooldownType.Move, StepDelayMilliseconds);
+                Cooldowns.Start(CooldownType.Move, StepDelay);
 
                 return true;
             }

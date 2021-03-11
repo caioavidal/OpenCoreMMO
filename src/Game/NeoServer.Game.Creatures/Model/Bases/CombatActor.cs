@@ -239,11 +239,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
             IsInvisible = true;
             OnChangedVisibility?.Invoke(this);
         }
-        public override bool TryGetNextStep(out Direction direction)
+        public override Direction GetNextStep()
         {
-            direction = Direction.None;
-            if (IsDead) return false;
-            return base.TryGetNextStep(out direction);
+            if (IsDead) return Direction.None;
+            return base.GetNextStep();
         }
         public virtual void TurnVisible()
         {

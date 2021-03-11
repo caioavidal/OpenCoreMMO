@@ -381,8 +381,8 @@ namespace NeoServer.Server.Model.Players
         public void SetChaseMode(ChaseMode mode)
         {
             ChaseMode = mode;
-            FollowCreature = mode == ChaseMode.Follow;
-            if (FollowCreature && AutoAttackTarget is not null)
+            FollowCreatureMode = mode == ChaseMode.Follow;
+            if (FollowCreatureMode && AutoAttackTarget is not null)
             {
                 StartFollowing(AutoAttackTarget as IWalkableCreature, PathSearchParams);
                 return;
