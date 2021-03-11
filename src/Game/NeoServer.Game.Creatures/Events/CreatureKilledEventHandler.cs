@@ -37,7 +37,7 @@ namespace NeoServer.Game.Creatures.Events
         private void CreateBlood(ICreature creature)
         {
             if (creature is not ICombatActor victim) return;
-            var liquidColor = victim.Blood switch
+            var liquidColor = victim.BloodType switch
             {
                 BloodType.Blood => LiquidColor.Red,
                 BloodType.Slime => LiquidColor.Green

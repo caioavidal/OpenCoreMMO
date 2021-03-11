@@ -175,6 +175,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ReceivePurchasedItems(INpc from, SaleContract saleContract, params IItem[] items);
         void WithdrawFromBank(ulong amount);
         void LoadBank(ulong amount);
+        void SetFlag(PlayerFlag flag);
+
         uint TotalCapacity { get; }
         bool Recovering { get; }
         IVocation Vocation { get; }

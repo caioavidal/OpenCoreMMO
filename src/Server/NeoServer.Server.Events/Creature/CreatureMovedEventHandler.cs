@@ -37,14 +37,8 @@ namespace NeoServer.Server.Events
             var fromLocation = cylinder.FromTile.Location;
             var toLocation = cylinder.ToTile.Location;
             var fromTile = cylinder.FromTile;
-            var toTile = cylinder.ToTile;
 
             if (creature is IMonster && creature.IsInvisible) return;
-
-            if (creature is ICreature)
-            {
-                creature.SetDirection(toDirection);
-            }
 
             foreach (var cylinderSpectator in cylinder.TileSpectators)
             {

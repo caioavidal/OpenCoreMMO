@@ -45,7 +45,7 @@ namespace NeoServer.Game.Creatures.Spells
         }
         public override void OnEnd(ICombatActor actor)
         {
-            actor.DisableTemporaryOutfit();
+            actor.BackToOldOutfit();
             base.OnEnd(actor);
         }
     }

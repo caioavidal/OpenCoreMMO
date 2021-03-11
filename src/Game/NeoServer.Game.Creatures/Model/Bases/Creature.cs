@@ -48,8 +48,6 @@ namespace NeoServer.Game.Creatures.Model
                 Head = (byte)type.Look[LookType.Head],
                 Legs = (byte)type.Look[LookType.Legs],
             };
-            Hostiles = new HashSet<uint>();
-            Friendly = new HashSet<uint>();
             MaxHealthPoints = type.MaxHealth;
 
         }
@@ -74,13 +72,14 @@ namespace NeoServer.Game.Creatures.Model
         public uint CreatureId { get; }
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
         public IThing Corpse { get; set; }
-        public virtual BloodType Blood => BloodType.Blood;
+        public virtual BloodType BloodType => BloodType.Blood;
         public virtual bool CanBeSeen => true;
         public abstract IOutfit Outfit { get; protected set; }
-        public IOutfit OldOutfit { get; private set; }
+        public IOutfit LastOutfit { get; private set; }
         public Direction Direction { get; protected set; }
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
-        public Direction ClientSafeDirection
+
+        public Direction SafeDirection
         {
             get
             {
@@ -105,43 +104,31 @@ namespace NeoServer.Game.Creatures.Model
 
         public void ChangeOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
         {
-            OldOutfit = null;
+            LastOutfit = null;
             Outfit.Change(lookType, id, head, body, legs, feet, addon);
 
             OnChangedOutfit?.Invoke(this, Outfit);
         }
         public void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
         {
-            OldOutfit = Outfit.Clone();
+            LastOutfit = Outfit.Clone();
             Outfit.Change(lookType, id, head, body, legs, feet, addon);
             OnChangedOutfit?.Invoke(this, Outfit);
         }
 
-        public void DisableTemporaryOutfit()
+        public void BackToOldOutfit()
         {
-            Outfit = OldOutfit;
-            OldOutfit = null;
+            Outfit = LastOutfit;
+            LastOutfit = null;
             OnChangedOutfit?.Invoke(this, Outfit);
         }
         public byte LightBrightness { get; protected set; }
         public byte LightColor { get; protected set; }
-        public uint Flags { get; private set; }
-        public bool IsInvisible { get; protected set; } // TODO: implement.
-        public virtual bool CanSeeInvisible { get; }
+        public  bool IsInvisible { get; protected set; } // TODO: implement.
+        public abstract bool CanSeeInvisible { get; }
 
-        public HashSet<uint> Hostiles { get; }
-
-        public HashSet<uint> Friendly { get; }
         public bool IsRemoved { get; private set; }
 
-        public bool HasFlag(CreatureFlag flag)
-        {
-            var flagValue = (uint)flag;
-            return (Flags & flagValue) == flagValue;
-        }
-
-        public void SetFlag(CreatureFlag flag) => Flags |= (uint)flag;
-        public void UnsetFlag(CreatureFlag flag) => Flags &= ~(uint)flag;
         public virtual bool CanSee(ICreature otherCreature)
         {
             return !otherCreature.IsInvisible || CanSeeInvisible;
@@ -213,11 +200,11 @@ namespace NeoServer.Game.Creatures.Model
 
         public byte Skull { get; protected set; } // TODO: implement.
 
-        public byte Shield { get; protected set; } // TODO: implement.
+        public byte Emblem { get; protected set; } // TODO: implement.
         public bool IsHealthHidden { get; protected set; }
         public Location Location { get; set; }
 
-        public void SetDirection(Direction direction) => Direction = direction;
+        protected void SetDirection(Direction direction) => Direction = direction;
 
         public virtual void GainExperience(uint exp)
         {

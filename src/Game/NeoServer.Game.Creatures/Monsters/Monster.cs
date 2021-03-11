@@ -124,7 +124,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override ushort MinimumAttackPower => 0;
         public override bool UsingDistanceWeapon => TargetDistance > 1;
         public ISpawnPoint Spawn { get; }
-        public override BloodType Blood => Metadata.Race switch
+        public override BloodType BloodType => Metadata.Race switch
         {
             Race.Bood => BloodType.Blood,
             Race.Venom => BloodType.Slime,
@@ -230,6 +230,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         }
 
         public bool IsSummon => false;
+
+        public override bool CanSeeInvisible => false; //todo: add invisibility flag
 
         public override void OnCreatureDisappear(ICreature creature)
         {

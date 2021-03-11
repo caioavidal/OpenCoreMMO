@@ -21,7 +21,7 @@ namespace NeoServer.Server.Handlers.Players
 
             if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player))
             {
-                game.Dispatcher.AddEvent(new Event(() => player.TryWalkTo(autoWalk.Steps)));
+                game.Dispatcher.AddEvent(new Event(() => player.WalkTo(autoWalk.Steps)));
             }
         }
     }

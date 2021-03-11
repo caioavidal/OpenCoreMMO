@@ -40,6 +40,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public KeywordReplacement ReplaceKeywords { get; set; }
 
+        public override bool CanSeeInvisible => false;
+
         private NpcDialog npcDialog;
 
         public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature) => npcDialog.GetDialogStoredValues(sociableCreature);

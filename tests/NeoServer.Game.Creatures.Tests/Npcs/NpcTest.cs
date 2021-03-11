@@ -158,7 +158,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         }
 
         [Fact]
-        public void WalkAround_Should_Emit_OnStartedWalking()
+        public void WalkRandomStep_Should_Emit_OnStartedWalking()
         {
             var npcType = new Mock<INpcType>();
 
@@ -175,7 +175,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             Assert.True(startedWalking);
             Assert.True(result);
-
         }
+    
     }
 }

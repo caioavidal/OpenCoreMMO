@@ -22,7 +22,7 @@ namespace NeoServer.Server.Handlers.Players
 
             if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player))
             {
-                game.Dispatcher.AddEvent(new Event(() => player.TryWalkTo(direction)));
+                game.Dispatcher.AddEvent(new Event(() => player.WalkTo(direction)));
             }
         }
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)
