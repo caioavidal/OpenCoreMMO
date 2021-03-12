@@ -185,7 +185,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         }
 
         [Fact]
-        public void OnCustomerLeft_Should_Emit_When_Player_Exit_ViewArea()
+        public void OnCustomerLeft_Should_Emit_When_Player_Logout()
         {
             var npcType = new Mock<INpcType>();
 
@@ -200,8 +200,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var customer = new Mock<IPlayer>();
             customer.Setup(x => x.CreatureId).Returns(123);
             customer.Setup(x => x.Location).Returns(new Location(100, 101, 7));
-            customer.Setup(x => x.OnMoved()).Raises(f => f.OnCreatureMoved += null, customer.Object, It.IsAny<Location>(), It.IsAny<Location>(), It.IsAny<ICylinderSpectator[]>());
-
+            
             var npcTile = new Mock<IDynamicTile>();
             npcTile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
 
@@ -214,13 +213,8 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             sut.Hear(customer.Object, SpeechType.PrivatePlayerToNpc, "hi");
 
-            customer.Setup(x => x.Location).Returns(new Location(100, 103, 7));
-            customer.Object.OnMoved();
-
-            Assert.False(eventCalled);
-
-            customer.Setup(x => x.Location).Returns(new Location(100, 150, 7));
-            customer.Object.OnMoved();
+            customer.Object.Logout();
+            customer.Raise(f => f.OnLoggedOut += null, customer.Object);
 
             Assert.True(eventCalled);
         }

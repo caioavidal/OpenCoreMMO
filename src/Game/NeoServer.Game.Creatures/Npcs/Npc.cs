@@ -83,8 +83,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
             if (dialog is null) return;
 
-            if (!isTalkingWith) WatchCustomerMovements(sociableCreature); //first interaction
-
+            if (!isTalkingWith) WatchCustomerEvents(sociableCreature); //first interaction
+            
             npcDialog.StoreWords(sociableCreature, dialog.StoreAt, message);
 
             if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, GetPlayerStoredValues(sociableCreature));
@@ -95,6 +95,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
                 OnAnswer?.Invoke(this, from, dialog, message, speechType);
             }
+
+            if (dialog.End) ForgetCustomer(sociableCreature);
         }
 
         public virtual void SendMessageTo(ISociableCreature to, SpeechType type, IDialog dialog)
@@ -131,14 +133,27 @@ namespace NeoServer.Game.Creatures.Npcs
 
         public void StopTalkingToCustomer(IPlayer player) => npcDialog.StopTalkingTo(player);
 
-        private void WatchCustomerMovements(ISociableCreature creature) => creature.OnCreatureMoved += OnCustomerMoved;
-        private void StopWatchCustomerMovements(ISociableCreature creature) => creature.OnCreatureMoved -= OnCustomerMoved;
+        private void WatchCustomerEvents(ISociableCreature creature)
+        {
+            creature.OnCreatureMoved += OnCustomerMoved;
+            if (creature is IPlayer player) player.OnLoggedOut += WhenCustomerLeft;
+        }
+        private void StopWatchCustomerMovements(ISociableCreature creature)
+        {
+            creature.OnCreatureMoved -= OnCustomerMoved;
+            if (creature is IPlayer player) player.OnLoggedOut -= WhenCustomerLeft;
+        }
 
 
         private void OnCustomerMoved(ICreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators)
         {
-            if (creature is not ISociableCreature sociableCreature) return;
             if (CanSee(creature.Location)) return;
+            OnCustomerLeft(creature);
+        }
+
+        private void WhenCustomerLeft(ICreature creature)
+        {
+            if (creature is not ISociableCreature sociableCreature) return;
 
             ForgetCustomer(sociableCreature);
             OnCustomerLeft?.Invoke(creature);
