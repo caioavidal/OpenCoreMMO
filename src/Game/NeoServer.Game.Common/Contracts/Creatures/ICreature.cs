@@ -30,26 +30,14 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         event RemoveCreature OnCreatureRemoved;
         /// <summary>
-        /// Fires when creature gained experience
-        /// </summary>
-        event GainExperience OnGainedExperience;
-        /// <summary>
         /// Fires when creature says something
         /// </summary>
         event Say OnSay;
-        /// <summary>
-        /// Fires when condition is removed from creature
-        /// </summary>
-        event RemoveCondition OnRemovedCondition;
+     
         /// <summary>
         /// Fires when creature changes outfit
         /// </summary>
         event ChangeOutfit OnChangedOutfit;
-        /// <summary>
-        /// Fires when condition is added to creature
-        /// </summary>
-        event AddCondition OnAddedCondition;
-
         /// <summary>
         /// Creature's Blood Type. Ex: Slime, blood, fire ...
         /// </summary>
@@ -64,11 +52,6 @@ namespace NeoServer.Game.Contracts.Creatures
         /// NorthWest and SouthWest to West 
         /// </summary>
         Direction SafeDirection { get; }
-
-        /// <summary>
-        /// All current conditions
-        /// </summary>
-        IDictionary<ConditionType, ICondition> Conditions { get; }
         /// <summary>
         /// Corpse Type Id
         /// </summary>
@@ -85,10 +68,6 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Checks if Creature is invisible
         /// </summary>
         bool IsInvisible { get; }
-        /// <summary>
-        /// Checks if Creature is removed from game
-        /// </summary>
-        bool IsRemoved { get; }
         /// <summary>
         /// Creature's light level
         /// </summary>
@@ -137,11 +116,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Checks if creature can be seen by others
         /// </summary>
         bool CanBeSeen { get; }
-        /// <summary>
-        /// Adds condition to creature. Resets condition if it is already added
-        /// </summary>
-        /// <param name="condition"></param>
-        void AddCondition(ICondition condition);
+   
         /// <summary>
         /// Checks if creature can see other creature
         /// </summary>                
@@ -156,49 +131,17 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         void ChangeOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon);
         /// <summary>
-        /// Creates new item
-        /// </summary>
-        /// <param name="itemId"></param>
-        /// <param name="amount"></param>
-        /// <returns></returns>
-        IItem CreateItem(ushort itemId, byte amount);
-        /// <summary>
         /// Set old outfit to current
         /// </summary>
         void BackToOldOutfit();
-        /// <summary>
-        /// Adds experience points
-        /// </summary>
-        /// <param name="exp"></param>
-        void GainExperience(uint exp);
-        /// <summary>
-        /// Checks if creature has condition and returns it
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="condition"></param>
-        /// <returns></returns>
-        bool HasCondition(ConditionType type, out ICondition condition);
-        /// <summary>
-        /// Checks if creature has condition
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        bool HasCondition(ConditionType type);
-      
+     
         void OnCreatureAppear(Location location, ICylinderSpectator[] spectators);
-        /// <summary>
-        /// Removes creature's condition
-        /// </summary>
-        /// <param name="condition"></param>
-        void RemoveCondition(ICondition condition);
+    
         /// <summary>
         /// Says a message
         /// </summary>
         void Say(string message, SpeechType talkType, ICreature receiver = null);
-        /// <summary>
-        /// Sets creature as removed
-        /// </summary>
-        void SetAsRemoved();
+        
   
         /// <summary>
         /// Sets new outfit and store current as last outfit

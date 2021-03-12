@@ -37,8 +37,8 @@ namespace NeoServer.Server.Model.Players
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, byte vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
-            Location location, IPathAccess pathAccess)
-             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathAccess, outfit, healthPoints)
+            Location location)
+             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), outfit, healthPoints)
         {
             Id = id;
             CharacterName = characterName;
@@ -56,6 +56,7 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
+            Speed = speed == 0 ? LevelBasesSpeed : speed;
 
             Location = location;
 
@@ -110,12 +111,14 @@ namespace NeoServer.Server.Model.Players
                 TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
                 ResetHealthPoints();
                 ResetMana();
-                ChangeSpeed(Speed);
+                ChangeSpeed(LevelBasesSpeed);
             }
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
 
         private ulong flags = 0b000000000000000000000;
+
+        public void UnsetFlag(PlayerFlag flag) => flags &= ~(ulong)flag;
 
         public void SetFlag(PlayerFlag flag) => flags |= (ulong)flag;
         public virtual void SetFlags(params PlayerFlag[] flags)
@@ -139,14 +142,14 @@ namespace NeoServer.Server.Model.Players
 
             OnLoadedVipList?.Invoke(this, vipList);
         }
-        public bool HasFlag(PlayerFlag flag) => (flags & (ulong)flag) != 0;
+        public bool FlagIsEnabled(PlayerFlag flag) => (flags & (ulong)flag) != 0;
+        private ushort LevelBasesSpeed => (ushort)(220 + (2 * (Level - 1)));
 
         private uint IdleTime;
         public uint AccountId { get; init; }
         public string CharacterName { get; private set; }
         public override IOutfit Outfit { get; protected set; }
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
-        public override ushort Speed => (ushort)(220 + (2 * (Level - 1))); //todo: remove hard code base speed
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }
@@ -271,7 +274,9 @@ namespace NeoServer.Server.Model.Players
         public bool Recovering { get; private set; }
         public ushort GuildLevel { get; set; }
 
-        public override bool CanSeeInvisible => HasFlag(PlayerFlag.CanSeeInvisibility);
+        public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
+
+        public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
@@ -377,10 +382,10 @@ namespace NeoServer.Server.Model.Players
         public void SetChaseMode(ChaseMode mode)
         {
             ChaseMode = mode;
-            FollowCreature = mode == ChaseMode.Follow;
-            if (FollowCreature && AutoAttackTarget is not null)
+            FollowModeEnabled = mode == ChaseMode.Follow;
+            if (FollowModeEnabled && AutoAttackTarget is not null)
             {
-                StartFollowing(AutoAttackTarget as IWalkableCreature, PathSearchParams);
+                Follow(AutoAttackTarget as IWalkableCreature, PathSearchParams);
                 return;
             }
 
@@ -479,15 +484,7 @@ namespace NeoServer.Server.Model.Players
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
 
-        public override IItem CreateItem(ushort itemId, byte amount)
-        {
-            var item = base.CreateItem(itemId, amount);
-            if (!Inventory.BackpackSlot.AddItem(item).IsSuccess)
-            {
-                Tile.AddItem(item);
-            }
-            return item;
-        }
+
         public void LookAt(ITile tile)
         {
             var isClose = Location.IsNextTo(tile.Location);
@@ -680,7 +677,7 @@ namespace NeoServer.Server.Model.Players
             base.SetAttackTarget(target);
             if (target.CreatureId != 0 && ChaseMode == ChaseMode.Follow)
             {
-                StartFollowing(target, PathSearchParams);
+                Follow(target, PathSearchParams);
             }
         }
 
@@ -740,9 +737,9 @@ namespace NeoServer.Server.Model.Players
                 OnOperationFailed?.Invoke(CreatureId, "You cannot add more buddies.");
                 return false;
             }
-            if (player.HasFlag(PlayerFlag.SpecialVIP))
+            if (player.FlagIsEnabled(PlayerFlag.SpecialVIP))
             {
-                if (!HasFlag(PlayerFlag.SpecialVIP))
+                if (!FlagIsEnabled(PlayerFlag.SpecialVIP))
                 {
                     OnOperationFailed?.Invoke(CreatureId, "You cannot add this player to your vip list.");
                     return false;

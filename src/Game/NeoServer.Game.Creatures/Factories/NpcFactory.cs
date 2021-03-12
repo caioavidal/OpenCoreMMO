@@ -10,17 +10,15 @@ namespace NeoServer.Game.Creatures
 {
     public class NpcFactory : INpcFactory
     {
-        private readonly IPathAccess pathAccess;
         private readonly IItemFactory itemFactory;
         private readonly Logger logger;
         private readonly ICreatureGameInstance creatureGameInstance;
 
         public static INpcFactory Instance { get; private set; }
 
-        public NpcFactory(CreaturePathAccess creaturePathAccess,
+        public NpcFactory(
             Logger logger, IItemFactory itemFactory, ICreatureGameInstance creatureGameInstance)
         {
-            pathAccess = creaturePathAccess;
             this.logger = logger;
             Instance = this;
             this.itemFactory = itemFactory;
@@ -47,13 +45,13 @@ namespace NeoServer.Game.Creatures
 
             if (npcType.CustomAttributes.ContainsKey("shop"))
             {
-                return new ShopperNpc(npcType, pathAccess, spawn, outfit, npcType.MaxHealth)
+                return new ShopperNpc(npcType, spawn, outfit, npcType.MaxHealth)
                 {
                     CreateNewItem = itemFactory.Create
                 };
             }
 
-            return new Npc(npcType, pathAccess, spawn, outfit, npcType.MaxHealth);
+            return new Npc(npcType, spawn, outfit, npcType.MaxHealth);
         }
 
     }

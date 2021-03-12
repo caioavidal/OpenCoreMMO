@@ -15,6 +15,7 @@ using NeoServer.Game.Creatures.Monsters;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model.Monsters
@@ -24,17 +25,15 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public event Born OnWasBorn;
         public override event DropLoot OnDropLoot;
         public event MonsterChangeState OnChangedState;
-        public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
+        public Monster(IMonsterType type, ISpawnPoint spawn) : base(type)
         {
             if (type.IsNull()) return;
 
             Metadata = type;
             Spawn = spawn;
-            Damages = new ConcurrentDictionary<ICreature, ushort>();
+            damages = new ConcurrentDictionary<ICreature, ushort>();
             State = MonsterState.Sleeping;
             OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
-            OnKilled += (enemy, by) => GiveExperience();
-
         }
 
         private MonsterState state;
@@ -50,33 +49,19 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-        public ConcurrentDictionary<ICreature, ushort> Damages;
+        private ConcurrentDictionary<ICreature, ushort> damages; //todo: change for dictionary
+
+        public ImmutableDictionary<ICreature, ushort> Damages => damages.ToImmutableDictionary();
 
         public void RecordDamage(IThing enemy, ushort damage)
         {
             if (enemy is not ICreature creature) return;
-            Damages.AddOrUpdate(creature, damage, (key, oldValue) => (ushort)(oldValue + damage));
-        }
-
-        private void GiveExperience()
-        {
-            var totalDamage = Damages.Sum(x => x.Value);
-
-            foreach (var enemyDamage in Damages)
-            {
-                var damage = enemyDamage.Value;
-
-                var damagePercent = damage * 100 / totalDamage;
-
-                var exp = damagePercent * Experience / 100;
-
-                enemyDamage.Key.GainExperience((uint)exp);
-            }
+            damages.AddOrUpdate(creature, damage, (key, oldValue) => (ushort)(oldValue + damage));
         }
 
         public void Born(Location location)
         {
-            Damages.Clear();
+            damages.Clear();
             ResetHealthPoints();
             Location = location;
             State = MonsterState.Sleeping;
@@ -86,7 +71,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (Spawn is null) return;
 
-            Damages.Clear();
+            damages.Clear();
             ResetHealthPoints();
             Location = Spawn.Location;
             State = MonsterState.Sleeping;
@@ -156,7 +141,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             if (State == MonsterState.Sleeping)
                 Awake();
 
-            if (IsDead || creature.IsRemoved || !canSee)
+            if (IsDead || !canSee)
             {
                 RemoveFromTargetList(creature);
                 return;
@@ -233,6 +218,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override bool CanSeeInvisible => false; //todo: add invisibility flag
 
+        public override bool CanBeSeen => false;
+
         public override void OnCreatureDisappear(ICreature creature)
         {
             RemoveFromTargetList(creature);
@@ -250,13 +237,13 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var target in Targets)
             {
-                if (target.Value.Creature.IsDead || target.Value.Creature.IsRemoved)
+                if (target.Value.Creature.IsDead )
                 {
                     RemoveFromTargetList(target.Value.Creature);
                     continue;
                 }
 
-                if (PathAccess.FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
+                if (PathFinder.Find(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
                     continue;
@@ -303,11 +290,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (target is null) return;
 
-            FollowCreature = Speed > 0;
+            FollowModeEnabled = Speed > 0;
 
-            if (FollowCreature)
+            if (FollowModeEnabled)
             {
-                StartFollowing(target.Creature, PathSearchParams);
+                Follow(target.Creature, PathSearchParams);
             }
 
             SetAttackTarget(target.Creature);
@@ -391,7 +378,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             List<ICreature> maxDamages = new List<ICreature>(50);
             ushort maxDamage = 0;
 
-            foreach (var damage in Damages)
+            foreach (var damage in damages)
             {
                 if (damage.Value > maxDamage)
                 {
@@ -450,7 +437,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
 
-            if (enemy.IsDead || enemy.IsRemoved) RemoveFromTargetList(enemy);
+            if (enemy.IsDead) RemoveFromTargetList(enemy);
 
             return attacked;
         }

@@ -45,6 +45,23 @@ namespace NeoServer.Game.World.Map
             return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
         }
 
+        public Direction FindRandomStep(ICreature creature, ITileEnterRule rule)
+        {
+            int randomIndex = GameRandom.Random.Next(minValue: 0, maxValue: 4);
+
+            var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
+
+            for (int i = 0; i < 4; i++)
+            {
+                randomIndex = randomIndex > 3 ? 0 : randomIndex;
+                var direction = directions[randomIndex++];
+
+                if (Map.CanGoToDirection(creature, direction, rule)) return direction;
+            }
+
+            return Direction.None;
+        }
+
         public bool FindStep(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             directions = new Direction[0];
@@ -91,7 +108,7 @@ namespace NeoServer.Game.World.Map
                 var nextLocation = startLocation.GetNextLocation(direction);
                 var nextDistance = nextLocation.GetMaxSqmDistance(target);
 
-                var canGoToDirection = Map.CanGoToDirection(creature, creature.Location, direction, tileEnterRule);
+                var canGoToDirection = Map.CanGoToDirection(creature, direction, tileEnterRule);
                 var isDiagonalMovement = startLocation.IsDiagonalMovement(nextLocation);
 
                 if (!canGoToDirection)

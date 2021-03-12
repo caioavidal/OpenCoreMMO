@@ -15,12 +15,9 @@ namespace NeoServer.Server.Commands
 
         public void Execute(IPlayer player, bool forced = false)
         {
-            if (player.IsRemoved) return;
-
             if (!player.Logout(forced) && !forced) return;
 
             game.CreatureManager.RemovePlayer(player);
-            player.SetAsRemoved();
             return;
 
         }

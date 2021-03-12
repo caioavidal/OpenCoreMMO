@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
@@ -31,6 +32,9 @@ namespace NeoServer.Game.Contracts.Creatures
         event ChangeVisibility OnChangedVisibility;
         event OnPropagateAttack OnPropagateAttack;
         event DropLoot OnDropLoot;
+        event GainExperience OnGainedExperience;
+        event RemoveCondition OnRemovedCondition;
+        event AddCondition OnAddedCondition;
 
         ushort ArmorRating { get; }
         bool Attacking { get; }
@@ -44,6 +48,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool UsingDistanceWeapon { get; }
         uint AttackEvent { get; set; }
         bool CanBeAttacked { get; }
+        IDictionary<ConditionType, ICondition> Conditions { get; set; }
 
         int ArmorDefend(int attack);
         //bool Attack(ICombatActor enemy, ICombatAttack combatAttack);
@@ -74,5 +79,11 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         /// <param name="creature"></param>
         void SetAsEnemy(ICreature actor);
+        void GainExperience(uint exp);
+        void AddCondition(ICondition condition);
+        void RemoveCondition(ICondition condition);
+        void RemoveCondition(ConditionType type);
+        bool HasCondition(ConditionType type, out ICondition condition);
+        bool HasCondition(ConditionType type);
     }
 }

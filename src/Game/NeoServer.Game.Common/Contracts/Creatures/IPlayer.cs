@@ -158,7 +158,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void RemoveFromVip(uint playerId);
         void LoadVipList(IEnumerable<(uint, string)> vips);
         bool HasInVipList(uint playerId);
-        bool HasFlag(PlayerFlag flag);
+        bool FlagIsEnabled(PlayerFlag flag);
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
         private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
@@ -176,6 +176,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         void WithdrawFromBank(ulong amount);
         void LoadBank(ulong amount);
         void SetFlag(PlayerFlag flag);
+        void UnsetFlag(PlayerFlag flag);
 
         uint TotalCapacity { get; }
         bool Recovering { get; }

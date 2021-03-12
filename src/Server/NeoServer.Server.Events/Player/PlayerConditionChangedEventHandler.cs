@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events.Player
 {
@@ -16,8 +17,9 @@ namespace NeoServer.Server.Events.Player
 
         public void Execute(ICreature creature, ICondition c)
         {
+            if (creature is not IPlayer player) return;
             ushort icons = 0;
-            foreach (var condition in creature.Conditions)
+            foreach (var condition in player.Conditions)
             {
                 icons |= (ushort)ConditionIconParser.Parse(condition.Key);
             }

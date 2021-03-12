@@ -501,18 +501,12 @@ namespace NeoServer.Game.World.Map
         }
         public void MoveCreature(IWalkableCreature creature)
         {
-            if (creature.TryGetNextStep(out var direction))
-            {
-                if (GetNextTile(creature.Location, direction) is not IDynamicTile toTile || !TryMoveCreature(creature, toTile.Location))
-                {
-                    if (creature is IPlayer player) player.CancelWalk();
-                    return;
-                }
-            }
+            var nextDirection = creature.GetNextStep();
+            if (nextDirection == Direction.None) return;
 
-            if (creature.IsRemoved)
+            if (GetNextTile(creature.Location, nextDirection) is not IDynamicTile toTile || !TryMoveCreature(creature, toTile.Location))
             {
-                creature.StopWalking();
+                if (creature is IPlayer player) player.CancelWalk();
                 return;
             }
         }
@@ -526,9 +520,9 @@ namespace NeoServer.Game.World.Map
             //if (pool is null) return;
             //tile.AddItem(pool);
         }
-        public bool CanGoToDirection(ICreature creature, Location location, Direction direction, ITileEnterRule rule)
+        public bool CanGoToDirection(ICreature creature, Direction direction, ITileEnterRule rule)
         {
-            var tile = GetNextTile(location, direction);
+            var tile = GetNextTile(creature.Location, direction);
             return rule.CanEnter(tile, creature);
         }
     }

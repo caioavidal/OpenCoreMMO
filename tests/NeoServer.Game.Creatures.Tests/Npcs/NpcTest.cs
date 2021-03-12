@@ -1,8 +1,11 @@
 ﻿using Moq;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Npcs;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System.Threading;
 using Xunit;
@@ -12,7 +15,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
     public class NpcTest
     {
         private Mock<IOutfit> outfit = new Mock<IOutfit>();
-        private Mock<IPathAccess> pathAccess = new Mock<IPathAccess>();
         private Mock<ISpawnPoint> spawnPoint = new Mock<ISpawnPoint>();
 
         [Fact]
@@ -37,7 +39,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
                 Action = "ok"
             } });
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
             var creature = new Mock<ISociableCreature>();
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
@@ -71,7 +73,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
                 } }
             } });
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
             var creature = new Mock<ISociableCreature>();
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
@@ -110,7 +112,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var anwser = "";
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
 
             sut.ReplaceKeywords = (m, a, b) => m;
             var creature = new Mock<IPlayer>();
@@ -141,7 +143,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var speechType = SpeechType.None;
 
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
             sut.OnSay += (a, b, message, d) =>
             {
                 advertise = message;
@@ -162,12 +164,16 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         {
             var npcType = new Mock<INpcType>();
 
+            var pathFinder = new Mock<IPathFinder>();
+            pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>())).Returns(Direction.North);
+            ConfigurationStore.PathFinder = pathFinder.Object;
+
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Speed).Returns(200);
 
             var startedWalking = false;
 
-            var sut = new Npc(npcType.Object, pathAccess.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
             sut.OnStartedWalking += (a) => startedWalking = true;
 
             Thread.Sleep(5_000);//todo: try remove this
@@ -176,6 +182,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             Assert.True(startedWalking);
             Assert.True(result);
         }
-    
+
     }
 }

@@ -15,7 +15,7 @@ namespace NeoServer.Game.Creatures.Npcs
     public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
     public class Npc : WalkableCreature, INpc
     {
-        public Npc(INpcType type, IPathAccess pathAccess, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathAccess, outfit, healthPoints)
+        public Npc(INpcType type,  ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
             Metadata = type;
             npcDialog = new NpcDialog(this);
@@ -41,6 +41,8 @@ namespace NeoServer.Game.Creatures.Npcs
         public KeywordReplacement ReplaceKeywords { get; set; }
 
         public override bool CanSeeInvisible => false;
+
+        public override bool CanBeSeen => true;
 
         private NpcDialog npcDialog;
 

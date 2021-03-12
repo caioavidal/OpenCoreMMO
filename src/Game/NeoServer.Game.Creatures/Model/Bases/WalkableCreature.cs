@@ -6,9 +6,11 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -25,28 +27,25 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event Moved OnCreatureMoved;
         #endregion
 
-        protected IPathAccess PathAccess { get; }
+        protected virtual IPathFinder PathFinder => ConfigurationStore.PathFinder;
 
         private uint lastStepCost = 1;
-        protected WalkableCreature(ICreatureType type, IPathAccess pathAccess, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
+        protected WalkableCreature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
             Speed = type.Speed;
-            PathAccess = pathAccess;
             OnCompleteWalking += ExecuteNextAction;
 
         }
 
         protected CooldownList Cooldowns { get; } = new CooldownList();
-        public uint EventWalk { get; set; }
 
         public virtual ITileEnterRule TileEnterRule => CreatureEnterTileRule.Rule;
         public virtual ushort Speed { get; protected set; }
         public uint Following { get; private set; }
         public bool IsFollowing => Following > 0;
-        public ConcurrentQueue<Direction> WalkingQueue { get; } = new ConcurrentQueue<Direction>();
+        private Queue<Direction> WalkingQueue = new Queue<Direction>();
         public bool HasNextStep => WalkingQueue.Count > 0;
-        public bool FollowCreature { get; protected set; }
-        public uint FollowEvent { get; set; }
+        public bool FollowModeEnabled { get; protected set; }
         public bool HasFollowPath { get; private set; }
         public virtual FindPathParams PathSearchParams => new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
 
@@ -58,7 +57,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 lastStepCost = 2;
             }
-            if (WalkingQueue.IsEmpty)
+            if (WalkingQueue.IsEmpty())
             {
                 OnCompleteWalking?.Invoke(this);
             }
@@ -70,7 +69,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             SetDirection(direction);
             OnTurnedToDirection?.Invoke(this, direction);
         }
-        public int StepDelayMilliseconds
+        public int StepDelay
         {
             get
             {
@@ -104,7 +103,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
             StopFollowing();
         }
 
-        public void StartFollowing(ICreature creature, FindPathParams fpp)
+        public void Follow(ICreature creature) => Follow(creature, PathSearchParams);
+
+        public void Follow(ICreature creature, FindPathParams fpp)
         {
             if (Speed == 0) return;
             if (creature is null) return;
@@ -112,21 +113,23 @@ namespace NeoServer.Game.Creatures.Model.Bases
             if (IsFollowing)
             {
                 Following = creature.CreatureId;
-                Follow(creature);
+                StartFollowing(creature);
                 return;
             }
 
             Following = creature.CreatureId;
+            StartFollowing(creature);
             OnStartedFollowing?.Invoke(this, creature, fpp);
         }
-        public void Follow(ICreature creature)
+        public void StartFollowing(ICreature creature)
         {
             if (!CanSee(creature.Location, 9, 9))
             {
                 OnCreatureDisappear(creature);
                 return;
             }
-            if (!PathAccess.FindPathToDestination(this, creature.Location, PathSearchParams, TileEnterRule, out var directions))
+
+            if (!PathFinder.Find(this, creature.Location, PathSearchParams, TileEnterRule, out var directions))
             {
                 HasFollowPath = false;
                 return;
@@ -142,7 +145,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location)
         {
             StopWalking();
-            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, TileEnterRule, out var directions))
+            if (PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
             {
                 return TryWalkTo(directions);
             }
@@ -151,7 +154,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location, Action<ICreature> callbackAction)
         {
             StopWalking();
-            if (PathAccess.FindPathToDestination(this, location, PathSearchParams, TileEnterRule, out var directions))
+            if (PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
             {
                 NextAction = callbackAction;
                 return TryWalkTo(directions);
@@ -163,7 +166,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             if (Speed == 0) return false;
 
-            if (!WalkingQueue.IsEmpty)
+            if (!WalkingQueue.IsEmpty())
             {
                 WalkingQueue.Clear();
             }
@@ -180,24 +183,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 WalkingQueue.Enqueue(direction);
             }
 
-            if (WalkingQueue.IsEmpty) return true;
+            if (WalkingQueue.IsEmpty()) return true;
 
             OnStartedWalking?.Invoke(this);
             return true;
         }
 
-        protected Direction GetRandomStep()
-        {
-            int randomIndex = GameRandom.Random.Next(minValue: 0, maxValue: 4);
-
-            var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
-
-            var direction = directions[randomIndex];
-
-            if (PathAccess.CanGoToDirection?.Invoke(this, Location, direction, TileEnterRule) is false) return Direction.None;
-
-            return direction;
-        }
+        protected Direction GetRandomStep() => PathFinder.FindRandomStep(this, TileEnterRule);
 
         public virtual bool WalkRandomStep()
         {
@@ -224,12 +216,18 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return true;
         }
 
-        public virtual bool TryGetNextStep(out Direction direction)
+        public virtual Direction GetNextStep()
+        {
+            if (!TryGetNextStep(out var direction)) return Direction.None;
+
+            return direction;
+        }
+        private bool TryGetNextStep(out Direction direction)
         {
             if (WalkingQueue.TryDequeue(out direction))
             {
                 FirstStep = false;
-                Cooldowns.Start(CooldownType.Move, StepDelayMilliseconds);
+                Cooldowns.Start(CooldownType.Move, StepDelay);
 
                 return true;
             }
@@ -243,7 +241,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public virtual void TeleportTo(ushort x, ushort y, byte z)
         {
-            OnTeleported?.Invoke(this, new Location(x,y,z));
+            OnTeleported?.Invoke(this, new Location(x, y, z));
         }
         public byte[] GetRaw(IPlayer playerRequesting) => CreatureRaw.Convert(playerRequesting, this);
         public void ChangeSpeed(int newSpeed)
@@ -252,6 +250,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnChangedSpeed?.Invoke(this, Speed);
         }
         public void IncreaseSpeed(ushort speed) => ChangeSpeed(speed + Speed);
-        public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Speed - speedBoost);
+        public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Math.Max(0,(int)Speed - (int)speedBoost));
     }
 }

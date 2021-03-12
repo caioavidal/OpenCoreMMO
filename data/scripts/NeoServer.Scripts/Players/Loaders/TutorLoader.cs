@@ -13,12 +13,10 @@ namespace NeoServer.Scripts.Players.Loaders
 {
     public class TutorLoader : PlayerLoader, IPlayerLoader
     {
-        private CreaturePathAccess _creaturePathAccess;
         private readonly ICreatureFactory creatureFactory;
-        public TutorLoader(CreaturePathAccess creaturePathAccess, IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory
-          ) : base(creaturePathAccess, itemFactory, creatureFactory, chatChannelFactory)
+        public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory
+          ) : base(itemFactory, creatureFactory, chatChannelFactory)
         {
-            _creaturePathAccess = creaturePathAccess;
             this.creatureFactory = creatureFactory;
         }
         public override bool IsApplicable(PlayerModel player) => player.PlayerType == 2;
@@ -34,8 +32,8 @@ namespace NeoServer.Scripts.Players.Loaders
                 new Outfit() { Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody, Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead, Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType },
                 ConvertToInventory(playerModel),
                 playerModel.Speed,
-                new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
-               _creaturePathAccess
+                new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ)
+               
                 )
             {
                 AccountId = (uint)playerModel.AccountId,
