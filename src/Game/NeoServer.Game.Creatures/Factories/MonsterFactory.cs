@@ -9,17 +9,16 @@ namespace NeoServer.Game.Creatures
     {
         private readonly IMonsterDataManager _monsterManager;
      
-        private readonly IPathAccess pathAccess;
         private readonly Logger logger;       
 
         public static IMonsterFactory Instance { get; private set; }
 
         public MonsterFactory(IMonsterDataManager monsterManager,
-            CreaturePathAccess creaturePathAccess, 
+            
             Logger logger)
         {
             _monsterManager = monsterManager;
-            pathAccess = creaturePathAccess;
+            
             this.logger = logger;
             Instance = this;
 
@@ -32,7 +31,7 @@ namespace NeoServer.Game.Creatures
                 logger.Warning($"Given monster name: {name} is not loaded");
                 return null;
             }
-            var monster = new Monster(monsterType, pathAccess, spawn);
+            var monster = new Monster(monsterType, spawn);
             return monster;
         }
 

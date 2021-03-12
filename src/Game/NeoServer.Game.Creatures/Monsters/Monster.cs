@@ -25,7 +25,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public event Born OnWasBorn;
         public override event DropLoot OnDropLoot;
         public event MonsterChangeState OnChangedState;
-        public Monster(IMonsterType type, IPathAccess pathAccess, ISpawnPoint spawn) : base(type, pathAccess)
+        public Monster(IMonsterType type, ISpawnPoint spawn) : base(type)
         {
             if (type.IsNull()) return;
 
@@ -243,7 +243,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                     continue;
                 }
 
-                if (PathAccess.FindPathToDestination.Invoke(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
+                if (PathFinder.Find(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
                 {
                     target.Value.SetAsUnreachable();
                     continue;
@@ -294,7 +294,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (FollowCreatureMode)
             {
-                StartFollowing(target.Creature, PathSearchParams);
+                Follow(target.Creature, PathSearchParams);
             }
 
             SetAttackTarget(target.Creature);

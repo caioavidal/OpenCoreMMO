@@ -97,11 +97,6 @@ namespace NeoServer.Server.Standalone.IoC
 
             builder.RegisterType<NeoServer.Game.World.Map.PathFinder>().As<IPathFinder>().SingleInstance();
 
-            builder.Register((c, p) =>
-            {
-                return new CreaturePathAccess(c.Resolve<IPathFinder>().Find, c.Resolve<IMap>().CanGoToDirection);
-            }).SingleInstance();
-
             builder.RegisterPacketHandlers();
 
             builder.RegisterType<OptimizedScheduler>().As<IScheduler>().SingleInstance();

@@ -26,15 +26,12 @@ namespace NeoServer.Game.Contracts.Creatures
         event TeleportTo OnTeleported;
         event Moved OnCreatureMoved;
 
-        uint EventWalk { get; set; } //remove
         uint Following { get; }
         bool HasNextStep { get; }
         bool IsFollowing { get; }
         ushort Speed { get; }
         int StepDelay { get; }
-        ConcurrentQueue<Direction> WalkingQueue { get; } //remove
         bool FollowCreatureMode { get; }
-        uint FollowEvent { get; set; } //remove
         bool FirstStep { get; } //remove
 
         /// <summary>
@@ -53,7 +50,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Follow creature
         /// </summary>
         /// <param name="creature"></param>
-        void Follow(ICreature creature);
+        void Follow(ICreature creature, FindPathParams findPathParams);
         void StopFollowing();
         /// <summary>
         /// Stops walking
@@ -104,5 +101,6 @@ namespace NeoServer.Game.Contracts.Creatures
         /// <param name="tile"></param>
         void SetCurrentTile(IDynamicTile tile);
         void TurnTo(Direction direction);
+        void Follow(ICreature creature);
     }
 }

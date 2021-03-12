@@ -37,8 +37,8 @@ namespace NeoServer.Server.Model.Players
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, byte vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
-            Location location, IPathAccess pathAccess)
-             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathAccess, outfit, healthPoints)
+            Location location)
+             : base(new CreatureType(characterName, string.Empty, maxHealthPoints, speed, new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), outfit, healthPoints)
         {
             Id = id;
             CharacterName = characterName;
@@ -384,7 +384,7 @@ namespace NeoServer.Server.Model.Players
             FollowCreatureMode = mode == ChaseMode.Follow;
             if (FollowCreatureMode && AutoAttackTarget is not null)
             {
-                StartFollowing(AutoAttackTarget as IWalkableCreature, PathSearchParams);
+                Follow(AutoAttackTarget as IWalkableCreature, PathSearchParams);
                 return;
             }
 
@@ -676,7 +676,7 @@ namespace NeoServer.Server.Model.Players
             base.SetAttackTarget(target);
             if (target.CreatureId != 0 && ChaseMode == ChaseMode.Follow)
             {
-                StartFollowing(target, PathSearchParams);
+                Follow(target, PathSearchParams);
             }
         }
 
