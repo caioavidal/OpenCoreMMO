@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
@@ -181,6 +182,41 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             Assert.True(startedWalking);
             Assert.True(result);
+        }
+
+        [Fact]
+        public void OnCustomerLeft_Should_Emit_When_Player_Logout()
+        {
+            var npcType = new Mock<INpcType>();
+
+            var pathFinder = new Mock<IPathFinder>();
+            pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>())).Returns(Direction.North);
+            ConfigurationStore.PathFinder = pathFinder.Object;
+
+            npcType.Setup(x => x.Name).Returns("Eryn");
+            npcType.Setup(x => x.Speed).Returns(200);
+            npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog() { OnWords = new string[] { "hi" } } });
+
+            var customer = new Mock<IPlayer>();
+            customer.Setup(x => x.CreatureId).Returns(123);
+            customer.Setup(x => x.Location).Returns(new Location(100, 101, 7));
+            
+            var npcTile = new Mock<IDynamicTile>();
+            npcTile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
+
+            var eventCalled = false;
+
+            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+            sut.OnCustomerLeft += (a) => eventCalled = true;
+
+            sut.SetCurrentTile(npcTile.Object);
+
+            sut.Hear(customer.Object, SpeechType.PrivatePlayerToNpc, "hi");
+
+            customer.Object.Logout();
+            customer.Raise(f => f.OnLoggedOut += null, customer.Object);
+
+            Assert.True(eventCalled);
         }
 
     }

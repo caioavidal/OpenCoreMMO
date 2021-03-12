@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
@@ -15,7 +16,7 @@ namespace NeoServer.Game.Creatures.Npcs
     public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
     public class Npc : WalkableCreature, INpc
     {
-        public Npc(INpcType type,  ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
+        public Npc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
             Metadata = type;
             npcDialog = new NpcDialog(this);
@@ -29,6 +30,7 @@ namespace NeoServer.Game.Creatures.Npcs
         public event DialogAction OnDialogAction;
         public event Answer OnAnswer;
         public event Hear OnHear;
+        public event CustomerLeft OnCustomerLeft;
         #endregion
 
         public ISpawnPoint SpawnPoint { get; }
@@ -72,13 +74,17 @@ namespace NeoServer.Game.Creatures.Npcs
 
             if (from is not ISociableCreature sociableCreature) return;
 
+            var isTalkingWith = npcDialog.IsTalkingWith(from);
+
             //if it is not the first message to npc and player sent it from any other channel
-            if (npcDialog.IsTalkingWith(from) && speechType != SpeechType.PrivatePlayerToNpc) return;
+            if (isTalkingWith && speechType != SpeechType.PrivatePlayerToNpc) return;
 
             var dialog = npcDialog.GetNextAnswer(from.CreatureId, message);
 
             if (dialog is null) return;
 
+            if (!isTalkingWith) WatchCustomerEvents(sociableCreature); //first interaction
+            
             npcDialog.StoreWords(sociableCreature, dialog.StoreAt, message);
 
             if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, GetPlayerStoredValues(sociableCreature));
@@ -89,6 +95,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
                 OnAnswer?.Invoke(this, from, dialog, message, speechType);
             }
+
+            if (dialog.End) ForgetCustomer(sociableCreature);
         }
 
         public virtual void SendMessageTo(ISociableCreature to, SpeechType type, IDialog dialog)
@@ -124,5 +132,37 @@ namespace NeoServer.Game.Creatures.Npcs
         }
 
         public void StopTalkingToCustomer(IPlayer player) => npcDialog.StopTalkingTo(player);
+
+        private void WatchCustomerEvents(ISociableCreature creature)
+        {
+            creature.OnCreatureMoved += OnCustomerMoved;
+            if (creature is IPlayer player) player.OnLoggedOut += HandleWhenCustomerLeave;
+        }
+        private void StopWatchCustomerMovements(ISociableCreature creature)
+        {
+            creature.OnCreatureMoved -= OnCustomerMoved;
+            if (creature is IPlayer player) player.OnLoggedOut -= HandleWhenCustomerLeave;
+        }
+
+
+        private void OnCustomerMoved(ICreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators)
+        {
+            if (CanSee(creature.Location)) return;
+            HandleWhenCustomerLeave(creature);
+        }
+
+        private void HandleWhenCustomerLeave(ICreature creature)
+        {
+            if (creature is not ISociableCreature sociableCreature) return;
+
+            ForgetCustomer(sociableCreature);
+            OnCustomerLeft?.Invoke(creature);
+        }
+
+        public void ForgetCustomer(ISociableCreature sociableCreature)
+        {
+            StopWatchCustomerMovements(sociableCreature);
+            npcDialog.EraseDialog(sociableCreature.CreatureId);
+        }
     }
 }

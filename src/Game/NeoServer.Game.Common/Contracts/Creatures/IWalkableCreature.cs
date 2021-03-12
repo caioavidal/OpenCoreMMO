@@ -15,6 +15,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void TeleportTo(IWalkableCreature creature, Location location);
     public delegate void Moved(IWalkableCreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators);
     
+
     public interface IWalkableCreature: ICreature
     {
         event StartWalk OnStartedWalking;

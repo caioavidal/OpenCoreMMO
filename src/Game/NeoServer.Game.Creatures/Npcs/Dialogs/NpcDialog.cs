@@ -60,7 +60,7 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
 
             if (dialog is null) return default;
 
-            if (dialog.End) playerDialogTree.Remove(creatureId);
+            if (dialog.End) EraseDialog(creatureId);
             else playerDialogTree.TryAdd(creatureId, positions);
 
             return dialog;
@@ -89,6 +89,12 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
                 i++;
             }
             return null;
+        }
+
+        public void EraseDialog(uint creatureId)
+        {
+            playerDialogTree.Remove(creatureId);
+            playerDialogStorage.Remove(creatureId);
         }
     }
 }
