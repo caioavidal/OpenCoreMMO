@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
@@ -183,32 +184,46 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             Assert.True(result);
         }
 
-        //[Fact]
-        //public void OnCustomerLeft_Should_Emit_When_Player_Exit_ViewArea()
-        //{
-        //    var npcType = new Mock<INpcType>();
+        [Fact]
+        public void OnCustomerLeft_Should_Emit_When_Player_Exit_ViewArea()
+        {
+            var npcType = new Mock<INpcType>();
 
-        //    var pathFinder = new Mock<IPathFinder>();
-        //    pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>())).Returns(Direction.North);
-        //    ConfigurationStore.PathFinder = pathFinder.Object;
+            var pathFinder = new Mock<IPathFinder>();
+            pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>())).Returns(Direction.North);
+            ConfigurationStore.PathFinder = pathFinder.Object;
 
-        //    npcType.Setup(x => x.Name).Returns("Eryn");
-        //    npcType.Setup(x => x.Speed).Returns(200);
+            npcType.Setup(x => x.Name).Returns("Eryn");
+            npcType.Setup(x => x.Speed).Returns(200);
+            npcType.Setup(x => x.Dialogs).Returns(new IDialog[] { new Dialog() { OnWords = new string[] { "hi" } } });
 
-        //    var customer = new Mock<IPlayer>();
-            
+            var customer = new Mock<IPlayer>();
+            customer.Setup(x => x.CreatureId).Returns(123);
+            customer.Setup(x => x.Location).Returns(new Location(100, 101, 7));
+            customer.Setup(x => x.OnMoved()).Raises(f => f.OnCreatureMoved += null, customer.Object, It.IsAny<Location>(), It.IsAny<Location>(), It.IsAny<ICylinderSpectator[]>());
 
-        //    var startedWalking = false;
+            var npcTile = new Mock<IDynamicTile>();
+            npcTile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
 
-        //    var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
-        //    sut.OnStartedWalking += (a) => startedWalking = true;
+            var eventCalled = false;
 
-        //    Thread.Sleep(5_000);//todo: try remove this
-        //    var result = sut.WalkRandomStep();
+            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+            sut.OnCustomerLeft += (a) => eventCalled = true;
 
-        //    Assert.True(startedWalking);
-        //    Assert.True(result);
-        //}
+            sut.SetCurrentTile(npcTile.Object);
+
+            sut.Hear(customer.Object, SpeechType.PrivatePlayerToNpc, "hi");
+
+            customer.Setup(x => x.Location).Returns(new Location(100, 103, 7));
+            customer.Object.OnMoved();
+
+            Assert.False(eventCalled);
+
+            customer.Setup(x => x.Location).Returns(new Location(100, 150, 7));
+            customer.Object.OnMoved();
+
+            Assert.True(eventCalled);
+        }
 
     }
 }

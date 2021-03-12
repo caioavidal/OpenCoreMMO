@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NeoServer.Game.Creatures.Npcs.Dialogs
 {
-    internal class NpcDialog
+    public class NpcDialog
     {
         private readonly INpc npc;
         private IDictionary<uint, List<byte>> playerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
