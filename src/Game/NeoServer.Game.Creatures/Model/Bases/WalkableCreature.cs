@@ -45,7 +45,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool IsFollowing => Following > 0;
         private Queue<Direction> WalkingQueue = new Queue<Direction>();
         public bool HasNextStep => WalkingQueue.Count > 0;
-        public bool FollowCreatureMode { get; protected set; }
+        public bool FollowModeEnabled { get; protected set; }
         public bool HasFollowPath { get; private set; }
         public virtual FindPathParams PathSearchParams => new FindPathParams(!HasFollowPath, true, true, false, 12, 1, 1, false);
 
@@ -118,6 +118,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
 
             Following = creature.CreatureId;
+            StartFollowing(creature);
             OnStartedFollowing?.Invoke(this, creature, fpp);
         }
         public void StartFollowing(ICreature creature)
@@ -249,6 +250,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnChangedSpeed?.Invoke(this, Speed);
         }
         public void IncreaseSpeed(ushort speed) => ChangeSpeed(speed + Speed);
-        public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Speed - speedBoost);
+        public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Math.Max(0,(int)Speed - (int)speedBoost));
     }
 }

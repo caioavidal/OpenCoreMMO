@@ -76,7 +76,7 @@ namespace NeoServer.Loaders.Players
                 playerModel.StaminaMinutes,
                 new Outfit() { Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody, Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead, Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType },
                 ConvertToInventory(playerModel),
-                playerModel.Speed,
+                0,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ)
                 )
             {

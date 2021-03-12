@@ -290,9 +290,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (target is null) return;
 
-            FollowCreatureMode = Speed > 0;
+            FollowModeEnabled = Speed > 0;
 
-            if (FollowCreatureMode)
+            if (FollowModeEnabled)
             {
                 Follow(target.Creature, PathSearchParams);
             }

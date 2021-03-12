@@ -31,7 +31,7 @@ namespace NeoServer.Game.Contracts.Creatures
         bool IsFollowing { get; }
         ushort Speed { get; }
         int StepDelay { get; }
-        bool FollowCreatureMode { get; }
+        bool FollowModeEnabled { get; }
         bool FirstStep { get; } //remove
 
         /// <summary>

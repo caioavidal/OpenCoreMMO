@@ -25,8 +25,7 @@ namespace NeoServer.Server.Events.Creature
                 return;
             }
 
-            var interval = creature.FirstStep ? 0 : 1000;
-            var eventId = game.Scheduler.AddEvent(new SchedulerEvent(interval, () => Follow(creature, following, fpp)));
+            var eventId = game.Scheduler.AddEvent(new SchedulerEvent(1000, () => Follow(creature, following, fpp)));
             followEvents.AddOrUpdate(creature.CreatureId, eventId);
 
         }

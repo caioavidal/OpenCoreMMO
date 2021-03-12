@@ -56,6 +56,7 @@ namespace NeoServer.Server.Model.Players
             Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
+            Speed = speed == 0 ? LevelBasesSpeed : speed;
 
             Location = location;
 
@@ -110,7 +111,7 @@ namespace NeoServer.Server.Model.Players
                 TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
                 ResetHealthPoints();
                 ResetMana();
-                ChangeSpeed(Speed);
+                ChangeSpeed(LevelBasesSpeed);
             }
             OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
         }
@@ -142,13 +143,13 @@ namespace NeoServer.Server.Model.Players
             OnLoadedVipList?.Invoke(this, vipList);
         }
         public bool FlagIsEnabled(PlayerFlag flag) => (flags & (ulong)flag) != 0;
+        private ushort LevelBasesSpeed => (ushort)(220 + (2 * (Level - 1)));
 
         private uint IdleTime;
         public uint AccountId { get; init; }
         public string CharacterName { get; private set; }
         public override IOutfit Outfit { get; protected set; }
         public IDictionary<SkillType, ISkill> Skills { get; private set; }
-        public override ushort Speed => (ushort)(220 + (2 * (Level - 1))); //todo: remove hard code base speed
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public Dictionary<uint, long> KnownCreatures { get; }
@@ -381,8 +382,8 @@ namespace NeoServer.Server.Model.Players
         public void SetChaseMode(ChaseMode mode)
         {
             ChaseMode = mode;
-            FollowCreatureMode = mode == ChaseMode.Follow;
-            if (FollowCreatureMode && AutoAttackTarget is not null)
+            FollowModeEnabled = mode == ChaseMode.Follow;
+            if (FollowModeEnabled && AutoAttackTarget is not null)
             {
                 Follow(AutoAttackTarget as IWalkableCreature, PathSearchParams);
                 return;

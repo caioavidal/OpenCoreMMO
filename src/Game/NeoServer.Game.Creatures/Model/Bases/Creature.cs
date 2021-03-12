@@ -57,7 +57,7 @@ namespace NeoServer.Game.Creatures.Model
             {
                 return tile;
             }
-            set
+            protected set
             {
                 tile = value;
                 Location = tile.Location;
