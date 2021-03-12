@@ -183,5 +183,32 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             Assert.True(result);
         }
 
+        //[Fact]
+        //public void OnCustomerLeft_Should_Emit_When_Player_Exit_ViewArea()
+        //{
+        //    var npcType = new Mock<INpcType>();
+
+        //    var pathFinder = new Mock<IPathFinder>();
+        //    pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>())).Returns(Direction.North);
+        //    ConfigurationStore.PathFinder = pathFinder.Object;
+
+        //    npcType.Setup(x => x.Name).Returns("Eryn");
+        //    npcType.Setup(x => x.Speed).Returns(200);
+
+        //    var customer = new Mock<IPlayer>();
+            
+
+        //    var startedWalking = false;
+
+        //    var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+        //    sut.OnStartedWalking += (a) => startedWalking = true;
+
+        //    Thread.Sleep(5_000);//todo: try remove this
+        //    var result = sut.WalkRandomStep();
+
+        //    Assert.True(startedWalking);
+        //    Assert.True(result);
+        //}
+
     }
 }

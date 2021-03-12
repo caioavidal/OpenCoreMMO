@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NeoServer.Game.Creatures.Npcs.Dialogs
 {
-    public class NpcDialog
+    internal class NpcDialog
     {
         private readonly INpc npc;
         private IDictionary<uint, List<byte>> playerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
@@ -89,6 +89,12 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
                 i++;
             }
             return null;
+        }
+
+        public void EraseDialog(uint creatureId)
+        {
+            playerDialogTree.Remove(creatureId);
+            playerDialogStorage.Remove(creatureId);
         }
     }
 }
