@@ -136,22 +136,22 @@ namespace NeoServer.Game.Creatures.Npcs
         private void WatchCustomerEvents(ISociableCreature creature)
         {
             creature.OnCreatureMoved += OnCustomerMoved;
-            if (creature is IPlayer player) player.OnLoggedOut += WhenCustomerLeft;
+            if (creature is IPlayer player) player.OnLoggedOut += HandleWhenCustomerLeave;
         }
         private void StopWatchCustomerMovements(ISociableCreature creature)
         {
             creature.OnCreatureMoved -= OnCustomerMoved;
-            if (creature is IPlayer player) player.OnLoggedOut -= WhenCustomerLeft;
+            if (creature is IPlayer player) player.OnLoggedOut -= HandleWhenCustomerLeave;
         }
 
 
         private void OnCustomerMoved(ICreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators)
         {
             if (CanSee(creature.Location)) return;
-            OnCustomerLeft(creature);
+            HandleWhenCustomerLeave(creature);
         }
 
-        private void WhenCustomerLeft(ICreature creature)
+        private void HandleWhenCustomerLeave(ICreature creature)
         {
             if (creature is not ISociableCreature sociableCreature) return;
 
