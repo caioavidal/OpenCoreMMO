@@ -15,6 +15,10 @@
         Exhausted,
         CannotDrink,
         IsFull,
-        TooFar
+        TooFar,
+        AlreadyInParty,
+        CannotInvite,
     }
+
+   
 }
