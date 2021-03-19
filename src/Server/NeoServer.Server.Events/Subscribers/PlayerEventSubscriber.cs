@@ -7,6 +7,7 @@ namespace NeoServer.Server.Events
 {
     public class PlayerEventSubscriber : ICreatureEventSubscriber
     {
+        #region event handlers
         private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
         private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
         private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
@@ -24,13 +25,16 @@ namespace NeoServer.Server.Events
         private readonly PlayerLookedAtEventHandler playerLookedAtEventHandler;
         private readonly PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler;
         private readonly PlayerUsedItemEventHandler playerUsedItemEventHandler;
-        private readonly PlayerSelfAppearOnMapEventHandler  playerSelfAppearOnMapEventHandler;
+        private readonly PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler;
         private readonly PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler;
         private readonly PlayerExitedChannelEventHandler playerExitedChannelEventHandler;
         private readonly PlayerAddToVipListEventHandler playerAddedToVipListEventHandler;
         private readonly PlayerLoadedVipListEventHandler playerLoadedVipListEvent;
         private readonly PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler;
         private readonly PlayerSentMessageEventHandler playerSentMessageEventHandler;
+        private readonly PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler;
+        #endregion
+
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
             PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler, ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
             PlayerChangedInventoryEventHandler itemAddedToInventoryEventHandler, InvalidOperationEventHandler invalidOperationEventHandler,
@@ -41,7 +45,8 @@ namespace NeoServer.Server.Events
             PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler,
             PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler, PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler,
             PlayerExitedChannelEventHandler playerExitedChannelEventHandler, PlayerAddToVipListEventHandler playerAddedToVipListEventHandler,
-            PlayerLoadedVipListEventHandler playerLoadedVipListEvent, PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler, PlayerSentMessageEventHandler playerSentMessageEventHandler)
+            PlayerLoadedVipListEventHandler playerLoadedVipListEvent, PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler, 
+            PlayerSentMessageEventHandler playerSentMessageEventHandler, PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -67,6 +72,7 @@ namespace NeoServer.Server.Events
             this.playerLoadedVipListEvent = playerLoadedVipListEvent;
             this.playerChangedOnlineStatusEventHandler = playerChangedOnlineStatusEventHandler;
             this.playerSentMessageEventHandler = playerSentMessageEventHandler;
+            this.playerInviteToPartyEventHandler = playerInviteToPartyEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -110,6 +116,7 @@ namespace NeoServer.Server.Events
             player.OnLoadedVipList += playerLoadedVipListEvent.Execute;
             player.OnChangedOnlineStatus += playerChangedOnlineStatusEventHandler.Execute;
             player.OnSentMessage += playerSentMessageEventHandler.Execute;
+            player.OnInviteToParty += playerInviteToPartyEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -153,7 +160,7 @@ namespace NeoServer.Server.Events
             player.OnLoadedVipList -= playerLoadedVipListEvent.Execute;
             player.OnChangedOnlineStatus -= playerChangedOnlineStatusEventHandler.Execute;
             player.OnSentMessage -= playerSentMessageEventHandler.Execute;
-
+            player.OnInviteToParty -= playerInviteToPartyEventHandler.Execute;
         }
     }
 }

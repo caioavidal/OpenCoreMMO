@@ -12,6 +12,7 @@ namespace NeoServer.Server.Contracts
         IEnumerable<IPlayer> GetAllLoggedPlayers();
         IEnumerable<ICreature> GetCreatures();
         bool GetPlayerConnection(uint playerId, out IConnection connection);
+        bool IsPlayerLogged(IPlayer player);
         bool RemoveCreature(ICreature creature);
         bool RemovePlayer(IPlayer player);
         bool TryGetCreature(uint id, out ICreature creature);

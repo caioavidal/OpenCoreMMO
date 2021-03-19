@@ -36,6 +36,8 @@
         CreatureLight = 0x8D,
         CreatureHealth = 0x8C,
         CreatureOutfit = 0x8E,
+        CreatureSkull = 0x90,
+        CreatureEmblem = 0x91,
         PlayerStatus = 0xA0,
         PlayerSkills = 0xA1,
         PlayerConditions = 0xA2,
