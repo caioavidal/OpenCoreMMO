@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
@@ -34,6 +35,11 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void PlayerLoadVipList(IPlayer player, IEnumerable<(uint, string)> vipList);
     public delegate void ChangeOnlineStatus(IPlayer player, bool online);
     public delegate void SendMessageTo(ISociableCreature from, ISociableCreature to, SpeechType speechType, string message);
+    public delegate void InviteToParty(IPlayer leader, IPlayer invited, IParty party);
+    public delegate void RevokePartyInvite(IPlayer leader, IPlayer invited, IParty party);
+    public delegate void JoinParty(IPlayer player, IParty party);
+    public delegate void LeaveParty(IPlayer player, IParty party);
+
     public interface IPlayer : ICombatActor, ISociableCreature
     {
         event UseSpell OnUsedSpell;
@@ -73,6 +79,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event AddToVipList OnAddedToVipList;
         event PlayerLoadVipList OnLoadedVipList;
         event ChangeOnlineStatus OnChangedOnlineStatus;
+        event InviteToParty OnInviteToParty;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -191,5 +198,9 @@ namespace NeoServer.Server.Model.Players.Contracts
         ulong BankAmount { get; }
         ulong TotalMoney { get; }
         IShopperNpc TradingWithNpc { get; }
+        bool IsInParty { get; }
+        IParty Party { get; }
+
+        void InviteToParty(IPlayer player);
     }
 }

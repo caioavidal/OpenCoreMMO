@@ -103,6 +103,8 @@ namespace NeoServer.Server
 
             return false;
         }
+
+        public bool IsPlayerLogged(IPlayer player) => creatureInstances.TryGetPlayer(player.Id, out player);
         public bool TryGetLoggedPlayer(uint playerId, out IPlayer player) => creatureInstances.TryGetPlayer(playerId, out player);
         public IEnumerable<IPlayer> GetAllLoggedPlayers() => creatureInstances.AllLoggedPlayers();
 

@@ -1,6 +1,7 @@
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Conditions;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
@@ -9,6 +10,7 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
+using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
@@ -91,6 +93,9 @@ namespace NeoServer.Server.Model.Players
         public event PlayerLoadVipList OnLoadedVipList;
         public event ChangeOnlineStatus OnChangedOnlineStatus;
         public event SendMessageTo OnSentMessage;
+        public event InviteToParty OnInviteToParty;
+
+
         public event Hear OnHear;
 
         public ushort GuildId { get; init; }
@@ -99,6 +104,7 @@ namespace NeoServer.Server.Model.Players
         public IChatChannel NpcsChannel { get; init; }
         public ulong BankAmount { get; private set; }
         public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
+        public IParty Party { get; private set; }
 
         public void LoadBank(ulong amount) => BankAmount = amount;
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -277,6 +283,8 @@ namespace NeoServer.Server.Model.Players
         public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
 
         public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
+
+        public bool IsInParty => Party is not null;
 
         public byte GetSkillInfo(SkillType skill) => (byte)Skills[skill].Level;
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
@@ -522,6 +530,7 @@ namespace NeoServer.Server.Model.Players
             StopWalking();
             Containers.CloseAll();
             ChangeOnlineStatus(online: false);
+            LeaveParty();
 
             OnLoggedOut?.Invoke(this);
             return true;
@@ -741,7 +750,7 @@ namespace NeoServer.Server.Model.Players
             {
                 if (!FlagIsEnabled(PlayerFlag.SpecialVIP))
                 {
-                    OnOperationFailed?.Invoke(CreatureId, "You cannot add this player to your vip list.");
+                    OnOperationFailed?.Invoke(CreatureId, TextConstants.CannotAddPlayerToVipList);
                     return false;
                 }
             }
@@ -836,5 +845,59 @@ namespace NeoServer.Server.Model.Players
             }
 
         }
+
+        public void InviteToParty(IPlayer invitedPlayer)
+        {
+            if (invitedPlayer is null || invitedPlayer.CreatureId == this.CreatureId) return;
+
+            if (invitedPlayer.IsInParty)
+            {
+                OnOperationFailed?.Invoke(CreatureId, $"{invitedPlayer.Name} is already in a party");
+                return;
+            }
+
+            Party = Party ?? new Party(this);
+
+            var result = Party.Invite(this, invitedPlayer);
+
+            switch (result.Error)
+            {
+                case InvalidOperation.CannotInvite:
+                    OnOperationFailed?.Invoke(CreatureId, TextConstants.OnlyLeadersCanInviteToParty);
+                    break;
+                default:
+                    Party.Invite(this, invitedPlayer);
+                    OnInviteToParty?.Invoke(this, invitedPlayer, Party);
+                    break;
+            }
+        }
+        public void RevokePartyInvite(IPlayer invitedPlayer)
+        {
+            if (Party is null) return;
+            Party.RevokeInvite(this, invitedPlayer);
+        }
+
+        public void LeaveParty()
+        {
+            if (Party is null) return;
+            if (InFight) return;
+
+            Party.RemoveMember(this);
+        }
+
+        public void JoinParty(IParty party)
+        {
+            if (party is not null)
+            {
+                OnOperationFailed?.Invoke(CreatureId, TextConstants.AlreadyInParty);
+                return;
+            }
+
+            if (!party.JoinPlayer(this)) return;
+
+            Party = party;
+        }
+
+
     }
 }

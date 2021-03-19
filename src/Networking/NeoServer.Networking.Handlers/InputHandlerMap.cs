@@ -1,3 +1,4 @@
+using NeoServer.Networking.Handlers.Player;
 using NeoServer.Server.Contracts.Network.Enums;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Handlers.Player;
@@ -50,6 +51,9 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.CloseShop, typeof(PlayerCloseShopHandler)},
             { GameIncomingPacketType.PlayerSale, typeof(PlayerSaleHandler)},
             { GameIncomingPacketType.PlayerPurchase, typeof(PlayerPurchaseHandler)},
+            { GameIncomingPacketType.PartyInvite, typeof(PlayerInviteToPartyHandler)},
+            { GameIncomingPacketType.PartyJoin, typeof(PlayerJoinPartyHandler)},
         };
     }
 }
+
