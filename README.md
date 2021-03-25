@@ -69,7 +69,8 @@ dotnet run -p "NeoServer.Server.Standalone"
   - [x] Loot and Death Channels
   - [x] Vip List
 - [ ] PvP Combat
-- [ ] NPC System
+- [ ] Party
+- [x] NPC System
 - [x] Lua Scripting
 - [x] C# Scripting
 
