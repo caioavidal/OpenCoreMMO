@@ -80,6 +80,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event PlayerLoadVipList OnLoadedVipList;
         event ChangeOnlineStatus OnChangedOnlineStatus;
         event InviteToParty OnInviteToParty;
+        event RevokePartyInvite OnRevokePartyInvite;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -202,5 +203,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         IParty Party { get; }
 
         void InviteToParty(IPlayer player);
+        void RevokePartyInvite(IPlayer invitedPlayer);
     }
 }

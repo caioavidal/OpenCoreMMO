@@ -52,7 +52,9 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.PlayerSale, typeof(PlayerSaleHandler)},
             { GameIncomingPacketType.PlayerPurchase, typeof(PlayerPurchaseHandler)},
             { GameIncomingPacketType.PartyInvite, typeof(PlayerInviteToPartyHandler)},
+            { GameIncomingPacketType.PartyRevoke, typeof(PlayerRevokeInvitePartyHandler)},
             { GameIncomingPacketType.PartyJoin, typeof(PlayerJoinPartyHandler)},
+            
         };
     }
 }
