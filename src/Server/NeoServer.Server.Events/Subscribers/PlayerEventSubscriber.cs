@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Events.Creature;
 using NeoServer.Server.Events.Player;
+using NeoServer.Server.Events.Player.Party;
 using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
@@ -33,6 +34,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler;
         private readonly PlayerSentMessageEventHandler playerSentMessageEventHandler;
         private readonly PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler;
+        private readonly PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler;
         #endregion
 
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
@@ -45,8 +47,9 @@ namespace NeoServer.Server.Events
             PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler, PlayerUsedItemEventHandler playerUsedItemEventHandler,
             PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler, PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler,
             PlayerExitedChannelEventHandler playerExitedChannelEventHandler, PlayerAddToVipListEventHandler playerAddedToVipListEventHandler,
-            PlayerLoadedVipListEventHandler playerLoadedVipListEvent, PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler, 
-            PlayerSentMessageEventHandler playerSentMessageEventHandler, PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler)
+            PlayerLoadedVipListEventHandler playerLoadedVipListEvent, PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler,
+            PlayerSentMessageEventHandler playerSentMessageEventHandler, PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler, 
+            PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -73,6 +76,7 @@ namespace NeoServer.Server.Events
             this.playerChangedOnlineStatusEventHandler = playerChangedOnlineStatusEventHandler;
             this.playerSentMessageEventHandler = playerSentMessageEventHandler;
             this.playerInviteToPartyEventHandler = playerInviteToPartyEventHandler;
+            this.playerRevokedPartyInviteEventHandler = playerRevokedPartyInviteEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -117,6 +121,7 @@ namespace NeoServer.Server.Events
             player.OnChangedOnlineStatus += playerChangedOnlineStatusEventHandler.Execute;
             player.OnSentMessage += playerSentMessageEventHandler.Execute;
             player.OnInviteToParty += playerInviteToPartyEventHandler.Execute;
+            player.OnRevokePartyInvite += playerRevokedPartyInviteEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -161,6 +166,8 @@ namespace NeoServer.Server.Events
             player.OnChangedOnlineStatus -= playerChangedOnlineStatusEventHandler.Execute;
             player.OnSentMessage -= playerSentMessageEventHandler.Execute;
             player.OnInviteToParty -= playerInviteToPartyEventHandler.Execute;
+            player.OnRevokePartyInvite -= playerRevokedPartyInviteEventHandler.Execute;
+
         }
     }
 }

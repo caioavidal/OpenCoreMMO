@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Jobs
 {
-     public class IntervalControl
+    public class IntervalControl
     {
         private int interval;
         private DateTime lastRun;

@@ -3,11 +3,6 @@ using NeoServer.Game.Common.Creatures.Party;
 using NeoServer.Networking.Packets.Outgoing.Party;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Events.Player
 {

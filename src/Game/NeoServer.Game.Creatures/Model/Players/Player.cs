@@ -94,6 +94,7 @@ namespace NeoServer.Server.Model.Players
         public event ChangeOnlineStatus OnChangedOnlineStatus;
         public event SendMessageTo OnSentMessage;
         public event InviteToParty OnInviteToParty;
+        public event RevokePartyInvite OnRevokePartyInvite;
 
 
         public event Hear OnHear;
@@ -843,12 +844,11 @@ namespace NeoServer.Server.Model.Players
 
                 Inventory.BackpackSlot?.AddItem(item, true);
             }
-
         }
 
         public void InviteToParty(IPlayer invitedPlayer)
         {
-            if (invitedPlayer is null || invitedPlayer.CreatureId == this.CreatureId) return;
+            if (invitedPlayer is null || invitedPlayer.CreatureId == CreatureId) return;
 
             if (invitedPlayer.IsInParty)
             {
@@ -875,6 +875,15 @@ namespace NeoServer.Server.Model.Players
         {
             if (Party is null) return;
             Party.RevokeInvite(this, invitedPlayer);
+            OnRevokePartyInvite?.Invoke(this, invitedPlayer, Party);
+        }
+
+        public void PartyEmptyHandler()
+        {
+            
+            Party.OnPartyEmpty -= PartyEmptyHandler;
+            LeaveParty();
+            Party = null;
         }
 
         public void LeaveParty()
@@ -883,6 +892,7 @@ namespace NeoServer.Server.Model.Players
             if (InFight) return;
 
             Party.RemoveMember(this);
+            Party = null;
         }
 
         public void JoinParty(IParty party)
@@ -894,6 +904,8 @@ namespace NeoServer.Server.Model.Players
             }
 
             if (!party.JoinPlayer(this)) return;
+
+            party.OnPartyEmpty += PartyEmptyHandler;
 
             Party = party;
         }

@@ -1,18 +1,9 @@
 ﻿using Moq;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Tests;
-using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players

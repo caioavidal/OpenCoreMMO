@@ -4,7 +4,6 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Concurrent;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

@@ -4,22 +4,21 @@ using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
     public class Party: IParty
     {
-        public event RevokePartyInvite OnRevokePartyInvite;
         public event JoinParty OnPlayerJoinedParty;
         public event LeaveParty OnPlayerLeftParty;
-
+        public event Action OnPartyEmpty;
         private uint leader;
         private HashSet<uint> members = new HashSet<uint>();
         private HashSet<uint> invites = new HashSet<uint>();
 
         public IReadOnlyCollection<uint> Members => invites.Append(leader).ToList();
+
+        public bool IsEmpty => !members.Any();
 
         public Party(IPlayer player)
         {
@@ -52,7 +51,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!IsLeader(by)) return;
             if (!invites.Remove(invitedPlayer.CreatureId)) return;
 
-            OnRevokePartyInvite?.Invoke(by, invitedPlayer, this);
+            if (IsEmpty) OnPartyEmpty?.Invoke();
+
         }
         public void RemoveMember(IPlayer player)
         {
@@ -60,6 +60,9 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             members.Remove(player.CreatureId);
             OnPlayerLeftParty?.Invoke(player, this);
+
+            if (IsEmpty) OnPartyEmpty?.Invoke();
+
         }
     }
 }

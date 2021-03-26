@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using System;
 
 namespace NeoServer.Game.Contracts.World.Tiles
 {

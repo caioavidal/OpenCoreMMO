@@ -1,4 +1,3 @@
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
@@ -6,7 +5,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

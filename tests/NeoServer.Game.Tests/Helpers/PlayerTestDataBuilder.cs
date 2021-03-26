@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Model.Players.Contracts;
 using System;

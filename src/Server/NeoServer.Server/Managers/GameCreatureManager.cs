@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Model.Players.Contracts;
-using Serilog;
 using Serilog.Core;
 using System;
 using System.Collections.Concurrent;
