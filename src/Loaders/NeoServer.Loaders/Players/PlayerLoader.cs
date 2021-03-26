@@ -8,7 +8,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Model.Players;

@@ -9,7 +9,6 @@ using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Model.Bases
@@ -250,6 +249,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnChangedSpeed?.Invoke(this, Speed);
         }
         public void IncreaseSpeed(ushort speed) => ChangeSpeed(speed + Speed);
-        public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Math.Max(0,(int)Speed - (int)speedBoost));
+        public void DecreaseSpeed(ushort speedBoost) => ChangeSpeed(Math.Max(0, Speed - speedBoost));
     }
 }

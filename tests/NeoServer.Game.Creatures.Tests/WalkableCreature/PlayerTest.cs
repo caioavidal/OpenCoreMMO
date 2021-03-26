@@ -3,18 +3,12 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Tests;
-using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.WalkableCreature

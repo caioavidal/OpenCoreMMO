@@ -2,7 +2,6 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace NeoServer.Server.Events.Creature

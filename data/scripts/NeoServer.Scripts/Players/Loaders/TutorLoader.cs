@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using NeoServer.Server.Model.Players;
