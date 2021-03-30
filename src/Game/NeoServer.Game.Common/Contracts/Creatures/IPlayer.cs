@@ -81,6 +81,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event ChangeOnlineStatus OnChangedOnlineStatus;
         event InviteToParty OnInviteToParty;
         event RevokePartyInvite OnRevokePartyInvite;
+        event LeaveParty OnPlayerLeftParty;
 
         IInventory Inventory { get; }
         ushort Mana { get; }

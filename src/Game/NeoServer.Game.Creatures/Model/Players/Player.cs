@@ -95,7 +95,7 @@ namespace NeoServer.Server.Model.Players
         public event SendMessageTo OnSentMessage;
         public event InviteToParty OnInviteToParty;
         public event RevokePartyInvite OnRevokePartyInvite;
-
+        public event LeaveParty OnPlayerLeftParty;
 
         public event Hear OnHear;
 
@@ -856,20 +856,19 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
 
+            var partyCreatedNow = Party is null;
             Party = Party ?? new Party(this);
 
             var result = Party.Invite(this, invitedPlayer);
 
-            switch (result.Error)
+            if (!result.IsSuccess)
             {
-                case InvalidOperation.CannotInvite:
-                    OnOperationFailed?.Invoke(CreatureId, TextConstants.OnlyLeadersCanInviteToParty);
-                    break;
-                default:
-                    Party.Invite(this, invitedPlayer);
-                    OnInviteToParty?.Invoke(this, invitedPlayer, Party);
-                    break;
+                OnOperationFailed?.Invoke(CreatureId, TextConstants.OnlyLeadersCanInviteToParty);
+                return;
             }
+
+            OnInviteToParty?.Invoke(this, invitedPlayer, Party);
+            if(partyCreatedNow) Party.OnPartyEmpty += PartyEmptyHandler;
         }
         public void RevokePartyInvite(IPlayer invitedPlayer)
         {
@@ -880,7 +879,6 @@ namespace NeoServer.Server.Model.Players
 
         public void PartyEmptyHandler()
         {
-            
             Party.OnPartyEmpty -= PartyEmptyHandler;
             LeaveParty();
             Party = null;
@@ -892,6 +890,7 @@ namespace NeoServer.Server.Model.Players
             if (InFight) return;
 
             Party.RemoveMember(this);
+            OnPlayerLeftParty?.Invoke(this, Party);
             Party = null;
         }
 

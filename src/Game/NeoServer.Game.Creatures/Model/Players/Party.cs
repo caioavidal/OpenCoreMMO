@@ -10,7 +10,6 @@ namespace NeoServer.Game.Creatures.Model.Players
     public class Party: IParty
     {
         public event JoinParty OnPlayerJoinedParty;
-        public event LeaveParty OnPlayerLeftParty;
         public event Action OnPartyEmpty;
         private uint leader;
         private HashSet<uint> members = new HashSet<uint>();
@@ -51,7 +50,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!IsLeader(by)) return;
             if (!invites.Remove(invitedPlayer.CreatureId)) return;
 
-            if (IsEmpty) OnPartyEmpty?.Invoke();
+            if (IsEmpty && !invites.Any()) OnPartyEmpty?.Invoke();
 
         }
         public void RemoveMember(IPlayer player)
@@ -59,10 +58,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (player.InFight) return;
 
             members.Remove(player.CreatureId);
-            OnPlayerLeftParty?.Invoke(player, this);
-
             if (IsEmpty) OnPartyEmpty?.Invoke();
-
         }
     }
 }
