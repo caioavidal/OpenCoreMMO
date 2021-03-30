@@ -1,5 +1,4 @@
-﻿using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
+﻿using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Tasks;

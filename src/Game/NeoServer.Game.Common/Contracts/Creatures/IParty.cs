@@ -8,11 +8,15 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     {
         IReadOnlyCollection<uint> Members { get; }
         bool IsEmpty { get; }
+        IPlayer Leader { get; }
 
         event Action OnPartyOver;
 
         Result Invite(IPlayer by, IPlayer invitedPlayer);
         bool IsLeader(IPlayer player);
+        bool IsLeader(uint creatureId);
+        bool IsMember(uint creatureId);
+        bool IsMember(IPlayer player);
         bool JoinPlayer(IPlayer player);
         void RemoveMember(IPlayer player);
         void RevokeInvite(IPlayer by, IPlayer invitedPlayer);

@@ -37,6 +37,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler;
         private readonly PlayerLeftPartyEventHandler playerLeftPartyEventHandler;
         private readonly PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler;
+        private readonly PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler;
         #endregion
 
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
@@ -51,8 +52,8 @@ namespace NeoServer.Server.Events
             PlayerExitedChannelEventHandler playerExitedChannelEventHandler, PlayerAddToVipListEventHandler playerAddedToVipListEventHandler,
             PlayerLoadedVipListEventHandler playerLoadedVipListEvent, PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler,
             PlayerSentMessageEventHandler playerSentMessageEventHandler, PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler,
-            PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler, PlayerLeftPartyEventHandler playerLeftPartyEventHandler, 
-            PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler)
+            PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler, PlayerLeftPartyEventHandler playerLeftPartyEventHandler,
+            PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler, PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -82,6 +83,7 @@ namespace NeoServer.Server.Events
             this.playerRevokedPartyInviteEventHandler = playerRevokedPartyInviteEventHandler;
             this.playerLeftPartyEventHandler = playerLeftPartyEventHandler;
             this.playerInvitedToPartyEventHandler = playerInvitedToPartyEventHandler;
+            this.playerJoinedPartyEventHandler = playerJoinedPartyEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -130,6 +132,7 @@ namespace NeoServer.Server.Events
             player.OnPlayerLeftParty += playerLeftPartyEventHandler.Execute;
             player.OnInvitedToParty += playerInvitedToPartyEventHandler.Execute;
             player.OnRejectedPartyInvite += playerLeftPartyEventHandler.Execute;
+            player.OnJoinedParty += playerJoinedPartyEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -177,6 +180,8 @@ namespace NeoServer.Server.Events
             player.OnRevokePartyInvite -= playerRevokedPartyInviteEventHandler.Execute;
             player.OnPlayerLeftParty -= playerLeftPartyEventHandler.Execute;
             player.OnInvitedToParty -= playerInvitedToPartyEventHandler.Execute;
+            player.OnJoinedParty -= playerJoinedPartyEventHandler.Execute;
+
         }
     }
 }

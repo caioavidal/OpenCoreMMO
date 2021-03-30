@@ -9,23 +9,26 @@ namespace NeoServer.Game.Creatures.Model.Players
 {
     public class Party: IParty
     {
-        public event JoinParty OnPlayerJoinedParty;
         public event Action OnPartyOver;
-        private uint leader;
+        public IPlayer Leader { get; }
         private HashSet<uint> members = new HashSet<uint>();
         private HashSet<uint> invites = new HashSet<uint>();
 
-        public IReadOnlyCollection<uint> Members => invites.Append(leader).ToList();
+        public IReadOnlyCollection<uint> Members => invites.Append(Leader.CreatureId).ToList();
 
         public bool IsEmpty => !members.Any();
 
         public Party(IPlayer player)
         {
-            leader = player.CreatureId;   
+            Leader = player;   
         }
 
+        public bool IsMember(IPlayer player) => members.Contains(player.CreatureId);
+        public bool IsMember(uint creatureId) => members.Contains(creatureId);
         public bool IsInvited(IPlayer player) => invites.Contains(player.CreatureId);
-        public bool IsLeader(IPlayer player) => player.CreatureId == leader;
+        public bool IsLeader(IPlayer player) => player == Leader;
+        public bool IsLeader(uint creatureId) => creatureId == Leader.CreatureId;
+
         public bool JoinPlayer(IPlayer player)
         {
             if(Guard.AnyNull(player)) return false;
@@ -33,7 +36,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!IsInvited(player)) return false;
 
             members.Add(player.CreatureId);
-            OnPlayerJoinedParty?.Invoke(player, this);
             return true;
         }
         public Result Invite(IPlayer by, IPlayer invitedPlayer)
