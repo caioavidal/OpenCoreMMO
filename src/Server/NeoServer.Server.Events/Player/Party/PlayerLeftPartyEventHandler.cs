@@ -6,25 +6,25 @@ using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events.Player
 {
-    public class PlayerInviteToPartyEventHandler
+    public class PlayerLeftPartyEventHandler
     {
 
         private readonly IGameServer game;
 
-        public PlayerInviteToPartyEventHandler(IGameServer game)
+        public PlayerLeftPartyEventHandler(IGameServer game)
         {
             this.game = game;
         }
 
-        public void Execute(IPlayer leader, IPlayer invited, IParty party)
+        public void Execute(IPlayer member, IParty party)
         {
-            if (Guard.AnyNull(leader, invited, party)) return;
+            if (Guard.AnyNull(member)) return;
 
-            foreach (var spectator in game.Map.GetPlayersAtPositionZone(leader.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone(member.Location))
             {
                 if (game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
                 {
-                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.Yellow));
+                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(member, PartyEmblem.None));
                     connection.Send();
                 }
             }

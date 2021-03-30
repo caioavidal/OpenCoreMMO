@@ -18,7 +18,7 @@ namespace NeoServer.Server.Events.Player.Party
 
         public void Execute(IPlayer by, IPlayer invited, IParty party)
         {
-            if (Guard.AnyNull(by, invited, party)) return;
+            if (Guard.AnyNull(by, invited)) return;
 
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(invited.Location))
             {
