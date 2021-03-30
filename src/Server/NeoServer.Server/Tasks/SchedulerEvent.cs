@@ -21,7 +21,6 @@ namespace NeoServer.Server.Tasks
 
         public double RemainingTime => ExpirationTime.Subtract(DateTime.Now.TimeOfDay).TotalMilliseconds;
 
-
         /// <summary>
         /// Event's Id
         /// </summary>

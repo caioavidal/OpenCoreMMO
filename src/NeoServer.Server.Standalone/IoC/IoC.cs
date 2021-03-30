@@ -140,7 +140,6 @@ namespace NeoServer.Server.Standalone.IoC
             //services
             builder.RegisterType<DealTransaction>().As<IDealTransaction>().SingleInstance();
             builder.RegisterType<CoinTransaction>().As<ICoinTransaction>().SingleInstance();
-            
 
             builder.RegisterType<EventSubscriber>().SingleInstance();
 

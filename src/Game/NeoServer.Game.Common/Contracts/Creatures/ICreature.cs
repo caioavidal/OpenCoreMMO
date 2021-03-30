@@ -139,8 +139,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Says a message
         /// </summary>
         void Say(string message, SpeechType talkType, ICreature receiver = null);
-        
-  
+
         /// <summary>
         /// Sets new outfit and store current as last outfit
         /// </summary>

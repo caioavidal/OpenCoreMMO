@@ -22,7 +22,6 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
 
         public Dictionary<string, string> GetDialogStoredValues(ISociableCreature sociableCreature) => playerDialogStorage.TryGetValue(sociableCreature.CreatureId, out var map) ? map : null;
 
-
         public void StoreWords(ISociableCreature creature, string key, string value)
         {
             if (creature is null || string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(value)) return;

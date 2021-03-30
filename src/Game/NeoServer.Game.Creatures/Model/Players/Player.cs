@@ -111,7 +111,6 @@ namespace NeoServer.Server.Model.Players
         public IParty Party { get; private set; }
         private IParty PartyInvite;
 
-
         public void LoadBank(ulong amount) => BankAmount = amount;
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
         {
@@ -497,7 +496,6 @@ namespace NeoServer.Server.Model.Players
             OnStatusChanged?.Invoke(this);
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
-
 
         public void LookAt(ITile tile)
         {

@@ -83,7 +83,6 @@ namespace NeoServer.Server.Events
                 walkableCreature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
                 walkableCreature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
 
-
             }
             #endregion
         }

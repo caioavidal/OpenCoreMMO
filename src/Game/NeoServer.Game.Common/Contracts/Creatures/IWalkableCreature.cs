@@ -13,7 +13,6 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate bool CanGoToDirection(ICreature creature, Location location, Direction direction, ITileEnterRule rule);
     public delegate void TeleportTo(IWalkableCreature creature, Location location);
     public delegate void Moved(IWalkableCreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators);
-    
 
     public interface IWalkableCreature: ICreature
     {

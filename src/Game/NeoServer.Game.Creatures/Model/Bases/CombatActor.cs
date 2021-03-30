@@ -59,7 +59,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
         }
 
-
         public abstract int ShieldDefend(int attack);
         public abstract int ArmorDefend(int attack);
         public virtual bool CanBlock(DamageType damage)

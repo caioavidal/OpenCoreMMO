@@ -92,7 +92,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             Assert.Equal("ok", result["answer"]);
         }
 
-
         [Fact]
         public void SendMessageTo_When_Has_Bind_Variables_Should_Replace_It()
         {
@@ -136,13 +135,11 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         {
             var npcType = new Mock<INpcType>();
 
-
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Marketings).Returns(new string[] { "this is a advertise" });
 
             var advertise = "";
             var speechType = SpeechType.None;
-
 
             var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
             sut.OnSay += (a, b, message, d) =>
@@ -153,7 +150,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             Thread.Sleep(10_000);//todo: try remove this
             sut.Advertise();
-
 
             Assert.Equal("this is a advertise", advertise);
             Assert.Equal(SpeechType.Say, speechType);

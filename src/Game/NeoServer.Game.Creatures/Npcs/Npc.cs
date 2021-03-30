@@ -144,7 +144,6 @@ namespace NeoServer.Game.Creatures.Npcs
             if (creature is IPlayer player) player.OnLoggedOut -= HandleWhenCustomerLeave;
         }
 
-
         private void OnCustomerMoved(ICreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators)
         {
             if (CanSee(creature.Location)) return;

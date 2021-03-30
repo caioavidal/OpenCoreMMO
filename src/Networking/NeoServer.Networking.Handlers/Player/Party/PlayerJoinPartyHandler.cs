@@ -25,7 +25,6 @@ namespace NeoServer.Networking.Handlers.Player
                 return;
             }
 
-
             game.Dispatcher.AddEvent(new Event(() => player.JoinParty(leader.Party)));
         }
     }

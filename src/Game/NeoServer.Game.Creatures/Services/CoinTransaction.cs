@@ -27,7 +27,6 @@ namespace NeoServer.Game.Creatures.Services
             
         }
 
-
         /// <summary>
         /// Removes coins from player and adds change to the bag
         /// </summary>

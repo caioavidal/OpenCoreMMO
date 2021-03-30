@@ -24,7 +24,6 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
 
               });
 
-
             Assert.False(sut.HasNextStep);
             sut.WalkTo(Direction.South, Direction.North);
             Assert.True(sut.HasNextStep);
@@ -62,7 +61,6 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var emittedEvent = false;
             sut.OnChangedSpeed += (creature, speed) => emittedEvent = true;
 
-
             sut.DecreaseSpeed(decrease);
 
             Assert.Equal(expected, sut.Speed);
@@ -79,13 +77,11 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var emittedEvent = false;
             sut.OnChangedSpeed += (creature, speed) => emittedEvent = true;
 
-
             sut.IncreaseSpeed(increase);
 
             Assert.Equal(expected, sut.Speed);
             Assert.True(emittedEvent);
         }
-
 
         [Fact]
         public void Follow_Should_Emmit_Follow_And_Walk_Event()
@@ -178,7 +174,6 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             Assert.Equal(Direction.North, sut.GetNextStep());
             Assert.Equal(Direction.East, sut.GetNextStep());
         }
-
 
     }
 }

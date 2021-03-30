@@ -105,7 +105,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs.Dialogs
             sut.GetNextAnswer(1, "fourth");
             sut.GetNextAnswer(1, "fifth");
 
-
             sut.Back(1, count);
 
             var result = sut.GetNextAnswer(1, answer);

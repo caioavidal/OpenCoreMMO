@@ -16,7 +16,6 @@ namespace NeoServer.Loaders.Npcs
 
             var converter = new ExpandoObjectConverter();
 
-
             var list = JsonConvert.DeserializeObject<ExpandoObject[]>(jsonString, converter);
 
             var map = new Dictionary<string, dynamic>();
@@ -28,7 +27,6 @@ namespace NeoServer.Loaders.Npcs
             }
 
             type.CustomAttributes.Add("custom-data", map);
-
 
         }
     }

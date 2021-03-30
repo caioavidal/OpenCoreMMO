@@ -18,7 +18,6 @@ namespace NeoServer.Loaders.Npcs
         private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
 
-
         public NpcLoader(ServerConfiguration serverConfiguration, Logger logger)
         {
             this.serverConfiguration = serverConfiguration;
@@ -75,7 +74,6 @@ namespace NeoServer.Loaders.Npcs
                 yield return npcType;
             }
         }
-
 
         private void LoadShopData(INpcType type, NpcJsonData npcData)
         {
