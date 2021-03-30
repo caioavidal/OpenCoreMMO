@@ -341,7 +341,6 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var platinum = ItemTestData.CreateCoin(1, 2, 100);
             var gold = ItemTestData.CreateCoin(2, 1, 1);
 
-
             itemFactoryMock.Setup(x => x.CreateCoins(It.IsAny<ulong>())).Returns(new List<ICoin> { (ICoin)ItemTestData.CreateCoin(1, 1, 100), (ICoin)ItemTestData.CreateCoin(2, 70, 1) });
 
             itemFactoryMock.Setup(x => x.Create(1, It.IsAny<Location>(), null)).Returns(platinum);

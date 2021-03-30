@@ -10,18 +10,22 @@ namespace NeoServer.Networking.Handlers.Player
     {
         private readonly IGameServer game;
 
+        public PlayerJoinPartyHandler(IGameServer game)
+        {
+            this.game = game;
+        }
+
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            var playerId = message.GetUInt32();
+            var leaderId = message.GetUInt32();
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-            if (!game.CreatureManager.TryGetLoggedPlayer(playerId, out var invitedPlayer))
+            if (!game.CreatureManager.TryGetPlayer(leaderId, out var leader) || !game.CreatureManager.IsPlayerLogged(leader))
             {
-                connection.Send(new TextMessagePacket("Invited player is not online.", TextMessageOutgoingType.Small));
+                connection.Send(new TextMessagePacket("Player is not online.", TextMessageOutgoingType.Small));
                 return;
             }
 
-
-            game.Dispatcher.AddEvent(new Event(() => player.InviteToParty(invitedPlayer)));
+            game.Dispatcher.AddEvent(new Event(() => player.JoinParty(leader.Party)));
         }
     }
 }

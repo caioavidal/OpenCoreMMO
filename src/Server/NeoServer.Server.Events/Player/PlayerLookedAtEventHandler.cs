@@ -20,7 +20,7 @@ namespace NeoServer.Server.Events.Player
 
             var text = isClose ? thing.CloseInspectionText : thing.InspectionText;
             var message = $"You see {text}."; //todo 
-            connection.OutgoingPackets.Enqueue(new TextMessagePacket(message, TextMessageOutgoingType.MessageInfoDescription));
+            connection.OutgoingPackets.Enqueue(new TextMessagePacket(message, TextMessageOutgoingType.Description));
             connection.Send();
 
         }

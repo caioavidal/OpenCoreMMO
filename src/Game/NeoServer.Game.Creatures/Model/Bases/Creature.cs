@@ -199,8 +199,6 @@ namespace NeoServer.Game.Creatures.Model
 
         protected void SetDirection(Direction direction) => Direction = direction;
 
-       
-
         public virtual void Say(string message, SpeechType talkType, ICreature receiver = null)
         {
             if (string.IsNullOrWhiteSpace(message) || talkType == SpeechType.None) return;

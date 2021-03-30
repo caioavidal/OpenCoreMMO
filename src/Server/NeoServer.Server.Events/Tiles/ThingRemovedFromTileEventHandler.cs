@@ -21,7 +21,6 @@ namespace NeoServer.Server.Events
         {
             if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
 
-
             var tile = cylinder.FromTile;
             if(tile.IsNull()) return;
 

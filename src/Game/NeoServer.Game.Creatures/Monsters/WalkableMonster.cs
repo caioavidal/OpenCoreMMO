@@ -12,7 +12,6 @@ namespace NeoServer.Game.Creatures.Monsters
         protected WalkableMonster(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints) { }
         public bool CanReachAnyTarget { get; protected set; } = false;
 
-       
         public bool LookForNewEnemy()
         {
             StopFollowing();

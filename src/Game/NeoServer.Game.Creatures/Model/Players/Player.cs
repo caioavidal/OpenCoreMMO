@@ -97,7 +97,7 @@ namespace NeoServer.Server.Model.Players
         public event InviteToParty OnInvitedToParty;
         public event RevokePartyInvite OnRevokePartyInvite;
         public event RejectPartyInvite OnRejectedPartyInvite;
-
+        public event JoinParty OnJoinedParty;
         public event LeaveParty OnPlayerLeftParty;
 
         public event Hear OnHear;
@@ -109,8 +109,7 @@ namespace NeoServer.Server.Model.Players
         public ulong BankAmount { get; private set; }
         public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
         public IParty Party { get; private set; }
-        public IParty PartyInvite { get; private set; }
-
+        private IParty PartyInvite;
 
         public void LoadBank(ulong amount) => BankAmount = amount;
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -498,7 +497,6 @@ namespace NeoServer.Server.Model.Players
         }
         public bool HasEnoughLevel(ushort level) => Level >= level;
 
-
         public void LookAt(ITile tile)
         {
             var isClose = Location.IsNextTo(tile.Location);
@@ -537,6 +535,7 @@ namespace NeoServer.Server.Model.Players
             Containers.CloseAll();
             ChangeOnlineStatus(online: false);
             LeaveParty();
+            RejectInvite();
 
             OnLoggedOut?.Invoke(this);
             return true;
@@ -887,10 +886,11 @@ namespace NeoServer.Server.Model.Players
 
         public void RejectInvite()
         {
+            if (PartyInvite is null) return;
             PartyInvite.OnPartyOver -= RejectInvite;
+
             OnRejectedPartyInvite?.Invoke(this, PartyInvite);
             PartyInvite = null;
-
         }
 
         public void RevokePartyInvite(IPlayer invitedPlayer)
@@ -919,7 +919,8 @@ namespace NeoServer.Server.Model.Players
 
         public void JoinParty(IParty party)
         {
-            if (party is not null)
+            if (party is null) return;
+            if (Party is not null)
             {
                 OnOperationFailed?.Invoke(CreatureId, TextConstants.AlreadyInParty);
                 return;
@@ -930,8 +931,8 @@ namespace NeoServer.Server.Model.Players
             party.OnPartyOver += PartyEmptyHandler;
 
             Party = party;
+
+            OnJoinedParty?.Invoke(this, party);
         }
-
-
     }
 }

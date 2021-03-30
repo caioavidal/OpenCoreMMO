@@ -85,6 +85,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         event LeaveParty OnPlayerLeftParty;
         event InviteToParty OnInvitedToParty;
         event RejectPartyInvite OnRejectedPartyInvite;
+        event JoinParty OnJoinedParty;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -211,5 +212,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void LeaveParty();
         void ReceivePartyInvite(IPlayer leader, IParty party);
         void RejectInvite();
+        void JoinParty(IParty party);
     }
 }
