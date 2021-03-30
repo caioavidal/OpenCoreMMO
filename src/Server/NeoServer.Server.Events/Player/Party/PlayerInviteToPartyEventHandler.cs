@@ -28,17 +28,6 @@ namespace NeoServer.Server.Events.Player
                     connection.Send();
                 }
             }
-
-            if (game.CreatureManager.GetPlayerConnection(leader.CreatureId, out var leaderConnection))
-            {
-                leaderConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(invited, PartyEmblem.WhiteBlue));
-                leaderConnection.Send();
-            }
-            if (game.CreatureManager.GetPlayerConnection(invited.CreatureId, out var invitedConnection))
-            {
-                invitedConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.WhiteYellow));
-                invitedConnection.Send();
-            }
         }
     }
 }

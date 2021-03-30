@@ -37,6 +37,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void SendMessageTo(ISociableCreature from, ISociableCreature to, SpeechType speechType, string message);
     public delegate void InviteToParty(IPlayer leader, IPlayer invited, IParty party);
     public delegate void RevokePartyInvite(IPlayer leader, IPlayer invited, IParty party);
+    public delegate void RejectPartyInvite(IPlayer invited, IParty party);
     public delegate void JoinParty(IPlayer player, IParty party);
     public delegate void LeaveParty(IPlayer player, IParty party);
 
@@ -82,6 +83,8 @@ namespace NeoServer.Server.Model.Players.Contracts
         event InviteToParty OnInviteToParty;
         event RevokePartyInvite OnRevokePartyInvite;
         event LeaveParty OnPlayerLeftParty;
+        event InviteToParty OnInvitedToParty;
+        event RejectPartyInvite OnRejectedPartyInvite;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
@@ -205,5 +208,8 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         void InviteToParty(IPlayer player);
         void RevokePartyInvite(IPlayer invitedPlayer);
+        void LeaveParty();
+        void ReceivePartyInvite(IPlayer leader, IParty party);
+        void RejectInvite();
     }
 }

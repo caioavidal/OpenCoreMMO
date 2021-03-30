@@ -54,7 +54,7 @@ namespace NeoServer.Networking.Packets.Incoming
             { GameIncomingPacketType.PartyInvite, typeof(PlayerInviteToPartyHandler)},
             { GameIncomingPacketType.PartyRevoke, typeof(PlayerRevokeInvitePartyHandler)},
             { GameIncomingPacketType.PartyJoin, typeof(PlayerJoinPartyHandler)},
-            
+            { GameIncomingPacketType.PartyLeave, typeof(PlayerLeavePartyHandler)},
         };
     }
 }
