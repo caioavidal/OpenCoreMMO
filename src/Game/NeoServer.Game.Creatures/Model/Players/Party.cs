@@ -10,7 +10,7 @@ namespace NeoServer.Game.Creatures.Model.Players
     public class Party: IParty
     {
         public event Action OnPartyOver;
-        public IPlayer Leader { get; }
+        public IPlayer Leader { get; private set; }
         private HashSet<uint> members = new HashSet<uint>();
         private HashSet<uint> invites = new HashSet<uint>();
 
@@ -35,6 +35,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (!IsInvited(player)) return false;
 
+            invites.Remove(player.CreatureId);
             members.Add(player.CreatureId);
             return true;
         }
@@ -64,6 +65,15 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 OnPartyOver?.Invoke();
             }
+        }
+
+        public Result ChangeLeadership(IPlayer from, IPlayer to)
+        {
+            if (!IsMember(to)) return new Result(InvalidOperation.NotAPartyMember);
+            if (!IsLeader(from)) return new Result(InvalidOperation.NotAPartyLeader);
+
+            Leader = to;
+            return Result.Success;
         }
     }
 }

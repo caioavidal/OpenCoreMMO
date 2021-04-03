@@ -12,7 +12,9 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
         event Action OnPartyOver;
 
+        Result ChangeLeadership(IPlayer from, IPlayer to);
         Result Invite(IPlayer by, IPlayer invitedPlayer);
+        bool IsInvited(IPlayer player);
         bool IsLeader(IPlayer player);
         bool IsLeader(uint creatureId);
         bool IsMember(uint creatureId);

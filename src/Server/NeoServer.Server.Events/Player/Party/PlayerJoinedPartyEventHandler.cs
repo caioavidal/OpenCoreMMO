@@ -9,7 +9,6 @@ namespace NeoServer.Server.Events.Player
 {
     public class PlayerJoinedPartyEventHandler
     {
-
         private readonly IGameServer game;
 
         public PlayerJoinedPartyEventHandler(IGameServer game)
@@ -29,7 +28,7 @@ namespace NeoServer.Server.Events.Player
 
                 if (spectator == member) //myself
                 {
-                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(party.Leader, PartyEmblem.Yellow));
+                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(party.Leader, PartyEmblem.Leader));
                     connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You have joined {party.Leader.Name}'s party. Open the party channel to communicate with your companions.", TextMessageOutgoingType.Description));
                 }
                 else
@@ -40,11 +39,10 @@ namespace NeoServer.Server.Events.Player
                 if ((party.IsMember(spectator.CreatureId) || party.IsLeader(spectator.CreatureId)))
                 {
                     //if spectator is member or leader, update new member emblem to blue
-                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(member, PartyEmblem.Blue));
+                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(member, PartyEmblem.Member));
                 }
 
                 connection.Send();
-
             }
         }
     }

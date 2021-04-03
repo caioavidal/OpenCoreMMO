@@ -18,6 +18,8 @@
         TooFar,
         AlreadyInParty,
         CannotInvite,
+        NotAPartyLeader,
+        NotAPartyMember,
     }
 
 }

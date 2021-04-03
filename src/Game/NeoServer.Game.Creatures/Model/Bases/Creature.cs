@@ -193,7 +193,7 @@ namespace NeoServer.Game.Creatures.Model
 
         public byte Skull { get; protected set; } // TODO: implement.
 
-        public byte Emblem { get; protected set; } // TODO: implement.
+        public virtual byte Emblem { get; } // TODO: implement.
         public bool IsHealthHidden { get; protected set; }
         public Location Location { get; set; }
 

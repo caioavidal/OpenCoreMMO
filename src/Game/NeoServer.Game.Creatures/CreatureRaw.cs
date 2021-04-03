@@ -1,5 +1,7 @@
 ﻿#define GAME_FEATURE_MESSAGE_LEVEL
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Party;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
@@ -12,6 +14,7 @@ namespace NeoServer.Game.Creatures
     {
         public static byte[] Convert(IPlayer playerRequesting, IWalkableCreature creature)
         {
+            //optimize this method
             var cache = new List<byte>();
 
             var known = playerRequesting.KnowsCreatureWithId(creature.CreatureId);
@@ -65,7 +68,7 @@ namespace NeoServer.Game.Creatures
             cache.AddRange(BitConverter.GetBytes(creature.Speed));
 
             cache.Add(creature.Skull);
-            cache.Add(creature.Emblem);
+            cache.Add((byte)GetPartyEmblem(playerRequesting, creature));
 
             if (!known)
             {
@@ -85,5 +88,27 @@ namespace NeoServer.Game.Creatures
             cache.Add(0x01);
             return cache.ToArray();
         }
+
+        private static PartyEmblem GetPartyEmblem(IPlayer playerRequesting, IWalkableCreature creature)
+        {
+            if (creature is not IPlayer player) return PartyEmblem.None;
+
+            if (playerRequesting.Party?.IsInvited(player) ?? false) return PartyEmblem.Invited;
+
+            if (player.Party is not IParty party) return PartyEmblem.None;
+
+            if (playerRequesting.Party is not null && party != playerRequesting.Party) return PartyEmblem.NotFromYourParty;
+
+            if (party.IsLeader(player))
+            {
+                if (party.IsInvited(playerRequesting)) return PartyEmblem.LeaderInvited;
+                return PartyEmblem.Leader;
+            }
+
+            if (playerRequesting.Party is null) return PartyEmblem.None;
+            return PartyEmblem.Member;
+
+        }
+
     }
 }

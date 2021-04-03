@@ -213,5 +213,6 @@ namespace NeoServer.Server.Model.Players.Contracts
         void ReceivePartyInvite(IPlayer leader, IParty party);
         void RejectInvite();
         void JoinParty(IParty party);
+        void PassPartyLeadership(IPlayer player);
     }
 }
