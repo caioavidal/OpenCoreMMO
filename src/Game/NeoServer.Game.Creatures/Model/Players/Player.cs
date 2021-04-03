@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Party;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -176,6 +177,7 @@ namespace NeoServer.Server.Model.Players
         public ushort MaxMana { get; private set; }
         public HashSet<uint> VipList { get; set; } = new HashSet<uint>();
         public FightMode FightMode { get; private set; }
+     
         public bool Shopping => TradingWithNpc is not null;
         public IEnumerable<IChatChannel> PrivateChannels
         {
@@ -933,6 +935,24 @@ namespace NeoServer.Server.Model.Players
             Party = party;
 
             OnJoinedParty?.Invoke(this, party);
+        }
+
+        public void PassPartyLeadership(IPlayer player)
+        {
+            if (Party is null) return;
+
+            var result = player.Party.ChangeLeadership(this, player);
+            if (result.IsSuccess) return;
+
+            switch (result.Error)
+            {
+                case InvalidOperation.NotAPartyMember:
+                    OnOperationFailed?.Invoke(CreatureId, TextConstants.PlayerIsNotPartyMember);
+                    break;
+                case InvalidOperation.NotAPartyLeader:
+                    OnOperationFailed?.Invoke(CreatureId, TextConstants.OnlyLeadersCanPassLeadership);
+                    break;
+            }
         }
     }
 }

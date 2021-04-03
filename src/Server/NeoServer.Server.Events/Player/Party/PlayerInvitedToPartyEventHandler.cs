@@ -22,12 +22,12 @@ namespace NeoServer.Server.Events.Player
 
             if (game.CreatureManager.GetPlayerConnection(leader.CreatureId, out var leaderConnection))
             {
-                leaderConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(invited, PartyEmblem.WhiteBlue));
+                leaderConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(invited, PartyEmblem.Invited));
                 leaderConnection.Send();
             }
             if (game.CreatureManager.GetPlayerConnection(invited.CreatureId, out var invitedConnection))
             {
-                invitedConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.WhiteYellow));
+                invitedConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.LeaderInvited));
                 invitedConnection.Send();
             }
         }

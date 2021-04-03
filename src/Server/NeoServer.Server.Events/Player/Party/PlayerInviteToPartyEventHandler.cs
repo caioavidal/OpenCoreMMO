@@ -24,7 +24,7 @@ namespace NeoServer.Server.Events.Player
             {
                 if (game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
                 {
-                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.Yellow));
+                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.Leader));
                     connection.Send();
                 }
             }
