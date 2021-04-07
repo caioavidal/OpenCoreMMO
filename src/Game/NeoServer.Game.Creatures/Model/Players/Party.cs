@@ -14,7 +14,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         private HashSet<uint> members = new HashSet<uint>();
         private HashSet<uint> invites = new HashSet<uint>();
 
-        public IReadOnlyCollection<uint> Members => invites.Append(Leader.CreatureId).ToList();
+        public IReadOnlyCollection<uint> Members => members.Append(Leader.CreatureId).ToList();
+        public IReadOnlyCollection<uint> Invites => invites.ToList();
 
         public bool IsEmpty => !members.Any();
 
@@ -73,6 +74,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!IsLeader(from)) return new Result(InvalidOperation.NotAPartyLeader);
 
             Leader = to;
+            members.Remove(to.CreatureId);
+            members.Add(from.CreatureId);
             return Result.Success;
         }
     }
