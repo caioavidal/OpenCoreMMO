@@ -129,7 +129,7 @@ namespace NeoServer.Server.Events
             player.OnSentMessage += playerSentMessageEventHandler.Execute;
             player.OnInviteToParty += playerInviteToPartyEventHandler.Execute;
             player.OnRevokePartyInvite += playerRevokedPartyInviteEventHandler.Execute;
-            player.OnPlayerLeftParty += playerLeftPartyEventHandler.Execute;
+            player.OnLeftParty += playerLeftPartyEventHandler.Execute;
             player.OnInvitedToParty += playerInvitedToPartyEventHandler.Execute;
             player.OnRejectedPartyInvite += playerLeftPartyEventHandler.Execute;
             player.OnJoinedParty += playerJoinedPartyEventHandler.Execute;
@@ -178,7 +178,7 @@ namespace NeoServer.Server.Events
             player.OnSentMessage -= playerSentMessageEventHandler.Execute;
             player.OnInviteToParty -= playerInviteToPartyEventHandler.Execute;
             player.OnRevokePartyInvite -= playerRevokedPartyInviteEventHandler.Execute;
-            player.OnPlayerLeftParty -= playerLeftPartyEventHandler.Execute;
+            player.OnLeftParty -= playerLeftPartyEventHandler.Execute;
             player.OnInvitedToParty -= playerInvitedToPartyEventHandler.Execute;
             player.OnJoinedParty -= playerJoinedPartyEventHandler.Execute;
 

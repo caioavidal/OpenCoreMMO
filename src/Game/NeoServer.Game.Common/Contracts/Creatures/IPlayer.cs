@@ -40,6 +40,7 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void RejectPartyInvite(IPlayer invited, IParty party);
     public delegate void JoinParty(IPlayer player, IParty party);
     public delegate void LeaveParty(IPlayer player, IParty party);
+    public delegate void PassPartyLeadership(IPlayer leader, IPlayer newLeader, IParty party);
 
     public interface IPlayer : ICombatActor, ISociableCreature
     {
@@ -82,10 +83,11 @@ namespace NeoServer.Server.Model.Players.Contracts
         event ChangeOnlineStatus OnChangedOnlineStatus;
         event InviteToParty OnInviteToParty;
         event RevokePartyInvite OnRevokePartyInvite;
-        event LeaveParty OnPlayerLeftParty;
+        event LeaveParty OnLeftParty;
         event InviteToParty OnInvitedToParty;
         event RejectPartyInvite OnRejectedPartyInvite;
         event JoinParty OnJoinedParty;
+        event PassPartyLeadership OnPassedPartyLeadership;
 
         IInventory Inventory { get; }
         ushort Mana { get; }
