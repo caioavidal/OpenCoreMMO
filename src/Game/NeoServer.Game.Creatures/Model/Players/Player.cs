@@ -99,7 +99,8 @@ namespace NeoServer.Server.Model.Players
         public event RevokePartyInvite OnRevokePartyInvite;
         public event RejectPartyInvite OnRejectedPartyInvite;
         public event JoinParty OnJoinedParty;
-        public event LeaveParty OnPlayerLeftParty;
+        public event LeaveParty OnLeftParty;
+        public event PassPartyLeadership OnPassedPartyLeadership;
 
         public event Hear OnHear;
 
@@ -915,7 +916,7 @@ namespace NeoServer.Server.Model.Players
             if (InFight) return;
 
             Party.RemoveMember(this);
-            OnPlayerLeftParty?.Invoke(this, Party);
+            OnLeftParty?.Invoke(this, Party);
             Party = null;
         }
 
@@ -942,7 +943,11 @@ namespace NeoServer.Server.Model.Players
             if (Party is null) return;
 
             var result = player.Party.ChangeLeadership(this, player);
-            if (result.IsSuccess) return;
+            if (result.IsSuccess)
+            {
+                OnPassedPartyLeadership?.Invoke(this, player, Party);
+                return;
+            }
 
             switch (result.Error)
             {

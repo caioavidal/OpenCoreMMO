@@ -9,6 +9,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         IReadOnlyCollection<uint> Members { get; }
         bool IsEmpty { get; }
         IPlayer Leader { get; }
+        IReadOnlyCollection<uint> Invites { get; }
 
         event Action OnPartyOver;
 
