@@ -21,6 +21,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool IsMember(uint creatureId);
         bool IsMember(IPlayer player);
         bool JoinPlayer(IPlayer player);
+        Result PassLeadership(IPlayer from);
         void RemoveMember(IPlayer player);
         void RevokeInvite(IPlayer by, IPlayer invitedPlayer);
     }

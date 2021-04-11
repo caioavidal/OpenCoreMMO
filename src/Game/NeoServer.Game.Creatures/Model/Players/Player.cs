@@ -112,6 +112,7 @@ namespace NeoServer.Server.Model.Players
         public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
         public IParty Party { get; private set; }
         private IParty PartyInvite;
+        private bool IsPartyLeader => Party?.IsLeader(this) ?? false;
 
         public void LoadBank(ulong amount) => BankAmount = amount;
         public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
@@ -914,6 +915,9 @@ namespace NeoServer.Server.Model.Players
         {
             if (Party is null) return;
             if (InFight) return;
+
+            if (IsPartyLeader) 
+                Party.PassLeadership(this);
 
             Party.RemoveMember(this);
             OnLeftParty?.Invoke(this, Party);
