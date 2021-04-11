@@ -9,6 +9,7 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,17 @@ namespace NeoServer.Game.Items
 
         public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
 
+
+        public IItem CreateCorpse(ushort typeId, Location location, IPlayer owner)
+        {
+            if (!ItemTypeStore.Data.TryGetValue(typeId, out var itemType)) return null;
+
+            var createdItem = new LootContainer(itemType, location, owner);
+
+            SubscribeEvents(createdItem);
+
+            return createdItem;
+        }
         public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
             if (!ItemTypeStore.Data.TryGetValue(typeId, out var itemType)) return null;

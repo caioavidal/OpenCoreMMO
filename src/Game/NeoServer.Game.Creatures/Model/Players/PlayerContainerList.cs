@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
@@ -101,6 +102,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (location.Type == LocationType.Ground)
             {
                 if (!player.Location.IsNextTo(containerToOpen.Location)) return;
+                if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player)) return;
+
                 playerContainer = new PlayerContainer(containerToOpen, player);
             }
             else if (location.Slot == Slot.Backpack)
