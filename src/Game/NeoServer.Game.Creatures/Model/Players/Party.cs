@@ -33,7 +33,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             get
             {
-                PartyMember partyMember;
+                PartyMember partyMember = new();
                 var min = uint.MaxValue;
                 foreach (var member in members)
                 {
@@ -106,6 +106,13 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             Leader = FirstMemberJoined.Player;
             members.Remove(Leader.CreatureId);
+
+            if (IsEmpty)
+            {
+                OnPartyOver?.Invoke();
+                return Result.NotPossible;
+            }
+
             return Result.Success;
         }
     }
