@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creatures.Enums;
+using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Creatures.Events
 {
@@ -19,13 +20,14 @@ namespace NeoServer.Game.Creatures.Events
         }
         public void Execute(ICreature creature, IThing by)
         {
-            CreateCorpse(creature);
+            CreateCorpse(creature, by);
             CreateBlood(creature);
         }
 
-        private void CreateCorpse(ICreature creature)
+        private void CreateCorpse(ICreature creature, IThing by)
         {
-            var corpse = itemFactory.Create(creature.CorpseType, creature.Location, null);
+            var playerOwner = by is IPlayer ? (IPlayer)by : null;
+            var corpse = itemFactory.CreateCorpse(creature.CorpseType, creature.Location, playerOwner);
             creature.Corpse = corpse;
 
             if (creature is IWalkableCreature walkable)
