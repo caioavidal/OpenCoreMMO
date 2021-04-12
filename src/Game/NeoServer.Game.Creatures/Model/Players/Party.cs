@@ -11,13 +11,25 @@ namespace NeoServer.Game.Creatures.Model.Players
     public class Party : IParty
     {
         public event Action OnPartyOver;
-        
+
         private Dictionary<uint, PartyMember> members = new Dictionary<uint, PartyMember>();
         private HashSet<uint> invites = new HashSet<uint>();
         private ushort memberCount = 0;
 
         public IPlayer Leader { get; private set; }
-        public IReadOnlyCollection<uint> Members => members.Keys.Append(Leader.CreatureId).ToList();
+        public IReadOnlyCollection<IPlayer> Members
+        {
+            get
+            {
+                var membersList = new List<IPlayer>(members.Count + 1);
+                foreach (var member in members.Values)
+                {
+                    membersList.Add(member.Player);
+                }
+                membersList.Add(Leader);
+                return membersList;
+            }
+        }
         public IReadOnlyCollection<uint> Invites => invites.ToList();
         public IChatChannel Channel { get; }
         public bool IsEmpty => !members.Any();
@@ -96,12 +108,15 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public Result ChangeLeadership(IPlayer from, IPlayer to)
         {
+            if (Guard.AnyNull(from, to)) return Result.NotPossible;
+
             if (!IsMember(to)) return new Result(InvalidOperation.NotAPartyMember);
             if (!IsLeader(from)) return new Result(InvalidOperation.NotAPartyLeader);
 
             Leader = to;
-            members.Remove(to.CreatureId);
             members.Add(from.CreatureId, new PartyMember(from, ++memberCount));
+            members.Remove(to.CreatureId);
+
             return Result.Success;
         }
 
@@ -113,18 +128,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public Result PassLeadership(IPlayer from)
         {
             if (!IsLeader(from)) return new Result(InvalidOperation.NotAPartyLeader);
-
-            Leader = FirstMemberJoined.Player;
-
-            if(Leader is not null) members.Remove(Leader.CreatureId);
-
-            if (IsEmpty)
-            {
-                OnPartyOver?.Invoke();
-                return Result.NotPossible;
-            }
-
-            return Result.Success;
+            return ChangeLeadership(from, FirstMemberJoined.Player);
         }
     }
 

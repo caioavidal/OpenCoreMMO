@@ -20,10 +20,9 @@ namespace NeoServer.Server.Events.Player
         {
             if (Guard.AnyNull(oldLeader, newLeader, party)) return;
 
-            foreach (var memberId in party.Members)
+            foreach (var member in party.Members)
             {
-                if (!game.CreatureManager.GetPlayerConnection(memberId, out var connection)) continue;
-                if (!game.CreatureManager.TryGetPlayer(memberId, out var member)) continue;
+                if (!game.CreatureManager.GetPlayerConnection(member.CreatureId, out var connection)) continue;
 
                 if (member == newLeader)
                 {

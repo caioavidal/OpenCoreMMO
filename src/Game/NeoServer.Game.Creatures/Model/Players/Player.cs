@@ -906,13 +906,14 @@ namespace NeoServer.Server.Model.Players
         {
             Party.OnPartyOver -= PartyEmptyHandler;
             LeaveParty();
-            Party = null;
         }
 
         public void LeaveParty()
         {
             if (Party is null) return;
             if (InFight) return;
+
+            Party.OnPartyOver -= PartyEmptyHandler;
 
             if (IsPartyLeader) 
                 Party.PassLeadership(this);
