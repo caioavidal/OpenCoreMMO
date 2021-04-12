@@ -1,4 +1,5 @@
-﻿using NeoServer.Networking.Packets.Outgoing;
+﻿using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Handlers;
@@ -9,10 +10,11 @@ namespace NeoServer.Networking.Handlers.Player
     public class PlayerInviteToPartyHandler : PacketHandler
     {
         private readonly IGameServer game;
-
-        public PlayerInviteToPartyHandler(IGameServer game)
+        private readonly IPartyInviteService partyInviteService;
+        public PlayerInviteToPartyHandler(IGameServer game, IPartyInviteService partyInviteService)
         {
             this.game = game;
+            this.partyInviteService = partyInviteService;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -25,7 +27,7 @@ namespace NeoServer.Networking.Handlers.Player
                 return;
             }
 
-            game.Dispatcher.AddEvent(new Event(() => player.InviteToParty(invitedPlayer)));
+            game.Dispatcher.AddEvent(new Event(() => partyInviteService.Invite(player, invitedPlayer)));
         }
     }
 }

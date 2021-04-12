@@ -32,6 +32,17 @@ namespace NeoServer.Game.Chats
             SubscribeEvents(channel);
             return channel;
         }
+
+        public IChatChannel CreatePartyChannel(string name = "Party")
+        {
+            var id = GenerateUniqueId();
+
+            var channel = new ChatChannel(id, name);
+
+            SubscribeEvents(channel);
+
+            return channel;
+        }
         public IChatChannel Create(string name, string description, bool opened, SpeechType chatColor, Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule, MuteRule muteRule)
         {
             var id = GenerateUniqueId();
@@ -51,6 +62,8 @@ namespace NeoServer.Game.Chats
 
             return channel;
         }
+
+        //injected
         public IEnumerable<IChatChannelEventSubscriber> ChannelEventSubscribers { get; set; }
 
         private static ushort GenerateUniqueId()

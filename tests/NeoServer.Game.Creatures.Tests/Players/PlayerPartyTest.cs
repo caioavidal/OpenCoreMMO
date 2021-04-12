@@ -1,4 +1,6 @@
 ﻿using Moq;
+using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests;
 using NeoServer.Server.Model.Players.Contracts;
 using Xunit;
@@ -15,7 +17,9 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var invitedPlayer = new Mock<IPlayer>();
             invitedPlayer.Setup(x => x.IsInParty).Returns(true);
 
-            sut.InviteToParty(invitedPlayer.Object);
+            var party = new Party(sut, new Mock<IChatChannel>().Object);
+
+            sut.InviteToParty(invitedPlayer.Object, party);
 
             Assert.Null(sut.Party);
         }
@@ -31,14 +35,16 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var invited = false;
 
-            leader.InviteToParty(sut);
+            var party = new Party(sut, new Mock<IChatChannel>().Object);
+
+            leader.InviteToParty(sut,party);
 
             leader.OnInviteToParty += (by, playerInvited, party) =>
             {
                 if (playerInvited == invitedPlayer) invited = true;
             };
 
-            sut.InviteToParty(invitedPlayer);
+            sut.InviteToParty(invitedPlayer, party);
 
             Assert.False(invited);
         }
@@ -55,8 +61,9 @@ namespace NeoServer.Game.Creatures.Tests.Players
             {
                 if (playerInvited == invitedPlayer) invited = true;
             };
+            var party = new Party(sut, new Mock<IChatChannel>().Object);
 
-            sut.InviteToParty(invitedPlayer);
+            sut.InviteToParty(invitedPlayer, party);
 
             Assert.True(invited);
         }

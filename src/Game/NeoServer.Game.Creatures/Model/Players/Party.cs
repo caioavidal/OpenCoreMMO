@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Contracts.Chats;
 using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,22 @@ namespace NeoServer.Game.Creatures.Model.Players
     public class Party : IParty
     {
         public event Action OnPartyOver;
-        public IPlayer Leader { get; private set; }
+        
         private Dictionary<uint, PartyMember> members = new Dictionary<uint, PartyMember>();
         private HashSet<uint> invites = new HashSet<uint>();
         private ushort memberCount = 0;
+
+        public IPlayer Leader { get; private set; }
         public IReadOnlyCollection<uint> Members => members.Keys.Append(Leader.CreatureId).ToList();
         public IReadOnlyCollection<uint> Invites => invites.ToList();
-
+        public IChatChannel Channel { get; }
         public bool IsEmpty => !members.Any();
 
-        public Party(IPlayer player)
+        public Party(IPlayer player, IChatChannel channel)
         {
             Leader = player;
+            Channel = channel;
+            player.JoinChannel(channel);
         }
 
         public bool IsMember(IPlayer player) => members.ContainsKey(player.CreatureId);
@@ -48,12 +53,14 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
         public bool JoinPlayer(IPlayer player)
         {
-            if (Guard.AnyNull(player)) return false;
+            if (Validation.IsNull(player)) return false;
 
             if (!IsInvited(player)) return false;
 
             invites.Remove(player.CreatureId);
             members.Add(player.CreatureId, new PartyMember(player, ++memberCount));
+
+            player.JoinChannel(Channel);
             return true;
         }
         public Result Invite(IPlayer by, IPlayer invitedPlayer)
@@ -75,9 +82,12 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
         public void RemoveMember(IPlayer player)
         {
+            if (Validation.IsNull(player)) return;
             if (player.InFight) return;
 
             members.Remove(player.CreatureId);
+            player.ExitChannel(Channel);
+
             if (IsEmpty)
             {
                 OnPartyOver?.Invoke();
@@ -105,7 +115,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!IsLeader(from)) return new Result(InvalidOperation.NotAPartyLeader);
 
             Leader = FirstMemberJoined.Player;
-            members.Remove(Leader.CreatureId);
+
+            if(Leader is not null) members.Remove(Leader.CreatureId);
 
             if (IsEmpty)
             {
@@ -124,7 +135,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             Player = player;
             Order = order;
         }
-
         public IPlayer Player { get; }
         public ushort Order { get; }
     }

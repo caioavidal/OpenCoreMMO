@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Creatures.Party;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -77,7 +76,6 @@ namespace NeoServer.Server.Model.Players
         public event PlayerLevelAdvance OnLevelAdvanced;
         public event PlayerGainSkillPoint OnGainedSkillPoint;
 
-        public event OperationFail OnOperationFailed;
         public event CancelWalk OnCancelledWalk;
 
         public event ReduceMana OnStatusChanged;
@@ -107,7 +105,6 @@ namespace NeoServer.Server.Model.Players
         public ushort GuildId { get; init; }
         public bool HasGuild => GuildId > 0;
         public IGuild Guild => GuildStore.Data.Get(GuildId);
-        public IChatChannel NpcsChannel { get; init; }
         public ulong BankAmount { get; private set; }
         public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
         public IParty Party { get; private set; }
@@ -186,6 +183,7 @@ namespace NeoServer.Server.Model.Players
             get
             {
                 if (HasGuild) yield return Guild.Channel;
+                if (Party?.Channel is not null) yield return Party.Channel;
             }
         }
         private IDictionary<ushort, IChatChannel> personalChannels;
@@ -529,7 +527,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (CannotLogout && forced == false)
             {
-                OnOperationFailed?.Invoke(CreatureId, "You may not logout during or immediately after a fight");
+                OperationFailService.Display(CreatureId, "You may not logout during or immediately after a fight");
                 return false;
             }
 
@@ -609,7 +607,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
+                OperationFailService.Display(CreatureId, requirement.ValidationError);
                 return;
             }
             var result = false;
@@ -627,7 +625,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
+                OperationFailService.Display(CreatureId, requirement.ValidationError);
                 return;
             }
 
@@ -640,7 +638,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, requirement.ValidationError);
+                OperationFailService.Display(CreatureId, requirement.ValidationError);
                 return;
             }
 
@@ -665,7 +663,7 @@ namespace NeoServer.Server.Model.Players
             {
                 if (condition.RemainingTime + regenerationMs >= maxRegenerationTime) //todo: this number should be configurable
                 {
-                    OnOperationFailed?.Invoke(CreatureId, "You are full");
+                    OperationFailService.Display(CreatureId, "You are full");
                     return false;
                 }
 
@@ -710,12 +708,12 @@ namespace NeoServer.Server.Model.Players
 
             if (channel.HasUser(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, "You've already joined this chat channel");
+                OperationFailService.Display(CreatureId, "You've already joined this chat channel");
                 return false;
             }
             if (!channel.AddUser(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, "You cannot join this chat channel");
+                OperationFailService.Display(CreatureId, "You cannot join this chat channel");
                 return false;
             }
 
@@ -724,13 +722,15 @@ namespace NeoServer.Server.Model.Players
         }
         public bool ExitChannel(IChatChannel channel)
         {
+            if (channel is null) return false;
+
             if (!channel.HasUser(this))
             {
                 return false;
             }
             if (!channel.RemoveUser(this))
             {
-                OnOperationFailed?.Invoke(CreatureId, "You cannot exit this chat channel");
+                OperationFailService.Display(CreatureId, "You cannot exit this chat channel");
                 return false;
             }
 
@@ -741,7 +741,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (!channel.WriteMessage(this, message, out var cancelMessage))
             {
-                OnOperationFailed?.Invoke(CreatureId, cancelMessage);
+                OperationFailService.Display(CreatureId, cancelMessage);
                 return false;
             }
             return true;
@@ -752,20 +752,20 @@ namespace NeoServer.Server.Model.Players
 
             if (VipList?.Count > 200)
             {
-                OnOperationFailed?.Invoke(CreatureId, "You cannot add more buddies.");
+                OperationFailService.Display(CreatureId, "You cannot add more buddies.");
                 return false;
             }
             if (player.FlagIsEnabled(PlayerFlag.SpecialVIP))
             {
                 if (!FlagIsEnabled(PlayerFlag.SpecialVIP))
                 {
-                    OnOperationFailed?.Invoke(CreatureId, TextConstants.CannotAddPlayerToVipList);
+                    OperationFailService.Display(CreatureId, TextConstants.CannotAddPlayerToVipList);
                     return false;
                 }
             }
             if (!VipList.Add(player.Id))
             {
-                OnOperationFailed?.Invoke(CreatureId, "This player is already in your list.");
+                OperationFailService.Display(CreatureId, "This player is already in your list.");
                 return false;
             }
 
@@ -854,30 +854,28 @@ namespace NeoServer.Server.Model.Players
             }
         }
 
-        public void InviteToParty(IPlayer invitedPlayer)
+        public void InviteToParty(IPlayer invitedPlayer, IParty party)
         {
             if (invitedPlayer is null || invitedPlayer.CreatureId == CreatureId) return;
 
             if (invitedPlayer.IsInParty)
             {
-                OnOperationFailed?.Invoke(CreatureId, $"{invitedPlayer.Name} is already in a party");
+                OperationFailService.Display(CreatureId, $"{invitedPlayer.Name} is already in a party");
+                return;
+            }
+
+            var result = party.Invite(this, invitedPlayer);
+
+            if (!result.IsSuccess)
+            {
+                OperationFailService.Display(CreatureId, TextConstants.OnlyLeadersCanInviteToParty);
                 return;
             }
 
             var partyCreatedNow = Party is null;
-            Party = Party ?? new Party(this);
-
-            var result = Party.Invite(this, invitedPlayer);
-
-            if (!result.IsSuccess)
-            {
-                OnOperationFailed?.Invoke(CreatureId, TextConstants.OnlyLeadersCanInviteToParty);
-                return;
-            }
-
+            Party = party;
             OnInviteToParty?.Invoke(this, invitedPlayer, Party);
 
-            invitedPlayer.ReceivePartyInvite(this, Party);
             if(partyCreatedNow) Party.OnPartyOver += PartyEmptyHandler;
         }
 
@@ -919,7 +917,7 @@ namespace NeoServer.Server.Model.Players
             if (IsPartyLeader) 
                 Party.PassLeadership(this);
 
-            Party.RemoveMember(this);
+            Party?.RemoveMember(this);
             OnLeftParty?.Invoke(this, Party);
             Party = null;
         }
@@ -929,7 +927,7 @@ namespace NeoServer.Server.Model.Players
             if (party is null) return;
             if (Party is not null)
             {
-                OnOperationFailed?.Invoke(CreatureId, TextConstants.AlreadyInParty);
+                OperationFailService.Display(CreatureId, TextConstants.AlreadyInParty);
                 return;
             }
 
@@ -956,10 +954,10 @@ namespace NeoServer.Server.Model.Players
             switch (result.Error)
             {
                 case InvalidOperation.NotAPartyMember:
-                    OnOperationFailed?.Invoke(CreatureId, TextConstants.PlayerIsNotPartyMember);
+                    OperationFailService.Display(CreatureId, TextConstants.PlayerIsNotPartyMember);
                     break;
                 case InvalidOperation.NotAPartyLeader:
-                    OnOperationFailed?.Invoke(CreatureId, TextConstants.OnlyLeadersCanPassLeadership);
+                    OperationFailService.Display(CreatureId, TextConstants.OnlyLeadersCanPassLeadership);
                     break;
             }
         }

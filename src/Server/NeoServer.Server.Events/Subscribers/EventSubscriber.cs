@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Items;
 
@@ -15,7 +16,7 @@ namespace NeoServer.Server.Events
         {
             this.map = map;
             this.container = container;
-            this.itemFactory = itemFactory;   
+            this.itemFactory = itemFactory;
         }
 
         public virtual void AttachEvents()
@@ -28,6 +29,7 @@ namespace NeoServer.Server.Events
             map.OnThingUpdatedOnTile += container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
             BaseSpell.OnSpellInvoked += container.Resolve<SpellInvokedEventHandler>().Execute;
             itemFactory.OnItemCreated += container.Resolve<ItemCreatedEventHandler>().Execute;
+            OperationFailService.OperationFailed += container.Resolve<PlayerOperationFailedEventHandler>().Execute;
         }
     }
 }
