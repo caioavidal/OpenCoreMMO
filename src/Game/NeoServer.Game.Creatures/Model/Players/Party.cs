@@ -32,7 +32,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
         public IReadOnlyCollection<uint> Invites => invites.ToList();
         public IChatChannel Channel { get; }
-        public bool IsEmpty => !members.Any();
+        public bool IsOver => !members.Any();
 
         public Party(IPlayer player, IChatChannel channel)
         {
@@ -89,7 +89,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!IsLeader(by)) return;
             if (!invites.Remove(invitedPlayer.CreatureId)) return;
 
-            if (IsEmpty && !invites.Any()) OnPartyOver?.Invoke();
+            if (IsOver && !invites.Any()) OnPartyOver?.Invoke();
 
         }
         public void RemoveMember(IPlayer player)
@@ -100,7 +100,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             members.Remove(player.CreatureId);
             player.ExitChannel(Channel);
 
-            if (IsEmpty)
+            if (IsOver)
             {
                 OnPartyOver?.Invoke();
             }

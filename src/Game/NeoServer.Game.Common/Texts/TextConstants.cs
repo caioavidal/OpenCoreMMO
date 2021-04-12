@@ -7,7 +7,7 @@
         public const string OnlyLeadersCanInviteToParty = "Only leaders can invite to party";
         public const string OnlyLeadersCanPassLeadership = "Only leaders can pass the leadership";
         public const string PlayerIsNotPartyMember = "Player is not a party member";
-
+        public const string PartyHasBeenDisbanded = "Your party has been disbanded";
 
     }
 }

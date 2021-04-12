@@ -176,7 +176,7 @@ namespace NeoServer.Server.Model.Players
         public ushort MaxMana { get; private set; }
         public HashSet<uint> VipList { get; set; } = new HashSet<uint>();
         public FightMode FightMode { get; private set; }
-     
+
         public bool Shopping => TradingWithNpc is not null;
         public IEnumerable<IChatChannel> PrivateChannels
         {
@@ -876,7 +876,7 @@ namespace NeoServer.Server.Model.Players
             Party = party;
             OnInviteToParty?.Invoke(this, invitedPlayer, Party);
 
-            if(partyCreatedNow) Party.OnPartyOver += PartyEmptyHandler;
+            if (partyCreatedNow) Party.OnPartyOver += PartyEmptyHandler;
         }
 
         public void ReceivePartyInvite(IPlayer leader, IParty party)
@@ -915,10 +915,19 @@ namespace NeoServer.Server.Model.Players
 
             Party.OnPartyOver -= PartyEmptyHandler;
 
-            if (IsPartyLeader) 
-                Party.PassLeadership(this);
+            var passedLeadership = false;
+            if (IsPartyLeader)
+            {
+                passedLeadership = Party.PassLeadership(this).IsSuccess;
+            }
 
             Party?.RemoveMember(this);
+
+            if(passedLeadership && !Party.IsOver)
+            {
+                OnPassedPartyLeadership?.Invoke(this, Party.Leader, Party);
+            }
+
             OnLeftParty?.Invoke(this, Party);
             Party = null;
         }
@@ -935,6 +944,8 @@ namespace NeoServer.Server.Model.Players
             if (!party.JoinPlayer(this)) return;
 
             party.OnPartyOver += PartyEmptyHandler;
+            party.OnPartyOver -= RejectInvite;
+
 
             Party = party;
 
