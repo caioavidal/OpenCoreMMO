@@ -23,7 +23,6 @@ namespace NeoServer.Server.Model.Players.Contracts
     public delegate void ReduceMana(IPlayer player);
     public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
     public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
-    public delegate void OperationFail(uint id, string message);
     public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
     public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
     public delegate void UseItem(IPlayer player, IThing thing, IUseableOn item);
@@ -68,7 +67,6 @@ namespace NeoServer.Server.Model.Players.Contracts
 
         event CancelWalk OnCancelledWalk;
         event CannotUseSpell OnCannotUseSpell;
-        event OperationFail OnOperationFailed;
         event LookAt OnLookedAt;
         event PlayerGainSkillPoint OnGainedSkillPoint;
         event UseItem OnUsedItem;
@@ -209,7 +207,7 @@ namespace NeoServer.Server.Model.Players.Contracts
         bool IsInParty { get; }
         IParty Party { get; }
 
-        void InviteToParty(IPlayer player);
+        void InviteToParty(IPlayer invitedPlayer, IParty party);
         void RevokePartyInvite(IPlayer invitedPlayer);
         void LeaveParty();
         void ReceivePartyInvite(IPlayer leader, IParty party);

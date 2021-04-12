@@ -1,4 +1,5 @@
-﻿using NeoServer.Server.Model.Players.Contracts;
+﻿using NeoServer.Game.Contracts.Chats;
+using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool IsEmpty { get; }
         IPlayer Leader { get; }
         IReadOnlyCollection<uint> Invites { get; }
+        IChatChannel Channel { get; }
 
         event Action OnPartyOver;
 

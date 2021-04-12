@@ -119,7 +119,6 @@ namespace NeoServer.Server.Events
             player.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
             player.OnRemovedCondition += _playerConditionChangedEventHandler.Execute;
             player.OnLevelAdvanced += _playerLevelAdvancedEventHandler.Execute;
-            player.OnOperationFailed += _playerOperationFailedEventHandler.Execute;
             player.OnLookedAt += playerLookedAtEventHandler.Execute;
             player.OnGainedSkillPoint += playerGainedSkillPointsEventHandler.Execute;
             player.OnUsedItem += playerUsedItemEventHandler.Execute;
@@ -169,7 +168,6 @@ namespace NeoServer.Server.Events
             player.OnAddedCondition -= _playerConditionChangedEventHandler.Execute;
             player.OnRemovedCondition -= _playerConditionChangedEventHandler.Execute;
             player.OnLevelAdvanced -= _playerLevelAdvancedEventHandler.Execute;
-            player.OnOperationFailed -= _playerOperationFailedEventHandler.Execute;
             player.OnLookedAt -= playerLookedAtEventHandler.Execute;
             player.OnGainedSkillPoint -= playerGainedSkillPointsEventHandler.Execute;
             player.OnUsedItem -= playerUsedItemEventHandler.Execute;
