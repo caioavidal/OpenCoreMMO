@@ -16,34 +16,32 @@ namespace NeoServer.Server.Events.Player
             this.game = game;
         }
 
-        public void Execute(IPlayer member, IParty party)
+        public void Execute(IPlayer newMember, IParty party)
         {
-            if (Guard.AnyNull(member, party)) return;
+            if (Guard.AnyNull(newMember, party)) return;
 
-            foreach (var spectator in game.Map.GetPlayersAtPositionZone(member.Location))
+            game.CreatureManager.GetPlayerConnection(newMember.CreatureId, out var newMemberConnection);
+
+            newMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(newMember, PartyEmblem.Member));
+            newMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket($"You have joined {party.Leader.Name}'s party. Open the party channel to communicate with your companions.", TextMessageOutgoingType.Description));
+
+            foreach (var member in party.Members)
             {
-                if (!party.IsMember(spectator.CreatureId) && !party.IsLeader(spectator.CreatureId)) continue;
+                if (member == newMember) continue;
+                if (!game.CreatureManager.GetPlayerConnection(member.CreatureId, out var memberConnection)) continue;
 
-                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
+                memberConnection.OutgoingPackets.Enqueue(new TextMessagePacket($"{newMember.Name} has joined the party", TextMessageOutgoingType.Description));
 
-                if (spectator == member) //myself
+                if (member.CanSee(newMember.Location))
                 {
-                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(party.Leader, PartyEmblem.Leader));
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You have joined {party.Leader.Name}'s party. Open the party channel to communicate with your companions.", TextMessageOutgoingType.Description));
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{member.Name} has joined the party", TextMessageOutgoingType.Description));
+                    memberConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(newMember, PartyEmblem.Member));
+                    newMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(member, party.IsLeader(member.CreatureId) ? PartyEmblem.Leader : PartyEmblem.Member));
                 }
 
-                if ((party.IsMember(spectator.CreatureId) || party.IsLeader(spectator.CreatureId)))
-                {
-                    //if spectator is member or leader, update new member emblem to blue
-                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(member, PartyEmblem.Member));
-                }
-
-                connection.Send();
+                memberConnection.Send();
             }
+
+            newMemberConnection?.Send();
         }
     }
 }

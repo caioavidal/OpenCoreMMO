@@ -103,7 +103,8 @@ namespace NeoServer.Game.Creatures
             if (party.IsLeader(player))
             {
                 if (party.IsInvited(playerRequesting)) return PartyEmblem.LeaderInvited;
-                return PartyEmblem.Leader;
+                if (party.IsMember(playerRequesting)) return PartyEmblem.Leader;
+                return PartyEmblem.None;
             }
 
             if (playerRequesting.Party is null) return PartyEmblem.None;

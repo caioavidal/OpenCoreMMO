@@ -20,13 +20,10 @@ namespace NeoServer.Server.Events.Player
         {
             if (Guard.AnyNull(leader, invited, party)) return;
 
-            foreach (var spectator in game.Map.GetPlayersAtPositionZone(leader.Location))
+            if (game.CreatureManager.GetPlayerConnection(leader.CreatureId, out var connection))
             {
-                if (game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
-                {
-                    connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.Leader));
-                    connection.Send();
-                }
+                connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.Leader));
+                connection.Send();
             }
         }
     }

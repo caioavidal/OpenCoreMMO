@@ -7,8 +7,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface IParty
     {
-        IReadOnlyCollection<uint> Members { get; }
-        bool IsEmpty { get; }
+        IReadOnlyCollection<IPlayer> Members { get; }
+        bool IsOver { get; }
         IPlayer Leader { get; }
         IReadOnlyCollection<uint> Invites { get; }
         IChatChannel Channel { get; }
