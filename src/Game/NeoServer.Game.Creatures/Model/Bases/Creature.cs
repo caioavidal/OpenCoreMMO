@@ -35,7 +35,7 @@ namespace NeoServer.Game.Creatures.Model
 
             CreatureType = type;
 
-            CreatureId = RandomIdGenerator.Generate();
+            CreatureId = RandomCreatureIdGenerator.Generate(this);
             Outfit = outfit ?? new Outfit()
             {
                 LookType = type.Look[LookType.Type],
