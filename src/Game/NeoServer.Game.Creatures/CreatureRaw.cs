@@ -86,6 +86,7 @@ namespace NeoServer.Game.Creatures
             }
 
             cache.Add(0x01);
+
             return cache.ToArray();
         }
 
