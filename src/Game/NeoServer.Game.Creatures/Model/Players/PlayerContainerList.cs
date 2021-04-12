@@ -1,7 +1,9 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
+using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
@@ -102,7 +104,11 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (location.Type == LocationType.Ground)
             {
                 if (!player.Location.IsNextTo(containerToOpen.Location)) return;
-                if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player)) return;
+                if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player))
+                {
+                    OperationFailService.Display(player.CreatureId, TextConstants.YouAreNotTheOwner);
+                    return;
+                }
 
                 playerContainer = new PlayerContainer(containerToOpen, player);
             }

@@ -911,7 +911,7 @@ namespace NeoServer.Server.Model.Players
         public void LeaveParty()
         {
             if (Party is null) return;
-            if (InFight) return;
+            if (InFight) OperationFailService.Display(CreatureId, TextConstants.YouCannotLeavePartyWhenInFight);
 
             Party.OnPartyOver -= PartyEmptyHandler;
 
@@ -923,7 +923,7 @@ namespace NeoServer.Server.Model.Players
 
             Party?.RemoveMember(this);
 
-            if(passedLeadership && !Party.IsOver)
+            if (passedLeadership && !Party.IsOver)
             {
                 OnPassedPartyLeadership?.Invoke(this, Party.Leader, Party);
             }
