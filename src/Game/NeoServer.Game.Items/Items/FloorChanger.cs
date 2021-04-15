@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Items.Items
 {

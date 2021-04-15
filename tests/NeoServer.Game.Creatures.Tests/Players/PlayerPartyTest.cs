@@ -2,7 +2,7 @@
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players

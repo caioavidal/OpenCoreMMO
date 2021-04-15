@@ -2,7 +2,7 @@
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Events
 {

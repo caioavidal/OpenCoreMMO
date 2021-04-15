@@ -3,7 +3,7 @@ using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.DataStore;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;

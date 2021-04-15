@@ -4,7 +4,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Commands.Movement
 {

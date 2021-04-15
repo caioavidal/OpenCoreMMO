@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 

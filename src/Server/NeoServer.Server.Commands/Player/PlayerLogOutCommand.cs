@@ -1,6 +1,6 @@
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Commands
 {

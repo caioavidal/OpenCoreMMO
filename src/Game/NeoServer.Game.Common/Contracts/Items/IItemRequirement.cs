@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Common;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System.Linq;
 using System.Text;
 

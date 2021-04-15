@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 
 public class RandomIdGenerator

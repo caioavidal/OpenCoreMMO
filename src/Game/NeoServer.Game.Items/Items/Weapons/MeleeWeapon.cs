@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Immutable;
 

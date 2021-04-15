@@ -15,7 +15,7 @@ using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Contracts.World;
 using System.Collections.Generic;
 
-namespace NeoServer.Server.Model.Players.Contracts
+namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void CancelWalk(IPlayer player);
     public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);

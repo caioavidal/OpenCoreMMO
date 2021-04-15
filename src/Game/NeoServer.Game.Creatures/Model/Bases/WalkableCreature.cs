@@ -7,7 +7,7 @@ using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.DataStore;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 

@@ -7,7 +7,6 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.DataStore;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Threading;
 using Xunit;
 

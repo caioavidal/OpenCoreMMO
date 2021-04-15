@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.DataStore;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System.Linq;
 
 namespace NeoServer.Game.Creatures.Events

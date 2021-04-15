@@ -5,14 +5,13 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.DataStore;
 using NeoServer.Scripts.Chat;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
 
 namespace NeoServer.Scripts.Events.Creatures
 {
     public class CreatureKilledEventHandler : IGameEventHandler
     {
-        public void Execute(ICombatActor actor, IThing by)
+        public void Execute(ICombatActor actor, IThing by, ILoot loot)
         {
             AddDeathMessageToChannel(actor, by);
         }

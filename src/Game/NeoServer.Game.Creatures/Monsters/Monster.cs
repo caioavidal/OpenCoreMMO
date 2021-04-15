@@ -23,7 +23,6 @@ namespace NeoServer.Game.Creatures.Model.Monsters
     public class Monster : WalkableMonster, IMonster
     {
         public event Born OnWasBorn;
-        public override event DropLoot OnDropLoot;
         public event MonsterChangeState OnChangedState;
         public Monster(IMonsterType type, ISpawnPoint spawn) : base(type)
         {
@@ -361,37 +360,45 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             StopDefending();
             base.OnDeath(by);
-
-            DropLoot();
         }
-        public void DropLoot()
+        public override ILoot DropLoot()
         {
-            var loot = Metadata.Loot?.Drop();
+            var lootItems = Metadata.Loot?.Drop();
 
-            List<ICreature> maxDamages = GetLootOwners();
+            var enemies = GetLootOwners();
 
-            OnDropLoot?.Invoke(this, new Loot(loot), maxDamages);
+            var loot = new Loot(lootItems, enemies.ToHashSet());
+
+            return loot;
         }
 
         private List<ICreature> GetLootOwners()
         {
-            List<ICreature> maxDamages = new List<ICreature>(50);
+            var enemies = new List<ICreature>();
             ushort maxDamage = 0;
 
             foreach (var damage in damages)
             {
                 if (damage.Value > maxDamage)
                 {
-                    maxDamages.Clear();
-                    maxDamages.Add(damage.Key);
+                    enemies.Clear();
+                    enemies.Add(damage.Key);
+                    maxDamage = damage.Value;
                 }
                 if (damage.Value == maxDamage)
                 {
-                    maxDamages.Add(damage.Key);
+                    enemies.Add(damage.Key);
                 }
             }
 
-            return maxDamages;
+            foreach (var enemy in enemies)
+            {
+                if(enemy is IPlayer player && player.Party is not null)
+                {
+                   enemies.AddRange(player.Party.Members);
+                }
+            }
+            return enemies;
         }
 
         public ushort Defend()

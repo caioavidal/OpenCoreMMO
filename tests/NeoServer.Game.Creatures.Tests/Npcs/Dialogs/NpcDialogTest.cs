@@ -2,7 +2,6 @@
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Dialogs;
-using NeoServer.Server.Model.Players.Contracts;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Npcs.Dialogs

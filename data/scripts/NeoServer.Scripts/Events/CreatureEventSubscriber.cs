@@ -17,15 +17,12 @@ namespace NeoServer.Scripts.Events
 
         public void Subscribe(ICreature creature)
         {
-            if(creature is IMonster monster)
-            {
-                monster.OnDropLoot += creatureDroppedLootEventHandler.Execute;
-            }
             if(creature is ICombatActor actor)
             {
                 actor.OnKilled += creatureKilledEventHandler.Execute;
+                actor.OnKilled += creatureDroppedLootEventHandler.Execute;
             }
-            if(creature is INpc npc)
+            if (creature is INpc npc)
             {
                 npc.OnAnswer += NpcActionHandler.OnAnswer;
             }
@@ -33,9 +30,10 @@ namespace NeoServer.Scripts.Events
 
         public void Unsubscribe(ICreature creature)
         {
-            if (creature is IMonster monster)
+            if (creature is ICombatActor actor)
             {
-                monster.OnDropLoot -= creatureDroppedLootEventHandler.Execute;
+                actor.OnKilled -= creatureKilledEventHandler.Execute;
+                actor.OnKilled -= creatureDroppedLootEventHandler.Execute;
             }
             if (creature is INpc npc)
             {

@@ -6,7 +6,7 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System.Linq;
 
 namespace NeoServer.Server.Commands.Player

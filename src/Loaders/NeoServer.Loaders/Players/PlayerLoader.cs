@@ -11,7 +11,7 @@ using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;

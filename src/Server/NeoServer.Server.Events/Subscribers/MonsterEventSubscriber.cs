@@ -10,16 +10,13 @@ namespace NeoServer.Server.Events
 
         private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
-        private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
         private readonly MonsterChangedStateEventHandler monsterChangedStateEventHandler;
 
         public MonsterEventSubscriber(CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureAttackEventHandler creatureAttackEventHandler, 
-            CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, 
             MonsterChangedStateEventHandler monsterChangedStateEventHandler)
         {
             _creatureWasBornEventHandler = creatureWasBornEventHandler;
             _creatureAttackEventHandler = creatureAttackEventHandler;
-            this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
             this.monsterChangedStateEventHandler = monsterChangedStateEventHandler;
         }
 
@@ -29,7 +26,6 @@ namespace NeoServer.Server.Events
 
             monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
             monster.OnAttackEnemy += _creatureAttackEventHandler.Execute;
-            monster.OnDropLoot += creatureDroppedLootEventHandler.Execute;
             monster.OnChangedState += monsterChangedStateEventHandler.Execute;
         }
 
@@ -39,7 +35,6 @@ namespace NeoServer.Server.Events
 
             monster.OnWasBorn -= _creatureWasBornEventHandler.Execute;
             monster.OnAttackEnemy -= _creatureAttackEventHandler.Execute;
-            monster.OnDropLoot -= creatureDroppedLootEventHandler.Execute;
             monster.OnChangedState -= monsterChangedStateEventHandler.Execute;
         }
     }

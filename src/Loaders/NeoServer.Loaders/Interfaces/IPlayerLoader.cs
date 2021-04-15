@@ -1,5 +1,5 @@
 ﻿using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Loaders.Interfaces
 {

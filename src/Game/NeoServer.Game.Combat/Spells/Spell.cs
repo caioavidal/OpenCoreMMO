@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Linq;
 

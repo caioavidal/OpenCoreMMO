@@ -7,7 +7,7 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System.Collections.Generic;
 
 namespace NeoServer.Scripts.Runes

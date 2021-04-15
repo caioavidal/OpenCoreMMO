@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Common.Creatures.Structs;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Linq;
 using System.Text;
@@ -28,7 +28,7 @@ namespace NeoServer.Game.Contracts.Items.Types.Runes
             {
                 var text = new StringBuilder();
                 text.Append("Only ");
-
+                //todo
                 //for (int i = 0; i < Vocations.Length; i++)
                 //{
                 //    text.Append($"{VocationTypeParser.Parse(Vocations[i]).ToLower()}s");

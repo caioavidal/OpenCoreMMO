@@ -6,7 +6,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

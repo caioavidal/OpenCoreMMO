@@ -3,7 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Creature
@@ -19,7 +19,7 @@ namespace NeoServer.Server.Events.Creature
             this.game = game;
             this.itemFactory = itemFactory;
         }
-        public void Execute(ICombatActor creature, IThing by)
+        public void Execute(ICombatActor creature, IThing by, ILoot loot)
         {
             game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
             {

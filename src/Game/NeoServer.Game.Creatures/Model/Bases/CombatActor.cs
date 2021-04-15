@@ -29,7 +29,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event OnAttackTargetChange OnTargetChanged;
         public event ChangeVisibility OnChangedVisibility;
         public event OnPropagateAttack OnPropagateAttack;
-        public abstract event DropLoot OnDropLoot;
         public event GainExperience OnGainedExperience;
         public event AddCondition OnAddedCondition;
         public event RemoveCondition OnRemovedCondition;
@@ -215,13 +214,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
         }
+
+        public abstract ILoot DropLoot();
         public virtual void OnDeath(IThing by)
         {
             StopAttack();
             StopFollowing();
             StopWalking();
             Conditions.Clear();
-            OnKilled?.Invoke(this, by);
+            var loot = DropLoot();
+            OnKilled?.Invoke(this, by, loot);
         }
         public void Heal(ushort increasing)
         {

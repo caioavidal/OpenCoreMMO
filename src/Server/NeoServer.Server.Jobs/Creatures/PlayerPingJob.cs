@@ -1,7 +1,7 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using System;
 
 namespace NeoServer.Server.Jobs

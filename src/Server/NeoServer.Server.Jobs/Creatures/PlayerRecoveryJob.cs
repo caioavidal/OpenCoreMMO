@@ -1,5 +1,5 @@
 ﻿using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Jobs.Creatures
 {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 {
-    public record Loot(ILootItem[] Items, decimal LootRate = 1): ILoot
+    public record Loot(ILootItem[] Items, HashSet<ICreature> Owners, decimal LootRate = 1): ILoot
     {
         public virtual ILootItem[] Drop()
         {
