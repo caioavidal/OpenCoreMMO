@@ -375,6 +375,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         private List<ICreature> GetLootOwners()
         {
             var enemies = new List<ICreature>();
+            var partyMembers = new List<ICreature>();
+
             ushort maxDamage = 0;
 
             foreach (var damage in damages)
@@ -395,10 +397,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             {
                 if(enemy is IPlayer player && player.Party is not null)
                 {
-                   enemies.AddRange(player.Party.Members);
+                    partyMembers.AddRange(player.Party.Members);
                 }
             }
-            return enemies;
+            return enemies.Concat(partyMembers).ToList();
         }
 
         public ushort Defend()
