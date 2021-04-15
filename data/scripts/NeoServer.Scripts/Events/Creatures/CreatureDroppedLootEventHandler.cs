@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.DataStore;
 using NeoServer.Scripts.Chat;
 
 namespace NeoServer.Scripts.Events.Creatures
