@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Server.Contracts;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Events
 {

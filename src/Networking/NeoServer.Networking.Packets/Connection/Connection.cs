@@ -1,15 +1,14 @@
-﻿using NeoServer.Networking.Packets;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Networking.Packets;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Game.Contracts.Creatures;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 
 namespace NeoServer.Networking
 {

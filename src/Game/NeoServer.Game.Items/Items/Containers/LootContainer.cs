@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Game.Items.Items.Containers

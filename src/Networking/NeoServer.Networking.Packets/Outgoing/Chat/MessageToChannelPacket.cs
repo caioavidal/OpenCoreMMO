@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts.Network;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

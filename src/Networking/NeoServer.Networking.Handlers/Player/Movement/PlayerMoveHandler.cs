@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Handlers.Players

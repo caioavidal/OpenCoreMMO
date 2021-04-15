@@ -9,7 +9,6 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.World.Map.Tiles;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Model.World.Map;
 using System;
 using System.Collections.Generic;

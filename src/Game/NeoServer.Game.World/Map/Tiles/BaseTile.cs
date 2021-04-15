@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Bases;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.World.Map.Tiles
 {

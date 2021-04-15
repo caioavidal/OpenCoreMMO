@@ -3,7 +3,6 @@ using NeoServer.Game.World.Spawns;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Jobs.Creatures.Npc;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Jobs.Creatures

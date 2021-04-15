@@ -6,7 +6,6 @@ using NeoServer.Game.Creature.Model;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using NeoServer.Server.Model.Players;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Scripts.Players.Loaders
 {

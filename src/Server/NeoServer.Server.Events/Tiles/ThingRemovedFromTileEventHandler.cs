@@ -5,7 +5,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Events
 {

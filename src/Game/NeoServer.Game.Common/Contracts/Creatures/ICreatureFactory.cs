@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Contracts.Creatures
 {

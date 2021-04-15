@@ -10,7 +10,6 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
-using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
@@ -6,7 +7,6 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
-using NeoServer.Game.Contracts.Creatures;
 using System;
 
 namespace NeoServer.Server.Commands.Player

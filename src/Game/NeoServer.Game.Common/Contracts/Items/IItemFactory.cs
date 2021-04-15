@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 

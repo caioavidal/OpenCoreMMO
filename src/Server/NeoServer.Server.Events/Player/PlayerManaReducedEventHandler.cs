@@ -1,6 +1,6 @@
-﻿using NeoServer.Networking.Packets.Outgoing;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Events.Player
 {

@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Creature

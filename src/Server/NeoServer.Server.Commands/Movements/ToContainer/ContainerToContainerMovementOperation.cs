@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Location;
-using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Networking.Packets.Incoming;
 
 namespace NeoServer.Server.Commands.Movement
 {
