@@ -9,7 +9,6 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Game.DataStore;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 

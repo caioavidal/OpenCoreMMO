@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players.Contracts;
+using NeoServer.Game.Creatures.Events.Players;
 
 namespace NeoServer.Game.Creatures.Events
 {
@@ -14,16 +14,15 @@ namespace NeoServer.Game.Creatures.Events
         private readonly CreatureMovedEventHandler creatureMovedEventHandler;
         private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler; 
         private readonly PlayerLoggedOutEventHandler  playerLoggedOutEventHandler;
-        private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
         public readonly CreatureSayEventHandler creatureSayEventHandler;
         public readonly MonsterKilledEventHandler monsterKilledEventHandler;
-
+        public readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
         public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureDamagedEventHandler creatureDamagedEventHandler, CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler,
             CreatureTeleportedEventHandler creatureTeleportedEventHandler, PlayerDisappearedEventHandler playerDisappearedEventHandler,
             CreatureMovedEventHandler creatureMovedEventHandler, PlayerLoggedInEventHandler playerLoggedInEventHandler,
-            PlayerLoggedOutEventHandler playerLoggedOutEventHandler, CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, 
-            CreatureSayEventHandler creatureSayEventHandler, MonsterKilledEventHandler monsterKilledEventHandler)
+            PlayerLoggedOutEventHandler playerLoggedOutEventHandler,
+            CreatureSayEventHandler creatureSayEventHandler, MonsterKilledEventHandler monsterKilledEventHandler, PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler)
         {
             this.creatureKilledEventHandler = creatureKilledEventHandler;
             this.creatureDamagedEventHandler = creatureDamagedEventHandler;
@@ -33,9 +32,9 @@ namespace NeoServer.Game.Creatures.Events
             this.creatureMovedEventHandler = creatureMovedEventHandler;
             this.playerLoggedInEventHandler = playerLoggedInEventHandler;
             this.playerLoggedOutEventHandler = playerLoggedOutEventHandler;
-            this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
             this.creatureSayEventHandler = creatureSayEventHandler;
             this.monsterKilledEventHandler = monsterKilledEventHandler;
+            this.playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -45,7 +44,6 @@ namespace NeoServer.Game.Creatures.Events
                 combatActor.OnKilled += creatureKilledEventHandler.Execute;
                 combatActor.OnDamaged += creatureDamagedEventHandler.Execute;
                 combatActor.OnPropagateAttack += creaturePropagatedAttackEventHandler.Execute;
-                combatActor.OnDropLoot += creatureDroppedLootEventHandler.Execute;
             }
             if (creature is IWalkableCreature walkableCreature)
             {
@@ -57,6 +55,7 @@ namespace NeoServer.Game.Creatures.Events
                 player.OnLoggedOut += playerDisappearedEventHandler.Execute;
                 player.OnLoggedIn += playerLoggedInEventHandler.Execute;
                 player.OnLoggedOut += playerLoggedOutEventHandler.Execute;
+                player.Containers.OnOpenedContainer += playerOpenedContainerEventHandler.Execute;
             }
             if(creature is IMonster monster)
             {
@@ -73,7 +72,6 @@ namespace NeoServer.Game.Creatures.Events
                 combatActor.OnKilled -= creatureKilledEventHandler.Execute;
                 combatActor.OnDamaged -= creatureDamagedEventHandler.Execute;
                 combatActor.OnPropagateAttack -= creaturePropagatedAttackEventHandler.Execute;
-                combatActor.OnDropLoot -= creatureDroppedLootEventHandler.Execute;
             }
             if (creature is IWalkableCreature walkableCreature)
             {
@@ -86,6 +84,7 @@ namespace NeoServer.Game.Creatures.Events
                 player.OnLoggedOut -= playerDisappearedEventHandler.Execute;
                 player.OnLoggedIn -= playerLoggedInEventHandler.Execute;
                 player.OnLoggedOut -= playerLoggedOutEventHandler.Execute;
+                player.Containers.OnOpenedContainer -= playerOpenedContainerEventHandler.Execute;
             }
             if (creature is IMonster monster)
             {

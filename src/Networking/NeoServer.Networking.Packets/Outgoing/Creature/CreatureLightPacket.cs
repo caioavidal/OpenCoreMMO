@@ -1,5 +1,5 @@
-﻿using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players.Contracts;
+﻿using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {

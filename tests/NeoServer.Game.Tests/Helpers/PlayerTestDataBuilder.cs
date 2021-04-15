@@ -5,7 +5,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 

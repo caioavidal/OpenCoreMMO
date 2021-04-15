@@ -18,18 +18,18 @@ namespace NeoServer.Loaders.Monsters.Converters
                 items.Add(ConvertToLootItem(item));
             }
 
-            return new Game.Creatures.Model.Monsters.Loots.Loot(items.ToArray(), lootRate);
+            return new Game.Creatures.Model.Monsters.Loots.Loot(items.ToArray(), null, lootRate);
         }
 
         private static ILootItem ConvertToLootItem(LootData item)
         {
             byte.TryParse(item.Countmax, out byte amount);
-            ushort.TryParse(item.Id, out ushort id); 
+            ushort.TryParse(item.Id, out ushort id);
             uint.TryParse(item.Chance, out var chance);
 
             var items = new List<ILootItem>();
 
-            if(item?.Items?.Count > 0)
+            if (item?.Items?.Count > 0)
             {
                 foreach (var child in item?.Items)
                 {

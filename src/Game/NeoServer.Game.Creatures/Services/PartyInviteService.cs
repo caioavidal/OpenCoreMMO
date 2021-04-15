@@ -2,8 +2,8 @@
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Creatures.Services
 {

@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Items.Events
 {

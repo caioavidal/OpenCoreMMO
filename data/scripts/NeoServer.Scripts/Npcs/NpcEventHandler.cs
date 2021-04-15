@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Scripts.Npcs.Modules
 {

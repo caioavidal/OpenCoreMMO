@@ -1,11 +1,11 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Data.Parsers;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Linq;
 
 namespace NeoServer.Server.Events

@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Creatures.Events
 {

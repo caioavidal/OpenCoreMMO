@@ -1,4 +1,3 @@
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

@@ -1,9 +1,9 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Runes;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

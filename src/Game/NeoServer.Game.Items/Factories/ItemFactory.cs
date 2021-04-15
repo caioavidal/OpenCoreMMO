@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.DataStore;
@@ -9,7 +10,6 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace NeoServer.Game.Items
 {
     public class ItemFactory : IItemFactory, IFactory
     {
-        public event CreateItem OnItemCreated;
+        public event Contracts.Items.CreateItem OnItemCreated;
         public ItemFactory()
         {
             Instance = this;
@@ -29,11 +29,11 @@ namespace NeoServer.Game.Items
         public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
 
 
-        public IItem CreateCorpse(ushort typeId, Location location, IPlayer owner)
+        public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
         {
             if (!ItemTypeStore.Data.TryGetValue(typeId, out var itemType)) return null;
 
-            var createdItem = new LootContainer(itemType, location, owner);
+            var createdItem = new LootContainer(itemType, location, loot);
 
             SubscribeEvents(createdItem);
 

@@ -1,18 +1,17 @@
 ﻿using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.Items;
 using NeoServer.Scripts.Chat;
-using NeoServer.Server.Model.Players.Contracts;
-using System.Collections.Generic;
 
 namespace NeoServer.Scripts.Events.Creatures
 {
     public class CreatureDroppedLootEventHandler : IGameEventHandler
     {
-        public void Execute(ICombatActor actor, ILoot loot, IEnumerable<ICreature> owners)
+        public void Execute(ICombatActor actor, IThing by, ILoot loot)
         {
-            if (owners is null) return;
+            if (loot?.Owners is null) return;
 
-            foreach (var owner in owners)
+            foreach (var owner in loot.Owners)
             {
                 if (owner is not IPlayer player) continue;
 

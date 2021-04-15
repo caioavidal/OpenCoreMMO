@@ -8,7 +8,6 @@ using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Npcs.Dialogs;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Npcs

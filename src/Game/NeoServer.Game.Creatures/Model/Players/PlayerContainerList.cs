@@ -7,7 +7,6 @@ using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 

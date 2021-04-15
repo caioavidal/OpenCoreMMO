@@ -2,7 +2,6 @@
 using NeoServer.Server.Events.Creature;
 using NeoServer.Server.Events.Player;
 using NeoServer.Server.Events.Player.Party;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Server.Events
 {

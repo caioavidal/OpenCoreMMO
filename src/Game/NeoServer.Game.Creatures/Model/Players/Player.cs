@@ -27,7 +27,6 @@ using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Spells;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.DataStore;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,7 +86,6 @@ namespace NeoServer.Server.Model.Players
         public event LogOut OnLoggedOut;
         public event PlayerJoinChannel OnJoinedChannel;
         public event PlayerExitChannel OnExitedChannel;
-        public override event DropLoot OnDropLoot;
         public event AddToVipList OnAddedToVipList;
         public event PlayerLoadVipList OnLoadedVipList;
         public event ChangeOnlineStatus OnChangedOnlineStatus;
@@ -972,6 +970,11 @@ namespace NeoServer.Server.Model.Players
                     OperationFailService.Display(CreatureId, TextConstants.OnlyLeadersCanPassLeadership);
                     break;
             }
+        }
+
+        public override ILoot DropLoot()
+        {
+            return null;
         }
     }
 }

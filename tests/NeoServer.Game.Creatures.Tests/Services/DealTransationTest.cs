@@ -11,7 +11,6 @@ using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests;
 using NeoServer.Server.Model.Players;
-using NeoServer.Server.Model.Players.Contracts;
 using System;
 using System.Collections.Generic;
 using Xunit;

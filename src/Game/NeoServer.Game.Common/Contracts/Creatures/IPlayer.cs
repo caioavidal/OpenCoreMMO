@@ -5,9 +5,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Useables;
@@ -15,7 +13,7 @@ using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Contracts.World;
 using System.Collections.Generic;
 
-namespace NeoServer.Server.Model.Players.Contracts
+namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void CancelWalk(IPlayer player);
     public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);

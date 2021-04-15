@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.DataStore;
-using NeoServer.Server.Model.Players.Contracts;
 
 namespace NeoServer.Game.Chats
 {

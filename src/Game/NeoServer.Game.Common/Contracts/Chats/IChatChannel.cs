@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players.Contracts;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Chats
