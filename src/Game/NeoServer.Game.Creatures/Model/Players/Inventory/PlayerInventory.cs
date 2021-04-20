@@ -124,7 +124,7 @@ namespace NeoServer.Server.Model.Players
             {
                 byte totalArmor = 0;
 
-                Func<Slot, ushort> getDefenseValue = (Slot slot) => (Inventory[Slot.Head].Item1 as IDefenseEquipmentItem).DefenseValue;
+                Func<Slot, ushort> getDefenseValue = (Slot slot) => (Inventory[slot].Item1 is  IDefenseEquipmentItem equipment) ? equipment.DefenseValue : default;
 
                 totalArmor += (byte)(Inventory.ContainsKey(Slot.Necklace) ? getDefenseValue(Slot.Necklace) : 0);
                 totalArmor += (byte)(Inventory.ContainsKey(Slot.Head) ? getDefenseValue(Slot.Head) : 0);
