@@ -680,7 +680,7 @@ namespace NeoServer.Server.Model.Players
 
         public Result MoveItem(IStore source, IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
         {
-            if (thing is not IPickupable) return Result.NotPossible;
+            if (thing is not IMoveableThing) return Result.NotPossible;
             if (thing.Location.Type == LocationType.Ground && !Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
 
             return source.SendTo(destination, thing, amount, fromPosition, toPosition).ResultValue;
