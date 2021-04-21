@@ -55,6 +55,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 lastStepCost = 2;
             }
+            SetDirection(fromTile.Location.DirectionTo(toTile.Location));
+
             if (WalkingQueue.IsEmpty())
             {
                 OnCompleteWalking?.Invoke(this);

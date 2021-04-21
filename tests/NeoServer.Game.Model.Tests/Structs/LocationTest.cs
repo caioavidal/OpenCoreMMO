@@ -81,6 +81,27 @@ namespace NeoServer.Game.Model.Tests.Structs
             Assert.Equal(id, location.ContainerId);
             Assert.Equal(slot, location.ContainerSlot);
         }
-     
+
+        [Theory]
+        [InlineData(100, 100, 101,100, Direction.East)]
+        [InlineData(100, 100, 99, 100, Direction.West)]
+        [InlineData(100, 100, 100, 99, Direction.North)]
+        [InlineData(100, 100, 100, 101, Direction.South)]
+        [InlineData(100, 100, 101, 99, Direction.East)] //northeast
+        [InlineData(100, 100, 101, 101, Direction.East)] //southeast
+        [InlineData(100, 100, 99, 99, Direction.West)] //northwest
+        [InlineData(100, 100, 99, 101, Direction.West)] //southest
+
+        public void GetDirectionTo_Should_Return_Correct_Direction(ushort fromX, ushort fromY, ushort toX, ushort toY, Direction expected)
+        {
+            var fromLocation = new Location(fromX, fromY, 7);
+            var toLocation = new Location(toX, toY, 7);
+
+            var result = fromLocation.DirectionTo(toLocation);
+
+            Assert.Equal(expected, result);
+            
+        }
+
     }
 }
