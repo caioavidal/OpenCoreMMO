@@ -55,11 +55,12 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 lastStepCost = 2;
             }
+            SetDirection(fromTile.Location.DirectionTo(toTile.Location));
+
             if (WalkingQueue.IsEmpty())
             {
                 OnCompleteWalking?.Invoke(this);
             }
-            SetDirection(fromTile.Location.DirectionTo(toTile.Location));
             OnCreatureMoved?.Invoke(this, fromTile.Location, toTile.Location, spectators);
         }
         public void TurnTo(Direction direction)
