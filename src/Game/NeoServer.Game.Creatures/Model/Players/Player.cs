@@ -236,7 +236,7 @@ namespace NeoServer.Server.Model.Players
             base.GainExperience(exp);
         }
 
-        public bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
+        public virtual bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
         public float DamageFactor => FightMode switch
         {
             FightMode.Attack => 1,
