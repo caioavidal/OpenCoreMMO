@@ -9,6 +9,7 @@ using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Monsters.Loots;
 using NeoServer.Game.Creatures.Monsters;
@@ -36,6 +37,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
             Targets = new TargetList(this);
         }
+
 
         private MonsterState state;
         public MonsterState State
@@ -236,7 +238,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                     continue;
                 }
 
-                if (PathFinder.Find(this, target.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
+                if (PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule, out var directions) == false)
                 {
                     target.SetAsUnreachable();
                     continue;

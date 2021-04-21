@@ -35,6 +35,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         }
 
+
         protected CooldownList Cooldowns { get; } = new CooldownList();
 
         public virtual ITileEnterRule TileEnterRule => CreatureEnterTileRule.Rule;
