@@ -23,6 +23,6 @@
         Awaken,
         Advertise,
         WalkAround,
-        Follow
+     
     }
 }
