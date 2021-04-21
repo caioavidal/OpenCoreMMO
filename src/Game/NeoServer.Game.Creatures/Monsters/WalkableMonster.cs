@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
 using System;
@@ -12,6 +13,7 @@ namespace NeoServer.Game.Creatures.Monsters
     {
         protected WalkableMonster(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints) { }
         public bool CanReachAnyTarget { get; protected set; } = false;
+        public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;
 
         public bool LookForNewEnemy()
         {
@@ -35,7 +37,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
             if (IsDead) return;
             if (PathFinder is null) return;
-            if (PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, CreatureEnterTileRule.Rule, out var directions) is false) return;
+            if (PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule, out var directions) is false) return;
 
             TryWalkTo(directions);
         }

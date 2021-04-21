@@ -37,6 +37,21 @@ namespace NeoServer.Game.Creatures.Monsters
                  dynamicTile.Ground is not null);
         }
     }
+    public class MonsterEnterTileRule : CreatureEnterTileRule<MonsterEnterTileRule>
+    {
+        public override bool CanEnter(ITile tile, ICreature creature)
+        {
+            if (tile is not IDynamicTile dynamicTile) return false;
+            if (creature is not IMonster monster) return false;
+
+            return ConditionEvaluation.And(
+                 dynamicTile.FloorDirection == Common.Location.FloorChangeDirection.None,
+                 !dynamicTile.HasBlockPathFinding,
+                 !dynamicTile.HasCreature,
+                 !dynamicTile.ProtectionZone,
+                 dynamicTile.Ground is not null);
+        }
+    }
     public class NpcEnterTileRule : CreatureEnterTileRule<NpcEnterTileRule>
     {
         public override bool CanEnter(ITile tile, ICreature creature)
