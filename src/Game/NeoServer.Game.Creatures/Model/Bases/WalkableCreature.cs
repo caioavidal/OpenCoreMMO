@@ -59,6 +59,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 OnCompleteWalking?.Invoke(this);
             }
+            SetDirection(fromTile.Location.DirectionTo(toTile.Location));
             OnCreatureMoved?.Invoke(this, fromTile.Location, toTile.Location, spectators);
         }
         public void TurnTo(Direction direction)
