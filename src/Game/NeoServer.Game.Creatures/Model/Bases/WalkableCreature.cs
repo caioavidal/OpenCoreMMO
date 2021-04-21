@@ -103,7 +103,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             StopFollowing();
         }
 
-        public void Follow(ICreature creature) => Follow(creature, PathSearchParams);
+        public virtual void Follow(ICreature creature) => Follow(creature, PathSearchParams);
 
         public void Follow(ICreature creature, FindPathParams fpp)
         {

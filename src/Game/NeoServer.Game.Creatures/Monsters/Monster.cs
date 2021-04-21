@@ -12,6 +12,7 @@ using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Monsters.Loots;
 using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Creatures.Monsters.Combats;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             damages = new ConcurrentDictionary<ICreature, ushort>();
             State = MonsterState.Sleeping;
             OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
+            Targets = new TargetList(this);
         }
 
         private MonsterState state;
@@ -87,6 +89,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public bool KeepDistance => TargetDistance > 1;
         public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
         public ICombatDefense[] Defenses => Metadata.Defenses;
+        public TargetList Targets { get; set; }
 
         public override int ArmorDefend(int attack)
         {
@@ -116,18 +119,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         };
         public ushort Defense => Metadata.Defense;
         public uint Experience => Metadata.Experience;
-        private IDictionary<uint, CombatTarget> Targets = new Dictionary<uint, CombatTarget>(150);
 
-        public void AddToTargetList(ICombatActor creature)
-        {
-            Targets.TryAdd(creature.CreatureId, new CombatTarget(creature));
-        }
-        public void RemoveFromTargetList(ICreature creature)
-        {
-            Targets.Remove(creature.CreatureId);
 
-            if (AutoAttackTargetId == creature.CreatureId) StopAttack();
-        }
 
         public override void SetAsEnemy(ICreature creature)
         {
@@ -142,11 +135,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (IsDead || !canSee)
             {
-                RemoveFromTargetList(creature);
+                Targets.RemoveTarget(creature);
                 return;
             }
 
-            AddToTargetList(enemy);
+            Targets.AddTarget(enemy);
         }
 
         public bool IsInCombat => State == MonsterState.InCombat;
@@ -187,6 +180,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (!Targets.Any()) State = MonsterState.Sleeping;
         }
+
         public bool IsInPerfectPostionToCombat(CombatTarget target)
         {
             if (KeepDistance)
@@ -221,7 +215,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public override void OnCreatureDisappear(ICreature creature)
         {
-            RemoveFromTargetList(creature);
+            Targets.RemoveTarget(creature);
             SelectTargetToAttack();
         }
 
@@ -234,37 +228,37 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             var canReachAnyTarget = false;
 
-            foreach (var target in Targets)
+            foreach (CombatTarget target in Targets)
             {
-                if (target.Value.Creature.IsDead )
+                if (target.Creature.IsDead)
                 {
-                    RemoveFromTargetList(target.Value.Creature);
+                    Targets.RemoveTarget(target.Creature);
                     continue;
                 }
 
-                if (PathFinder.Find(this, target.Value.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
+                if (PathFinder.Find(this, target.Creature.Location, PathSearchParams, CreatureEnterTileRule.Rule, out var directions) == false)
                 {
-                    target.Value.SetAsUnreachable();
+                    target.SetAsUnreachable();
                     continue;
                 }
 
-                if (target.Value.Creature.IsInvisible && !CanSeeInvisible)
+                if (target.Creature.IsInvisible && !CanSeeInvisible)
                 {
-                    target.Value.SetAsUnreachable();
+                    target.SetAsUnreachable();
                     continue;
                 }
 
-                target.Value.CanSee = true;
+                target.CanSee = true;
 
-                target.Value.SetAsReachable(directions);
+                target.SetAsReachable(directions);
 
                 canReachAnyTarget = true;
 
-                var offset = Location.GetSqmDistance(target.Value.Creature.Location);
+                var offset = Location.GetSqmDistance(target.Creature.Location);
                 if (offset < nearest)
                 {
                     nearest = offset;
-                    nearestCombat = target.Value;
+                    nearestCombat = target;
                 }
             }
             CanReachAnyTarget = canReachAnyTarget;
@@ -274,7 +268,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void MoveAroundEnemy()
         {
-            if (!Targets.TryGetValue(AutoAttackTargetId, out var combatTarget)) return;
+            if (!Targets.TryGetTarget(AutoAttackTargetId, out var combatTarget)) return;
 
             if (!IsInPerfectPostionToCombat(combatTarget)) return;
 
@@ -289,17 +283,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (target is null) return;
 
-            FollowModeEnabled = Speed > 0;
-
-            if (FollowModeEnabled)
-            {
-                Follow(target.Creature, PathSearchParams);
-            }
-
+            Follow(target.Creature);
             SetAttackTarget(target.Creature);
             UpdateLastTargetChance();
         }
-
         public void Sleep()
         {
             State = MonsterState.Sleeping;
@@ -314,10 +301,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             ICreature escapeFrom = null;
 
-            if (Targets.TryGetValue(AutoAttackTargetId, out var creature)) escapeFrom = creature.Creature;
+            if (Targets.TryGetTarget(AutoAttackTargetId, out var creature)) escapeFrom = creature.Creature;
             else
             {
-                foreach (var target in Targets.Values)
+                foreach (CombatTarget target in Targets)
                 {
                     if (target.CanReachCreature)
                     {
@@ -357,6 +344,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override void OnDeath(IThing by)
         {
             Targets?.Clear();
+            StopAttack();
 
             StopDefending();
             base.OnDeath(by);
@@ -395,7 +383,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             foreach (var enemy in enemies)
             {
-                if(enemy is IPlayer player && player.Party is not null)
+                if (enemy is IPlayer player && player.Party is not null)
                 {
                     partyMembers.AddRange(player.Party.Members);
                 }
@@ -446,7 +434,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
             if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
 
-            if (enemy.IsDead) RemoveFromTargetList(enemy);
+            if (enemy.IsDead) Targets.RemoveTarget(enemy);
 
             return attacked;
         }

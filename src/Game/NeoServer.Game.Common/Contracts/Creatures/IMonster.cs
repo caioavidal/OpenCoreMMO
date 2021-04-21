@@ -25,8 +25,6 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Select a target to attack
         /// </summary>
         void SelectTargetToAttack();
-        void AddToTargetList(ICombatActor creature);
-        void RemoveFromTargetList(ICreature creature);
 
         /// <summary>
         /// Executes defense action
