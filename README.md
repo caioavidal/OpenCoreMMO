@@ -70,6 +70,9 @@ dotnet run -p "NeoServer.Server.Standalone"
   - [x] Vip List
 - [ ] PvP Combat
 - [ ] Party
+  - [x] Basics
+  - [x] Share Loot
+  - [ ] Shared Experience
 - [x] NPC System
 - [x] Lua Scripting
 - [x] C# Scripting
