@@ -25,18 +25,18 @@ namespace NeoServer.Server.Events.Creature
                 return;
             }
 
-            var eventId = game.Scheduler.AddEvent(new SchedulerEvent(1000, () => Follow(creature, following, fpp)));
+            var eventId = game.Scheduler.AddEvent(new SchedulerEvent(1000, () => Follow(creature, fpp)));
             followEvents.AddOrUpdate(creature.CreatureId, eventId);
 
         }
 
-        private void Follow(IWalkableCreature creature, ICreature following, FindPathParams fpp)
+        private void Follow(IWalkableCreature creature, FindPathParams fpp)
         {
             followEvents.TryGetValue(creature.CreatureId, out var followEvent);
 
             if (creature.IsFollowing)
             {
-                creature.Follow(following);
+                creature.Follow(creature.Following);
             }
             else
             {
@@ -50,13 +50,7 @@ namespace NeoServer.Server.Events.Creature
             if (followEvent != 0)
             {
                 followEvents.Remove(creature.CreatureId);
-
-                if (creature.Following != following.CreatureId && game.CreatureManager.TryGetCreature(creature.Following, out var newFollowing))
-                {
-                    Execute(creature, newFollowing as IWalkableCreature, fpp);
-                    return;
-                }
-                Execute(creature, following, fpp);
+                Execute(creature, creature.Following, fpp);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event TeleportTo OnTeleported;
         event Moved OnCreatureMoved;
 
-        uint Following { get; }
+        ICreature Following { get; }
         bool HasNextStep { get; }
         bool IsFollowing { get; }
         ushort Speed { get; }

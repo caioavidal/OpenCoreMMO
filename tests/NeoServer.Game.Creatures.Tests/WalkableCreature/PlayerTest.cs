@@ -110,7 +110,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             sut.Follow(creature.Object);
 
             Assert.True(sut.IsFollowing);
-            Assert.Equal(123u, sut.Following);
+            Assert.Equal(creature.Object, sut.Following);
             Assert.True(followEventEmitted);
             Assert.True(walkEventEmitted);
             Assert.Equal(Direction.North, sut.GetNextStep());
@@ -144,7 +144,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             sut.StopFollowing();
 
             Assert.False(sut.IsFollowing);
-            Assert.Equal(0u, sut.Following);
+            Assert.Null(sut.Following);
             Assert.True(stoppedWalkEventEmitted);
             Assert.Equal(Direction.None, sut.GetNextStep());
         }

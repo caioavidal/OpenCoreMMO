@@ -39,8 +39,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual ITileEnterRule TileEnterRule => CreatureEnterTileRule.Rule;
         public virtual ushort Speed { get; protected set; }
-        public uint Following { get; private set; }
-        public bool IsFollowing => Following > 0;
+        public ICreature Following { get; private set; }
+        public bool IsFollowing => Following is not null;
         private Queue<Direction> WalkingQueue = new Queue<Direction>();
         public bool HasNextStep => WalkingQueue.Count > 0;
         public bool FollowModeEnabled { get; protected set; }
@@ -93,7 +93,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             if (!IsFollowing) return;
 
-            Following = 0;
+            Following = null;
             HasFollowPath = false;
             StopWalking();
         }
@@ -103,7 +103,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             StopFollowing();
         }
 
-        public void Follow(ICreature creature) => Follow(creature, PathSearchParams);
+        public virtual void Follow(ICreature creature) => Follow(creature, PathSearchParams);
 
         public void Follow(ICreature creature, FindPathParams fpp)
         {
@@ -112,12 +112,12 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             if (IsFollowing)
             {
-                Following = creature.CreatureId;
+                Following = creature;
                 StartFollowing(creature);
                 return;
             }
 
-            Following = creature.CreatureId;
+            Following = creature;
             StartFollowing(creature);
             OnStartedFollowing?.Invoke(this, creature, fpp);
         }

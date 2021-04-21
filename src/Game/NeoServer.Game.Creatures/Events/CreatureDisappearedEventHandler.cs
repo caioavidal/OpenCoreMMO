@@ -14,14 +14,14 @@ namespace NeoServer.Game.Creatures.Events
 
         public void Execute(IPlayer player)
         {
-            foreach (var spectator in map.GetCreaturesAtPositionZone(player.Location, player.Location))
-            {
-                if (spectator is not IMonster monster) continue;
+            //foreach (var spectator in map.GetCreaturesAtPositionZone(player.Location, player.Location))
+            //{
+            //    if (spectator is not IMonster monster) continue;
 
-                if (monster.IsDead) continue;
+            //    if (monster.IsDead) continue;
 
-                monster.SetAsEnemy(player);
-            }
+            //    monster.SetAsEnemy(player);
+            //}
         }
     }
 }

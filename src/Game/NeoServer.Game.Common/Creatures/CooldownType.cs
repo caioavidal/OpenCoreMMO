@@ -22,6 +22,7 @@
         /// </summary>
         Awaken,
         Advertise,
-        WalkAround
+        WalkAround,
+     
     }
 }
