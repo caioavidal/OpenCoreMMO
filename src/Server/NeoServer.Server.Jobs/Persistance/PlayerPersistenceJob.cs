@@ -54,9 +54,11 @@ namespace NeoServer.Server.Jobs.Persistance
 
                     var end = lastIndexProcessed + PROCESS_CHUNCKS > players.Length ? players.Length : lastIndexProcessed + PROCESS_CHUNCKS;
 
+                    
                     var playersChunk = full ? players : players[lastIndexProcessed..end];
 
-                    await accountRepository.UpdatePlayers(playersChunk);
+                    if(playersChunk.Length > 0) await accountRepository.UpdatePlayers(playersChunk);
+
                     logger.Information("{numPlayers} players saved in {elapsed} ms", playersChunk.Length, stopwatch.ElapsedMilliseconds);
 
                     lastIndexProcessed = lastIndexProcessed + PROCESS_CHUNCKS > players.Length ? 0 : end;
