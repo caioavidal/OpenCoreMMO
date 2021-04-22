@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Serilog.Core;
 using System;
@@ -33,21 +34,24 @@ namespace NeoServer.Scripts.Lua
 
         public void Register()
         {
-            lua.LoadCLRPackage();
+            logger.Step("Loading lua scripts...", "{Lua} scripts loaded", () =>
+            {
+                lua.LoadCLRPackage();
 
-            lua["gameServer"] = gameServer;
-            lua["scheduler"] = gameServer.Scheduler;
-            lua["map"] = gameServer.Map;
-            lua["itemFactory"] = itemFactory;
-            lua["creatureFactory"] = creatureFactory;
-            lua["load"] = new Action<string>((path) => DoFile(path));
-            lua["logger"] = logger;
-            lua["coinTransaction"] = coinTransaction;
-            lua["random"] = GameRandom.Random;
+                lua["gameServer"] = gameServer;
+                lua["scheduler"] = gameServer.Scheduler;
+                lua["map"] = gameServer.Map;
+                lua["itemFactory"] = itemFactory;
+                lua["creatureFactory"] = creatureFactory;
+                lua["load"] = new Action<string>((path) => DoFile(path));
+                lua["logger"] = logger;
+                lua["coinTransaction"] = coinTransaction;
+                lua["random"] = GameRandom.Random;
 
-            ExecuteMainFiles();
+                ExecuteMainFiles();
 
-            logger.Information("{Lua} scripts loaded!", "Lua");
+                return new object[] { "LUA" };
+            });
         }
 
         private void ExecuteMainFiles()

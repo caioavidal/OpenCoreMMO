@@ -3,6 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
+using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
@@ -26,16 +27,18 @@ namespace NeoServer.Loaders.Npcs
         public event Action<INpcType, string> OnLoad;
         public void Load()
         {
-            var npcs = ConvertNpcs();
-
-            foreach (var npcLoaded in npcs)
+            logger.Step("Loading npcs...", "{n} npcs loaded", () =>
             {
-                var (jsonContent, npc) = npcLoaded;
-                NpcStore.Data.Add(npc.Name, npc);
-                OnLoad?.Invoke(npc, jsonContent);
-            }
+                var npcs = ConvertNpcs();
 
-            logger.Information("{n} NPCs loaded!", npcs.Count());
+                foreach (var npcLoaded in npcs)
+                {
+                    var (jsonContent, npc) = npcLoaded;
+                    NpcStore.Data.Add(npc.Name, npc);
+                    OnLoad?.Invoke(npc, jsonContent);
+                }
+                return new object[] { npcs.Count() };
+            });               
         }
         private IEnumerable<(string, INpcType)> ConvertNpcs()
         {

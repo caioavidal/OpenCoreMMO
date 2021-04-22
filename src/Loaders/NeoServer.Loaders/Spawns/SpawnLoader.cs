@@ -1,4 +1,5 @@
-﻿using NeoServer.Server.Standalone;
+﻿using NeoServer.Server.Helpers.Extensions;
+using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
 using System.Collections.Generic;
@@ -20,12 +21,15 @@ namespace NeoServer.Loaders.Spawns
         }
         public void Load()
         {
-            var spawnData = GetSpawnData();
+            logger.Step("Loading spawns...", "{n} spawns loaded", () =>
+            {
+                var spawnData = GetSpawnData();
 
-            var spawns = spawnData.AsParallel().Select(x => SpawnConverter.Convert(x)).ToList();
+                var spawns = spawnData.AsParallel().Select(x => SpawnConverter.Convert(x)).ToList();
 
-            _world.LoadSpawns(spawns);
-            logger.Information("{n} spawns loaded!", spawns.Count);
+                _world.LoadSpawns(spawns);
+                return new object[] { spawns.Count };
+            });
         }
 
         private IEnumerable<SpawnData> GetSpawnData()
