@@ -162,7 +162,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>())).Returns(Direction.North);
-            ConfigurationStore.PathFinder = pathFinder.Object;
+            GameToolStore.PathFinder = pathFinder.Object;
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Speed).Returns(200);
@@ -186,7 +186,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>())).Returns(Direction.North);
-            ConfigurationStore.PathFinder = pathFinder.Object;
+            GameToolStore.PathFinder = pathFinder.Object;
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Speed).Returns(200);

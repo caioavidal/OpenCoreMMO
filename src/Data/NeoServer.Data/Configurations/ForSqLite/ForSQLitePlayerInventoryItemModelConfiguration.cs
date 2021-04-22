@@ -11,11 +11,6 @@ namespace NeoServer.Data.Configurations
         {
             entity.ToTable("player_inventory_items");
 
-            //entity.HasIndex(e => e.PlayerId)
-            //    .HasDatabaseName("player_id");
-
-            //entity.HasIndex(e => e.ServerId)
-            //    .HasDatabaseName("sid");
 
             entity.Property(e => e.Id)
                 .HasColumnName("id")
@@ -27,7 +22,7 @@ namespace NeoServer.Data.Configurations
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
 
             entity.Property(e => e.SlotId)
-                .HasColumnName("pid")
+                .HasColumnName("slot_id")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
 
             entity.Property(e => e.PlayerId)

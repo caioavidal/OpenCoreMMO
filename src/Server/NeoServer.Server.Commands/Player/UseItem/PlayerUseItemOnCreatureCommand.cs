@@ -52,7 +52,8 @@ namespace NeoServer.Server.Commands.Player
 
             if (useItemPacket.FromLocation.Type == LocationType.Ground)
             {
-                WalkToMechanism.DoOperation(player, action, useItemPacket.FromLocation, game);
+                //WalkToMechanism.DoOperation(player, action, useItemPacket.FromLocation, game); //todo: use
+                action?.Invoke();
                 return;
             }
 

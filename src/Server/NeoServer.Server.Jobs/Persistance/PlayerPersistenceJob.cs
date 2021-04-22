@@ -18,7 +18,7 @@ namespace NeoServer.Server.Jobs.Persistance
         private readonly Logger logger;
         private readonly Stopwatch stopwatch = new Stopwatch();
 
-        private const int SAVE_INTERVAL = 30000;
+        private const int SAVE_INTERVAL = 5000;
         public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, Logger logger)
         {
             this.gameServer = gameServer;
@@ -27,14 +27,21 @@ namespace NeoServer.Server.Jobs.Persistance
         }
         public void Start(CancellationToken token)
         {
-
             Task.Run(async () =>
             {
                 while (true)
                 {
                     if (token.IsCancellationRequested) return;
-
-                    await SavePlayers();
+                    try
+                    {
+                        await SavePlayers();
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error("Could not save players");
+                        logger.Debug(ex.Message);
+                        logger.Debug(ex.StackTrace);
+                    }
                     await Task.Delay(SAVE_INTERVAL, token);
                 }
             });
@@ -46,21 +53,11 @@ namespace NeoServer.Server.Jobs.Persistance
 
             if (players.Any())
             {
-                try
-                {
-                    stopwatch.Restart();
+                stopwatch.Restart();
 
-                    await accountRepository.UpdatePlayers(players);
+                await accountRepository.UpdatePlayers(players);
 
-                    logger.Information("{numPlayers} players saved in {elapsed} ms", players.Count, stopwatch.ElapsedMilliseconds);
-                }
-                catch (Exception ex)
-                {
-                    logger.Error("Could not save players");
-                    logger.Debug(ex.Message);
-                    logger.Debug(ex.StackTrace);
-
-                }
+                logger.Information("{numPlayers} players saved in {elapsed} ms", players.Count, stopwatch.ElapsedMilliseconds);
             }
         }
     }

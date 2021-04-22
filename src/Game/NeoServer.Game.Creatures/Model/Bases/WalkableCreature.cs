@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Helpers;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
@@ -25,7 +26,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event Moved OnCreatureMoved;
         #endregion
 
-        protected virtual IPathFinder PathFinder => ConfigurationStore.PathFinder;
+        protected virtual IPathFinder PathFinder => GameToolStore.PathFinder;
+        protected virtual IWalkToMechanism WalkToMechanism => GameToolStore.WalkToMechanism;
 
         private uint lastStepCost = 1;
         protected WalkableCreature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
