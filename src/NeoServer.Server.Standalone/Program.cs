@@ -16,6 +16,7 @@ using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Events;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
+using NeoServer.Server.Jobs.Persistance;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
@@ -88,6 +89,7 @@ public class Program
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameChatChannelJob>().StartChecking));
+        container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
         container.Resolve<EventSubscriber>().AttachEvents();
 

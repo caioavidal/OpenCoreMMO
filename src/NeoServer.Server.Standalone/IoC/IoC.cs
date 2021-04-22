@@ -44,6 +44,7 @@ using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Instances;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
+using NeoServer.Server.Jobs.Persistance;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Tasks;
 using NLua;
@@ -148,7 +149,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameCreatureJob>().SingleInstance();
             builder.RegisterType<GameItemJob>().SingleInstance();
             builder.RegisterType<GameChatChannelJob>().SingleInstance();
+            builder.RegisterType<PlayerPersistenceJob>().SingleInstance();
             
+
             //Database
             builder.RegisterContext<NeoContext>();
 
