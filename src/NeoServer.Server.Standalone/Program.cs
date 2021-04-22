@@ -38,7 +38,6 @@ public class Program
 
         var stepSw = new Stopwatch();
 
-
         var sw = new Stopwatch();
         sw.Start();
 
@@ -54,13 +53,14 @@ public class Program
         logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
         logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
+
         logger.Step("Compiling scripts...", "Scripts compiled", () => ScriptCompiler.Compile(serverConfiguration.Data));
 
         var container = Container.CompositionRoot();
         var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
         var context = container.Resolve<NeoContext>();
 
-        logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreated(), databaseConfiguration.active);
+        logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreatedAsync(), databaseConfiguration.active);
 
         RSA.LoadPem(serverConfiguration.Data);
 
