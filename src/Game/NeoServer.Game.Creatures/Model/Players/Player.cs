@@ -35,7 +35,7 @@ namespace NeoServer.Server.Model.Players
 {
     public class Player : CombatActor, IPlayer
     {
-        public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, ushort healthPoints, ushort maxHealthPoints, byte vocation,
+        public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, uint healthPoints, uint maxHealthPoints, byte vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax, IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
             Location location)
@@ -126,7 +126,6 @@ namespace NeoServer.Server.Model.Players
         }
 
         private ulong flags = 0b000000000000000000000;
-
         public void UnsetFlag(PlayerFlag flag) => flags &= ~(ulong)flag;
 
         public void SetFlag(PlayerFlag flag) => flags |= (ulong)flag;

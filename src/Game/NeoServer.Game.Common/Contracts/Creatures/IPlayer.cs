@@ -204,6 +204,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IShopperNpc TradingWithNpc { get; }
         bool IsInParty { get; }
         IParty Party { get; }
+        byte MaxSoulPoints { get; }
 
         void InviteToParty(IPlayer invitedPlayer, IParty party);
         void RevokePartyInvite(IPlayer invitedPlayer);
