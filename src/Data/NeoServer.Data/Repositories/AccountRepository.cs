@@ -49,13 +49,12 @@ namespace NeoServer.Data.Repositories
 
         }
 
-        public Task UpdatePlayers(IEnumerable<IPlayer> players)
+        public async Task UpdatePlayers(IEnumerable<IPlayer> players)
         {
             Task[] tasks = new Task[players.Count()];
             var i = 0;
-            foreach (var player in players)
-            {
-                var sql = $@"UPDATE players
+
+            var sql = $@"UPDATE players
                            SET --id = @id,
                                --account_id = @account_id,
                                --name = @name,
@@ -106,60 +105,67 @@ namespace NeoServer.Data.Repositories
                                vocation = @vocation
                          WHERE id = @playerId";
 
-                using (var connection = Context.Database.GetDbConnection())
+            using (var connection = Context.Database.GetDbConnection())
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
                 {
-                    tasks[i++] = connection.ExecuteAsync(sql, new 
+                    foreach (var player in players)
                     {
-                        cap = player.TotalCapacity,
-                        level = player.Level,
-                        mana = player.Mana,
-                        manamax = player.MaxMana,
-                        health = player.HealthPoints,
-                        healthmax = player.MaxHealthPoints,
-                        Soul =  player.SoulPoints,
-                        MaxSoul = player.MaxSoulPoints,
-                        Speed = player.Speed,
-                        StaminaMinutes = player.StaminaMinutes,
-                        AmmoAmount = player.Inventory[Game.Common.Players.Slot.Ammo]?.Amount ?? 0,
+                        tasks[i++] = connection.ExecuteAsync(sql, new
+                            {
+                                cap = player.TotalCapacity,
+                                level = player.Level,
+                                mana = player.Mana,
+                                manamax = player.MaxMana,
+                                health = player.HealthPoints,
+                                healthmax = player.MaxHealthPoints,
+                                Soul = player.SoulPoints,
+                                MaxSoul = player.MaxSoulPoints,
+                                Speed = player.Speed,
+                                StaminaMinutes = player.StaminaMinutes,
+                                AmmoAmount = player.Inventory[Game.Common.Players.Slot.Ammo]?.Amount ?? 0,
 
-                        lookaddons = player.Outfit.Addon,
-                        lookbody = player.Outfit.Body,
-                        lookfeet = player.Outfit.Feet,
-                        lookhead= player.Outfit.Head,
-                        looklegs = player.Outfit.Legs,
-                        looktype = player.Outfit.LookType,
-                        posx = player.Location.X,
-                        posy = player.Location.Y,
-                        posz = player.Location.Z,
+                                lookaddons = player.Outfit.Addon,
+                                lookbody = player.Outfit.Body,
+                                lookfeet = player.Outfit.Feet,
+                                lookhead = player.Outfit.Head,
+                                looklegs = player.Outfit.Legs,
+                                looktype = player.Outfit.LookType,
+                                posx = player.Location.X,
+                                posy = player.Location.Y,
+                                posz = player.Location.Z,
 
-                        skill_fist = player.Skills[Game.Common.Creatures.SkillType.Fist].Level,
-                        skill_fist_tries = player.Skills[Game.Common.Creatures.SkillType.Fist].Count,
-                        skill_club = player.Skills[Game.Common.Creatures.SkillType.Club].Level,
-                        skill_club_tries = player.Skills[Game.Common.Creatures.SkillType.Club].Count,
-                        skill_sword = player.Skills[Game.Common.Creatures.SkillType.Sword].Level,
-                        skill_sword_tries = player.Skills[Game.Common.Creatures.SkillType.Sword].Count,
-                        skill_axe = player.Skills[Game.Common.Creatures.SkillType.Axe].Level,
-                        skill_axe_tries = player.Skills[Game.Common.Creatures.SkillType.Axe].Count,
-                        skill_dist = player.Skills[Game.Common.Creatures.SkillType.Distance].Level,
-                        skill_dist_tries = player.Skills[Game.Common.Creatures.SkillType.Distance].Count,
-                        skill_shielding = player.Skills[Game.Common.Creatures.SkillType.Shielding].Level,
-                        skill_shielding_tries = player.Skills[Game.Common.Creatures.SkillType.Shielding].Count,
-                        skill_fishing = player.Skills[Game.Common.Creatures.SkillType.Fishing].Level,
-                        skill_fishing_tries = player.Skills[Game.Common.Creatures.SkillType.Fishing].Count,
-                        MagicLevel = player.Skills[Game.Common.Creatures.SkillType.Magic].Level,
-                        MagicLevelTries = player.Skills[Game.Common.Creatures.SkillType.Magic].Count,
+                                skill_fist = player.Skills[Game.Common.Creatures.SkillType.Fist].Level,
+                                skill_fist_tries = player.Skills[Game.Common.Creatures.SkillType.Fist].Count,
+                                skill_club = player.Skills[Game.Common.Creatures.SkillType.Club].Level,
+                                skill_club_tries = player.Skills[Game.Common.Creatures.SkillType.Club].Count,
+                                skill_sword = player.Skills[Game.Common.Creatures.SkillType.Sword].Level,
+                                skill_sword_tries = player.Skills[Game.Common.Creatures.SkillType.Sword].Count,
+                                skill_axe = player.Skills[Game.Common.Creatures.SkillType.Axe].Level,
+                                skill_axe_tries = player.Skills[Game.Common.Creatures.SkillType.Axe].Count,
+                                skill_dist = player.Skills[Game.Common.Creatures.SkillType.Distance].Level,
+                                skill_dist_tries = player.Skills[Game.Common.Creatures.SkillType.Distance].Count,
+                                skill_shielding = player.Skills[Game.Common.Creatures.SkillType.Shielding].Level,
+                                skill_shielding_tries = player.Skills[Game.Common.Creatures.SkillType.Shielding].Count,
+                                skill_fishing = player.Skills[Game.Common.Creatures.SkillType.Fishing].Level,
+                                skill_fishing_tries = player.Skills[Game.Common.Creatures.SkillType.Fishing].Count,
+                                MagicLevel = player.Skills[Game.Common.Creatures.SkillType.Magic].Level,
+                                MagicLevelTries = player.Skills[Game.Common.Creatures.SkillType.Magic].Count,
 
-                        Experience = player.Experience,
-                        ChaseMode = player.ChaseMode,
-                        FightMode = player.FightMode,
+                                Experience = player.Experience,
+                                ChaseMode = player.ChaseMode,
+                                FightMode = player.FightMode,
 
-                        vocation = player.VocationType,
-                        playerId = player.Id
-                    }, commandTimeout: 5);
+                                vocation = player.VocationType,
+                                playerId = player.Id
+                            }, commandTimeout: 5);
+                    }
+
+                    await Task.WhenAll(tasks);
+                    await transaction.CommitAsync();
                 }
             }
-
-            return Task.WhenAll(tasks);
         }
 
         public async Task<PlayerModel> GetPlayer(string playerName)
