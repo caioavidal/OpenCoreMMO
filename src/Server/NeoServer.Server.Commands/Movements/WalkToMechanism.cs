@@ -4,6 +4,7 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Tasks;
 using System;
+using System.Collections.Generic;
 
 namespace NeoServer.Server.Commands.Movement
 {
@@ -15,7 +16,6 @@ namespace NeoServer.Server.Commands.Movement
         {
             this.game = game;
         }
-
         public void WalkTo(IPlayer player, Action action, Location toLocation, bool secondChance = false)
         {
             if (!toLocation.IsNextTo(player.Location))

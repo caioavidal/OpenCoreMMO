@@ -598,6 +598,13 @@ namespace NeoServer.Server.Model.Players
         }
         public void Use(IUseable item)
         {
+            if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location))
+            {
+                if (!CanSee(item.Location) || Location.Z != item.Location.Z) return;
+                WalkToMechanism.WalkTo(this, () => item.Use(this), item.Location);
+                return;
+            }
+
             item.Use(this);
         }
         public void Use(IUseableOn item, ICreature onCreature)
@@ -607,6 +614,13 @@ namespace NeoServer.Server.Model.Players
                 OperationFailService.Display(CreatureId, requirement.ValidationError);
                 return;
             }
+            if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location))
+            {
+                if (!CanSee(item.Location) || Location.Z != item.Location.Z) return;
+                WalkToMechanism.WalkTo(this, () => Use(item, onCreature), item.Location);
+                return;
+            }
+
             var result = false;
 
             if (onCreature is ICombatActor enemy)
@@ -639,16 +653,32 @@ namespace NeoServer.Server.Model.Players
                 return;
             }
 
-            if (onTile.TopItemOnStack is not IItem onItem) return;
+            var use = new Action(() =>
+            {
+                if (onTile.TopItemOnStack is not IItem onItem) return;
 
-            var result = false;
+                var result = false;
 
-            if (item is IUseableAttackOnTile useableAttackOnTile) result = Attack(onTile, useableAttackOnTile);
-            else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, onTile);
-            else if (item is IUseableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
+                if (item is IUseableAttackOnTile useableAttackOnTile) result = Attack(onTile, useableAttackOnTile);
+                else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, onTile);
+                else if (item is IUseableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
 
-            if (result) OnUsedItem?.Invoke(this, onItem, item);
+                if (result) OnUsedItem?.Invoke(this, onItem, item);
+            });
+
+            if (!Location.IsNextTo(onTile.Location))
+            {
+                if (!CanSee(onTile.Location) || Location.Z != onTile.Location.Z) return;
+                WalkToMechanism.WalkTo(this, use, onTile.Location);
+                return;  
+            }
+
+            use();
         }
+
+
+
+
         public bool Feed(IFood food)
         {
             if (food is null) return false;
@@ -680,13 +710,13 @@ namespace NeoServer.Server.Model.Players
         public Result MoveItem(IStore source, IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
         {
             if (thing is not IMoveableThing) return Result.NotPossible;
-            
-            if (source is ITile)
+
+            if (source is ITile && !Location.IsNextTo(thing.Location))
             {
                 if (!CanSee(thing.Location) || Location.Z != thing.Location.Z) return Result.NotPossible;
                 WalkToMechanism.WalkTo(this, () => MoveItem(source, destination, thing, amount, fromPosition, toPosition), thing.Location);
             }
-            
+
             if (thing.Location.Type == LocationType.Ground && !Location.IsNextTo(thing.Location)) return new Result(InvalidOperation.TooFar);
 
             return source.SendTo(destination, thing, amount, fromPosition, toPosition).ResultValue;
