@@ -12,7 +12,7 @@ namespace NeoServer.Server.Commands.Movement
     {
         public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow)
         {
-            WalkToMechanism.DoOperation(player, () => MapToContainer(player, map, itemThrow), itemThrow.FromLocation, game);
+           MapToContainer(player, map, itemThrow);
         }
 
         private static void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)

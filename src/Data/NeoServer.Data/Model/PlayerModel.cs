@@ -28,7 +28,6 @@ namespace NeoServer.Server.Model.Players
         public byte MaxSoul { get; set; }
         public ushort Speed { get; set; }
         public ushort StaminaMinutes { get; set; }
-        public byte AmmoAmount { get; set; }
         public bool Online { get; set; }
 
         public int LookAddons { get; set; }

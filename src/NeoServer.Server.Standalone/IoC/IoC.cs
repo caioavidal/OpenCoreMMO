@@ -9,6 +9,7 @@ using NeoServer.Data.Providers.SQLite.Extensions;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -34,6 +35,7 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
 using NeoServer.Scripts.Lua;
 using NeoServer.Server.Commands;
+using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
@@ -96,7 +98,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
             builder.RegisterType<SpawnManager>().SingleInstance();
 
+            //tools
             builder.RegisterType<NeoServer.Game.World.Map.PathFinder>().As<IPathFinder>().SingleInstance();
+            builder.RegisterType<WalkToMechanism>().As<IWalkToMechanism>().SingleInstance();
 
             builder.RegisterPacketHandlers();
 
@@ -280,7 +284,7 @@ namespace NeoServer.Server.Standalone.IoC
                 builder.AddUserSecrets<Program>();
             }
             configuration = builder.Build();
-            ServerConfiguration serverConfiguration = new(0, null, null, null, "");
+            ServerConfiguration serverConfiguration = new(0, null, null, null, "", new(3600));
             GameConfiguration gameConfiguration = new();
             LogConfiguration logConfiguration = new(null);
 

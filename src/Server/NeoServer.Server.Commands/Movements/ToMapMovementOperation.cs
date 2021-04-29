@@ -15,7 +15,7 @@ namespace NeoServer.Server.Commands.Movement
         {
             if (map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
 
-            WalkToMechanism.DoOperation(player, () => FromGround(player, map, itemThrow), itemThrow.FromLocation, game);
+            FromGround(player, map, itemThrow);
             FromInventory(player, map, itemThrow);
             FromContainer(player, map, itemThrow);
         }
@@ -27,8 +27,6 @@ namespace NeoServer.Server.Commands.Movement
             if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
 
             if (fromTile.TopItemOnStack is not IItem item) return;
-
-            if (!itemThrow.FromLocation.IsNextTo(player.Location)) return;
 
             player.MoveItem(fromTile, map[itemThrow.ToLocation], item, itemThrow.Count, 0, 0);
         }

@@ -28,7 +28,7 @@ namespace NeoServer.Server.Commands.Player
             }
             else if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
             {
-                MapToInventoryMovementOperation.Execute(player,game, game.Map, itemThrow);
+                MapToInventoryMovementOperation.Execute(player, game.Map, itemThrow);
             }
             else if (ToMapMovementOperation.IsApplicable(itemThrow))
             {
