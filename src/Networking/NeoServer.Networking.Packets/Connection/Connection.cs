@@ -66,7 +66,7 @@ namespace NeoServer.Networking
             }
             catch
             {
-                Console.WriteLine("Error on stream read");
+                logger.Error("Error on stream read");
             }
         }
 
