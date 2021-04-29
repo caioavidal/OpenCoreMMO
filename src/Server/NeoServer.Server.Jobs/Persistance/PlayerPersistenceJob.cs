@@ -1,5 +1,6 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Server.Contracts;
+using NeoServer.Server.Standalone;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,21 @@ namespace NeoServer.Server.Jobs.Persistance
         private readonly IGameServer gameServer;
         private readonly IAccountRepository accountRepository;
         private readonly Logger logger;
+        private readonly ServerConfiguration serverConfiguration;
         private readonly Stopwatch stopwatch = new Stopwatch();
 
-        private const int SAVE_INTERVAL = 5000;
-        public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, Logger logger)
+        private int saveInterval = 60000;
+        public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, Logger logger, ServerConfiguration serverConfiguration)
         {
             this.gameServer = gameServer;
             this.accountRepository = accountRepository;
             this.logger = logger;
+            this.serverConfiguration = serverConfiguration;
+
         }
         public void Start(CancellationToken token)
         {
+            saveInterval = (int)(serverConfiguration?.Save?.Players ?? (uint)saveInterval);
             Task.Run(async () =>
             {
                 while (true)
@@ -42,7 +47,7 @@ namespace NeoServer.Server.Jobs.Persistance
                         logger.Debug(ex.Message);
                         logger.Debug(ex.StackTrace);
                     }
-                    await Task.Delay(SAVE_INTERVAL, token);
+                    await Task.Delay(saveInterval, token);
                 }
             });
         }
