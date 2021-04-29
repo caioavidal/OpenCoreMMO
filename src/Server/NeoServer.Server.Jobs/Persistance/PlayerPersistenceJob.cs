@@ -20,7 +20,7 @@ namespace NeoServer.Server.Jobs.Persistance
         private readonly ServerConfiguration serverConfiguration;
         private readonly Stopwatch stopwatch = new Stopwatch();
 
-        private int saveInterval = 60000;
+        private int saveInterval;
         public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, Logger logger, ServerConfiguration serverConfiguration)
         {
             this.gameServer = gameServer;
@@ -32,6 +32,7 @@ namespace NeoServer.Server.Jobs.Persistance
         public void Start(CancellationToken token)
         {
             saveInterval = (int)(serverConfiguration?.Save?.Players ?? (uint)saveInterval);
+            saveInterval = (saveInterval == 0 ? 3600 : saveInterval) * 1000;
             Task.Run(async () =>
             {
                 while (true)
