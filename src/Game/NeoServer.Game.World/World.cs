@@ -27,7 +27,7 @@ namespace NeoServer.Game.World
             ushort y = newTile.Location.Y;
 
             var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y, out var created);
-         
+
             sector.AddTile(newTile);
             LoadedTilesCount++;
         }

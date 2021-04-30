@@ -17,7 +17,7 @@ namespace NeoServer.Loaders.Vocations
 {
     public class VocationLoader
     {
-        
+
         private readonly GameConfiguration gameConfiguration;
         private readonly ServerConfiguration serverConfiguration;
 
@@ -35,13 +35,13 @@ namespace NeoServer.Loaders.Vocations
                 var vocations = GetVocations();
                 VocationStore.Load(vocations);
                 return new object[] { vocations.Count };
-            });             
+            });
         }
 
         private List<Vocation> GetVocations()
         {
             var basePath = $"{serverConfiguration.Data}";
-            var jsonString = File.ReadAllText(Path.Combine(basePath,"vocations.json"));
+            var jsonString = File.ReadAllText(Path.Combine(basePath, "vocations.json"));
             var vocations = JsonConvert.DeserializeObject<List<Vocation>>(jsonString, new JsonSerializerSettings
             {
 
@@ -59,7 +59,7 @@ namespace NeoServer.Loaders.Vocations
         {
             public override Dictionary<byte, float> ReadJson(JsonReader reader, Type objectType, [AllowNull] Dictionary<byte, float> existingValue, bool hasExistingValue, JsonSerializer serializer)
             {
-               return serializer.Deserialize<List<Dictionary<string,string>>>(reader).ToDictionary(x=>byte.Parse(x["id"]), x => float.Parse(x["multiplier"], CultureInfo.InvariantCulture.NumberFormat));
+                return serializer.Deserialize<List<Dictionary<string, string>>>(reader).ToDictionary(x => byte.Parse(x["id"]), x => float.Parse(x["multiplier"], CultureInfo.InvariantCulture.NumberFormat));
             }
 
             public override void WriteJson(JsonWriter writer, [AllowNull] Dictionary<byte, float> value, JsonSerializer serializer)
@@ -68,5 +68,5 @@ namespace NeoServer.Loaders.Vocations
             }
         }
     }
-  
+
 }

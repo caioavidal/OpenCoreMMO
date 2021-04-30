@@ -13,7 +13,7 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
         ushort ArmorValue => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.ArmorValue);
 
         private string DefenseText => ArmorValue > 0 ? $"(Arm:{ArmorValue})" : $"(Def:{DefenseValue})";
-        
+
         string IThing.InspectionText => $"{LookText} {DefenseText}{RequirementText}";
     }
 }

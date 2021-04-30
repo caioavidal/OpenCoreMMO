@@ -15,7 +15,7 @@ namespace NeoServer.Scripts.Players
 {
     public class God : Tutor
     {
-        public God(uint id, string characterName, byte vocation, Gender gender, bool online, IDictionary<SkillType, ISkill> skills, IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed, Location location) : 
+        public God(uint id, string characterName, byte vocation, Gender gender, bool online, IDictionary<SkillType, ISkill> skills, IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed, Location location) :
             base(id, characterName, vocation, gender, online, skills, outfit, inventory, speed, location)
         {
             SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVIP);

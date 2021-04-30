@@ -39,7 +39,7 @@ namespace NeoServer.Server.Model.Players
 
         public Skill(SkillType type, float rate, ushort level = 0, double count = 0)
         {
-        
+
             if (rate < 0)
             {
                 throw new Exception($"{nameof(rate)} must be positive.");
@@ -50,7 +50,7 @@ namespace NeoServer.Server.Model.Players
                 throw new Exception($"{nameof(count)} cannot be negative.");
             }
             Type = type;
-            Level =  level;
+            Level = level;
             Rate = rate;
 
             Count = count;
@@ -109,7 +109,7 @@ namespace NeoServer.Server.Model.Players
         public void IncreaseCounter(double value)
         {
             Count += value;
-            if (Type ==  SkillType.Level) IncreaseLevel();
+            if (Type == SkillType.Level) IncreaseLevel();
             else IncreaseSkillLevel();
         }
 

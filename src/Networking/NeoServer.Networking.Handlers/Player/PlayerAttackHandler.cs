@@ -18,7 +18,7 @@ namespace NeoServer.Server.Handlers.Player
 
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player)) return;
 
-            if(targetId == 0)
+            if (targetId == 0)
             {
                 game.Dispatcher.AddEvent(new Event(() => player.StopAttack()));
                 return;
@@ -26,7 +26,7 @@ namespace NeoServer.Server.Handlers.Player
 
             if (!game.CreatureManager.TryGetCreature(targetId, out ICreature creature)) return;
 
-            game.Dispatcher.AddEvent(new Event(() => 
+            game.Dispatcher.AddEvent(new Event(() =>
             player.SetAttackTarget(creature)));
         }
     }

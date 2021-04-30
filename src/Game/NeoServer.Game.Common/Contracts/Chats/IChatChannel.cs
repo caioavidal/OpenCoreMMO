@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Chats
 {
-    public delegate void AddMessage(ISociableCreature creature, IChatChannel channel, SpeechType speechType, string message );
+    public delegate void AddMessage(ISociableCreature creature, IChatChannel channel, SpeechType speechType, string message);
     public interface IChatChannel
     {
         ushort Id { get; }

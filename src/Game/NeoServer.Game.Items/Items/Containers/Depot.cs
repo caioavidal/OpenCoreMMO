@@ -9,6 +9,6 @@ namespace NeoServer.Game.Items.Items.Containers
         public Depot(IItemType type, Location location) : base(type, location)
         {
         }
-        public static new bool IsApplicable(IItemType type) =>type.Attributes.GetAttribute(Common.ItemAttribute.Type) == "depot";
+        public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Common.ItemAttribute.Type) == "depot";
     }
 }

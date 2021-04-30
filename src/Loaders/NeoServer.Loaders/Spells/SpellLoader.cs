@@ -53,7 +53,7 @@ namespace NeoServer.Loaders.Spells
                     SpellList.Add(spell["words"].ToString(), spellInstance);
                 }
                 return new object[] { spells.Count };
-            });             
+            });
         }
     }
 }

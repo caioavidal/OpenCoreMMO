@@ -98,7 +98,7 @@ namespace NeoServer.Data.Repositories
             if (entity is null) return;
             await DbContext.Entry(entity).ReloadAsync();
         }
-       
+
         #endregion
 
         #region private methods implementation

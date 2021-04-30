@@ -26,7 +26,7 @@ namespace NeoServer.Loaders.Items
         /// </summary>
         public void Load()
         {
-            
+
             logger.Step("Loading items", "{n} items loaded", () =>
             {
                 var basePath = $"{serverConfiguration.Data}/items/";

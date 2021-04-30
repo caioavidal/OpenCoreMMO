@@ -10,7 +10,7 @@ namespace NeoServer.Server.Events.Player
     {
         private readonly IGameServer game;
 
-        public PlayerLookedAtEventHandler( IGameServer game)
+        public PlayerLookedAtEventHandler(IGameServer game)
         {
             this.game = game;
         }

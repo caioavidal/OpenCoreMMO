@@ -17,7 +17,7 @@ namespace NeoServer.Scripts.Events
 
         public void Subscribe(ICreature creature)
         {
-            if(creature is ICombatActor actor)
+            if (creature is ICombatActor actor)
             {
                 actor.OnKilled += creatureKilledEventHandler.Execute;
                 actor.OnKilled += creatureDroppedLootEventHandler.Execute;

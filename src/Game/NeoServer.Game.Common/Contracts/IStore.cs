@@ -14,7 +14,7 @@ namespace NeoServer.Game.Contracts
         /// <param name="item"></param>
         /// <param name="slot"></param>
         /// <returns></returns>
-        Result CanAddItem(IItem item,byte amount = 1, byte? slot = null);
+        Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
         /// <summary>
         /// Gives amount that can be added to store
         /// </summary>

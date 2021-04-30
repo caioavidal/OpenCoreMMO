@@ -6,7 +6,6 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using System;
@@ -16,13 +15,13 @@ namespace NeoServer.Server.Commands.Player
     public class PlayerUseItemCommand : ICommand
     {
         private readonly IGameServer game;
-        
+
         public PlayerUseItemCommand(IGameServer game)
         {
             this.game = game;
         }
 
-        public  void Execute(IPlayer player, UseItemPacket useItemPacket)
+        public void Execute(IPlayer player, UseItemPacket useItemPacket)
         {
             IItem item = null;
             if (useItemPacket.Location.Type == LocationType.Ground)
@@ -62,7 +61,7 @@ namespace NeoServer.Server.Commands.Player
 
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
-                
+
                 action?.Invoke();
                 return;
             }

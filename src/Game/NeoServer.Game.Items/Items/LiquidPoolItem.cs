@@ -38,7 +38,7 @@ namespace NeoServer.Game.Items.Items
         public LiquidColor GetLiquidColor(LiquidColor color)
         {
             if (!IsLiquidPool && !IsLiquidContainer) return 0x00;
-            
+
             return color;
         }
         public LiquidColor GetLiquidColor(IDictionary<ItemAttribute, IConvertible> attributes)

@@ -154,7 +154,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameItemJob>().SingleInstance();
             builder.RegisterType<GameChatChannelJob>().SingleInstance();
             builder.RegisterType<PlayerPersistenceJob>().SingleInstance();
-            
+
 
             //Database
             builder.RegisterContext<NeoContext>();
@@ -174,7 +174,7 @@ namespace NeoServer.Server.Standalone.IoC
             var logger = loggerConfig.CreateLogger();
 
             Builder.RegisterInstance(logger).SingleInstance();
-          
+
             return (logger, loggerConfig);
         }
 
@@ -201,7 +201,7 @@ namespace NeoServer.Server.Standalone.IoC
 
         private static void RegisterAssembliesByInterface(Type interfaceType)
         {
-            
+
             var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => interfaceType.IsAssignableFrom(x));
 
             foreach (var type in types)
@@ -216,7 +216,7 @@ namespace NeoServer.Server.Standalone.IoC
             var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommand));
             builder.RegisterAssemblyTypes(assembly);
         }
-        
+
         private static void RegisterPlayerLoaders(this ContainerBuilder builder)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies();

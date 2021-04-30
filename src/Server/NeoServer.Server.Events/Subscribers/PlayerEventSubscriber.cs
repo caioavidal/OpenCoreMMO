@@ -53,7 +53,7 @@ namespace NeoServer.Server.Events
             PlayerLoadedVipListEventHandler playerLoadedVipListEvent, PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler,
             PlayerSentMessageEventHandler playerSentMessageEventHandler, PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler,
             PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler, PlayerLeftPartyEventHandler playerLeftPartyEventHandler,
-            PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler, PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler, 
+            PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler, PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler,
             PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;

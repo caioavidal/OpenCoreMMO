@@ -17,7 +17,7 @@ namespace NeoServer.Data.Configurations
             builder.Property(e => e.RankId).HasColumnName("rank_id");
             builder.Property(e => e.Nick).HasColumnName("nick");
 
-            builder.HasOne(x => x.Guild).WithMany(x=>x.Members).HasForeignKey("GuildId");
+            builder.HasOne(x => x.Guild).WithMany(x => x.Members).HasForeignKey("GuildId");
 
         }
     }

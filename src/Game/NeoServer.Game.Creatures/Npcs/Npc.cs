@@ -83,7 +83,7 @@ namespace NeoServer.Game.Creatures.Npcs
             if (dialog is null) return;
 
             if (!isTalkingWith) WatchCustomerEvents(sociableCreature); //first interaction
-            
+
             npcDialog.StoreWords(sociableCreature, dialog.StoreAt, message);
 
             if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, GetPlayerStoredValues(sociableCreature));

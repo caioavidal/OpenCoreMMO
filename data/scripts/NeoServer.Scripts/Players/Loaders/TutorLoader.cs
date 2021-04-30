@@ -5,7 +5,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
-using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Scripts.Players.Loaders
 {
@@ -31,7 +30,7 @@ namespace NeoServer.Scripts.Players.Loaders
                 ConvertToInventory(playerModel),
                 playerModel.Speed,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ)
-               
+
                 )
             {
                 AccountId = (uint)playerModel.AccountId,

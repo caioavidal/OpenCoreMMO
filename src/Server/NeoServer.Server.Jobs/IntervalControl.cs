@@ -13,6 +13,6 @@ namespace NeoServer.Server.Jobs
         }
 
         public void MarkAsExecuted() => lastRun = DateTime.Now;
-        public bool CanExecuteNow() => DateTime.Now  >= lastRun.AddMilliseconds(interval);
+        public bool CanExecuteNow() => DateTime.Now >= lastRun.AddMilliseconds(interval);
     }
 }

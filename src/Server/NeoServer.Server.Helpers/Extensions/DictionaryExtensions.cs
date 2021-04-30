@@ -7,7 +7,7 @@ namespace NeoServer.Server.Helpers.Extensions
     {
         public static bool TryGetValue<T>(this Dictionary<string, object> dictionary, string key, out T value)
         {
-           
+
             if (dictionary is null || key is null || !dictionary.TryGetValue(key, out var val))
             {
                 value = default;

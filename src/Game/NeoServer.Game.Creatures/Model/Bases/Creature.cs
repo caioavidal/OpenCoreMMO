@@ -119,14 +119,14 @@ namespace NeoServer.Game.Creatures.Model
         }
         public byte LightBrightness { get; protected set; }
         public byte LightColor { get; protected set; }
-        public  bool IsInvisible { get; protected set; } // TODO: implement.
+        public bool IsInvisible { get; protected set; } // TODO: implement.
         public abstract bool CanSeeInvisible { get; }
 
         public virtual bool CanSee(ICreature otherCreature)
         {
             return !otherCreature.IsInvisible || CanSeeInvisible;
         }
-        
+
         public bool CanSee(Location pos, int viewPortX, int viewPortY)
         {
             if (Location.IsSurface || Location.IsAboveSurface)
@@ -204,7 +204,7 @@ namespace NeoServer.Game.Creatures.Model
             if (string.IsNullOrWhiteSpace(message) || talkType == SpeechType.None) return;
             OnSay?.Invoke(this, talkType, message, receiver);
         }
-    
+
         public override bool Equals(object obj) => obj is ICreature creature && creature.CreatureId == CreatureId;
 
         public override int GetHashCode() => HashCode.Combine(CreatureId);

@@ -98,7 +98,7 @@ namespace NeoServer.Loaders.Monsters
 
             [JsonProperty("defense")]
             public string Defense { get; set; }
-        }      
+        }
         public class DefenseData
         {
             [JsonProperty("armor")]

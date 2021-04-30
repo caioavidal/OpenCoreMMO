@@ -12,8 +12,8 @@ namespace NeoServer.Game.Creatures.Events
         private readonly CreatureTeleportedEventHandler creatureTeleportedEventHandler;
         private readonly PlayerDisappearedEventHandler playerDisappearedEventHandler;
         private readonly CreatureMovedEventHandler creatureMovedEventHandler;
-        private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler; 
-        private readonly PlayerLoggedOutEventHandler  playerLoggedOutEventHandler;
+        private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler;
+        private readonly PlayerLoggedOutEventHandler playerLoggedOutEventHandler;
         public readonly CreatureSayEventHandler creatureSayEventHandler;
         public readonly MonsterKilledEventHandler monsterKilledEventHandler;
         public readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
@@ -57,7 +57,7 @@ namespace NeoServer.Game.Creatures.Events
                 player.OnLoggedOut += playerLoggedOutEventHandler.Execute;
                 player.Containers.OnOpenedContainer += playerOpenedContainerEventHandler.Execute;
             }
-            if(creature is IMonster monster)
+            if (creature is IMonster monster)
             {
                 monster.OnKilled += monsterKilledEventHandler.Execute;
             }

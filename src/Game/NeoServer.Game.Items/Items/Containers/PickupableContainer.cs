@@ -32,7 +32,7 @@ namespace NeoServer.Game.Items.Items
         private void UpdateParents(float weight)
         {
             IThing parent = Parent;
-            while (parent is IPickupableContainer container) 
+            while (parent is IPickupableContainer container)
             {
                 container.Weight += weight;
                 parent = container.Parent;

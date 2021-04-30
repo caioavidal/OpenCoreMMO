@@ -4,7 +4,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using System;
@@ -15,7 +14,7 @@ namespace NeoServer.Server.Commands.Player
     {
         private readonly IGameServer game;
 
-        public PlayerUseItemOnCommand( IGameServer game)
+        public PlayerUseItemOnCommand(IGameServer game)
         {
             this.game = game;
         }

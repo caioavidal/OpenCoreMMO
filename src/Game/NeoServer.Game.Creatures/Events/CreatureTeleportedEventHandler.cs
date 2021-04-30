@@ -29,7 +29,7 @@ namespace NeoServer.Game.Creatures.Events
             }
             else
             {
-                map.TryMoveCreature(creature, tile.Location); 
+                map.TryMoveCreature(creature, tile.Location);
             }
         }
     }

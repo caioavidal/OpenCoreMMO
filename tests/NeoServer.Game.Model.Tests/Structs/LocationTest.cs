@@ -61,7 +61,7 @@ namespace NeoServer.Game.Model.Tests.Structs
         }
 
         [Theory]
-        [InlineData(1,1)]
+        [InlineData(1, 1)]
         [InlineData(2, 2)]
         [InlineData(3, 5)]
         [InlineData(4, 10)]
@@ -83,7 +83,7 @@ namespace NeoServer.Game.Model.Tests.Structs
         }
 
         [Theory]
-        [InlineData(100, 100, 101,100, Direction.East)]
+        [InlineData(100, 100, 101, 100, Direction.East)]
         [InlineData(100, 100, 99, 100, Direction.West)]
         [InlineData(100, 100, 100, 99, Direction.North)]
         [InlineData(100, 100, 100, 101, Direction.South)]
@@ -100,7 +100,7 @@ namespace NeoServer.Game.Model.Tests.Structs
             var result = fromLocation.DirectionTo(toLocation);
 
             Assert.Equal(expected, result);
-            
+
         }
 
     }

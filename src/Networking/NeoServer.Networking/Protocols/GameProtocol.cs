@@ -36,8 +36,8 @@ namespace NeoServer.Networking.Protocols
                 Xtea.Decrypt(connection.InMessage, 6, connection.XteaKey);
             }
 
-            if(_handlerFactory(args.Connection) is not IPacketHandler handler) return;
-            
+            if (_handlerFactory(args.Connection) is not IPacketHandler handler) return;
+
             handler?.HandlerMessage(args.Connection.InMessage, args.Connection);
         }
     }

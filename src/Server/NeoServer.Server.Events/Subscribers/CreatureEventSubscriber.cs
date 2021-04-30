@@ -22,7 +22,7 @@ namespace NeoServer.Server.Events
         private readonly CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler;
         private readonly CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler;
         private readonly PlayerSentMessageEventHandler creatureSentMessageEventHandler;
-        private readonly NpcShowShopEventHandler  npcShowShopEventHandler;
+        private readonly NpcShowShopEventHandler npcShowShopEventHandler;
         public CreatureEventSubscriber(CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler,
             CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
             CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler, CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler,
@@ -30,8 +30,8 @@ namespace NeoServer.Server.Events
             CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler, CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler,
             CreatureHearEventHandler creatureHearEventHandler,
             CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler,
-            CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler, 
-            PlayerSentMessageEventHandler creatureSentMessageEventHandler, 
+            CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler,
+            PlayerSentMessageEventHandler creatureSentMessageEventHandler,
             NpcShowShopEventHandler npcShowShopEventHandler)
         {
             _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
@@ -70,7 +70,7 @@ namespace NeoServer.Server.Events
                 combatActor.OnHeal += _creatureHealedEventHandler.Execute;
                 combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
             }
-            if(creature is IShopperNpc shopperNpc)
+            if (creature is IShopperNpc shopperNpc)
             {
                 shopperNpc.OnShowShop += npcShowShopEventHandler.Execute;
             }

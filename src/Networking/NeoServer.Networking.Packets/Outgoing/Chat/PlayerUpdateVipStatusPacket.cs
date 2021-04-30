@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         {
             message.AddByte((byte)(online ? GameOutgoingPacketType.OnlineStatusVip : GameOutgoingPacketType.OfflineStatusVip));
             message.AddUInt32(playerId);
-            
+
         }
     }
 }

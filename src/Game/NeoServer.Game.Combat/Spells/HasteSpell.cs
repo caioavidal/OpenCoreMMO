@@ -5,7 +5,7 @@ using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Combat.Spells
 {
-    public class HasteSpell: Spell<HasteSpell>
+    public class HasteSpell : Spell<HasteSpell>
     {
         public override string Name => "Haste";
         public override EffectT Effect { get; } = EffectT.GlitterBlue;

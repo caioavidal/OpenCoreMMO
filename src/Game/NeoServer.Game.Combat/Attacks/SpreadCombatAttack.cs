@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
             if (CalculateAttack(actor, enemy, option, out var damage))
             {
-                combatType.Area = SpreadEffect.Create(actor.Location,actor.Direction, Length, Spread);
+                combatType.Area = SpreadEffect.Create(actor.Location, actor.Direction, Length, Spread);
                 actor.PropagateAttack(combatType.Area, damage);
                 return true;
             }

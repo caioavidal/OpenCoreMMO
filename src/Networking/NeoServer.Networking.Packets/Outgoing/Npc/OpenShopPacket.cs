@@ -19,7 +19,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
         {
             message.AddByte((byte)GameOutgoingPacketType.OpenShop);
 
-            var itemsCount = (ushort) Math.Min(Items.Count(), ushort.MaxValue);
+            var itemsCount = (ushort)Math.Min(Items.Count(), ushort.MaxValue);
             message.AddByte((byte)itemsCount);
 
             foreach (var item in Items)

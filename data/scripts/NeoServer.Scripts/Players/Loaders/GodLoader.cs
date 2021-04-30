@@ -5,14 +5,13 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
-using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Scripts.Players.Loaders
 {
     public class GodLoader : PlayerLoader, IPlayerLoader
     {
         private readonly ICreatureFactory creatureFactory;
-        public GodLoader( IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory) : base(itemFactory, creatureFactory, chatChannelFactory)
+        public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory) : base(itemFactory, creatureFactory, chatChannelFactory)
         {
             this.creatureFactory = creatureFactory;
         }

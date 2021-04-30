@@ -3,12 +3,9 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Monsters.Combats
 {
@@ -26,7 +23,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
         {
             if (targets is null) targets = new Dictionary<uint, CombatTarget>(150);
 
-            if(!targets.TryAdd(creature.CreatureId, new CombatTarget(creature))) return;
+            if (!targets.TryAdd(creature.CreatureId, new CombatTarget(creature))) return;
             AttachToTargetEvents(creature);
         }
         public void RemoveTarget(ICreature creature)
@@ -36,7 +33,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
             targets?.Remove(creature.CreatureId);
 
             if (monster.AutoAttackTargetId == creature.CreatureId) monster.StopAttack();
-            
+
         }
 
         public void Clear()
@@ -83,7 +80,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
                 return;
             }
         }
-        private void OnTargetMoved(IWalkableCreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators)=> HandleTargetMoved(creature);        
+        private void OnTargetMoved(IWalkableCreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators) => HandleTargetMoved(creature);
         private void OnTargetRemoved(ICreature creature) => RemoveTarget(creature);
         #endregion
 

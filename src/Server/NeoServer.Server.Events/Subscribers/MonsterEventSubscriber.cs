@@ -12,7 +12,7 @@ namespace NeoServer.Server.Events
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
         private readonly MonsterChangedStateEventHandler monsterChangedStateEventHandler;
 
-        public MonsterEventSubscriber(CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureAttackEventHandler creatureAttackEventHandler, 
+        public MonsterEventSubscriber(CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
             MonsterChangedStateEventHandler monsterChangedStateEventHandler)
         {
             _creatureWasBornEventHandler = creatureWasBornEventHandler;

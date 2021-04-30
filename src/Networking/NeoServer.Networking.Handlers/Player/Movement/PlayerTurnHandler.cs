@@ -25,7 +25,7 @@ namespace NeoServer.Server.Handlers.Players
             Direction direction = ParseTurnPacket(message.IncomingPacket);
 
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player)) return;
-            
+
             game.Dispatcher.AddEvent(new Event(() => player.TurnTo(direction)));
         }
 

@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
 
             if (playerDialogStorage.TryGetValue(creature.CreatureId, out var map))
             {
-                if(map.ContainsKey(key)) map[key] = value;
+                if (map.ContainsKey(key)) map[key] = value;
                 else map.TryAdd(key, value);
 
                 return;
@@ -36,7 +36,7 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
             playerDialogStorage.TryAdd(creature.CreatureId, new Dictionary<string, string>() { { key, value } });
         }
 
-        public void Back(uint creatureId,byte count)
+        public void Back(uint creatureId, byte count)
         {
             if (!playerDialogTree.TryGetValue(creatureId, out var dialogHistory)) return;
 

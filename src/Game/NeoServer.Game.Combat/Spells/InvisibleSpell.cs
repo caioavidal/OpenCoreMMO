@@ -6,7 +6,7 @@ using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures.Spells
 {
-    public class InvisibleSpell: Spell<InvisibleSpell>
+    public class InvisibleSpell : Spell<InvisibleSpell>
     {
         public override string Name => "Invisible";
         public override EffectT Effect { get; } = EffectT.GlitterBlue;

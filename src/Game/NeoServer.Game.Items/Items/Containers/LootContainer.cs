@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.DataStore;
 using System;
 using System.Linq;
@@ -39,7 +38,7 @@ namespace NeoServer.Game.Items.Items.Containers
         public override string ToString()
         {
             if (LootCreated) return base.ToString();
-            
+
             var content = GetStringContent(Loot?.Items);
             if (string.IsNullOrWhiteSpace(content)) return "nothing";
 

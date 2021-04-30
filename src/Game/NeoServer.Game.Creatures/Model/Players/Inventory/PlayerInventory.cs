@@ -124,7 +124,7 @@ namespace NeoServer.Server.Model.Players
             {
                 byte totalArmor = 0;
 
-                Func<Slot, ushort> getDefenseValue = (Slot slot) => (Inventory[slot].Item1 is  IDefenseEquipmentItem equipment) ? equipment.DefenseValue : default;
+                Func<Slot, ushort> getDefenseValue = (Slot slot) => (Inventory[slot].Item1 is IDefenseEquipmentItem equipment) ? equipment.DefenseValue : default;
 
                 totalArmor += (byte)(Inventory.ContainsKey(Slot.Necklace) ? getDefenseValue(Slot.Necklace) : 0);
                 totalArmor += (byte)(Inventory.ContainsKey(Slot.Head) ? getDefenseValue(Slot.Head) : 0);
@@ -473,7 +473,7 @@ namespace NeoServer.Server.Model.Players
 
             position = position ?? (byte)thing.Metadata.BodyPosition;
 
-            if (position is null) return Result<OperationResult<IItem>>.NotPossible; 
+            if (position is null) return Result<OperationResult<IItem>>.NotPossible;
 
             var swappedItem = TryAddItemToSlot((Slot)position, item);
 

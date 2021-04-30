@@ -11,7 +11,7 @@ namespace NeoServer.Server.Jobs.Creatures
             if (monster.IsDead) return;
 
             monster.ChangeState();
-            
+
             if (monster.State == MonsterState.LookingForEnemy)
             {
                 monster.LookForNewEnemy();
@@ -21,7 +21,8 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 monster.MoveAroundEnemy();
 
-                if (!monster.Attacking) {
+                if (!monster.Attacking)
+                {
                     monster.SelectTargetToAttack();
                     return;
                 }
@@ -36,7 +37,7 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 monster.Sleep();
             }
-            if(monster.State == MonsterState.Running)
+            if (monster.State == MonsterState.Running)
             {
                 monster.Escape();
             }

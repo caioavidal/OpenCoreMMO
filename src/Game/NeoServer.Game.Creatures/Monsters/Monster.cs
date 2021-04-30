@@ -9,7 +9,6 @@ using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Monsters.Loots;
 using NeoServer.Game.Creatures.Monsters;

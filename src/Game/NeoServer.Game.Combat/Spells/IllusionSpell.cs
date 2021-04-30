@@ -16,7 +16,7 @@ namespace NeoServer.Game.Creatures.Spells
         public override ConditionType ConditionType => ConditionType.Illusion;
         public virtual IMonsterDataManager Monsters { get; }
         public virtual string CreatureName { get; }
-      
+
         public IllusionSpell(uint duration, string creatureName, IMonsterDataManager monsters, EffectT effect)
         {
             Monsters = monsters;

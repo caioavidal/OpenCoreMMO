@@ -7,7 +7,7 @@ using NeoServer.Game.Creatures.Model.Players;
 
 namespace NeoServer.Game.Creatures.Services
 {
-    public class PartyInviteService: IPartyInviteService
+    public class PartyInviteService : IPartyInviteService
     {
         private readonly ChatChannelFactory chatChannelFactory;
 

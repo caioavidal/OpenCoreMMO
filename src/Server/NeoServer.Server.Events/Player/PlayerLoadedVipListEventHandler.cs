@@ -8,7 +8,7 @@ namespace NeoServer.Server.Events.Player
     public class PlayerLoadedVipListEventHandler
     {
         private readonly IGameServer game;
-        
+
         public PlayerLoadedVipListEventHandler(IGameServer game)
         {
             this.game = game;

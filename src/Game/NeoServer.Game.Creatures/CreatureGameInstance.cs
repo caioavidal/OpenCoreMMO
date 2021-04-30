@@ -72,7 +72,7 @@ namespace NeoServer.Game.Creature
             if (!_creatures.Remove(id, out ICreature creature))
             {
                 // TODO: proper logging
-               // Console.WriteLine($"WARNING: Failed to remove {creature.Name} from the global dictionary.");
+                // Console.WriteLine($"WARNING: Failed to remove {creature.Name} from the global dictionary.");
                 return false;
             }
             return true;

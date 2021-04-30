@@ -15,7 +15,7 @@ namespace NeoServer.Game.Creatures.Npcs
     {
 
         public event ShowShop OnShowShop;
-        public ShopperNpc(INpcType type,ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, spawnPoint, outfit, healthPoints)
+        public ShopperNpc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, spawnPoint, outfit, healthPoints)
         {
         }
 

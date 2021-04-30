@@ -18,7 +18,7 @@ namespace NeoServer.Server.Jobs.Items
         {
             game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_ITEM_INTERVAL, StartChecking));
 
-            foreach (var item in game.DecayableItemManager.Items) 
+            foreach (var item in game.DecayableItemManager.Items)
             {
                 LiquidPoolJob.Execute(item, game);
             }
