@@ -197,7 +197,6 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
             builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
             builder.RegisterAssemblyTypes(types).As<IChatChannelEventSubscriber>().SingleInstance();
-
         }
 
         private static void RegisterAssembliesByInterface(Type interfaceType)
@@ -260,6 +259,8 @@ namespace NeoServer.Server.Standalone.IoC
 
                 if (c.TryResolve(handlerType, out object instance))
                 {
+                    c.Resolve<Logger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
+
                     return (IPacketHandler)instance;
                 }
 
