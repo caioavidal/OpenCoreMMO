@@ -4,13 +4,11 @@ using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Server.Model.Players;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace NeoServer.Data.Repositories

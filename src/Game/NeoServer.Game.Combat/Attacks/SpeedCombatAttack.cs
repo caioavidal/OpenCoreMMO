@@ -25,7 +25,7 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
             if (CalculateAttack(actor, enemy, option, out var damage))
             {
-                return SpeedChange > 0 ? HasteSpell.Instance.InvokeOn(actor, enemy,null, out var error) : ParalyzeSpell.Instance.InvokeOn(actor, enemy,null, out error);
+                return SpeedChange > 0 ? HasteSpell.Instance.InvokeOn(actor, enemy, null, out var error) : ParalyzeSpell.Instance.InvokeOn(actor, enemy, null, out error);
             }
             return false;
         }

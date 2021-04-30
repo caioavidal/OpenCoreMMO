@@ -15,7 +15,7 @@ namespace NeoServer.Game.Chats
         private long firstMessageBeforeMuted;
         private ushort lastMutedForSeconds;
         public ushort MessagesCount { get; private set; }
-        public int RemainingMutedSeconds => MutedForSeconds == 0 ? 0 : (int)Math.Round(TimeSpan.FromTicks((LastMessage + (TimeSpan.TicksPerSecond * MutedForSeconds)) - DateTime.Now.Ticks).TotalSeconds,MidpointRounding.AwayFromZero);
+        public int RemainingMutedSeconds => MutedForSeconds == 0 ? 0 : (int)Math.Round(TimeSpan.FromTicks((LastMessage + (TimeSpan.TicksPerSecond * MutedForSeconds)) - DateTime.Now.Ticks).TotalSeconds, MidpointRounding.AwayFromZero);
         private byte mutedTimes; //count how many times user get muted.
         public bool IsMuted => RemainingMutedSeconds > 0;
         public void UpdateLastMessage(MuteRule rule)

@@ -27,7 +27,7 @@ namespace NeoServer.Game.Contracts.Bases
         }
 
         public abstract Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
-      
+
         public virtual Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
         {
             var canAdd = destination.CanAddItem(thing, amount, toPosition);
@@ -53,11 +53,11 @@ namespace NeoServer.Game.Contracts.Bases
 
             if (result.IsSuccess && thing is IMoveableThing moveableThing) moveableThing.OnMoved();
 
-            var amountResult = (byte) Math.Max(0, amount - (int)possibleAmountToAdd);
+            var amountResult = (byte)Math.Max(0, amount - (int)possibleAmountToAdd);
             if (amountResult > 0)
             {
                 return SendTo(destination, thing, amountResult, fromPosition, toPosition);
-             
+
             }
 
             return result;

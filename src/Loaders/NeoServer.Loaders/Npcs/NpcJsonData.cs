@@ -62,11 +62,11 @@ namespace NeoServer.Loaders.Npcs
 
         public class ShopData
         {
-          
-                public ushort Item { get; set; }
-                public uint Sell { get; set; }
-                public uint Buy { get; set; }
-            
+
+            public ushort Item { get; set; }
+            public uint Sell { get; set; }
+            public uint Buy { get; set; }
+
         }
     }
 }

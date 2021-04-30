@@ -238,7 +238,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
             var container = ItemTestData.CreateBackpack();
-         
+
             var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) },
              { itemToBuy.Metadata.BodyPosition, new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(10, slot),10) }});
 
@@ -273,7 +273,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var container = ItemTestData.CreateBackpack();
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) }});
+            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) } });
 
             player.LoadBank(5000);
 
@@ -292,7 +292,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             Assert.Equal(itemToBuy, player.Inventory.BackpackSlot.Items[3]);
         }
 
-        [InlineData(30, 100,30)]
+        [InlineData(30, 100, 30)]
         [InlineData(100, 100, 100)]
         [InlineData(100, 1, 1)]
         [InlineData(99, 2, 1)]
@@ -352,7 +352,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(ItemTestData.CreateWeaponItem(11, "axe"));
             container.AddItem(platinum);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { 
+            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() {
                 { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 1) }});
 
             player.LoadBank(5000);

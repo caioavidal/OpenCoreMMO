@@ -13,7 +13,7 @@ namespace NeoServer.Scripts.Spells.Commands
         {
             error = InvalidOperation.NotPossible;
             if (Params?.Length == 0) return false;
-            
+
             var monster = CreatureFactory.Instance.CreateMonster(Params[0].ToString());
             if (monster is null) return false;
 
@@ -21,7 +21,7 @@ namespace NeoServer.Scripts.Spells.Commands
 
             foreach (var neighbour in actor.Location.Neighbours)
             {
-                
+
                 if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
                 {
                     monster.Born(neighbour);

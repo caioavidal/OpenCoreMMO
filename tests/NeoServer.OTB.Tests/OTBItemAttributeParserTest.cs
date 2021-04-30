@@ -11,7 +11,7 @@ namespace NeoServer.OTB.Tests
         [Fact]
         public void Instance_StreamNull_Throws()
         {
-           var sut = new OTBParsingItemAttribute(null);
+            var sut = new OTBParsingItemAttribute(null);
             Assert.Null(sut.Attributes);
         }
 

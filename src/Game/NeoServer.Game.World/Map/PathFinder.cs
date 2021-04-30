@@ -73,7 +73,7 @@ namespace NeoServer.Game.World.Map
             foreach (var direction in possibleDirections)
             {
                 if (startLocation.GetMaxSqmDistance(target) > fpp.MaxTargetDist) continue;
-                
+
             }
 
             return false;

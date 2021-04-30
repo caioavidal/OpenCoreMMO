@@ -26,7 +26,7 @@ namespace NeoServer.Game.Creatures.Spells
             if (words.StartsWith("/"))
             {
                 var command = GetCommand(words);
-                if(Spells.TryGetValue(command.Item1, out spell) && spell is ICommandSpell commandSpell)
+                if (Spells.TryGetValue(command.Item1, out spell) && spell is ICommandSpell commandSpell)
                 {
                     commandSpell.Params = command.Item2;
                     return true;
@@ -36,12 +36,12 @@ namespace NeoServer.Game.Creatures.Spells
             return Spells.TryGetValue(words, out spell);
         }
 
-        private static  (string, object[]) GetCommand(string words)
+        private static (string, object[]) GetCommand(string words)
         {
             var firstWhiteSpace = words.IndexOf(" ");
 
             if (firstWhiteSpace == -1) return (words, null);
-            
+
             var command = words.Substring(0, firstWhiteSpace);
             var @params = words.Substring(firstWhiteSpace, words.Length - firstWhiteSpace).Trim().Split(",");
 

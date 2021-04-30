@@ -4,7 +4,7 @@ using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Game.Contracts.Items.Types.Runes
 {
-    public interface IAttackRune: IUseableAttackOnCreature, IUseableAttackOnTile, IRune
+    public interface IAttackRune : IUseableAttackOnCreature, IUseableAttackOnTile, IRune
     {
         /// <summary>
         /// Rune's Damage Type 

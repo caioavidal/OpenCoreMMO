@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Guilds
 {
-    public class GuildLoader: ICustomLoader
+    public class GuildLoader : ICustomLoader
     {
         private readonly Logger logger;
         private readonly ChatChannelFactory chatChannelFactory;

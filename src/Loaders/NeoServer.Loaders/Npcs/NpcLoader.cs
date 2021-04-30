@@ -38,7 +38,7 @@ namespace NeoServer.Loaders.Npcs
                     OnLoad?.Invoke(npc, jsonContent);
                 }
                 return new object[] { npcs.Count() };
-            });               
+            });
         }
         private IEnumerable<(string, INpcType)> ConvertNpcs()
         {

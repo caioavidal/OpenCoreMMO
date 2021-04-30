@@ -16,9 +16,9 @@ namespace NeoServer.Server.Handlers.Player
         {
             var containerId = message.GetByte();
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-            
-                game.Dispatcher.AddEvent(new Event(() => player.Containers.CloseContainer(containerId)));
-            
+
+            game.Dispatcher.AddEvent(new Event(() => player.Containers.CloseContainer(containerId)));
+
         }
     }
 }

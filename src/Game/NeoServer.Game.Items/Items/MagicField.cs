@@ -58,7 +58,7 @@ namespace NeoServer.Game.Items.Items
             }
             else
             {
-                if (DamageCount == 0) actor.AddCondition(new DamageCondition(conditionType, Interval, minDamage: (ushort)damages.Min, maxDamage: (ushort) damages.Max));
+                if (DamageCount == 0) actor.AddCondition(new DamageCondition(conditionType, Interval, minDamage: (ushort)damages.Min, maxDamage: (ushort)damages.Max));
                 else actor.AddCondition(new DamageCondition(conditionType, Interval, amount: DamageCount, damage: (ushort)damages.Min));
             }
         }

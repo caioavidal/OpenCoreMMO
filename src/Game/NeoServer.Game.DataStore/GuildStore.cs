@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.DataStore
 {
-    public class GuildStore: DataStore<GuildStore, ushort, IGuild>
+    public class GuildStore : DataStore<GuildStore, ushort, IGuild>
     {
     }
 }

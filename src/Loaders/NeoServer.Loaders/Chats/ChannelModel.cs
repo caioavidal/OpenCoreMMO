@@ -52,6 +52,6 @@ namespace NeoServer.Loaders.Chats
             [JsonProperty("cancel-message")]
             public string CancelMessage { get; set; }
         }
-        
+
     }
 }

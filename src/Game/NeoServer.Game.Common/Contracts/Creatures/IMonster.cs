@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void Born(IMonster monster, Location location);
-    public delegate void MonsterChangeState(IMonster monster,MonsterState fromState, MonsterState toState);
+    public delegate void MonsterChangeState(IMonster monster, MonsterState fromState, MonsterState toState);
     public interface IMonster : IWalkableMonster, ICombatActor
     {
         event Born OnWasBorn;

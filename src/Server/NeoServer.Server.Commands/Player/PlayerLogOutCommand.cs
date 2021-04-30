@@ -7,7 +7,7 @@ namespace NeoServer.Server.Commands
     public class PlayerLogOutCommand : ICommand
     {
         private readonly IGameServer game;
-     
+
         public PlayerLogOutCommand(IGameServer game)
         {
             this.game = game;

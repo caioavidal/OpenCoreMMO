@@ -107,7 +107,7 @@ namespace NeoServer.Loaders.Items
                         {
                             attributes.SetAttribute(itemAttribute, value);
                         }
-                        
+
                     }
                 }
                 else

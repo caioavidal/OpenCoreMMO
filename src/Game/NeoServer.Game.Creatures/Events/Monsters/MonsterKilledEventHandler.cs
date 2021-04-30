@@ -6,7 +6,7 @@ using System.Linq;
 namespace NeoServer.Game.Creatures.Events
 {
     public class MonsterKilledEventHandler : IGameEventHandler
-    { 
+    {
         public void Execute(ICreature creature, IThing by, ILoot loot)
         {
             if (creature is not IMonster monster) return;

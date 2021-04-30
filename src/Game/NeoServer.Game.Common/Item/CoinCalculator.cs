@@ -9,7 +9,7 @@ namespace NeoServer.Game.Common.Item
     {
         public static IEnumerable<(ushort, byte)> Calculate(IDictionary<ushort, IItemType> coinTypes, ulong value)
         {
-            return Calculate(value, coinTypes.ToDictionary(x=> x.Key, x=> x.Value?.Attributes?.GetAttribute<uint>(ItemAttribute.Worth) ?? 0));
+            return Calculate(value, coinTypes.ToDictionary(x => x.Key, x => x.Value?.Attributes?.GetAttribute<uint>(ItemAttribute.Worth) ?? 0));
         }
         private static IEnumerable<(ushort, byte)> Calculate(ulong value, IDictionary<ushort, uint> coinTypes, List<(ushort, byte)> coins = null)
         {

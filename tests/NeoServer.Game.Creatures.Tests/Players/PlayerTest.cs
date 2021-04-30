@@ -35,7 +35,7 @@ namespace NeoServer.Game.Creatures.Tests
         [Fact]
         public void OnDamage_When_Receives_Melee_Attack_Reduce_Health()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp:100) as Player;
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100) as Player;
             var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
             sut.OnDamage(enemy, new(5, Common.Item.DamageType.Melee));
 
@@ -44,7 +44,7 @@ namespace NeoServer.Game.Creatures.Tests
         [Fact]
         public void OnDamage_When_Receives_Mana_Attack_Reduce_Mana()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(mana:30) as Player;
+            var sut = PlayerTestDataBuilder.BuildPlayer(mana: 30) as Player;
             var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
             sut.OnDamage(enemy, new(5, Common.Item.DamageType.ManaDrain));
 

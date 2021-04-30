@@ -22,16 +22,16 @@ namespace NeoServer.Game.Items
                 return customAttributes;
             }
         }
-      
+
         public ItemAttributeList()
         {
             _defaultAttributes = new Dictionary<ItemAttribute, (dynamic, IItemAttributeList)>();
         }
         public void SetCustomAttribute(string attribute, int attributeValue) => _customAttributes[attribute] = (attributeValue, null);
-                                       
+
         public void SetCustomAttribute(string attribute, IConvertible attributeValue) => _customAttributes[attribute] = (attributeValue, null);
         public void SetCustomAttribute(string attribute, dynamic values) => _customAttributes[attribute] = (values, null);
-                                       
+
         public void SetCustomAttribute(string attribute, IConvertible attributeValue, IItemAttributeList attrs) => _customAttributes[attribute] = (attributeValue, attrs);
 
         public void SetAttribute(ItemAttribute attribute, int attributeValue) => _defaultAttributes[attribute] = (attributeValue, null);
@@ -42,7 +42,7 @@ namespace NeoServer.Game.Items
         public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs) => _defaultAttributes[attribute] = (attributeValue, attrs);
 
         public bool HasAttribute(ItemAttribute attribute) => _defaultAttributes.ContainsKey(attribute);
-        
+
         public bool HasAttribute(string attribute) => _customAttributes.ContainsKey(attribute);
 
         public T GetAttribute<T>(ItemAttribute attribute) where T : struct

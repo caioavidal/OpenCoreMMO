@@ -18,7 +18,7 @@ namespace NeoServer.Game.Contracts.Items.Types.Useables
     public interface IUseableOnTile : IUseableOn, IItem
     {
         event UseOnTile OnUsedOnTile;
-        
+
         /// <summary>
         /// Useable by creatures on items (ground, weapon, stairs..)
         /// </summary>

@@ -670,7 +670,7 @@ namespace NeoServer.Server.Model.Players
             {
                 if (!CanSee(onTile.Location) || Location.Z != onTile.Location.Z) return;
                 WalkToMechanism.WalkTo(this, use, onTile.Location);
-                return;  
+                return;
             }
 
             use();

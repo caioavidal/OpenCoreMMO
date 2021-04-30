@@ -31,7 +31,7 @@ namespace NeoServer.Scripts.Players.Loaders
                 ConvertToInventory(playerModel),
                 playerModel.Speed,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ)
-               
+
                 )
             {
                 AccountId = (uint)playerModel.AccountId,

@@ -31,7 +31,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Fires when creature says something
         /// </summary>
         event Say OnSay;
-     
+
         /// <summary>
         /// Fires when creature changes outfit
         /// </summary>
@@ -114,7 +114,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Checks if creature can be seen by others
         /// </summary>
         bool CanBeSeen { get; }
-   
+
         /// <summary>
         /// Checks if creature can see other creature
         /// </summary>                
@@ -132,9 +132,9 @@ namespace NeoServer.Game.Contracts.Creatures
         /// Set old outfit to current
         /// </summary>
         void BackToOldOutfit();
-     
+
         void OnCreatureAppear(Location location, ICylinderSpectator[] spectators);
-    
+
         /// <summary>
         /// Says a message
         /// </summary>

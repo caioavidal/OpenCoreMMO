@@ -4,7 +4,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Tasks;
 using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Server.Commands.Movement
 {

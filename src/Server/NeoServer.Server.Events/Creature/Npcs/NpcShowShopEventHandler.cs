@@ -20,7 +20,7 @@ namespace NeoServer.Server.Events.Creature.Npcs
 
             connection.OutgoingPackets.Enqueue(new OpenShopPacket(shopItems));
 
-            if(to is IPlayer player && player.Shopping) connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, shopItems));
+            if (to is IPlayer player && player.Shopping) connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, shopItems));
             connection.Send();
         }
     }

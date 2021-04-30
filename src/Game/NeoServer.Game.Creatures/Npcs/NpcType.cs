@@ -24,10 +24,10 @@ namespace NeoServer.Game.Creatures.Npcs
         public string[] Marketings { get; init; }
     }
 
-    public sealed class Dialog: IDialog
+    public sealed class Dialog : IDialog
     {
-        public string[] OnWords { get ; init; }
-        public string[] Answers { get ; init; }
+        public string[] OnWords { get; init; }
+        public string[] Answers { get; init; }
         public string Action { get; init; }
         /// <summary>
         /// Indicated how many times to back in dialog

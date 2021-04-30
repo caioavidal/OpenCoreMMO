@@ -5,7 +5,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
-using System;
 
 namespace NeoServer.Game.Creatures.Monsters
 {
@@ -41,7 +40,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
             TryWalkTo(directions);
         }
-  
+
         public void MoveAroundEnemy(Location targetLocation)
         {
             if (!Attacking) return;

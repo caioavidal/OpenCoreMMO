@@ -86,11 +86,11 @@ namespace NeoServer.Server.Commands.Player
 
             player.SendMessageTo(receiver, playerSayPacket.TalkType, message);
         }
-        private void SendMessageToNpc(IPlayer player, PlayerSayPacket playerSayPacket,string message)
+        private void SendMessageToNpc(IPlayer player, PlayerSayPacket playerSayPacket, string message)
         {
             foreach (var creature in game.Map.GetCreaturesAtPositionZone(player.Location))
             {
-                if(creature is INpc npc)
+                if (creature is INpc npc)
                 {
                     npc.Hear(player, playerSayPacket.TalkType, message);
                     return;

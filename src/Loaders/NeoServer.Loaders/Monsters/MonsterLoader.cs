@@ -34,7 +34,7 @@ namespace NeoServer.Loaders.Monsters
             });
         }
 
-        private IEnumerable<(string,IMonsterType)> GetMonsterDataList()
+        private IEnumerable<(string, IMonsterType)> GetMonsterDataList()
         {
             var basePath = $"{serverConfiguration.Data}/monsters";
             var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));

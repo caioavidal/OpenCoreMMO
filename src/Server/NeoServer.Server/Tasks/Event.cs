@@ -5,7 +5,7 @@ namespace NeoServer.Server.Tasks
 {
     public class Event : IEvent
     {
-        
+
         public Event(Action action)
         {
             Action = action;

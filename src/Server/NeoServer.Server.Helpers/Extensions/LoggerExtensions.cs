@@ -1,10 +1,7 @@
 ﻿using Serilog.Core;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Helpers.Extensions
 {
@@ -41,7 +38,7 @@ namespace NeoServer.Server.Helpers.Extensions
         public static void Step(this Logger logger, string beforeMessage, string afterMessage, Func<object[]> action)
         {
             logger.Information(beforeMessage);
-            
+
             sw.Restart();
 
             var @params = action();
@@ -59,5 +56,5 @@ namespace NeoServer.Server.Helpers.Extensions
 
         }
     }
-   
+
 }

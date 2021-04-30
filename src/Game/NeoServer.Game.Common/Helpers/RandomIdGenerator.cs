@@ -29,9 +29,9 @@ public class RandomCreatureIdGenerator
     private static uint lastNpcId = 0x80000000;
     public static uint Generate(ICreature creature)
     {
-        
+
         lock (_lock)
-        {           
+        {
             if (creature is IPlayer)
                 return lastPlayerId++;
             if (creature is IMonster)
@@ -41,6 +41,6 @@ public class RandomCreatureIdGenerator
         }
         return 0;
     }
-   
+
 }
 

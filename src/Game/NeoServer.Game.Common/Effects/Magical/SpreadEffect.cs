@@ -26,7 +26,7 @@ namespace NeoServer.Game.Effects.Magical
                 var cols = i < (length / spread) ? 0 : (i + 1) / ((length / spread) + 1);
                 for (int c = 0 - cols; c <= 0 + cols; c++)
                 {
-                    
+
                     switch (direction)
                     {
                         case Direction.North:

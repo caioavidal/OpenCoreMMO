@@ -16,9 +16,9 @@ namespace NeoServer.Networking.Packets.Outgoing.Party
         }
         public override void WriteToMessage(INetworkMessage message)
         {
-			message.AddByte((byte)GameOutgoingPacketType.CreatureEmblem);
-			message.AddUInt32(creature.CreatureId);
-            message.AddByte((byte)emblem);		
-		}
+            message.AddByte((byte)GameOutgoingPacketType.CreatureEmblem);
+            message.AddUInt32(creature.CreatureId);
+            message.AddByte((byte)emblem);
+        }
     }
 }

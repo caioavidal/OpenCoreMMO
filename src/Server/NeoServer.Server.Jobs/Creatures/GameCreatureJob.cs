@@ -25,7 +25,7 @@ namespace NeoServer.Server.Jobs.Creatures
         {
             game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartChecking));
 
-            foreach (var creature in game.CreatureManager.GetCreatures()) 
+            foreach (var creature in game.CreatureManager.GetCreatures())
             {
                 if (creature is ICombatActor actor && actor.IsDead) continue;
                 if (creature is null) continue;
@@ -41,13 +41,13 @@ namespace NeoServer.Server.Jobs.Creatures
                     CreatureConditionJob.Execute(combatActor);
                 }
 
-                if(creature is IMonster monster)
+                if (creature is IMonster monster)
                 {
                     CreatureDefenseJob.Execute(monster, game);
                     MonsterStateJob.Execute(monster);
                     MonsterYellJob.Execute(monster);
                 }
-                if(creature is INpc npc)
+                if (creature is INpc npc)
                 {
                     NpcJob.Execute(npc);
                 }

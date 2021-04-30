@@ -20,8 +20,8 @@ namespace NeoServer.Data.Configurations
 
             entity.Property(e => e.ServerId)
                 .HasColumnName("sid")
-                .HasColumnType("int(11)"); 
-            
+                .HasColumnType("int(11)");
+
             entity.Property(e => e.SlotId)
                  .HasColumnName("slot_id")
                  .HasColumnType("int(11)");

@@ -3,7 +3,7 @@ using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Contracts.Items.Types.Useables
 {
-    public interface IUseableOnCreature: IUseableOn, IItem
+    public interface IUseableOnCreature : IUseableOn, IItem
     {
         /// <summary>
         /// Useable by players on creatures

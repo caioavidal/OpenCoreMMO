@@ -9,7 +9,7 @@ namespace NeoServer.Data.Providers.MySQL.Extensions
         {
             var builder = new DbContextOptionsBuilder<NeoContext>();
             builder.UseMySql(serverVersion: new MySqlServerVersion(new Version(5, 7, 17)), connectionString: name);
-            
+
             return builder.Options;
         }
     }

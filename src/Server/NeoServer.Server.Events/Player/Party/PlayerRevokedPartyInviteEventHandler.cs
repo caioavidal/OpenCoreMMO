@@ -24,7 +24,7 @@ namespace NeoServer.Server.Events.Player.Party
             {
                 if (game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
                 {
-                    if(spectator == invited)
+                    if (spectator == invited)
                     {
                         connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{by.Name} has revoked her invitation", TextMessageOutgoingType.Small)); //todo set correct gender
                     }

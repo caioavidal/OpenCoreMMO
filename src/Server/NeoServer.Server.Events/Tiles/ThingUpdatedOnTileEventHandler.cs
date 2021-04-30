@@ -19,7 +19,7 @@ namespace NeoServer.Server.Events
             if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
 
             var tile = cylinder.ToTile;
-            if(tile.IsNull()) return;
+            if (tile.IsNull()) return;
 
             foreach (var spectator in cylinder.TileSpectators)
             {

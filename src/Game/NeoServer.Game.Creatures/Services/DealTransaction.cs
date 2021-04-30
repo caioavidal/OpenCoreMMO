@@ -42,7 +42,7 @@ namespace NeoServer.Game.Creatures.Events
             AddItems(buyer, seller, saleContract);
 
             coinTransaction.AddCoins(buyer, change);
-            
+
             return true;
         }
 
@@ -53,7 +53,7 @@ namespace NeoServer.Game.Creatures.Events
 
         private void AddItems(IPlayer player, INpc seller, SaleContract saleContract)
         {
-            
+
             var item = itemFactory.Create(saleContract.TypeId, Location.Inventory(Common.Players.Slot.Backpack), null);
 
             if (item is ICumulative cumulative)
@@ -74,7 +74,7 @@ namespace NeoServer.Game.Creatures.Events
                 player.ReceivePurchasedItems(seller, saleContract, items);
             }
         }
-      
+
         public IEnumerable<IItem> CreateCoins(ulong amount)
         {
             var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, amount);

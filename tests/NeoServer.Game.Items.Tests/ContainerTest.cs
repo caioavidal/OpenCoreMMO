@@ -321,7 +321,7 @@ namespace NeoServer.Game.Items.Tests
             sut.AddItem(CreateCumulativeItem(200, 100));
 
             sut.RemoveItem(null, 60, 1, out var removedThing);
-            sut.RemoveItem(null, amount:77, 3, out var removedThing2);
+            sut.RemoveItem(null, amount: 77, 3, out var removedThing2);
 
             Assert.Equal(100, (sut[0] as ICumulative).Amount);
             Assert.Equal(40, (sut[1] as ICumulative).Amount);
@@ -680,7 +680,7 @@ namespace NeoServer.Game.Items.Tests
         public void CanAddItem_Adding_Cumulative_Item_With_No_Free_Slots_Returns_Error()
         {
             var sut = CreateContainer(0);
-            var item = ItemTestData.CreateCumulativeItem(1,100);
+            var item = ItemTestData.CreateCumulativeItem(1, 100);
             var result = sut.CanAddItem(item.Metadata);
 
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);

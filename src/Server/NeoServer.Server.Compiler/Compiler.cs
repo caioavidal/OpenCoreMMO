@@ -76,7 +76,7 @@ namespace NeoServer.Server.Compiler
                 MetadataReference.CreateFromFile(typeof(InvalidOperation).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(JsonConvert).Assembly.Location),
             };
-         
+
             foreach (var assembly in typeof(JsonConvert).Assembly.GetReferencedAssemblies())
             {
                 references.Add(MetadataReference.CreateFromFile(Assembly.Load(assembly.FullName).Location));

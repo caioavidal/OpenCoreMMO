@@ -8,17 +8,17 @@ namespace NeoServer.Game.Creatures
     public class MonsterFactory : IMonsterFactory
     {
         private readonly IMonsterDataManager _monsterManager;
-     
-        private readonly Logger logger;       
+
+        private readonly Logger logger;
 
         public static IMonsterFactory Instance { get; private set; }
 
         public MonsterFactory(IMonsterDataManager monsterManager,
-            
+
             Logger logger)
         {
             _monsterManager = monsterManager;
-            
+
             this.logger = logger;
             Instance = this;
 

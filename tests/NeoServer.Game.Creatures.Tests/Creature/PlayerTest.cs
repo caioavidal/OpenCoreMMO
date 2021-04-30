@@ -23,7 +23,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
             sut.TurnTo(input);
-            Assert.Equal(expected,sut.SafeDirection);
+            Assert.Equal(expected, sut.SafeDirection);
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.SetFlag(PlayerFlag.CanSeeInvisibility);
 
             Assert.True(sut.CanSeeInvisible);
-        } 
+        }
 
         [Fact]
         public void CanSee_When_Creature_Is_Invisible_And_Cant_See_Invisible_Returns_False()
@@ -119,7 +119,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             creature.Setup(x => x.IsInvisible).Returns(true);
 
             var result = sut.CanSee(creature.Object);
-            
+
             Assert.False(result);
         }
         [Fact]

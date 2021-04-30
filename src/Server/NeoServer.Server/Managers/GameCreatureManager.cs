@@ -15,7 +15,7 @@ namespace NeoServer.Server
     /// <summary>
     /// Control creatures on game
     /// </summary>
-    public class GameCreatureManager: IGameCreatureManager
+    public class GameCreatureManager : IGameCreatureManager
     {
 
         private ICreatureGameInstance creatureInstances;
@@ -90,10 +90,10 @@ namespace NeoServer.Server
         {
             player = default;
             if (string.IsNullOrWhiteSpace(name)) return false;
-            
+
             var creature = creatureInstances.All().FirstOrDefault(x => x is IPlayer player && player.Name.Trim().Equals(name.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
-            if(creature is IPlayer p)
+            if (creature is IPlayer p)
             {
                 player = p;
                 return true;

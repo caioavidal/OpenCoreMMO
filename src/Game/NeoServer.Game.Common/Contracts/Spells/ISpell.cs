@@ -24,7 +24,7 @@ namespace NeoServer.Game.Contracts.Spells
         bool IncreaseSkill => true;
     }
 
-    public interface ICommandSpell:ISpell
+    public interface ICommandSpell : ISpell
     {
         public object[] Params { get; set; }
         new bool IncreaseSkill => false;

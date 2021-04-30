@@ -20,8 +20,8 @@ namespace NeoServer.Game.Creatures.Spells
         public HealSpell(MinMax minMax, EffectT effect)
         {
             Effect = effect;
-            Min = (ushort) minMax.Min;
-            Max = (ushort) minMax.Max;
+            Min = (ushort)minMax.Min;
+            Max = (ushort)minMax.Max;
         }
         public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {

@@ -51,7 +51,7 @@ namespace NeoServer.Game.Effects.Explosion
         {0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0}
     };
 
-        public static IEnumerable<Coordinate> Create(byte [,] area)
+        public static IEnumerable<Coordinate> Create(byte[,] area)
         {
             var points = new List<Coordinate>();
 

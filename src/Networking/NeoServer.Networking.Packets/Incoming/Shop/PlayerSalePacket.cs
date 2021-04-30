@@ -4,7 +4,7 @@ namespace NeoServer.Networking.Packets.Incoming.Shop
 {
     public class PlayerSalePacket : IncomingPacket
     {
-        public ushort ItemClientId { get;  }
+        public ushort ItemClientId { get; }
         public byte Count { get; }
         public byte Amount { get; set; }
         public bool IgnoreEquipped { get; set; }

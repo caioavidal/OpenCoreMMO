@@ -26,7 +26,7 @@ namespace NeoServer.Data.Configurations
             entity.Property(e => e.PlayerId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("id");
-                //.HasColumnType("int(11)");
+            //.HasColumnType("int(11)");
 
             entity.Property(e => e.AccountId)
                 .HasColumnName("account_id")

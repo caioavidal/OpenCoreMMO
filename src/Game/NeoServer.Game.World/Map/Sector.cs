@@ -136,7 +136,7 @@ namespace NeoServer.Game.World.Map
                 }
             }
 
-            return new MinMax(minRangeZ,maxRangeZ);
+            return new MinMax(minRangeZ, maxRangeZ);
         }
     }
 

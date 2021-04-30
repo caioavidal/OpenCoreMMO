@@ -19,7 +19,7 @@ namespace NeoServer.Server.Events
         public void Execute(IWalkableCreature creature, Direction direction)
         {
             if (Guard.AnyNull(creature, direction)) return;
-          
+
             if (creature.IsInvisible) return;
 
             foreach (var spectator in map.GetSpectators(creature.Location, onlyPlayers: true))

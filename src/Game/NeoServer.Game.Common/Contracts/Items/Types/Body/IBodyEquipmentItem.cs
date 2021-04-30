@@ -14,7 +14,7 @@ namespace NeoServer.Game.Contracts.Items.Types
     public interface IBodyEquipmentItem : IMoveableThing, IPickupable, IInventoryItem
     {
         bool Pickupable => true;
-      
+
         ushort MinimumLevelRequired => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
         public ImmutableDictionary<SkillType, byte> SkillBonus => Metadata.Attributes.SkillBonus.ToImmutableDictionary();
         public WeaponType WeaponType => Metadata.WeaponType;

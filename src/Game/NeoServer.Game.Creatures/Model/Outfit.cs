@@ -32,7 +32,7 @@ namespace NeoServer.Game.Creature.Model
 
         public IOutfit Clone()
         {
-            return (IOutfit) MemberwiseClone();
+            return (IOutfit)MemberwiseClone();
         }
     }
 
