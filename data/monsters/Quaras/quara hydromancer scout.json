@@ -76,7 +76,7 @@
       "range": "7",
       "radius": "3",
       "target": "0",
-      "min": "--130",
+      "min": "-130",
       "max": "-165",
       "attributes": [
         {
