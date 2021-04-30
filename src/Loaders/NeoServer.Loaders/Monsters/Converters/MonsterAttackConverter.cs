@@ -19,7 +19,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
             var attacks = new List<IMonsterCombatAttack>();
 
-            AdjustAttackChangeValue(data.Attacks);
+            AdjustAttackChanceValue(data.Attacks);
 
             foreach (var attack in data.Attacks)
             {
@@ -144,9 +144,9 @@ namespace NeoServer.Loaders.Monsters.Converters
             return attacks.ToArray();
         }
 
-        private static void AdjustAttackChangeValue(List<Dictionary<string, object>> attacks)
+        private static void AdjustAttackChanceValue(List<Dictionary<string, object>> attacks)
         {
-            Func<Dictionary<string, object>, (bool, int)> getChange = (attack) =>
+            Func<Dictionary<string, object>, (bool, int)> getChance = (attack) =>
               {
                   if (!attack.TryGetValue("chance", out string chance)) return (false, default);
 
@@ -157,7 +157,7 @@ namespace NeoServer.Loaders.Monsters.Converters
             int maxChance = 0;
             foreach (var attack in attacks)
             {
-                var result = getChange(attack);
+                var result = getChance(attack);
                 if (!result.Item1) continue;
                 var value = result.Item2;
 
@@ -168,7 +168,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
             foreach (var attack in attacks)
             {
-                var result = getChange(attack);
+                var result = getChance(attack);
                 if (!result.Item1) continue;
 
                 attack["chance"] = Math.Round((result.Item2 * 100d) / maxChance).ToString();
