@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.World;
 using System.Collections.Immutable;
@@ -47,6 +48,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void ChangeState();
         void Escape();
         void Born(Location location);
+        void Summon(ISummonService summonService);
 
         /// <summary>
         /// Experience that monster can give
