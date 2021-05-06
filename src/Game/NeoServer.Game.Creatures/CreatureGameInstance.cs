@@ -34,7 +34,7 @@ namespace NeoServer.Game.Creature
         public bool TryGetCreature(uint id, out ICreature creature) => _creatures.TryGetValue(id, out creature);
         public bool TryGetPlayer(uint playerId, out IPlayer player) => _playersLogged.TryGetValue(playerId, out player);
 
-        public IEnumerable<ICreature> All() => _creatures.Values;
+        public IEnumerable<ICreature> All() => _creatures.Values.ToImmutableArray();
         public IEnumerable<IPlayer> AllLoggedPlayers() => _playersLogged.Values;
 
         public ImmutableList<Tuple<IMonster, TimeSpan>> AllKilledMonsters() => _killedMonsters.Values.ToImmutableList();

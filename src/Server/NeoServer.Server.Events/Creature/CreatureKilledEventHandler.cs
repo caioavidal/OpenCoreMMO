@@ -34,7 +34,7 @@ namespace NeoServer.Server.Events.Creature
                 }
             }));
 
-            if (creature is IMonster monster)
+            if (creature is IMonster monster && !monster.IsSummon)
             {
                 game.CreatureManager.AddKilledMonsters(creature as IMonster);
             }

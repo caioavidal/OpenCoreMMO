@@ -13,10 +13,37 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public class Summon : Monster
     {
+        public ICreature Master { get; }
         public override bool IsSummon => true;
-        public new event Die OnKilled;
-        public Summon(IMonsterType type) : base(type, null)
+        public Summon(IMonsterType type, ICreature master) : base(type, null)
         {
+            Master = master;
+            if(master is ICombatActor actor) actor.OnKilled +=  OnMasterKilled;
+        }
+
+        public override void SetAsEnemy(ICreature creature)
+        {
+            if (Master == creature) return;
+
+            if (creature is Summon summon && summon.Master == Master) return;
+
+            base.SetAsEnemy(creature);
+        }
+        public void Die()
+        {
+            OnDeath(this);
+        }
+
+        public override void OnDeath(IThing by)
+        {
+            base.OnDeath(by);
+            if (Master is ICombatActor actor) actor.OnKilled -=  OnMasterKilled;
+        }
+
+        private void OnMasterKilled(ICombatActor master, IThing by, ILoot loot)
+        {
+            master.OnKilled -= OnMasterKilled;
+            Die();
         }
     }
 }

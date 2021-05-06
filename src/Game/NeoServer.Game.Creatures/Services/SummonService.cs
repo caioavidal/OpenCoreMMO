@@ -2,6 +2,7 @@
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World.Tiles;
+using NeoServer.Game.Creatures.Monsters;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace NeoServer.Game.Creatures.Services
 {
-    public class SummonService: ISummonService
+    public class SummonService : ISummonService
     {
         private readonly ICreatureFactory creatureFactory;
         private readonly IMap map;
@@ -25,15 +26,11 @@ namespace NeoServer.Game.Creatures.Services
 
         public IMonster Summon(IMonster master, string summonName)
         {
-            var summon = creatureFactory.CreateMonster(summonName);
-            if (summon is null)
+            if (creatureFactory.CreateSummon(summonName, master) is not Summon summon)
             {
                 logger.Error($"Summon with name: {summonName} does not exists");
                 return null;
             }
-
-            master.OnKilled += (_, _, _) => OnMasterKilled(map, master, summon);
-            summon.OnKilled += (_, _, _) => OnSummonKilled(map, summon);
 
             foreach (var neighbour in master.Location.Neighbours)
             {
@@ -45,17 +42,6 @@ namespace NeoServer.Game.Creatures.Services
                 }
             }
             return null;
-        }
-
-        private void OnMasterKilled(IMap map, IMonster master, IMonster summon)
-        {
-            master.OnKilled -= (_, _, _) => OnMasterKilled(map, master, summon);
-            map.RemoveCreature(summon);
-        }
-        private void OnSummonKilled(IMap map, IMonster summon)
-        {
-            summon.OnKilled -= (_, _, _) => OnSummonKilled(map, summon);
-            map.RemoveCreature(summon);
         }
     }
 }
