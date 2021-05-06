@@ -146,7 +146,7 @@ namespace NeoServer.Networking.Packets
         {
 
             var srcBuffer = Buffer.AsSpan(0, Length);
-            var newArray = new byte[Length + 50].AsSpan(); //added 50 for xtea padding
+            Span<byte> newArray = new byte[Length + 50]; //added 50 for xtea padding
 
             var lengthBytes = BitConverter.GetBytes((ushort)Length);
             newArray[0] = lengthBytes[0];
