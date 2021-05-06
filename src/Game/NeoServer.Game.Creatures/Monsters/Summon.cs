@@ -13,6 +13,7 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public class Summon : Monster
     {
+        public override bool IsSummon => true;
         public new event Die OnKilled;
         public Summon(IMonsterType type) : base(type, null)
         {

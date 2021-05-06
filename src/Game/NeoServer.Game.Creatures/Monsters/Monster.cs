@@ -209,7 +209,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-        public bool IsSummon => false;
+        public virtual bool IsSummon => false;
 
         public override bool CanSeeInvisible => false; //todo: add invisibility flag
 
@@ -470,15 +470,16 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
                 if (foundAliveSummon && count >= summon.Max) continue;
 
-                Cooldowns.Start(summon.Name, (int)summon.Interval);
-
                 var createdSummon = summonService.Summon(this, summon.Name);
+                if (createdSummon is null) continue;
+
+                Cooldowns.Start(summon.Name, (int)summon.Interval);
 
                 AttachToSummonEvents(createdSummon);
 
                 AliveSummons = AliveSummons ?? new();
 
-                if (foundAliveSummon) AliveSummons[summon.Name] = count++;
+                if (foundAliveSummon) AliveSummons[summon.Name] = (byte)(count + 1);
                 else
                 {
                     AliveSummons.TryAdd(summon.Name, 1);
