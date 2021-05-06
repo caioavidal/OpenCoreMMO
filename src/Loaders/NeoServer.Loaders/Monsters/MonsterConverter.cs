@@ -43,6 +43,10 @@ namespace NeoServer.Loaders.Monsters
 
             monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate);
 
+            var summons = MonsterSummonConverter.Convert(data);
+            monster.MaxSummons = (byte)summons.Item1;
+            monster.Summons = summons.Item2;
+
             foreach (var flag in data.Flags)
             {
                 var creatureFlag = ParseCreatureFlag(flag.Key);

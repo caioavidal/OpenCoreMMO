@@ -31,6 +31,14 @@ namespace NeoServer.Game.Creatures
             AttachEvents(monster);
             return monster;
         }
+        public IMonster CreateSummon(string name, IMonster master)
+        {
+            var monster = _monsterFactory.Create(name, master);
+            if (monster is null) return null;
+
+            AttachEvents(monster);
+            return monster;
+        }
         public INpc CreateNpc(string name, ISpawnPoint spawn = null)
         {
             var npc = npcFactory.Create(name, spawn);

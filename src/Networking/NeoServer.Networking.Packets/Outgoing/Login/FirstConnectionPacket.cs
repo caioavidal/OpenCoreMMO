@@ -12,9 +12,8 @@ namespace NeoServer.Networking.Packets.Outgoing
             message.AddUInt32((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
             Random rnd = new Random();
-            var bytes = new byte[10];
-            rnd.NextBytes(bytes);
-            message.AddByte(bytes[0]);
+            var randomByte = (byte)rnd.Next(byte.MinValue, byte.MaxValue);
+            message.AddByte(randomByte);
         }
     }
 }

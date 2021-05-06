@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Contracts.Creatures;
 
@@ -6,7 +7,7 @@ namespace NeoServer.Server.Jobs.Creatures
 {
     public class MonsterStateJob
     {
-        public static void Execute(IMonster monster)
+        public static void Execute(IMonster monster, ISummonService summonService)
         {
             if (monster.IsDead) return;
 
@@ -26,6 +27,8 @@ namespace NeoServer.Server.Jobs.Creatures
                     monster.SelectTargetToAttack();
                     return;
                 }
+
+                monster.Summon(summonService);
 
                 if (monster.Metadata.TargetChance.Interval == 0) return;
 

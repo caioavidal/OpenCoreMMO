@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Packets.Messages
         /// </summary>
         public byte[] GetMessageInBytes()
         {
-            if (Length.IsLessThanZero()) return new byte[0];
+            if (Length.IsLessThanZero()) return Array.Empty<byte>();
             return Length == 0 ? Buffer : Buffer[0..Length];
         }
 

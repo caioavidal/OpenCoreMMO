@@ -5,5 +5,6 @@ namespace NeoServer.Game.Contracts.Creatures
     public interface IMonsterFactory
     {
         IMonster Create(string name, ISpawnPoint spawn = null);
+        IMonster Create(string name, IMonster master);
     }
 }

@@ -15,6 +15,8 @@ namespace NeoServer.Game.Creatures.Events
 
         private void GiveExperience(IMonster monster)
         {
+            if (monster.IsSummon) return;
+
             var totalDamage = monster.Damages.Sum(x => x.Value);
 
             foreach (var enemyDamage in monster.Damages)

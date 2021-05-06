@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
@@ -37,7 +38,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Targets = new TargetList(this);
         }
 
-
+        private Dictionary<string, byte> AliveSummons;
         private MonsterState state;
         public MonsterState State
         {
@@ -208,7 +209,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-        public bool IsSummon => false;
+        public virtual bool IsSummon => false;
 
         public override bool CanSeeInvisible => false; //todo: add invisibility flag
 
@@ -453,7 +454,62 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return damage;
         }
 
+        public void Summon(ISummonService summonService)
+        {
+            if ((AliveSummons?.Count ?? 0) >= Metadata.MaxSummons) return;
+
+            foreach (var summon in Metadata.Summons)
+            {
+                if (!Cooldowns.Expired(summon.Name)) continue;
+
+                if (summon.Chance < GameRandom.Random.Next(minValue: 0, maxValue: 100))
+                    continue;
+
+                byte count = 0;
+                var foundAliveSummon = AliveSummons != null && AliveSummons.TryGetValue(summon.Name, out count);
+
+                if (foundAliveSummon && count >= summon.Max) continue;
+
+                var createdSummon = summonService.Summon(this, summon.Name);
+                if (createdSummon is null) continue;
+
+                Cooldowns.Start(summon.Name, (int)summon.Interval);
+
+                AttachToSummonEvents(createdSummon);
+
+                AliveSummons = AliveSummons ?? new();
+
+                if (foundAliveSummon) AliveSummons[summon.Name] = (byte)(count + 1);
+                else
+                {
+                    AliveSummons.TryAdd(summon.Name, 1);
+                }
+            }
+        }
+
         public override void OnDamage(IThing enemy, CombatDamage damage) => ReduceHealth(damage);
 
+        #region Summon Event Attachment
+
+        public void AttachToSummonEvents(IMonster monster)
+        {
+            monster.OnKilled += OnSummonDie;
+        }
+
+        private void OnSummonDie(ICombatActor creature, IThing by, ILoot loot)
+        {
+            creature.OnKilled -= OnSummonDie;
+            if (!AliveSummons.TryGetValue(creature.Name, out var count)) return;
+
+            if (count == 1)
+            {
+                AliveSummons.Remove(creature.Name);
+                return;
+            }
+
+            AliveSummons[creature.Name] = (byte)(count - 1);
+        }
+
+        #endregion
     }
 }
