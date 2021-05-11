@@ -49,7 +49,6 @@ namespace NeoServer.Game.Creatures.Monsters
             {
                 actor.OnKilled -= OnMasterKilled;
                 actor.OnTargetChanged -= OnMasterTargetChange;
-
             }
         }
 
