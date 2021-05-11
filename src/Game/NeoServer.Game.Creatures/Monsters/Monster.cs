@@ -434,6 +434,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
                 if (!(attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat) ?? false)) continue;
                 attacked = true;
+
+                if (40 < GameRandom.Random.Next(minValue: 0, maxValue: 100)) break; //chance to combo next attack
+
             }
 
             if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
