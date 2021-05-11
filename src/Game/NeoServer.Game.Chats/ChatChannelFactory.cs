@@ -17,8 +17,8 @@ namespace NeoServer.Game.Chats
             if (!typeof(IChatChannel).IsAssignableFrom(type)) return default;
 
             var id = typeof(PersonalChatChannel).IsAssignableTo(type) && player is not null ? GeneratePlayerUniqueId(player) : GenerateUniqueId();
-         
-            var channel = (IChatChannel) Activator.CreateInstance(type: type, id, name);
+
+            var channel = (IChatChannel)Activator.CreateInstance(type: type, id, name);
 
             SubscribeEvents(channel);
 
@@ -84,7 +84,7 @@ namespace NeoServer.Game.Chats
             {
                 id = GenerateUniqueId();
             }
-            while ((player.PersonalChannels?.Any(x=>x.Id == id) ?? false) || (player.PrivateChannels?.Any(x=>x.Id == id)?? false));
+            while ((player.PersonalChannels?.Any(x => x.Id == id) ?? false) || (player.PrivateChannels?.Any(x => x.Id == id) ?? false));
 
             return id;
         }

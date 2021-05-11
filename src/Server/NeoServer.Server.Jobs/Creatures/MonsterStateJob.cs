@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Contracts.Creatures;
 
@@ -6,12 +7,12 @@ namespace NeoServer.Server.Jobs.Creatures
 {
     public class MonsterStateJob
     {
-        public static void Execute(IMonster monster)
+        public static void Execute(IMonster monster, ISummonService summonService)
         {
             if (monster.IsDead) return;
 
             monster.ChangeState();
-            
+
             if (monster.State == MonsterState.LookingForEnemy)
             {
                 monster.LookForNewEnemy();
@@ -21,10 +22,13 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 monster.MoveAroundEnemy();
 
-                if (!monster.Attacking) {
+                if (!monster.Attacking)
+                {
                     monster.SelectTargetToAttack();
                     return;
                 }
+
+                monster.Summon(summonService);
 
                 if (monster.Metadata.TargetChance.Interval == 0) return;
 
@@ -36,7 +40,7 @@ namespace NeoServer.Server.Jobs.Creatures
             {
                 monster.Sleep();
             }
-            if(monster.State == MonsterState.Running)
+            if (monster.State == MonsterState.Running)
             {
                 monster.Escape();
             }

@@ -14,8 +14,10 @@ using NeoServer.Server.Compiler;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Events;
+using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
+using NeoServer.Server.Jobs.Persistance;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
@@ -33,6 +35,8 @@ public class Program
     {
         Console.Title = "OpenCoreMMO Server";
 
+        var stepSw = new Stopwatch();
+
         var sw = new Stopwatch();
         sw.Start();
 
@@ -48,16 +52,14 @@ public class Program
         logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
         logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
-        logger.Information("Compiling scripts...");
-        ScriptCompiler.Compile(serverConfiguration.Data);
+
+        logger.Step("Compiling scripts...", "Scripts compiled", () => ScriptCompiler.Compile(serverConfiguration.Data));
 
         var container = Container.CompositionRoot();
         var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
-
-        logger.Information("Loading database: {db}", databaseConfiguration.active);
-
         var context = container.Resolve<NeoContext>();
-        context.Database.EnsureCreated();
+
+        logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreatedAsync(), databaseConfiguration.active);
 
         RSA.LoadPem(serverConfiguration.Data);
 
@@ -77,8 +79,6 @@ public class Program
 
         container.Resolve<SpawnManager>().StartSpawn();
 
-        var listeningTask = StartListening(container, cancellationToken);
-
         var scheduler = container.Resolve<IScheduler>();
         var dispatcher = container.Resolve<IDispatcher>();
 
@@ -88,19 +88,22 @@ public class Program
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameChatChannelJob>().StartChecking));
+        container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
         container.Resolve<EventSubscriber>().AttachEvents();
+        container.Resolve<LuaGlobalRegister>().Register();
+
+        var listeningTask = StartListening(container, cancellationToken);
 
         container.Resolve<IGameServer>().Open();
 
-        container.Resolve<LuaGlobalRegister>().Register();
-
         sw.Stop();
 
-        logger.Information($"Running Garbage Collector");
-
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
+        logger.Step("Running Garbage Collector", "Garbage collected", () =>
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        });
 
         logger.Information("Memory usage: {mem} MB", Math.Round((Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2));
 
@@ -108,7 +111,6 @@ public class Program
 
         listeningTask.Wait(cancellationToken);
     }
-
     static async Task StartListening(IContainer container, CancellationToken token)
     {
         container.Resolve<LoginListener>().BeginListening();
@@ -120,4 +122,5 @@ public class Program
         }
     }
 }
+
 

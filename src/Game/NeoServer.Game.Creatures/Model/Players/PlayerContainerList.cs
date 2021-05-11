@@ -170,7 +170,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
 
             var result = player.MoveItem(fromContainer.Container, toContainer.Container, item, amount, (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
-            
+
             if (result.IsSuccess && item is IContainer container)
             {
                 container.SetParent(toContainer.Container);

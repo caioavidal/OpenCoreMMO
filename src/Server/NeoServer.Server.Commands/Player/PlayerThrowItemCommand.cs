@@ -14,21 +14,21 @@ namespace NeoServer.Server.Commands.Player
 
         public PlayerThrowItemCommand(IGameServer game)
         {
-            
+
             this.game = game;
-            
+
         }
 
         public void Execute(IPlayer player, ItemThrowPacket itemThrow)
         {
-        
+
             if (ContainerToContainerMovementOperation.IsApplicable(itemThrow))
             {
                 ContainerToContainerMovementOperation.Execute(player, itemThrow);
             }
             else if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
             {
-                MapToInventoryMovementOperation.Execute(player,game, game.Map, itemThrow);
+                MapToInventoryMovementOperation.Execute(player, game.Map, itemThrow);
             }
             else if (ToMapMovementOperation.IsApplicable(itemThrow))
             {

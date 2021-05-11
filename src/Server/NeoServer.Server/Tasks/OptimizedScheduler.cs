@@ -76,7 +76,7 @@ namespace NeoServer.Server.Tasks
                 activeEventIds.TryRemove(evt.EventId, out _);
 
                 preQueue.Enqueue(evt);
-                lock (preQueueMonitor)               
+                lock (preQueueMonitor)
                 {
                     Monitor.Pulse(preQueueMonitor);
                 }

@@ -29,7 +29,7 @@ namespace NeoServer.Game.Creatures.Events.Players
             lootContainer.MarkAsLootCreated();
         }
         private void CreateLoot(ILootContainer lootContainer)
-        { 
+        {
             CreateLootItems(lootContainer.Loot.Items, lootContainer);
         }
 

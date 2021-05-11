@@ -19,16 +19,16 @@ namespace NeoServer.Server.Events
         {
             if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
             var tile = cylinder.ToTile;
-            if(tile.IsNull()) return;
+            if (tile.IsNull()) return;
 
             var spectators = cylinder.TileSpectators;
 
             foreach (var spectator in spectators)
             {
                 if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out IConnection connection)) continue;
-                
+
                 if (spectator.Spectator is not IPlayer) continue;
-                
+
                 connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)thing, spectator.ToStackPosition));
 
                 connection.Send();

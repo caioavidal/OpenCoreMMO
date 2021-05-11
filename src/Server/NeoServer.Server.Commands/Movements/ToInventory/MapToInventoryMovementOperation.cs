@@ -5,13 +5,12 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Contracts;
 
 namespace NeoServer.Server.Commands.Movement
 {
     public sealed class MapToInventoryMovementOperation
     {
-        public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow) => WalkToMechanism.DoOperation(player, () => FromMapToInventory(player, map, itemThrow), itemThrow.FromLocation, game);
+        public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow) => FromMapToInventory(player, map, itemThrow);
 
         private static void FromMapToInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
         {

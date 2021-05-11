@@ -262,14 +262,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnDamaged?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath(enemy);
         }
-     
+
         public virtual bool ReceiveAttack(IThing enemy, CombatDamage damage)
         {
             if (enemy.Equals(this)) return false;
             if (!CanBeAttacked) return false;
             if (IsDead) return false;
 
-            if(this is ICreature c) SetAsEnemy(c);
+            if (this is ICreature c) SetAsEnemy(c);
 
             damage = ReduceDamage(damage);
             if (damage.Damage <= 0)

@@ -24,7 +24,7 @@ namespace NeoServer.Game.World.Tests
                              ItemTestData.CreateRegularItem(1),
                         };
 
-                    if (item.Location == new Location((ushort)x,(ushort) y, 7))
+                    if (item.Location == new Location((ushort)x, (ushort)y, 7))
                     {
                         items.Add(item);
                     }

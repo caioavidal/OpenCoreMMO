@@ -22,13 +22,12 @@ namespace NeoServer.Server.Model.Players
         public ushort Level { get; set; }
         public ushort Mana { get; set; }
         public ushort MaxMana { get; set; }
-        public ushort Health { get; set; }
-        public ushort MaxHealth { get; set; }
+        public uint Health { get; set; }
+        public uint MaxHealth { get; set; }
         public byte Soul { get; set; }
         public byte MaxSoul { get; set; }
         public ushort Speed { get; set; }
         public ushort StaminaMinutes { get; set; }
-        public byte AmmoAmount { get; set; }
         public bool Online { get; set; }
 
         public int LookAddons { get; set; }
@@ -46,25 +45,25 @@ namespace NeoServer.Server.Model.Players
         public int OfflineTrainingSkill { get; set; }
 
         public int SkillFist { get; set; }
-        public int SkillFistTries { get; set; }
+        public double SkillFistTries { get; set; }
 
         public int SkillClub { get; set; }
-        public int SkillClubTries { get; set; }
+        public double SkillClubTries { get; set; }
 
         public int SkillSword { get; set; }
-        public int SkillSwordTries { get; set; }
+        public double SkillSwordTries { get; set; }
 
         public int SkillAxe { get; set; }
-        public int SkillAxeTries { get; set; }
+        public double SkillAxeTries { get; set; }
 
         public int SkillDist { get; set; }
-        public int SkillDistTries { get; set; }
+        public double SkillDistTries { get; set; }
 
         public int SkillShielding { get; set; }
-        public int SkillShieldingTries { get; set; }
+        public double SkillShieldingTries { get; set; }
 
         public int SkillFishing { get; set; }
-        public int SkillFishingTries { get; set; }
+        public double SkillFishingTries { get; set; }
 
         public int MagicLevel { get; set; }
         public double MagicLevelTries { get; set; }

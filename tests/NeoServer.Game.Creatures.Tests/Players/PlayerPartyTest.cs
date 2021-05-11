@@ -37,7 +37,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var party = new Party(sut, new Mock<IChatChannel>().Object);
 
-            leader.InviteToParty(sut,party);
+            leader.InviteToParty(sut, party);
 
             leader.OnInviteToParty += (by, playerInvited, party) =>
             {

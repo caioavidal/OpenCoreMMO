@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace NeoServer.Server.Commands
 {
-    public class PlayerLogInCommand: ICommand
+    public class PlayerLogInCommand : ICommand
     {
         private readonly IGameServer game;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;

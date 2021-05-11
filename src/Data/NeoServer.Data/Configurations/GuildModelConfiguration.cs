@@ -10,7 +10,7 @@ namespace NeoServer.Data.Configurations
         {
             builder.ToTable("guilds");
 
-            builder.HasKey(e => new { e.Id} );
+            builder.HasKey(e => new { e.Id });
 
             builder.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnName("id");
             builder.Property(e => e.Name).HasColumnName("name");

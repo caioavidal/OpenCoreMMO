@@ -20,7 +20,7 @@ namespace NeoServer.Server.Handlers.Player
             var channels = ChatChannelStore.Data.All.Where(x => x.PlayerCanJoin(player));
             channels = player.PersonalChannels is null ? channels : channels.Concat(player.PersonalChannels);
             channels = player.PrivateChannels is null ? channels : channels.Concat(player.PrivateChannels);
-            
+
             connection.OutgoingPackets.Enqueue(new PlayerChannelListPacket(channels.ToArray()));
             connection.Send();
         }

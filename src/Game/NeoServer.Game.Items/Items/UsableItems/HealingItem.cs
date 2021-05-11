@@ -18,7 +18,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
         public ushort Min => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Min) ?? 0;
         public ushort Max => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)?.GetAttribute<ushort>(ItemAttribute.Max) ?? 0;
         public string Type => Metadata.Attributes.GetAttribute(ItemAttribute.Healing);
-      
+
         public event Use OnUsed;
 
         public static new bool IsApplicable(IItemType type) => (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && ICumulative.IsApplicable(type) && UseableOnItem.IsApplicable(type);

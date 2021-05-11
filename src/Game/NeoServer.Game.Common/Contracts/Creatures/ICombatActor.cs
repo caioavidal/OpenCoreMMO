@@ -48,6 +48,7 @@ namespace NeoServer.Game.Contracts.Creatures
         uint AttackEvent { get; set; }
         bool CanBeAttacked { get; }
         IDictionary<ConditionType, ICondition> Conditions { get; set; }
+        ICreature AutoAttackTarget { get; }
 
         int ArmorDefend(int attack);
         //bool Attack(ICombatActor enemy, ICombatAttack combatAttack);

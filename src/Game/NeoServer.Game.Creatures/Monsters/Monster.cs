@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
@@ -9,7 +10,6 @@ using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Monsters.Loots;
 using NeoServer.Game.Creatures.Monsters;
@@ -38,7 +38,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             Targets = new TargetList(this);
         }
 
-
+        private Dictionary<string, byte> AliveSummons;
         private MonsterState state;
         public MonsterState State
         {
@@ -91,7 +91,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public bool KeepDistance => TargetDistance > 1;
         public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
         public ICombatDefense[] Defenses => Metadata.Defenses;
-        public TargetList Targets { get; set; }
+        public virtual TargetList Targets { get; private set; }
 
         public override int ArmorDefend(int attack)
         {
@@ -128,6 +128,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (creature is not ICombatActor enemy) return;
             if (creature is Monster monster && !monster.IsSummon) return;
+            if (creature is Summon summon && summon.Master.CreatureId == this.CreatureId) return;
+
             if (!enemy.CanBeAttacked) return;
 
             var canSee = CanSee(creature.Location, 9, 7);
@@ -155,7 +157,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void ChangeState()
         {
-            searchTarget();
+            SearchTarget();
 
             if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken))
             {
@@ -209,7 +211,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             }
         }
 
-        public bool IsSummon => false;
+        public virtual bool IsSummon => false;
 
         public override bool CanSeeInvisible => false; //todo: add invisibility flag
 
@@ -221,7 +223,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             SelectTargetToAttack();
         }
 
-        private CombatTarget searchTarget()
+        protected virtual CombatTarget SearchTarget()
         {
             if (Targets.IsNull()) return null;
 
@@ -277,11 +279,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             MoveAroundEnemy(combatTarget.Creature.Location);
         }
 
-        public void SelectTargetToAttack()
+        public virtual  void SelectTargetToAttack()
         {
             if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
 
-            var target = searchTarget();
+            var target = SearchTarget();
 
             if (target is null) return;
 
@@ -432,6 +434,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
                 if (!(attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat) ?? false)) continue;
                 attacked = true;
+
+                if (40 < GameRandom.Random.Next(minValue: 0, maxValue: 100)) break; //chance to combo next attack
+
             }
 
             if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
@@ -454,7 +459,62 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             return damage;
         }
 
+        public void Summon(ISummonService summonService)
+        {
+            if ((AliveSummons?.Count ?? 0) >= Metadata.MaxSummons) return;
+
+            foreach (var summon in Metadata.Summons)
+            {
+                if (!Cooldowns.Expired(summon.Name)) continue;
+
+                if (summon.Chance < GameRandom.Random.Next(minValue: 0, maxValue: 100))
+                    continue;
+
+                byte count = 0;
+                var foundAliveSummon = AliveSummons != null && AliveSummons.TryGetValue(summon.Name, out count);
+
+                if (foundAliveSummon && count >= summon.Max) continue;
+
+                var createdSummon = summonService.Summon(this, summon.Name);
+                if (createdSummon is null) continue;
+
+                Cooldowns.Start(summon.Name, (int)summon.Interval);
+
+                AttachToSummonEvents(createdSummon);
+
+                AliveSummons = AliveSummons ?? new();
+
+                if (foundAliveSummon) AliveSummons[summon.Name] = (byte)(count + 1);
+                else
+                {
+                    AliveSummons.TryAdd(summon.Name, 1);
+                }
+            }
+        }
+
         public override void OnDamage(IThing enemy, CombatDamage damage) => ReduceHealth(damage);
 
+        #region Summon Event Attachment
+
+        public void AttachToSummonEvents(IMonster monster)
+        {
+            monster.OnKilled += OnSummonDie;
+        }
+
+        private void OnSummonDie(ICombatActor creature, IThing by, ILoot loot)
+        {
+            creature.OnKilled -= OnSummonDie;
+            if (!AliveSummons.TryGetValue(creature.Name, out var count)) return;
+
+            if (count == 1)
+            {
+                AliveSummons.Remove(creature.Name);
+                return;
+            }
+
+            AliveSummons[creature.Name] = (byte)(count - 1);
+        }
+
+        #endregion
     }
 }

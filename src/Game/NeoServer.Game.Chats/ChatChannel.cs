@@ -100,7 +100,7 @@ namespace NeoServer.Game.Chats
         {
             cancelMessage = default;
 
-            IPlayer player = creature is IPlayer ? (IPlayer) creature : null;
+            IPlayer player = creature is IPlayer ? (IPlayer)creature : null;
 
             if (!PlayerCanWrite(player))
             {

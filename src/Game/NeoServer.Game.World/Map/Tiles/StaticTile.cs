@@ -76,7 +76,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public override byte GetCreatureStackPositionIndex(IPlayer observer) => 0;
 
         #region Store Methods
-        public override Result CanAddItem(IItem item, byte amount=1, byte? slot = null) => new Result(InvalidOperation.NotEnoughRoom);
+        public override Result CanAddItem(IItem item, byte amount = 1, byte? slot = null) => new Result(InvalidOperation.NotEnoughRoom);
         public override bool CanRemoveItem(IItem item) => false;
         public override uint PossibleAmountToAdd(IItem item, byte? toPosition = null) => 0;
         public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)

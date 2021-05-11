@@ -19,7 +19,7 @@ namespace NeoServer.Game.Items.Items
         public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Attack);
         public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.HitChance);
         public byte Range => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Range);
-        
+
         public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Common.ItemAttribute.WeaponType) == "distance" && !type.HasFlag(Common.ItemFlag.Stackable);
 
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)

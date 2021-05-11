@@ -7,7 +7,7 @@ using NeoServer.Game.Items.Items;
 
 namespace NeoServer.Game.Items.Factories
 {
-    public class LiquidPoolFactory: ILiquidPoolFactory
+    public class LiquidPoolFactory : ILiquidPoolFactory
     {
         public event CreateItem OnItemCreated;
 

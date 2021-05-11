@@ -23,7 +23,7 @@ namespace NeoServer.Server.Handlers.Player
                 if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Ground)
                 {
                     if (game.Map[lookAtPacket.Location] is not ITile tile) return;
-                    
+
                     game.Dispatcher.AddEvent(new Event(() => player.LookAt(tile)));
                 }
                 if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Container)

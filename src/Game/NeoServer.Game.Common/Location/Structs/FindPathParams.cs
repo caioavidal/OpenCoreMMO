@@ -48,6 +48,6 @@
         public int MaxSearchDist { get; set; }
         public int MinTargetDist { get; set; }
         public int MaxTargetDist { get; set; }
-        
+
     }
 }

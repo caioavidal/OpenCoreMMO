@@ -51,6 +51,9 @@ namespace NeoServer.Loaders.Monsters
         [JsonProperty("voices")]
         public VoicesData Voices { get; set; }
 
+        [JsonProperty("summon")]
+        public SummonData Summon { get; set; }
+
         [JsonProperty("loot")]
         public List<LootData> Loot { get; set; }
 
@@ -98,7 +101,7 @@ namespace NeoServer.Loaders.Monsters
 
             [JsonProperty("defense")]
             public string Defense { get; set; }
-        }      
+        }
         public class DefenseData
         {
             [JsonProperty("armor")]
@@ -156,6 +159,28 @@ namespace NeoServer.Loaders.Monsters
 
             [JsonProperty("items")]
             public List<LootData> Items { get; set; }
+        }
+
+        public class SummonData
+        {
+            [JsonProperty("maxSummons")]
+
+            public int MaxSummons { get; set; }
+            [JsonProperty("summons")]
+
+            public List<MonsterSummonData> Summons { get; set; }
+        }
+        public class MonsterSummonData
+        {
+            [JsonProperty("name")]
+
+            public string Name { get; set; }
+            [JsonProperty("interval")]
+            public uint Interval { get; set; }
+            [JsonProperty("chance")]
+            public int Chance { get; set; }
+            [JsonProperty("max")]
+            public int Max { get; set; }
         }
 
     }

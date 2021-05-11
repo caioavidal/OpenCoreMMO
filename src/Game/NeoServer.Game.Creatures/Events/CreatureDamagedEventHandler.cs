@@ -17,7 +17,7 @@ namespace NeoServer.Game.Creatures.Events
             this.liquidPoolFactory = liquidPoolFactory;
         }
         public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
-        { 
+        {
             CreateBlood(victim, damage);
         }
 

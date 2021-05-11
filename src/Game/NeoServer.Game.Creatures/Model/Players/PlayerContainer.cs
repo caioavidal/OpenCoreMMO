@@ -76,7 +76,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Container.OnItemAdded += ItemAdded;
             Container.OnItemRemoved += ItemRemoved;
             Container.OnItemUpdated += ItemUpdated;
-            Container.OnContainerMoved += ContainerMoved;            
+            Container.OnContainerMoved += ContainerMoved;
 
             eventsAttached = true;
         }

@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Contracts.Items
 {
-    public interface IUseable
+    public interface IUseable : IThing
     {
         void Use(IPlayer player);
     }

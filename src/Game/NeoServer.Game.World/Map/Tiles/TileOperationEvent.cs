@@ -11,8 +11,8 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public static void OnChanged(ITile tile, IItem thing, OperationResult<IItem> operation)
         {
-            OnTileChanged?.Invoke(tile,thing, operation);
+            OnTileChanged?.Invoke(tile, thing, operation);
         }
-     
+
     }
 }

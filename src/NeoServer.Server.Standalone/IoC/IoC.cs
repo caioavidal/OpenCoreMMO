@@ -9,6 +9,7 @@ using NeoServer.Data.Providers.SQLite.Extensions;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -34,6 +35,7 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Protocols;
 using NeoServer.Scripts.Lua;
 using NeoServer.Server.Commands;
+using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
@@ -44,6 +46,7 @@ using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Instances;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
+using NeoServer.Server.Jobs.Persistance;
 using NeoServer.Server.Model.Players;
 using NeoServer.Server.Tasks;
 using NLua;
@@ -95,7 +98,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
             builder.RegisterType<SpawnManager>().SingleInstance();
 
+            //tools
             builder.RegisterType<NeoServer.Game.World.Map.PathFinder>().As<IPathFinder>().SingleInstance();
+            builder.RegisterType<WalkToMechanism>().As<IWalkToMechanism>().SingleInstance();
 
             builder.RegisterPacketHandlers();
 
@@ -141,6 +146,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<DealTransaction>().As<IDealTransaction>().SingleInstance();
             builder.RegisterType<CoinTransaction>().As<ICoinTransaction>().SingleInstance();
             builder.RegisterType<PartyInviteService>().As<IPartyInviteService>().SingleInstance();
+            builder.RegisterType<SummonService>().As<ISummonService>().SingleInstance();
 
             builder.RegisterType<EventSubscriber>().SingleInstance();
 
@@ -148,7 +154,9 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameCreatureJob>().SingleInstance();
             builder.RegisterType<GameItemJob>().SingleInstance();
             builder.RegisterType<GameChatChannelJob>().SingleInstance();
-            
+            builder.RegisterType<PlayerPersistenceJob>().SingleInstance();
+
+
             //Database
             builder.RegisterContext<NeoContext>();
 
@@ -167,7 +175,7 @@ namespace NeoServer.Server.Standalone.IoC
             var logger = loggerConfig.CreateLogger();
 
             Builder.RegisterInstance(logger).SingleInstance();
-          
+
             return (logger, loggerConfig);
         }
 
@@ -190,12 +198,11 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
             builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
             builder.RegisterAssemblyTypes(types).As<IChatChannelEventSubscriber>().SingleInstance();
-
         }
 
         private static void RegisterAssembliesByInterface(Type interfaceType)
         {
-            
+
             var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => interfaceType.IsAssignableFrom(x));
 
             foreach (var type in types)
@@ -210,7 +217,7 @@ namespace NeoServer.Server.Standalone.IoC
             var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommand));
             builder.RegisterAssemblyTypes(assembly);
         }
-        
+
         private static void RegisterPlayerLoaders(this ContainerBuilder builder)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies();
@@ -253,6 +260,8 @@ namespace NeoServer.Server.Standalone.IoC
 
                 if (c.TryResolve(handlerType, out object instance))
                 {
+                    c.Resolve<Logger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
+
                     return (IPacketHandler)instance;
                 }
 
@@ -277,7 +286,7 @@ namespace NeoServer.Server.Standalone.IoC
                 builder.AddUserSecrets<Program>();
             }
             configuration = builder.Build();
-            ServerConfiguration serverConfiguration = new(0, null, null, null, "");
+            ServerConfiguration serverConfiguration = new(0, null, null, null, "", new(3600));
             GameConfiguration gameConfiguration = new();
             LogConfiguration logConfiguration = new(null);
 

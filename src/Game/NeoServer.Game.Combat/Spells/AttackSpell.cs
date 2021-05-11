@@ -6,7 +6,7 @@ using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures.Spells
 {
-    public abstract class AttackSpell: Spell<AttackSpell>
+    public abstract class AttackSpell : Spell<AttackSpell>
     {
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 0;

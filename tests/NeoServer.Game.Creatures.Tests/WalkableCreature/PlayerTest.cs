@@ -35,7 +35,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var pathFinder = new Mock<IPathFinder>();
             var directions = new Direction[] { Direction.North };
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(), It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            ConfigurationStore.PathFinder = pathFinder.Object;
+            GameToolStore.PathFinder = pathFinder.Object;
 
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, skills: new Dictionary<SkillType, ISkill>
               {
@@ -93,7 +93,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var directions = new Direction[] { Direction.North, Direction.East };
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(), It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            ConfigurationStore.PathFinder = pathFinder.Object;
+            GameToolStore.PathFinder = pathFinder.Object;
 
             sut.OnStartedWalking += (creature) => walkEventEmitted = true;
             sut.OnStartedFollowing += (creature, to, fpp) => followEventEmitted = true;
@@ -126,7 +126,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var directions = new Direction[] { Direction.North, Direction.East };
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(), It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            ConfigurationStore.PathFinder = pathFinder.Object;
+            GameToolStore.PathFinder = pathFinder.Object;
 
             sut.OnStoppedWalking += (creature) => stoppedWalkEventEmitted = true;
 
@@ -158,7 +158,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var directions = new Direction[] { Direction.North, Direction.East };
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(), It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            ConfigurationStore.PathFinder = pathFinder.Object;
+            GameToolStore.PathFinder = pathFinder.Object;
 
             sut.OnStoppedWalking += (creature) => startedWalkingEvent = true;
 

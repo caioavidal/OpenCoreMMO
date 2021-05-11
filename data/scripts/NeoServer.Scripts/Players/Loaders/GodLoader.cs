@@ -12,7 +12,7 @@ namespace NeoServer.Scripts.Players.Loaders
     public class GodLoader : PlayerLoader, IPlayerLoader
     {
         private readonly ICreatureFactory creatureFactory;
-        public GodLoader( IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory) : base(itemFactory, creatureFactory, chatChannelFactory)
+        public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory) : base(itemFactory, creatureFactory, chatChannelFactory)
         {
             this.creatureFactory = creatureFactory;
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Scripts
 {
-    public class AttachEventLoaders: IRunBeforeLoaders
+    public class AttachEventLoaders : IRunBeforeLoaders
     {
         private readonly IEnumerable<IStartupLoader> loaders;
 

@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.DataStore
 {
-    public class NpcStore: DataStore<NpcStore, string, INpcType>
+    public class NpcStore : DataStore<NpcStore, string, INpcType>
     {
     }
 }

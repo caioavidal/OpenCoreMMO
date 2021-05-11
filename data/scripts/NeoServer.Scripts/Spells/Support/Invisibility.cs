@@ -19,7 +19,7 @@ namespace NeoServer.Scripts
             actor.TurnInvisible();
             return true;
         }
-        
+
         public override void OnEnd(ICombatActor actor)
         {
             actor.TurnVisible();

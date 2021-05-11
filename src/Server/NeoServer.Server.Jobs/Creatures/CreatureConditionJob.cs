@@ -16,7 +16,7 @@ namespace NeoServer.Server.Jobs.Creatures
                     condition.Value.End();
                     creature.RemoveCondition(condition.Value);
                 }
-                if(condition.Value is DamageCondition damageCondition)
+                if (condition.Value is DamageCondition damageCondition)
                 {
                     damageCondition.Execute(creature);
                 }

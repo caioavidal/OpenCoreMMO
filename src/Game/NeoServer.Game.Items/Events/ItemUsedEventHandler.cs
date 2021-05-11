@@ -6,7 +6,7 @@ using NeoServer.Game.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Items.Events
 {
-    public class ItemUsedEventHandler: IGameEventHandler
+    public class ItemUsedEventHandler : IGameEventHandler
     {
         private readonly IMap map;
         private readonly IItemFactory itemFactory;
@@ -40,7 +40,7 @@ namespace NeoServer.Game.Items.Events
                 var container = player.Containers[item.Location.ContainerId];
 
                 var result = container.AddItem(createdItem);
-                if(!result.IsSuccess) tile.AddItem(createdItem);
+                if (!result.IsSuccess) tile.AddItem(createdItem);
             }
         }
         private void Say(ICreature creature, IItem item)
@@ -48,7 +48,7 @@ namespace NeoServer.Game.Items.Events
             if (item is IConsumable consumable && !string.IsNullOrWhiteSpace(consumable.Sentence))
             {
                 creature.Say(consumable.Sentence, Common.Talks.SpeechType.MonsterSay);
-            }          
+            }
         }
     }
 }

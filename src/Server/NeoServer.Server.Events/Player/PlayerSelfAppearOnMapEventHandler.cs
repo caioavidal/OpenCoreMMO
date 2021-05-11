@@ -20,7 +20,7 @@ namespace NeoServer.Server.Events
         }
         public void Execute(IWalkableCreature creature)
         {
-            if(creature.IsNull()) return;
+            if (creature.IsNull()) return;
 
             if (creature is not IPlayer player) return;
 

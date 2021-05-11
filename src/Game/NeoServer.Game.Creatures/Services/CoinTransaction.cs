@@ -24,7 +24,7 @@ namespace NeoServer.Game.Creatures.Services
             var changeCoins = itemFactory.CreateCoins(amount).ToList();
 
             player.ReceivePayment(changeCoins, amount);
-            
+
         }
 
         /// <summary>

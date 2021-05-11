@@ -59,7 +59,7 @@ namespace NeoServer.Game.World.Map
 
             var minRangeZ = search.RangeZ.Min;
             var maxRangeZ = search.RangeZ.Max;
-            
+
             if (minRangeX == (int)MapViewPort.ViewPortX && maxRangeX == (int)MapViewPort.ViewPortX && minRangeY == (int)MapViewPort.ViewPortY && maxRangeY == (int)MapViewPort.ViewPortY && search.Multifloor)
             {
             }
@@ -79,7 +79,7 @@ namespace NeoServer.Game.World.Map
             int x1 = Math.Min(0xFFFF, Math.Max(0, (min_x + minoffset)));
             int y1 = Math.Min(0xFFFF, Math.Max(0, (min_y + minoffset)));
 
-            int maxoffset = centerPos.Z- minRangeZ;
+            int maxoffset = centerPos.Z - minRangeZ;
             int x2 = Math.Min(0xFFFF, Math.Max(0, (max_x + maxoffset)));
             int y2 = Math.Min(0xFFFF, Math.Max(0, (max_y + maxoffset)));
 

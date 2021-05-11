@@ -95,7 +95,7 @@ namespace NeoServer.Game.Common.Location.Structs
         /// </summary>
         public Coordinate Translate(int xOffset, int yOffset) => Translate(xOffset: xOffset, yOffset: yOffset, zOffset: 0);
 
-        public Location Location => new Location((ushort)X, (ushort) Y, (byte)Z);
+        public Location Location => new Location((ushort)X, (ushort)Y, (byte)Z);
 
         /// <summary>
         /// Creates a new <see cref="Coordinate"/> whose coordinates are equal to this instance's

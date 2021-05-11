@@ -4,7 +4,6 @@ using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Movement;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using System;
@@ -52,7 +51,8 @@ namespace NeoServer.Server.Commands.Player
 
             if (useItemPacket.FromLocation.Type == LocationType.Ground)
             {
-                WalkToMechanism.DoOperation(player, action, useItemPacket.FromLocation, game);
+                //WalkToMechanism.DoOperation(player, action, useItemPacket.FromLocation, game); //todo: use
+                action?.Invoke();
                 return;
             }
 

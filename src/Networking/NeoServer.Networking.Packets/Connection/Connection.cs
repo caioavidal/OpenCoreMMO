@@ -66,7 +66,7 @@ namespace NeoServer.Networking
             }
             catch
             {
-                Console.WriteLine("Error on stream read");
+                logger.Error("Error on stream read");
             }
         }
 
@@ -113,7 +113,11 @@ namespace NeoServer.Networking
             {
                 lock (connectionLock)
                 {
-
+                    if (Socket.Connected == false)
+                    {
+                        Close();
+                        return false;
+                    }
                     if (Socket.Available == 0)
                     {
                         return false;
@@ -144,6 +148,7 @@ namespace NeoServer.Networking
             }
             catch (Exception e)
             {
+                logger.Error(e.Message);
                 Close();
             }
 

@@ -9,6 +9,7 @@ using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTBM;
 using NeoServer.OTBM.Structure;
+using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Serilog.Core;
 using System;
@@ -34,36 +35,36 @@ namespace NeoServer.Loaders.World
         }
         public void Load()
         {
-            logger.Information("Loading world...");
-
-            var fileStream = File.ReadAllBytes($"{serverConfiguration.Data}/world/{ serverConfiguration.OTBM}");
-
-            var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
-
-            var otbm = new OTBMNodeParser().Parse(otbmNode);
-
-            LoadTiles(otbm);
-
-            foreach (var townNode in otbm.Towns)
+            logger.Step("Loading world...", "{tiles} tiles, {towns} towns and {waypoints} waypoints loaded", () =>
             {
-                world.AddTown(new Town()
-                {
-                    Id = townNode.Id,
-                    Name = townNode.Name,
-                    Coordinate = townNode.Coordinate
-                });
-            }
-            foreach (var waypointNode in otbm.Waypoints)
-            {
-                world.AddWaypoint(new Waypoint
-                {
-                    Coordinate = waypointNode.Coordinate,
-                    Name = waypointNode.Name
-                });
-            }
+                var fileStream = File.ReadAllBytes($"{serverConfiguration.Data}/world/{ serverConfiguration.OTBM}");
 
-            logger.Information("{tiles} tiles, {towns} towns and {waypoints} waypoints loaded", world.LoadedTilesCount, world.LoadedTownsCount, world.LoadedWaypointsCount);
+                var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
 
+                var otbm = new OTBMNodeParser().Parse(otbmNode);
+
+                LoadTiles(otbm);
+
+                foreach (var townNode in otbm.Towns)
+                {
+                    world.AddTown(new Town()
+                    {
+                        Id = townNode.Id,
+                        Name = townNode.Name,
+                        Coordinate = townNode.Coordinate
+                    });
+                }
+                foreach (var waypointNode in otbm.Waypoints)
+                {
+                    world.AddWaypoint(new Waypoint
+                    {
+                        Coordinate = waypointNode.Coordinate,
+                        Name = waypointNode.Name
+                    });
+                }
+
+                return new object[] { world.LoadedTilesCount, world.LoadedTownsCount, world.LoadedWaypointsCount };
+            });
         }
 
         private void LoadTiles(OTBM.Structure.OTBM otbm)

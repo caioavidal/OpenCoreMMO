@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 {
-    public record Loot(ILootItem[] Items, HashSet<ICreature> Owners, decimal LootRate = 1): ILoot
+    public record Loot(ILootItem[] Items, HashSet<ICreature> Owners, decimal LootRate = 1) : ILoot
     {
         public virtual ILootItem[] Drop()
         {
-            return Drop( Items);
+            return Drop(Items);
         }
-        
+
         public ILootItem[] Drop(ILootItem[] items)
         {
             var random = GameRandom.Random.Next(minValue: 1, maxValue: 100_000) / LootRate;
@@ -24,7 +24,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 
                 var itemToDrop = item;
 
-                ILootItem [] childrenItems = null;
+                ILootItem[] childrenItems = null;
                 if (item?.Items?.Length > 0)
                 {
                     childrenItems = Drop(item.Items);
@@ -40,7 +40,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters.Loots
 
                 if (amount == 0) continue;
 
-                itemToDrop = new LootItem(itemToDrop.ItemId, Math.Min(amount,(byte)100), itemToDrop.Chance, childrenItems);
+                itemToDrop = new LootItem(itemToDrop.ItemId, Math.Min(amount, (byte)100), itemToDrop.Chance, childrenItems);
                 drop.Add(itemToDrop);
             }
             return drop.ToArray();

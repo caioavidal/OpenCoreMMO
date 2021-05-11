@@ -12,7 +12,7 @@ namespace NeoServer.Server.Commands.Movement
     {
         public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow)
         {
-            WalkToMechanism.DoOperation(player, () => MapToContainer(player, map, itemThrow), itemThrow.FromLocation, game);
+            MapToContainer(player, map, itemThrow);
         }
 
         private static void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
@@ -29,8 +29,8 @@ namespace NeoServer.Server.Commands.Movement
             IContainer container = player.Containers[itemThrow.ToLocation.ContainerId];
             if (container is null) return;
 
-            if(container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
-           
+            if (container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
+
             player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
         }
 

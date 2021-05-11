@@ -2,8 +2,8 @@
 {
     public interface ILootItem
     {
-        ushort ItemId { get;  }
-        byte Amount { get;  }
+        ushort ItemId { get; }
+        byte Amount { get; }
         uint Chance { get; }
         ILootItem[] Items { get; }
     }

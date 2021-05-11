@@ -22,7 +22,7 @@ namespace NeoServer.Game.Items.Items
         public byte Attack => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Attack);
         public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.HitChance);
         public byte Range => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Range);
-     
+
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
         public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Common.ItemAttribute.WeaponType) == "distance" && type.HasFlag(Common.ItemFlag.Stackable);

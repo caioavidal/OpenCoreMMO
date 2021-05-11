@@ -25,7 +25,7 @@ namespace NeoServer.Game.Items.Tests
             container.AddItem(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
             Assert.Equal(60, container.Weight);
 
-            container.RemoveItem(null,1,0, out var removed);
+            container.RemoveItem(null, 1, 0, out var removed);
 
             Assert.Equal(20, container.Weight);
         }
@@ -127,7 +127,7 @@ namespace NeoServer.Game.Items.Tests
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
             child.AddItem(shield);
 
-            sut.SendTo(sut, child,1, 1, 0);
+            sut.SendTo(sut, child, 1, 1, 0);
 
             Assert.Equal(100, sut.Weight);
 
@@ -139,7 +139,7 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(180, sut.Weight);
 
-            child2.RemoveItem(null,1,1, out var removed);
+            child2.RemoveItem(null, 1, 1, out var removed);
 
             Assert.Equal(80, sut.Weight);
         }

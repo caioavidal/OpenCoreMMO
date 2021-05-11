@@ -4,7 +4,7 @@ namespace NeoServer.Game.Contracts.Creatures
 {
     public interface IShopItem
     {
-        IItemType Item { get; } 
+        IItemType Item { get; }
         uint BuyPrice { get; }
         uint SellPrice { get; }
     }

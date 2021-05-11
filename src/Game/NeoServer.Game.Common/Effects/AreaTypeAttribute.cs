@@ -3,7 +3,7 @@
 namespace NeoServer.Game.Effects
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class AreaTypeAttribute: Attribute
+    public class AreaTypeAttribute : Attribute
     {
         public AreaTypeAttribute(string name)
         {

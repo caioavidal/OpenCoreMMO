@@ -32,7 +32,7 @@ namespace NeoServer.Server.Events
                         break;
                 }
 
-                if(player.Containers[containerId]?.Parent == player && player.Shopping)
+                if (player.Containers[containerId]?.Parent == player && player.Shopping)
                 {
                     connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, player.TradingWithNpc?.ShopItems?.Values));
                 }

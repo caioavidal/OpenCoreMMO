@@ -19,7 +19,7 @@ namespace NeoServer.Data.Configurations
             builder.Property(e => e.AccountId)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd();
-                //.HasColumnType("int(11)");
+            //.HasColumnType("int(11)");
 
             builder.Property(e => e._creation)
                 .HasColumnName("creation")

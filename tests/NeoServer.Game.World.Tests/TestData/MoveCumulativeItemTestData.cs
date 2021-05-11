@@ -31,7 +31,7 @@ namespace NeoServer.Game.World.Tests.TestData
                 ExpectedFromTileDowmItems = expectedFromTileDowmItems;
                 ExpectedToTileDowmItems = expectedToTileDowmItems;
             }
-           
+
             public Map.Map CreateMap(IItem item)
             {
                 var world = new World();

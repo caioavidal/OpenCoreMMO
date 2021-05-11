@@ -25,7 +25,7 @@ namespace NeoServer.Server.Handlers.Player
 
             if (!ItemTypeStore.Data.TryGetValue(serverId, out var itemType)) return;
 
-            game.Dispatcher.AddEvent(new Event(() => dealTransaction?.Buy(player,player.TradingWithNpc,itemType, playerPurchasePacket.Amount)));
+            game.Dispatcher.AddEvent(new Event(() => dealTransaction?.Buy(player, player.TradingWithNpc, itemType, playerPurchasePacket.Amount)));
         }
     }
 }

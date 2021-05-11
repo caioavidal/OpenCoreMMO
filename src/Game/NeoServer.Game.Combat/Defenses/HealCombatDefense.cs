@@ -13,6 +13,6 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
         {
             Spell = new HealSpell(new MinMax(min, max), effect);
         }
-        public override void Defende(ICombatActor actor) => Spell?.Invoke(actor,null, out var error);
+        public override void Defende(ICombatActor actor) => Spell?.Invoke(actor, null, out var error);
     }
 }

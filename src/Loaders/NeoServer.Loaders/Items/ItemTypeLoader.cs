@@ -1,6 +1,7 @@
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.DataStore;
 using NeoServer.OTB.Parsers;
+using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
@@ -25,23 +26,26 @@ namespace NeoServer.Loaders.Items
         /// </summary>
         public void Load()
         {
-            var basePath = $"{serverConfiguration.Data}/items/";
-            var itemTypes = LoadOTB(basePath);
 
-            LoadItemsJson(basePath, itemTypes);
-        
-            foreach (var item in itemTypes)
+            logger.Step("Loading items", "{n} items loaded", () =>
             {
-                ItemTypeStore.Data.Add(item.Key, item.Value);
-                ItemIdMapStore.Data.Add(item.Value.ClientId, item.Key);
+                var basePath = $"{serverConfiguration.Data}/items/";
+                var itemTypes = LoadOTB(basePath);
 
-                if(item.Value.Attributes.GetAttribute(Game.Common.ItemAttribute.Type)?.Equals("coin", StringComparison.InvariantCultureIgnoreCase) ?? false)
+                LoadItemsJson(basePath, itemTypes);
+
+                foreach (var item in itemTypes)
                 {
-                    CoinTypeStore.Data.Add(item.Key, item.Value);
-                }
-            }
+                    ItemTypeStore.Data.Add(item.Key, item.Value);
+                    ItemIdMapStore.Data.Add(item.Value.ClientId, item.Key);
 
-            logger.Information("{n} items loaded", itemTypes.Count);
+                    if (item.Value.Attributes.GetAttribute(Game.Common.ItemAttribute.Type)?.Equals("coin", StringComparison.InvariantCultureIgnoreCase) ?? false)
+                    {
+                        CoinTypeStore.Data.Add(item.Key, item.Value);
+                    }
+                }
+                return new object[] { itemTypes.Count };
+            });
         }
 
         private Dictionary<ushort, IItemType> LoadOTB(string basePath)

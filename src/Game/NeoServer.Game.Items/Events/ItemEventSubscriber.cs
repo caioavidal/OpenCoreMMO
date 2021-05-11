@@ -21,7 +21,7 @@ namespace NeoServer.Game.Items.Events
             {
                 consumable.OnUsed += itemUsedEventHandler.Execute;
             }
-            if(item is IFieldRune fieldRune)
+            if (item is IFieldRune fieldRune)
             {
                 fieldRune.OnUsedOnTile += fieldRuneUsedEventHandler.Execute;
             }

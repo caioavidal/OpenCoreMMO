@@ -3,7 +3,7 @@ using NeoServer.Game.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Server.Events
 {
-    public class ItemEventSubscriber: IItemEventSubscriber
+    public class ItemEventSubscriber : IItemEventSubscriber
     {
         private readonly ItemUsedOnTileEventHandler itemUsedOnTileEventHandler;
 
@@ -14,7 +14,7 @@ namespace NeoServer.Server.Events
 
         public void Subscribe(IItem item)
         {
-            if(item is IUseableOnTile useableOnTile)
+            if (item is IUseableOnTile useableOnTile)
             {
                 useableOnTile.OnUsedOnTile += itemUsedOnTileEventHandler.Execute;
             }

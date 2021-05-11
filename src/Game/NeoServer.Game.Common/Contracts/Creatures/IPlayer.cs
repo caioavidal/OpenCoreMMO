@@ -52,7 +52,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte SoulPoints { get; }
 
         float CarryStrength { get; }
-        
+
         IDictionary<SkillType, ISkill> Skills { get; }
         ushort StaminaMinutes { get; }
 
@@ -93,7 +93,7 @@ namespace NeoServer.Game.Contracts.Creatures
         uint Id { get; }
         bool HasDepotOpened { get; }
 
-        byte VocationType{ get; }
+        byte VocationType { get; }
 
         //  IAction PendingAction { get; }
 
@@ -161,9 +161,9 @@ namespace NeoServer.Game.Contracts.Creatures
         void Use(IUseable item);
         void Use(IUseableOn item, IItem onItem);
         bool Login();
-        
+
         bool CastSpell(string message);
-   
+
         void AddPersonalChannel(IChatChannel channel);
         bool AddToVip(IPlayer player);
         void RemoveFromVip(uint playerId);
@@ -204,6 +204,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IShopperNpc TradingWithNpc { get; }
         bool IsInParty { get; }
         IParty Party { get; }
+        byte MaxSoulPoints { get; }
 
         void InviteToParty(IPlayer invitedPlayer, IParty party);
         void RevokePartyInvite(IPlayer invitedPlayer);

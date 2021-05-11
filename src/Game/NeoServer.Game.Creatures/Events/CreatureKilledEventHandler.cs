@@ -19,6 +19,11 @@ namespace NeoServer.Game.Creatures.Events
         }
         public void Execute(ICreature creature, IThing by, ILoot loot)
         {
+            if (creature is IMonster monster && monster.IsSummon)
+            {
+                map.RemoveCreature(monster);
+                return;
+            }
             CreateCorpse(creature, by, loot);
             CreateBlood(creature);
         }

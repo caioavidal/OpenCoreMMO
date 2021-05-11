@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Handlers.Player
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-          
+
             game.Dispatcher.AddEvent(new Event(() => player.LeaveParty()));
         }
     }

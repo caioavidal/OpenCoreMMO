@@ -6,7 +6,7 @@ namespace NeoServer.Game.Contracts.Creatures
     {
         public string Script { get; set; }
         public IDialog[] Dialogs { get; init; }
-        public IDictionary<string, dynamic> CustomAttributes { get;  }
+        public IDictionary<string, dynamic> CustomAttributes { get; }
         bool IsLuaScript { get; }
         string[] Marketings { init; get; }
     }

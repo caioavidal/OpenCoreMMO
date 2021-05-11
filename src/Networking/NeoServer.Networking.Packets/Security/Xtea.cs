@@ -69,7 +69,6 @@ namespace NeoServer.Networking.Packets.Security
                 }
             }
 
-            length = BitConverter.ToUInt16(buffer, index) + 2 + index;
             return true;
         }
 

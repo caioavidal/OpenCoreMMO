@@ -19,6 +19,8 @@ namespace NeoServer.Loaders.Monsters.Converters
 
             var attacks = new List<IMonsterCombatAttack>();
 
+            AdjustAttackChanceValue(data.Attacks);
+
             foreach (var attack in data.Attacks)
             {
                 attack.TryGetValue("name", out string attackName);
@@ -52,7 +54,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 if (combatAttack.IsMelee)
                 {
-                    
+
                     combatAttack.MinDamage = (ushort)Math.Abs(min);
                     combatAttack.MaxDamage = Math.Abs(max) > 0 ? (ushort)Math.Abs(max) : MeleeCombatAttack.CalculateMaxDamage(skill, attackValue);
 
@@ -60,7 +62,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                     if (attack.TryGetValue("fire", out ushort value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value,value, ConditionType.Fire, 9000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Fire, 9000);
                     }
                     else if (attack.TryGetValue("poison", out value))
                     {
@@ -88,7 +90,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                     }
                     else if (attack.TryGetValue("bleed", out value) || attack.TryGetValue("physical", out value))
                     {
-                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Bleeding , 4000);
+                        combatAttack.CombatAttack = new MeleeCombatAttack(value, value, ConditionType.Bleeding, 4000);
                     }
 
                     if (attack.TryGetValue("tick", out ushort tick) && combatAttack.CombatAttack is MeleeCombatAttack melee) melee.ConditionInterval = tick;
@@ -110,7 +112,7 @@ namespace NeoServer.Loaders.Monsters.Converters
                     combatAttack.CombatAttack = new SpreadCombatAttack(length, spread);
                 }
 
-                if(attackName == "lifedrain")
+                if (attackName == "lifedrain")
                 {
                     var shootType = ShootTypeParser.Parse(shootEffect);
 
@@ -134,7 +136,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 if (combatAttack.CombatAttack is null)
                 {
-             //       Console.WriteLine($"{attackName} was not created on monster: {data.Name}");
+                    //       Console.WriteLine($"{attackName} was not created on monster: {data.Name}");
                 }
 
                 attacks.Add(combatAttack);
@@ -142,5 +144,35 @@ namespace NeoServer.Loaders.Monsters.Converters
             return attacks.ToArray();
         }
 
+        private static void AdjustAttackChanceValue(List<Dictionary<string, object>> attacks)
+        {
+            Func<Dictionary<string, object>, (bool, int)> getChance = (attack) =>
+              {
+                  if (!attack.TryGetValue("chance", out string chance)) return (false, default);
+
+                  if (!int.TryParse(chance, out var value)) return (false, default);
+                  return (true, value);
+              };
+
+            int maxChance = 0;
+            foreach (var attack in attacks)
+            {
+                var result = getChance(attack);
+                if (!result.Item1) continue;
+                var value = result.Item2;
+
+                maxChance = value > maxChance ? value : maxChance;
+            }
+
+            if (maxChance == 100) return;
+
+            foreach (var attack in attacks)
+            {
+                var result = getChance(attack);
+                if (!result.Item1) continue;
+
+                attack["chance"] = Math.Round((result.Item2 * 100d) / maxChance).ToString();
+            }
+        }
     }
 }

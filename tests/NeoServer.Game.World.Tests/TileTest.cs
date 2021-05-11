@@ -212,7 +212,7 @@ namespace NeoServer.Game.World.Tests
             sut.AddItem(item);
 
             var result = sut.SendTo(dest, item, 80, 0, 0);
-            
+
             Assert.True(result.IsSuccess);
 
             Assert.Equal(100, dest.TopItemOnStack.ClientId);
@@ -269,7 +269,7 @@ namespace NeoServer.Game.World.Tests
 
             Assert.Equal(50, (dest.TopItemOnStack as ICumulative).Amount);
         }
-      
+
     }
 
 }

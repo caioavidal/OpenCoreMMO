@@ -15,8 +15,8 @@ namespace NeoServer.OTB.DataStructures
         public ReadOnlyMemoryStream(ReadOnlyMemory<byte> buffer, int position = 0)
         {
             if (buffer.IsNull()) return;
-            if(position.IsLessThanZero()) return;
-            if(position.ThrowIfBiggerThan(buffer.Length)) return;
+            if (position.IsLessThanZero()) return;
+            if (position.ThrowIfBiggerThan(buffer.Length)) return;
 
             _buffer = buffer;
             Position = position;

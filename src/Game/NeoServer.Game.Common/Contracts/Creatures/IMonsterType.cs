@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures.Monsters;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
@@ -30,5 +31,7 @@ namespace NeoServer.Game.Contracts.Creatures
         ImmutableDictionary<DamageType, sbyte> Immunities { get; set; }
         Race Race { get; set; }
         ILoot Loot { get; set; }
+        IMonsterSummon[] Summons { get; set; }
+        byte MaxSummons { get; set; }
     }
 }

@@ -56,5 +56,5 @@ namespace NeoServer.Game.Creatures
         }
 
     }
-   
+
 }

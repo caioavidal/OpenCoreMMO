@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace NeoServer.Game.Combat.Spells
 {
-    public abstract class BaseSpell: ISpell
+    public abstract class BaseSpell : ISpell
     {
         public virtual string Name { get; set; }
         public abstract EffectT Effect { get; }
@@ -24,7 +24,7 @@ namespace NeoServer.Game.Combat.Spells
 
         public abstract bool OnCast(ICombatActor actor, string words, out InvalidOperation error);
 
-        public bool InvokeOn(ICombatActor actor, ICombatActor onCreature,string words, out InvalidOperation error)
+        public bool InvokeOn(ICombatActor actor, ICombatActor onCreature, string words, out InvalidOperation error)
         {
             if (!CanBeUsedBy(actor, out error)) return false;
             if (actor is IPlayer player)
@@ -50,8 +50,8 @@ namespace NeoServer.Game.Combat.Spells
                 player.ConsumeMana(Mana);
             }
 
-            if (!actor.HasCondition(ConditionType)) 
-                if(!OnCast(actor, words, out error)) return false;
+            if (!actor.HasCondition(ConditionType))
+                if (!OnCast(actor, words, out error)) return false;
 
             AddCondition(actor);
 
@@ -77,7 +77,7 @@ namespace NeoServer.Game.Combat.Spells
                     return false;
                 }
 
-                if(!Vocations?.Contains(player.VocationType) ?? false)
+                if (!Vocations?.Contains(player.VocationType) ?? false)
                 {
                     error = InvalidOperation.VocationCannotUseSpell;
                     return false;
