@@ -8,7 +8,7 @@
         Club,
         Sword,
         Distance,
-        Wand,
+        Magical,
         None
     }
 }

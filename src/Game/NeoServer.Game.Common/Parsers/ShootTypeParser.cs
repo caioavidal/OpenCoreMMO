@@ -43,5 +43,15 @@ namespace NeoServer.Game.Common.Parsers
                 _ => ShootType.None
             };
 
+        public static DamageType ToDamageType(ShootType shootType)
+        {
+            return shootType switch
+            {
+                ShootType.Energy => DamageType.Energy,
+                ShootType.EnergyBall => DamageType.Energy,
+                ShootType.Fire => DamageType.Fire,
+                _ => DamageType.None
+            };
+        }
     }
 }

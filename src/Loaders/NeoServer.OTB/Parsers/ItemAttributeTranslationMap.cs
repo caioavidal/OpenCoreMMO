@@ -52,7 +52,7 @@ namespace NeoServer.OTB.Parsers
                 case "showcharges": return ItemAttribute.ShowCharges;
                 case "showattributes": return ItemAttribute.ShowAttributes;
                 case "hitchance": return ItemAttribute.HitChance;
-                case "maxhitchance": return ItemAttribute.MaxHitChange;
+                case "maxhitchance": return ItemAttribute.MaxHitChance;
                 case "invisible": return ItemAttribute.Invisible;
                 case "speed": return ItemAttribute.Speed;
                 case "healthgain": return ItemAttribute.HealthGain;
@@ -144,6 +144,7 @@ namespace NeoServer.OTB.Parsers
                 case "count": return ItemAttribute.Count;
                 case "script": return ItemAttribute.Script;
                 case "worth": return ItemAttribute.Worth;
+                case "manause": return ItemAttribute.ManaUse;
                 default:
                     success = false;
                     return ItemAttribute.None; // Just return the first
