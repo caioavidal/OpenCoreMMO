@@ -91,7 +91,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public bool KeepDistance => TargetDistance > 1;
         public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
         public ICombatDefense[] Defenses => Metadata.Defenses;
-        public TargetList Targets { get; set; }
+        public virtual TargetList Targets { get; private set; }
 
         public override int ArmorDefend(int attack)
         {
@@ -128,6 +128,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (creature is not ICombatActor enemy) return;
             if (creature is Monster monster && !monster.IsSummon) return;
+            if (creature is Summon summon && summon.Master.CreatureId == this.CreatureId) return;
+
             if (!enemy.CanBeAttacked) return;
 
             var canSee = CanSee(creature.Location, 9, 7);
@@ -155,7 +157,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
 
         public void ChangeState()
         {
-            searchTarget();
+            SearchTarget();
 
             if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken))
             {
@@ -221,7 +223,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             SelectTargetToAttack();
         }
 
-        private CombatTarget searchTarget()
+        protected virtual CombatTarget SearchTarget()
         {
             if (Targets.IsNull()) return null;
 
@@ -277,11 +279,11 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             MoveAroundEnemy(combatTarget.Creature.Location);
         }
 
-        public void SelectTargetToAttack()
+        public virtual  void SelectTargetToAttack()
         {
             if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
 
-            var target = searchTarget();
+            var target = SearchTarget();
 
             if (target is null) return;
 
