@@ -46,7 +46,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public abstract ushort MinimumAttackPower { get; }
         public abstract bool UsingDistanceWeapon { get; }
         public uint AttackEvent { get; set; }
-        public virtual bool CanBeAttacked => true;
+        public virtual bool CanBeAttacked => true; //todo: set as a flag
         public IDictionary<ConditionType, ICondition> Conditions { get; set; } = new Dictionary<ConditionType, ICondition>();
 
         #endregion
@@ -165,7 +165,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public bool Attack(ICreature creature, IUseableAttackOnCreature item)
         {
-            if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location)) return false;
+            if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) || creature.Equals(this)) return false;
 
             if (!item.Use(this, creature, out var combat)) return false;
             OnAttackEnemy?.Invoke(this, enemy, combat);
@@ -174,7 +174,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         }
         public bool Attack(ICreature creature)
         {
-            if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location))
+            if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) || creature.Equals(this))
             {
                 StopAttack();
                 return false;
@@ -265,6 +265,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool ReceiveAttack(IThing enemy, CombatDamage damage)
         {
+            if (enemy.Equals(this)) return false;
             if (!CanBeAttacked) return false;
             if (IsDead) return false;
 

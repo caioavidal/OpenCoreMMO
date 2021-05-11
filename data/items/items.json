@@ -8794,6 +8794,14 @@
              "key": "weaponType",
              "value": "wand"
           },
+		  {
+			 "key": "manaUse",
+             "value": "2"
+		  },
+		  {
+             "key": "maxHitChance",
+             "value": "17"
+          },
           {
              "key": "shootType",
              "value": "energy"

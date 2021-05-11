@@ -78,7 +78,6 @@
         MinimumLevel,
         Professions,
         WandRange,
-        WandManaConsumption,
         WandAttackStrength,
         WandAttackVariation,
         WandDamageType,
@@ -124,7 +123,7 @@
         ShowDuration,
         ShowCharges,
         ShowAttributes,
-        MaxHitChange,
+        MaxHitChance,
         Invisible,
         Speed,
         HealthGain,
@@ -206,6 +205,7 @@
         Area,
         Ticks,
         Script,
-        Worth
+        Worth,
+        ManaUse
     }
 }

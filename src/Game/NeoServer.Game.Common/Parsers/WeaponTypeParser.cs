@@ -12,7 +12,8 @@ namespace NeoServer.Game.Common.Parsers
             "club" => WeaponType.Club,
             "sword" => WeaponType.Sword,
             "distance" => WeaponType.Distance,
-            "wand" => WeaponType.Wand,
+            "wand" => WeaponType.Magical,
+            "rod" => WeaponType.Magical,
             _ => WeaponType.None
         };
     }

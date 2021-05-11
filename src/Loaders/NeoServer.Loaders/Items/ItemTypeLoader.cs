@@ -60,6 +60,7 @@ namespace NeoServer.Loaders.Items
         private void LoadItemsJson(string basePath, Dictionary<ushort, IItemType> itemTypes)
         {
             var jsonString = File.ReadAllText(Path.Combine(basePath, "items.json"));
+
             var itemTypeMetadatas = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(jsonString);
 
             var itemTypeMetadataParser = new ItemTypeMetadataParser(itemTypes);

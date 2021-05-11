@@ -140,9 +140,9 @@ namespace NeoServer.Game.Items
             {
                 return new Necklace(itemType, location);
             }
-            if (Wand.IsApplicable(itemType))
+            if (MagicWeapon.IsApplicable(itemType))
             {
-                return new Wand(itemType, location);
+                return new MagicWeapon(itemType, location);
             }
             if (ICumulative.IsApplicable(itemType))
             {

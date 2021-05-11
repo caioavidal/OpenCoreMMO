@@ -264,6 +264,7 @@ namespace NeoServer.Server.Model.Players
                         WeaponType.Axe => SkillType.Axe,
                         WeaponType.Ammunition => SkillType.Distance,
                         WeaponType.Distance => SkillType.Distance,
+                        WeaponType.Magical => SkillType.Magic,
                         _ => SkillType.Fist
                     };
                 }
