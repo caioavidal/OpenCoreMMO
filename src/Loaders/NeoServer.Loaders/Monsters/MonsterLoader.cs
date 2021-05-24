@@ -48,7 +48,7 @@ namespace NeoServer.Loaders.Monsters
 
             var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
 
-            return MonsterConverter.Convert(monster, gameConfiguration, _monsterManager);
+            return MonsterConverter.Convert(monster, gameConfiguration, _monsterManager, logger);
         }
     }
 }

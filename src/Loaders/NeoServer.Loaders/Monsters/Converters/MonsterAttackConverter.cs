@@ -5,6 +5,7 @@ using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Creatures.Combat.Attacks;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 {
     class MonsterAttackConverter
     {
-        public static IMonsterCombatAttack[] Convert(MonsterData data)
+        public static IMonsterCombatAttack[] Convert(MonsterData data, Logger logger)
         {
             if (data.Attacks is null) return new IMonsterCombatAttack[0];
 
@@ -54,7 +55,6 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 if (combatAttack.IsMelee)
                 {
-
                     combatAttack.MinDamage = (ushort)Math.Abs(min);
                     combatAttack.MaxDamage = Math.Abs(max) > 0 ? (ushort)Math.Abs(max) : MeleeCombatAttack.CalculateMaxDamage(skill, attackValue);
 
@@ -136,7 +136,7 @@ namespace NeoServer.Loaders.Monsters.Converters
 
                 if (combatAttack.CombatAttack is null)
                 {
-                    //       Console.WriteLine($"{attackName} was not created on monster: {data.Name}");
+                    logger.Warning("{attackName} attack was not created on monster: {name}", attackName, data.Name);
                 }
 
                 attacks.Add(combatAttack);

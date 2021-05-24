@@ -11,6 +11,8 @@ namespace NeoServer.Server.Helpers.Extensions
 
         public static void Step(this Logger logger, string beforeMessage, string afterMessage, Action action, params object[] @params)
         {
+            var lastRow = Console.CursorTop;
+
             if (@params is null || @params.Length == 0)
             {
                 logger.Information(beforeMessage);
@@ -19,12 +21,13 @@ namespace NeoServer.Server.Helpers.Extensions
             {
                 logger.Information(beforeMessage, @params);
             }
+
             sw.Restart();
 
             action();
 
-            Console.SetCursorPosition(0, Console.CursorTop - 1);
-
+            var currentRow = Console.CursorTop;
+            Console.SetCursorPosition(0, lastRow);
             if (@params is null || @params.Length == 0)
             {
                 logger.Information($"{afterMessage} in {{elapsed}} secs", Math.Round(sw.ElapsedMilliseconds / 1000d, 2));
@@ -34,16 +37,20 @@ namespace NeoServer.Server.Helpers.Extensions
                 logger.Information($"{afterMessage} in {{elapsed}} secs", @params.Concat(new object[] { Math.Round(sw.ElapsedMilliseconds / 1000d, 2) }).ToArray());
             }
 
+            Console.SetCursorPosition(0, currentRow);
         }
         public static void Step(this Logger logger, string beforeMessage, string afterMessage, Func<object[]> action)
         {
+            var lastRow = Console.CursorTop;
+
             logger.Information(beforeMessage);
 
             sw.Restart();
 
             var @params = action();
 
-            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            var currentRow = Console.CursorTop;
+            Console.SetCursorPosition(0, lastRow);
 
             if (@params is null || @params.Length == 0)
             {
@@ -54,6 +61,7 @@ namespace NeoServer.Server.Helpers.Extensions
                 logger.Information($"{afterMessage} in {{elapsed}} secs", @params.Concat(new object[] { Math.Round(sw.ElapsedMilliseconds / 1000d, 2) }).ToArray());
             }
 
+            Console.SetCursorPosition(0, currentRow);
         }
     }
 
