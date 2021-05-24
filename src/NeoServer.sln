@@ -73,7 +73,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Creatures.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Creatures", "Creatures", "{417FDC3A-FCB6-4875-BC91-CE55E9314F1D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Scripts", "..\data\scripts\NeoServer.Scripts\NeoServer.Scripts.csproj", "{F9748A4D-F069-408B-986B-7633236B280D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Extensions", "..\data\extensions\NeoServer.Scripts\NeoServer.Extensions.csproj", "{F9748A4D-F069-408B-986B-7633236B280D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Compiler", "Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj", "{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}"
 EndProject
@@ -97,7 +97,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats", "Gam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats.Tests", "..\tests\NeoServer.Game.Chats.Tests\NeoServer.Game.Chats.Tests.csproj", "{7588730A-5787-4D61-A3B2-31D63AC10355}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Scripts.Lua", "NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj", "{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Scripts.Lua", "NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj", "{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

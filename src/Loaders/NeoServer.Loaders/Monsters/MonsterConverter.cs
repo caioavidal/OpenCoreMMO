@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Loaders.Monsters.Converters;
+using Serilog.Core;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace NeoServer.Loaders.Monsters
 {
     public class MonsterConverter
     {
-        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration, IMonsterDataManager monsters)
+        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration, IMonsterDataManager monsters, Logger logger)
         {
             var data = monsterData;
             var monster = new MonsterType()
@@ -35,7 +36,7 @@ namespace NeoServer.Loaders.Monsters
                 monster.Voices = data.Voices.Sentences.Select(x => x.Sentence).ToArray();
             }
 
-            monster.Attacks = MonsterAttackConverter.Convert(data);
+            monster.Attacks = MonsterAttackConverter.Convert(data, logger);
 
             monster.Immunities = MonsterImmunityConverter.Convert(data).ToImmutableDictionary();
 

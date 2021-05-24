@@ -5,9 +5,9 @@ namespace NeoServer.Server.Compiler
 {
     public class ScriptCompiler
     {
-        public static void Compile(string basePath)
+        public static void Compile(string basePath, string extensionsFolder)
         {
-            var sourcesPath = Path.Combine(basePath, "scripts");
+            var sourcesPath = Path.Combine(basePath, extensionsFolder);
 
             var compiler = new Compiler();
 
