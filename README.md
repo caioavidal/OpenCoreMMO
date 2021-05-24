@@ -75,7 +75,7 @@ dotnet run -p "NeoServer.Server.Standalone"
   - [ ] Shared Experience
 - [x] NPC System
 - [x] Lua Scripting
-- [x] C# Scripting
+- [x] C# Extensions
 
 ## Technologies
 
