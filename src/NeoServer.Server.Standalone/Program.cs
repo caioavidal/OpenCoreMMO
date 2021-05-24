@@ -53,7 +53,7 @@ public class Program
         logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
 
-        logger.Step("Compiling scripts...", "Scripts compiled", () => ScriptCompiler.Compile(serverConfiguration.Data));
+        logger.Step("Building extensions...", "Extensions builded", () => ScriptCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
         var container = Container.CompositionRoot();
         var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
