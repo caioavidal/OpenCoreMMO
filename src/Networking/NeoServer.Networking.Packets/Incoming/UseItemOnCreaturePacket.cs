@@ -9,7 +9,6 @@ namespace NeoServer.Networking.Packets.Incoming
         public ushort ClientId { get; }
         public byte FromStackPosition { get; set; }
         public uint CreatureId { get; }
-
         public UseItemOnCreaturePacket(IReadOnlyNetworkMessage message)
         {
             FromLocation = message.GetLocation();

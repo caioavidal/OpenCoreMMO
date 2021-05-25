@@ -50,6 +50,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         void RemoveItem(IItemType itemToRemove, byte amount);
         Result<OperationResult<IItem>> AddItem(IItem item, bool addToAnyChild);
         void RemoveItem(IItem item, byte amount);
+        IItem GetFirstItem(ushort clientId);
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
         /// <summary>

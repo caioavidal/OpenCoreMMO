@@ -27,7 +27,13 @@ namespace NeoServer.Server.Commands.Player
             if (!game.CreatureManager.TryGetCreature(useItemPacket.CreatureId, out var creature)) return;
 
             IThing itemToUse = null;
-            if (useItemPacket.FromLocation.Type == LocationType.Ground)
+
+            if (useItemPacket.FromLocation.IsHotkey)
+            {
+                if (player.Inventory?.BackpackSlot?.GetFirstItem(useItemPacket.ClientId) is not IThing thing) return; //todo: slow method. we need a cache
+                itemToUse = thing;
+            }
+            else if (useItemPacket.FromLocation.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.FromLocation] is not ITile tile) return;
                 if (tile.TopItemOnStack is null) return;
@@ -41,7 +47,6 @@ namespace NeoServer.Server.Commands.Player
             else if (useItemPacket.FromLocation.Type == LocationType.Container)
             {
                 if (player.Containers[useItemPacket.FromLocation.ContainerId][useItemPacket.FromLocation.ContainerSlot] is not IThing thing) return;
-
                 itemToUse = thing;
             }
 
@@ -51,7 +56,6 @@ namespace NeoServer.Server.Commands.Player
 
             if (useItemPacket.FromLocation.Type == LocationType.Ground)
             {
-                //WalkToMechanism.DoOperation(player, action, useItemPacket.FromLocation, game); //todo: use
                 action?.Invoke();
                 return;
             }
