@@ -29,7 +29,7 @@ namespace NeoServer.Game.Items.Items
         public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
         public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
         private ContainerStore Store;
-        public IThing Root
+        public IThing RootParent
         {
             get
             {
@@ -273,7 +273,7 @@ namespace NeoServer.Game.Items.Items
                 return total;
             }
         }
-        public void RemoveItem(IItemType itemToRemove, byte amount)
+        public void RemoveItem(IItemType itemToRemove, byte amount) //todo: slow method
         {
             sbyte slotIndex = -1;
             var slotsToRemove = new Stack<(IItem, byte, byte)>();// slot and amount
@@ -306,7 +306,7 @@ namespace NeoServer.Game.Items.Items
                 RemoveItem(item, amountToRemove, slotIndexToRemove, out var removedThing);
             }
         }
-        public void RemoveItem(IItem item, byte amount)
+        public void RemoveItem(IItem item, byte amount) //todo: slow method
         {
             var containers = new Queue<IContainer>();
             containers.Enqueue(this);
@@ -355,6 +355,29 @@ namespace NeoServer.Game.Items.Items
             }
 
             return removedItem;
+        }
+
+        public (IItem, IContainer, byte) GetFirstItem(ushort clientId)
+        {
+            var containers = new Queue<IContainer>();
+            containers.Enqueue(this);
+
+            while (containers.TryDequeue(out var container))
+            {
+                byte slotIndex = 0;
+                foreach (var containerItem in container.Items)
+                {
+                    if (containerItem is IContainer innerContainer) containers.Enqueue(innerContainer);
+                    if (containerItem.ClientId == clientId)
+                    {
+                        return (containerItem, container, slotIndex);
+                    }
+
+                    slotIndex++;
+                }
+            }
+
+            return (null, null, 0);
         }
 
         public void Clear()

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using NeoServer.Data;
 using NeoServer.Data.Interfaces;
@@ -36,6 +37,7 @@ using NeoServer.Networking.Protocols;
 using NeoServer.Scripts.Lua;
 using NeoServer.Server.Commands;
 using NeoServer.Server.Commands.Movement;
+using NeoServer.Server.Commands.Player.UseItem;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
@@ -156,6 +158,8 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameChatChannelJob>().SingleInstance();
             builder.RegisterType<PlayerPersistenceJob>().SingleInstance();
 
+            builder.RegisterType<HotKeyCache>().SingleInstance();
+            builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
 
             //Database
             builder.RegisterContext<NeoContext>();

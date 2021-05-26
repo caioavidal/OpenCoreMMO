@@ -32,7 +32,7 @@ namespace NeoServer.Server.Events
                 connection.Send();
             }
 
-            if (container.Root is IDepot depot && player.HasDepotOpened is false)
+            if (container.RootParent is IDepot depot && player.HasDepotOpened is false)
             {
                 //todo: process very expensive. need to find another solution
                 await playerDepotItemRepository.DeleteAll(player.Id);

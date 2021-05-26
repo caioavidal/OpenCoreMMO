@@ -34,12 +34,11 @@ namespace NeoServer.Game.Items.Events
             {
                 tile.AddItem(createdItem);
             }
-
             if (item?.Location.Type == Common.Location.LocationType.Container)
             {
-                var container = player.Containers[item.Location.ContainerId];
+                var container = player.Containers[item.Location.ContainerId] ?? player.Inventory?.BackpackSlot;
 
-                var result = container.AddItem(createdItem);
+                var result = container is not null ? container.AddItem(createdItem) : new Common.Result<Common.OperationResult<IItem>>(Common.InvalidOperation.NotPossible);
                 if (!result.IsSuccess) tile.AddItem(createdItem);
             }
         }

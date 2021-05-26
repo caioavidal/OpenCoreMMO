@@ -33,6 +33,7 @@ namespace NeoServer.Game.Common.Location.Structs
             Z = z;
         }
 
+        public bool IsHotkey => X == 0xFFFF && Y == 0 && Z == 0;
         public ushort X { get; set; }
 
         public ushort Y { get; set; }

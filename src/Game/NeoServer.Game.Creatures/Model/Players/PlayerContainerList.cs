@@ -27,7 +27,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             {
                 foreach (var container in openedContainers.Values)
                 {
-                    if (container.Container.Root is IDepot) return true;
+                    if (container.Container.RootParent is IDepot) return true;
                 }
                 return false;
             }
@@ -43,7 +43,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             if (openedContainers.Count == 0) return;
 
-            var containerLocation = container.Root?.Location;
+            var containerLocation = container.RootParent?.Location;
 
             if (containerLocation is null) return;
 
@@ -54,7 +54,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            if (container.Root is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
+            if (container.RootParent is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
         }
         public void CloseDistantContainers()
         {
