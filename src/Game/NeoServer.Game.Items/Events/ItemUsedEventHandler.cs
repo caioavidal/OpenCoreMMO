@@ -40,9 +40,7 @@ namespace NeoServer.Game.Items.Events
 
                 var result = container is not null ? container.AddItem(createdItem) : new Common.Result<Common.OperationResult<IItem>>(Common.InvalidOperation.NotPossible);
                 if (!result.IsSuccess) tile.AddItem(createdItem);
-
             }
-
         }
         private void Say(ICreature creature, IItem item)
         {

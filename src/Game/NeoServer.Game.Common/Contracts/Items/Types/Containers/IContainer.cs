@@ -28,7 +28,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         IThing Parent { get; }
         bool IsFull { get; }
         bool HasItems { get; }
-        IThing Root { get; }
+        IThing RootParent { get; }
 
         event RemoveItem OnItemRemoved;
         event AddItem OnItemAdded;
@@ -50,7 +50,7 @@ namespace NeoServer.Game.Contracts.Items.Types
         void RemoveItem(IItemType itemToRemove, byte amount);
         Result<OperationResult<IItem>> AddItem(IItem item, bool addToAnyChild);
         void RemoveItem(IItem item, byte amount);
-        IItem GetFirstItem(ushort clientId);
+        (IItem,IContainer, byte) GetFirstItem(ushort clientId);
 
         string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
         /// <summary>

@@ -29,7 +29,7 @@ namespace NeoServer.Game.Items.Items
         public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
         public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
         private ContainerStore Store;
-        public IThing Root
+        public IThing RootParent
         {
             get
             {
@@ -357,24 +357,27 @@ namespace NeoServer.Game.Items.Items
             return removedItem;
         }
 
-        public IItem GetFirstItem(ushort clientId)
+        public (IItem, IContainer, byte) GetFirstItem(ushort clientId)
         {
             var containers = new Queue<IContainer>();
             containers.Enqueue(this);
 
             while (containers.TryDequeue(out var container))
             {
+                byte slotIndex = 0;
                 foreach (var containerItem in container.Items)
                 {
                     if (containerItem is IContainer innerContainer) containers.Enqueue(innerContainer);
                     if (containerItem.ClientId == clientId)
                     {
-                        return containerItem;
+                        return (containerItem, container, slotIndex);
                     }
+
+                    slotIndex++;
                 }
             }
 
-            return null;
+            return (null, null, 0);
         }
 
         public void Clear()
