@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Useables;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Server.Commands.Player.UseItem;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
 using System;
@@ -15,16 +16,22 @@ namespace NeoServer.Server.Commands.Player
     public class PlayerUseItemCommand : ICommand
     {
         private readonly IGameServer game;
+        private readonly HotkeyService hotKeyService;
 
-        public PlayerUseItemCommand(IGameServer game)
+        public PlayerUseItemCommand(IGameServer game, HotkeyService hotKeyService)
         {
             this.game = game;
+            this.hotKeyService = hotKeyService;
         }
 
         public void Execute(IPlayer player, UseItemPacket useItemPacket)
         {
             IItem item = null;
-            if (useItemPacket.Location.Type == LocationType.Ground)
+            if (useItemPacket.Location.IsHotkey)
+            {
+                item = hotKeyService.GetItem(player, useItemPacket.ClientId);
+            }
+            else if (useItemPacket.Location.Type == LocationType.Ground)
             {
                 if (game.Map[useItemPacket.Location] is not ITile tile) return;
                 item = tile.TopItemOnStack;

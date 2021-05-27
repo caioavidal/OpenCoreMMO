@@ -14,12 +14,12 @@ namespace NeoServer.Server.Commands.Player
     public class PlayerUseItemOnCreatureCommand : ICommand
     {
         private readonly IGameServer game;
-        private readonly HotKeyCache hotKeyCache;
+        private readonly HotkeyService hotKeyService;
 
-        public PlayerUseItemOnCreatureCommand(IGameServer game, HotKeyCache hotKeyCache)
+        public PlayerUseItemOnCreatureCommand(IGameServer game, HotkeyService hotKeyCache)
         {
             this.game = game;
-            this.hotKeyCache = hotKeyCache;
+            this.hotKeyService = hotKeyCache;
         }
 
         public void Execute(IPlayer player, UseItemOnCreaturePacket useItemPacket)
@@ -45,22 +45,7 @@ namespace NeoServer.Server.Commands.Player
         {
             if (useItemPacket.FromLocation.IsHotkey)
             {
-                var hotKeyItemLocation = hotKeyCache.Get(player.Id, useItemPacket.ClientId);
-                if (hotKeyItemLocation is not null && hotKeyItemLocation.Container.RootParent is IPlayer owner)
-                {
-
-                    var containerItemId = hotKeyItemLocation.Container.Items.Count > hotKeyItemLocation.SlotIndex ? hotKeyItemLocation.Container[hotKeyItemLocation.SlotIndex]?.ClientId : null;
-
-                    if (owner.Id == player.Id && containerItemId == useItemPacket.ClientId)
-                    {
-                        return hotKeyItemLocation.Container[hotKeyItemLocation.SlotIndex];
-                    }
-                }
-
-                var foundItem = player.Inventory?.BackpackSlot?.GetFirstItem(useItemPacket.ClientId);// is not IThing thing) return null;
-                if (foundItem?.Item1 is not IThing thing) return null;
-                hotKeyCache.Add(player.Id, useItemPacket.ClientId, foundItem.Value.Item2, foundItem.Value.Item3);
-                return thing;
+               return hotKeyService.GetItem(player, useItemPacket.ClientId);
             }
 
             if (useItemPacket.FromLocation.Type == LocationType.Ground)
