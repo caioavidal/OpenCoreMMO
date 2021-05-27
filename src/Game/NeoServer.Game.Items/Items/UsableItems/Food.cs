@@ -15,7 +15,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
         }
 
         public event Use OnUsed;
-
+        public int CooldownTime => 0;
         public void Use(IPlayer usedBy, ICreature creature)
         {
             if (creature is not IPlayer player) return;

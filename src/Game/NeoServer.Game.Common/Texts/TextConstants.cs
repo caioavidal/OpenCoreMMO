@@ -10,5 +10,6 @@
         public const string PartyHasBeenDisbanded = "Your party has been disbanded";
         public const string YouAreNotTheOwner = "You are not the owner";
         public const string YouCannotLeavePartyWhenInFight = "You cannot leave party when in fight";
+        public const string YouAreExhausted = "You are exhausted";
     }
 }

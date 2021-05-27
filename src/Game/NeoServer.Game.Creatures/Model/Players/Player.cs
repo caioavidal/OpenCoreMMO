@@ -97,7 +97,7 @@ namespace NeoServer.Server.Model.Players
         public event JoinParty OnJoinedParty;
         public event LeaveParty OnLeftParty;
         public event PassPartyLeadership OnPassedPartyLeadership;
-
+        public event Exhaust OnExhausted;
         public event Hear OnHear;
 
         public ushort GuildId { get; init; }
@@ -610,6 +610,11 @@ namespace NeoServer.Server.Model.Players
         }
         public void Use(IUseableOn item, ICreature onCreature)
         {
+            if (!Cooldowns.Expired(CooldownType.UseItem))
+            {
+                OnExhausted?.Invoke(this);
+                return;
+            }
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
                 OperationFailService.Display(CreatureId, requirement.ValidationError);
@@ -632,9 +637,15 @@ namespace NeoServer.Server.Model.Players
             }
 
             if (result) OnUsedItem?.Invoke(this, onCreature, item);
+            Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
         }
         public void Use(IUseableOn item, IItem onItem)
         {
+            if (!Cooldowns.Expired(CooldownType.UseItem))
+            {
+                OnExhausted?.Invoke(this);
+                return;
+            }
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
                 OperationFailService.Display(CreatureId, requirement.ValidationError);
@@ -645,9 +656,16 @@ namespace NeoServer.Server.Model.Players
 
             useableOnItem.Use(this, onItem);
             OnUsedItem?.Invoke(this, onItem, item);
+            Cooldowns.Start(CooldownType.UseItem, 1000);
         }
         public void Use(IUseableOn item, ITile onTile)
         {
+            if (!Cooldowns.Expired(CooldownType.UseItem))
+            {
+                OnExhausted?.Invoke(this);
+                return;
+            }
+
             if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
             {
                 OperationFailService.Display(CreatureId, requirement.ValidationError);
@@ -665,6 +683,8 @@ namespace NeoServer.Server.Model.Players
                 else if (item is IUseableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
 
                 if (result) OnUsedItem?.Invoke(this, onItem, item);
+                Cooldowns.Start(CooldownType.UseItem, 1000);
+
             });
 
             if (!Location.IsNextTo(onTile.Location))
@@ -676,9 +696,6 @@ namespace NeoServer.Server.Model.Players
 
             use();
         }
-
-
-
 
         public bool Feed(IFood food)
         {

@@ -145,6 +145,8 @@ namespace NeoServer.OTB.Parsers
                 case "script": return ItemAttribute.Script;
                 case "worth": return ItemAttribute.Worth;
                 case "manause": return ItemAttribute.ManaUse;
+                case "cooldown": return ItemAttribute.CooldownTime;
+
                 default:
                     success = false;
                     return ItemAttribute.None; // Just return the first
