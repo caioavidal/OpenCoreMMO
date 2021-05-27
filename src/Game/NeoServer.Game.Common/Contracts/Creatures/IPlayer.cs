@@ -38,7 +38,7 @@ namespace NeoServer.Game.Contracts.Creatures
     public delegate void JoinParty(IPlayer player, IParty party);
     public delegate void LeaveParty(IPlayer player, IParty party);
     public delegate void PassPartyLeadership(IPlayer leader, IPlayer newLeader, IParty party);
-
+    public delegate void Exhaust(IPlayer player);
     public interface IPlayer : ICombatActor, ISociableCreature
     {
         event UseSpell OnUsedSpell;
@@ -84,6 +84,7 @@ namespace NeoServer.Game.Contracts.Creatures
         event RejectPartyInvite OnRejectedPartyInvite;
         event JoinParty OnJoinedParty;
         event PassPartyLeadership OnPassedPartyLeadership;
+        event Exhaust OnExhausted;
 
         IInventory Inventory { get; }
         ushort Mana { get; }

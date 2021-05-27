@@ -38,6 +38,7 @@ namespace NeoServer.Server.Events
         private readonly PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler;
         private readonly PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler;
         private readonly PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler;
+        private readonly PlayerExhaustedEventHandler playerExhaustedEventHandler;
         #endregion
 
         public PlayerEventSubscriber(PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler, PlayerClosedContainerEventHandler playerClosedContainerEventHandler,
@@ -54,7 +55,7 @@ namespace NeoServer.Server.Events
             PlayerSentMessageEventHandler playerSentMessageEventHandler, PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler,
             PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler, PlayerLeftPartyEventHandler playerLeftPartyEventHandler,
             PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler, PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler,
-            PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler)
+            PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler, PlayerExhaustedEventHandler playerExhaustedEventHandler)
         {
             this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -86,6 +87,7 @@ namespace NeoServer.Server.Events
             this.playerInvitedToPartyEventHandler = playerInvitedToPartyEventHandler;
             this.playerJoinedPartyEventHandler = playerJoinedPartyEventHandler;
             this.playerPassedPartyLeadershipEventHandler = playerPassedPartyLeadershipEventHandler;
+            this.playerExhaustedEventHandler = playerExhaustedEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -135,6 +137,7 @@ namespace NeoServer.Server.Events
             player.OnRejectedPartyInvite += playerLeftPartyEventHandler.Execute;
             player.OnJoinedParty += playerJoinedPartyEventHandler.Execute;
             player.OnPassedPartyLeadership += playerPassedPartyLeadershipEventHandler.Execute;
+            player.OnExhausted += playerExhaustedEventHandler.Execute;
         }
 
         public void Unsubscribe(ICreature creature)

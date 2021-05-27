@@ -206,6 +206,7 @@
         Ticks,
         Script,
         Worth,
-        ManaUse
+        ManaUse,
+        CooldownTime
     }
 }
