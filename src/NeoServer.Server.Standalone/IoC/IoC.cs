@@ -158,7 +158,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameChatChannelJob>().SingleInstance();
             builder.RegisterType<PlayerPersistenceJob>().SingleInstance();
 
-            builder.RegisterType<HotKeyCache>().SingleInstance();
+            builder.RegisterType<HotkeyService>().SingleInstance();
             builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
 
             //Database
