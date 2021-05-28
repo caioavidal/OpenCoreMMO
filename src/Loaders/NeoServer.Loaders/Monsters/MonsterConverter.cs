@@ -38,7 +38,8 @@ namespace NeoServer.Loaders.Monsters
 
             monster.Attacks = MonsterAttackConverter.Convert(data, logger);
 
-            monster.Immunities = MonsterImmunityConverter.Convert(data).ToImmutableDictionary();
+            monster.ElementResistance = MonsterResistanceConverter.Convert(data).ToImmutableDictionary();
+            monster.Immunities = MonsterImmunityConverter.Convert(data);
 
             monster.Defenses = MonsterDefenseConverter.Convert(data, monsters);
 

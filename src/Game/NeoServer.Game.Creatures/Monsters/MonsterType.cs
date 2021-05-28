@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Monsters;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
@@ -29,7 +28,8 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public ICombatDefense[] Defenses { get; set; }
         public IIntervalChance VoiceConfig { get; set; }
         public string[] Voices { get; set; }
-        public ImmutableDictionary<DamageType, sbyte> Immunities { get; set; }
+        public ImmutableDictionary<DamageType, sbyte> ElementResistance { get; set; }
+        public ushort Immunities { get; set; }
         public ILoot Loot { get; set; }
         public byte MaxSummons { get; set; }
         public IMonsterSummon[] Summons { get; set; }

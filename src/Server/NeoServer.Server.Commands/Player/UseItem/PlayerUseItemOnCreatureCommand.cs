@@ -45,7 +45,7 @@ namespace NeoServer.Server.Commands.Player
         {
             if (useItemPacket.FromLocation.IsHotkey)
             {
-               return hotKeyService.GetItem(player, useItemPacket.ClientId);
+                return hotKeyService.GetItem(player, useItemPacket.ClientId);
             }
 
             if (useItemPacket.FromLocation.Type == LocationType.Ground)

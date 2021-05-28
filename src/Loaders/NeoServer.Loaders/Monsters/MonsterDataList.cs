@@ -48,6 +48,8 @@ namespace NeoServer.Loaders.Monsters
 
         [JsonProperty("elements")]
         public Dictionary<string, sbyte> Elements { get; set; }
+        [JsonProperty("immunities")]
+        public Dictionary<string, byte> Immunities { get; set; }
         [JsonProperty("voices")]
         public VoicesData Voices { get; set; }
 
