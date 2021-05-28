@@ -1,8 +1,9 @@
-﻿using NeoServer.Game.Common.Item;
+﻿using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Parsers
 {
-    public class DamageTypeParser
+    public static class DamageTypeParser
     {
         public static string Parse(DamageType type)
         {
@@ -19,7 +20,7 @@ namespace NeoServer.Game.Common.Parsers
                 DamageType.Ice => "ice",
                 DamageType.Holy => "holy",
                 DamageType.Death => "death",
-                DamageType.AbsorbPercentPhysical => "lifedrain",
+                DamageType.LifeDrain => "lifedrain",
                 _ => "physical"
             };
         }
@@ -41,9 +42,29 @@ namespace NeoServer.Game.Common.Parsers
                 "ice" => DamageType.Ice,
                 "holy" => DamageType.Holy,
                 "death" => DamageType.Death,
-                "lifedrain" => DamageType.AbsorbPercentPhysical,
+                "lifedrain" => DamageType.LifeDrain,
                 "mortarea" => DamageType.Death,
                 _ => DamageType.Melee
+            };
+        }
+        public static Immunity ToImmunity(this DamageType type)
+        {
+            return type switch
+            {
+                DamageType.Melee => Immunity.Physical,
+                DamageType.Physical => Immunity.Physical,
+                DamageType.Energy => Immunity.Energy,
+                DamageType.Fire => Immunity.Fire,
+                DamageType.FireField => Immunity.Fire,
+                DamageType.ManaDrain => Immunity.ManaDrain,
+                DamageType.Earth => Immunity.Earth,
+                DamageType.Drown => Immunity.Drown,
+                DamageType.Ice => Immunity.Ice,
+                DamageType.Holy => Immunity.Holy,
+                DamageType.Death => Immunity.Death,
+                DamageType.LifeDrain => Immunity.LifeDrain,
+                DamageType.Drunk => Immunity.Drunkenness,
+                _ => Immunity.None,
             };
         }
     }

@@ -13,7 +13,7 @@ namespace NeoServer.Game.Parsers.Effects
             DamageType.Melee => EffectT.XBlood,
             DamageType.Physical => EffectT.XBlood,
             DamageType.Earth => EffectT.RingsGreen,
-            DamageType.AbsorbPercentPhysical => EffectT.GlitterRed,
+            DamageType.LifeDrain => EffectT.GlitterRed,
             DamageType.ManaDrain => EffectT.GlitterRed,
             DamageType.Death => EffectT.BubbleBlack,
             DamageType.Holy => EffectT.HolyDamage,

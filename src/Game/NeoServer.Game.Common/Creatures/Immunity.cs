@@ -13,6 +13,8 @@
         Invisibility = 1 << 8,
         LifeDrain = 1 << 9,
         Paralysis = 1 << 10,
-        Physical = 1 << 11
+        Physical = 1 << 11,
+        ManaDrain = 1 << 12,
+        None = 0
     }
 }

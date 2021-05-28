@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Common.Texts;
@@ -223,7 +224,8 @@ namespace NeoServer.Server.Model.Players
         }
 
         public void ResetIdleTime() => IdleTime = 0;
-
+        public override bool HasImmunity(Immunity immunity) => false; //todo: add immunity check
+        
         public override void GainExperience(uint exp)
         {
             if (exp == 0)
@@ -518,7 +520,13 @@ namespace NeoServer.Server.Model.Players
 
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
         {
-            return damage; //todo
+            if (HasImmunity(damage.Type.ToImmunity()))
+            {
+                damage.SetNewDamage(0);
+                return damage;
+            }
+
+            return damage;
         }
 
         public bool Logout(bool forced = false)

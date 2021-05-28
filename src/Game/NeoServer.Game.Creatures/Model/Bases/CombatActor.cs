@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -57,7 +58,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         protected CombatActor(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
         }
-
+        public abstract bool HasImmunity(Immunity immunity);
         public abstract int ShieldDefend(int attack);
         public abstract int ArmorDefend(int attack);
         public virtual bool CanBlock(DamageType damage)
@@ -136,9 +137,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
             attack.SetNewDamage((ushort)damage);
 
-            return OnImmunityDefense(attack);
+            attack = OnImmunityDefense(attack);
 
-            //return attack;
+            if(attack.Damage <= 0)
+            {
+                OnBlockedAttack?.Invoke(this, BlockType.Armor);
+            }
+
+            return attack;
         }
 
         public void StopAttack()
@@ -275,7 +281,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             if (damage.Damage <= 0)
             {
                 WasDamagedOnLastAttack = false;
-                return false;
+                return true;
             }
 
             OnDamage(enemy, this, damage);

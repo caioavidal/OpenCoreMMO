@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
@@ -210,7 +211,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return fpp;
             }
         }
-        public bool HasImmunity(Immunity immunity) => (Metadata.Immunities & (ushort)immunity) != 0;
+        public override bool HasImmunity(Immunity immunity) => (Metadata.Immunities & (ushort)immunity) != 0;
         public virtual bool IsSummon => false;
 
         public override bool CanSeeInvisible => HasImmunity(Immunity.Invisibility); //todo: add invisibility flag
@@ -449,6 +450,12 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         public override CombatDamage OnImmunityDefense(CombatDamage damage)
         {
             if (damage.Damage <= 0) return damage;
+
+            if (HasImmunity(damage.Type.ToImmunity()))
+            {
+                damage.SetNewDamage(0);
+                return damage;
+            }
 
             if (!Metadata.ElementResistance.ContainsKey(damage.Type)) return damage;
 

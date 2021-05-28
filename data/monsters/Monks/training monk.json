@@ -67,7 +67,10 @@
     "chance": 0,
     "sentences": []
   },
-  "immunities": {},
+  "immunities": {
+	  "physical":1,
+	  "energy": 1
+  },
   "summon": {
     "maxSummons": 0,
     "summons": []
