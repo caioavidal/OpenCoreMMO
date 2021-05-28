@@ -11,11 +11,12 @@
         Death,
         Earth,
         All,
-        AbsorbPercentPhysical,
+        LifeDrain,
         AbsorbPercentMagic,
         ManaDrain,
         FireField,
         Melee,
-        Drown
+        Drown,
+        Drunk
     }
 }

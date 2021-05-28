@@ -258,7 +258,7 @@ namespace NeoServer.Game.Items
                     dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentDeath));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPhysical) ?? false)
-                    dictionary.TryAdd(DamageType.AbsorbPercentPhysical, GetAttribute<byte>(ItemAttribute.AbsorbPercentPhysical));
+                    dictionary.TryAdd(DamageType.LifeDrain, GetAttribute<byte>(ItemAttribute.AbsorbPercentPhysical));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
                     dictionary.TryAdd(DamageType.AbsorbPercentMagic, GetAttribute<byte>(ItemAttribute.AbsorbPercentMagic));
