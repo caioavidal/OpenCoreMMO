@@ -210,10 +210,10 @@ namespace NeoServer.Game.Creatures.Model.Monsters
                 return fpp;
             }
         }
-
+        public bool HasImmunity(Immunity immunity) => (Metadata.Immunities & (ushort)immunity) != 0;
         public virtual bool IsSummon => false;
 
-        public override bool CanSeeInvisible => false; //todo: add invisibility flag
+        public override bool CanSeeInvisible => HasImmunity(Immunity.Invisibility); //todo: add invisibility flag
 
         public override bool CanBeSeen => false;
 
@@ -279,7 +279,7 @@ namespace NeoServer.Game.Creatures.Model.Monsters
             MoveAroundEnemy(combatTarget.Creature.Location);
         }
 
-        public virtual  void SelectTargetToAttack()
+        public virtual void SelectTargetToAttack()
         {
             if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
 

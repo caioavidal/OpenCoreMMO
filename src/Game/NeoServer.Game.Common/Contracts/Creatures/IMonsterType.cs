@@ -33,5 +33,6 @@ namespace NeoServer.Game.Contracts.Creatures
         ILoot Loot { get; set; }
         IMonsterSummon[] Summons { get; set; }
         byte MaxSummons { get; set; }
+        ushort Immunities { get; set; }
     }
 }

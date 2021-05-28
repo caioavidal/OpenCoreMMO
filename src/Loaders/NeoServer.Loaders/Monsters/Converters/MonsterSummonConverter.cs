@@ -1,7 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures.Monsters;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Creatures.Monsters;
-using System;
 using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Monsters.Converters

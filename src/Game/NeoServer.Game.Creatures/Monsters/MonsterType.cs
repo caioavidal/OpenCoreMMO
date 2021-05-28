@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Attacks;
 using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Monsters;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 

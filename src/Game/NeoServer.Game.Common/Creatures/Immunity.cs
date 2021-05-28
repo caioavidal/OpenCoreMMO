@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NeoServer.Game.Common.Creatures
+﻿namespace NeoServer.Game.Common.Creatures
 {
-    public enum ImmunityFlag : ushort
+    public enum Immunity : ushort
     {
         Death = 1 << 0,
         Drown = 1 << 1,

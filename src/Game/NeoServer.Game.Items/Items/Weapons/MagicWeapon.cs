@@ -8,7 +8,6 @@ using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using System.Collections.Immutable;
-using System.Runtime.CompilerServices;
 
 namespace NeoServer.Game.Items.Items
 {
