@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Item;
+﻿using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Creatures.Model.Monsters;
 using System;
 using System.Collections.Generic;
 
@@ -6,44 +8,69 @@ namespace NeoServer.Loaders.Monsters.Converters
 {
     public class MonsterImmunityConverter
     {
-        public static IDictionary<DamageType, sbyte> Convert(MonsterData data)
+        public static ushort Convert(MonsterData data)
         {
-            if (data.Elements is null) return new Dictionary<DamageType, sbyte>(0);
+            if (data.Immunities is null) return default;
 
-            var immunities = new Dictionary<DamageType, sbyte>(data.Elements.Count);
+            ushort flag = 0;
 
-            foreach (var element in data.Elements)
+            foreach (var immunity in data.Immunities)
             {
-                DamageType immunity = DamageType.Melee;
-                if (element.Key.Contains("energy", StringComparison.InvariantCultureIgnoreCase))
+                if (immunity.Key.Contains("lifedrain", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    immunity = DamageType.Energy;
+                    flag |= (ushort)ImmunityFlag.LifeDrain;
                 }
-                else if (element.Key.Contains("holy", StringComparison.InvariantCultureIgnoreCase))
+                else if (immunity.Key.Contains("paralyze", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    immunity = DamageType.Holy;
+                    flag |= (ushort)ImmunityFlag.Paralysis;
                 }
-                else if (element.Key.Contains("earth", StringComparison.InvariantCultureIgnoreCase))
+                else if (immunity.Key.Contains("invisible", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    immunity = DamageType.Earth;
+                    flag |= (ushort)ImmunityFlag.Invisibility;
                 }
-                else if (element.Key.Contains("death", StringComparison.InvariantCultureIgnoreCase))
+                else if (immunity.Key.Contains("death", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    immunity = DamageType.Death;
+                    flag |= (ushort)ImmunityFlag.Death;
                 }
-                else if (element.Key.Contains("fire", StringComparison.InvariantCultureIgnoreCase))
+                else if (immunity.Key.Contains("fire", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    immunity = DamageType.Fire;
+                    flag |= (ushort)ImmunityFlag.Fire;
                 }
-                else if (element.Key.Contains("ice", StringComparison.InvariantCultureIgnoreCase))
+                else if (immunity.Key.Contains("ice", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    immunity = DamageType.Ice;
+                    flag |= (ushort)ImmunityFlag.Ice;
                 }
-
-                immunities.Add(immunity, element.Value);
+                else if (immunity.Key.Contains("drown", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    flag |= (ushort)ImmunityFlag.Drown;
+                }
+                else if (immunity.Key.Contains("drunk", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    flag |= (ushort)ImmunityFlag.Drunkenness;
+                }
+                else if (immunity.Key.Contains("earth", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    flag |= (ushort)ImmunityFlag.Earth;
+                }
+                else if (immunity.Key.Contains("energy", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    flag |= (ushort)ImmunityFlag.Energy;
+                }
+                else if (immunity.Key.Contains("poison", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    flag |= (ushort)ImmunityFlag.Earth;
+                }
+                else if (immunity.Key.Contains("physical", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    flag |= (ushort)ImmunityFlag.Physical;
+                }
+                else if (immunity.Key.Contains("holy", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    flag |= (ushort)ImmunityFlag.Holy;
+                }
             }
 
-            return immunities;
+            return flag;
         }
     }
 }

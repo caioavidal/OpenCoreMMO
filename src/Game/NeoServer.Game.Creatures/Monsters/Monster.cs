@@ -450,9 +450,9 @@ namespace NeoServer.Game.Creatures.Model.Monsters
         {
             if (damage.Damage <= 0) return damage;
 
-            if (!Metadata.Immunities.ContainsKey(damage.Type)) return damage;
+            if (!Metadata.ElementResistance.ContainsKey(damage.Type)) return damage;
 
-            var valueToReduce = Math.Round(damage.Damage * (decimal)(Metadata.Immunities[damage.Type] / 100f));
+            var valueToReduce = Math.Round(damage.Damage * (decimal)(Metadata.ElementResistance[damage.Type] / 100f));
 
             damage.IncreaseDamage((int)valueToReduce);
 
