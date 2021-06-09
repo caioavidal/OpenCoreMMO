@@ -32,17 +32,17 @@ namespace NeoServer.Server.Standalone.IoC
 
         private static void RegisterContext<TContext>(this ContainerBuilder builder, IConfigurationRoot configuration) where TContext : DbContext
         {
-            DatabaseConfiguration2 config = new(null, DatabaseType.INMEMORY);
+            DatabaseConfiguration config = new(null, DatabaseType.INMEMORY);
 
             configuration.GetSection("database").Bind(config);
 
-            DbContextOptions<NeoContext> options = config.active switch
+            DbContextOptions<NeoContext> options = config.Active switch
             {
-                DatabaseType.INMEMORY => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.INMEMORY]),
-                DatabaseType.MONGODB => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MONGODB]),
-                DatabaseType.MYSQL => DbContextFactory.GetInstance().UseMySql(config.connections[DatabaseType.MYSQL]),
-                DatabaseType.MSSQL => DbContextFactory.GetInstance().UseInMemory(config.connections[DatabaseType.MSSQL]),
-                DatabaseType.SQLITE => DbContextFactory.GetInstance().UseSQLite(config.connections[DatabaseType.SQLITE]),
+                DatabaseType.INMEMORY => DbContextFactory.GetInstance().UseInMemory(config.Connections[DatabaseType.INMEMORY]),
+                DatabaseType.MONGODB => DbContextFactory.GetInstance().UseInMemory(config.Connections[DatabaseType.MONGODB]),
+                DatabaseType.MYSQL => DbContextFactory.GetInstance().UseMySql(config.Connections[DatabaseType.MYSQL]),
+                DatabaseType.MSSQL => DbContextFactory.GetInstance().UseInMemory(config.Connections[DatabaseType.MSSQL]),
+                DatabaseType.SQLITE => DbContextFactory.GetInstance().UseSQLite(config.Connections[DatabaseType.SQLITE]),
                 _ => throw new ArgumentException("Invalid active database!"),
             };
 
