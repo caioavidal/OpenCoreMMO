@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -14,8 +13,6 @@ using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Server.Tasks;
-using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 using System.Reflection;
 
 namespace NeoServer.Server.Standalone.IoC
