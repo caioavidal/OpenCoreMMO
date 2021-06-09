@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Microsoft.Extensions.Logging;
 using NeoServer.Data;
+using NeoServer.Game.Common;
 using NeoServer.Game.World.Spawns;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
@@ -22,6 +24,8 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,23 +47,22 @@ public class Program
         var cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = cancellationTokenSource.Token;
 
-        var (serverConfiguration, gameConfiguration, logConfiguration) = Container.LoadConfigurations();
+        var container = Container.CompositionRoot();
 
-        var (logger, loggerConfiguration) = Container.RegisterLogger();
+        var (serverConfiguration, gameConfiguration, logConfiguration) = (container.Resolve<ServerConfiguration>(), container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
+        var (logger, loggerConfiguration) = (container.Resolve<Logger>(), container.Resolve<LoggerConfiguration>());
 
         logger.Information("Welcome to OpenCoreMMO Server!");
 
         logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
         logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
-
         logger.Step("Building extensions...", "Extensions builded", () => ScriptCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
-        var container = Container.CompositionRoot();
-        var databaseConfiguration = container.Resolve<DatabaseConfiguration2>();
+        var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
         var context = container.Resolve<NeoContext>();
 
-        logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreatedAsync(), databaseConfiguration.active);
+        logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreatedAsync(), databaseConfiguration.Active);
 
         RSA.LoadPem(serverConfiguration.Data);
 

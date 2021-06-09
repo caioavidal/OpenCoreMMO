@@ -15,6 +15,5 @@ namespace NeoServer.Server.Standalone
     public record LogConfiguration(string MinimumLevel);
     public record SaveConfiguration(uint Players);
 
-    public record DatabaseConfiguration(string InMemory, string MongoDB, string SQLite, string MySQL, string MSSQL, string active);
-    public record DatabaseConfiguration2(Dictionary<DatabaseType, string> connections, DatabaseType active);
+    public record DatabaseConfiguration(Dictionary<DatabaseType, string> Connections, DatabaseType Active);
 }
