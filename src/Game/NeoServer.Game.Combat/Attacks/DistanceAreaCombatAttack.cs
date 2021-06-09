@@ -1,10 +1,9 @@
-﻿
+﻿using System.Linq;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Effects.Explosion;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Combat.Attacks
 {
@@ -15,7 +14,10 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
             Radius = radius;
         }
 
-        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        public byte Radius { get; set; }
+
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+            out CombatAttackType combatType)
         {
             combatType = new CombatAttackType(ShootType);
 
@@ -29,7 +31,5 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
 
             return false;
         }
-
-        public byte Radius { get; set; }
     }
 }

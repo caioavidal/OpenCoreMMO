@@ -1,12 +1,12 @@
-﻿using NeoServer.Game.Contracts.Spells;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Spells;
 
 namespace NeoServer.Game.Creatures.Spells
 {
     public class SpellList
     {
-        private static Dictionary<string, ISpell> Spells { get; set; } = new Dictionary<string, ISpell>(StringComparer.InvariantCultureIgnoreCase);
+        private static Dictionary<string, ISpell> Spells { get; } = new(StringComparer.InvariantCultureIgnoreCase);
 
         public static void Add(string words, ISpell spell)
         {
@@ -21,6 +21,7 @@ namespace NeoServer.Game.Creatures.Spells
                 Spells.Add(words, spell);
             }
         }
+
         public static bool TryGet(string words, out ISpell spell)
         {
             if (words.StartsWith("/"))
@@ -31,8 +32,10 @@ namespace NeoServer.Game.Creatures.Spells
                     commandSpell.Params = command.Item2;
                     return true;
                 }
+
                 return false;
             }
+
             return Spells.TryGetValue(words, out spell);
         }
 
@@ -48,5 +51,4 @@ namespace NeoServer.Game.Creatures.Spells
             return (command, @params);
         }
     }
-
 }

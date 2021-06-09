@@ -6,8 +6,9 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class UpdateItemContainerPacket : OutgoingPacket
     {
         private readonly byte containerId;
-        public readonly byte slot;
         private readonly IItem item;
+        public readonly byte slot;
+
         public UpdateItemContainerPacket(byte containerId, byte slot, IItem item)
         {
             this.containerId = containerId;
@@ -17,7 +18,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.ContainerUpdateItem);
+            message.AddByte((byte) GameOutgoingPacketType.ContainerUpdateItem);
 
             message.AddByte(containerId);
             message.AddByte(slot);

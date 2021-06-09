@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts;
@@ -9,19 +11,35 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Body;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Game.DataStore;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Server.Model.Players
 {
     public class PlayerInventory : Store, IInventory
     {
+        public PlayerInventory(IPlayer owner, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory)
+        {
+            if (owner == null) throw new ArgumentNullException(nameof(owner));
+
+            Owner = owner;
+            Inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+
+            foreach (var item in inventory) TryAddItemToSlot(item.Key, item.Value.Item1);
+        }
+
+        private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
+
+        public IAmmoItem Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoItem ammo
+            ? Inventory[Slot.Ammo].Item1 as IAmmoItem
+            : null;
+
+        public IDefenseEquipmentItem Shield => Inventory.ContainsKey(Slot.Right)
+            ? Inventory[Slot.Right].Item1 as IDefenseEquipmentItem
+            : null;
 
         public event AddItemToSlot OnItemAddedToSlot;
         public event RemoveItemFromSlot OnItemRemovedFromSlot;
 
         public event FailAddItemToSlot OnFailedToAddToSlot;
-        private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
 
         public ushort TotalAttack
         {
@@ -34,36 +52,25 @@ namespace NeoServer.Server.Model.Players
                 if (Weapon is IDistanceWeaponItem distance)
                 {
                     attack += distance.ExtraAttack;
-                    if (Ammo != null)
-                    {
-                        attack += distance.ExtraAttack;
-                    }
-
+                    if (Ammo != null) attack += distance.ExtraAttack;
                 }
 
                 return attack;
             }
         }
 
-        public IAmmoItem Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoItem ammo ? Inventory[Slot.Ammo].Item1 as IAmmoItem : null;
-
         public ushort TotalDefense
         {
             get
             {
                 var totalDefense = 0;
-                if (Weapon is IWeaponItem weapon)
-                {
-                    totalDefense += weapon.Defense;
-                }
+                if (Weapon is IWeaponItem weapon) totalDefense += weapon.Defense;
 
                 totalDefense += Shield?.DefenseValue ?? 0;
 
-                return (ushort)totalDefense;
+                return (ushort) totalDefense;
             }
         }
-
-        public IDefenseEquipmentItem Shield => Inventory.ContainsKey(Slot.Right) ? Inventory[Slot.Right].Item1 as IDefenseEquipmentItem : null;
 
         public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
 
@@ -73,10 +80,11 @@ namespace NeoServer.Server.Model.Players
             {
                 var map = BackpackSlot?.Map ?? new Dictionary<ushort, uint>();
 
-                Action<IItem> addOrUpdate = (item) =>
+                Action<IItem> addOrUpdate = item =>
                 {
                     if (item is null) return;
-                    if (map.TryGetValue(item.Metadata.TypeId, out var val)) map[item.Metadata.TypeId] = val + item.Amount;
+                    if (map.TryGetValue(item.Metadata.TypeId, out var val))
+                        map[item.Metadata.TypeId] = val + item.Amount;
                     else map.Add(item.Metadata.TypeId, item.Amount);
                 };
 
@@ -92,6 +100,7 @@ namespace NeoServer.Server.Model.Players
                 return map;
             }
         }
+
         public ulong GetTotalMoney(IDictionary<ushort, uint> inventoryMap)
         {
             uint total = 0;
@@ -118,20 +127,22 @@ namespace NeoServer.Server.Model.Players
         }
 
         public bool HasShield => Inventory.ContainsKey(Slot.Right);
+
         public byte TotalArmor
         {
             get
             {
                 byte totalArmor = 0;
 
-                Func<Slot, ushort> getDefenseValue = (Slot slot) => (Inventory[slot].Item1 is IDefenseEquipmentItem equipment) ? equipment.DefenseValue : default;
+                Func<Slot, ushort> getDefenseValue = slot =>
+                    Inventory[slot].Item1 is IDefenseEquipmentItem equipment ? equipment.DefenseValue : default;
 
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Necklace) ? getDefenseValue(Slot.Necklace) : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Head) ? getDefenseValue(Slot.Head) : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Body) ? getDefenseValue(Slot.Body) : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Legs) ? getDefenseValue(Slot.Legs) : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Feet) ? getDefenseValue(Slot.Feet) : 0);
-                totalArmor += (byte)(Inventory.ContainsKey(Slot.Ring) ? getDefenseValue(Slot.Ring) : 0);
+                totalArmor += (byte) (Inventory.ContainsKey(Slot.Necklace) ? getDefenseValue(Slot.Necklace) : 0);
+                totalArmor += (byte) (Inventory.ContainsKey(Slot.Head) ? getDefenseValue(Slot.Head) : 0);
+                totalArmor += (byte) (Inventory.ContainsKey(Slot.Body) ? getDefenseValue(Slot.Body) : 0);
+                totalArmor += (byte) (Inventory.ContainsKey(Slot.Legs) ? getDefenseValue(Slot.Legs) : 0);
+                totalArmor += (byte) (Inventory.ContainsKey(Slot.Feet) ? getDefenseValue(Slot.Feet) : 0);
+                totalArmor += (byte) (Inventory.ContainsKey(Slot.Ring) ? getDefenseValue(Slot.Ring) : 0);
 
                 return totalArmor;
             }
@@ -146,39 +157,17 @@ namespace NeoServer.Server.Model.Players
                 var twoHanded = 0;
 
                 if (Inventory.ContainsKey(Slot.Left) && Inventory[Slot.Left] is IAmmoItem leftWeapon)
-                {
                     rangeLeft = leftWeapon.Range;
-                }
                 if (Inventory.ContainsKey(Slot.Right) && Inventory[Slot.Right] is IAmmoItem rightWeapon)
-                {
                     rangeRight = rightWeapon.Range;
-                }
                 if (Inventory.ContainsKey(Slot.TwoHanded) && Inventory[Slot.TwoHanded] is IAmmoItem twoHandedWeapon)
-                {
                     rangeRight = twoHandedWeapon.Range;
-                }
 
-                return (byte)Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
+                return (byte) Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
             }
         }
 
         public IPlayer Owner { get; }
-
-        public PlayerInventory(IPlayer owner, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory)
-        {
-            if (owner == null)
-            {
-                throw new ArgumentNullException(nameof(owner));
-            }
-
-            Owner = owner;
-            Inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
-
-            foreach (var item in inventory)
-            {
-                TryAddItemToSlot(item.Key, item.Value.Item1);
-            }
-        }
 
         public IItem this[Slot slot] => !Inventory.ContainsKey(slot) ? null : Inventory[slot].Item1;
 
@@ -189,10 +178,7 @@ namespace NeoServer.Server.Model.Players
             get
             {
                 var sum = 0F;
-                foreach (var item in Inventory.Values)
-                {
-                    sum += item.Item1.Weight;
-                }
+                foreach (var item in Inventory.Values) sum += item.Item1.Weight;
                 return sum;
             }
         }
@@ -216,13 +202,14 @@ namespace NeoServer.Server.Model.Players
                 Inventory.Remove(slot);
                 removedItem = item;
             }
+
             OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
             return true;
         }
 
         public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
         {
-            bool canCarry = CanCarryItem(item, slot);
+            var canCarry = CanCarryItem(item, slot);
 
             if (!canCarry)
             {
@@ -240,14 +227,11 @@ namespace NeoServer.Server.Model.Players
             if (slot == Slot.Backpack)
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
-                {
-                    return new Result<IPickupable>(null, (Inventory[slot].Item1 as IPickupableContainer).AddItem(item).Error);
-                }
-                else if (item is IPickupableContainer container)
-                {
-                    container.SetParent(Owner);
-                }
+                    return new Result<IPickupable>(null,
+                        (Inventory[slot].Item1 as IPickupableContainer).AddItem(item).Error);
+                if (item is IPickupableContainer container) container.SetParent(Owner);
             }
+
             var slotHasItem = Inventory.ContainsKey(slot);
 
             //todo: refact
@@ -265,9 +249,7 @@ namespace NeoServer.Server.Model.Players
                     {
                         (Inventory[slot].Item1 as ICumulative).TryJoin(ref cumulative);
                         if (cumulative?.Amount > 0)
-                        {
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
-                        }
                     }
 
                     if (itemToSwap?.Item1 is ICumulative c) c.ClearSubscribers();
@@ -282,7 +264,8 @@ namespace NeoServer.Server.Model.Players
             }
             else
             {
-                if (item is ICumulative cumulative) cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+                if (item is ICumulative cumulative)
+                    cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
             }
 
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
@@ -293,6 +276,41 @@ namespace NeoServer.Server.Model.Players
             return new Result<IPickupable>();
         }
 
+        public Result<bool> CanAddItemToSlot(Slot slot, IItem item)
+        {
+            var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
+
+            if (slot == Slot.Backpack)
+            {
+                if (item is IPickupableContainer && !Inventory.ContainsKey(Slot.Backpack))
+                    return new Result<bool>(true);
+                return Inventory.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
+            }
+
+            if (item is not IInventoryItem inventoryItem) return cannotDressFail;
+
+            if (inventoryItem is IWeapon weapon)
+            {
+                if (slot != Slot.Left) return cannotDressFail;
+
+                var hasShieldDressed = this[Slot.Right] != null;
+
+                if (weapon.TwoHanded && hasShieldDressed)
+                    //trying to add a two handed while right slot has a shield
+                    return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
+
+                return new Result<bool>(true);
+            }
+
+            if (slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded)
+                //trying to add a shield while left slot has a two handed weapon
+                return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
+
+            if (inventoryItem.Slot != slot) return cannotDressFail;
+
+            return new Result<bool>(true);
+        }
+
         private void OnItemReduced(ICumulative item, Slot slot, byte amount)
         {
             if (item.Amount == 0)
@@ -300,6 +318,7 @@ namespace NeoServer.Server.Model.Players
                 RemoveItemFromSlot(slot, amount, out var removedItem);
                 return;
             }
+
             OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
         }
 
@@ -308,31 +327,25 @@ namespace NeoServer.Server.Model.Players
             var itemToSwap = Inventory[slot];
             Inventory[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
 
-            if (item is ICumulative cumulative) cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+            if (item is ICumulative cumulative)
+                cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
 
             return itemToSwap;
         }
 
         private bool NeedToSwap(IPickupable itemToAdd, Slot slotDestination)
         {
-            if (!Inventory.ContainsKey(slotDestination))
-            {
-                return false;
-            }
+            if (!Inventory.ContainsKey(slotDestination)) return false;
 
             var itemOnSlot = Inventory[slotDestination].Item1;
 
             if (itemToAdd is ICumulative cumulative && itemOnSlot.ClientId == cumulative.ClientId)
-            {
                 //will join
                 return false;
-            }
 
             if (slotDestination == Slot.Backpack)
-            {
                 // will add item to container
                 return false;
-            }
 
             return true;
         }
@@ -345,92 +358,47 @@ namespace NeoServer.Server.Model.Players
             {
                 var itemOnSlot = Inventory[slot].Item1;
 
-                return (TotalWeight - itemOnSlot.Weight + itemWeight) <= Owner.TotalCapacity;
+                return TotalWeight - itemOnSlot.Weight + itemWeight <= Owner.TotalCapacity;
             }
 
-            float weight = item.Weight;
+            var weight = item.Weight;
 
             if (item is ICumulative cumulative && slot == Slot.Ammo)
             {
-                byte amountToAdd = cumulative.Amount > cumulative.AmountToComplete ? cumulative.AmountToComplete : cumulative.Amount;
+                var amountToAdd = cumulative.Amount > cumulative.AmountToComplete
+                    ? cumulative.AmountToComplete
+                    : cumulative.Amount;
                 weight = cumulative.CalculateWeight(amountToAdd);
             }
 
-            var canCarry = (TotalWeight + weight) <= Owner.TotalCapacity;
+            var canCarry = TotalWeight + weight <= Owner.TotalCapacity;
             return canCarry;
         }
 
-        public Result<bool> CanAddItemToSlot(Slot slot, IItem item)
-        {
-            var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
-
-            if (slot == Slot.Backpack)
-            {
-                if (item is IPickupableContainer && !Inventory.ContainsKey(Slot.Backpack))
-                {
-                    return new Result<bool>(true);
-                }
-                return Inventory.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
-            }
-
-            if (item is not IInventoryItem inventoryItem)
-            {
-                return cannotDressFail;
-            }
-
-            if (inventoryItem is IWeapon weapon)
-            {
-                if (slot != Slot.Left)
-                {
-                    return cannotDressFail;
-                }
-
-                var hasShieldDressed = this[Slot.Right] != null;
-
-                if (weapon.TwoHanded && hasShieldDressed)
-                {
-                    //trying to add a two handed while right slot has a shield
-                    return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
-                }
-
-                return new Result<bool>(true);
-            }
-
-            if (slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded)
-            {
-                //trying to add a shield while left slot has a two handed weapon
-                return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
-            }
-
-            if (inventoryItem.Slot != slot)
-            {
-                return cannotDressFail;
-            }
-
-            return new Result<bool>(true);
-        }
-
         #region Store Methods
+
         public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
         {
             if (thing is not IPickupable item) return Result.NotPossible;
-            if (!CanCarryItem(item, (Slot)slot, amount)) return new Result(InvalidOperation.TooHeavy);
+            if (!CanCarryItem(item, (Slot) slot, amount)) return new Result(InvalidOperation.TooHeavy);
 
-            return CanAddItemToSlot((Slot)slot, item).ResultValue;
+            return CanAddItemToSlot((Slot) slot, item).ResultValue;
         }
+
         public override Result<uint> CanAddItem(IItemType itemType)
         {
             if (itemType is null) return Result<uint>.NotPossible;
             if (itemType.BodyPosition == Slot.None) return new Result<uint>(InvalidOperation.NotEnoughRoom);
 
             var itemOnSlot = this[itemType.BodyPosition];
-            if (itemOnSlot is not null && itemType.TypeId != itemOnSlot.Metadata.TypeId) return new Result<uint>(InvalidOperation.NotEnoughRoom);
+            if (itemOnSlot is not null && itemType.TypeId != itemOnSlot.Metadata.TypeId)
+                return new Result<uint>(InvalidOperation.NotEnoughRoom);
 
             byte possibleAmountToAdd;
             if (ICumulative.IsApplicable(itemType))
             {
                 var amountOnSlot = this[itemType.BodyPosition]?.Amount ?? 0;
-                possibleAmountToAdd = (byte)Math.Abs(100 - amountOnSlot);
+                possibleAmountToAdd = (byte) Math.Abs(100 - amountOnSlot);
             }
             else
             {
@@ -447,7 +415,7 @@ namespace NeoServer.Server.Model.Players
         {
             if (toPosition is null) return 0;
 
-            var slot = (Slot)toPosition;
+            var slot = (Slot) toPosition;
 
             if (slot == Slot.Backpack)
             {
@@ -460,36 +428,42 @@ namespace NeoServer.Server.Model.Players
             if (item is not ICumulative) return 1;
             if (item is ICumulative c1 && this[slot] is IItem i && c1.ClientId != i.ClientId) return 100;
             if (item is ICumulative && this[slot] is null) return 100;
-            if (item is ICumulative cumulative) return (uint)(100 - this[slot].Amount);
+            if (item is ICumulative cumulative) return (uint) (100 - this[slot].Amount);
 
             return 0;
         }
 
-        public override bool CanRemoveItem(IItem item) => true;
+        public override bool CanRemoveItem(IItem item)
+        {
+            return true;
+        }
 
         public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
         {
             if (thing is not IPickupable item) return Result<OperationResult<IItem>>.NotPossible;
 
-            position = position ?? (byte)thing.Metadata.BodyPosition;
+            position = position ?? (byte) thing.Metadata.BodyPosition;
 
             if (position is null) return Result<OperationResult<IItem>>.NotPossible;
 
-            var swappedItem = TryAddItemToSlot((Slot)position, item);
+            var swappedItem = TryAddItemToSlot((Slot) position, item);
 
             if (swappedItem.Value is null) return Result<OperationResult<IItem>>.Success;
 
-            return new(new OperationResult<IItem>(Operation.Removed, swappedItem.Value));
+            return new Result<OperationResult<IItem>>(new OperationResult<IItem>(Operation.Removed, swappedItem.Value));
         }
 
-        public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
+        public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+            out IItem removedThing)
         {
             removedThing = null;
-            if (!RemoveItemFromSlot((Slot)fromPosition, amount, out var removedItem)) return Result<OperationResult<IItem>>.NotPossible;
+            if (!RemoveItemFromSlot((Slot) fromPosition, amount, out var removedItem))
+                return Result<OperationResult<IItem>>.NotPossible;
 
             removedThing = removedItem;
-            return new();
+            return new Result<OperationResult<IItem>>();
         }
+
         public override Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
         {
             var result = base.ReceiveFrom(source, thing, toPosition);
@@ -497,15 +471,12 @@ namespace NeoServer.Server.Model.Players
             if (!result.Value.HasAnyOperation) return result;
 
             foreach (var operation in result.Value.Operations)
-            {
                 if (operation.Item2 == Operation.Removed)
-                {
                     source.ReceiveFrom(this, operation.Item1, null);
-                }
-            }
 
             return result;
         }
+
         #endregion
     }
 }

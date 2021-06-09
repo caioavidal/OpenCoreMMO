@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Creatures.Guilds;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Contracts.Chats;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -14,6 +14,7 @@ namespace NeoServer.Game.Contracts.Creatures
         IGuildLevel GetMemberLevel(IPlayer player);
         bool HasMember(IPlayer player);
     }
+
     public interface IGuildLevel
     {
         GuildRank Level { get; }

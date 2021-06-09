@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
@@ -29,10 +29,12 @@ namespace NeoServer.Game.Creatures.Npcs
         public string[] OnWords { get; init; }
         public string[] Answers { get; init; }
         public string Action { get; init; }
+
         /// <summary>
-        /// Indicated how many times to back in dialog
+        ///     Indicated how many times to back in dialog
         /// </summary>
         public byte Back { get; init; }
+
         public string StoreAt { get; init; }
 
         public bool End { get; init; }

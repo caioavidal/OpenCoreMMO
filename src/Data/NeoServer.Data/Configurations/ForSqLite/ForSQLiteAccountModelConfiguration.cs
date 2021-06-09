@@ -70,7 +70,7 @@ namespace NeoServer.Data.Configurations
         public void Seed(EntityTypeBuilder<AccountModel> builder)
         {
             builder.HasData
-                (
+            (
                 new AccountModel
                 {
                     AccountId = 1,
@@ -79,7 +79,7 @@ namespace NeoServer.Data.Configurations
                     Password = "1",
                     PremiumTime = 1
                 }
-              );
+            );
         }
     }
 }

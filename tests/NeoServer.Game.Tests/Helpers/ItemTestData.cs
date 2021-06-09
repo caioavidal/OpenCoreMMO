@@ -12,25 +12,27 @@ namespace NeoServer.Game.Items.Tests
         public static Container CreateContainer(byte capacity = 6)
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
 
             return new Container(itemType, new Location(100, 100, 7));
         }
+
         public static IPickupableContainer CreatePickupableContainer(byte capacity = 6)
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Weight, 20);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
+            itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
 
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
+
         public static PickupableContainer CreateBackpack()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Weight, 20);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
 
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "backpack");
+            itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
@@ -41,9 +43,9 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.SetId(id);
             type.SetName("item");
-            type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, slot);
-            type.Flags.Add(Common.ItemFlag.Stackable);
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
+            type.Flags.Add(ItemFlag.Stackable);
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
 
             return new Cumulative(type, new Location(100, 100, 7), amount);
         }
@@ -57,6 +59,7 @@ namespace NeoServer.Game.Items.Tests
 
             return new Item(type, new Location(100, 100, 7));
         }
+
         public static IItem CreateMoveableItem(ushort id)
         {
             var type = new ItemType();
@@ -67,22 +70,24 @@ namespace NeoServer.Game.Items.Tests
 
             return new MeleeWeapon(type, new Location(100, 100, 7));
         }
+
         public static IPickupable CreateWeaponItem(ushort id, string weaponType, bool twoHanded = false)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
             type.SetName("item");
-            type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, weaponType);
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
+            type.Attributes.SetAttribute(ItemAttribute.WeaponType, weaponType);
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
 
             if (twoHanded)
-                type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "two-handed");
+                type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "two-handed");
             else
-                type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "weapon");
+                type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "weapon");
 
             return new MeleeWeapon(type, new Location(100, 100, 7));
         }
+
         public static IPickupable CreateThrowableDistanceItem(ushort id, byte amount, bool twoHanded = false)
         {
             var type = new ItemType();
@@ -90,8 +95,8 @@ namespace NeoServer.Game.Items.Tests
             type.SetId(id);
             type.SetName("item");
 
-            type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, "distance");
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
+            type.Attributes.SetAttribute(ItemAttribute.WeaponType, "distance");
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
 
             return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
         }
@@ -101,17 +106,18 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
-            type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "ring");
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "ring");
             type.SetName("item");
 
             return new Ring(type, new Location(100, 100, 7));
         }
+
         public static object CreateNecklace(ushort id)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
-            type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, "necklace");
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "necklace");
             type.SetName("item");
 
             return new Necklace(type, new Location(100, 100, 7));
@@ -122,9 +128,9 @@ namespace NeoServer.Game.Items.Tests
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
-            type.Attributes.SetAttribute(Common.ItemAttribute.BodyPosition, slot);
-            type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, weaponType);
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 40);
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
+            type.Attributes.SetAttribute(ItemAttribute.WeaponType, weaponType);
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
             type.SetName("item");
 
             return new BodyDefenseEquimentItem(type, new Location(100, 100, 7));
@@ -136,23 +142,24 @@ namespace NeoServer.Game.Items.Tests
             type.SetClientId(id);
             type.SetId(id);
             type.SetName("item");
-            type.Attributes.SetAttribute(Common.ItemAttribute.WeaponType, "ammunition");
+            type.Attributes.SetAttribute(ItemAttribute.WeaponType, "ammunition");
             type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "ammo");
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
-            type.Flags.Add(Common.ItemFlag.Stackable);
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
+            type.Flags.Add(ItemFlag.Stackable);
 
             return new AmmoItem(type, new Location(100, 100, 7), amount);
         }
+
         public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
             type.SetName("coin");
-            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "coin");
+            type.Attributes.SetAttribute(ItemAttribute.Type, "coin");
             type.Attributes.SetAttribute(ItemAttribute.Worth, multiplier);
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, 1);
-            type.Flags.Add(Common.ItemFlag.Stackable);
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
+            type.Flags.Add(ItemFlag.Stackable);
 
             return new Coin(type, new Location(100, 100, 7), amount);
         }
@@ -165,16 +172,11 @@ namespace NeoServer.Game.Items.Tests
             type.SetName("item");
 
             if (topOrder == 1)
-            {
-                type.SetFlag(Common.ItemFlag.AlwaysOnTop);
-            }
+                type.SetFlag(ItemFlag.AlwaysOnTop);
             else
-            {
-                type.SetFlag(Common.ItemFlag.Bottom);
-            }
+                type.SetFlag(ItemFlag.Bottom);
 
             return new Item(type, new Location(100, 100, 7));
         }
-
     }
 }

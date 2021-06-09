@@ -8,6 +8,5 @@ namespace NeoServer.Scripts
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 20000;
         public override ushort SpeedBoost => 600;
-
     }
 }

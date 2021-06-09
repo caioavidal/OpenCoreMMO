@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Contracts.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Npc
 {
@@ -23,8 +23,8 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
             var map = Player.Inventory.Map;
             var totalMoney = Player.Inventory.GetTotalMoney(map) + Player.BankAmount;
 
-            message.AddByte((byte)GameOutgoingPacketType.SaleItemList);
-            message.AddUInt32((uint)Math.Min(totalMoney, uint.MaxValue));
+            message.AddByte((byte) GameOutgoingPacketType.SaleItemList);
+            message.AddUInt32((uint) Math.Min(totalMoney, uint.MaxValue));
 
             byte itemsToSend = 0;
 
@@ -33,7 +33,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
             {
                 if (shopItem.SellPrice == 0) continue;
 
-                var index = (int)shopItem.Item.TypeId;
+                var index = (int) shopItem.Item.TypeId;
                 //if (Item::items[shopInfo.itemId].isFluidContainer()) //todo
                 //{
                 //    index |= (static_cast<uint32_t>(shopInfo.subType) << 16);
@@ -42,7 +42,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
                 if (!map.TryGetValue(shopItem.Item.TypeId, out var itemAmount)) continue;
 
                 temp.AddRange(BitConverter.GetBytes(shopItem.Item.ClientId));
-                temp.Add((byte)Math.Min(itemAmount, byte.MaxValue));
+                temp.Add((byte) Math.Min(itemAmount, byte.MaxValue));
 
                 if (++itemsToSend >= byte.MaxValue) break;
             }

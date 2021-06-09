@@ -21,23 +21,21 @@ namespace NeoServer.Server.Events.Player.Party
             if (Guard.AnyNull(by, invited)) return;
 
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(invited.Location))
-            {
                 if (game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
                 {
                     if (spectator == invited)
-                    {
-                        connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{by.Name} has revoked her invitation", TextMessageOutgoingType.Small)); //todo set correct gender
-                    }
+                        connection.OutgoingPackets.Enqueue(
+                            new TextMessagePacket($"{@by.Name} has revoked her invitation",
+                                TextMessageOutgoingType.Small)); //todo set correct gender
 
-                    if (spectator == by)
-                    {
-                        connection.OutgoingPackets.Enqueue(new TextMessagePacket($"Invitation for {invited.Name} has been revoked", TextMessageOutgoingType.Small)); //todo set correct gender
-                    }
+                    if (spectator == @by)
+                        connection.OutgoingPackets.Enqueue(new TextMessagePacket(
+                            $"Invitation for {invited.Name} has been revoked",
+                            TextMessageOutgoingType.Small)); //todo set correct gender
 
                     connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(invited, PartyEmblem.None));
                     connection.Send();
                 }
-            }
         }
     }
 }

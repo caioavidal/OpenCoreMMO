@@ -5,7 +5,7 @@
         public const int Start = 1610612741;
 
         /// <summary>
-        /// Combines the current hashcode with the hashcode of another object.
+        ///     Combines the current hashcode with the hashcode of another object.
         /// </summary>
         public static int CombineHashCode<T>(this int hashCode, T arg)
         {

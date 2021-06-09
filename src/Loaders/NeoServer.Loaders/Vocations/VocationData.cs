@@ -2,7 +2,6 @@
 
 namespace NeoServer.Loaders.Vocations
 {
-
     public class VocationData
     {
         public List<Vocation> Vocations { get; set; }
@@ -44,5 +43,4 @@ namespace NeoServer.Loaders.Vocations
             public List<Skill> skill { get; set; }
         }
     }
-
 }

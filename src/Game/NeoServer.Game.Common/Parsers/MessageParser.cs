@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
-using System;
+﻿using System;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Parsers
 {
@@ -20,7 +20,7 @@ namespace NeoServer.Game.Common.Parsers
                 _ => throw new ArgumentException()
             };
 
-            return $"You advanced to {skillText} level { level}.";
+            return $"You advanced to {skillText} level {level}.";
         }
     }
 }

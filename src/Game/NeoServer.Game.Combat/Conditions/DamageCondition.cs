@@ -1,4 +1,6 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Creatures.Structs;
@@ -7,14 +9,18 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Parsers.Effects;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Common.Conditions
 {
     public class DamageCondition : BaseCondition
     {
-        public DamageCondition(ConditionType type, int interval, ushort minDamage, ushort maxDamage, EffectT effect = EffectT.None) : base(0)
+        private CooldownTime Cooldown;
+        private Queue<ushort> DamageQueue;
+        private ushort MaxDamage;
+        private ushort MinDamage;
+
+        public DamageCondition(ConditionType type, int interval, ushort minDamage, ushort maxDamage,
+            EffectT effect = EffectT.None) : base(0)
         {
             Type = type;
             Interval = interval;
@@ -22,9 +28,10 @@ namespace NeoServer.Game.Common.Conditions
             MaxDamage = maxDamage;
             MinDamage = minDamage;
             Effect = effect;
-
         }
-        public DamageCondition(ConditionType type, int interval, byte amount, ushort damage, EffectT effect = EffectT.None) : base(0)
+
+        public DamageCondition(ConditionType type, int interval, byte amount, ushort damage,
+            EffectT effect = EffectT.None) : base(0)
         {
             if (amount == 0) return;
 
@@ -36,22 +43,18 @@ namespace NeoServer.Game.Common.Conditions
             Effect = effect;
             Amount = amount;
         }
+
         public byte Amount { get; }
         public override ConditionType Type { get; }
         public DamageType DamageType { get; set; }
         public EffectT Effect { get; }
+
         public int Interval
         {
-            set
-            {
-                Cooldown = new CooldownTime(DateTime.Now, value);
-            }
+            set => Cooldown = new CooldownTime(DateTime.Now, value);
         }
-        private Queue<ushort> DamageQueue;
+
         public override bool HasExpired => DamageQueue.Count <= 0;
-        private CooldownTime Cooldown;
-        private ushort MinDamage;
-        private ushort MaxDamage;
 
         public void Execute(ICombatActor creature)
         {
@@ -63,8 +66,10 @@ namespace NeoServer.Game.Common.Conditions
                 End();
                 return;
             }
+
             creature.ReceiveAttack(null, new CombatDamage(damage, DamageType, DamageEffectParser.Parse(DamageType)));
         }
+
         public bool Start(ICreature creature, ushort minDamage, ushort maxDamage)
         {
             if (maxDamage < MaxDamage) return false;
@@ -75,18 +80,16 @@ namespace NeoServer.Game.Common.Conditions
             Start(creature);
             return true;
         }
+
         public override bool Start(ICreature creature)
         {
             if (Amount == 0)
-            {
                 GenerateDamageList();
-            }
             else
-            {
                 GenerateDamageList(Amount);
-            }
             return true;
         }
+
         public bool Restart(byte amount)
         {
             GenerateDamageList(amount);
@@ -97,31 +100,22 @@ namespace NeoServer.Game.Common.Conditions
         {
             var startDamage = 0;
             if (startDamage > maxDamage)
-            {
                 startDamage = maxDamage;
-            }
-            else if (startDamage == 0)
-            {
-                startDamage = (int)Math.Max(1, Math.Ceiling(amount / 20.0));
-            }
+            else if (startDamage == 0) startDamage = (int) Math.Max(1, Math.Ceiling(amount / 20.0));
             return startDamage;
         }
+
         private void GenerateDamageList(byte amount)
         {
             DamageQueue = DamageQueue ?? new Queue<ushort>();
-            for (int i = 0; i < amount - DamageQueue.Count; i++)
-            {
-                DamageQueue.Enqueue(MaxDamage);
-            }
+            for (var i = 0; i < amount - DamageQueue.Count; i++) DamageQueue.Enqueue(MaxDamage);
         }
+
         private void GenerateDamageList()
         {
-            if (DamageQueue is null)
-            {
-                DamageQueue = new Queue<ushort>();
-            }
+            if (DamageQueue is null) DamageQueue = new Queue<ushort>();
 
-            int amount = (ushort)GameRandom.Random.Next(minValue: MinDamage, maxValue: MaxDamage);
+            int amount = (ushort) GameRandom.Random.Next(MinDamage, maxValue: MaxDamage);
             var start = GetStartDamage(MaxDamage, amount);
 
             DamageQueue.Clear();
@@ -133,19 +127,17 @@ namespace NeoServer.Game.Common.Conditions
             for (var i = start; i > 0; --i)
             {
                 var n = start + 1 - i;
-                var med = (n * amount) / start;
+                var med = n * amount / start;
 
                 do
                 {
                     sum += i;
-                    DamageQueue.Enqueue((ushort)i);
+                    DamageQueue.Enqueue((ushort) i);
 
-                    x1 = Math.Abs(1.0 - ((float)sum + i) / med);
-                    x2 = Math.Abs(1.0 - ((float)sum / med));
+                    x1 = Math.Abs(1.0 - ((float) sum + i) / med);
+                    x2 = Math.Abs(1.0 - (float) sum / med);
                 } while (x1 < x2);
             }
         }
-
     }
 }
-

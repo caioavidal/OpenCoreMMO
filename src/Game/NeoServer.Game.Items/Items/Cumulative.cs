@@ -1,31 +1,38 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Items.Items
 {
     public class Cumulative : MoveableItem, ICumulative, IItem
     {
-        public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
+        public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
+            base(type, location)
         {
             Amount = 1;
-            if (attributes != null && attributes.TryGetValue(Common.ItemAttribute.Count, out var count))
+            if (attributes != null && attributes.TryGetValue(ItemAttribute.Count, out var count))
             {
                 var amount = Convert.ToByte(count);
-                Amount = Math.Min((byte)100, amount);
+                Amount = Math.Min((byte) 100, amount);
             }
         }
 
-        public Cumulative(IItemType type, Location location, byte amount) : base(type, location) => Amount = Math.Min((byte)100, amount);
+        public Cumulative(IItemType type, Location location, byte amount) : base(type, location)
+        {
+            Amount = Math.Min((byte) 100, amount);
+        }
 
         public event ItemReduce OnReduced;
 
         public new float Weight => CalculateWeight(Amount);
 
-        public float CalculateWeight(byte amount) => Metadata.Weight * amount;
+        public float CalculateWeight(byte amount)
+        {
+            return Metadata.Weight * amount;
+        }
 
         public Span<byte> GetRaw()
         {
@@ -41,7 +48,7 @@ namespace NeoServer.Game.Items.Items
 
         public ICumulative Clone(byte amount)
         {
-            var clone = (ICumulative)MemberwiseClone();
+            var clone = (ICumulative) MemberwiseClone();
             clone.Amount = amount;
             clone.ClearSubscribers();
             return clone;
@@ -53,7 +60,51 @@ namespace NeoServer.Game.Items.Items
         }
 
         /// <summary>
-        /// Reduce amount from item
+        ///     Split item in two parts
+        /// </summary>
+        /// <param name="amount">Amount to be reduced</param>
+        public ICumulative Split(byte amount)
+        {
+            if (amount == Amount)
+            {
+                ClearSubscribers();
+                return this;
+            }
+
+            if (TryReduce(amount) is false) return null;
+            return Clone(amount);
+        }
+
+        public void Increase(byte amount)
+        {
+            Amount = (byte) (amount + Amount > 100 ? 100 : amount + Amount);
+        }
+
+        public byte AmountToComplete => (byte) (100 - Amount);
+
+        public bool TryJoin(ref ICumulative item)
+        {
+            if (item?.Metadata?.ClientId is null) return false;
+            if (item.Metadata.ClientId != Metadata.ClientId) return false;
+
+            var totalAmount = Amount + item.Amount;
+
+            if (totalAmount <= 100)
+            {
+                Amount = (byte) totalAmount;
+                item = null;
+                return true;
+            }
+
+            Amount = 100;
+
+            item.Amount = (byte) (totalAmount - Amount);
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Reduce amount from item
         /// </summary>
         /// <param name="amount">Amount to be reduced</param>
         protected void Reduce(byte amount = 1)
@@ -67,7 +118,7 @@ namespace NeoServer.Game.Items.Items
         {
             if (amount == 0 || Amount == 0) return false;
 
-            amount = (byte)(amount > 100 ? 100 : amount);
+            amount = (byte) (amount > 100 ? 100 : amount);
 
             var oldAmount = Amount;
             Amount -= amount;
@@ -76,44 +127,9 @@ namespace NeoServer.Game.Items.Items
             return true;
         }
 
-        /// <summary>
-        /// Split item in two parts
-        /// </summary>
-        /// <param name="amount">Amount to be reduced</param>
-        public ICumulative Split(byte amount)
+        public override string ToString()
         {
-            if (amount == Amount)
-            {
-                ClearSubscribers();
-                return this;
-            }
-            if (TryReduce(amount) is false) return null;
-            return Clone(amount);
+            return $"{Amount} {Metadata.Name}";
         }
-
-        public void Increase(byte amount) => Amount = (byte)(amount + Amount > 100 ? 100 : amount + Amount);
-
-        public byte AmountToComplete => (byte)(100 - Amount);
-
-        public bool TryJoin(ref ICumulative item)
-        {
-            if (item?.Metadata?.ClientId is null) return false;
-            if (item.Metadata.ClientId != Metadata.ClientId) return false;
-
-            var totalAmount = Amount + item.Amount;
-
-            if (totalAmount <= 100)
-            {
-                Amount = (byte)totalAmount;
-                item = null;
-                return true;
-            }
-            Amount = 100;
-
-            item.Amount = (byte)(totalAmount - Amount);
-
-            return true;
-        }
-        public override string ToString() => $"{Amount} {Metadata.Name}";
     }
 }

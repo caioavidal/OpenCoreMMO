@@ -1,12 +1,13 @@
-﻿using NeoServer.Game.Common.Contracts.Services;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.DataStore;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Events
 {
@@ -48,13 +49,11 @@ namespace NeoServer.Game.Creatures.Events
 
         private void Sell(ISociableCreature part, ISociableCreature counterpart)
         {
-
         }
 
         private void AddItems(IPlayer player, INpc seller, SaleContract saleContract)
         {
-
-            var item = itemFactory.Create(saleContract.TypeId, Location.Inventory(Common.Players.Slot.Backpack), null);
+            var item = itemFactory.Create(saleContract.TypeId, Location.Inventory(Slot.Backpack), null);
 
             if (item is ICumulative cumulative)
             {
@@ -66,10 +65,8 @@ namespace NeoServer.Game.Creatures.Events
                 var items = new IItem[saleContract.Amount];
                 items[0] = item;
 
-                for (int i = 1; i < saleContract.Amount; i++)
-                {
-                    items[i] = itemFactory.Create(saleContract.TypeId, Location.Inventory(Common.Players.Slot.Backpack), null);
-                }
+                for (var i = 1; i < saleContract.Amount; i++)
+                    items[i] = itemFactory.Create(saleContract.TypeId, Location.Inventory(Slot.Backpack), null);
 
                 player.ReceivePurchasedItems(seller, saleContract, items);
             }
@@ -81,14 +78,12 @@ namespace NeoServer.Game.Creatures.Events
 
             foreach (var coinToAdd in coinsToAdd)
             {
-                var createdCoin = itemFactory.Create(coinToAdd.Item1, Location.Inventory(Common.Players.Slot.Backpack), null);
+                var createdCoin = itemFactory.Create(coinToAdd.Item1, Location.Inventory(Slot.Backpack), null);
                 if (createdCoin is not ICoin newCoin) continue;
                 newCoin.Amount = coinToAdd.Item2;
 
                 yield return newCoin;
             }
         }
-
     }
-
 }

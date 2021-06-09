@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Enums;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -24,10 +24,7 @@ namespace NeoServer.OTBM.Structure
             ItemNodeAttributes = new List<ItemNodeAttributeValue>();
             ItemId = default;
 
-            if (node.Type != NodeType.Item)
-            {
-                throw new Exception($"{tile.Coordinate}: Unknown node type");
-            }
+            if (node.Type != NodeType.Item) throw new Exception($"{tile.Coordinate}: Unknown node type");
 
             var stream = new OTBParsingStream(node.Data);
 
@@ -43,55 +40,48 @@ namespace NeoServer.OTBM.Structure
 
             switch (originalItemId)
             {
-                case (UInt16)OTBMWorldItemId.FireFieldPvpLarge:
-                    parsedItemId = (UInt16)OTBMWorldItemId.FireFieldPersistentLarge;
+                case (ushort) OTBMWorldItemId.FireFieldPvpLarge:
+                    parsedItemId = (ushort) OTBMWorldItemId.FireFieldPersistentLarge;
                     break;
 
-                case (UInt16)OTBMWorldItemId.FireFieldPvpMedium:
-                    parsedItemId = (UInt16)OTBMWorldItemId.FireFieldPersistentMedium;
+                case (ushort) OTBMWorldItemId.FireFieldPvpMedium:
+                    parsedItemId = (ushort) OTBMWorldItemId.FireFieldPersistentMedium;
                     break;
 
-                case (UInt16)OTBMWorldItemId.FireFieldPvpSmall:
-                    parsedItemId = (UInt16)OTBMWorldItemId.FireFieldPersistentSmall;
+                case (ushort) OTBMWorldItemId.FireFieldPvpSmall:
+                    parsedItemId = (ushort) OTBMWorldItemId.FireFieldPersistentSmall;
                     break;
 
-                case (UInt16)OTBMWorldItemId.EnergyFieldPvp:
-                    parsedItemId = (UInt16)OTBMWorldItemId.EnergyFieldPersistent;
+                case (ushort) OTBMWorldItemId.EnergyFieldPvp:
+                    parsedItemId = (ushort) OTBMWorldItemId.EnergyFieldPersistent;
                     break;
 
-                case (UInt16)OTBMWorldItemId.PoisonFieldPvp:
-                    parsedItemId = (UInt16)OTBMWorldItemId.PoisonFieldPersistent;
+                case (ushort) OTBMWorldItemId.PoisonFieldPvp:
+                    parsedItemId = (ushort) OTBMWorldItemId.PoisonFieldPersistent;
                     break;
 
-                case (UInt16)OTBMWorldItemId.MagicWall:
-                    parsedItemId = (UInt16)OTBMWorldItemId.MagicWallPersistent;
+                case (ushort) OTBMWorldItemId.MagicWall:
+                    parsedItemId = (ushort) OTBMWorldItemId.MagicWallPersistent;
                     break;
 
-                case (UInt16)OTBMWorldItemId.WildGrowth:
-                    parsedItemId = (UInt16)OTBMWorldItemId.WildGrowthPersistent;
-                    break;
-
-                default:
+                case (ushort) OTBMWorldItemId.WildGrowth:
+                    parsedItemId = (ushort) OTBMWorldItemId.WildGrowthPersistent;
                     break;
             }
+
             return parsedItemId;
         }
 
         private void ParseAttributes(OTBParsingStream stream)
         {
-
             while (!stream.IsOver)
             {
                 var attribute = stream.ReadByte();
 
-                if (attribute == 0)
-                {
-                    break;
-                }
+                if (attribute == 0) break;
 
-                ItemNodeAttributes.Add(new ItemNodeAttributeValue((ItemNodeAttribute)attribute, stream));
+                ItemNodeAttributes.Add(new ItemNodeAttributeValue((ItemNodeAttribute) attribute, stream));
             }
         }
     }
-
 }

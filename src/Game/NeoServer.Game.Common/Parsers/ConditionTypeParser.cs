@@ -15,6 +15,7 @@ namespace NeoServer.Game.Common.Parsers
                 _ => DamageType.None
             };
         }
+
         public static ConditionType Parse(DamageType type)
         {
             return type switch

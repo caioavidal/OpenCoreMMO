@@ -10,7 +10,7 @@ namespace NeoServer.Server.Security
 
             while (length > 0)
             {
-                int tmp = (length > 5552) ? 5552 : length;
+                var tmp = length > 5552 ? 5552 : length;
                 length -= tmp;
 
                 do
@@ -25,6 +25,5 @@ namespace NeoServer.Server.Security
 
             return (b << 16) | a;
         }
-
     }
 }

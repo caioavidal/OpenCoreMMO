@@ -5,6 +5,7 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class LoginFailurePacket : OutgoingPacket
     {
         private readonly string text;
+
         public LoginFailurePacket(string text)
         {
             this.text = text;

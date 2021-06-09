@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Contracts.Combat;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Contracts.Combat;
 using NeoServer.Game.Contracts.Combat.Defenses;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -24,7 +24,8 @@ namespace NeoServer.Loaders.Monsters.Converters
                 defense.TryGetValue("interval", out ushort interval);
 
                 defense.TryGetValue<JArray>("attributes", out var attributesArray);
-                var attributes = attributesArray?.ToDictionary(k => ((JObject)k).Properties().First().Name, v => v.Values().First().Value<object>());
+                var attributes = attributesArray?.ToDictionary(k => ((JObject) k).Properties().First().Name,
+                    v => v.Values().First().Value<object>());
 
                 attributes.TryGetValue("areaEffect", out string areaEffect);
 
@@ -33,7 +34,8 @@ namespace NeoServer.Loaders.Monsters.Converters
                     defense.TryGetValue("min", out decimal min);
                     defense.TryGetValue("max", out decimal max);
 
-                    defenses.Add(new HealCombatDefense((int)Math.Abs(min), (int)Math.Abs(max), MonsterAttributeParser.ParseAreaEffect(areaEffect))
+                    defenses.Add(new HealCombatDefense((int) Math.Abs(min), (int) Math.Abs(max),
+                        MonsterAttributeParser.ParseAreaEffect(areaEffect))
                     {
                         Chance = chance,
                         Interval = interval
@@ -44,7 +46,8 @@ namespace NeoServer.Loaders.Monsters.Converters
                     defense.TryGetValue("speedchange", out ushort speed);
                     defense.TryGetValue("duration", out uint duration);
 
-                    defenses.Add(new HasteCombatDefense(duration, speed, MonsterAttributeParser.ParseAreaEffect(areaEffect))
+                    defenses.Add(new HasteCombatDefense(duration, speed,
+                        MonsterAttributeParser.ParseAreaEffect(areaEffect))
                     {
                         Chance = chance,
                         Interval = interval
@@ -54,21 +57,23 @@ namespace NeoServer.Loaders.Monsters.Converters
                 {
                     defense.TryGetValue("duration", out uint duration);
 
-                    defenses.Add(new InvisibleCombatDefense(duration, MonsterAttributeParser.ParseAreaEffect(areaEffect))
-                    {
-                        Chance = chance,
-                        Interval = interval,
-                    });
+                    defenses.Add(
+                        new InvisibleCombatDefense(duration, MonsterAttributeParser.ParseAreaEffect(areaEffect))
+                        {
+                            Chance = chance,
+                            Interval = interval
+                        });
                 }
                 else if (defenseName.Equals("outfit", StringComparison.InvariantCultureIgnoreCase))
                 {
                     defense.TryGetValue("duration", out uint duration);
                     defense.TryGetValue("monster", out string monsterName);
 
-                    defenses.Add(new IllusionCombatDefense(duration, monsterName, MonsterAttributeParser.ParseAreaEffect(areaEffect), monsters)
+                    defenses.Add(new IllusionCombatDefense(duration, monsterName,
+                        MonsterAttributeParser.ParseAreaEffect(areaEffect), monsters)
                     {
                         Chance = chance,
-                        Interval = interval,
+                        Interval = interval
                     });
                 }
                 else

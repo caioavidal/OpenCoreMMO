@@ -8,13 +8,13 @@ namespace NeoServer.Server.Events
 {
     public class ContentModifiedOnContainerEventHandler
     {
-
         private readonly IGameServer game;
 
         public ContentModifiedOnContainerEventHandler(IGameServer game)
         {
             this.game = game;
         }
+
         public void Execute(IPlayer player, ContainerOperation operation, byte containerId, byte slotIndex, IItem item)
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
@@ -33,9 +33,8 @@ namespace NeoServer.Server.Events
                 }
 
                 if (player.Containers[containerId]?.Parent == player && player.Shopping)
-                {
-                    connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, player.TradingWithNpc?.ShopItems?.Values));
-                }
+                    connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
+                        player.TradingWithNpc?.ShopItems?.Values));
 
                 connection.Send();
             }

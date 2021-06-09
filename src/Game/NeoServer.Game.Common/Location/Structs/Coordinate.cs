@@ -3,71 +3,63 @@ using System;
 namespace NeoServer.Game.Common.Location.Structs
 {
     /// <summary>
-    /// Represents a 3D point with integer coordinates.
+    ///     Represents a 3D point with integer coordinates.
     /// </summary>
     /// <remarks>
-    /// It's important to note that our coordinate system is "cartesian-like".
-    /// That means that our origin is at (X=0, Y=0, Z=0).
-    /// 
-    /// A positive <see cref="X"/> means that the coordinate is to the west of the origin, while
-    /// a negative <see cref="X"/> that the coordinate is to the east of the origin.
-    /// 
-    /// A positive <see cref="Y"/> means that the coordinate is to the north of the origin, while
-    /// a negative <see cref="Y"/> means that the coordinate is to the south of the origin.
-    /// 
-    /// A zero <see cref="Z"/> means that the coordinate is on the ground fllor, 
-    /// while a positive <see cref="Z"/> means that the coordinate is above 
-    /// the ground floor and a negative <see cref="Z"/> means that the coordinate
-    /// is underground.
-    /// 
-    /// This is different from TFS / OTX, where the X and Y values are positive only, with
-    /// the origin being on the top-left corner of the map.
-    /// Also, the Z coordinate of TFS / OTX must be [0, 15], with 7 representing the ground
-    /// floor.
-    /// Be careful when converting between the two systems (e.g.: when parsing a .otbm map).
+    ///     It's important to note that our coordinate system is "cartesian-like".
+    ///     That means that our origin is at (X=0, Y=0, Z=0).
+    ///     A positive <see cref="X" /> means that the coordinate is to the west of the origin, while
+    ///     a negative <see cref="X" /> that the coordinate is to the east of the origin.
+    ///     A positive <see cref="Y" /> means that the coordinate is to the north of the origin, while
+    ///     a negative <see cref="Y" /> means that the coordinate is to the south of the origin.
+    ///     A zero <see cref="Z" /> means that the coordinate is on the ground fllor,
+    ///     while a positive <see cref="Z" /> means that the coordinate is above
+    ///     the ground floor and a negative <see cref="Z" /> means that the coordinate
+    ///     is underground.
+    ///     This is different from TFS / OTX, where the X and Y values are positive only, with
+    ///     the origin being on the top-left corner of the map.
+    ///     Also, the Z coordinate of TFS / OTX must be [0, 15], with 7 representing the ground
+    ///     floor.
+    ///     Be careful when converting between the two systems (e.g.: when parsing a .otbm map).
     /// </remarks>
     public readonly struct Coordinate : IEquatable<Coordinate>
     {
         public const byte TFSGroundFloorZCoordinate = 7;
 
         /// <summary>
-        /// The x coordinate of this instance.
+        ///     The x coordinate of this instance.
         /// </summary>
         public readonly int X;
 
         /// <summary>
-        /// The y coordinate of this instance.
+        ///     The y coordinate of this instance.
         /// </summary>
         public readonly int Y;
 
         /// <summary>
-        /// The z coordinate of this instance, used to represent the "floor height".
+        ///     The z coordinate of this instance, used to represent the "floor height".
         /// </summary>
         public readonly sbyte Z;
 
         /// <summary>
-        /// Creates a new instance of <see cref="Coordinate"/>.
+        ///     Creates a new instance of <see cref="Coordinate" />.
         /// </summary>
         /// <remarks>
-        /// It's important to note that our coordinate system is "cartesian-like".
-        /// That means that our origin is at (X=0, Y=0, Z=0).
-        /// 
-        /// A positive <see cref="X"/> means that the coordinate is to the west of the origin, while
-        /// a negative <see cref="X"/> that the coordinate is to the east of the origin.
-        /// 
-        /// A positive <see cref="Y"/> means that the coordinate is to the north of the origin, while
-        /// a negative <see cref="Y"/> means that the coordinate is to the south of the origin.
-        /// 
-        /// A zero <see cref="Z"/> means that the coordinate is on the ground fllor, 
-        /// while a positive <see cref="Z"/> means that the coordinate is above 
-        /// the ground floor and a negative <see cref="Z"/> means that the coordinate
-        /// is underground.
-        /// 
-        /// This is different from TFS / OTX, where the X and Y values are positive only, with
-        /// the origin being on the top-left corner of the map.
-        /// Also, the Z coordinate of TFS / OTX must be [0, 15], with 7 representing the ground
-        /// floor.
-        /// Be careful when converting between the two systems (e.g.: when parsing a .otbm map).
+        ///     It's important to note that our coordinate system is "cartesian-like".
+        ///     That means that our origin is at (X=0, Y=0, Z=0).
+        ///     A positive <see cref="X" /> means that the coordinate is to the west of the origin, while
+        ///     a negative <see cref="X" /> that the coordinate is to the east of the origin.
+        ///     A positive <see cref="Y" /> means that the coordinate is to the north of the origin, while
+        ///     a negative <see cref="Y" /> means that the coordinate is to the south of the origin.
+        ///     A zero <see cref="Z" /> means that the coordinate is on the ground fllor,
+        ///     while a positive <see cref="Z" /> means that the coordinate is above
+        ///     the ground floor and a negative <see cref="Z" /> means that the coordinate
+        ///     is underground.
+        ///     This is different from TFS / OTX, where the X and Y values are positive only, with
+        ///     the origin being on the top-left corner of the map.
+        ///     Also, the Z coordinate of TFS / OTX must be [0, 15], with 7 representing the ground
+        ///     floor.
+        ///     Be careful when converting between the two systems (e.g.: when parsing a .otbm map).
         /// </remarks>
         public Coordinate(int x, int y, sbyte z)
         {
@@ -77,36 +69,39 @@ namespace NeoServer.Game.Common.Location.Structs
         }
 
         /// <summary>
-        /// Creates a <see cref="Coordinate"/> from the coordinates of a 
-        /// "TFS Location". See the remarks of <see cref="Coordinate"/> to know more
-        /// about the differences between the coordinate systems.
+        ///     Creates a <see cref="Coordinate" /> from the coordinates of a
+        ///     "TFS Location". See the remarks of <see cref="Coordinate" /> to know more
+        ///     about the differences between the coordinate systems.
         /// </summary>
-        public static Coordinate FromTFSCoordinates(UInt16 x, UInt16 y, byte z)
+        public static Coordinate FromTFSCoordinates(ushort x, ushort y, byte z)
         {
-            return new Coordinate(
-                x: x,
-                y: -y,
-                z: (sbyte)-(z - TFSGroundFloorZCoordinate));
+            return new(
+                x,
+                -y,
+                (sbyte) -(z - TFSGroundFloorZCoordinate));
         }
 
         /// <summary>
-        /// Creates a new <see cref="Coordinate"/> whose coordinates are equal to this instance's
-        /// plus the provided offesets.
+        ///     Creates a new <see cref="Coordinate" /> whose coordinates are equal to this instance's
+        ///     plus the provided offesets.
         /// </summary>
-        public Coordinate Translate(int xOffset, int yOffset) => Translate(xOffset: xOffset, yOffset: yOffset, zOffset: 0);
+        public Coordinate Translate(int xOffset, int yOffset)
+        {
+            return Translate(xOffset, yOffset, 0);
+        }
 
-        public Location Location => new Location((ushort)X, (ushort)Y, (byte)Z);
+        public Location Location => new((ushort) X, (ushort) Y, (byte) Z);
 
         /// <summary>
-        /// Creates a new <see cref="Coordinate"/> whose coordinates are equal to this instance's
-        /// plus the provided offesets.
+        ///     Creates a new <see cref="Coordinate" /> whose coordinates are equal to this instance's
+        ///     plus the provided offesets.
         /// </summary>
         public Coordinate Translate(int xOffset, int yOffset, sbyte zOffset)
         {
-            return new Coordinate(
-                x: X + xOffset,
-                y: Y + yOffset,
-                z: (sbyte)(Z + zOffset));
+            return new(
+                X + xOffset,
+                Y + yOffset,
+                (sbyte) (Z + zOffset));
         }
 
         /// <summary>
@@ -116,16 +111,22 @@ namespace NeoServer.Game.Common.Location.Structs
 
         //public override bool Equals(object obj) => obj is Coordinate c && Equals(c);
         /// <summary>
-        /// Returns a string representation of this instance.
+        ///     Returns a string representation of this instance.
         /// </summary>
-        public override string ToString() => $"{{X={X}, Y={Y}, Z={Z}}}";
+        public override string ToString()
+        {
+            return $"{{X={X}, Y={Y}, Z={Z}}}";
+        }
 
         /// <summary>
-        /// Returns true if the other <see cref="Coordinate"/> has the same <see cref="X"/>,
-        /// <see cref="Y"/> and <see cref="Z"/> values as this one.
-        /// Returns false otherwise.
+        ///     Returns true if the other <see cref="Coordinate" /> has the same <see cref="X" />,
+        ///     <see cref="Y" /> and <see cref="Z" /> values as this one.
+        ///     Returns false otherwise.
         /// </summary>
-        public bool Equals(Coordinate other) => X == other.X && Y == other.Y && Z == other.Z;
+        public bool Equals(Coordinate other)
+        {
+            return X == other.X && Y == other.Y && Z == other.Z;
+        }
 
         public override int GetHashCode()
         {
@@ -134,20 +135,19 @@ namespace NeoServer.Game.Common.Location.Structs
 
         public static Coordinate operator +(Coordinate location1, Coordinate location2)
         {
-            return new Coordinate(
-            x: (location1.X + location2.X),
-            y: (location1.Y + location2.Y),
-            z: (sbyte)(location1.Z + location2.Z)
+            return new(
+                location1.X + location2.X,
+                location1.Y + location2.Y,
+                (sbyte) (location1.Z + location2.Z)
             );
         }
 
         public static Coordinate operator -(Coordinate location1, Coordinate location2)
         {
-            return new Coordinate
-            (
-                x: location2.X - location1.X,
-                y: location2.Y - location1.Y,
-                z: (sbyte)(location2.Z - location1.Z)
+            return new(
+                location2.X - location1.X,
+                location2.Y - location1.Y,
+                (sbyte) (location2.Z - location1.Z)
             );
         }
     }

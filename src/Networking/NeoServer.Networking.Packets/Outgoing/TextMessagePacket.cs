@@ -6,6 +6,7 @@ namespace NeoServer.Networking.Packets.Outgoing
     {
         private readonly string text;
         private readonly TextMessageOutgoingType type;
+
         public TextMessagePacket(string text, TextMessageOutgoingType type)
         {
             this.text = text;
@@ -14,8 +15,8 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.TextMessage);
-            message.AddByte((byte)type);
+            message.AddByte((byte) GameOutgoingPacketType.TextMessage);
+            message.AddByte((byte) type);
             message.AddString(text);
         }
     }

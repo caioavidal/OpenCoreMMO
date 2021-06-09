@@ -1,11 +1,10 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.World.Tiles
 {
-
     public interface IDynamicTile : ITile
     {
         IGround Ground { get; }
@@ -20,11 +19,11 @@ namespace NeoServer.Game.Contracts.World.Tiles
         bool HasCreature { get; }
         IMagicField MagicField { get; }
 
+        bool HasBlockPathFinding { get; }
+
         byte[] GetRaw(IPlayer playerRequesting = null);
         ICreature GetTopVisibleCreature(ICreature creature);
         bool TryGetStackPositionOfItem(IItem item, out byte stackPosition);
         byte GetCreatureStackPositionIndex(IPlayer observer);
-
-        bool HasBlockPathFinding { get; }
     }
 }

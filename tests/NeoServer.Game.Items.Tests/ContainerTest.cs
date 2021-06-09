@@ -8,11 +8,10 @@ namespace NeoServer.Game.Items.Tests
 {
     public class ContainerTest
     {
-
         private IContainer CreateContainer(byte capacity = 6, string name = "")
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, capacity);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
             itemType.SetName(name);
             return new PickupableContainer(itemType, new Location(100, 100, 7));
         }
@@ -40,7 +39,7 @@ namespace NeoServer.Game.Items.Tests
         public void Constructor_Should_Create_Instance_With_Capacity_And_List_Items()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
             var sut = new Container(itemType, new Location(100, 100, 7));
 
@@ -53,7 +52,7 @@ namespace NeoServer.Game.Items.Tests
         public void SetParent_Should_Modify_Parent_Property()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
             var parentContainer = new Container(itemType, new Location(100, 100, 7));
             var sut = new Container(itemType, new Location(100, 100, 7));
@@ -70,19 +69,19 @@ namespace NeoServer.Game.Items.Tests
         [Fact]
         public void IsApplicable_Returns_True_When_ItemType_Is_Container()
         {
-            ItemType type = new ItemType();
-            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "container");
+            var type = new ItemType();
+            type.Attributes.SetAttribute(ItemAttribute.Type, "container");
 
             Assert.True(Container.IsApplicable(type));
 
             type = new ItemType();
-            type.SetGroup((byte)Common.ItemGroup.GroundContainer);
+            type.SetGroup((byte) ItemGroup.GroundContainer);
 
             Assert.True(Container.IsApplicable(type));
 
             type = new ItemType();
-            type.Attributes.SetAttribute(Common.ItemAttribute.Type, "container");
-            type.SetGroup((byte)Common.ItemGroup.GroundContainer);
+            type.Attributes.SetAttribute(ItemAttribute.Type, "container");
+            type.SetGroup((byte) ItemGroup.GroundContainer);
 
             Assert.True(Container.IsApplicable(type));
 
@@ -123,6 +122,7 @@ namespace NeoServer.Game.Items.Tests
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(0u, result);
         }
+
         [Fact]
         public void PossibleAmountToAdd_When_Passing_Cumulative_Item_Should_Return_Amount_Count()
         {
@@ -167,6 +167,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.True(container.HasParent);
             Assert.Same(sut, container.Parent);
         }
+
         [Fact]
         public void TryAddItem_Adding_Container_To_Itseft_Should_Return_Error()
         {
@@ -321,7 +322,7 @@ namespace NeoServer.Game.Items.Tests
             sut.AddItem(CreateCumulativeItem(200, 100));
 
             sut.RemoveItem(null, 60, 1, out var removedThing);
-            sut.RemoveItem(null, amount: 77, 3, out var removedThing2);
+            sut.RemoveItem(null, 77, 3, out var removedThing2);
 
             Assert.Equal(100, (sut[0] as ICumulative).Amount);
             Assert.Equal(40, (sut[1] as ICumulative).Amount);
@@ -363,6 +364,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(26, (sut[0] as ICumulative).Amount);
             Assert.Equal(200, sut[0].ClientId);
         }
+
         [Fact]
         public void TryAddItem_Adding_CumulativeItem_Return_False_When_Full()
         {
@@ -381,6 +383,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.IsFull, result.Error);
         }
+
         [Fact]
         public void TryAddItem_Adding_CumulativeItem_Join_If_Possible_And_Return_Full_If_Exceeds()
         {
@@ -400,6 +403,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(100, (sut[1] as ICumulative).Amount);
             Assert.Equal(20, item.Amount);
         }
+
         [Fact]
         public void TryAddItem_Adding_CumulativeItem_To_Child_Join_If_Possible_And_Return_Full_If_Exceeds()
         {
@@ -413,7 +417,8 @@ namespace NeoServer.Game.Items.Tests
             sut.AddItem(child);
             sut.AddItem(item);
 
-            var result = sut.SendTo(sut, item, 70, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+            var result = sut.SendTo(sut, item, 70, (byte) item.Location.ContainerSlot,
+                (byte) child.Location.ContainerSlot);
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.IsFull, result.Error);
@@ -421,6 +426,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(100, itemOnChild.Amount);
             Assert.Equal(50, item.Amount);
         }
+
         [Fact]
         public void MoveItem_When_Moving_Cumulative_To_Child_Should_Remove_From_Parent_And_Add_To_Child()
         {
@@ -435,9 +441,9 @@ namespace NeoServer.Game.Items.Tests
             var childEventCalled = false;
 
             sut.OnItemRemoved += (a, b) => { eventCalled = true; };
-            child.OnItemAdded += (a) => { childEventCalled = true; };
+            child.OnItemAdded += a => { childEventCalled = true; };
 
-            sut.SendTo(sut, item, 40, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+            sut.SendTo(sut, item, 40, (byte) item.Location.ContainerSlot, (byte) child.Location.ContainerSlot);
 
             Assert.True(eventCalled);
             Assert.True(childEventCalled);
@@ -445,6 +451,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Single(sut.Items);
             Assert.Equal(40, (child[0] as ICumulative).Amount);
         }
+
         [Fact]
         public void MoveItem_When_Moving_To_Child_Should_Remove_From_Parent_And_Add_To_Child()
         {
@@ -459,9 +466,9 @@ namespace NeoServer.Game.Items.Tests
             var childEventCalled = false;
 
             sut.OnItemRemoved += (a, b) => { eventCalled = true; };
-            child.OnItemAdded += (a) => { childEventCalled = true; };
+            child.OnItemAdded += a => { childEventCalled = true; };
 
-            sut.SendTo(sut, item, 1, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+            sut.SendTo(sut, item, 1, (byte) item.Location.ContainerSlot, (byte) child.Location.ContainerSlot);
 
             Assert.True(eventCalled);
             Assert.True(childEventCalled);
@@ -469,6 +476,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Single(sut.Items);
             Assert.Equal(100, child[0].ClientId);
         }
+
         [Fact]
         public void MoveItem_When_Moving_Cumulative_To_Child_And_Is_Full_Return_Error()
         {
@@ -481,12 +489,14 @@ namespace NeoServer.Game.Items.Tests
             sut.AddItem(item);
             child.AddItem(item2);
 
-            var result = sut.SendTo(sut, item, 40, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+            var result = sut.SendTo(sut, item, 40, (byte) item.Location.ContainerSlot,
+                (byte) child.Location.ContainerSlot);
 
             Assert.Equal(InvalidOperation.IsFull, result.Error);
             Assert.Equal(2, sut.Items.Count);
             Assert.Equal(100, (child[0] as ICumulative).Amount);
         }
+
         [Fact]
         public void SendTo_When_Moving_Backpack_To_First_Slot_Of_Another_Backpack_Should_Move()
         {
@@ -501,6 +511,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Single(sut.Items);
             Assert.Equal(item, sut[0]);
         }
+
         [Fact]
         public void MoveItem_When_Moving_Cumulative_To_Child_Should_Remove_Amount_From_Parent_And_Add_To_Child()
         {
@@ -519,15 +530,17 @@ namespace NeoServer.Game.Items.Tests
             sut.OnItemUpdated += (a, b, c) => { eventCalled = true; };
             child.OnItemUpdated += (a, b, c) => { childEventCalled = true; };
 
-            var result = sut.SendTo(sut, item, 20, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+            var result = sut.SendTo(sut, item, 20, (byte) item.Location.ContainerSlot,
+                (byte) child.Location.ContainerSlot);
 
             Assert.True(eventCalled);
             Assert.True(childEventCalled);
 
             Assert.Equal(2, sut.Items.Count);
-            Assert.Equal(20, (sut[(byte)item.Location.ContainerSlot] as ICumulative).Amount);
-            Assert.Equal(40, (child[(byte)item2.Location.ContainerSlot] as ICumulative).Amount);
+            Assert.Equal(20, (sut[(byte) item.Location.ContainerSlot] as ICumulative).Amount);
+            Assert.Equal(40, (child[(byte) item2.Location.ContainerSlot] as ICumulative).Amount);
         }
+
         [Fact]
         public void TryAddItem_Adding_CumulativeItem_Rejects_Exceeding_Amount_When_Full()
         {
@@ -591,7 +604,7 @@ namespace NeoServer.Game.Items.Tests
             var item = CreateCumulativeItem(200, 57);
             sut.AddItem(item);
 
-            sut.RemoveItem(null, amount: 23, 0, out var removedItem);
+            sut.RemoveItem(null, 23, 0, out var removedItem);
 
             Assert.Equal(2, sut.SlotsUsed);
 
@@ -613,11 +626,11 @@ namespace NeoServer.Game.Items.Tests
             var item = CreateCumulativeItem(200, 63);
             sut.AddItem(item);
 
-            sut.RemoveItem(null, amount: 63, 0, out var removedItem);
+            sut.RemoveItem(null, 63, 0, out var removedItem);
 
             Assert.Equal(1, sut.SlotsUsed);
 
-            Assert.Equal(100, (sut[0].ClientId));
+            Assert.Equal(100, sut[0].ClientId);
             Assert.Equal(63, (removedItem as ICumulative).Amount);
 
             Assert.Equal(item.ClientId, removedItem.ClientId);
@@ -627,17 +640,18 @@ namespace NeoServer.Game.Items.Tests
         public void ToString_When_Container_Is_Empty_Should_Return_Nothing()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
             var sut = new Container(itemType, new Location(100, 100, 7));
 
             Assert.Equal("nothing", sut.ToString());
         }
+
         [Fact]
         public void ToString_When_Container_Has_Items_Should_Return_Items_Name()
         {
             var itemType = new ItemType();
-            itemType.Attributes.SetAttribute(Common.ItemAttribute.Capacity, 20);
+            itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
             var sut = new Container(itemType, new Location(100, 100, 7));
 
@@ -676,6 +690,7 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
         }
+
         [Fact]
         public void CanAddItem_Adding_Cumulative_Item_With_No_Free_Slots_Returns_Error()
         {
@@ -685,6 +700,7 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
         }
+
         [Fact]
         public void CanAddItem_Adding_Regular_Item_With_Free_Slots_Returns_Success()
         {
@@ -694,6 +710,7 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(1u, result.Value);
         }
+
         [Fact]
         public void CanAddItem_Adding_Regular_Item_With_Free_Slots_On_Child_Returns_Success()
         {
@@ -708,6 +725,7 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(1u, result.Value);
         }
+
         [Fact]
         public void CanAddItem_Adding_Cumulative_Item_With_Free_Slots_Returns_Success()
         {
@@ -719,6 +737,7 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(100u, result.Value);
         }
+
         [Fact]
         public void CanAddItem_Adding_Cumulative_Item_With_Partial_Free_Slots_Returns_Success()
         {
@@ -732,6 +751,7 @@ namespace NeoServer.Game.Items.Tests
 
             Assert.Equal(50u, result.Value);
         }
+
         [Fact]
         public void CanAddItem_Adding_Cumulative_Item_With_Partial_Free_Slots_With_Diff_Type_Returns_Error()
         {

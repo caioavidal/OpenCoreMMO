@@ -1,26 +1,38 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures.Npcs.Dialogs
 {
     public class NpcDialog
     {
         private readonly INpc npc;
-        private IDictionary<uint, List<byte>> playerDialogTree { get; set; } = new Dictionary<uint, List<byte>>();
 
-        private IDictionary<uint, Dictionary<string, string>> playerDialogStorage = new Dictionary<uint, Dictionary<string, string>>();
+        private readonly IDictionary<uint, Dictionary<string, string>> playerDialogStorage =
+            new Dictionary<uint, Dictionary<string, string>>();
 
         public NpcDialog(INpc npc)
         {
             this.npc = npc;
         }
 
-        public bool StopTalkingTo(ICreature creature) => playerDialogTree.Remove(creature.CreatureId);
-        public bool IsTalkingWith(ICreature creature) => playerDialogTree.ContainsKey(creature.CreatureId);
+        private IDictionary<uint, List<byte>> playerDialogTree { get; } = new Dictionary<uint, List<byte>>();
 
-        public Dictionary<string, string> GetDialogStoredValues(ISociableCreature sociableCreature) => playerDialogStorage.TryGetValue(sociableCreature.CreatureId, out var map) ? map : null;
+        public bool StopTalkingTo(ICreature creature)
+        {
+            return playerDialogTree.Remove(creature.CreatureId);
+        }
+
+        public bool IsTalkingWith(ICreature creature)
+        {
+            return playerDialogTree.ContainsKey(creature.CreatureId);
+        }
+
+        public Dictionary<string, string> GetDialogStoredValues(ISociableCreature sociableCreature)
+        {
+            return playerDialogStorage.TryGetValue(sociableCreature.CreatureId, out var map) ? map : null;
+        }
 
         public void StoreWords(ISociableCreature creature, string key, string value)
         {
@@ -33,27 +45,22 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
 
                 return;
             }
-            playerDialogStorage.TryAdd(creature.CreatureId, new Dictionary<string, string>() { { key, value } });
+
+            playerDialogStorage.TryAdd(creature.CreatureId, new Dictionary<string, string> {{key, value}});
         }
 
         public void Back(uint creatureId, byte count)
         {
             if (!playerDialogTree.TryGetValue(creatureId, out var dialogHistory)) return;
 
-            for (int i = 0; i < count; i++)
-            {
-                dialogHistory.RemoveAt(dialogHistory.Count - 1);
-            }
+            for (var i = 0; i < count; i++) dialogHistory.RemoveAt(dialogHistory.Count - 1);
         }
 
         public IDialog GetNextAnswer(uint creatureId, string message)
         {
             if (creatureId == 0 || string.IsNullOrWhiteSpace(message)) return null;
 
-            if (!playerDialogTree.TryGetValue(creatureId, out List<byte> positions))
-            {
-                positions = new List<byte>() { 0 };
-            }
+            if (!playerDialogTree.TryGetValue(creatureId, out var positions)) positions = new List<byte> {0};
 
             var dialog = GetAnswer(positions, creatureId, message);
 
@@ -69,10 +76,7 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
         {
             IDialog[] dialogs = null;
             var i = 0;
-            foreach (var position in positions)
-            {
-                dialogs = i++ == 0 ? npc.Metadata.Dialogs : dialogs[position].Then;
-            }
+            foreach (var position in positions) dialogs = i++ == 0 ? npc.Metadata.Dialogs : dialogs[position].Then;
 
             i = 0;
 
@@ -80,13 +84,14 @@ namespace NeoServer.Game.Creatures.Npcs.Dialogs
             {
                 if (dialog.OnWords.Any(x => x.Equals(message, StringComparison.InvariantCultureIgnoreCase)))
                 {
-                    if (dialog.Then is not null) positions.Add((byte)i);
+                    if (dialog.Then is not null) positions.Add((byte) i);
                     if (dialog.Back > 0) Back(creatureId, dialog.Back);
                     return dialog;
                 }
 
                 i++;
             }
+
             return null;
         }
 

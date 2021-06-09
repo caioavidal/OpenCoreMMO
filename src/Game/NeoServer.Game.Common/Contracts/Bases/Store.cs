@@ -1,13 +1,12 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using System;
 
 namespace NeoServer.Game.Contracts.Bases
 {
     public abstract class Store : IStore
     {
-
         public abstract Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null);
         public abstract Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
         public abstract Result<uint> CanAddItem(IItemType itemType);
@@ -26,9 +25,11 @@ namespace NeoServer.Game.Contracts.Bases
             return result;
         }
 
-        public abstract Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
+        public abstract Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+            out IItem removedThing);
 
-        public virtual Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
+        public virtual Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount,
+            byte fromPosition, byte? toPosition)
         {
             var canAdd = destination.CanAddItem(thing, amount, toPosition);
             if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
@@ -44,7 +45,7 @@ namespace NeoServer.Game.Contracts.Bases
             }
             else
             {
-                var amountToAdd = (byte)Math.Min(amount, possibleAmountToAdd);
+                var amountToAdd = (byte) Math.Min(amount, possibleAmountToAdd);
 
                 RemoveItem(thing, amountToAdd, fromPosition, out removedThing);
             }
@@ -53,12 +54,8 @@ namespace NeoServer.Game.Contracts.Bases
 
             if (result.IsSuccess && thing is IMoveableThing moveableThing) moveableThing.OnMoved();
 
-            var amountResult = (byte)Math.Max(0, amount - (int)possibleAmountToAdd);
-            if (amountResult > 0)
-            {
-                return SendTo(destination, thing, amountResult, fromPosition, toPosition);
-
-            }
+            var amountResult = (byte) Math.Max(0, amount - (int) possibleAmountToAdd);
+            if (amountResult > 0) return SendTo(destination, thing, amountResult, fromPosition, toPosition);
 
             return result;
         }

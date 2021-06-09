@@ -38,13 +38,13 @@ namespace NeoServer.Game.Common.Combat.Structs
         {
             DamageType = damageType;
         }
+
         public bool Missed { get; set; }
         public ShootType ShootType { get; set; }
         public DamageType DamageType { get; set; }
         public EffectT EffectT { get; set; }
 
         public Coordinate[] Area { get; set; }
-        public static CombatAttackType None => new CombatAttackType();
-
+        public static CombatAttackType None => new();
     }
 }

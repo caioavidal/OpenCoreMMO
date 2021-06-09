@@ -12,34 +12,34 @@ namespace NeoServer.Game.Creatures
 
         private readonly Logger logger;
 
-        public static IMonsterFactory Instance { get; private set; }
-
         public MonsterFactory(IMonsterDataManager monsterManager,
-
             Logger logger)
         {
             _monsterManager = monsterManager;
 
             this.logger = logger;
             Instance = this;
-
         }
+
+        public static IMonsterFactory Instance { get; private set; }
+
         public IMonster Create(string name, IMonster master)
         {
-
-            var result = _monsterManager.TryGetMonster(name, out IMonsterType monsterType);
+            var result = _monsterManager.TryGetMonster(name, out var monsterType);
             if (result == false)
             {
                 logger.Warning($"Given monster name: {name} is not loaded");
                 return null;
             }
+
             IMonster monster = new Summon(monsterType, master);
 
             return monster;
         }
+
         public IMonster Create(string name, ISpawnPoint spawn = null)
         {
-            var result = _monsterManager.TryGetMonster(name, out IMonsterType monsterType);
+            var result = _monsterManager.TryGetMonster(name, out var monsterType);
             if (result == false)
             {
                 logger.Warning($"Given monster name: {name} is not loaded");
@@ -48,6 +48,5 @@ namespace NeoServer.Game.Creatures
 
             return new Monster(monsterType, spawn);
         }
-
     }
 }

@@ -1,8 +1,8 @@
-﻿using Moq;
+﻿using System;
+using System.Threading;
+using Moq;
 using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Tasks;
-using System;
-using System.Threading;
 using Xunit;
 
 namespace NeoServer.Server.Tests.Tasks
@@ -24,14 +24,12 @@ namespace NeoServer.Server.Tests.Tasks
 
             sut.Start(cancellationToken);
 
-            for (int i = 0; i < 5_000; i++)
-            {
-                sut.AddEvent(new SchedulerEvent(delay, () => { }));
-            }
+            for (var i = 0; i < 5_000; i++) sut.AddEvent(new SchedulerEvent(delay, () => { }));
 
             Thread.Sleep(1_000);
             Assert.Equal(5_000ul, sut.Count);
         }
+
         [Fact(Skip = "Only runs manually")]
         public void Start_Must_Execute_Random_Delayed_Events()
         {
@@ -44,7 +42,7 @@ namespace NeoServer.Server.Tests.Tasks
             sut.Start(cancellationToken);
 
             Random random = new();
-            for (int i = 0; i < 5_000; i++)
+            for (var i = 0; i < 5_000; i++)
             {
                 var delay = random.Next(1, 500);
                 sut.AddEvent(new SchedulerEvent(delay, () => { }));
@@ -53,6 +51,5 @@ namespace NeoServer.Server.Tests.Tasks
             Thread.Sleep(1_000);
             Assert.Equal(5_000ul, sut.Count);
         }
-
     }
 }

@@ -9,14 +9,17 @@ namespace NeoServer.Game.Items.Items
         {
             Location = location;
         }
+
         public float Weight => Metadata.Weight;
+
+        public virtual void OnMoved()
+        {
+        }
 
         public IMoveableThing Clone()
         {
-            var clone = (IMoveableThing)MemberwiseClone();
+            var clone = (IMoveableThing) MemberwiseClone();
             return clone;
         }
-
-        public virtual void OnMoved() { }
     }
 }

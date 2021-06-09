@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {

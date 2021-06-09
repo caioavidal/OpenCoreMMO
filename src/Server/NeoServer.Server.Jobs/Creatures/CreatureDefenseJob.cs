@@ -20,15 +20,12 @@ namespace NeoServer.Server.Jobs.Creatures
 
         private static void ScheduleDefense(IGameServer game, IMonster monster, ushort interval)
         {
-
             if (monster.Defending)
-            {
                 game.Scheduler.AddEvent(new SchedulerEvent(interval, () =>
                 {
                     var interval = monster.Defend();
                     ScheduleDefense(game, monster, interval);
                 }));
-            }
         }
     }
 }

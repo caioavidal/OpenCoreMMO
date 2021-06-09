@@ -9,6 +9,7 @@ namespace NeoServer.Game.Items.Items
         {
             Metadata = metadata;
         }
+
         public IItemType Metadata { get; }
         public Location Location { get; set; }
         public byte Amount { get; set; } = 1;

@@ -1,15 +1,16 @@
-﻿using Dapper;
-using Microsoft.EntityFrameworkCore;
-using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Interfaces;
+using NeoServer.Data.Model;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Players;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Data.Repositories
 {
@@ -17,7 +18,9 @@ namespace NeoServer.Data.Repositories
     {
         #region constructors
 
-        public AccountRepository(NeoContext context) : base(context) { }
+        public AccountRepository(NeoContext context) : base(context)
+        {
+        }
 
         #endregion
 
@@ -37,26 +40,24 @@ namespace NeoServer.Data.Repositories
         }
 
 
-
         public async Task<PlayerModel> GetPlayer(string accountName, string password, string charName)
         {
             return await Context.Players.Where(x => x.Account.Name.Equals(accountName) &&
-                                         x.Account.Password.Equals(password) &&
-                                         x.Name.Equals(charName))
-                                       .Include(x => x.PlayerItems)
-                                       .Include(x => x.PlayerInventoryItems)
-                                       .Include(x => x.Account)
-                                       .ThenInclude(x => x.VipList)
-                                       .ThenInclude(x => x.Player)
-                                       .Include(x => x.GuildMember)
-                                       .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
-
+                                                    x.Account.Password.Equals(password) &&
+                                                    x.Name.Equals(charName))
+                .Include(x => x.PlayerItems)
+                .Include(x => x.PlayerInventoryItems)
+                .Include(x => x.Account)
+                .ThenInclude(x => x.VipList)
+                .ThenInclude(x => x.Player)
+                .Include(x => x.GuildMember)
+                .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
         }
 
 
         public Task UpdatePlayer(IPlayer player, DbConnection conn = null)
         {
-            var sql = $@"UPDATE players
+            var sql = @"UPDATE players
                            SET --id = @id,
                                --account_id = @account_id,
                                --name = @name,
@@ -106,7 +107,7 @@ namespace NeoServer.Data.Repositories
                                vocation = @vocation
                          WHERE id = @playerId";
 
-            Func<DbConnection, Task> executeQuery = (connection) => connection.ExecuteAsync(sql, new
+            Func<DbConnection, Task> executeQuery = connection => connection.ExecuteAsync(sql, new
             {
                 cap = player.TotalCapacity,
                 level = player.Level,
@@ -116,8 +117,8 @@ namespace NeoServer.Data.Repositories
                 healthmax = player.MaxHealthPoints,
                 Soul = player.SoulPoints,
                 MaxSoul = player.MaxSoulPoints,
-                Speed = player.Speed,
-                StaminaMinutes = player.StaminaMinutes,
+                player.Speed,
+                player.StaminaMinutes,
 
                 lookaddons = player.Outfit.Addon,
                 lookbody = player.Outfit.Body,
@@ -129,26 +130,25 @@ namespace NeoServer.Data.Repositories
                 posy = player.Location.Y,
                 posz = player.Location.Z,
 
-                skill_fist = player.Skills[Game.Common.Creatures.SkillType.Fist].Level,
-                skill_fist_tries = player.Skills[Game.Common.Creatures.SkillType.Fist].Count,
-                skill_club = player.Skills[Game.Common.Creatures.SkillType.Club].Level,
-                skill_club_tries = player.Skills[Game.Common.Creatures.SkillType.Club].Count,
-                skill_sword = player.Skills[Game.Common.Creatures.SkillType.Sword].Level,
-                skill_sword_tries = player.Skills[Game.Common.Creatures.SkillType.Sword].Count,
-                skill_axe = player.Skills[Game.Common.Creatures.SkillType.Axe].Level,
-                skill_axe_tries = player.Skills[Game.Common.Creatures.SkillType.Axe].Count,
-                skill_dist = player.Skills[Game.Common.Creatures.SkillType.Distance].Level,
-                skill_dist_tries = player.Skills[Game.Common.Creatures.SkillType.Distance].Count,
-                skill_shielding = player.Skills[Game.Common.Creatures.SkillType.Shielding].Level,
-                skill_shielding_tries = player.Skills[Game.Common.Creatures.SkillType.Shielding].Count,
-                skill_fishing = player.Skills[Game.Common.Creatures.SkillType.Fishing].Level,
-                skill_fishing_tries = player.Skills[Game.Common.Creatures.SkillType.Fishing].Count,
-                MagicLevel = player.Skills[Game.Common.Creatures.SkillType.Magic].Level,
-                MagicLevelTries = player.Skills[Game.Common.Creatures.SkillType.Magic].Count,
-
-                Experience = player.Experience,
-                ChaseMode = player.ChaseMode,
-                FightMode = player.FightMode,
+                skill_fist = player.Skills[SkillType.Fist].Level,
+                skill_fist_tries = player.Skills[SkillType.Fist].Count,
+                skill_club = player.Skills[SkillType.Club].Level,
+                skill_club_tries = player.Skills[SkillType.Club].Count,
+                skill_sword = player.Skills[SkillType.Sword].Level,
+                skill_sword_tries = player.Skills[SkillType.Sword].Count,
+                skill_axe = player.Skills[SkillType.Axe].Level,
+                skill_axe_tries = player.Skills[SkillType.Axe].Count,
+                skill_dist = player.Skills[SkillType.Distance].Level,
+                skill_dist_tries = player.Skills[SkillType.Distance].Count,
+                skill_shielding = player.Skills[SkillType.Shielding].Level,
+                skill_shielding_tries = player.Skills[SkillType.Shielding].Count,
+                skill_fishing = player.Skills[SkillType.Fishing].Level,
+                skill_fishing_tries = player.Skills[SkillType.Fishing].Count,
+                MagicLevel = player.Skills[SkillType.Magic].Level,
+                MagicLevelTries = player.Skills[SkillType.Magic].Count,
+                player.Experience,
+                player.ChaseMode,
+                player.FightMode,
 
                 vocation = player.VocationType,
                 playerId = player.Id
@@ -156,12 +156,11 @@ namespace NeoServer.Data.Repositories
 
 
             if (conn is null)
-            {
                 using (var connection = Context.Database.GetDbConnection())
                 {
                     return executeQuery.Invoke(connection);
                 }
-            }
+
             return executeQuery.Invoke(conn);
         }
 
@@ -198,16 +197,20 @@ namespace NeoServer.Data.Repositories
             if (player is null) return Array.Empty<Task>();
             if (!Context.Database.IsRelational()) return Array.Empty<Task>();
 
-            var sql = $@"UPDATE player_inventory_items
+            var sql = @"UPDATE player_inventory_items
                            SET sid = @sid,
                                count = @count
                          WHERE player_id = @playerId and slot_id = @pid";
 
-            Func<DbConnection, Task[]> executeQueries = (connection) =>
+            Func<DbConnection, Task[]> executeQueries = connection =>
             {
                 var tasks = new List<Task>();
 
-                foreach (var slot in new Slot[] { Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring, Slot.Legs, Slot.Ammo, Slot.Feet })
+                foreach (var slot in new[]
+                {
+                    Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring, Slot.Legs,
+                    Slot.Ammo, Slot.Feet
+                })
                 {
                     var item = player.Inventory[slot];
                     tasks.Add(connection.ExecuteAsync(sql, new
@@ -215,35 +218,37 @@ namespace NeoServer.Data.Repositories
                         sid = item?.Metadata?.TypeId ?? 0,
                         count = item?.Amount ?? 0,
                         playerId = player.Id,
-                        pid = (int)slot
+                        pid = (int) slot
                     }, commandTimeout: 5));
                 }
+
                 return tasks.ToArray();
             };
 
             if (conn is null)
-            {
                 using (var connection = Context.Database.GetDbConnection())
                 {
                     return executeQueries.Invoke(connection);
                 }
-            }
 
             return executeQueries.Invoke(conn);
         }
+
         public async Task AddPlayerToVipList(int accountId, int playerId)
         {
-            await Context.AccountsVipList.AddAsync(new AccountVipListModel()
+            await Context.AccountsVipList.AddAsync(new AccountVipListModel
             {
                 AccountId = accountId,
-                PlayerId = playerId,
+                PlayerId = playerId
             });
 
             await CommitChanges();
         }
+
         public async Task RemoveFromVipList(int accountId, int playerId)
         {
-            var item = await Context.AccountsVipList.SingleOrDefaultAsync(x => x.PlayerId == playerId && x.AccountId == accountId);
+            var item = await Context.AccountsVipList.SingleOrDefaultAsync(x =>
+                x.PlayerId == playerId && x.AccountId == accountId);
             Context.AccountsVipList.Remove(item);
             await CommitChanges();
         }

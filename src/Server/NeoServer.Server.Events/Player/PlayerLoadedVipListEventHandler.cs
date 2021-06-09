@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using System.Collections.Generic;
 
 namespace NeoServer.Server.Events.Player
 {
@@ -23,6 +23,7 @@ namespace NeoServer.Server.Events.Player
                 var isOnline = game.CreatureManager.TryGetLoggedPlayer(vip.Item1, out var loggedPlayer);
                 connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(vip.Item1, vip.Item2, isOnline));
             }
+
             connection.Send();
         }
     }

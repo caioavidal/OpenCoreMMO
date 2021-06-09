@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Item;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -14,31 +14,19 @@ namespace NeoServer.Loaders.Monsters.Converters
 
             foreach (var element in data.Elements)
             {
-                DamageType immunity = DamageType.Melee;
+                var immunity = DamageType.Melee;
                 if (element.Key.Contains("energy", StringComparison.InvariantCultureIgnoreCase))
-                {
                     immunity = DamageType.Energy;
-                }
                 else if (element.Key.Contains("holy", StringComparison.InvariantCultureIgnoreCase))
-                {
                     immunity = DamageType.Holy;
-                }
                 else if (element.Key.Contains("earth", StringComparison.InvariantCultureIgnoreCase))
-                {
                     immunity = DamageType.Earth;
-                }
                 else if (element.Key.Contains("death", StringComparison.InvariantCultureIgnoreCase))
-                {
                     immunity = DamageType.Death;
-                }
                 else if (element.Key.Contains("fire", StringComparison.InvariantCultureIgnoreCase))
-                {
                     immunity = DamageType.Fire;
-                }
                 else if (element.Key.Contains("ice", StringComparison.InvariantCultureIgnoreCase))
-                {
                     immunity = DamageType.Ice;
-                }
 
                 immunities.Add(immunity, element.Value);
             }

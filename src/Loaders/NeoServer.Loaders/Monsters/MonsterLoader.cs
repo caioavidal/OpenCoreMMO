@@ -1,13 +1,13 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace NeoServer.Loaders.Monsters
 {
@@ -15,22 +15,25 @@ namespace NeoServer.Loaders.Monsters
     {
         private readonly IMonsterDataManager _monsterManager;
         private readonly GameConfiguration gameConfiguration;
-        private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
-        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, Logger logger, ServerConfiguration serverConfiguration)
+        private readonly ServerConfiguration serverConfiguration;
+
+        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, Logger logger,
+            ServerConfiguration serverConfiguration)
         {
             _monsterManager = monsterManager;
             this.gameConfiguration = gameConfiguration;
             this.logger = logger;
             this.serverConfiguration = serverConfiguration;
         }
+
         public void Load()
         {
             logger.Step("Loading monsters...", "{n} monsters loaded", () =>
             {
                 var monsters = GetMonsterDataList().ToList();
                 _monsterManager.Load(monsters);
-                return new object[] { monsters.Count() };
+                return new object[] {monsters.Count()};
             });
         }
 
@@ -42,11 +45,19 @@ namespace NeoServer.Loaders.Monsters
 
             return monstersPath.AsParallel().Select(x => (x["name"], ConvertMonster(basePath, x)));
         }
+
         private IMonsterType ConvertMonster(string basePath, IDictionary<string, string> monsterFile)
         {
             var json = File.ReadAllText(Path.Combine(basePath, monsterFile["file"]));
 
-            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
+            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings
+            {
+                Error = (se, ev) =>
+                {
+                    ev.ErrorContext.Handled = true;
+                    Console.WriteLine(ev.ErrorContext.Error);
+                }
+            });
 
             return MonsterConverter.Convert(monster, gameConfiguration, _monsterManager, logger);
         }

@@ -5,20 +5,23 @@ namespace NeoServer.Game.Parsers.Effects
 {
     public class DamageEffectParser
     {
-        public static EffectT Parse(DamageType damageType) => damageType switch
+        public static EffectT Parse(DamageType damageType)
         {
-            DamageType.Fire => EffectT.Flame,
-            DamageType.FireField => EffectT.Flame,
-            DamageType.Energy => EffectT.DamageEnergy,
-            DamageType.Melee => EffectT.XBlood,
-            DamageType.Physical => EffectT.XBlood,
-            DamageType.Earth => EffectT.RingsGreen,
-            DamageType.LifeDrain => EffectT.GlitterRed,
-            DamageType.ManaDrain => EffectT.GlitterRed,
-            DamageType.Death => EffectT.BubbleBlack,
-            DamageType.Holy => EffectT.HolyDamage,
-            DamageType.Ice => EffectT.IceAttack,
-            _ => EffectT.None
-        };
+            return damageType switch
+            {
+                DamageType.Fire => EffectT.Flame,
+                DamageType.FireField => EffectT.Flame,
+                DamageType.Energy => EffectT.DamageEnergy,
+                DamageType.Melee => EffectT.XBlood,
+                DamageType.Physical => EffectT.XBlood,
+                DamageType.Earth => EffectT.RingsGreen,
+                DamageType.LifeDrain => EffectT.GlitterRed,
+                DamageType.ManaDrain => EffectT.GlitterRed,
+                DamageType.Death => EffectT.BubbleBlack,
+                DamageType.Holy => EffectT.HolyDamage,
+                DamageType.Ice => EffectT.IceAttack,
+                _ => EffectT.None
+            };
+        }
     }
 }

@@ -1,25 +1,27 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Events.Players
 {
     public class PlayerOpenedContainerEventHandler : IGameEventHandler
     {
+        private readonly IItemFactory itemFactory;
+
         public PlayerOpenedContainerEventHandler()
         {
         }
 
-        private readonly IItemFactory itemFactory;
         public PlayerOpenedContainerEventHandler(IItemFactory itemFactory)
         {
             this.itemFactory = itemFactory;
         }
+
         public void Execute(IPlayer player, byte containerId, IContainer container)
         {
             if (container is not ILootContainer lootContainer || lootContainer.Loot is null) return;
@@ -28,6 +30,7 @@ namespace NeoServer.Game.Creatures.Events.Players
             CreateLoot(lootContainer);
             lootContainer.MarkAsLootCreated();
         }
+
         private void CreateLoot(ILootContainer lootContainer)
         {
             CreateLootItems(lootContainer.Loot.Items, lootContainer);

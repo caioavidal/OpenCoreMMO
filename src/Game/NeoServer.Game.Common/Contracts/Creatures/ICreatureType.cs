@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
@@ -10,6 +10,5 @@ namespace NeoServer.Game.Contracts.Creatures
         uint MaxHealth { get; }
         ushort Speed { get; }
         IDictionary<LookType, ushort> Look { get; }
-
     }
 }

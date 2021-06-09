@@ -6,8 +6,9 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class CreatureMovedPacket : OutgoingPacket
     {
         private readonly Location location;
-        private readonly Location toLocation;
         private readonly byte stackPosition;
+        private readonly Location toLocation;
+
         public CreatureMovedPacket(Location location, Location toLocation, byte stackPosition)
         {
             this.location = location;
@@ -17,7 +18,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.CreatureMoved);
+            message.AddByte((byte) GameOutgoingPacketType.CreatureMoved);
 
             message.AddLocation(location);
             message.AddByte(stackPosition);

@@ -1,16 +1,17 @@
-﻿using NeoServer.Networking.Protocols;
-using NeoServer.Server.Contracts.Network;
-using Serilog.Core;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using NeoServer.Networking.Protocols;
+using NeoServer.Server.Contracts.Network;
+using Serilog.Core;
 
 namespace NeoServer.Networking.Listeners
 {
     public abstract class Listener : TcpListener, IListener
     {
-        private readonly IProtocol protocol;
         private readonly Logger logger;
+        private readonly IProtocol protocol;
+
         public Listener(int port, IProtocol protocol, Logger logger) : base(IPAddress.Any, port)
         {
             this.protocol = protocol;
@@ -30,8 +31,12 @@ namespace NeoServer.Networking.Listeners
 
                     protocol.OnAccept(connection);
                 }
-
             });
+        }
+
+        public void EndListening()
+        {
+            Stop();
         }
 
         private async Task<IConnection> CreateConnection()
@@ -52,11 +57,6 @@ namespace NeoServer.Networking.Listeners
             args.Connection.OnCloseEvent -= OnConnectionClose;
             args.Connection.OnProcessEvent -= protocol.ProcessMessage;
             args.Connection.OnPostProcessEvent -= protocol.PostProcessMessage;
-        }
-
-        public void EndListening()
-        {
-            Stop();
         }
     }
 }

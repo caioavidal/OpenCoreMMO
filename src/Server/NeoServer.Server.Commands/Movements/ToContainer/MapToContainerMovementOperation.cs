@@ -21,22 +21,20 @@ namespace NeoServer.Server.Commands.Movement
 
             if (fromTile.TopItemOnStack is not IPickupable item) return;
 
-            if (!itemThrow.FromLocation.IsNextTo(player.Location))
-            {
-                player.WalkTo(itemThrow.FromLocation);
-            }
+            if (!itemThrow.FromLocation.IsNextTo(player.Location)) player.WalkTo(itemThrow.FromLocation);
 
-            IContainer container = player.Containers[itemThrow.ToLocation.ContainerId];
+            var container = player.Containers[itemThrow.ToLocation.ContainerId];
             if (container is null) return;
 
             if (container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
 
-            player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
+            player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte) itemThrow.ToLocation.ContainerSlot);
         }
 
-        public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>
-              itemThrowPacket.FromLocation.Type == LocationType.Ground
-              && itemThrowPacket.ToLocation.Type == LocationType.Container;
-
+        public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
+        {
+            return itemThrowPacket.FromLocation.Type == LocationType.Ground
+                   && itemThrowPacket.ToLocation.Type == LocationType.Container;
+        }
     }
 }

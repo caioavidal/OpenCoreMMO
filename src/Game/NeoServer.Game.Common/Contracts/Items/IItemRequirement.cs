@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Creatures;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
+using NeoServer.Game.Common;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Contracts.Items
 {
@@ -9,20 +9,6 @@ namespace NeoServer.Game.Contracts.Items
     {
         public byte[] Vocations => Metadata.Attributes.GetRequiredVocations();
         public ushort MinLevel => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
-
-        public bool CanBeUsed(IPlayer player)
-        {
-            var vocations = Vocations;
-            if (vocations?.Length > 0)
-            {
-                if (!vocations.Contains(player.VocationType)) return false;
-            }
-            if (MinLevel > 0)
-            {
-                if (player.Level < MinLevel) return false;
-            }
-            return true;
-        }
 
         public string ValidationError
         {
@@ -42,6 +28,18 @@ namespace NeoServer.Game.Contracts.Items
                 text.Append($" of level {MinLevel} or above may use or consume this item");
                 return text.ToString();
             }
+        }
+
+        public bool CanBeUsed(IPlayer player)
+        {
+            var vocations = Vocations;
+            if (vocations?.Length > 0)
+                if (!vocations.Contains(player.VocationType))
+                    return false;
+            if (MinLevel > 0)
+                if (player.Level < MinLevel)
+                    return false;
+            return true;
         }
     }
 }

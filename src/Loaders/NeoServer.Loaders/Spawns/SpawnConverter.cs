@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using System.Linq;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Spawns;
-using System.Linq;
 
 namespace NeoServer.Loaders.Spawns
 {
@@ -11,7 +11,7 @@ namespace NeoServer.Loaders.Spawns
             var spawn = new Spawn
             {
                 Location = new Location(spawnData.Centerx, spawnData.Centery, spawnData.Centerz),
-                Radius = spawnData.Radius,
+                Radius = spawnData.Radius
             };
             //todo: remove code duplucation
             if (spawnData.Monsters is not null)
@@ -20,13 +20,13 @@ namespace NeoServer.Loaders.Spawns
 
                 var i = 0;
                 foreach (var monster in spawnData.Monsters)
-                {
                     spawn.Monsters[i++] = new Spawn.Creature
                     {
                         Name = monster.Name,
-                        Spawn = new SpawnPoint(new Location((ushort)(monster.X + spawn.Location.X), (ushort)(monster.Y + spawn.Location.Y), monster.Z), monster.Spawntime)
+                        Spawn = new SpawnPoint(
+                            new Location((ushort) (monster.X + spawn.Location.X),
+                                (ushort) (monster.Y + spawn.Location.Y), monster.Z), monster.Spawntime)
                     };
-                }
             }
 
             if (spawnData.Npcs is not null)
@@ -35,13 +35,13 @@ namespace NeoServer.Loaders.Spawns
 
                 var i = 0;
                 foreach (var npc in spawnData.Npcs)
-                {
                     spawn.Npcs[i++] = new Spawn.Creature
                     {
                         Name = npc.Name,
-                        Spawn = new SpawnPoint(new Location((ushort)(npc.X + spawn.Location.X), (ushort)(npc.Y + spawn.Location.Y), npc.Z), npc.Spawntime)
+                        Spawn = new SpawnPoint(
+                            new Location((ushort) (npc.X + spawn.Location.X), (ushort) (npc.Y + spawn.Location.Y),
+                                npc.Z), npc.Spawntime)
                     };
-                }
             }
 
             return spawn;

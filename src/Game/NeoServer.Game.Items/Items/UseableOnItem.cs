@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -12,7 +13,11 @@ namespace NeoServer.Game.Items.Items
         {
         }
 
-        public static bool IsApplicable(IItemType type) => type.Flags.Contains(Common.ItemFlag.Useable) && type.Flags.Contains(Common.ItemFlag.Pickupable);
         public abstract bool Use(ICreature usedBy, IItem onItem);
+
+        public static bool IsApplicable(IItemType type)
+        {
+            return type.Flags.Contains(ItemFlag.Useable) && type.Flags.Contains(ItemFlag.Pickupable);
+        }
     }
 }

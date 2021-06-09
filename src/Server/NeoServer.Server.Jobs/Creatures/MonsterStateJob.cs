@@ -13,10 +13,7 @@ namespace NeoServer.Server.Jobs.Creatures
 
             monster.ChangeState();
 
-            if (monster.State == MonsterState.LookingForEnemy)
-            {
-                monster.LookForNewEnemy();
-            }
+            if (monster.State == MonsterState.LookingForEnemy) monster.LookForNewEnemy();
 
             if (monster.State == MonsterState.InCombat)
             {
@@ -32,18 +29,13 @@ namespace NeoServer.Server.Jobs.Creatures
 
                 if (monster.Metadata.TargetChance.Interval == 0) return;
 
-                if (monster.Attacking && monster.Metadata.TargetChance.Chance < GameRandom.Random.Next(minValue: 1, maxValue: 100)) return;
+                if (monster.Attacking &&
+                    monster.Metadata.TargetChance.Chance < GameRandom.Random.Next(1, maxValue: 100)) return;
                 monster.SelectTargetToAttack();
             }
 
-            if (monster.State == MonsterState.Sleeping)
-            {
-                monster.Sleep();
-            }
-            if (monster.State == MonsterState.Running)
-            {
-                monster.Escape();
-            }
+            if (monster.State == MonsterState.Sleeping) monster.Sleep();
+            if (monster.State == MonsterState.Running) monster.Escape();
         }
     }
 }

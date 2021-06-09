@@ -44,6 +44,6 @@
         SmallEarth = 39,
         EarthArrow = 40,
         Explosion = 41,
-        WeaponType = 0xfe, // 254
+        WeaponType = 0xfe // 254
     }
 }

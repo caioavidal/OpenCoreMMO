@@ -8,9 +8,9 @@ namespace NeoServer.Server.Events
 {
     public class EventSubscriber
     {
-        private readonly IMap map;
-        private IComponentContext container;
         private readonly ILiquidPoolFactory itemFactory;
+        private readonly IMap map;
+        private readonly IComponentContext container;
 
         public EventSubscriber(IMap map, IComponentContext container, ILiquidPoolFactory itemFactory)
         {
@@ -21,7 +21,8 @@ namespace NeoServer.Server.Events
 
         public virtual void AttachEvents()
         {
-            map.OnCreatureAddedOnMap += (creature, cylinder) => container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
+            map.OnCreatureAddedOnMap += (creature, cylinder) =>
+                container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
             map.OnThingRemovedFromTile += container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
             map.OnCreatureMoved += container.Resolve<CreatureMovedEventHandler>().Execute;
             map.OnThingMovedFailed += container.Resolve<InvalidOperationEventHandler>().Execute;

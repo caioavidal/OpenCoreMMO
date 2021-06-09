@@ -4,7 +4,6 @@ namespace NeoServer.Server.Contracts.Tasks
 {
     public interface IEvent
     {
-
         Action Action { get; }
 
         bool HasExpired { get; }

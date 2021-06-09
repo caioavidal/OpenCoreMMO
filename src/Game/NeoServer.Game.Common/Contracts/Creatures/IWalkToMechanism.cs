@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using System;
+﻿using System;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {

@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using Microsoft.Extensions.Caching.Memory;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Contracts;
@@ -13,7 +14,7 @@ using NeoServer.Server.Contracts.Tasks;
 using NeoServer.Server.Handlers;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Server.Tasks;
-using System.Reflection;
+using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -21,10 +22,10 @@ namespace NeoServer.Server.Standalone.IoC
     {
         public static IContainer CompositionRoot()
         {
-            var builder = new ContainerBuilder(); 
-           
+            var builder = new ContainerBuilder();
+
             //tools
-            builder.RegisterType<Game.World.Map.PathFinder>().As<IPathFinder>().SingleInstance();
+            builder.RegisterType<PathFinder>().As<IPathFinder>().SingleInstance();
             builder.RegisterType<WalkToMechanism>().As<IWalkToMechanism>().SingleInstance();
 
             builder.RegisterPacketHandlers();
@@ -39,18 +40,18 @@ namespace NeoServer.Server.Standalone.IoC
             var configuration = ConfigurationInjection.GetConfiguration();
 
             builder.AddFactories()
-                   .AddServices()
-                   .AddLoaders()
-                   .AddDatabases(configuration)
-                   .AddRepositories()
-                   .AddConfigurations(configuration)
-                   .AddNetwork()
-                   .AddEvents()
-                   .AddManagers()
-                   .AddLogger(configuration)
-                   .AddCommands()
-                   .AddLua()
-                   .AddJobs();
+                .AddServices()
+                .AddLoaders()
+                .AddDatabases(configuration)
+                .AddRepositories()
+                .AddConfigurations(configuration)
+                .AddNetwork()
+                .AddEvents()
+                .AddManagers()
+                .AddLogger(configuration)
+                .AddCommands()
+                .AddLua()
+                .AddJobs();
 
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();

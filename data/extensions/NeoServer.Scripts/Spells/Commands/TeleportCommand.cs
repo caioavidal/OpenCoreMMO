@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Scripts.Spells.Commands
@@ -15,19 +16,19 @@ namespace NeoServer.Scripts.Spells.Commands
             var location = actor.Location;
             switch (actor.Direction)
             {
-                case Game.Common.Location.Direction.North:
-                    location.Update(location.X, (ushort)(location.Y - steps), location.Z);
+                case Direction.North:
+                    location.Update(location.X, (ushort) (location.Y - steps), location.Z);
                     break;
-                case Game.Common.Location.Direction.East:
-                    location.Update((ushort)(location.X + steps), location.Y, location.Z);
+                case Direction.East:
+                    location.Update((ushort) (location.X + steps), location.Y, location.Z);
                     break;
-                case Game.Common.Location.Direction.South:
-                    location.Update(location.X, (ushort)(location.Y + steps), location.Z);
+                case Direction.South:
+                    location.Update(location.X, (ushort) (location.Y + steps), location.Z);
                     break;
-                case Game.Common.Location.Direction.West:
-                    location.Update((ushort)(location.X - steps), location.Y, location.Z);
+                case Direction.West:
+                    location.Update((ushort) (location.X - steps), location.Y, location.Z);
                     break;
-                case Game.Common.Location.Direction.None:
+                case Direction.None:
                     return false;
                 default:
                     return false;

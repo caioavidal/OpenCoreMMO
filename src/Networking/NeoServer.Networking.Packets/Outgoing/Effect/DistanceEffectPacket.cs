@@ -5,10 +5,10 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class DistanceEffectPacket : OutgoingPacket
     {
+        private readonly byte effect;
         private readonly Location location;
         private readonly Location toLocation;
 
-        private readonly byte effect;
         public DistanceEffectPacket(Location location, Location toLocation, byte effect)
         {
             this.location = location;
@@ -18,7 +18,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.DistanceShootEffect);
+            message.AddByte((byte) GameOutgoingPacketType.DistanceShootEffect);
             message.AddLocation(location);
             message.AddLocation(toLocation);
             message.AddByte(effect);

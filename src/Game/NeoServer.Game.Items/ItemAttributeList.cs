@@ -1,72 +1,104 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts.Items;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Items
 {
-
     public sealed class ItemAttributeList : IItemAttributeList
     {
-        private IDictionary<ItemAttribute, (dynamic, IItemAttributeList)> _defaultAttributes;
+        private readonly IDictionary<ItemAttribute, (dynamic, IItemAttributeList)> _defaultAttributes;
         private IDictionary<string, (dynamic, IItemAttributeList)> customAttributes;
-        private IDictionary<string, (dynamic, IItemAttributeList)> _customAttributes
-        {
-            get
-            {
-                customAttributes = customAttributes ?? new Dictionary<string, (dynamic, IItemAttributeList)>(StringComparer.InvariantCultureIgnoreCase);
-                return customAttributes;
-            }
-        }
 
         public ItemAttributeList()
         {
             _defaultAttributes = new Dictionary<ItemAttribute, (dynamic, IItemAttributeList)>();
         }
-        public void SetCustomAttribute(string attribute, int attributeValue) => _customAttributes[attribute] = (attributeValue, null);
 
-        public void SetCustomAttribute(string attribute, IConvertible attributeValue) => _customAttributes[attribute] = (attributeValue, null);
-        public void SetCustomAttribute(string attribute, dynamic values) => _customAttributes[attribute] = (values, null);
+        private IDictionary<string, (dynamic, IItemAttributeList)> _customAttributes
+        {
+            get
+            {
+                customAttributes = customAttributes ??
+                                   new Dictionary<string, (dynamic, IItemAttributeList)>(StringComparer
+                                       .InvariantCultureIgnoreCase);
+                return customAttributes;
+            }
+        }
 
-        public void SetCustomAttribute(string attribute, IConvertible attributeValue, IItemAttributeList attrs) => _customAttributes[attribute] = (attributeValue, attrs);
+        public void SetCustomAttribute(string attribute, int attributeValue)
+        {
+            _customAttributes[attribute] = (attributeValue, null);
+        }
 
-        public void SetAttribute(ItemAttribute attribute, int attributeValue) => _defaultAttributes[attribute] = (attributeValue, null);
+        public void SetCustomAttribute(string attribute, IConvertible attributeValue)
+        {
+            _customAttributes[attribute] = (attributeValue, null);
+        }
 
-        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue) => _defaultAttributes[attribute] = (attributeValue, null);
-        public void SetAttribute(ItemAttribute attribute, dynamic values) => _defaultAttributes[attribute] = (values, null);
+        public void SetCustomAttribute(string attribute, dynamic values)
+        {
+            _customAttributes[attribute] = (values, null);
+        }
 
-        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs) => _defaultAttributes[attribute] = (attributeValue, attrs);
+        public void SetCustomAttribute(string attribute, IConvertible attributeValue, IItemAttributeList attrs)
+        {
+            _customAttributes[attribute] = (attributeValue, attrs);
+        }
 
-        public bool HasAttribute(ItemAttribute attribute) => _defaultAttributes.ContainsKey(attribute);
+        public void SetAttribute(ItemAttribute attribute, int attributeValue)
+        {
+            _defaultAttributes[attribute] = (attributeValue, null);
+        }
 
-        public bool HasAttribute(string attribute) => _customAttributes.ContainsKey(attribute);
+        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue)
+        {
+            _defaultAttributes[attribute] = (attributeValue, null);
+        }
+
+        public void SetAttribute(ItemAttribute attribute, dynamic values)
+        {
+            _defaultAttributes[attribute] = (values, null);
+        }
+
+        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs)
+        {
+            _defaultAttributes[attribute] = (attributeValue, attrs);
+        }
+
+        public bool HasAttribute(ItemAttribute attribute)
+        {
+            return _defaultAttributes.ContainsKey(attribute);
+        }
+
+        public bool HasAttribute(string attribute)
+        {
+            return _customAttributes.ContainsKey(attribute);
+        }
 
         public T GetAttribute<T>(ItemAttribute attribute) where T : struct
         {
             if (_defaultAttributes is null) return default;
 
             if (_defaultAttributes.TryGetValue(attribute, out var value))
-            {
-                return (T)Convert.ChangeType(value.Item1, typeof(T));
-            }
+                return (T) Convert.ChangeType(value.Item1, typeof(T));
 
             return default;
         }
+
         public string GetAttribute(ItemAttribute attribute)
         {
             if (_defaultAttributes is null) return default;
 
-            if (_defaultAttributes.TryGetValue(attribute, out var value))
-            {
-                return (string)value.Item1;
-            }
+            if (_defaultAttributes.TryGetValue(attribute, out var value)) return (string) value.Item1;
 
             return default;
         }
+
         public dynamic[] GetAttributeArray(ItemAttribute attribute)
         {
             if (_defaultAttributes is null) return default;
@@ -79,6 +111,7 @@ namespace NeoServer.Game.Items
 
             return default;
         }
+
         public dynamic[] GetAttributeArray(string attribute)
         {
             if (_customAttributes is null) return default;
@@ -99,37 +132,25 @@ namespace NeoServer.Game.Items
             var dictionary = new Dictionary<TKey, TValue>();
 
             if (_defaultAttributes is not null)
-            {
                 foreach (var item in _defaultAttributes)
-                {
-                    dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey)), (TValue)item.Value.Item1);
-                }
-            }
+                    dictionary.Add((TKey) Convert.ChangeType(item.Key, typeof(TKey)), (TValue) item.Value.Item1);
             if (_customAttributes is not null)
-            {
                 foreach (var item in _customAttributes)
-                {
-
-                    dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey)), (TValue)item.Value.Item1);
-                }
-            }
+                    dictionary.Add((TKey) Convert.ChangeType(item.Key, typeof(TKey)), (TValue) item.Value.Item1);
             return dictionary;
         }
+
         public IItemAttributeList GetInnerAttributes(ItemAttribute attribute)
         {
             if (_defaultAttributes is null) return default;
 
-            if (_defaultAttributes.TryGetValue(attribute, out var value))
-            {
-                return value.Item2;
-            }
+            if (_defaultAttributes.TryGetValue(attribute, out var value)) return value.Item2;
 
             return default;
         }
 
         public FloorChangeDirection GetFloorChangeDirection()
         {
-
             if (_defaultAttributes?.ContainsKey(ItemAttribute.FloorChange) ?? false)
             {
                 var floorChange = GetAttribute(ItemAttribute.FloorChange);
@@ -155,13 +176,11 @@ namespace NeoServer.Game.Items
         {
             if (_defaultAttributes is null) return default;
 
-            if (_defaultAttributes.TryGetValue(ItemAttribute.Vocation, out var value))
-            {
-                return (byte[])value.Item1;
-            }
+            if (_defaultAttributes.TryGetValue(ItemAttribute.Vocation, out var value)) return (byte[]) value.Item1;
 
             return default;
         }
+
         public EffectT GetEffect()
         {
             if (_defaultAttributes?.ContainsKey(ItemAttribute.Effect) ?? false)
@@ -204,13 +223,15 @@ namespace NeoServer.Game.Items
                 return new Tuple<DamageType, byte>(DamageType.Energy, GetAttribute<byte>(ItemAttribute.ElementEnergy));
 
             if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementFire) ?? false)
-                return new Tuple<DamageType, byte>(DamageType.FireField, GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
+                return new Tuple<DamageType, byte>(DamageType.FireField,
+                    GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
 
             if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementIce) ?? false)
                 return new Tuple<DamageType, byte>(DamageType.Ice, GetAttribute<byte>(ItemAttribute.ElementIce));
 
             return null;
         }
+
         public Dictionary<SkillType, byte> SkillBonus
         {
             get
@@ -261,7 +282,8 @@ namespace NeoServer.Game.Items
                     dictionary.TryAdd(DamageType.LifeDrain, GetAttribute<byte>(ItemAttribute.AbsorbPercentPhysical));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
-                    dictionary.TryAdd(DamageType.AbsorbPercentMagic, GetAttribute<byte>(ItemAttribute.AbsorbPercentMagic));
+                    dictionary.TryAdd(DamageType.AbsorbPercentMagic,
+                        GetAttribute<byte>(ItemAttribute.AbsorbPercentMagic));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentAll) ?? false)
                     dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentAll));
@@ -269,6 +291,5 @@ namespace NeoServer.Game.Items
                 return dictionary;
             }
         }
-
     }
 }

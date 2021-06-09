@@ -9,7 +9,9 @@ namespace NeoServer.Game.Contracts.World
     {
         IMap Map { get; set; }
 
-        bool Find(ICreature creature, Location target, FindPathParams findPathParams, ITileEnterRule tileEnterRule, out Direction[] directions);
+        bool Find(ICreature creature, Location target, FindPathParams findPathParams, ITileEnterRule tileEnterRule,
+            out Direction[] directions);
+
         bool Find(ICreature creature, Location target, ITileEnterRule tileEnterRule, out Direction[] directions);
         Direction FindRandomStep(ICreature creature, ITileEnterRule rule);
     }

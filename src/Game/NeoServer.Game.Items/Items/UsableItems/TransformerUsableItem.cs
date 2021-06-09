@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 
@@ -6,7 +7,10 @@ namespace NeoServer.Game.Items.Items.UsableItems
 {
     public class TransformerUsableItem : UseableOnItem
     {
-        public TransformerUsableItem(IItemType type, Location location) : base(type, location) { }
+        public TransformerUsableItem(IItemType type, Location location) : base(type, location)
+        {
+        }
+
         public override bool Use(ICreature usedBy, IItem item)
         {
             return true;
@@ -26,6 +30,10 @@ namespace NeoServer.Game.Items.Items.UsableItems
             //    base.UseOn(player, map, thing);
         }
 
-        public static new bool IsApplicable(IItemType type) => UseableOnItem.IsApplicable(type) && (type.OnUse?.HasAttribute(Common.ItemAttribute.TransformTo) ?? false);
+        public new static bool IsApplicable(IItemType type)
+        {
+            return UseableOnItem.IsApplicable(type) &&
+                   (type.OnUse?.HasAttribute(ItemAttribute.TransformTo) ?? false);
+        }
     }
 }

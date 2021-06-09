@@ -17,6 +17,6 @@
         Cursed = 1 << 11,
         PartyBuff = 1 << 12,
         Redswords = 1 << 13,
-        Pigeon = 1 << 14,
+        Pigeon = 1 << 14
     }
 }

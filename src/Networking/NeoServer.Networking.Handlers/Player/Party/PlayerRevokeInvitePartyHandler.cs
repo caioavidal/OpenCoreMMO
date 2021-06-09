@@ -19,7 +19,8 @@ namespace NeoServer.Networking.Handlers.Player
         {
             var creatureId = message.GetUInt32();
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-            if (!game.CreatureManager.TryGetPlayer(creatureId, out var invitedPlayer) || !game.CreatureManager.IsPlayerLogged(invitedPlayer))
+            if (!game.CreatureManager.TryGetPlayer(creatureId, out var invitedPlayer) ||
+                !game.CreatureManager.IsPlayerLogged(invitedPlayer))
             {
                 connection.Send(new TextMessagePacket("Revoked player is not online.", TextMessageOutgoingType.Small));
                 return;

@@ -4,8 +4,9 @@ namespace NeoServer.Game.Common.Parsers
 {
     public class ShootTypeParser
     {
-        public static ShootType Parse(string shootType) =>
-            shootType switch
+        public static ShootType Parse(string shootType)
+        {
+            return shootType switch
             {
                 "arrow" => ShootType.Arrow,
                 "bolt" => ShootType.Bolt,
@@ -42,6 +43,7 @@ namespace NeoServer.Game.Common.Parsers
                 "smallholy" => ShootType.SmallHoly,
                 _ => ShootType.None
             };
+        }
 
         public static DamageType ToDamageType(ShootType shootType)
         {

@@ -1,17 +1,19 @@
-﻿using NeoServer.Game.Common.Creatures.Structs;
-using NeoServer.Game.Creatures.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Creatures.Structs;
+using NeoServer.Game.Creatures.Enums;
 
 namespace NeoServer.Game.Creatures
 {
     public class CooldownList
     {
-        public IDictionary<CooldownType, CooldownTime> Cooldowns { get; } = new Dictionary<CooldownType, CooldownTime>();
+        public IDictionary<CooldownType, CooldownTime> Cooldowns { get; } =
+            new Dictionary<CooldownType, CooldownTime>();
+
         public IDictionary<string, CooldownTime> Spells { get; } = new Dictionary<string, CooldownTime>();
 
         /// <summary>
-        /// Add cooldown
+        ///     Add cooldown
         /// </summary>
         /// <param name="type"></param>
         /// <param name="duration">milliseconds</param>
@@ -31,30 +33,22 @@ namespace NeoServer.Game.Creatures
         {
             Spells.TryAdd(spell, new CooldownTime(DateTime.Now, duration));
         }
+
         public bool Expired(CooldownType type)
         {
-            if (Cooldowns.TryGetValue(type, out var cooldown))
-            {
-                return cooldown.Expired;
-            }
+            if (Cooldowns.TryGetValue(type, out var cooldown)) return cooldown.Expired;
             return true;
         }
+
         public bool Expired(string spell)
         {
-            if (Spells.TryGetValue(spell, out var cooldown))
-            {
-                return cooldown.Expired;
-            }
+            if (Spells.TryGetValue(spell, out var cooldown)) return cooldown.Expired;
             return true;
         }
+
         public void RestartCoolDown(CooldownType type, int duration)
         {
-            if (Cooldowns.ContainsKey(type))
-            {
-                Cooldowns[type].Reset();
-            }
+            if (Cooldowns.ContainsKey(type)) Cooldowns[type].Reset();
         }
-
     }
-
 }

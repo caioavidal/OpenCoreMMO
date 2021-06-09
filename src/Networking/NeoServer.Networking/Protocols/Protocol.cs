@@ -18,7 +18,6 @@ namespace NeoServer.Networking.Protocols
             if (!KeepConnectionOpen)
             {
                 args.Connection.Close();
-                return;
             }
         }
 

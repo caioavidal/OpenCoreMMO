@@ -8,10 +8,7 @@ namespace NeoServer.Networking.Packets.Incoming
 
         protected void LoadXtea(IReadOnlyNetworkMessage message)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                Xtea[i] = message.GetUInt32();
-            }
+            for (var i = 0; i < 4; i++) Xtea[i] = message.GetUInt32();
         }
     }
 }

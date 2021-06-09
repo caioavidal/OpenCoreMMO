@@ -48,6 +48,7 @@ namespace NeoServer.Game.Items.Tests
             container.AddItem(ItemTestData.CreateCumulativeItem(105, 70));
             Assert.Equal(200, container.Weight);
         }
+
         [Fact]
         public void Weight_When_Remove_Cumulative_Item_Returns_Increased_Weight()
         {

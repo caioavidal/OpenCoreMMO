@@ -9,6 +9,14 @@ namespace NeoServer.Game.Creatures.Spells
 {
     public class IllusionSpell : Spell<IllusionSpell>
     {
+        public IllusionSpell(uint duration, string creatureName, IMonsterDataManager monsters, EffectT effect)
+        {
+            Monsters = monsters;
+            Duration = duration;
+            Effect = effect;
+            CreatureName = creatureName;
+        }
+
         public override string Name => "Illusion";
         public override EffectT Effect { get; } = EffectT.GlitterGreen;
         public override uint Duration { get; } = 5000;
@@ -17,13 +25,6 @@ namespace NeoServer.Game.Creatures.Spells
         public virtual IMonsterDataManager Monsters { get; }
         public virtual string CreatureName { get; }
 
-        public IllusionSpell(uint duration, string creatureName, IMonsterDataManager monsters, EffectT effect)
-        {
-            Monsters = monsters;
-            Duration = duration;
-            Effect = effect;
-            CreatureName = creatureName;
-        }
         public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {
             error = InvalidOperation.NotPossible;
@@ -39,10 +40,11 @@ namespace NeoServer.Game.Creatures.Spells
             look.TryGetValue(LookType.Legs, out var legs);
             look.TryGetValue(LookType.Head, out var head);
 
-            actor.SetTemporaryOutfit(lookType, 0, (byte)head, (byte)body, (byte)legs, (byte)feet, (byte)addon);
+            actor.SetTemporaryOutfit(lookType, 0, (byte) head, (byte) body, (byte) legs, (byte) feet, (byte) addon);
 
             return true;
         }
+
         public override void OnEnd(ICombatActor actor)
         {
             actor.BackToOldOutfit();

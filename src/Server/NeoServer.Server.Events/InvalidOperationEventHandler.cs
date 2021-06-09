@@ -14,17 +14,16 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
+
         public void Execute(IThing thing, InvalidOperation error)
         {
             if (thing is IPlayer)
-            {
-
-                if (game.CreatureManager.GetPlayerConnection(((IPlayer)thing).CreatureId, out var connection))
+                if (game.CreatureManager.GetPlayerConnection(((IPlayer) thing).CreatureId, out var connection))
                 {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextMessageOutgoingParser.Parse(error), TextMessageOutgoingType.Small));
+                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextMessageOutgoingParser.Parse(error),
+                        TextMessageOutgoingType.Small));
                     connection.Send();
                 }
-            }
         }
     }
 }

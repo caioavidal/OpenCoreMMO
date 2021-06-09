@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Creature.Model;
@@ -10,11 +11,9 @@ namespace NeoServer.Game.Creatures
 {
     public class NpcFactory : INpcFactory
     {
+        private readonly ICreatureGameInstance creatureGameInstance;
         private readonly IItemFactory itemFactory;
         private readonly Logger logger;
-        private readonly ICreatureGameInstance creatureGameInstance;
-
-        public static INpcFactory Instance { get; private set; }
 
         public NpcFactory(
             Logger logger, IItemFactory itemFactory, ICreatureGameInstance creatureGameInstance)
@@ -24,6 +23,9 @@ namespace NeoServer.Game.Creatures
             this.itemFactory = itemFactory;
             this.creatureGameInstance = creatureGameInstance;
         }
+
+        public static INpcFactory Instance { get; private set; }
+
         public INpc Create(string name, ISpawnPoint spawn = null)
         {
             var npcType = NpcStore.Data.Get(name);
@@ -33,26 +35,23 @@ namespace NeoServer.Game.Creatures
                 return null;
             }
 
-            var outfit = new Outfit()
+            var outfit = new Outfit
             {
-                Addon = (byte)npcType.Look[Common.Creatures.LookType.Addon],
-                LookType = (byte)npcType.Look[Common.Creatures.LookType.Type],
-                Body = (byte)npcType.Look[Common.Creatures.LookType.Body],
-                Feet = (byte)npcType.Look[Common.Creatures.LookType.Feet],
-                Head = (byte)npcType.Look[Common.Creatures.LookType.Head],
-                Legs = (byte)npcType.Look[Common.Creatures.LookType.Legs]
+                Addon = (byte) npcType.Look[LookType.Addon],
+                LookType = (byte) npcType.Look[LookType.Type],
+                Body = (byte) npcType.Look[LookType.Body],
+                Feet = (byte) npcType.Look[LookType.Feet],
+                Head = (byte) npcType.Look[LookType.Head],
+                Legs = (byte) npcType.Look[LookType.Legs]
             };
 
             if (npcType.CustomAttributes.ContainsKey("shop"))
-            {
                 return new ShopperNpc(npcType, spawn, outfit, npcType.MaxHealth)
                 {
                     CreateNewItem = itemFactory.Create
                 };
-            }
 
             return new Npc(npcType, spawn, outfit, npcType.MaxHealth);
         }
-
     }
 }

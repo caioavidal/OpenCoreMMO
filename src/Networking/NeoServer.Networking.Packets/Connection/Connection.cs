@@ -1,14 +1,15 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts.Network;
-using Serilog.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Networking.Packets;
+using NeoServer.Networking.Packets.Messages;
+using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Networking.Packets.Security;
+using NeoServer.Server.Contracts.Network;
+using Serilog.Core;
 
 namespace NeoServer.Networking
 {
@@ -16,33 +17,12 @@ namespace NeoServer.Networking
     {
         private const int NETWORK_MESSAGE_MAXSIZE = 24590 - 16;
         private const int HEADER_LENGTH = 2;
+        private readonly object connectionLock;
+        private readonly Logger logger;
 
-        public event EventHandler<IConnectionEventArgs> OnProcessEvent;
-        public event EventHandler<IConnectionEventArgs> OnCloseEvent;
-        public event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
-
-        private Socket Socket;
-        private Stream Stream;
-        private object writeLock;
-        private object connectionLock;
-
-        public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
-        public IReadOnlyNetworkMessage InMessage { get; private set; }
-
-        public uint[] XteaKey { get; private set; }
-        public uint CreatureId { get; private set; }
-        public bool IsAuthenticated { get; private set; } = false;
-
-        public bool Disconnected { get; private set; } = false;
-
-        public int BeginStreamReadCalls { get; set; }
-        public long LastPingRequest { get; set; }
-        public long LastPingResponse { get; set; }
-
-        public string IP { get; }
-
-        public bool Closed => !Stream.CanRead || !Socket.Connected;
-        private Logger logger;
+        private readonly Socket Socket;
+        private readonly Stream Stream;
+        private readonly object writeLock;
 
         public Connection(Socket socket, Logger logger)
         {
@@ -56,6 +36,28 @@ namespace NeoServer.Networking
             connectionLock = new object();
             this.logger = logger;
         }
+
+        public int BeginStreamReadCalls { get; set; }
+
+        public bool Closed => !Stream.CanRead || !Socket.Connected;
+
+        public event EventHandler<IConnectionEventArgs> OnProcessEvent;
+        public event EventHandler<IConnectionEventArgs> OnCloseEvent;
+        public event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
+
+        public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
+        public IReadOnlyNetworkMessage InMessage { get; }
+
+        public uint[] XteaKey { get; private set; }
+        public uint CreatureId { get; private set; }
+        public bool IsAuthenticated { get; private set; }
+
+        public bool Disconnected { get; private set; }
+        public long LastPingRequest { get; set; }
+        public long LastPingResponse { get; set; }
+
+        public string IP { get; }
+
         public void BeginStreamRead()
         {
             if (!Stream.CanRead || !Socket.Connected || Disconnected) return;
@@ -74,20 +76,110 @@ namespace NeoServer.Networking
         {
             XteaKey = xtea;
         }
+
+        public void Close(bool force = false)
+        {
+            //todo needs to remove this connection from pool
+            lock (connectionLock)
+            {
+                if (!Socket.Connected)
+                {
+                    if (Stream.CanRead) Stream.Close();
+                    return;
+                }
+
+                if (OutgoingPackets == null || !OutgoingPackets.Any() || force)
+                {
+                    CloseSocket();
+                }
+            }
+
+            // Tells the subscribers of this event that this connection has been closed.
+            OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
+        }
+
+        public void SendFirstConnection()
+        {
+            var message = new NetworkMessage();
+
+            new FirstConnectionPacket().WriteToMessage(message);
+
+            SendMessage(message);
+        }
+
+        public void Send(IOutgoingPacket packet)
+        {
+            var message = new NetworkMessage();
+
+            packet.WriteToMessage(message);
+
+            message.AddLength();
+
+            var encryptedMessage = Xtea.Encrypt(message, XteaKey);
+
+            SendMessage(encryptedMessage);
+        }
+
+        /// <summary>
+        ///     Sends all packets in connection's outgoing packets queue and clean
+        /// </summary>
+        public void Send()
+        {
+            if (!OutgoingPackets.Any()) return;
+
+            var message = new NetworkMessage();
+
+            while (OutgoingPackets.TryDequeue(out var packet))
+            {
+                logger.Debug("To {PlayerId}: {name}", CreatureId, packet.GetType().Name);
+                packet.WriteToMessage(message);
+            }
+
+            message.AddLength();
+
+            var encryptedMessage = Xtea.Encrypt(message, XteaKey);
+            SendMessage(encryptedMessage);
+        }
+
+        public void Disconnect(string text)
+        {
+            var message = new NetworkMessage();
+
+            new LoginFailurePacket(text).WriteToMessage(message);
+
+            message.AddLength();
+
+            var encryptedMessage = Xtea.Encrypt(message, XteaKey);
+
+            SendMessage(encryptedMessage);
+            Close();
+        }
+
+        public void SetAsAuthenticated()
+        {
+            IsAuthenticated = true;
+        }
+
+        public void SetConnectionOwner(IPlayer player)
+        {
+            if (CreatureId != 0) throw new InvalidOperationException("Connection already has a Player Id");
+            SetAsAuthenticated();
+
+            OutgoingPackets = new Queue<IOutgoingPacket>();
+
+            CreatureId = player.CreatureId;
+        }
+
         private void OnRead(IAsyncResult ar)
         {
-
-            var clientDisconnected = !this.CompleteRead(ar);
+            var clientDisconnected = !CompleteRead(ar);
             if (clientDisconnected && !IsAuthenticated)
             {
                 Close();
                 return;
             }
-            if (clientDisconnected && IsAuthenticated)
-            {
 
-                Disconnected = true;
-            }
+            if (clientDisconnected && IsAuthenticated) Disconnected = true;
 
             var eventArgs = new ConnectionEventArgs(this);
 
@@ -118,14 +210,12 @@ namespace NeoServer.Networking
                         Close();
                         return false;
                     }
-                    if (Socket.Available == 0)
-                    {
-                        return false;
-                    }
 
-                    int read = Stream.EndRead(ar);
+                    if (Socket.Available == 0) return false;
 
-                    int size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
+                    var read = Stream.EndRead(ar);
+
+                    var size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
 
                     if (size >= NETWORK_MESSAGE_MAXSIZE)
                     {
@@ -134,12 +224,8 @@ namespace NeoServer.Networking
                     }
 
                     while (read < size)
-                    {
                         if (Stream.CanRead)
-                        {
                             read += Stream.Read(InMessage.Buffer, read, size - read);
-                        }
-                    }
 
                     InMessage.Resize(size);
                 }
@@ -155,35 +241,6 @@ namespace NeoServer.Networking
             return false;
         }
 
-        public void Close(bool force = false)
-        {
-            //todo needs to remove this connection from pool
-            lock (connectionLock)
-            {
-                if (!Socket.Connected)
-                {
-                    if (Stream.CanRead)
-                    {
-                        Stream.Close();
-                    }
-                    return;
-                }
-
-                if (OutgoingPackets == null || !OutgoingPackets.Any() || force)
-                {
-                    CloseSocket();
-                }
-                else
-                {
-                    //need to close connection when outgoing queue is empty;
-                }
-            }
-
-            // Tells the subscribers of this event that this connection has been closed.
-            OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
-
-        }
-
         private void CloseSocket()
         {
             try
@@ -193,10 +250,8 @@ namespace NeoServer.Networking
             }
             catch (Exception)
             {
-
                 Console.WriteLine("Error on socket closing");
             }
-
         }
 
         private void SendMessage(INetworkMessage message)
@@ -205,14 +260,10 @@ namespace NeoServer.Networking
             {
                 lock (writeLock)
                 {
-                    if (Closed || !Socket.Connected || Disconnected)
-                    {
-                        return;
-                    }
+                    if (Closed || !Socket.Connected || Disconnected) return;
                     var streamMessage = message.AddHeader();
 
                     Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
-
                 }
 
                 var eventArgs = new ConnectionEventArgs(this);
@@ -223,79 +274,6 @@ namespace NeoServer.Networking
                 Console.WriteLine("Network error - Send Message fail");
                 Close();
             }
-        }
-
-        public void SendFirstConnection()
-        {
-            var message = new NetworkMessage();
-
-            new FirstConnectionPacket().WriteToMessage(message);
-
-            SendMessage(message);
-        }
-
-        public void Send(IOutgoingPacket packet)
-        {
-            var message = new NetworkMessage();
-
-            packet.WriteToMessage(message);
-
-            message.AddLength();
-
-            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
-
-            SendMessage(encryptedMessage);
-
-        }
-
-        /// <summary>
-        /// Sends all packets in connection's outgoing packets queue and clean
-        /// </summary>
-        public void Send()
-        {
-            if (!OutgoingPackets.Any()) return;
-
-            var message = new NetworkMessage();
-
-            while (OutgoingPackets.TryDequeue(out var packet))
-            {
-                logger.Debug("To {PlayerId}: {name}", CreatureId, packet.GetType().Name);
-                packet.WriteToMessage(message);
-            }
-
-            message.AddLength();
-
-            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
-            SendMessage(encryptedMessage);
-        }
-
-        public void Disconnect(string text)
-        {
-            var message = new NetworkMessage();
-
-            new LoginFailurePacket(text).WriteToMessage(message);
-
-            message.AddLength();
-
-            var encryptedMessage = Packets.Security.Xtea.Encrypt(message, XteaKey);
-
-            SendMessage(encryptedMessage);
-            Close();
-        }
-
-        public void SetAsAuthenticated() => IsAuthenticated = true;
-
-        public void SetConnectionOwner(IPlayer player)
-        {
-            if (CreatureId != 0)
-            {
-                throw new InvalidOperationException("Connection already has a Player Id");
-            }
-            SetAsAuthenticated();
-
-            OutgoingPackets = new Queue<IOutgoingPacket>();
-
-            CreatureId = player.CreatureId;
         }
     }
 }

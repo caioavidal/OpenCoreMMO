@@ -12,15 +12,12 @@ namespace NeoServer.Server.Events.Player
         {
             this.game = game;
         }
+
         public void Execute(IPlayer player)
         {
-            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-            {
-                return;
-            }
+            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
             connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
             connection.Send();
-
         }
     }
 }

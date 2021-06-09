@@ -20,6 +20,6 @@
         ChannelOrangeText = 15, //@name@text
         ChannelRed2Text = 17, //#d
         MonsterSay = 19,
-        MonsterYell = 20,
+        MonsterYell = 20
     }
 }

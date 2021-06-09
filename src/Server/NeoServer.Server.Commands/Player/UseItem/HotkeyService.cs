@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using System;
+using Microsoft.Extensions.Caching.Memory;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using System;
 
 namespace NeoServer.Server.Commands.Player.UseItem
 {
     public class HotkeyService
     {
-        private IMemoryCache _cache;
+        private readonly IMemoryCache _cache;
 
         public HotkeyService(IMemoryCache cache)
         {
@@ -27,20 +27,18 @@ namespace NeoServer.Server.Commands.Player.UseItem
             var hotKeyItemLocation = _cache.Get((player.Id, clientId)) as HotkeyItemLocation;
             if (hotKeyItemLocation is not null && hotKeyItemLocation.Container.RootParent is IPlayer owner)
             {
-
-                var containerItemId = hotKeyItemLocation.Container.Items.Count > hotKeyItemLocation.SlotIndex ? hotKeyItemLocation.Container[hotKeyItemLocation.SlotIndex]?.ClientId : null;
+                var containerItemId = hotKeyItemLocation.Container.Items.Count > hotKeyItemLocation.SlotIndex
+                    ? hotKeyItemLocation.Container[hotKeyItemLocation.SlotIndex]?.ClientId
+                    : null;
 
                 if (owner.Id == player.Id && containerItemId == clientId)
-                {
                     return hotKeyItemLocation.Container[hotKeyItemLocation.SlotIndex];
-                }
             }
 
-            var foundItem = player.Inventory?.BackpackSlot?.GetFirstItem(clientId);// is not IThing thing) return null;
+            var foundItem = player.Inventory?.BackpackSlot?.GetFirstItem(clientId); // is not IThing thing) return null;
             if (foundItem?.Item1 is not IItem item) return null;
             AddToCache(player.Id, clientId, foundItem.Value.Item2, foundItem.Value.Item3);
             return item;
-
         }
 
         private record HotkeyItemLocation(IContainer Container, byte SlotIndex);

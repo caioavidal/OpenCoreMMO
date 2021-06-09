@@ -1,10 +1,9 @@
+using System.Collections.Generic;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Players;
-using System.Collections.Generic;
 
 namespace NeoServer.Server.Model.Players
 {
-
     public class PlayerModel
     {
         public PlayerModel()
@@ -80,6 +79,7 @@ namespace NeoServer.Server.Model.Players
         public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
         public virtual ICollection<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
         public virtual GuildMembershipModel GuildMember { get; set; }
+
         public bool IsMounted()
         {
             return false;

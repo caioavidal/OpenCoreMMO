@@ -18,10 +18,7 @@ namespace NeoServer.Server.Events.Player
         {
             if (creature is not IPlayer player) return;
             ushort icons = 0;
-            foreach (var condition in player.Conditions)
-            {
-                icons |= (ushort)ConditionIconParser.Parse(condition.Key);
-            }
+            foreach (var condition in player.Conditions) icons |= (ushort) ConditionIconParser.Parse(condition.Key);
 
             if (game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
             {
@@ -29,6 +26,5 @@ namespace NeoServer.Server.Events.Player
                 connection.Send();
             }
         }
-
     }
 }

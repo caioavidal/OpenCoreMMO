@@ -7,20 +7,21 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class AnimatedTextPacket : OutgoingPacket
     {
         private readonly TextColor color;
-        private readonly string text;
         private readonly Location location;
+        private readonly string text;
+
         public AnimatedTextPacket(Location location, TextColor color, string message)
         {
             this.location = location;
             this.color = color;
-            this.text = message;
+            text = message;
         }
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.AnimatedText);
+            message.AddByte((byte) GameOutgoingPacketType.AnimatedText);
             message.AddLocation(location);
-            message.AddByte((byte)color);
+            message.AddByte((byte) color);
             message.AddString(text);
         }
     }

@@ -1,10 +1,9 @@
-using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Server.Contracts.Network
 {
-
     public interface IConnection
     {
         IReadOnlyNetworkMessage InMessage { get; }

@@ -7,27 +7,34 @@ namespace NeoServer.Server.Events
 {
     public class CreatureEventSubscriber : ICreatureEventSubscriber
     {
-        private readonly CreatureInjuredEventHandler _creatureReceiveDamageEventHandler;
-        private readonly CreatureKilledEventHandler _creatureKilledEventHandler;
-        private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
-        private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
         private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
-        private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
-        private readonly CreatureStartedWalkingEventHandler _creatureStartedWalkingEventHandler;
-        private readonly CreatureHealedEventHandler _creatureHealedEventHandler;
+        private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
         private readonly CreatureChangedAttackTargetEventHandler _creatureChangedAttackTargetEventHandler;
-        private readonly CreatureStartedFollowingEventHandler _creatureStartedFollowingEventHandler;
         private readonly CreatureChangedSpeedEventHandler _creatureChangedSpeedEventHandler;
-        private readonly CreatureHearEventHandler creatureHearEventHandler;
-        private readonly CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler;
+        private readonly CreatureHealedEventHandler _creatureHealedEventHandler;
+        private readonly CreatureKilledEventHandler _creatureKilledEventHandler;
+        private readonly CreatureInjuredEventHandler _creatureReceiveDamageEventHandler;
+        private readonly CreatureStartedFollowingEventHandler _creatureStartedFollowingEventHandler;
+        private readonly CreatureStartedWalkingEventHandler _creatureStartedWalkingEventHandler;
+        private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
+        private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
         private readonly CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler;
+        private readonly CreatureHearEventHandler creatureHearEventHandler;
         private readonly PlayerSentMessageEventHandler creatureSentMessageEventHandler;
+        private readonly CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler;
         private readonly NpcShowShopEventHandler npcShowShopEventHandler;
-        public CreatureEventSubscriber(CreatureInjuredEventHandler creatureReceiveDamageEventHandler, CreatureKilledEventHandler creatureKilledEventHandler,
-            CreatureWasBornEventHandler creatureWasBornEventHandler, CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler, CreatureAttackEventHandler creatureAttackEventHandler,
-            CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler, CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler,
-            CreatureHealedEventHandler creatureHealedEventHandler, CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler,
-            CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler, CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler,
+
+        public CreatureEventSubscriber(CreatureInjuredEventHandler creatureReceiveDamageEventHandler,
+            CreatureKilledEventHandler creatureKilledEventHandler,
+            CreatureWasBornEventHandler creatureWasBornEventHandler,
+            CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler,
+            CreatureAttackEventHandler creatureAttackEventHandler,
+            CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
+            CreatureStartedWalkingEventHandler creatureStartedWalkingEventHandler,
+            CreatureHealedEventHandler creatureHealedEventHandler,
+            CreatureChangedAttackTargetEventHandler creatureChangedAttackTargetEventHandler,
+            CreatureStartedFollowingEventHandler creatureStartedFollowingEventHandler,
+            CreatureChangedSpeedEventHandler creatureChangedSpeedEventHandler,
             CreatureHearEventHandler creatureHearEventHandler,
             CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler,
             CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler,
@@ -57,9 +64,7 @@ namespace NeoServer.Server.Events
             creature.OnChangedOutfit += creatureChangedOutfitEventHandler.Execute;
 
             if (creature is ISociableCreature sociableCreature)
-            {
                 sociableCreature.OnHear += creatureHearEventHandler.Execute;
-            }
             if (creature is ICombatActor combatActor)
             {
                 combatActor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
@@ -70,20 +75,19 @@ namespace NeoServer.Server.Events
                 combatActor.OnHeal += _creatureHealedEventHandler.Execute;
                 combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
             }
-            if (creature is IShopperNpc shopperNpc)
-            {
-                shopperNpc.OnShowShop += npcShowShopEventHandler.Execute;
-            }
+
+            if (creature is IShopperNpc shopperNpc) shopperNpc.OnShowShop += npcShowShopEventHandler.Execute;
 
             #region WalkableEvents
+
             if (creature is IWalkableCreature walkableCreature)
             {
                 walkableCreature.OnStartedFollowing += _creatureStartedFollowingEventHandler.Execute;
                 walkableCreature.OnChangedSpeed += _creatureChangedSpeedEventHandler.Execute;
                 walkableCreature.OnStartedWalking += _creatureStartedWalkingEventHandler.Execute;
                 walkableCreature.OnTurnedToDirection += _creatureTurnToDirectionEventHandler.Execute;
-
             }
+
             #endregion
         }
 
@@ -109,14 +113,10 @@ namespace NeoServer.Server.Events
                 walkableCreature.OnTurnedToDirection -= _creatureTurnToDirectionEventHandler.Execute;
                 walkableCreature.OnStartedWalking -= _creatureStartedWalkingEventHandler.Execute;
             }
+
             if (creature is ISociableCreature sociableCreature)
-            {
                 sociableCreature.OnHear -= creatureHearEventHandler.Execute;
-            }
-            if (creature is IShopperNpc shopperNpc)
-            {
-                shopperNpc.OnShowShop -= npcShowShopEventHandler.Execute;
-            }
+            if (creature is IShopperNpc shopperNpc) shopperNpc.OnShowShop -= npcShowShopEventHandler.Execute;
         }
     }
 }

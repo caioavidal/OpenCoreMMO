@@ -1,13 +1,13 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System.Buffers;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using System.Buffers;
 
 namespace NeoServer.Game.Effects.Magical
 {
     public class SpreadEffect
     {
         /// <summary>
-        /// Creates a spread effect based on length
+        ///     Creates a spread effect based on length
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
@@ -19,14 +19,12 @@ namespace NeoServer.Game.Effects.Magical
             var y = 0;
             var x = 0;
 
-            int count = 0;
-            for (int i = 0; i < length; i++)
+            var count = 0;
+            for (var i = 0; i < length; i++)
             {
                 var row = i + 1;
-                var cols = i < (length / spread) ? 0 : (i + 1) / ((length / spread) + 1);
-                for (int c = 0 - cols; c <= 0 + cols; c++)
-                {
-
+                var cols = i < length / spread ? 0 : (i + 1) / (length / spread + 1);
+                for (var c = 0 - cols; c <= 0 + cols; c++)
                     switch (direction)
                     {
                         case Direction.North:
@@ -43,15 +41,12 @@ namespace NeoServer.Game.Effects.Magical
                             break;
                         case Direction.None:
                             break;
-                        default:
-                            break;
                     }
-                }
             }
 
             pool.Return(points);
 
-            return points[0..count];
+            return points[..count];
         }
 
         public static Coordinate[] Create(Location location, Direction direction, int length, int spread = 1)
@@ -62,9 +57,7 @@ namespace NeoServer.Game.Effects.Magical
             var affectedArea = new Coordinate[affectedLocations.Length];
 
             foreach (var affectedlocation in affectedLocations)
-            {
                 affectedArea[i++] = location.Translate() + affectedlocation;
-            }
             return affectedArea;
         }
     }

@@ -1,30 +1,30 @@
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.World.Map;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Contracts.World;
+using NeoServer.Game.World.Map;
 
 namespace NeoServer.Game.World
 {
     public class World
     {
+        private readonly Region region = new();
+
+        private readonly ConcurrentDictionary<Coordinate, ITown> towns = new();
+        private readonly ConcurrentDictionary<Coordinate, IWaypoint> waypoints = new();
         public int LoadedTilesCount { get; private set; }
         public int LoadedTownsCount => towns.Count();
         public int LoadedWaypointsCount => waypoints.Count();
-
-        private readonly ConcurrentDictionary<Coordinate, ITown> towns = new ConcurrentDictionary<Coordinate, ITown>();
-        private readonly ConcurrentDictionary<Coordinate, IWaypoint> waypoints = new ConcurrentDictionary<Coordinate, IWaypoint>();
-        private readonly Region region = new Region();
 
         public ImmutableList<ISpawn> Spawns { get; private set; }
 
         public void AddTile(ITile newTile)
         {
-            ushort x = newTile.Location.X;
-            ushort y = newTile.Location.Y;
+            var x = newTile.Location.X;
+            var y = newTile.Location.Y;
 
             var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y, out var created);
 
@@ -50,9 +50,15 @@ namespace NeoServer.Game.World
             return true;
         }
 
-        public Sector GetSector(ushort x, ushort y) => region.GetSector(x, y);
+        public Sector GetSector(ushort x, ushort y)
+        {
+            return region.GetSector(x, y);
+        }
 
-        public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search) => region.GetSpectators(ref search);
+        public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search)
+        {
+            return region.GetSpectators(ref search);
+        }
 
         public void AddTown(ITown town)
         {
@@ -60,7 +66,10 @@ namespace NeoServer.Game.World
             towns[town.Coordinate] = town;
         }
 
-        public bool TryGetTown(Location location, out ITown town) => towns.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out town);
+        public bool TryGetTown(Location location, out ITown town)
+        {
+            return towns.TryGetValue(new Coordinate(location.X, location.Y, (sbyte) location.Z), out town);
+        }
 
         public void AddWaypoint(IWaypoint waypoint)
         {
@@ -69,6 +78,9 @@ namespace NeoServer.Game.World
             waypoints[waypoint.Coordinate] = waypoint;
         }
 
-        public bool TryGetWaypoint(Location location, IWaypoint waypoint) => waypoints.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out waypoint);
+        public bool TryGetWaypoint(Location location, IWaypoint waypoint)
+        {
+            return waypoints.TryGetValue(new Coordinate(location.X, location.Y, (sbyte) location.Z), out waypoint);
+        }
     }
 }

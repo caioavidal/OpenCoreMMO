@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
@@ -10,7 +10,6 @@ namespace NeoServer.Game.World.Map.Tiles
     {
         public static ITile CreateTile(Coordinate coordinate, TileFlag flag, IItem[] items)
         {
-
             var hasUnpassableItem = false;
             var hasMoveableItem = false;
             IGround ground = null;
@@ -20,15 +19,9 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in items)
             {
-                if (item.IsBlockeable)
-                {
-                    hasUnpassableItem = true;
-                }
+                if (item.IsBlockeable) hasUnpassableItem = true;
 
-                if (item.CanBeMoved)
-                {
-                    hasMoveableItem = true;
-                }
+                if (item.CanBeMoved) hasMoveableItem = true;
 
                 if (item.IsAlwaysOnTop)
                 {
@@ -45,13 +38,9 @@ namespace NeoServer.Game.World.Map.Tiles
                 downItems.Add(item);
             }
 
-            if (hasUnpassableItem && !hasMoveableItem)
-            {
-                return new StaticTile(coordinate, items);
-            }
+            if (hasUnpassableItem && !hasMoveableItem) return new StaticTile(coordinate, items);
 
             return new Tile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
         }
     }
 }
-

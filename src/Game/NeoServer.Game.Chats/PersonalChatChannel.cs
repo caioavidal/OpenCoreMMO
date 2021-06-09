@@ -8,7 +8,9 @@ namespace NeoServer.Game.Chats
         public PersonalChatChannel(ushort id, string name) : base(id, name)
         {
         }
-        public abstract new string Name { get; }
+
+        public new abstract string Name { get; }
+
         public override bool AddUser(IPlayer player)
         {
             if (users.Count == 1) return false;

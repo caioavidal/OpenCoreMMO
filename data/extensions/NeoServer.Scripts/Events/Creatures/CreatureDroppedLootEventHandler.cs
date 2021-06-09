@@ -18,9 +18,9 @@ namespace NeoServer.Scripts.Events.Creatures
                 if (player.PersonalChannels is null) continue;
 
                 foreach (var channel in player.PersonalChannels)
-                {
-                    if (channel is LootChannel lootChannel) lootChannel.WriteMessage($"Loot of a {actor.Name.ToLower()}: {actor?.Corpse?.ToString()}", out var cancelMessage);
-                }
+                    if (channel is LootChannel lootChannel)
+                        lootChannel.WriteMessage($"Loot of a {actor.Name.ToLower()}: {actor?.Corpse}",
+                            out var cancelMessage);
             }
         }
     }

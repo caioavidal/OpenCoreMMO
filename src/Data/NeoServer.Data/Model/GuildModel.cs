@@ -1,6 +1,6 @@
-﻿using NeoServer.Server.Model.Players;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Data.Model
 {

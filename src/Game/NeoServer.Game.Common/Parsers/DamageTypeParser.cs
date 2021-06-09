@@ -24,6 +24,7 @@ namespace NeoServer.Game.Common.Parsers
                 _ => "physical"
             };
         }
+
         public static DamageType Parse(string type)
         {
             return type switch
@@ -47,6 +48,7 @@ namespace NeoServer.Game.Common.Parsers
                 _ => DamageType.Melee
             };
         }
+
         public static Immunity ToImmunity(this DamageType type)
         {
             return type switch
@@ -64,7 +66,7 @@ namespace NeoServer.Game.Common.Parsers
                 DamageType.Death => Immunity.Death,
                 DamageType.LifeDrain => Immunity.LifeDrain,
                 DamageType.Drunk => Immunity.Drunkenness,
-                _ => Immunity.None,
+                _ => Immunity.None
             };
         }
     }

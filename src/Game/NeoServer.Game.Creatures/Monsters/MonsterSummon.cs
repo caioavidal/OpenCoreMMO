@@ -2,7 +2,6 @@
 
 namespace NeoServer.Game.Creatures.Monsters
 {
-
     public readonly struct MonsterSummon : IMonsterSummon
     {
         public MonsterSummon(string name, uint interval, byte chance, byte max)

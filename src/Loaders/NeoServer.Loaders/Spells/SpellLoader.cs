@@ -1,30 +1,33 @@
-﻿using NeoServer.Game.Contracts.Spells;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Spells;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog.Core;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace NeoServer.Loaders.Spells
 {
     public class SpellLoader
     {
-        private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
+        private readonly ServerConfiguration serverConfiguration;
+
         public SpellLoader(ServerConfiguration serverConfiguration, Logger logger)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
         }
+
         public void Load()
         {
             LoadSpells();
         }
+
         private void LoadSpells()
         {
             logger.Step("Loading spells...", "{n} spells loaded", () =>
@@ -48,11 +51,14 @@ namespace NeoServer.Loaders.Spells
                     spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
                     spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
                     spellInstance.MinLevel = Convert.ToUInt16(spell["level"]);
-                    spellInstance.Vocations = spell.ContainsKey("vocations") ? (spell["vocations"] as JArray).Select(jv => (byte)jv).ToArray() : null;
+                    spellInstance.Vocations = spell.ContainsKey("vocations")
+                        ? (spell["vocations"] as JArray).Select(jv => (byte) jv).ToArray()
+                        : null;
 
                     SpellList.Add(spell["words"].ToString(), spellInstance);
                 }
-                return new object[] { spells.Count };
+
+                return new object[] {spells.Count};
             });
         }
     }

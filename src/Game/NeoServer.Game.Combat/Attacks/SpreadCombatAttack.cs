@@ -13,7 +13,11 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
             Spread = spread;
         }
 
-        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        public byte Spread { get; }
+        public byte Length { get; }
+
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+            out CombatAttackType combatType)
         {
             combatType = new CombatAttackType(option.DamageType);
 
@@ -23,10 +27,8 @@ namespace NeoServer.Game.Creatures.Combat.Attacks
                 actor.PropagateAttack(combatType.Area, damage);
                 return true;
             }
+
             return false;
         }
-
-        public byte Spread { get; }
-        public byte Length { get; }
     }
 }

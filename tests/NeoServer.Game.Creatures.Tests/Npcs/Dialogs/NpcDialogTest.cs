@@ -14,18 +14,26 @@ namespace NeoServer.Game.Creatures.Tests.Npcs.Dialogs
             var npc = new Mock<INpc>();
 
             npc.Setup(x => x.Name).Returns("Eryn");
-            npc.Setup(x => x.Metadata.Dialogs).Returns(new IDialog[] { new Dialog()
+            npc.Setup(x => x.Metadata.Dialogs).Returns(new IDialog[]
             {
-                OnWords = new string[] { "hi" },
-                Then =new IDialog[] { new Dialog()
+                new Dialog
                 {
-                     OnWords = new string[] { "carlin" },
-                     Answers = new string[] {"Do you want to sail to carlin for 1000 gold coins ?"},
-                       Then =new IDialog[] { new Dialog() { OnWords =new string[] { "yes" } },
-                       new Dialog() { OnWords = new string[] { "no" }, Back = 1,  Answers = new string[] { "Then stay here!" } },
-                       }
-                } }
-            } });
+                    OnWords = new[] {"hi"},
+                    Then = new IDialog[]
+                    {
+                        new Dialog
+                        {
+                            OnWords = new[] {"carlin"},
+                            Answers = new[] {"Do you want to sail to carlin for 1000 gold coins ?"},
+                            Then = new IDialog[]
+                            {
+                                new Dialog {OnWords = new[] {"yes"}},
+                                new Dialog {OnWords = new[] {"no"}, Back = 1, Answers = new[] {"Then stay here!"}}
+                            }
+                        }
+                    }
+                }
+            });
 
             var sut = new NpcDialog(npc.Object);
 
@@ -40,7 +48,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs.Dialogs
         [Fact]
         public void StoreWords_Adding_Same_Storage_Key_Should_Update_Value()
         {
-
             var npc = new Mock<INpc>();
             npc.Setup(x => x.Name).Returns("Eryn");
 
@@ -62,36 +69,50 @@ namespace NeoServer.Game.Creatures.Tests.Npcs.Dialogs
         [InlineData(2, "third")]
         [InlineData(3, "second")]
         [InlineData(4, "first")]
-
         public void Back_Should_Remove_Last_Positions_On_Dialog_History(byte count, string answer)
         {
             var npc = new Mock<INpc>();
             npc.Setup(x => x.Name).Returns("Eryn");
-            npc.Setup(x => x.Metadata.Dialogs).Returns(new IDialog[] { new Dialog()
+            npc.Setup(x => x.Metadata.Dialogs).Returns(new IDialog[]
             {
-                OnWords = new string[] { "first" },
-                  Answers = new string[] {"first"},
-                Then =new IDialog[] { new Dialog()
+                new Dialog
                 {
-                     OnWords = new string[] { "second" },
-                     Answers = new string[] {"second"},
-                     Then =new IDialog[] { new Dialog()
+                    OnWords = new[] {"first"},
+                    Answers = new[] {"first"},
+                    Then = new IDialog[]
+                    {
+                        new Dialog
                         {
-                     OnWords = new string[] { "third" },
-                     Answers = new string[] {"third"},
-                         Then =new IDialog[] { new Dialog()
+                            OnWords = new[] {"second"},
+                            Answers = new[] {"second"},
+                            Then = new IDialog[]
                             {
-                         OnWords = new string[] { "fourth" },
-                         Answers = new string[] {"fourth"},
-                              Then =new IDialog[] { new Dialog()
-                            {
-                         OnWords = new string[] { "fifth" },
-                         Answers = new string[] {"fifth"},
-                            }}
-                            }}
-            } }
-                } }
-            } });
+                                new Dialog
+                                {
+                                    OnWords = new[] {"third"},
+                                    Answers = new[] {"third"},
+                                    Then = new IDialog[]
+                                    {
+                                        new Dialog
+                                        {
+                                            OnWords = new[] {"fourth"},
+                                            Answers = new[] {"fourth"},
+                                            Then = new IDialog[]
+                                            {
+                                                new Dialog
+                                                {
+                                                    OnWords = new[] {"fifth"},
+                                                    Answers = new[] {"fifth"}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
 
             var player = new Mock<IPlayer>();
             player.Setup(x => x.CreatureId).Returns(1);

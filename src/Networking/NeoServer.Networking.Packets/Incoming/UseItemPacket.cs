@@ -5,11 +5,6 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class UseItemPacket : IncomingPacket
     {
-        public Location Location { get; }
-        public ushort ClientId { get; }
-        public byte StackPosition { get; set; }
-        public byte Index { get; set; }
-
         public UseItemPacket(IReadOnlyNetworkMessage message)
         {
             Location = message.GetLocation();
@@ -17,5 +12,10 @@ namespace NeoServer.Networking.Packets.Incoming
             StackPosition = message.GetByte();
             Index = message.GetByte();
         }
+
+        public Location Location { get; }
+        public ushort ClientId { get; }
+        public byte StackPosition { get; set; }
+        public byte Index { get; set; }
     }
 }

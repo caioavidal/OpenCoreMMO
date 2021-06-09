@@ -12,8 +12,14 @@ namespace NeoServer.Game.Items.Items
 
         public bool InUse { get; private set; }
 
-        public void Dress() => InUse = true;
-        public void Undress() => InUse = false;
+        public void Dress()
+        {
+            InUse = true;
+        }
 
+        public void Undress()
+        {
+            InUse = false;
+        }
     }
 }

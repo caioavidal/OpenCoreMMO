@@ -14,7 +14,7 @@ namespace NeoServer.Data.Seeds
                     PlayerId = 1,
                     ParentId = 0,
                     ServerId = 1988,
-                    Amount = 1,
+                    Amount = 1
                 },
                 new PlayerItemModel
                 {
@@ -22,7 +22,7 @@ namespace NeoServer.Data.Seeds
                     PlayerId = 1,
                     ParentId = 0,
                     ServerId = 2666,
-                    Amount = 10,
+                    Amount = 10
                 },
                 new PlayerItemModel
                 {
@@ -30,7 +30,7 @@ namespace NeoServer.Data.Seeds
                     PlayerId = 1,
                     ParentId = 0,
                     ServerId = 7618,
-                    Amount = 10,
+                    Amount = 10
                 },
                 new PlayerItemModel
                 {
@@ -38,18 +38,17 @@ namespace NeoServer.Data.Seeds
                     PlayerId = 1,
                     ParentId = 0,
                     ServerId = 2311,
-                    Amount = 10,
+                    Amount = 10
                 },
-                  new PlayerItemModel
-                  {
-                      Id = -5,
-                      PlayerId = 1,
-                      ParentId = -1,
-                      ServerId = 2304,
-                      Amount = 10,
-                  }
+                new PlayerItemModel
+                {
+                    Id = -5,
+                    PlayerId = 1,
+                    ParentId = -1,
+                    ServerId = 2304,
+                    Amount = 10
+                }
             );
         }
-
     }
 }

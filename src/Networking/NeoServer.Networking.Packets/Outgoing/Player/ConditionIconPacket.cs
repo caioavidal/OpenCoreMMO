@@ -13,7 +13,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.PlayerConditions);
+            message.AddByte((byte) GameOutgoingPacketType.PlayerConditions);
             message.AddUInt16(icons);
         }
     }

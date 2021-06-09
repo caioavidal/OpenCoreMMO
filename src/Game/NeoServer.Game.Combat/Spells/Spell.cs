@@ -1,39 +1,33 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using System;
+using System.Linq;
+using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Conditions;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Spells;
 using NeoServer.Game.Creatures.Enums;
-using System;
-using System.Linq;
 
 namespace NeoServer.Game.Combat.Spells
 {
     public abstract class BaseSpell : ISpell
     {
+        public abstract uint Duration { get; }
         public virtual string Name { get; set; }
         public abstract EffectT Effect { get; }
-        public abstract uint Duration { get; }
         public virtual ushort Mana { get; set; }
         public virtual ushort MinLevel { get; set; } = 0;
         public virtual byte[] Vocations { get; set; }
         public uint Cooldown { get; set; }
 
-        public static event InvokeSpell OnSpellInvoked;
-
-        public abstract bool OnCast(ICombatActor actor, string words, out InvalidOperation error);
-
         public bool InvokeOn(ICombatActor actor, ICombatActor onCreature, string words, out InvalidOperation error)
         {
             if (!CanBeUsedBy(actor, out error)) return false;
-            if (actor is IPlayer player)
-            {
-                player.ConsumeMana(Mana);
-            }
+            if (actor is IPlayer player) player.ConsumeMana(Mana);
 
             if (!onCreature.HasCondition(ConditionType))
-                if (!OnCast(onCreature, words, out error)) return false;
+                if (!OnCast(onCreature, words, out error))
+                    return false;
 
             AddCondition(onCreature);
 
@@ -42,16 +36,15 @@ namespace NeoServer.Game.Combat.Spells
             OnSpellInvoked?.Invoke(onCreature, this);
             return true;
         }
+
         public bool Invoke(ICombatActor actor, string words, out InvalidOperation error)
         {
             if (!CanBeUsedBy(actor, out error)) return false;
-            if (actor is IPlayer player)
-            {
-                player.ConsumeMana(Mana);
-            }
+            if (actor is IPlayer player) player.ConsumeMana(Mana);
 
             if (!actor.HasCondition(ConditionType))
-                if (!OnCast(actor, words, out error)) return false;
+                if (!OnCast(actor, words, out error))
+                    return false;
 
             AddCondition(actor);
 
@@ -60,6 +53,15 @@ namespace NeoServer.Game.Combat.Spells
             OnSpellInvoked?.Invoke(actor, this);
             return true;
         }
+
+        public abstract ConditionType ConditionType { get; }
+
+        public virtual bool ShouldSay { get; }
+
+        public static event InvokeSpell OnSpellInvoked;
+
+        public abstract bool OnCast(ICombatActor actor, string words, out InvalidOperation error);
+
         public bool CanBeUsedBy(ICombatActor actor, out InvalidOperation error)
         {
             error = InvalidOperation.None;
@@ -71,6 +73,7 @@ namespace NeoServer.Game.Combat.Spells
                     error = InvalidOperation.NotEnoughMana;
                     return false;
                 }
+
                 if (!player.HasEnoughLevel(MinLevel))
                 {
                     error = InvalidOperation.NotEnoughLevel;
@@ -89,14 +92,13 @@ namespace NeoServer.Game.Combat.Spells
                     return false;
                 }
             }
+
             return true;
         }
 
-        public abstract ConditionType ConditionType { get; }
-
-        public virtual bool ShouldSay { get; }
-
-        public virtual void OnEnd(ICombatActor actor) { }
+        public virtual void OnEnd(ICombatActor actor)
+        {
+        }
 
         public virtual void AddCondition(ICombatActor actor)
         {
@@ -113,13 +115,18 @@ namespace NeoServer.Game.Combat.Spells
 
             actor.AddCondition(condition);
         }
-        private void AddCooldown(ICombatActor actor) => actor.StartSpellCooldown(this);
+
+        private void AddCooldown(ICombatActor actor)
+        {
+            actor.StartSpellCooldown(this);
+        }
     }
+
     public abstract class Spell<T> : BaseSpell where T : ISpell
     {
+        private static readonly Lazy<T> Lazy = new(() => (T) Activator.CreateInstance(typeof(T), true));
         public override bool ShouldSay => true;
         public string Words { get; set; }
-        private static readonly Lazy<T> Lazy = new Lazy<T>(() => (T)Activator.CreateInstance(typeof(T), true));
         public static T Instance => Lazy.Value;
     }
 }

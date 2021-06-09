@@ -5,5 +5,4 @@
         string Id { get; set; }
         string Multiplier { get; set; }
     }
-
 }

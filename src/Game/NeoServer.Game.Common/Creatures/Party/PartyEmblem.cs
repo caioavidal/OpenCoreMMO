@@ -13,6 +13,6 @@
         YellowNoSharedExpBlink = 8,
         BlueNoSharedExp = 9,
         YellowNoSharedExp = 10,
-        NotFromYourParty = 11,
+        NotFromYourParty = 11
     }
 }

@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Services;
+﻿using System;
+using System.IO;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -6,22 +8,21 @@ using NeoServer.Server.Contracts;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Serilog.Core;
-using System;
-using System.IO;
 
 namespace NeoServer.Scripts.Lua
 {
     public class LuaGlobalRegister
     {
+        private readonly ICoinTransaction coinTransaction;
+        private readonly ICreatureFactory creatureFactory;
         private readonly IGameServer gameServer;
         private readonly IItemFactory itemFactory;
-        private readonly ICreatureFactory creatureFactory;
-        private readonly ServerConfiguration serverConfiguration;
-        private readonly ICoinTransaction coinTransaction;
         private readonly Logger logger;
         private readonly NLua.Lua lua;
+        private readonly ServerConfiguration serverConfiguration;
 
-        public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory, NLua.Lua lua, ServerConfiguration serverConfiguration, Logger logger, ICoinTransaction coinTransaction)
+        public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
+            NLua.Lua lua, ServerConfiguration serverConfiguration, Logger logger, ICoinTransaction coinTransaction)
         {
             this.gameServer = gameServer;
             this.itemFactory = itemFactory;
@@ -43,14 +44,14 @@ namespace NeoServer.Scripts.Lua
                 lua["map"] = gameServer.Map;
                 lua["itemFactory"] = itemFactory;
                 lua["creatureFactory"] = creatureFactory;
-                lua["load"] = new Action<string>((path) => DoFile(path));
+                lua["load"] = new Action<string>(path => DoFile(path));
                 lua["logger"] = logger;
                 lua["coinTransaction"] = coinTransaction;
                 lua["random"] = GameRandom.Random;
 
                 ExecuteMainFiles();
 
-                return new object[] { "LUA" };
+                return new object[] {"LUA"};
             });
         }
 
@@ -64,9 +65,7 @@ namespace NeoServer.Scripts.Lua
                 IgnoreInaccessible = true,
                 RecurseSubdirectories = true
             }))
-            {
                 lua.DoFile(file);
-            }
         }
 
         public void DoFile(string luaPath)

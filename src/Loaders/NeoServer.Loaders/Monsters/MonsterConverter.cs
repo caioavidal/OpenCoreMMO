@@ -1,38 +1,45 @@
-﻿using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Monsters;
 using NeoServer.Loaders.Monsters.Converters;
 using Serilog.Core;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 
 namespace NeoServer.Loaders.Monsters
 {
     public class MonsterConverter
     {
-        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration, IMonsterDataManager monsters, Logger logger)
+        public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration,
+            IMonsterDataManager monsters, Logger logger)
         {
             var data = monsterData;
-            var monster = new MonsterType()
+            var monster = new MonsterType
             {
                 Name = data.Name,
                 MaxHealth = data.Health.Max,
-                Look = new Dictionary<LookType, ushort>() { { LookType.Type, data.Look.Type }, { LookType.Corpse, data.Look.Corpse }, { LookType.Body, data.Look.Body}, { LookType.Legs, data.Look.Legs}, { LookType.Head, data.Look.Head },
-                { LookType.Feet, data.Look.Feet},{ LookType.Addon, data.Look.Addons}},
+                Look = new Dictionary<LookType, ushort>
+                {
+                    {LookType.Type, data.Look.Type}, {LookType.Corpse, data.Look.Corpse},
+                    {LookType.Body, data.Look.Body}, {LookType.Legs, data.Look.Legs}, {LookType.Head, data.Look.Head},
+                    {LookType.Feet, data.Look.Feet}, {LookType.Addon, data.Look.Addons}
+                },
                 Speed = data.Speed,
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defense = ushort.Parse(data.Defense.Defense),
-                Experience = (uint)(data.Experience * configuration.ExperienceRate),
+                Experience = (uint) (data.Experience * configuration.ExperienceRate),
                 Race = ParseRace(data.Race)
             };
 
-            monster.TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval), System.Convert.ToByte(data.Targetchange.Chance));
+            monster.TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval),
+                System.Convert.ToByte(data.Targetchange.Chance));
 
             if (data.Voices != null)
             {
-                monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval), System.Convert.ToByte(data.Voices.Chance));
+                monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval),
+                    System.Convert.ToByte(data.Voices.Chance));
                 monster.Voices = data.Voices.Sentences.Select(x => x.Sentence).ToArray();
             }
 
@@ -46,7 +53,7 @@ namespace NeoServer.Loaders.Monsters
             monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate);
 
             var summons = MonsterSummonConverter.Convert(data);
-            monster.MaxSummons = (byte)summons.Item1;
+            monster.MaxSummons = (byte) summons.Item1;
             monster.Summons = summons.Item2;
 
             foreach (var flag in data.Flags)
@@ -57,6 +64,7 @@ namespace NeoServer.Loaders.Monsters
 
             return monster;
         }
+
         private static CreatureFlagAttribute ParseCreatureFlag(string flag)
         {
             return flag switch
@@ -77,14 +85,17 @@ namespace NeoServer.Loaders.Monsters
             };
         }
 
-        private static Race ParseRace(string race) => race switch
+        private static Race ParseRace(string race)
         {
-            "venom" => Race.Venom,
-            "blood" => Race.Bood,
-            "undead" => Race.Undead,
-            "fire" => Race.Fire,
-            "energy" => Race.Energy,
-            _ => Race.Bood
-        };
+            return race switch
+            {
+                "venom" => Race.Venom,
+                "blood" => Race.Bood,
+                "undead" => Race.Undead,
+                "fire" => Race.Fire,
+                "energy" => Race.Energy,
+                _ => Race.Bood
+            };
+        }
     }
 }

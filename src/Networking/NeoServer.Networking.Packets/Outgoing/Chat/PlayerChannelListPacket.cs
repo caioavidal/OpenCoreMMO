@@ -14,9 +14,9 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.ChannelList);
+            message.AddByte((byte) GameOutgoingPacketType.ChannelList);
 
-            message.AddByte((byte)chatChannels.Length);
+            message.AddByte((byte) chatChannels.Length);
 
             foreach (var channel in chatChannels)
             {

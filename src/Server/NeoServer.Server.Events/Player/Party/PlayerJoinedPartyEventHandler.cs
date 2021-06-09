@@ -23,19 +23,23 @@ namespace NeoServer.Server.Events.Player
             game.CreatureManager.GetPlayerConnection(newMember.CreatureId, out var newMemberConnection);
 
             newMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(newMember, PartyEmblem.Member));
-            newMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket($"You have joined {party.Leader.Name}'s party. Open the party channel to communicate with your companions.", TextMessageOutgoingType.Description));
+            newMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket(
+                $"You have joined {party.Leader.Name}'s party. Open the party channel to communicate with your companions.",
+                TextMessageOutgoingType.Description));
 
             foreach (var member in party.Members)
             {
                 if (member == newMember) continue;
                 if (!game.CreatureManager.GetPlayerConnection(member.CreatureId, out var memberConnection)) continue;
 
-                memberConnection.OutgoingPackets.Enqueue(new TextMessagePacket($"{newMember.Name} has joined the party", TextMessageOutgoingType.Description));
+                memberConnection.OutgoingPackets.Enqueue(new TextMessagePacket($"{newMember.Name} has joined the party",
+                    TextMessageOutgoingType.Description));
 
                 if (member.CanSee(newMember.Location))
                 {
                     memberConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(newMember, PartyEmblem.Member));
-                    newMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(member, party.IsLeader(member.CreatureId) ? PartyEmblem.Leader : PartyEmblem.Member));
+                    newMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(member,
+                        party.IsLeader(member.CreatureId) ? PartyEmblem.Leader : PartyEmblem.Member));
                 }
 
                 memberConnection.Send();

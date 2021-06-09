@@ -8,11 +8,16 @@ namespace NeoServer.Game.Contracts.Combat.Defenses
 {
     public class HealCombatDefense : BaseCombatDefense
     {
-        public ISpell Spell { get; }
         public HealCombatDefense(int min, int max, EffectT effect) //todo: remove dataManager from here
         {
             Spell = new HealSpell(new MinMax(min, max), effect);
         }
-        public override void Defende(ICombatActor actor) => Spell?.Invoke(actor, null, out var error);
+
+        public ISpell Spell { get; }
+
+        public override void Defende(ICombatActor actor)
+        {
+            Spell?.Invoke(actor, null, out var error);
+        }
     }
 }

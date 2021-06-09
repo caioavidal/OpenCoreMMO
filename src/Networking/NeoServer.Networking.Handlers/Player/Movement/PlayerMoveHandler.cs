@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
@@ -18,13 +17,12 @@ namespace NeoServer.Server.Handlers.Players
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            Direction direction = ParseMovementPacket(message.IncomingPacket);
+            var direction = ParseMovementPacket(message.IncomingPacket);
 
-            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player))
-            {
+            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
                 game.Dispatcher.AddEvent(new Event(() => player.WalkTo(direction)));
-            }
         }
+
         private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)
         {
             var direction = Direction.North;

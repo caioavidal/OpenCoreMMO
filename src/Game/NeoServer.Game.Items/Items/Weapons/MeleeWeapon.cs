@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Combat.Attacks;
+﻿using System;
+using System.Collections.Immutable;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
@@ -7,8 +9,6 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using System;
-using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -19,13 +19,13 @@ namespace NeoServer.Game.Items.Items
             //AllowedVocations  todo
         }
 
+        public ImmutableHashSet<VocationType> AllowedVocations { get; }
+
         public ushort Attack => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
 
         public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
 
         public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
-
-        public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
@@ -37,7 +37,8 @@ namespace NeoServer.Game.Items.Items
 
             if (Attack > 0)
             {
-                var combat = new CombatAttackValue(actor.MinimumAttackPower, player.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
+                var combat = new CombatAttackValue(actor.MinimumAttackPower,
+                    player.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
                 if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
                 {
                     enemy.ReceiveAttack(actor, damage);
@@ -47,7 +48,8 @@ namespace NeoServer.Game.Items.Items
 
             if (ElementalDamage != null)
             {
-                var combat = new CombatAttackValue(actor.MinimumAttackPower, player.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
+                var combat = new CombatAttackValue(actor.MinimumAttackPower,
+                    player.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
 
                 if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
                 {
@@ -59,14 +61,15 @@ namespace NeoServer.Game.Items.Items
             return result;
         }
 
-        public static bool IsApplicable(IItemType type) =>
-            type.WeaponType switch
+        public static bool IsApplicable(IItemType type)
+        {
+            return type.WeaponType switch
             {
                 WeaponType.Axe => true,
                 WeaponType.Club => true,
                 WeaponType.Sword => true,
                 _ => false
             };
-
+        }
     }
 }

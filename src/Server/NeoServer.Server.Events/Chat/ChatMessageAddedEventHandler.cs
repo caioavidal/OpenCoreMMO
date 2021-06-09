@@ -3,7 +3,6 @@ using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events.Chat
 {
@@ -23,8 +22,9 @@ namespace NeoServer.Server.Events.Chat
 
             foreach (var user in chatChannel.Users)
             {
-                if (!game.CreatureManager.GetPlayerConnection(user.Player.CreatureId, out IConnection connection)) continue;
-                connection.OutgoingPackets.Enqueue(new MessageToChannelPacket(player, speechType, message, chatChannel.Id));
+                if (!game.CreatureManager.GetPlayerConnection(user.Player.CreatureId, out var connection)) continue;
+                connection.OutgoingPackets.Enqueue(new MessageToChannelPacket(player, speechType, message,
+                    chatChannel.Id));
                 connection.Send();
             }
         }

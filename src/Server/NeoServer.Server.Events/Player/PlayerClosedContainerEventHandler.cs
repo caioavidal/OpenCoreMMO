@@ -1,4 +1,6 @@
-﻿using NeoServer.Data.Interfaces;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using NeoServer.Data.Interfaces;
 using NeoServer.Data.Parsers;
 using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
@@ -7,23 +9,23 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Events
 {
     public class PlayerClosedContainerEventHandler
     {
-        private readonly IMap map;
         private readonly IGameServer game;
+        private readonly IMap map;
         private readonly IPlayerDepotItemRepositoryNeo playerDepotItemRepository;
 
-        public PlayerClosedContainerEventHandler(IMap map, IGameServer game, IPlayerDepotItemRepositoryNeo playerDepotItemRepository)
+        public PlayerClosedContainerEventHandler(IMap map, IGameServer game,
+            IPlayerDepotItemRepositoryNeo playerDepotItemRepository)
         {
             this.map = map;
             this.game = game;
             this.playerDepotItemRepository = playerDepotItemRepository;
         }
+
         public async void Execute(IPlayer player, byte containerId, IContainer container)
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
@@ -36,7 +38,7 @@ namespace NeoServer.Server.Events
             {
                 //todo: process very expensive. need to find another solution
                 await playerDepotItemRepository.DeleteAll(player.Id);
-                await Save((int)player.Id, depot.Items);
+                await Save((int) player.Id, depot.Items);
                 depot.Clear();
             }
         }
@@ -50,10 +52,7 @@ namespace NeoServer.Server.Events
                 itemModel.ParentId = parentId;
                 await playerDepotItemRepository.Insert(itemModel);
 
-                if (item is IContainer container)
-                {
-                    await Save(playerId, container.Items, itemModel.Id);
-                }
+                if (item is IContainer container) await Save(playerId, container.Items, itemModel.Id);
             }
         }
     }

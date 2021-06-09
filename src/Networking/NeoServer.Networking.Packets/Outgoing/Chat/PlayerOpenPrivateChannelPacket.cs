@@ -14,7 +14,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         //todo: this code is duplicated?
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.OpenPrivateChannel);
+            message.AddByte((byte) GameOutgoingPacketType.OpenPrivateChannel);
             message.AddString(receiver);
         }
     }

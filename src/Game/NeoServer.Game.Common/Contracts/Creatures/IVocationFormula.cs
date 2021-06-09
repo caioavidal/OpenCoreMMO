@@ -7,5 +7,4 @@
         string DistDamage { get; set; }
         string MeleeDamage { get; set; }
     }
-
 }

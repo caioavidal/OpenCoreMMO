@@ -1,9 +1,9 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using System;
+using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Contracts.Creatures;
-using System;
 
 namespace NeoServer.Scripts.Spells.Attack
 {

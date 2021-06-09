@@ -14,7 +14,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.CreatureOutfit);
+            message.AddByte((byte) GameOutgoingPacketType.CreatureOutfit);
 
             message.AddUInt32(creature.CreatureId);
             message.AddUInt16(creature.Outfit.LookType);
@@ -32,7 +32,5 @@ namespace NeoServer.Networking.Packets.Outgoing
                 message.AddUInt16(0); //todo
             }
         }
-
     }
 }
-

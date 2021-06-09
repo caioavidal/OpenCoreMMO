@@ -2,7 +2,7 @@
 
 namespace NeoServer.Data.Providers.SQLite.Extensions
 {
-    public static partial class DbContextFactoryExtensions
+    public static class DbContextFactoryExtensions
     {
         public static DbContextOptions<NeoContext> UseSQLite(this DbContextFactory factory, string name)
         {

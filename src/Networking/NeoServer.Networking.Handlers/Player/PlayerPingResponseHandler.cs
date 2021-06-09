@@ -1,17 +1,19 @@
-﻿using NeoServer.Server.Contracts;
+﻿using System;
+using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
-using System;
 
 namespace NeoServer.Server.Handlers.Player
 {
     public sealed class PlayerPingResponseHandler : PacketHandler
     {
         private readonly IGameServer game;
+
         public PlayerPingResponseHandler(IGameServer game)
         {
             this.game = game;
         }
+
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             game.Dispatcher.AddEvent(new Event(() => connection.LastPingResponse = DateTime.Now.Ticks));

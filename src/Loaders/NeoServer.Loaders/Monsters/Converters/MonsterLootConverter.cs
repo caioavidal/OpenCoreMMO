@@ -1,7 +1,8 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures;
+using NeoServer.Game.Creatures.Model.Monsters.Loots;
 using static NeoServer.Loaders.Monsters.MonsterData;
 
 namespace NeoServer.Loaders.Monsters.Converters
@@ -14,12 +15,9 @@ namespace NeoServer.Loaders.Monsters.Converters
 
             var items = new List<ILootItem>();
 
-            foreach (var item in Normalize(data.Loot))
-            {
-                items.Add(ConvertToLootItem(item));
-            }
+            foreach (var item in Normalize(data.Loot)) items.Add(ConvertToLootItem(item));
 
-            return new Game.Creatures.Model.Monsters.Loots.Loot(items.ToArray(), null, lootRate);
+            return new Loot(items.ToArray(), null, lootRate);
         }
 
         private static List<LootData> Normalize(List<LootData> lootData)
@@ -28,28 +26,24 @@ namespace NeoServer.Loaders.Monsters.Converters
             {
                 Chance = gp.FirstOrDefault().Chance,
                 Id = gp.Key,
-                Countmax = gp.Sum(s => byte.TryParse(s.Countmax, out byte amount) ? amount : 0).ToString(),
+                Countmax = gp.Sum(s => byte.TryParse(s.Countmax, out var amount) ? amount : 0).ToString(),
                 Items = Normalize(gp.FirstOrDefault().Items)
             })?.ToList();
         }
 
         private static ILootItem ConvertToLootItem(LootData item)
         {
-            byte.TryParse(item.Countmax, out byte amount);
-            ushort.TryParse(item.Id, out ushort id);
+            byte.TryParse(item.Countmax, out var amount);
+            ushort.TryParse(item.Id, out var id);
             uint.TryParse(item.Chance, out var chance);
 
             var items = new List<ILootItem>();
 
             if (item?.Items?.Count > 0)
-            {
                 foreach (var child in item?.Items)
-                {
                     items.Add(ConvertToLootItem(child));
-                }
-            }
 
-            return new LootItem(id, amount == 0 ? (byte)1 : amount, chance, items.ToArray());
+            return new LootItem(id, amount == 0 ? (byte) 1 : amount, chance, items.ToArray());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Game.Items.Items
@@ -15,11 +16,14 @@ namespace NeoServer.Game.Items.Items
         public GroundItem(IItemType type, Location location)
         {
             Metadata = type;
-            StepSpeed = type?.Speed != 0 ? type.Speed : (ushort)150;
+            StepSpeed = type?.Speed != 0 ? type.Speed : (ushort) 150;
             Location = location;
-            MovementPenalty = type.Attributes.GetAttribute<byte>(Common.ItemAttribute.Waypoints);
+            MovementPenalty = type.Attributes.GetAttribute<byte>(ItemAttribute.Waypoints);
         }
-        public static bool IsApplicable(IItemType type) => type.Group == Common.ItemGroup.Ground;
 
+        public static bool IsApplicable(IItemType type)
+        {
+            return type.Group == ItemGroup.Ground;
+        }
     }
 }

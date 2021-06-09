@@ -5,7 +5,7 @@ namespace NeoServer.OTB.Parsers
     public class ItemAttributeTranslationMap
     {
         /// <summary>
-        /// Translate attribute name to enum
+        ///     Translate attribute name to enum
         /// </summary>
         public static ItemAttribute TranslateAttributeName(string attrName, out bool success)
         {
@@ -297,6 +297,5 @@ namespace NeoServer.OTB.Parsers
                     return 0;
             }
         }
-
     }
 }

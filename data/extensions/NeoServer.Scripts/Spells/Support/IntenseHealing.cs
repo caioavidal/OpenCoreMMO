@@ -12,6 +12,7 @@ namespace NeoServer.Scripts
         public override uint Duration => 0;
 
         public override ConditionType ConditionType => ConditionType.None;
+
         public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {
             error = InvalidOperation.None;

@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -34,15 +34,12 @@ namespace NeoServer.OTBM.Structure
 
             var stream = new OTBParsingStream(node.Data);
 
-            ushort x = (ushort)(tileArea.X + stream.ReadByte());
-            ushort y = (ushort)(tileArea.Y + stream.ReadByte());
+            var x = (ushort) (tileArea.X + stream.ReadByte());
+            var y = (ushort) (tileArea.Y + stream.ReadByte());
 
             Coordinate = new Coordinate(x, y, tileArea.Z);
 
-            if (node.Type == NodeType.HouseTile)
-            {
-                HouseId = stream.ReadUInt32();
-            }
+            if (node.Type == NodeType.HouseTile) HouseId = stream.ReadUInt32();
 
             NodeType = node.Type;
 
@@ -56,27 +53,21 @@ namespace NeoServer.OTBM.Structure
         {
             while (!stream.IsOver)
             {
-                NodeAttribute = (NodeAttribute)stream.ReadByte();
+                NodeAttribute = (NodeAttribute) stream.ReadByte();
 
                 if (IsFlag)
-                {
-                    Flag = ParseTileFlags((OTBMTileFlags)stream.ReadUInt32());
-                }
+                    Flag = ParseTileFlags((OTBMTileFlags) stream.ReadUInt32());
                 else if (IsItem)
-                {
                     Items.Add(new ItemNode(stream));
-                }
                 else
-                {
                     //Console.WriteLine($"{Coordinate}: Unknown tile attribute");
                     throw new Exception($"{Coordinate}: Unknown tile attribute");
-                }
             }
         }
 
         private TileFlags ParseTileFlags(OTBMTileFlags newFlags)
         {
-            TileFlags oldFlags = TileFlags.None;
+            var oldFlags = TileFlags.None;
 
             if ((newFlags & OTBMTileFlags.ProtectionZone) != 0)
                 oldFlags |= TileFlags.ProtectionZone;

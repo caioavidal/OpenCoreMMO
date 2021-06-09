@@ -4,8 +4,9 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class WorldLightPacket : OutgoingPacket
     {
-        private readonly byte Level;
         private readonly byte Color;
+        private readonly byte Level;
+
         public WorldLightPacket(byte level, byte color)
         {
             Level = level;
@@ -14,7 +15,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.WorldLight);
+            message.AddByte((byte) GameOutgoingPacketType.WorldLight);
 
             message.AddByte(Level);
             message.AddByte(Color);

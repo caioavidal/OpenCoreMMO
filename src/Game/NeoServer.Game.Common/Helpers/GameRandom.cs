@@ -4,19 +4,6 @@ namespace NeoServer.Game.Common.Helpers
 {
     public class GameRandom : Random
     {
-        public double Next(double mu = 0, double sigma = 1)
-        {
-            var u1 = NextDouble();
-            var u2 = NextDouble();
-
-            var rand_std_normal = Math.Sqrt(-2.0 * Math.Log(u1)) *
-                                Math.Sin(2.0 * Math.PI * u2);
-
-            var rand_normal = mu + sigma * rand_std_normal;
-
-            return rand_normal;
-        }
-
         private static GameRandom Instance;
 
         public static GameRandom Random
@@ -27,17 +14,29 @@ namespace NeoServer.Game.Common.Helpers
 
                 return Instance;
             }
+        }
 
+        public double Next(double mu = 0, double sigma = 1)
+        {
+            var u1 = NextDouble();
+            var u2 = NextDouble();
+
+            var rand_std_normal = Math.Sqrt(-2.0 * Math.Log(u1)) *
+                                  Math.Sin(2.0 * Math.PI * u2);
+
+            var rand_normal = mu + sigma * rand_std_normal;
+
+            return rand_normal;
         }
 
         public T Next<T>(T[] values)
         {
-            var randomValue = Next(minValue: 0, maxValue: values.Length);
+            var randomValue = Next(0, maxValue: values.Length);
             return values[randomValue];
         }
 
         /// <summary>
-        /// Random value in a interval using gaussian
+        ///     Random value in a interval using gaussian
         /// </summary>
         /// <param name="min"></param>
         /// <param name="max"></param>
@@ -49,18 +48,12 @@ namespace NeoServer.Game.Common.Helpers
 
             double increment;
             if (gaussian < 0.0)
-            {
                 increment = diff / 2;
-            }
             else if (gaussian > 1.0)
-            {
                 increment = (diff + 1) / 2;
-            }
             else
-            {
                 increment = Math.Round(gaussian * diff);
-            }
-            return (double)(min + increment);
+            return min + increment;
         }
     }
 }

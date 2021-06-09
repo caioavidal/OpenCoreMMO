@@ -1,4 +1,5 @@
 ﻿using Moq;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Player;
@@ -18,7 +19,7 @@ namespace NeoServer.Server.Tests.Commands
             var network = new Mock<IReadOnlyNetworkMessage>();
 
             var playerSayPacket = new Mock<PlayerSayPacket>(network.Object);
-            playerSayPacket.SetupGet(x => x.TalkType).Returns(NeoServer.Game.Common.Talks.SpeechType.Private);
+            playerSayPacket.SetupGet(x => x.TalkType).Returns(SpeechType.Private);
             playerSayPacket.SetupGet(x => x.Receiver).Returns("receiver");
             playerSayPacket.SetupGet(x => x.Message).Returns("hello");
 
@@ -32,7 +33,7 @@ namespace NeoServer.Server.Tests.Commands
 
             sut.Execute(player.Object, connection.Object, playerSayPacket.Object);
 
-            player.Verify(x => x.SendMessageTo(receiver, NeoServer.Game.Common.Talks.SpeechType.Private, "hello"), Times.Once());
+            player.Verify(x => x.SendMessageTo(receiver, SpeechType.Private, "hello"), Times.Once());
         }
     }
 }

@@ -4,7 +4,6 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class PlayerOpenChannelPacket : OutgoingPacket
     {
-
         private readonly ushort channelId;
         private readonly string name;
 
@@ -16,7 +15,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.OpenChannel);
+            message.AddByte((byte) GameOutgoingPacketType.OpenChannel);
             message.AddUInt16(channelId);
             message.AddString(name);
         }

@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
@@ -6,13 +10,11 @@ using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creature.Model;
 using NeoServer.Game.Tests;
 using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests
 {
-    public partial class PlayerTest
+    public class PlayerTest
     {
         [Theory]
         [InlineData(100, 111, true)]
@@ -22,12 +24,13 @@ namespace NeoServer.Game.Creatures.Tests
         [InlineData(94, 94, false)]
         public void CanMoveThing_Given_Distance_Bigger_Than_11_Returns_False(ushort toX, ushort toY, bool expected)
         {
-            var sut = new Player(1, "PlayerA", ChaseMode.Stand, 100, healthPoints: 100, maxHealthPoints: 100, vocation: 1, Gender.Male, online: true, mana: 30, maxMana: 30, fightMode: FightMode.Attack,
-                soulPoints: 100, soulMax: 100, skills: new Dictionary<SkillType, ISkill>
+            var sut = new Player(1, "PlayerA", ChaseMode.Stand, 100, 100, 100, 1, Gender.Male, true, 30, 30,
+                FightMode.Attack,
+                100, 100, new Dictionary<SkillType, ISkill>
                 {
-                    { SkillType.Axe, new Skill(SkillType.Axe, 1.1f,10,0)  }
-
-                }, staminaMinutes: 300, outfit: new Outfit(), inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>(), speed: 300, new Location(100, 100, 7));
+                    {SkillType.Axe, new Skill(SkillType.Axe, 1.1f, 10)}
+                }, 300, new Outfit(), new Dictionary<Slot, Tuple<IPickupable, ushort>>(), 300,
+                new Location(100, 100, 7));
 
             Assert.Equal(expected, sut.CanMoveThing(new Location(toX, toY, 7)));
         }
@@ -37,18 +40,19 @@ namespace NeoServer.Game.Creatures.Tests
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100) as Player;
             var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
-            sut.OnDamage(enemy, new(5, Common.Item.DamageType.Melee));
+            sut.OnDamage(enemy, new CombatDamage(5, DamageType.Melee));
 
-            Assert.Equal((uint)95, sut.HealthPoints);
+            Assert.Equal((uint) 95, sut.HealthPoints);
         }
+
         [Fact]
         public void OnDamage_When_Receives_Mana_Attack_Reduce_Mana()
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(mana: 30) as Player;
             var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
-            sut.OnDamage(enemy, new(5, Common.Item.DamageType.ManaDrain));
+            sut.OnDamage(enemy, new CombatDamage(5, DamageType.ManaDrain));
 
-            Assert.Equal((uint)25, sut.Mana);
+            Assert.Equal((uint) 25, sut.Mana);
         }
     }
 }

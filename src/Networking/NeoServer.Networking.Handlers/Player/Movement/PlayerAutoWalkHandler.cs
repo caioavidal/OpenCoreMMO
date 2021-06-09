@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets.Incoming;
+﻿using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
@@ -19,10 +18,8 @@ namespace NeoServer.Server.Handlers.Players
         {
             var autoWalk = new AutoWalkPacket(message);
 
-            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player))
-            {
+            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
                 game.Dispatcher.AddEvent(new Event(() => player.WalkTo(autoWalk.Steps)));
-            }
         }
     }
 }

@@ -1,16 +1,16 @@
-using NeoServer.Server.Contracts.Tasks;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using NeoServer.Server.Contracts.Tasks;
 
 namespace NeoServer.Server.Tasks
 {
     public class OptimizedScheduler : Scheduler
     {
-        protected object preQueueMonitor = new object();
         private readonly IDispatcher dispatcher;
-        protected ConcurrentQueue<ISchedulerEvent> preQueue = new ConcurrentQueue<ISchedulerEvent>();
+        protected ConcurrentQueue<ISchedulerEvent> preQueue = new();
+        protected object preQueueMonitor = new();
 
         public OptimizedScheduler(IDispatcher dispatcher) : base(dispatcher)
         {
@@ -22,16 +22,11 @@ namespace NeoServer.Server.Tasks
             Task.Run(async () =>
             {
                 while (await reader.WaitToReadAsync())
+                while (reader.TryRead(out var evt))
                 {
-                    while (reader.TryRead(out var evt))
-                    {
-                        if (EventIsCancelled(evt.EventId))
-                        {
-                            continue;
-                        }
+                    if (EventIsCancelled(evt.EventId)) continue;
 
-                        DispatchEvent(evt);
-                    }
+                    DispatchEvent(evt);
                 }
             });
 
@@ -55,7 +50,7 @@ namespace NeoServer.Server.Tasks
                         var remainingTime = evt.RemainingTime;
                         if (remainingTime > 0)
                         {
-                            minDelay = remainingTime < minDelay ? (int)remainingTime : minDelay;
+                            minDelay = remainingTime < minDelay ? (int) remainingTime : minDelay;
                             replace.Add(evt);
                             continue;
                         }
@@ -80,6 +75,7 @@ namespace NeoServer.Server.Tasks
                 {
                     Monitor.Pulse(preQueueMonitor);
                 }
+
                 return false;
             }
 

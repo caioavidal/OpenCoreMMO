@@ -7,6 +7,7 @@ namespace NeoServer.Networking.Packets.Outgoing
     {
         private readonly IItem item;
         private readonly byte stackPosition;
+
         public AddTileItemPacket(IItem item, byte stackPosition)
         {
             this.item = item;
@@ -15,7 +16,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
+            message.AddByte((byte) GameOutgoingPacketType.AddAtStackpos);
             message.AddLocation(item.Location);
             message.AddByte(stackPosition);
             message.AddItem(item);

@@ -1,26 +1,29 @@
-﻿using NeoServer.Data.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Data.Interfaces;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Networking.Packets.Incoming.Chat;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerAddVipHandler : PacketHandler
     {
-        private readonly IGameServer game;
         private readonly IAccountRepository accountRepository;
+        private readonly IGameServer game;
         private readonly IEnumerable<IPlayerLoader> playerLoaders;
-        public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository, IEnumerable<IPlayerLoader> playerLoaders)
+
+        public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository,
+            IEnumerable<IPlayerLoader> playerLoaders)
         {
             this.game = game;
             this.accountRepository = accountRepository;
             this.playerLoaders = playerLoaders;
         }
+
         public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var addVipPacket = new AddVipPacket(message);
@@ -31,14 +34,16 @@ namespace NeoServer.Server.Handlers.Player
             if (!game.CreatureManager.TryGetPlayer(addVipPacket.Name, out var vipPlayer))
             {
                 var playerRecord = await accountRepository.GetPlayer(addVipPacket.Name);
-                if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader) return;
+                if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader)
+                    return;
 
                 vipPlayer = playerLoader.Load(playerRecord);
             }
 
             if (vipPlayer is null)
             {
-                connection.Send(new TextMessagePacket("A player with this name does not exist.", TextMessageOutgoingType.Small));
+                connection.Send(new TextMessagePacket("A player with this name does not exist.",
+                    TextMessageOutgoingType.Small));
                 return;
             }
 
@@ -48,4 +53,3 @@ namespace NeoServer.Server.Handlers.Player
         }
     }
 }
-

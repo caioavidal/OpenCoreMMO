@@ -2,7 +2,6 @@
 using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events
 {
@@ -14,6 +13,7 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
+
         public void Execute(IThing thing, ICylinder cylinder)
         {
             if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
@@ -23,12 +23,11 @@ namespace NeoServer.Server.Events
 
             foreach (var spectator in cylinder.TileSpectators)
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out IConnection connection))
-                {
+                if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out var connection))
                     continue;
-                }
 
-                connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(thing.Location, spectator.ToStackPosition, (IItem)thing));
+                connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(thing.Location, spectator.ToStackPosition,
+                    (IItem) thing));
 
                 connection.Send();
             }

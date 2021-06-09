@@ -14,18 +14,12 @@ namespace NeoServer.Server.Events
 
         public void Subscribe(IItem item)
         {
-            if (item is IUseableOnTile useableOnTile)
-            {
-                useableOnTile.OnUsedOnTile += itemUsedOnTileEventHandler.Execute;
-            }
+            if (item is IUseableOnTile useableOnTile) useableOnTile.OnUsedOnTile += itemUsedOnTileEventHandler.Execute;
         }
 
         public void Unsubscribe(IItem item)
         {
-            if (item is IUseableOnTile useableOnTile)
-            {
-                useableOnTile.OnUsedOnTile -= itemUsedOnTileEventHandler.Execute;
-            }
+            if (item is IUseableOnTile useableOnTile) useableOnTile.OnUsedOnTile -= itemUsedOnTileEventHandler.Execute;
         }
     }
 }

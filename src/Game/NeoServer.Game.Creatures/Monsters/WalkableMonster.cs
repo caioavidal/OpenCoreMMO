@@ -10,7 +10,11 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public abstract class WalkableMonster : CombatActor, IWalkableMonster
     {
-        protected WalkableMonster(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints) { }
+        protected WalkableMonster(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit,
+            healthPoints)
+        {
+        }
+
         public bool CanReachAnyTarget { get; protected set; } = false;
         public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;
 
@@ -36,7 +40,8 @@ namespace NeoServer.Game.Creatures.Monsters
 
             if (IsDead) return;
             if (PathFinder is null) return;
-            if (PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule, out var directions) is false) return;
+            if (PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule,
+                out var directions) is false) return;
 
             TryWalkTo(directions);
         }
@@ -46,7 +51,7 @@ namespace NeoServer.Game.Creatures.Monsters
             if (!Attacking) return;
 
             if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
-            Cooldowns.Start(CooldownType.MoveAroundEnemy, GameRandom.Random.Next(minValue: 3000, maxValue: 5000));
+            Cooldowns.Start(CooldownType.MoveAroundEnemy, GameRandom.Random.Next(3000, maxValue: 5000));
 
             var direction = GetRandomStep();
             if (direction == Direction.None) return;

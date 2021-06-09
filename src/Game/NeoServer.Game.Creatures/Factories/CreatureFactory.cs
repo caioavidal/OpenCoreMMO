@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Contracts;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures
 {
@@ -10,19 +10,21 @@ namespace NeoServer.Game.Creatures
     {
         //factories
         private readonly IMonsterFactory _monsterFactory;
-        private readonly INpcFactory npcFactory;
         private readonly IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers;
+        private readonly INpcFactory npcFactory;
+
         public CreatureFactory(
-           IMonsterFactory monsterFactory,
+            IMonsterFactory monsterFactory,
             IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers, INpcFactory npcFactory)
         {
-
             _monsterFactory = monsterFactory;
             this.creatureEventSubscribers = creatureEventSubscribers;
             Instance = this;
             this.npcFactory = npcFactory;
         }
+
         public static ICreatureFactory Instance { get; private set; }
+
         public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
         {
             var monster = _monsterFactory.Create(name, spawn);
@@ -31,6 +33,7 @@ namespace NeoServer.Game.Creatures
             AttachEvents(monster);
             return monster;
         }
+
         public IMonster CreateSummon(string name, IMonster master)
         {
             var monster = _monsterFactory.Create(name, master);
@@ -39,6 +42,7 @@ namespace NeoServer.Game.Creatures
             AttachEvents(monster);
             return monster;
         }
+
         public INpc CreateNpc(string name, ISpawnPoint spawn = null)
         {
             var npc = npcFactory.Create(name, spawn);
@@ -46,8 +50,8 @@ namespace NeoServer.Game.Creatures
 
             AttachEvents(npc);
             return npc;
-
         }
+
         public IPlayer CreatePlayer(IPlayer player)
         {
             return AttachEvents(player) as IPlayer;
@@ -55,15 +59,13 @@ namespace NeoServer.Game.Creatures
 
         private ICreature AttachEvents(ICreature creature)
         {
-            foreach (var gameSubscriber in creatureEventSubscribers.Where(x => x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
-            {
+            foreach (var gameSubscriber in creatureEventSubscribers.Where(x =>
+                x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
                 gameSubscriber?.Subscribe(creature);
-            }
 
-            foreach (var subscriber in creatureEventSubscribers.Where(x => !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
-            {
+            foreach (var subscriber in creatureEventSubscribers.Where(x =>
+                !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
                 subscriber?.Subscribe(creature);
-            }
 
             return creature;
         }

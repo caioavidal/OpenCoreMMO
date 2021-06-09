@@ -1,8 +1,7 @@
 ﻿namespace NeoServer.Server
 {
-
     /// <summary>
-    /// State of the game
+    ///     State of the game
     /// </summary>
     public enum GameState
     {

@@ -2,7 +2,7 @@
 
 namespace NeoServer.Data.Model
 {
-    public partial class PlayerInventoryItemModel
+    public class PlayerInventoryItemModel
     {
         public int Id { get; set; }
         public int PlayerId { get; set; }

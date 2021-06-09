@@ -12,20 +12,12 @@ namespace NeoServer.Game.Tests.Helpers
         {
             var world = new World.World();
 
-            for (int x = fromX; x < toX; x++)
-            {
-                for (int y = fromY; y < toY; y++)
-                {
-                    for (int z = fromZ; z < toZ; z++)
-                    {
-                        world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None, null, new IItem[0], null));
-                    }
-
-                }
-            }
+            for (var x = fromX; x < toX; x++)
+            for (var y = fromY; y < toY; y++)
+            for (var z = fromZ; z < toZ; z++)
+                world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None, null, new IItem[0], null));
 
             return new Map(world);
-
         }
     }
 }

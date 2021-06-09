@@ -7,6 +7,6 @@
         Bood,
         Venom,
         Undead,
-        Energy,
+        Energy
     }
 }

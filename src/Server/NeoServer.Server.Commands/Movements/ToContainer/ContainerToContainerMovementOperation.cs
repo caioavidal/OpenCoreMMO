@@ -6,14 +6,11 @@ namespace NeoServer.Server.Commands.Movement
 {
     public class ContainerToContainerMovementOperation
     {
-
         public static void Execute(IPlayer player, ItemThrowPacket itemThrowPacket)
         {
             if (itemThrowPacket.FromLocation.Type != LocationType.Container
                 || itemThrowPacket.ToLocation.Type != LocationType.Container)
-            {
                 return;
-            }
 
             var fromContainerId = itemThrowPacket.FromLocation.ContainerId;
             var toContainerId = itemThrowPacket.ToLocation.ContainerId;
@@ -25,17 +22,17 @@ namespace NeoServer.Server.Commands.Movement
             var tryingMoveContainerToItself = !sameIds && sameContainers;
 
             if (tryingMoveContainerToItself)
-            {
                 //this is impossible error
                 return;
-            }
 
-            player.Containers.MoveItemBetweenContainers(itemThrowPacket.FromLocation, itemThrowPacket.ToLocation, itemThrowPacket.Count);
-
+            player.Containers.MoveItemBetweenContainers(itemThrowPacket.FromLocation, itemThrowPacket.ToLocation,
+                itemThrowPacket.Count);
         }
-        public static bool IsApplicable(ItemThrowPacket itemThrowPacket) =>
-              itemThrowPacket.FromLocation.Type == LocationType.Container
-              && itemThrowPacket.ToLocation.Type == LocationType.Container;
 
+        public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
+        {
+            return itemThrowPacket.FromLocation.Type == LocationType.Container
+                   && itemThrowPacket.ToLocation.Type == LocationType.Container;
+        }
     }
 }

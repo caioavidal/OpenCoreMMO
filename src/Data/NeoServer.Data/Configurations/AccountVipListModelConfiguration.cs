@@ -10,7 +10,7 @@ namespace NeoServer.Data.Configurations
         {
             builder.ToTable("account_viplist");
 
-            builder.HasKey(e => new { e.AccountId, e.PlayerId });
+            builder.HasKey(e => new {e.AccountId, e.PlayerId});
 
             builder.Property(e => e.AccountId).HasColumnName("account_id");
             builder.Property(e => e.PlayerId).HasColumnName("player_id");

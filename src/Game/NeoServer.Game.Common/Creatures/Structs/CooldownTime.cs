@@ -12,14 +12,11 @@ namespace NeoServer.Game.Common.Creatures.Structs
 
         public long Start { get; set; }
         public long Duration { get; set; }
-        public bool Expired
-        {
-            get
-            {
-                return Start + Duration <= DateTime.Now.Ticks;
-            }
-        }
+        public bool Expired => Start + Duration <= DateTime.Now.Ticks;
 
-        public void Reset() => Start = DateTime.Now.Ticks;
+        public void Reset()
+        {
+            Start = DateTime.Now.Ticks;
+        }
     }
 }

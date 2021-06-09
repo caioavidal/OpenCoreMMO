@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Common;
+﻿using System.Collections.Immutable;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -22,6 +22,8 @@ namespace NeoServer.Game.Items.Items
             //Weight = itemType.GetAttribute<float>(ItemAttribute.Weight);
         }
 
+        public ImmutableHashSet<VocationType> AllowedVocations { get; }
+
         public DamageType DamageType { get; }
 
         public byte AverageDamage { get; }
@@ -30,13 +32,13 @@ namespace NeoServer.Game.Items.Items
 
         public byte Range { get; }
 
-        public ImmutableHashSet<VocationType> AllowedVocations { get; }
-
         public ushort MinimumLevelRequired { get; }
 
         public ImmutableDictionary<SkillType, byte> SkillBonus { get; }
 
-        public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "wand";
-
+        public static bool IsApplicable(IItemType type)
+        {
+            return type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "wand";
+        }
     }
 }

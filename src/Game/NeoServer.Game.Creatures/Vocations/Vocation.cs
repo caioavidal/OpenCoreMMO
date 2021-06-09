@@ -1,9 +1,8 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures.Vocations
 {
-
     public class Vocation : IVocation
     {
         public string Id { get; set; }
@@ -27,5 +26,4 @@ namespace NeoServer.Game.Creatures.Vocations
         public Dictionary<byte, float> Skill { get; set; }
         public byte VocationType => byte.Parse(Id);
     }
-
 }

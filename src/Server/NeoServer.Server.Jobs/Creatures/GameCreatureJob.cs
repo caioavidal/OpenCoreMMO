@@ -12,11 +12,12 @@ namespace NeoServer.Server.Jobs.Creatures
     {
         private const ushort EVENT_CHECK_CREATURE_INTERVAL = 500;
         private readonly IGameServer game;
-        private readonly SpawnManager spawnManager;
         private readonly PlayerLogOutCommand playerLogOutCommand;
+        private readonly SpawnManager spawnManager;
         private readonly ISummonService summonService;
 
-        public GameCreatureJob(IGameServer game, SpawnManager spawnManager, PlayerLogOutCommand playerLogOutCommand, ISummonService summonService)
+        public GameCreatureJob(IGameServer game, SpawnManager spawnManager, PlayerLogOutCommand playerLogOutCommand,
+            ISummonService summonService)
         {
             this.game = game;
             this.spawnManager = spawnManager;
@@ -39,10 +40,7 @@ namespace NeoServer.Server.Jobs.Creatures
                     PlayerRecoveryJob.Execute(player, game);
                 }
 
-                if (creature is ICombatActor combatActor)
-                {
-                    CreatureConditionJob.Execute(combatActor);
-                }
+                if (creature is ICombatActor combatActor) CreatureConditionJob.Execute(combatActor);
 
                 if (creature is IMonster monster)
                 {
@@ -50,14 +48,11 @@ namespace NeoServer.Server.Jobs.Creatures
                     MonsterStateJob.Execute(monster, summonService);
                     MonsterYellJob.Execute(monster);
                 }
-                if (creature is INpc npc)
-                {
-                    NpcJob.Execute(npc);
-                }
+
+                if (creature is INpc npc) NpcJob.Execute(npc);
 
                 RespawnJob.Execute(spawnManager);
             }
-
         }
     }
 }

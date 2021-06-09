@@ -1,5 +1,7 @@
-﻿using NeoServer.Game.Combat.Attacks;
+﻿using System.Collections.Immutable;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Calculations;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -7,20 +9,20 @@ using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
     public class DistanceWeapon : MoveableItem, IDistanceWeaponItem
     {
-        public DistanceWeapon(IItemType type, Location location) : base(type, location) { }
+        public DistanceWeapon(IItemType type, Location location) : base(type, location)
+        {
+        }
+
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
 
-        public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Attack);
-        public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.HitChance);
-        public byte Range => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Range);
-
-        public static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Common.ItemAttribute.WeaponType) == "distance" && !type.HasFlag(Common.ItemFlag.Stackable);
+        public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
+        public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
+        public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
@@ -37,9 +39,11 @@ namespace NeoServer.Game.Items.Items
 
             if (ammo.Amount <= 0) return false;
 
-            var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
+            var distance = (byte) actor.Location.GetSqmDistance(enemy.Location);
 
-            var hitChance = (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level, distance) + ExtraHitChance);
+            var hitChance =
+                (byte) (DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level,
+                    distance) + ExtraHitChance);
             combatType.ShootType = ammo.ShootType;
 
             var missed = DistanceCombatAttack.MissedAttack(hitChance);
@@ -51,7 +55,7 @@ namespace NeoServer.Game.Items.Items
                 return true;
             }
 
-            var maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
+            var maxDamage = player.CalculateAttackPower(0.09f, (ushort) (ammo.Attack + ExtraAttack));
 
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
@@ -63,21 +67,26 @@ namespace NeoServer.Game.Items.Items
 
             UseElementalDamage(actor, enemy, ref combatType, ref result, player, ammo, ref maxDamage, ref combat);
 
-            if (result)
-            {
-                ammo.Throw();
-            }
+            if (result) ammo.Throw();
 
             return result;
         }
 
-        private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackType combatType, ref bool result, IPlayer player, IAmmoItem ammo, ref ushort maxDamage, ref CombatAttackValue combat)
+        public static bool IsApplicable(IItemType type)
+        {
+            return type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "distance" &&
+                   !type.HasFlag(ItemFlag.Stackable);
+        }
+
+        private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackType combatType,
+            ref bool result, IPlayer player, IAmmoItem ammo, ref ushort maxDamage, ref CombatAttackValue combat)
         {
             if (ammo.HasElementalDamage)
             {
-                maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack));
+                maxDamage = player.CalculateAttackPower(0.09f, (ushort) (ammo.ElementalDamage.Item2 + ExtraAttack));
                 combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, ammo.ElementalDamage.Item1);
-                if (ammo.ElementalDamage != null && DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage))
+                if (ammo.ElementalDamage != null &&
+                    DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage))
                 {
                     combatType.DamageType = ammo.ElementalDamage.Item1;
 

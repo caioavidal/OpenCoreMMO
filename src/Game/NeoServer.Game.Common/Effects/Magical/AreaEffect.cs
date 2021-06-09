@@ -1,13 +1,13 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-using System;
+﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Effects.Magical
 {
     public partial class AreaEffect
     {
-        public static Dictionary<string, (byte, byte)> originPoints = new Dictionary<string, (byte, byte)>();
+        public static Dictionary<string, (byte, byte)> originPoints = new();
 
         public static Coordinate[] Create(string areaType, byte[,] areaTemplate)
         {
@@ -19,21 +19,20 @@ namespace NeoServer.Game.Effects.Magical
             var pool = ArrayPool<Coordinate>.Shared;
             var points = pool.Rent(array.Length * array.GetLength(0));
 
-            int count = 0;
+            var count = 0;
 
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (var i = 0; i < array.GetLength(0); i++)
+            for (var y = 0; y < array.GetLength(1); y++)
             {
-                for (int y = 0; y < array.GetLength(1); y++)
-                {
-                    var value = array[i, y];
-                    if (value == 0) continue;
+                var value = array[i, y];
+                if (value == 0) continue;
 
-                    points[count++] = new Coordinate(i - origin.Item1, y - origin.Item2, 0);
-                }
+                points[count++] = new Coordinate(i - origin.Item1, y - origin.Item2, 0);
             }
+
             pool.Return(points);
 
-            return points[0..count];
+            return points[..count];
         }
 
         public static Coordinate[] Create(Location location, string areaType, byte[,] areaTemplate)
@@ -44,9 +43,7 @@ namespace NeoServer.Game.Effects.Magical
             var affectedArea = new Coordinate[affectedLocations.Length];
 
             foreach (var affectedlocation in affectedLocations)
-            {
                 affectedArea[i++] = location.Translate() + affectedlocation;
-            }
             return affectedArea;
         }
 
@@ -56,17 +53,15 @@ namespace NeoServer.Game.Effects.Magical
 
             var length = array.GetLength(0);
 
-            for (int i = 0; i < array.Length; i++)
+            for (var i = 0; i < array.Length; i++)
+            for (var y = 0; y < length; y++)
             {
-                for (int y = 0; y < length; y++)
+                var value = array[i, y];
+                if (value == 3)
                 {
-                    var value = array[i, y];
-                    if (value == 3)
-                    {
-                        origin = ((byte)i, (byte)y);
-                        originPoints.TryAdd(areaType, origin);
-                        return origin;
-                    }
+                    origin = ((byte) i, (byte) y);
+                    originPoints.TryAdd(areaType, origin);
+                    return origin;
                 }
             }
 

@@ -1,12 +1,11 @@
-﻿using NeoServer.Data.Enums;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Data.Enums;
 using NeoServer.Data.Helpers;
 using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Data.Model
 {
-
     public class AccountModel
     {
         public AccountModel()
@@ -38,12 +37,14 @@ namespace NeoServer.Data.Model
         {
             get => DateTimeHelper.FromUnixTime(_lastday);
 
-            set => _lastday = (uint)DateTimeHelper.ToUnixTimeInt(value);
+            set => _lastday = (uint) DateTimeHelper.ToUnixTimeInt(value);
         }
 
-        public bool IsValid() =>
-            !string.IsNullOrWhiteSpace(Email) &&
-            !string.IsNullOrWhiteSpace(Name) &&
-            !string.IsNullOrWhiteSpace(Password);
+        public bool IsValid()
+        {
+            return !string.IsNullOrWhiteSpace(Email) &&
+                   !string.IsNullOrWhiteSpace(Name) &&
+                   !string.IsNullOrWhiteSpace(Password);
+        }
     }
 }

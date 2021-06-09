@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Items.Items;
 using Xunit;
@@ -25,6 +26,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(40, itemToJoin.Amount);
             Assert.Equal(50, sut.Amount);
         }
+
         [Fact]
         public void TryJoin_When_Sum_Of_Amount_Less_Than_100_Outs_Null()
         {
@@ -39,6 +41,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Null(itemToJoin);
             Assert.Equal(90, sut.Amount);
         }
+
         [Fact]
         public void TryJoin_When_Sum_Of_Amount_Bigger_Than_100_Outs_Item_With_Exceeding_Amount()
         {
@@ -53,6 +56,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(20, itemToJoin.Amount);
             Assert.Equal(100, sup.Amount);
         }
+
         [Fact]
         public void TryJoin_When_Item_To_Join_Has_Amount_100()
         {
@@ -67,6 +71,7 @@ namespace NeoServer.Game.Items.Tests
             Assert.Equal(50, itemToJoin.Amount);
             Assert.Equal(100, sup.Amount);
         }
+
         [Fact]
         public void TryJoin_When_Both_Has_Amount_100()
         {
@@ -92,11 +97,10 @@ namespace NeoServer.Game.Items.Tests
         {
             var type = new ItemType();
             type.SetClientId(100);
-            type.Attributes.SetAttribute(Common.ItemAttribute.Weight, weight);
+            type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
 
             var sup = new Cumulative(type, new Location(100, 100, 7), amount);
             Assert.Equal(totalWeight, sup.Weight);
         }
-
     }
 }

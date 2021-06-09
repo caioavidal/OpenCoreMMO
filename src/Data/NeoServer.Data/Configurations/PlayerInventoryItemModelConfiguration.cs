@@ -10,7 +10,7 @@ namespace NeoServer.Data.Configurations
         public void Configure(EntityTypeBuilder<PlayerInventoryItemModel> entity)
         {
             entity.HasKey(e => e.Id)
-                    .HasName("player_iventory_item_id");
+                .HasName("player_iventory_item_id");
 
             entity.ToTable("player_inventory_items");
 
@@ -23,8 +23,8 @@ namespace NeoServer.Data.Configurations
                 .HasColumnType("int(11)");
 
             entity.Property(e => e.SlotId)
-                 .HasColumnName("slot_id")
-                 .HasColumnType("int(11)");
+                .HasColumnName("slot_id")
+                .HasColumnType("int(11)");
 
             entity.Property(e => e.Id)
                 .HasColumnName("id")
@@ -42,6 +42,5 @@ namespace NeoServer.Data.Configurations
 
             PlayerInventorySeed.Seed(entity);
         }
-
     }
 }

@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures.Monsters;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures.Monsters;
 using NeoServer.Game.Creatures.Monsters;
-using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
@@ -16,7 +16,8 @@ namespace NeoServer.Loaders.Monsters.Converters
             {
                 if (string.IsNullOrWhiteSpace(summon.Name) || summon.Chance <= 0 || summon.Max <= 0) continue;
 
-                summons.Add(new MonsterSummon(summon.Name, summon.Interval == 0 ? 1000 : summon.Interval, (byte)summon.Chance, (byte)summon.Max));
+                summons.Add(new MonsterSummon(summon.Name, summon.Interval == 0 ? 1000 : summon.Interval,
+                    (byte) summon.Chance, (byte) summon.Max));
             }
 
             return (data.Summon.MaxSummons, summons.ToArray());

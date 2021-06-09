@@ -10,7 +10,7 @@ namespace NeoServer.Data.Configurations
         {
             builder.ToTable("guild_ranks");
 
-            builder.HasKey(e => new { e.Id });
+            builder.HasKey(e => new {e.Id});
 
             builder.Property(e => e.Id).HasAnnotation("Sqlite:Autoincrement", false).HasColumnName("id");
             builder.Property(e => e.GuildId).HasColumnName("guild_id");
