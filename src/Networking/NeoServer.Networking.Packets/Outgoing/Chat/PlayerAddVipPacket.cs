@@ -17,11 +17,11 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.AddVip);
+            message.AddByte((byte) GameOutgoingPacketType.AddVip);
 
             message.AddUInt32(playerId);
             message.AddString(playerName);
-            message.AddByte(status ? (byte)1 : (byte)0);
+            message.AddByte(status ? (byte) 1 : (byte) 0);
         }
     }
 }

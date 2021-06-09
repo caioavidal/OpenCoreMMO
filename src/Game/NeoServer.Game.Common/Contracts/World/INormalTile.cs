@@ -1,13 +1,14 @@
-﻿using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts
 {
     public delegate void RemoveThing(IThing thing, INormalTile tile, byte stackPosition);
+
     public interface INormalTile : ITile
     {
         bool HandlesCollision { get; }

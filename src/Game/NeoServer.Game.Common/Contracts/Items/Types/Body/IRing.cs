@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Item;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Contracts.Items.Types.Body
 {
@@ -8,6 +8,5 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
         bool Expired { get; }
         byte Defense { get; }
         Dictionary<DamageType, byte> DamageProtection { get; }
-
     }
 }

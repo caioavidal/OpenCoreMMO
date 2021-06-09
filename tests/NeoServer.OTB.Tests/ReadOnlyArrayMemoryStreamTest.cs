@@ -1,16 +1,15 @@
-using NeoServer.OTB.DataStructures;
 using System;
+using NeoServer.OTB.DataStructures;
 using Xunit;
 
 namespace NeoServer.OTB.Tests
 {
     public class ReadOnlyMemoryStreamTest
     {
-
         [Fact]
         public void Instance_NullBuffer_NotThrows()
         {
-            var instance = new ReadOnlyMemoryStream(null, 0);
+            var instance = new ReadOnlyMemoryStream(null);
             Assert.NotNull(instance);
             Assert.Equal(0, instance.Position);
         }
@@ -30,6 +29,7 @@ namespace NeoServer.OTB.Tests
 
             Assert.Equal(default, sut.Position);
         }
+
         [Fact]
         public void Instance_PositionBiggerThanBuffer_()
         {
@@ -41,7 +41,7 @@ namespace NeoServer.OTB.Tests
         [Fact]
         public void PositionIncrease_WhenReadingBytes()
         {
-            var instance = new ReadOnlyMemoryStream(new byte[20], 0);
+            var instance = new ReadOnlyMemoryStream(new byte[20]);
             instance.ReadUInt16();
             Assert.Equal(2, instance.Position);
             instance.ReadUInt32();
@@ -53,15 +53,16 @@ namespace NeoServer.OTB.Tests
             instance.PeakByte();
             Assert.Equal(14, instance.Position);
         }
+
         [Fact]
         public void WhenReadingBytes_ReturnValue()
         {
             var data = new byte[20]
             {
-                1,4,5,7,2,7,9,2,5,2,8,3,5,8,5,3,8,4,8,5
+                1, 4, 5, 7, 2, 7, 9, 2, 5, 2, 8, 3, 5, 8, 5, 3, 8, 4, 8, 5
             };
 
-            var instance = new ReadOnlyMemoryStream(data, 0);
+            var instance = new ReadOnlyMemoryStream(data);
 
             Assert.Equal(BitConverter.ToUInt16(data, 0), instance.ReadUInt16());
 
@@ -78,7 +79,7 @@ namespace NeoServer.OTB.Tests
         public void IsOver_PositionEqualsOrBiggerThanBuffer_ReturnsTrue()
         {
             var buffer = new ReadOnlyMemory<byte>(new byte[7]);
-            var instance = new ReadOnlyMemoryStream(buffer, 0);
+            var instance = new ReadOnlyMemoryStream(buffer);
 
             instance.Skip(7);
 
@@ -89,12 +90,11 @@ namespace NeoServer.OTB.Tests
         public void IsOver_PositionLessThanBuffer_ReturnsFalse()
         {
             var buffer = new ReadOnlyMemory<byte>(new byte[7]);
-            var instance = new ReadOnlyMemoryStream(buffer, 0);
+            var instance = new ReadOnlyMemoryStream(buffer);
 
             instance.Skip(5);
 
             Assert.False(instance.IsOver);
         }
-
     }
 }

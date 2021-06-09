@@ -33,7 +33,7 @@
         NotGainSkill = 1 << 28,
         SetMaxSpeed = 1 << 29,
         SpecialVIP = 1 << 30,
-        NotGenerateLoot = (ulong)1 << 31,
+        NotGenerateLoot = (ulong) 1 << 31,
         CanTalkRedChannelAnonymous = 1 << 32,
         IgnoreProtectionZone = 1 << 33,
         IgnoreSpellCheck = 1 << 34,

@@ -8,7 +8,6 @@ namespace NeoServer.Scripts
 {
     public class Invisibility : Spell<Invisibility>
     {
-
         public override EffectT Effect => EffectT.GlitterBlue;
         public override uint Duration => 20000;
         public override ConditionType ConditionType => ConditionType.Invisible;
@@ -25,6 +24,5 @@ namespace NeoServer.Scripts
             actor.TurnVisible();
             base.OnEnd(actor);
         }
-
     }
 }

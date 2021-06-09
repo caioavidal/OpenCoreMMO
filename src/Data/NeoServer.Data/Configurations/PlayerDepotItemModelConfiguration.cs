@@ -9,7 +9,7 @@ namespace NeoServer.Data.Configurations
         public void Configure(EntityTypeBuilder<PlayerDepotItemModel> entity)
         {
             entity.HasKey(e => e.Id)
-                    .HasName("player_depot_items_id");
+                .HasName("player_depot_items_id");
 
             entity.ToTable("player_depot_items");
 

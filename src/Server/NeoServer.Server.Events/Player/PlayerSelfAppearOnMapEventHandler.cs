@@ -10,14 +10,15 @@ namespace NeoServer.Server.Events
 {
     public class PlayerSelfAppearOnMapEventHandler : IEventHandler
     {
-        private readonly IMap map;
         private readonly IGameServer game;
+        private readonly IMap map;
 
         public PlayerSelfAppearOnMapEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;
         }
+
         public void Execute(IWalkableCreature creature)
         {
             if (creature.IsNull()) return;
@@ -27,7 +28,6 @@ namespace NeoServer.Server.Events
             if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
 
             SendPacketsToPlayer(player, connection);
-
         }
 
         private void SendPacketsToPlayer(IPlayer player, IConnection connection)
@@ -44,10 +44,7 @@ namespace NeoServer.Server.Events
             connection.OutgoingPackets.Enqueue(new CreatureLightPacket(player));
 
             ushort icons = 0;
-            foreach (var condition in player.Conditions)
-            {
-                icons |= (ushort)ConditionIconParser.Parse(condition.Key);
-            }
+            foreach (var condition in player.Conditions) icons |= (ushort) ConditionIconParser.Parse(condition.Key);
 
             connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
         }

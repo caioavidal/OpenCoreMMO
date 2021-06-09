@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Server.Events
 {
@@ -13,9 +12,10 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
+
         public void Execute(ICombatActor actor)
         {
-            if (game.CreatureManager.GetPlayerConnection(actor.CreatureId, out IConnection connection))
+            if (game.CreatureManager.GetPlayerConnection(actor.CreatureId, out var connection))
             {
                 connection.OutgoingPackets.Enqueue(new CancelTargetPacket());
                 connection.Send();

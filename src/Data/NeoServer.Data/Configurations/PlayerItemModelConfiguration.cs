@@ -51,6 +51,5 @@ namespace NeoServer.Data.Configurations
 
             PlayerItemSeed.Seed(entity);
         }
-
     }
 }

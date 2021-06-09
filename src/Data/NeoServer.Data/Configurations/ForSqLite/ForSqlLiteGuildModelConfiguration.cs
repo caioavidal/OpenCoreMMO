@@ -10,7 +10,7 @@ namespace NeoServer.Data.Configurations
         {
             builder.ToTable("guilds");
 
-            builder.HasKey(e => new { e.Id });
+            builder.HasKey(e => new {e.Id});
 
             builder.Property(e => e.Id).HasAnnotation("Sqlite:Autoincrement", false).HasColumnName("id");
             builder.Property(e => e.Name).HasColumnName("name");
@@ -19,7 +19,6 @@ namespace NeoServer.Data.Configurations
             builder.Property(e => e.Modt).HasColumnName("modt");
 
             builder.HasMany(x => x.Members).WithOne().HasForeignKey("GuildId");
-
         }
     }
 }

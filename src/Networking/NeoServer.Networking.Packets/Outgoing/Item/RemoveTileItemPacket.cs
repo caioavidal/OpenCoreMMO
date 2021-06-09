@@ -6,9 +6,10 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class RemoveTileItemPacket : OutgoingPacket
     {
+        public readonly IItem item;
         public readonly Location location;
         public readonly byte stackPosition;
-        public readonly IItem item;
+
         public RemoveTileItemPacket(Location location, byte stackPosition, IItem item)
         {
             if (item.IsNull()) return;
@@ -17,10 +18,10 @@ namespace NeoServer.Networking.Packets.Outgoing
             this.stackPosition = stackPosition;
             this.item = item;
         }
+
         public override void WriteToMessage(INetworkMessage message)
         {
-
-            message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
+            message.AddByte((byte) GameOutgoingPacketType.AddAtStackpos);
             message.AddLocation(location);
             message.AddByte(stackPosition);
             message.AddItem(item);

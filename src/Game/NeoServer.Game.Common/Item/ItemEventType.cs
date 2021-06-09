@@ -8,5 +8,4 @@
         Collision,
         Separation
     }
-
 }

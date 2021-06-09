@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
@@ -6,25 +7,34 @@ using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Effects.Parsers;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Items
 {
     public class ItemType : IItemType
     {
+        public ItemType()
+        {
+            TypeId = 0;
+            Name = string.Empty;
+            Flags = new HashSet<ItemFlag>();
+            Attributes = new ItemAttributeList();
+            Locked = false;
+        }
+
+        public bool Locked { get; private set; }
+
         /// <summary>
-        /// Server Id
+        ///     Server Id
         /// </summary>
         public ushort TypeId { get; private set; }
 
         /// <summary>
-        /// Item's name
+        ///     Item's name
         /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
-        /// Item's description
+        ///     Item's description
         /// </summary>
         public string Description => Attributes.GetAttribute(ItemAttribute.Description);
 
@@ -32,7 +42,6 @@ namespace NeoServer.Game.Items
 
         public IItemAttributeList Attributes { get; }
         public IItemAttributeList OnUse { get; private set; }
-        public bool Locked { get; private set; }
 
         public ushort ClientId { get; private set; }
         public ushort TransformTo => Attributes.GetTransformationItem();
@@ -48,24 +57,91 @@ namespace NeoServer.Game.Items
 
         public float Weight => Attributes.GetAttribute<float>(ItemAttribute.Weight);
 
-        void ThrowIfLocked()
+        public void SetSpeed(ushort speed)
         {
-            if (Locked)
-            {
-                throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
-            }
+            Attributes.SetAttribute(ItemAttribute.Speed, speed);
+            ThrowIfLocked();
         }
+
+        public void SetLight(LightBlock lightBlock)
+        {
+            ThrowIfLocked();
+            LightBlock = lightBlock;
+        }
+
+        public void LockChanges()
+        {
+            Locked = true;
+        }
+
+        public void SetWareId(ushort wareId)
+        {
+            ThrowIfLocked();
+            WareId = wareId;
+        }
+
+        public void SetName(string name)
+        {
+            ThrowIfLocked();
+
+            Name = name;
+        }
+
+        public void SetRequirements(IItemRequirement[] requirements)
+        {
+            ThrowIfLocked();
+        }
+
+        public void SetOnUse()
+        {
+            ThrowIfLocked();
+            if (OnUse is not null) return;
+            OnUse = new ItemAttributeList();
+        }
+
+        public void SetArticle(string article)
+        {
+            Article = article;
+        }
+
+        public void SetPlural(string plural)
+        {
+            Plural = plural;
+        }
+
+        public bool HasFlag(ItemFlag flag)
+        {
+            return Flags.Contains(flag);
+        }
+
+        public AmmoType AmmoType => Attributes?.GetAttribute(ItemAttribute.AmmoType) switch
+        {
+            "bolt" => AmmoType.Bolt,
+            "arrow" => AmmoType.Arrow,
+            _ => AmmoType.None
+        };
+
+        public Slot BodyPosition => SlotTypeParser.Parse(Attributes);
+        public ShootType ShootType => ShootTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.ShootType));
+        public WeaponType WeaponType => WeaponTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.WeaponType));
+        public DamageType DamageType => DamageTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.Damage));
+        public EffectT EffectT => EffectParser.Parse(Attributes?.GetAttribute(ItemAttribute.Effect));
+
+        private void ThrowIfLocked()
+        {
+            if (Locked) throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
+        }
+
         public void SetGroup(byte type)
         {
             ThrowIfLocked();
-            Group = (ItemGroup)type;
-
+            Group = (ItemGroup) type;
         }
 
         public void SetType(byte type)
         {
             ThrowIfLocked();
-            switch ((ItemGroup)type)
+            switch ((ItemGroup) type)
             {
                 case ItemGroup.GroundContainer:
                     TypeAttribute = ItemTypeAttribute.ITEM_TYPE_CONTAINER;
@@ -89,41 +165,7 @@ namespace NeoServer.Game.Items
                 case ItemGroup.ITEM_GROUP_CHARGES:
                 case ItemGroup.ITEM_GROUP_DEPRECATED:
                     break;
-                default:
-                    break;
             }
-        }
-
-        public void SetSpeed(ushort speed)
-        {
-            Attributes.SetAttribute(ItemAttribute.Speed, speed);
-            ThrowIfLocked();
-        }
-
-        public ItemType()
-        {
-            TypeId = 0;
-            Name = string.Empty;
-            Flags = new HashSet<ItemFlag>();
-            Attributes = new ItemAttributeList();
-            Locked = false;
-        }
-
-        public void SetLight(LightBlock lightBlock)
-        {
-            ThrowIfLocked();
-            LightBlock = lightBlock;
-        }
-
-        public void LockChanges()
-        {
-            Locked = true;
-        }
-
-        public void SetWareId(ushort wareId)
-        {
-            ThrowIfLocked();
-            WareId = wareId;
         }
 
         public IItemType SetId(ushort typeId)
@@ -140,23 +182,6 @@ namespace NeoServer.Game.Items
             ClientId = clientId;
         }
 
-        public void SetName(string name)
-        {
-            ThrowIfLocked();
-
-            Name = name;
-        }
-
-        public void SetRequirements(IItemRequirement[] requirements)
-        {
-            ThrowIfLocked();
-        }
-        public void SetOnUse()
-        {
-            ThrowIfLocked();
-            if (OnUse is not null) return;
-            OnUse = new ItemAttributeList();
-        }
         public void SetFlag(ItemFlag flag)
         {
             ThrowIfLocked();
@@ -224,35 +249,9 @@ namespace NeoServer.Game.Items
                 SetFlag(ItemFlag.ForceUse);
         }
 
-        private bool HasOTFlag(UInt32 flags, UInt32 flag)
+        private bool HasOTFlag(uint flags, uint flag)
         {
             return (flags & flag) != 0;
         }
-
-        public void SetArticle(string article)
-        {
-            Article = article;
-        }
-
-        public void SetPlural(string plural)
-        {
-            Plural = plural;
-        }
-
-        public bool HasFlag(ItemFlag flag) => Flags.Contains(flag);
-
-        public AmmoType AmmoType => Attributes?.GetAttribute(ItemAttribute.AmmoType) switch
-        {
-            "bolt" => AmmoType.Bolt,
-            "arrow" => AmmoType.Arrow,
-            _ => AmmoType.None
-        };
-
-        public Slot BodyPosition => SlotTypeParser.Parse(Attributes);
-        public ShootType ShootType => ShootTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.ShootType));
-        public WeaponType WeaponType => WeaponTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.WeaponType));
-        public DamageType DamageType => DamageTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.Damage));
-        public EffectT EffectT => EffectParser.Parse(Attributes?.GetAttribute(ItemAttribute.Effect));
-
     }
 }

@@ -6,6 +6,7 @@ using NeoServer.Game.Contracts.Creatures;
 namespace NeoServer.Game.Contracts.Spells
 {
     public delegate void InvokeSpell(ICombatActor creature, ISpell spell);
+
     public interface ISpell
     {
         EffectT Effect { get; }
@@ -16,12 +17,14 @@ namespace NeoServer.Game.Contracts.Spells
         uint Cooldown { get; set; }
         bool ShouldSay { get; }
         byte[] Vocations { get; set; }
-        bool Invoke(ICombatActor actor, string words, out InvalidOperation error);
-        bool InvokeOn(ICombatActor actor, ICombatActor onCreature, string words, out InvalidOperation error);
+
         /// <summary>
-        /// Indicates if should train magic level when spell is cast
+        ///     Indicates if should train magic level when spell is cast
         /// </summary>
         bool IncreaseSkill => true;
+
+        bool Invoke(ICombatActor actor, string words, out InvalidOperation error);
+        bool InvokeOn(ICombatActor actor, ICombatActor onCreature, string words, out InvalidOperation error);
     }
 
     public interface ICommandSpell : ISpell

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Containers;
 
@@ -9,6 +10,10 @@ namespace NeoServer.Game.Items.Items.Containers
         public Depot(IItemType type, Location location) : base(type, location)
         {
         }
-        public static new bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(Common.ItemAttribute.Type) == "depot";
+
+        public new static bool IsApplicable(IItemType type)
+        {
+            return type.Attributes.GetAttribute(ItemAttribute.Type) == "depot";
+        }
     }
 }

@@ -7,5 +7,4 @@ namespace NeoServer.Networking.Packets.Outgoing
         public virtual bool Disconnect { get; protected set; } = false;
         public abstract void WriteToMessage(INetworkMessage message);
     }
-
 }

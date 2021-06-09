@@ -1,5 +1,5 @@
-﻿using NeoServer.Server.Model.Players;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Server.Model
 {
@@ -13,7 +13,6 @@ namespace NeoServer.Server.Model
 
         public Account()
         {
-
         }
 
         public string AccountName { get; set; }
@@ -22,9 +21,10 @@ namespace NeoServer.Server.Model
         public int PremiumTime { get; set; }
         public ICollection<Player> Players { get; set; } = new List<Player>();
 
-        public bool IsValid() =>
-            !string.IsNullOrWhiteSpace(AccountName) &&
-            !string.IsNullOrWhiteSpace(Password);
-
+        public bool IsValid()
+        {
+            return !string.IsNullOrWhiteSpace(AccountName) &&
+                   !string.IsNullOrWhiteSpace(Password);
+        }
     }
 }

@@ -9,15 +9,17 @@ namespace NeoServer.Server.Events.Creature
 {
     public class CreatureKilledEventHandler
     {
-        private readonly IMap map;
         private readonly IGameServer game;
         private readonly IItemFactory itemFactory;
+        private readonly IMap map;
+
         public CreatureKilledEventHandler(IMap map, IGameServer game, IItemFactory itemFactory)
         {
             this.map = map;
             this.game = game;
             this.itemFactory = itemFactory;
         }
+
         public void Execute(ICombatActor creature, IThing by, ILoot loot)
         {
             game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
@@ -27,7 +29,8 @@ namespace NeoServer.Server.Events.Creature
                 var thing = creature as IThing;
 
                 //send packets to killed player
-                if (creature is IPlayer killedPlayer && game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
+                if (creature is IPlayer killedPlayer &&
+                    game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
                 {
                     connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
                     connection.Send();
@@ -35,9 +38,7 @@ namespace NeoServer.Server.Events.Creature
             }));
 
             if (creature is IMonster monster && !monster.IsSummon)
-            {
                 game.CreatureManager.AddKilledMonsters(creature as IMonster);
-            }
         }
     }
 }

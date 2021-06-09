@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Contracts.Chats;
-using System.Linq;
+﻿using System.Linq;
+using NeoServer.Game.Contracts.Chats;
 
 namespace NeoServer.Server.Jobs.Creatures
 {
@@ -9,11 +9,7 @@ namespace NeoServer.Server.Jobs.Creatures
         {
             var removedUsers = channel.Users.Where(x => x.Removed && !x.IsMuted);
 
-            foreach (var user in removedUsers)
-            {
-                channel.RemoveUser(user.Player);
-            }
-
+            foreach (var user in removedUsers) channel.RemoveUser(user.Player);
         }
     }
 }

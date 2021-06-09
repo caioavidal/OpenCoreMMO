@@ -1,4 +1,8 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.DataStore;
@@ -7,24 +11,20 @@ using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace NeoServer.Loaders.Npcs
 {
     public class NpcLoader : IStartupLoader
     {
-        private readonly ServerConfiguration serverConfiguration;
         private readonly Logger logger;
+        private readonly ServerConfiguration serverConfiguration;
 
         public NpcLoader(ServerConfiguration serverConfiguration, Logger logger)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
         }
-        public event Action<INpcType, string> OnLoad;
+
         public void Load()
         {
             logger.Step("Loading npcs...", "{n} npcs loaded", () =>
@@ -37,36 +37,49 @@ namespace NeoServer.Loaders.Npcs
                     NpcStore.Data.Add(npc.Name, npc);
                     OnLoad?.Invoke(npc, jsonContent);
                 }
-                return new object[] { npcs.Count() };
+
+                return new object[] {npcs.Count()};
             });
         }
+
+        public event Action<INpcType, string> OnLoad;
+
         private IEnumerable<(string, INpcType)> ConvertNpcs()
         {
             var basePath = $"{serverConfiguration.Data}/npcs";
             foreach (var file in Directory.GetFiles(basePath, "*.json"))
             {
                 var jsonContent = File.ReadAllText(file);
-                var npcData = JsonConvert.DeserializeObject<NpcJsonData>(jsonContent, new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; Console.WriteLine(ev.ErrorContext.Error); } });
+                var npcData = JsonConvert.DeserializeObject<NpcJsonData>(jsonContent, new JsonSerializerSettings
+                {
+                    Error = (se, ev) =>
+                    {
+                        ev.ErrorContext.Handled = true;
+                        Console.WriteLine(ev.ErrorContext.Error);
+                    }
+                });
 
                 if (npcData is null) continue;
                 if (string.IsNullOrWhiteSpace(npcData.Name)) continue;
 
                 var dialogs = new List<IDialog>();
 
-                foreach (var dialog in npcData.Dialog)
-                {
-                    dialogs.Add(ConvertDialog(dialog));
-                }
+                foreach (var dialog in npcData.Dialog) dialogs.Add(ConvertDialog(dialog));
 
-                var npcType = (jsonContent, new NpcType()
+                var npcType = (jsonContent, new NpcType
                 {
                     Script = npcData.Script,
                     MaxHealth = npcData.Health?.Max ?? 100,
                     Name = npcData.Name,
                     Marketings = npcData.Marketings,
                     Speed = 280,
-                    Look = new Dictionary<LookType, ushort>() { { LookType.Type, npcData.Look.Type }, { LookType.Corpse, npcData.Look.Corpse }, { LookType.Body, npcData.Look.Body}, { LookType.Legs, npcData.Look.Legs}, { LookType.Head, npcData.Look.Head },
-                { LookType.Feet, npcData.Look.Feet},{ LookType.Addon, npcData.Look.Addons}},
+                    Look = new Dictionary<LookType, ushort>
+                    {
+                        {LookType.Type, npcData.Look.Type}, {LookType.Corpse, npcData.Look.Corpse},
+                        {LookType.Body, npcData.Look.Body}, {LookType.Legs, npcData.Look.Legs},
+                        {LookType.Head, npcData.Look.Head},
+                        {LookType.Feet, npcData.Look.Feet}, {LookType.Addon, npcData.Look.Addons}
+                    },
                     Dialogs = dialogs.ToArray()
                 });
 
@@ -108,5 +121,4 @@ namespace NeoServer.Loaders.Npcs
             return d;
         }
     }
-
 }

@@ -1,6 +1,6 @@
-﻿using NeoServer.Data.Model;
+﻿using System.Linq;
+using NeoServer.Data.Model;
 using NeoServer.Server.Contracts.Network;
-using System.Linq;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
@@ -8,6 +8,7 @@ namespace NeoServer.Networking.Packets.Outgoing
     {
         private readonly AccountModel _acountModel;
         private readonly string serverName;
+
         public CharacterListPacket(AccountModel account, string serverName)
         {
             _acountModel = account;
@@ -22,7 +23,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         private void AddCharList(INetworkMessage message)
         {
             message.AddByte(0x64); //todo charlist
-            message.AddByte((byte)_acountModel.Players.Count());
+            message.AddByte((byte) _acountModel.Players.Count());
             foreach (var player in _acountModel.Players)
             {
                 message.AddString(player.Name);
@@ -33,7 +34,8 @@ namespace NeoServer.Networking.Packets.Outgoing
                 message.AddByte(1);
                 message.AddUInt16(7172);
             }
-            message.AddUInt16((ushort)_acountModel.PremiumTime);
+
+            message.AddUInt16((ushort) _acountModel.PremiumTime);
         }
     }
 }

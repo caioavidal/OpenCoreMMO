@@ -1,38 +1,19 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
     public class Party : IParty
     {
-        public event Action OnPartyOver;
+        private readonly HashSet<uint> invites = new();
+        private ushort memberCount;
 
-        private Dictionary<uint, PartyMember> members = new Dictionary<uint, PartyMember>();
-        private HashSet<uint> invites = new HashSet<uint>();
-        private ushort memberCount = 0;
-
-        public IPlayer Leader { get; private set; }
-        public IReadOnlyCollection<IPlayer> Members
-        {
-            get
-            {
-                var membersList = new List<IPlayer>(members.Count + 1);
-                foreach (var member in members.Values)
-                {
-                    membersList.Add(member.Player);
-                }
-                membersList.Add(Leader);
-                return membersList;
-            }
-        }
-        public IReadOnlyCollection<uint> Invites => invites.ToList();
-        public IChatChannel Channel { get; }
-        public bool IsOver => !members.Any();
+        private readonly Dictionary<uint, PartyMember> members = new();
 
         public Party(IPlayer player, IChatChannel channel)
         {
@@ -41,11 +22,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             player.JoinChannel(channel);
         }
 
-        public bool IsMember(IPlayer player) => members.ContainsKey(player.CreatureId);
-        public bool IsMember(uint creatureId) => members.ContainsKey(creatureId);
-        public bool IsInvited(IPlayer player) => invites.Contains(player.CreatureId);
-        public bool IsLeader(IPlayer player) => player == Leader;
-        public bool IsLeader(uint creatureId) => creatureId == Leader.CreatureId;
         private PartyMember FirstMemberJoined
         {
             get
@@ -53,19 +29,63 @@ namespace NeoServer.Game.Creatures.Model.Players
                 PartyMember partyMember = new();
                 var min = uint.MaxValue;
                 foreach (var member in members)
-                {
                     if (member.Value.Order < min)
                     {
                         min = member.Value.Order;
                         partyMember = member.Value;
                     }
-                }
+
                 return partyMember;
             }
         }
+
+        public event Action OnPartyOver;
+
+        public IPlayer Leader { get; private set; }
+
+        public IReadOnlyCollection<IPlayer> Members
+        {
+            get
+            {
+                var membersList = new List<IPlayer>(members.Count + 1);
+                foreach (var member in members.Values) membersList.Add(member.Player);
+                membersList.Add(Leader);
+                return membersList;
+            }
+        }
+
+        public IReadOnlyCollection<uint> Invites => invites.ToList();
+        public IChatChannel Channel { get; }
+        public bool IsOver => !members.Any();
+
+        public bool IsMember(IPlayer player)
+        {
+            return members.ContainsKey(player.CreatureId);
+        }
+
+        public bool IsMember(uint creatureId)
+        {
+            return members.ContainsKey(creatureId);
+        }
+
+        public bool IsInvited(IPlayer player)
+        {
+            return invites.Contains(player.CreatureId);
+        }
+
+        public bool IsLeader(IPlayer player)
+        {
+            return player == Leader;
+        }
+
+        public bool IsLeader(uint creatureId)
+        {
+            return creatureId == Leader.CreatureId;
+        }
+
         public bool JoinPlayer(IPlayer player)
         {
-            if (Validation.IsNull(player)) return false;
+            if (player.IsNull()) return false;
 
             if (!IsInvited(player)) return false;
 
@@ -75,6 +95,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             player.JoinChannel(Channel);
             return true;
         }
+
         public Result Invite(IPlayer by, IPlayer invitedPlayer)
         {
             if (invitedPlayer.IsInParty) return new Result(InvalidOperation.CannotInvite);
@@ -84,26 +105,24 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             return Result.Success;
         }
+
         public void RevokeInvite(IPlayer by, IPlayer invitedPlayer)
         {
             if (!IsLeader(by)) return;
             if (!invites.Remove(invitedPlayer.CreatureId)) return;
 
             if (IsOver && !invites.Any()) OnPartyOver?.Invoke();
-
         }
+
         public void RemoveMember(IPlayer player)
         {
-            if (Validation.IsNull(player)) return;
+            if (player.IsNull()) return;
             if (player.InFight) return;
 
             members.Remove(player.CreatureId);
             player.ExitChannel(Channel);
 
-            if (IsOver)
-            {
-                OnPartyOver?.Invoke();
-            }
+            if (IsOver) OnPartyOver?.Invoke();
         }
 
         public Result ChangeLeadership(IPlayer from, IPlayer to)
@@ -121,7 +140,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         /// <summary>
-        /// Pass leadership to first member joined
+        ///     Pass leadership to first member joined
         /// </summary>
         /// <param name="from"></param>
         /// <returns></returns>
@@ -139,6 +158,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Player = player;
             Order = order;
         }
+
         public IPlayer Player { get; }
         public ushort Order { get; }
     }

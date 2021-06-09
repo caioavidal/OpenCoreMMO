@@ -12,16 +12,18 @@ namespace NeoServer.Game.Combat.Attacks
             Range = range;
             ShootType = shootType;
         }
+
         public byte Range { get; }
         public ShootType ShootType { get; }
 
-        public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatDamage damage)
+        public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+            out CombatDamage damage)
         {
             damage = new CombatDamage();
 
             if (actor.Location.GetMaxSqmDistance(enemy.Location) > option.Range) return false;
 
-            var damageValue = (ushort)GameRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
+            var damageValue = (ushort) GameRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
 
             damage = new CombatDamage(damageValue, option.DamageType);
 
@@ -30,11 +32,12 @@ namespace NeoServer.Game.Combat.Attacks
 
         public static bool MissedAttack(byte hitChance)
         {
-            var value = GameRandom.Random.Next(minValue: 1, maxValue: 100);
+            var value = GameRandom.Random.Next(1, maxValue: 100);
             return hitChance < value;
         }
 
-        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+            out CombatAttackType combatType)
         {
             combatType = new CombatAttackType(ShootType);
 

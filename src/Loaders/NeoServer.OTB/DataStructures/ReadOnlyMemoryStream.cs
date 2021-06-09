@@ -5,10 +5,9 @@ namespace NeoServer.OTB.DataStructures
     public sealed class ReadOnlyMemoryStream
     {
         private readonly ReadOnlyMemory<byte> _buffer;
-        public int Position { get; private set; }
 
         /// <summary>
-        /// Creates a new instace of this class
+        ///     Creates a new instace of this class
         /// </summary>
         /// <param name="buffer"></param>
         /// <param name="position"></param>
@@ -22,20 +21,22 @@ namespace NeoServer.OTB.DataStructures
             Position = position;
         }
 
+        public int Position { get; private set; }
+
         /// <summary>
-        /// Returns true if this instance can read at least 1 more byte.
-        /// Returns false otherwise.
+        ///     Returns true if this instance can read at least 1 more byte.
+        ///     Returns false otherwise.
         /// </summary>
         public bool IsOver => Position >= _buffer.Length;
 
         /// <summary>
-        /// Returns the number of bytes that can still be read.
+        ///     Returns the number of bytes that can still be read.
         /// </summary>
         public int BytesLeftToRead => _buffer.Length - Position;
 
         /// <summary>
-        /// Returns the value currently pointed by the stream, without moving
-        /// the stream forward.
+        ///     Returns the value currently pointed by the stream, without moving
+        ///     the stream forward.
         /// </summary>
         public byte PeakByte()
         {
@@ -46,7 +47,7 @@ namespace NeoServer.OTB.DataStructures
         }
 
         /// <summary>
-        /// Reads 1 byte from the stream.
+        ///     Reads 1 byte from the stream.
         /// </summary>
         public byte ReadByte()
         {
@@ -59,7 +60,7 @@ namespace NeoServer.OTB.DataStructures
         }
 
         /// <summary>
-        /// Reads two bytes from the stream and parses them as a UInt16.
+        ///     Reads two bytes from the stream and parses them as a UInt16.
         /// </summary>
         public ushort ReadUInt16()
         {
@@ -67,8 +68,8 @@ namespace NeoServer.OTB.DataStructures
                 throw new InvalidOperationException();
 
             var rawData = _buffer.Slice(
-                start: Position,
-                length: sizeof(ushort));
+                Position,
+                sizeof(ushort));
 
             var parsedData = BitConverter.ToUInt16(rawData.Span);
             Position += sizeof(ushort);
@@ -76,7 +77,7 @@ namespace NeoServer.OTB.DataStructures
         }
 
         /// <summary>
-        /// Reads 4 bytes from the stream and parses them as a UInt32.
+        ///     Reads 4 bytes from the stream and parses them as a UInt32.
         /// </summary>
         public uint ReadUInt32()
         {
@@ -84,8 +85,8 @@ namespace NeoServer.OTB.DataStructures
                 throw new InvalidOperationException();
 
             var rawData = _buffer.Slice(
-                start: Position,
-                length: sizeof(uint));
+                Position,
+                sizeof(uint));
 
             var parsedData = BitConverter.ToUInt32(rawData.Span);
             Position += sizeof(uint);
@@ -93,7 +94,7 @@ namespace NeoServer.OTB.DataStructures
         }
 
         /// <summary>
-        /// Moves the stream forward <paramref name="byteCount"/> bytes.
+        ///     Moves the stream forward <paramref name="byteCount" /> bytes.
         /// </summary>
         public void Skip(int byteCount = 1)
         {

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.World;
+﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
@@ -9,6 +10,7 @@ namespace NeoServer.Server.Handlers.Player
     public class PlayerLookAtHandler : PacketHandler
     {
         private readonly IGameServer game;
+
         public PlayerLookAtHandler(IGameServer game)
         {
             this.game = game;
@@ -20,20 +22,18 @@ namespace NeoServer.Server.Handlers.Player
 
             if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
             {
-                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Ground)
+                if (lookAtPacket.Location.Type == LocationType.Ground)
                 {
                     if (game.Map[lookAtPacket.Location] is not ITile tile) return;
 
                     game.Dispatcher.AddEvent(new Event(() => player.LookAt(tile)));
                 }
-                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Container)
-                {
-                    game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.ContainerId, lookAtPacket.Location.ContainerSlot)));
-                }
-                if (lookAtPacket.Location.Type == NeoServer.Game.Common.Location.LocationType.Slot)
-                {
+
+                if (lookAtPacket.Location.Type == LocationType.Container)
+                    game.Dispatcher.AddEvent(new Event(() =>
+                        player.LookAt(lookAtPacket.Location.ContainerId, lookAtPacket.Location.ContainerSlot)));
+                if (lookAtPacket.Location.Type == LocationType.Slot)
                     game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.Slot)));
-                }
             }
         }
     }

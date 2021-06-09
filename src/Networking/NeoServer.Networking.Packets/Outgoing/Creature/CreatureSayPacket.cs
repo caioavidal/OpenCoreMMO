@@ -27,20 +27,15 @@ namespace NeoServer.Networking.Packets.Outgoing
 
             //Add level only for players
             if (creature is IPlayer player)
-            {
                 message.AddUInt16(player.Level);
-            }
             else
-            {
                 message.AddUInt16(0x00);
-            }
 
-            message.AddByte((byte)talkType);
+            message.AddByte((byte) talkType);
 
             message.AddLocation(creature.Location);
 
             message.AddString(textMessage);
         }
-
     }
 }

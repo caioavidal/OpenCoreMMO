@@ -1,5 +1,5 @@
-﻿using Autofac;
-using Microsoft.Extensions.Logging;
+﻿using System.Collections.Generic;
+using Autofac;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -13,11 +13,6 @@ using NeoServer.Server.Handlers;
 using NeoServer.Server.Handlers.Authentication;
 using NeoServer.Server.Model.Players;
 using Serilog.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -25,8 +20,12 @@ namespace NeoServer.Server.Standalone.IoC
     {
         public static ContainerBuilder AddFactories(this ContainerBuilder builder)
         {
-            builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e => e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>()).SingleInstance();
-            builder.RegisterType<ChatChannelFactory>().OnActivated(e => e.Instance.ChannelEventSubscribers = e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>()).SingleInstance();
+            builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e =>
+                    e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>())
+                .SingleInstance();
+            builder.RegisterType<ChatChannelFactory>().OnActivated(e =>
+                    e.Instance.ChannelEventSubscribers = e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>())
+                .SingleInstance();
             builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
 
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
@@ -47,21 +46,16 @@ namespace NeoServer.Server.Standalone.IoC
 
                 var packet = GameIncomingPacketType.PlayerLogOut;
 
-                if (!conn.Disconnected)
-                {
-                    packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
-                }
+                if (!conn.Disconnected) packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
 
-                if (!InputHandlerMap.Data.TryGetValue(packet, out Type handlerType))
-                {
+                if (!InputHandlerMap.Data.TryGetValue(packet, out var handlerType))
                     return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());
-                }
 
-                if (c.TryResolve(handlerType, out object instance))
+                if (c.TryResolve(handlerType, out var instance))
                 {
                     c.Resolve<Logger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
 
-                    return (IPacketHandler)instance;
+                    return (IPacketHandler) instance;
                 }
 
                 return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());

@@ -8,7 +8,6 @@ namespace NeoServer.Server.Events.Player
 {
     public class PlayerInvitedToPartyEventHandler
     {
-
         private readonly IGameServer game;
 
         public PlayerInvitedToPartyEventHandler(IGameServer game)
@@ -25,6 +24,7 @@ namespace NeoServer.Server.Events.Player
                 leaderConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(invited, PartyEmblem.Invited));
                 leaderConnection.Send();
             }
+
             if (game.CreatureManager.GetPlayerConnection(invited.CreatureId, out var invitedConnection))
             {
                 invitedConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.LeaderInvited));

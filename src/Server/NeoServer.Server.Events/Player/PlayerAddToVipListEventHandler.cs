@@ -7,8 +7,9 @@ namespace NeoServer.Server.Events.Player
 {
     public class PlayerAddToVipListEventHandler
     {
-        private readonly IGameServer game;
         private readonly IAccountRepository accountRepository;
+        private readonly IGameServer game;
+
         public PlayerAddToVipListEventHandler(IGameServer game, IAccountRepository accountRepository)
         {
             this.game = game;
@@ -19,13 +20,12 @@ namespace NeoServer.Server.Events.Player
         {
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
 
-            await accountRepository.AddPlayerToVipList((int)player.AccountId, (int)vipPlayerId);
+            await accountRepository.AddPlayerToVipList((int) player.AccountId, (int) vipPlayerId);
 
             var isOnline = game.CreatureManager.TryGetLoggedPlayer(vipPlayerId, out var loggedPlayer);
 
             connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(vipPlayerId, vipPlayerName, isOnline));
             connection.Send();
-
         }
     }
 }

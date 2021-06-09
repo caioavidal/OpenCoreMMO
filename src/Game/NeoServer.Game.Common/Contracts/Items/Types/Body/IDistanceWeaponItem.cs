@@ -1,12 +1,13 @@
 ﻿using System.Text;
+using NeoServer.Game.Common;
 
 namespace NeoServer.Game.Contracts.Items.Types.Body
 {
     public interface IDistanceWeaponItem : IWeapon, IBodyEquipmentItem
     {
-        byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Attack);
-        byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.HitChance);
-        byte Range => Metadata.Attributes.GetAttribute<byte>(Common.ItemAttribute.Range);
+        byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
+        byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
+        byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
         private string AttributesText
         {
@@ -28,9 +29,8 @@ namespace NeoServer.Game.Contracts.Items.Types.Body
                 return $"({stringBuilder})";
             }
         }
+
         string IItem.LookText => $"{Metadata.Article} {Metadata.Name} {AttributesText}{RequirementText}";
         string IThing.InspectionText => $"{LookText}";
-
     }
-
 }

@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
@@ -7,76 +9,52 @@ using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Contracts.Items.Types.Containers;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
     public class PlayerContainerList : IPlayerContainerList
     {
-        public event ClosedContainer OnClosedContainer;
-        public event OpenedContainer OnOpenedContainer;
-        public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
-        public AddItemOnOpenedContainer AddItemAction { get; set; }
-        public UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
-        public MoveOpenedContainer MoveOpenedContainer { get; private set; }
-
-        public bool HasAnyDepotOpened
-        {
-            get
-            {
-                foreach (var container in openedContainers.Values)
-                {
-                    if (container.Container.RootParent is IDepot) return true;
-                }
-                return false;
-            }
-        }
         private readonly IPlayer player;
+
+        private readonly Dictionary<byte, PlayerContainer> openedContainers = new();
+
         public PlayerContainerList(IPlayer player)
         {
             this.player = player;
             MoveOpenedContainer += CloseDistantContainer;
         }
 
-        public void CloseDistantContainer(byte containerId, IContainer container)
+        public MoveOpenedContainer MoveOpenedContainer { get; }
+        public event ClosedContainer OnClosedContainer;
+        public event OpenedContainer OnOpenedContainer;
+        public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
+        public AddItemOnOpenedContainer AddItemAction { get; set; }
+        public UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
+
+        public bool HasAnyDepotOpened
         {
-            if (openedContainers.Count == 0) return;
-
-            var containerLocation = container.RootParent?.Location;
-
-            if (containerLocation is null) return;
-
-            if (containerLocation.Value.Type == LocationType.Ground &&
-                containerLocation.Value.IsNextTo(player.Location) is false)
+            get
             {
-                CloseContainer(containerId);
-                return;
+                foreach (var container in openedContainers.Values)
+                    if (container.Container.RootParent is IDepot)
+                        return true;
+                return false;
             }
-
-            if (container.RootParent is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
         }
+
         public void CloseDistantContainers()
         {
             if (openedContainers.Count == 0) return;
-            foreach (var container in openedContainers.Values)
-            {
-                CloseDistantContainer(container.Id, container.Container);
-            }
+            foreach (var container in openedContainers.Values) CloseDistantContainer(container.Id, container.Container);
         }
 
         public void CloseAll()
         {
             if (openedContainers.Count == 0) return;
-            foreach (var container in openedContainers.Values)
-            {
-                CloseContainer(container.Id);
-            }
+            foreach (var container in openedContainers.Values) CloseContainer(container.Id);
         }
 
         public IContainer this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
-
-        private Dictionary<byte, PlayerContainer> openedContainers = new Dictionary<byte, PlayerContainer>();
 
         public void GoBackContainer(byte containerId)
         {
@@ -90,7 +68,8 @@ namespace NeoServer.Game.Creatures.Model.Players
                     return;
                 }
 
-                InsertOrOverrideOpenedContainer(containerId, new PlayerContainer(parentContainer as IContainer, player));
+                InsertOrOverrideOpenedContainer(containerId,
+                    new PlayerContainer(parentContainer as IContainer, player));
 
                 OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
             }
@@ -114,12 +93,11 @@ namespace NeoServer.Game.Creatures.Model.Players
             else if (location.Slot == Slot.Backpack)
             {
                 playerContainer = new PlayerContainer(player.Inventory.BackpackSlot, player);
-
             }
             else if (location.Type == LocationType.Container)
             {
                 var parentContainer = openedContainers[location.ContainerId]?.Container;
-                parentContainer.GetContainerAt((byte)location.ContainerSlot, out var container);
+                parentContainer.GetContainerAt((byte) location.ContainerSlot, out var container);
                 if (container is not IContainer) return;
                 playerContainer = new PlayerContainer(container, player);
             }
@@ -135,26 +113,6 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
             playerContainer.Container.UpdateId(playerContainer.Id);
-
-            return;
-        }
-
-        private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
-        {
-            playerContainer.Id = containerLevel;
-
-            if (openedContainers.ContainsKey(containerLevel)) //when opening container in the same level. Just override the opened container
-            {
-                openedContainers[containerLevel].DetachContainerEvents(); //detach all container events from the old container
-                openedContainers[containerLevel] = playerContainer; // set the new container
-            }
-            else
-            {
-                openedContainers.TryAdd(playerContainer.Id, playerContainer);
-            }
-
-            playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction, MoveOpenedContainer);
-            playerContainer.AttachContainerEvent();
         }
 
         public void MoveItemBetweenContainers(Location fromLocation, Location toLocation, byte amount = 1)
@@ -164,17 +122,12 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             var item = fromContainer.Container[fromLocation.ContainerSlot];
 
-            if (item == toContainer.Container)
-            {
-                return;
-            }
+            if (item == toContainer.Container) return;
 
-            var result = player.MoveItem(fromContainer.Container, toContainer.Container, item, amount, (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
+            var result = player.MoveItem(fromContainer.Container, toContainer.Container, item, amount,
+                (byte) fromLocation.ContainerSlot, (byte) toLocation.ContainerSlot);
 
-            if (result.IsSuccess && item is IContainer container)
-            {
-                container.SetParent(toContainer.Container);
-            }
+            if (result.IsSuccess && item is IContainer container) container.SetParent(toContainer.Container);
         }
 
         public void CloseContainer(byte containerId)
@@ -185,6 +138,46 @@ namespace NeoServer.Game.Creatures.Model.Players
                 OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
                 playerContainer.Container.RemoveId();
             }
+        }
+
+        public void CloseDistantContainer(byte containerId, IContainer container)
+        {
+            if (openedContainers.Count == 0) return;
+
+            var containerLocation = container.RootParent?.Location;
+
+            if (containerLocation is null) return;
+
+            if (containerLocation.Value.Type == LocationType.Ground &&
+                containerLocation.Value.IsNextTo(player.Location) is false)
+            {
+                CloseContainer(containerId);
+                return;
+            }
+
+            if (container.RootParent is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
+        }
+
+        private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
+        {
+            playerContainer.Id = containerLevel;
+
+            if (
+                openedContainers
+                    .ContainsKey(
+                        containerLevel)) //when opening container in the same level. Just override the opened container
+            {
+                openedContainers[containerLevel]
+                    .DetachContainerEvents(); //detach all container events from the old container
+                openedContainers[containerLevel] = playerContainer; // set the new container
+            }
+            else
+            {
+                openedContainers.TryAdd(playerContainer.Id, playerContainer);
+            }
+
+            playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction, MoveOpenedContainer);
+            playerContainer.AttachContainerEvent();
         }
     }
 }

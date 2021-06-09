@@ -10,17 +10,22 @@ namespace NeoServer.Game.World.Map
 {
     public class PathFinder : IPathFinder
     {
-        public PathFinder(IMap map) => Map = map;
+        public PathFinder(IMap map)
+        {
+            Map = map;
+        }
 
         public IMap Map { get; set; }
 
         public bool Find(ICreature creature, Location target, ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
-            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule, out directions);
+            return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule,
+                out directions);
         }
 
-        public bool Find(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
+        public bool Find(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule,
+            out Direction[] directions)
         {
             var AStarTibia = new AStarTibia();
 
@@ -28,17 +33,12 @@ namespace NeoServer.Game.World.Map
 
             if (creature.Location.Z != target.Z) return false;
 
-            if (fpp.OneStep)
-            {
-                return FindStep(creature, target, fpp, tileEnterRule, out directions);
-            }
+            if (fpp.OneStep) return FindStep(creature, target, fpp, tileEnterRule, out directions);
 
             if (fpp.MaxTargetDist > 1)
             {
                 if (!FindPathToKeepDistance(creature, target, fpp, tileEnterRule, out directions))
-                {
                     return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
-                }
                 return true;
             }
 
@@ -47,11 +47,11 @@ namespace NeoServer.Game.World.Map
 
         public Direction FindRandomStep(ICreature creature, ITileEnterRule rule)
         {
-            int randomIndex = GameRandom.Random.Next(minValue: 0, maxValue: 4);
+            var randomIndex = GameRandom.Random.Next(0, maxValue: 4);
 
-            var directions = new Direction[4] { Direction.East, Direction.North, Direction.South, Direction.West };
+            var directions = new Direction[4] {Direction.East, Direction.North, Direction.South, Direction.West};
 
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 randomIndex = randomIndex > 3 ? 0 : randomIndex;
                 var direction = directions[randomIndex++];
@@ -62,31 +62,29 @@ namespace NeoServer.Game.World.Map
             return Direction.None;
         }
 
-        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
+        public bool FindStep(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule,
+            out Direction[] directions)
         {
             directions = new Direction[0];
 
             var startLocation = creature.Location;
 
-            var possibleDirections = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast };
+            var possibleDirections = new[]
+                {Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast};
 
             foreach (var direction in possibleDirections)
-            {
-                if (startLocation.GetMaxSqmDistance(target) > fpp.MaxTargetDist) continue;
-
-            }
+                if (startLocation.GetMaxSqmDistance(target) > fpp.MaxTargetDist)
+                    continue;
 
             return false;
         }
 
-        public bool FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
+        public bool FindPathToKeepDistance(ICreature creature, Location target, FindPathParams fpp,
+            ITileEnterRule tileEnterRule, out Direction[] directions)
         {
             directions = new Direction[0];
 
-            if (fpp.MaxTargetDist <= 1)
-            {
-                return true;
-            }
+            if (fpp.MaxTargetDist <= 1) return true;
             var startLocation = creature.Location;
 
             var currentDistance = startLocation.GetMaxSqmDistance(target);
@@ -95,7 +93,11 @@ namespace NeoServer.Game.World.Map
 
             if (currentDistance == fpp.MaxTargetDist) return true;
 
-            var possibleDirections = new Direction[] { Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast, Direction.NorthEast, Direction.SouthEast, Direction.SouthWest };
+            var possibleDirections = new[]
+            {
+                Direction.East, Direction.South, Direction.West, Direction.North, Direction.NorthEast,
+                Direction.NorthEast, Direction.SouthEast, Direction.SouthWest
+            };
 
             (Direction, int) directionWeight = (Direction.None, 0);
 
@@ -124,14 +126,8 @@ namespace NeoServer.Game.World.Map
 
                 canGoToDirections[canGoIndex++] = direction;
 
-                if (nextDistance > currentDistance)
-                {
-                    weight++;
-                }
-                if (nextLocation.GetSumSqmDistance(target) > startLocation.GetSumSqmDistance(target))
-                {
-                    weight++;
-                }
+                if (nextDistance > currentDistance) weight++;
+                if (nextLocation.GetSumSqmDistance(target) > startLocation.GetSumSqmDistance(target)) weight++;
 
                 if (weight > directionWeight.Item2)
                 {
@@ -142,14 +138,14 @@ namespace NeoServer.Game.World.Map
 
             if (directionWeight.Item1 != Direction.None)
             {
-                directions = new Direction[] { directionWeight.Item1 };
+                directions = new[] {directionWeight.Item1};
                 return true;
             }
 
             if (canGoIndex > 0)
             {
-                var randonIndex = GameRandom.Random.Next(minValue: 0, maxValue: canGoIndex);
-                directions = new Direction[] { canGoToDirections[randonIndex] };
+                var randonIndex = GameRandom.Random.Next(0, maxValue: canGoIndex);
+                directions = new[] {canGoToDirections[randonIndex]};
                 return true;
             }
 

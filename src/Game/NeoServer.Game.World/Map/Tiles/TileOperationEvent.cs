@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using System;
 
 namespace NeoServer.Game.World.Map.Tiles
 {
@@ -13,6 +13,5 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             OnTileChanged?.Invoke(tile, thing, operation);
         }
-
     }
 }

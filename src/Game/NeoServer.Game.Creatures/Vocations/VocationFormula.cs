@@ -2,7 +2,6 @@
 
 namespace NeoServer.Game.Creatures.Vocations
 {
-
     public class VocationFormula : IVocationFormula
     {
         public string MeleeDamage { get; set; }

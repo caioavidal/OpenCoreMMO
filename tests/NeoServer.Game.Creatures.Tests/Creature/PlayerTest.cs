@@ -8,7 +8,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
 {
-    public partial class PlayerTest
+    public class PlayerTest
     {
         [Theory]
         [InlineData(Direction.NorthWest, Direction.West)]
@@ -30,7 +30,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void ChangeOutfit_Changes_Outfit_And_Emit_Event()
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
-            bool changedOutfit = false;
+            var changedOutfit = false;
 
             sut.OnChangedOutfit += (a, b) => changedOutfit = true;
 
@@ -50,7 +50,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void SetTemporaryOutfit_Store_Current_To_LastOutfit_And_Changes_Outfit()
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
-            bool changedOutfit = false;
+            var changedOutfit = false;
 
             sut.OnChangedOutfit += (a, b) => changedOutfit = true;
 
@@ -78,7 +78,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void BackToOldOutfit_Sets_LastOutfit_To_Outfit_And_Changes_Outfit()
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
-            bool changedOutfit = false;
+            var changedOutfit = false;
 
             sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
 
@@ -122,6 +122,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             Assert.False(result);
         }
+
         [Fact]
         public void CanSee_When_Creature_Is_Invisible_And_Can_See_Invisible_Returns_True()
         {
@@ -136,8 +137,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             Assert.True(result);
         }
-        [Fact]
 
+        [Fact]
         public void Say_Should_Emit_Event()
         {
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
@@ -157,6 +158,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             Assert.Equal("Hello", messageEmitted);
             Assert.Equal(SpeechType.Say, speechTypeEmitted);
         }
+
         [Fact]
         public void Say_To_Receiver_Should_Emit_Event()
         {
@@ -181,6 +183,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             Assert.Equal(SpeechType.Private, speechTypeEmitted);
             Assert.Equal(receiver.Object, to);
         }
+
         [Fact]
         public void Say_Empty_Message_Dont_Emit_Event()
         {
@@ -217,6 +220,5 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.UnsetFlag(PlayerFlag.CanBeSeen);
             Assert.False(sut.CanBeSeen);
         }
-
     }
 }

@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using System;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Conditions;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Contracts.Creatures;
-using System;
 
 namespace NeoServer.Game.Combat.Attacks
 {
@@ -16,22 +16,36 @@ namespace NeoServer.Game.Combat.Attacks
             ConditionType = conditionType;
             ConditionInterval = conditionInterval;
         }
-        public MeleeCombatAttack() { }
-        public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue combat, out CombatDamage damage)
+
+        public MeleeCombatAttack()
+        {
+        }
+
+        public ushort Min { get; set; }
+        public ushort Max { get; set; }
+        public ConditionType ConditionType { get; set; }
+        public ushort ConditionInterval { get; set; }
+
+        public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue combat,
+            out CombatDamage damage)
         {
             damage = new CombatDamage();
             if (!actor.Location.IsNextTo(enemy.Location)) return false;
 
-            var damageValue = (ushort)GameRandom.Random.NextInRange(combat.MinDamage, combat.MaxDamage);
+            var damageValue = (ushort) GameRandom.Random.NextInRange(combat.MinDamage, combat.MaxDamage);
 
             damage = new CombatDamage(damageValue, combat.DamageType);
 
             return true;
         }
 
-        public static ushort CalculateMaxDamage(int skill, int attack) => (ushort)Math.Ceiling((skill * (attack * 0.05)) + (attack * 0.5));
+        public static ushort CalculateMaxDamage(int skill, int attack)
+        {
+            return (ushort) Math.Ceiling(skill * (attack * 0.05) + attack * 0.5);
+        }
 
-        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+            out CombatAttackType combatType)
         {
             combatType = new CombatAttackType(option.DamageType);
 
@@ -44,21 +58,15 @@ namespace NeoServer.Game.Combat.Attacks
                 if (ConditionType != ConditionType.None)
                 {
                     if (!enemy.HasCondition(ConditionType, out var condition))
-                    {
                         enemy.AddCondition(new DamageCondition(ConditionType, ConditionInterval, Min, Max));
-                    }
                     else if (condition is DamageCondition damageCondition) damageCondition.Start(enemy, Min, Max);
                     else condition.Start(enemy);
-
                 }
+
                 return true;
             }
+
             return false;
         }
-
-        public ushort Min { get; set; }
-        public ushort Max { get; set; }
-        public ConditionType ConditionType { get; set; }
-        public ushort ConditionInterval { get; set; }
     }
 }

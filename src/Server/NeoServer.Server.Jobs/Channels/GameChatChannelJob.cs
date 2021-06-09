@@ -19,10 +19,7 @@ namespace NeoServer.Server.Jobs.Items
         {
             game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_ITEM_INTERVAL, StartChecking));
 
-            foreach (var channel in ChatChannelStore.Data.All)
-            {
-                ChatUserCleanupJob.Execute(channel);
-            }
+            foreach (var channel in ChatChannelStore.Data.All) ChatUserCleanupJob.Execute(channel);
         }
     }
 }

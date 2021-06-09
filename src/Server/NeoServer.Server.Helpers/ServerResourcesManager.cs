@@ -13,7 +13,9 @@ namespace NeoServer.Server.Helpers
         {
             var assembly = Assembly.GetCallingAssembly();
             using (var stream = assembly.GetManifestResourceStream(MapFilesDirectory + "." + MapName))
+            {
                 return ReadFully(stream);
+            }
         }
 
         public static Stream GetItems(string itemsFileName)
@@ -26,7 +28,9 @@ namespace NeoServer.Server.Helpers
         {
             var assembly = Assembly.GetCallingAssembly();
             using (var stream = assembly.GetManifestResourceStream(ItemsFilesDirectory + "." + itemsFileName))
+            {
                 return ReadFully(stream);
+            }
         }
 
         public static byte[] GetFileStream(string filePath)

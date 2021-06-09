@@ -10,6 +10,7 @@ namespace NeoServer.Game.Items.Items
             Metadata = metadata;
             Location = location;
         }
+
         public IItemType Metadata { get; }
 
         public Location Location { get; set; }

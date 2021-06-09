@@ -74,6 +74,6 @@
         Bats = 67,
         Smoke = 68,
         Insects = 69,
-        Dragonhead = 70,
+        Dragonhead = 70
     }
 }

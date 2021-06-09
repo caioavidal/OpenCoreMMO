@@ -5,10 +5,6 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class UseItemOnCreaturePacket : IncomingPacket
     {
-        public Location FromLocation { get; }
-        public ushort ClientId { get; }
-        public byte FromStackPosition { get; set; }
-        public uint CreatureId { get; }
         public UseItemOnCreaturePacket(IReadOnlyNetworkMessage message)
         {
             FromLocation = message.GetLocation();
@@ -16,5 +12,10 @@ namespace NeoServer.Networking.Packets.Incoming
             FromStackPosition = message.GetByte();
             CreatureId = message.GetUInt32();
         }
+
+        public Location FromLocation { get; }
+        public ushort ClientId { get; }
+        public byte FromStackPosition { get; set; }
+        public uint CreatureId { get; }
     }
 }

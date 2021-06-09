@@ -27,7 +27,7 @@ namespace NeoServer.Data.Configurations
                 .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.PlayerType)
-              .HasColumnName("player_type");
+                .HasColumnName("player_type");
             entity.Property(e => e.AccountId)
                 .HasColumnName("account_id")
                 .HasColumnType("int(11)")
@@ -197,6 +197,5 @@ namespace NeoServer.Data.Configurations
 
             PlayerModelSeed.Seed(entity);
         }
-
     }
 }

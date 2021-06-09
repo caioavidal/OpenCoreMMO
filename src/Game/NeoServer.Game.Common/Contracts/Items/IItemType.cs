@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Players;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Items
 {
@@ -21,9 +21,6 @@ namespace NeoServer.Game.Contracts.Items
 
         ushort ClientId { get; }
 
-        void SetArticle(string article);
-        void SetPlural(string plural);
-
         ushort WareId { get; }
         LightBlock LightBlock { get; }
         ushort Speed { get; }
@@ -39,6 +36,9 @@ namespace NeoServer.Game.Contracts.Items
         IItemAttributeList OnUse { get; }
         DamageType DamageType { get; }
         EffectT EffectT { get; }
+
+        void SetArticle(string article);
+        void SetPlural(string plural);
 
         void SetName(string value);
         void LockChanges();

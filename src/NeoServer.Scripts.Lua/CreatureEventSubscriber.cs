@@ -1,21 +1,22 @@
-﻿using NeoServer.Game.Contracts;
+﻿using System;
+using System.IO;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Standalone;
-using System;
-using System.IO;
 
 namespace NeoServer.Scripts.Lua
 {
     public class CreatureEventSubscriber : ICreatureEventSubscriber, IGameEventSubscriber
     {
-        private readonly ServerConfiguration serverConfiguration;
         private readonly NLua.Lua lua;
+        private readonly ServerConfiguration serverConfiguration;
 
         public CreatureEventSubscriber(ServerConfiguration serverConfiguration, NLua.Lua lua)
         {
             this.serverConfiguration = serverConfiguration;
             this.lua = lua;
         }
+
         public void Subscribe(ICreature creature)
         {
             if (creature is INpc npc && npc.Metadata.IsLuaScript && !string.IsNullOrWhiteSpace(npc.Metadata.Script))

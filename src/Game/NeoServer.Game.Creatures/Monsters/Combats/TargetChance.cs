@@ -2,7 +2,6 @@
 
 namespace NeoServer.Game.Creatures.Model.Monsters
 {
-
     public struct IntervalChance : IIntervalChance
     {
         public IntervalChance(ushort interval, byte chance)

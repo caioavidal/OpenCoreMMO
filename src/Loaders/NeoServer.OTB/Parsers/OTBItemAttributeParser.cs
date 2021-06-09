@@ -1,41 +1,38 @@
-using NeoServer.OTB.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using NeoServer.OTB.Enums;
 
 namespace NeoServer.OTB.Parsers
 {
-
     /// <summary>
-    /// Responsible for parse the item attributes coming from OTB structure
+    ///     Responsible for parse the item attributes coming from OTB structure
     /// </summary>
     public sealed class OTBParsingItemAttribute
     {
-        /// <summary>
-        /// Dictionary containing the otb item attributes and its respective values
-        /// </summary>
-        /// <value></value>
-        public ImmutableDictionary<OTBItemAttribute, IConvertible> Attributes { get; }
-
-        private IDictionary<OTBItemAttribute, IConvertible> attributes =
-        new Dictionary<OTBItemAttribute, IConvertible>();
+        private readonly IDictionary<OTBItemAttribute, IConvertible> attributes =
+            new Dictionary<OTBItemAttribute, IConvertible>();
 
         /// <summary>
-        /// Creates OTBParsingItemAttribute instance
+        ///     Creates OTBParsingItemAttribute instance
         /// </summary>
         /// <param name="stream"></param>
         public OTBParsingItemAttribute(OTBParsingStream stream)
         {
             if (stream.IsNull()) return;
-            while (!stream.IsOver)
-            {
-                Parse(stream);
-            }
+            while (!stream.IsOver) Parse(stream);
             Attributes = attributes.ToImmutableDictionary();
         }
+
+        /// <summary>
+        ///     Dictionary containing the otb item attributes and its respective values
+        /// </summary>
+        /// <value></value>
+        public ImmutableDictionary<OTBItemAttribute, IConvertible> Attributes { get; }
+
         private void Parse(OTBParsingStream stream)
         {
-            var attribute = (OTBItemAttribute)stream.ReadByte();
+            var attribute = (OTBItemAttribute) stream.ReadByte();
             var dataLength = stream.ReadUInt16();
 
             switch (attribute)
@@ -59,8 +56,8 @@ namespace NeoServer.OTB.Parsers
                 case OTBItemAttribute.Light2:
                     //todo validation
 
-                    attributes.TryAdd(OTBItemAttribute.LightLevel, (byte)stream.ReadUInt16());
-                    attributes.TryAdd(OTBItemAttribute.LightColor, (byte)stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.LightLevel, (byte) stream.ReadUInt16());
+                    attributes.TryAdd(OTBItemAttribute.LightColor, (byte) stream.ReadUInt16());
                     break;
                 case OTBItemAttribute.TopOrder:
                     dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(byte));
@@ -76,7 +73,6 @@ namespace NeoServer.OTB.Parsers
                     stream.Skip(dataLength);
                     break;
             }
-
         }
     }
 }

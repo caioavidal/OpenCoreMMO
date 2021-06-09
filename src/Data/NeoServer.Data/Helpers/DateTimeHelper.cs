@@ -27,7 +27,7 @@ namespace NeoServer.Data.Helpers
 
         public static int ToUnixTimeInt(DateTime date)
         {
-            if (date == default(DateTime)) return 0;
+            if (date == default) return 0;
 
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return Convert.ToInt32((date - epoch).TotalSeconds);
@@ -35,7 +35,7 @@ namespace NeoServer.Data.Helpers
 
         public static long ToUnixTimeLong(DateTime date)
         {
-            if (date == default(DateTime)) return 0;
+            if (date == default) return 0;
 
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return Convert.ToInt64((date - epoch).TotalSeconds);

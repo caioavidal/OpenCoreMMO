@@ -1,9 +1,9 @@
-using NeoServer.OTB.Enums;
-using NeoServer.OTB.Parsers;
-using NeoServer.OTB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.OTB.Enums;
+using NeoServer.OTB.Parsers;
+using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -15,20 +15,18 @@ namespace NeoServer.OTBM.Structure
 
             X = stream.ReadUInt16();
             Y = stream.ReadUInt16();
-            Z = (sbyte)stream.ReadByte();
+            Z = (sbyte) stream.ReadByte();
 
             Tiles = new List<TileNode>();
 
             var tileArea = this;
 
             var tileNodes = node.Children.Select(child =>
-             {
-                 if (child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
-                 {
-                     return new TileNode(tileArea, child);
-                 }
-                 throw new Exception($"unknown tile nodes found.");
-             }).ToList();
+            {
+                if (child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
+                    return new TileNode(tileArea, child);
+                throw new Exception("unknown tile nodes found.");
+            }).ToList();
 
             Tiles.AddRange(tileNodes);
 

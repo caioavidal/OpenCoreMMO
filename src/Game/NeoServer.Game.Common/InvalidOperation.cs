@@ -19,7 +19,6 @@
         AlreadyInParty,
         CannotInvite,
         NotAPartyLeader,
-        NotAPartyMember,
+        NotAPartyMember
     }
-
 }

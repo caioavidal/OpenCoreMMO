@@ -5,8 +5,9 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class RemoveTileThingPacket : OutgoingPacket
     {
-        private readonly ITile tile;
         private readonly byte stackPosition;
+        private readonly ITile tile;
+
         public RemoveTileThingPacket(ITile tile, byte stackPosition)
         {
             this.tile = tile;
@@ -15,7 +16,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.RemoveAtStackpos);
+            message.AddByte((byte) GameOutgoingPacketType.RemoveAtStackpos);
             message.AddLocation(tile.Location);
             message.AddByte(stackPosition);
         }

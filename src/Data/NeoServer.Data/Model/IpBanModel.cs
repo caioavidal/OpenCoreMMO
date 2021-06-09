@@ -9,6 +9,5 @@ namespace NeoServer.Data.Model
         public TimeSpan BannedAt { get; set; }
         public TimeSpan ExpiresAt { get; set; }
         public ushort BannedBy { get; set; }
-
     }
 }

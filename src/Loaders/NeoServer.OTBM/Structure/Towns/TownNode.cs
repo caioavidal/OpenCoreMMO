@@ -6,10 +6,6 @@ namespace NeoServer.OTBM.Structure
 {
     public class TownNode
     {
-        public uint Id { get; set; }
-        public string Name { get; set; }
-        public Coordinate Coordinate { get; set; }
-
         public TownNode(OTBNode node)
         {
             var stream = new OTBParsingStream(node.Data);
@@ -18,5 +14,9 @@ namespace NeoServer.OTBM.Structure
 
             Coordinate = stream.ReadCoordinate();
         }
+
+        public uint Id { get; set; }
+        public string Name { get; set; }
+        public Coordinate Coordinate { get; set; }
     }
 }

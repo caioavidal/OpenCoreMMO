@@ -11,7 +11,8 @@ namespace NeoServer.Game.Combat.Attacks
         {
         }
 
-        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option, out CombatAttackType combatType)
+        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+            out CombatAttackType combatType)
         {
             combatType = new CombatAttackType(ShootType);
 

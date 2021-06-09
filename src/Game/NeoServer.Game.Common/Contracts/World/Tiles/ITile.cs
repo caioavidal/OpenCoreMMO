@@ -8,16 +8,19 @@ namespace NeoServer.Game.Contracts.World
     {
         Location Location { get; }
 
-        /// <summary>
-        /// check whether tile is 1 sqm distant to destination tile
-        /// </summary>
-        /// <returns></returns>
-        public bool IsNextTo(ITile dest) => Location.IsNextTo(dest.Location);
-        bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition);
-        byte GetCreatureStackPositionIndex(IPlayer observer);
-
         IItem TopItemOnStack { get; }
         ICreature TopCreatureOnStack { get; }
 
+        /// <summary>
+        ///     check whether tile is 1 sqm distant to destination tile
+        /// </summary>
+        /// <returns></returns>
+        public bool IsNextTo(ITile dest)
+        {
+            return Location.IsNextTo(dest.Location);
+        }
+
+        bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition);
+        byte GetCreatureStackPositionIndex(IPlayer observer);
     }
 }

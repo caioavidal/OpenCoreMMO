@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Helpers;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
@@ -8,14 +9,17 @@ using NeoServer.Game.Creatures.Enums;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Npcs.Dialogs;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
     public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
+
     public class Npc : WalkableCreature, INpc
     {
-        public Npc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit, healthPoints)
+        private readonly NpcDialog npcDialog;
+
+        public Npc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type,
+            outfit, healthPoints)
         {
             Metadata = type;
             npcDialog = new NpcDialog(this);
@@ -25,37 +29,23 @@ namespace NeoServer.Game.Creatures.Npcs
             Cooldowns.Start(CooldownType.WalkAround, 5_000);
         }
 
-        #region Events
-        public event DialogAction OnDialogAction;
-        public event Answer OnAnswer;
-        public event Hear OnHear;
-        public event CustomerLeft OnCustomerLeft;
-        #endregion
-
-        public ISpawnPoint SpawnPoint { get; }
-        public override IOutfit Outfit { get; protected set; }
-        public INpcType Metadata { get; }
         public CreateItem CreateNewItem { protected get; init; }
 
         public override ITileEnterRule TileEnterRule => NpcEnterTileRule.Rule;
 
         public KeywordReplacement ReplaceKeywords { get; set; }
 
+        public ISpawnPoint SpawnPoint { get; }
+        public override IOutfit Outfit { get; protected set; }
+        public INpcType Metadata { get; }
+
         public override bool CanSeeInvisible => false;
 
         public override bool CanBeSeen => true;
 
-        private NpcDialog npcDialog;
-
-        public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature) => npcDialog.GetDialogStoredValues(sociableCreature);
-
-        private string BindAnswerVariables(ISociableCreature creature, IDialog dialog, string answer)
+        public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature)
         {
-            var storedValues = npcDialog.GetDialogStoredValues(creature);
-            if (string.IsNullOrWhiteSpace(dialog.StoreAt)) return answer;
-
-            if (!storedValues.TryGetValue(dialog.StoreAt, out var value)) return answer;
-            return answer.Replace($"{{{{{dialog.StoreAt}}}}}", value);
+            return npcDialog.GetDialogStoredValues(sociableCreature);
         }
 
         public void Advertise()
@@ -65,7 +55,47 @@ namespace NeoServer.Game.Creatures.Npcs
             Cooldowns.Start(CooldownType.Advertise, 10_000);
         }
 
-        public void BackInDialog(ISociableCreature creature, byte count) => npcDialog.Back(creature.CreatureId, count);
+        public void BackInDialog(ISociableCreature creature, byte count)
+        {
+            npcDialog.Back(creature.CreatureId, count);
+        }
+
+        public override bool WalkRandomStep()
+        {
+            if (!Cooldowns.Cooldowns[CooldownType.WalkAround].Expired) return false;
+            var result = base.WalkRandomStep();
+            Cooldowns.Start(CooldownType.WalkAround, 5_000);
+            return result;
+        }
+
+        public void Hear(ICreature from, SpeechType speechType, string message)
+        {
+            if (from is null || speechType == SpeechType.None || string.IsNullOrWhiteSpace(message)) return;
+
+            OnHear?.Invoke(from, this, speechType, message);
+
+            Answer(from, speechType, message);
+        }
+
+        public void StopTalkingToCustomer(IPlayer player)
+        {
+            npcDialog.StopTalkingTo(player);
+        }
+
+        public void ForgetCustomer(ISociableCreature sociableCreature)
+        {
+            StopWatchCustomerMovements(sociableCreature);
+            npcDialog.EraseDialog(sociableCreature.CreatureId);
+        }
+
+        private string BindAnswerVariables(ISociableCreature creature, IDialog dialog, string answer)
+        {
+            var storedValues = npcDialog.GetDialogStoredValues(creature);
+            if (string.IsNullOrWhiteSpace(dialog.StoreAt)) return answer;
+
+            if (!storedValues.TryGetValue(dialog.StoreAt, out var value)) return answer;
+            return answer.Replace($"{{{{{dialog.StoreAt}}}}}", value);
+        }
 
         public virtual void Answer(ICreature from, SpeechType speechType, string message)
         {
@@ -86,7 +116,8 @@ namespace NeoServer.Game.Creatures.Npcs
 
             npcDialog.StoreWords(sociableCreature, dialog.StoreAt, message);
 
-            if (dialog.Action is not null) OnDialogAction?.Invoke(this, from, dialog, dialog.Action, GetPlayerStoredValues(sociableCreature));
+            if (dialog.Action is not null)
+                OnDialogAction?.Invoke(this, from, dialog, dialog.Action, GetPlayerStoredValues(sociableCreature));
 
             if (dialog?.Answers is not null)
             {
@@ -113,37 +144,20 @@ namespace NeoServer.Game.Creatures.Npcs
             }
         }
 
-        public override bool WalkRandomStep()
-        {
-            if (!Cooldowns.Cooldowns[CooldownType.WalkAround].Expired) return false;
-            var result = base.WalkRandomStep();
-            Cooldowns.Start(CooldownType.WalkAround, 5_000);
-            return result;
-        }
-
-        public void Hear(ICreature from, SpeechType speechType, string message)
-        {
-            if (from is null || speechType == SpeechType.None || string.IsNullOrWhiteSpace(message)) return;
-
-            OnHear?.Invoke(from, this, speechType, message);
-
-            Answer(from, speechType, message);
-        }
-
-        public void StopTalkingToCustomer(IPlayer player) => npcDialog.StopTalkingTo(player);
-
         private void WatchCustomerEvents(ISociableCreature creature)
         {
             creature.OnCreatureMoved += OnCustomerMoved;
             if (creature is IPlayer player) player.OnLoggedOut += HandleWhenCustomerLeave;
         }
+
         private void StopWatchCustomerMovements(ISociableCreature creature)
         {
             creature.OnCreatureMoved -= OnCustomerMoved;
             if (creature is IPlayer player) player.OnLoggedOut -= HandleWhenCustomerLeave;
         }
 
-        private void OnCustomerMoved(ICreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators)
+        private void OnCustomerMoved(ICreature creature, Location fromLocation, Location toLocation,
+            ICylinderSpectator[] spectators)
         {
             if (CanSee(creature.Location)) return;
             HandleWhenCustomerLeave(creature);
@@ -157,10 +171,13 @@ namespace NeoServer.Game.Creatures.Npcs
             OnCustomerLeft?.Invoke(creature);
         }
 
-        public void ForgetCustomer(ISociableCreature sociableCreature)
-        {
-            StopWatchCustomerMovements(sociableCreature);
-            npcDialog.EraseDialog(sociableCreature.CreatureId);
-        }
+        #region Events
+
+        public event DialogAction OnDialogAction;
+        public event Answer OnAnswer;
+        public event Hear OnHear;
+        public event CustomerLeft OnCustomerLeft;
+
+        #endregion
     }
 }

@@ -11,11 +11,13 @@ namespace NeoServer.Game.Contracts.World
         ITile ToTile { get; }
         IThing Thing { get; }
         Operation Operation { get; }
+
         bool IsTeleport { get; }
         //Result<TileOperationResult> AddThing(IThing thing, IDynamicTile tile);
         //Result<TileOperationResult> MoveThing(IMoveableThing thing, IDynamicTile fromTile, IDynamicTile toTile, byte amount = 1);
         //IThing RemoveThing(IThing thing, IDynamicTile tile, byte amount = 1);
     }
+
     public interface ICylinderSpectator
     {
         ICreature Spectator { get; }

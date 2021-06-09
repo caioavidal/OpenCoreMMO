@@ -15,6 +15,5 @@ namespace NeoServer.Game.World.Map.Tiles
         public abstract bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition);
 
         public abstract byte GetCreatureStackPositionIndex(IPlayer observer);
-
     }
 }

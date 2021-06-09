@@ -12,14 +12,16 @@ namespace NeoServer.Server.Events.Combat
         {
             this.game = game;
         }
+
         public void Execute(ICombatActor actor, uint oldTarget, uint newTarget)
         {
             if (actor.AttackEvent != 0) return;
 
             var result = Attack(actor);
             var attackSpeed = result ? actor.BaseAttackSpeed : 300;
-            actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int)attackSpeed, () => Attack(actor)));
+            actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int) attackSpeed, () => Attack(actor)));
         }
+
         private bool Attack(ICombatActor actor)
         {
             var result = false;
@@ -42,6 +44,7 @@ namespace NeoServer.Server.Events.Combat
                 actor.AttackEvent = 0;
                 Execute(actor, 0, 0);
             }
+
             return result;
         }
     }

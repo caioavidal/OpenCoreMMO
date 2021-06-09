@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using System;
+using System.Collections.Generic;
+using Moq;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
@@ -11,8 +13,6 @@ using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests;
 using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services
@@ -88,14 +88,19 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(coin2);
             container.AddItem(coin3);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) } });
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                    {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
-            var inventory = new PlayerInventory(player, new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) } });
+            var inventory = new PlayerInventory(player,
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                    {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
             var result = sut.Buy(player, shopperMock.Object, itemToBuy.Metadata, 3);
 
             Assert.Empty(container.Items);
         }
+
         [Fact]
         public void Buy_Remove_Coins_From_Backpack_And_Bank()
         {
@@ -111,7 +116,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) } });
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                    {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
             player.LoadBank(500);
 
@@ -149,7 +156,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) } });
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                    {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
             player.LoadBank(500);
 
@@ -160,6 +169,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             Assert.Equal(itemToBuy, player.Inventory[itemToBuy.Metadata.BodyPosition]);
         }
+
         [Fact]
         public void Buy_Backpack_When_Slot_Is_Empty_Adds_There()
         {
@@ -172,7 +182,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var player =
+                PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             player.LoadBank(500);
 
@@ -202,9 +213,12 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() {
-               { Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(1, current), 1) },
-               { Slot.Backpack, new Tuple<IPickupable, ushort>(ItemTestData.CreateBackpack(), 2) }  });
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(1, current), 1)},
+                    {Slot.Backpack, new Tuple<IPickupable, ushort>(ItemTestData.CreateBackpack(), 2)}
+                });
 
             player.LoadBank(500);
 
@@ -239,8 +253,15 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var container = ItemTestData.CreateBackpack();
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) },
-             { itemToBuy.Metadata.BodyPosition, new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(10, slot),10) }});
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)},
+                    {
+                        itemToBuy.Metadata.BodyPosition,
+                        new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(10, slot), 10)
+                    }
+                });
 
             player.LoadBank(5000);
 
@@ -251,6 +272,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             Assert.Equal(itemToBuy, player.Inventory.BackpackSlot.Items[0]);
         }
+
         [InlineData("head")]
         [InlineData("body")]
         [InlineData("weapon")]
@@ -273,7 +295,9 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var container = ItemTestData.CreateBackpack();
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) } });
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                    {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
             player.LoadBank(5000);
 
@@ -298,7 +322,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [InlineData(99, 2, 1)]
         [InlineData(100, 99, 99)]
         [Theory]
-        public void Buy_Ammo_When_Slot_Is_Partial_Adds_To_Backpack(byte currentOnInventory, byte bought, byte expectedOnBackpack)
+        public void Buy_Ammo_When_Slot_Is_Partial_Adds_To_Backpack(byte currentOnInventory, byte bought,
+            byte expectedOnBackpack)
         {
             var itemFactoryMock = new Mock<IItemFactory>();
             var coinTransaction = new Mock<ICoinTransaction>();
@@ -311,8 +336,15 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var container = ItemTestData.CreateBackpack();
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() { { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2) },
-             { itemToBuy.Metadata.BodyPosition, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(10, currentOnInventory),10) }});
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)},
+                    {
+                        itemToBuy.Metadata.BodyPosition,
+                        new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(10, currentOnInventory), 10)
+                    }
+                });
 
             player.LoadBank(5000);
 
@@ -340,7 +372,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var platinum = ItemTestData.CreateCoin(1, 2, 100);
             var gold = ItemTestData.CreateCoin(2, 1, 1);
 
-            itemFactoryMock.Setup(x => x.CreateCoins(It.IsAny<ulong>())).Returns(new List<ICoin> { (ICoin)ItemTestData.CreateCoin(1, 1, 100), (ICoin)ItemTestData.CreateCoin(2, 70, 1) });
+            itemFactoryMock.Setup(x => x.CreateCoins(It.IsAny<ulong>())).Returns(new List<ICoin>
+                {(ICoin) ItemTestData.CreateCoin(1, 1, 100), (ICoin) ItemTestData.CreateCoin(2, 70, 1)});
 
             itemFactoryMock.Setup(x => x.Create(1, It.IsAny<Location>(), null)).Returns(platinum);
             itemFactoryMock.Setup(x => x.Create(2, It.IsAny<Location>(), null)).Returns(gold);
@@ -352,8 +385,11 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(ItemTestData.CreateWeaponItem(11, "axe"));
             container.AddItem(platinum);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>() {
-                { Slot.Backpack, new Tuple<IPickupable, ushort>(container, 1) }});
+            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+                inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Backpack, new Tuple<IPickupable, ushort>(container, 1)}
+                });
 
             player.LoadBank(5000);
 
@@ -365,6 +401,5 @@ namespace NeoServer.Game.Creatures.Tests.Services
             Assert.Single(player.Inventory.BackpackSlot.Items);
             Assert.Equal(5170ul, player.BankAmount);
         }
-
     }
 }

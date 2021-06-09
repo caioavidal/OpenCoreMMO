@@ -9,14 +9,16 @@ namespace NeoServer.Game.Creatures.Events
     public class CreatureKilledEventHandler : IGameEventHandler
     {
         private readonly IItemFactory itemFactory;
-        private readonly IMap map;
         private readonly ILiquidPoolFactory liquidPoolFactory;
+        private readonly IMap map;
+
         public CreatureKilledEventHandler(IItemFactory itemFactory, IMap map, ILiquidPoolFactory liquidPoolFactory)
         {
             this.itemFactory = itemFactory;
             this.map = map;
             this.liquidPoolFactory = liquidPoolFactory;
         }
+
         public void Execute(ICreature creature, IThing by, ILoot loot)
         {
             if (creature is IMonster monster && monster.IsSummon)
@@ -24,6 +26,7 @@ namespace NeoServer.Game.Creatures.Events
                 map.RemoveCreature(monster);
                 return;
             }
+
             CreateCorpse(creature, by, loot);
             CreateBlood(creature);
         }
@@ -39,6 +42,7 @@ namespace NeoServer.Game.Creatures.Events
                 map.RemoveCreature(creature);
             }
         }
+
         private void CreateBlood(ICreature creature)
         {
             if (creature is not ICombatActor victim) return;

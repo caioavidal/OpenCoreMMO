@@ -1,11 +1,6 @@
 ﻿using Autofac;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Protocols;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -19,6 +14,5 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<GameListener>().SingleInstance();
             return builder;
         }
-    
     }
 }

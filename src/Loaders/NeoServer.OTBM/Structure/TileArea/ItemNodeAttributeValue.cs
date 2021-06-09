@@ -1,7 +1,7 @@
-using NeoServer.OTB.Parsers;
-using NeoServer.OTBM.Enums;
 using System;
 using System.Collections.Generic;
+using NeoServer.OTB.Parsers;
+using NeoServer.OTBM.Enums;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -60,10 +60,7 @@ namespace NeoServer.OTBM.Structure
                 case ItemNodeAttribute.DecayingState:
                     Value = stream.ReadByte();
 
-                    if ((ItemDecayingState)Value != ItemDecayingState.False)
-                    {
-                        Value = ItemDecayingState.Pending;
-                    }
+                    if ((ItemDecayingState) Value != ItemDecayingState.False) Value = ItemDecayingState.Pending;
                     break;
 
                 case ItemNodeAttribute.HouseDoorId:
@@ -80,8 +77,9 @@ namespace NeoServer.OTBM.Structure
                     {
                         CustomAttributes = new List<CustomAttribute>();
 
-                        ((List<CustomAttribute>)Value).Add(new CustomAttribute(stream));
+                        ((List<CustomAttribute>) Value).Add(new CustomAttribute(stream));
                     }
+
                     break;
             }
         }

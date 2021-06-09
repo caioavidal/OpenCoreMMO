@@ -1,24 +1,26 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using System;
+using System.Text;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Security;
-using System;
-using System.Text;
 
 namespace NeoServer.Networking.Packets
 {
     /// <summary>
-    /// Contains all the methods to handle incoming and outgoing message from/to client
+    ///     Contains all the methods to handle incoming and outgoing message from/to client
     /// </summary>
     public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     {
         private int Cursor;
+
         public NetworkMessage(byte[] buffer, int length) : base(buffer, length)
         {
             Length = length;
             Cursor = length;
         }
+
         public NetworkMessage(int length = 0) : base(new byte[16394], length)
         {
             Length = length;
@@ -26,7 +28,7 @@ namespace NeoServer.Networking.Packets
         }
 
         /// <summary>
-        /// Inserts a location point on the buffer
+        ///     Inserts a location point on the buffer
         /// </summary>
         /// <param name="location"></param>
         public void AddLocation(Location location)
@@ -37,97 +39,81 @@ namespace NeoServer.Networking.Packets
         }
 
         /// <summary>
-        /// Inserts a string on buffer. This method put the string's length in front of the value itself
-        /// Ex: the string "hello world" will be inserted as 0x0b 0 + string bytes
+        ///     Inserts a string on buffer. This method put the string's length in front of the value itself
+        ///     Ex: the string "hello world" will be inserted as 0x0b 0 + string bytes
         /// </summary>
         /// <param name="value"></param>
         public void AddString(string value)
         {
-            AddUInt16((ushort)value.Length);
+            AddUInt16((ushort) value.Length);
             WriteBytes(Encoding.UTF8.GetBytes(value));
         }
 
         /// <summary>
-        /// Inserts item object into the buffer.
+        ///     Inserts item object into the buffer.
         /// </summary>
         /// <param name="item"></param>
         public void AddItem(IItem item)
         {
-
             if (item == null)
-            {
                 //todo log
                 return;
-            }
 
             AddBytes(item.GetRaw().ToArray());
         }
 
         /// <summary>
-        /// Adds uint value (4 bytes) to buffer
+        ///     Adds uint value (4 bytes) to buffer
         /// </summary>
         /// <param name="value"></param>
-        public void AddUInt32(uint value) => WriteBytes(BitConverter.GetBytes(value));
+        public void AddUInt32(uint value)
+        {
+            WriteBytes(BitConverter.GetBytes(value));
+        }
 
         /// <summary>
-        /// Adds ushort (2 bytes) to buffer
+        ///     Adds ushort (2 bytes) to buffer
         /// </summary>
         /// <param name="value"></param>
-        public void AddUInt16(ushort value) => WriteBytes(BitConverter.GetBytes(value));
+        public void AddUInt16(ushort value)
+        {
+            WriteBytes(BitConverter.GetBytes(value));
+        }
 
         /// <summary>
-        /// Adds a byte value to buffer
+        ///     Adds a byte value to buffer
         /// </summary>
         /// <param name="b"></param>
-        public void AddByte(byte b) => WriteBytes(new[] { b });
+        public void AddByte(byte b)
+        {
+            WriteBytes(new[] {b});
+        }
 
         /// <summary>
-        /// Adds a array of bytes to buffer
+        ///     Adds a array of bytes to buffer
         /// </summary>
         /// <param name="bytes"></param>
         public void AddBytes(byte[] bytes)
         {
-            foreach (var b in bytes)
-            {
-                WriteByte(b);
-            }
+            foreach (var b in bytes) WriteByte(b);
         }
 
         /// <summary>
-        /// Adds padding right bytes (0x33) to buffer
+        ///     Adds padding right bytes (0x33) to buffer
         /// </summary>
         /// <param name="count">how many times the padding will be added</param>
-        public void AddPaddingBytes(int count) => WriteBytes(0x33, count);
-
-        private void WriteBytes(byte[] bytes)
+        public void AddPaddingBytes(int count)
         {
-            foreach (var b in bytes)
-            {
-                WriteByte(b);
-            }
-        }
-        private void WriteBytes(byte b, int times)
-        {
-            for (int i = 0; i < times; i++)
-            {
-                WriteByte(b);
-            }
-        }
-
-        private void WriteByte(byte b)
-        {
-            Length++;
-            Buffer[Cursor++] = b;
+            WriteBytes(0x33, count);
         }
 
         /// <summary>
-        /// Add header bytes and return the whole packet
+        ///     Add header bytes and return the whole packet
         /// </summary>
         /// <param name="addChecksum"></param>
         /// <returns></returns>
         public byte[] AddHeader(bool addChecksum = true)
         {
-
             var newArray = new byte[Length + 6];
 
             var header = GetHeader();
@@ -139,16 +125,15 @@ namespace NeoServer.Networking.Packets
         }
 
         /// <summary>
-        /// Add payload length to the buffer
-        /// The ushort bytes will be added in front of buffer
+        ///     Add payload length to the buffer
+        ///     The ushort bytes will be added in front of buffer
         /// </summary>
         public void AddLength()
         {
-
             var srcBuffer = Buffer.AsSpan(0, Length);
             Span<byte> newArray = new byte[Length + 50]; //added 50 for xtea padding
 
-            var lengthBytes = BitConverter.GetBytes((ushort)Length);
+            var lengthBytes = BitConverter.GetBytes((ushort) Length);
             newArray[0] = lengthBytes[0];
             newArray[1] = lengthBytes[1];
 
@@ -157,7 +142,22 @@ namespace NeoServer.Networking.Packets
             Length = Length + 2;
             Cursor += 2;
             Buffer = newArray.ToArray();
+        }
 
+        private void WriteBytes(byte[] bytes)
+        {
+            foreach (var b in bytes) WriteByte(b);
+        }
+
+        private void WriteBytes(byte b, int times)
+        {
+            for (var i = 0; i < times; i++) WriteByte(b);
+        }
+
+        private void WriteByte(byte b)
+        {
+            Length++;
+            Buffer[Cursor++] = b;
         }
 
         private byte[] GetHeader(bool addChecksum = true)
@@ -168,15 +168,14 @@ namespace NeoServer.Networking.Packets
                 var adlerChecksum = AdlerChecksum.Checksum(Buffer, 0, Length); //todo: 6 is the header length
                 checkSumBytes = BitConverter.GetBytes(adlerChecksum);
             }
-            var lengthInBytes = BitConverter.GetBytes((ushort)(Length + checkSumBytes.Length));
+
+            var lengthInBytes = BitConverter.GetBytes((ushort) (Length + checkSumBytes.Length));
 
             var header = new byte[6];
 
             System.Buffer.BlockCopy(lengthInBytes, 0, header, 0, 2);
             System.Buffer.BlockCopy(checkSumBytes, 0, header, 2, 4);
             return header;
-
         }
-
     }
 }

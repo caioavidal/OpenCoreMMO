@@ -1,18 +1,18 @@
-﻿using NeoServer.Game.Combat;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Monsters.Combats
 {
     public class TargetList : IEnumerable<CombatTarget>
     {
-        private IDictionary<uint, CombatTarget> targets;
         private readonly IMonster monster;
+        private IDictionary<uint, CombatTarget> targets;
 
         public TargetList(IMonster monster)
         {
@@ -26,6 +26,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
             if (!targets.TryAdd(creature.CreatureId, new CombatTarget(creature))) return;
             AttachToTargetEvents(creature);
         }
+
         public void RemoveTarget(ICreature creature)
         {
             if (creature is ICombatActor actor) DettachFromTargetEvents(actor);
@@ -33,18 +34,19 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
             targets?.Remove(creature.CreatureId);
 
             if (monster.AutoAttackTargetId == creature.CreatureId) monster.StopAttack();
-
         }
 
         public void Clear()
         {
             if (targets is null) return;
-            foreach (var target in targets)
-            {
-                RemoveTarget(target.Value.Creature);
-            }
+            foreach (var target in targets) RemoveTarget(target.Value.Creature);
         }
-        public bool Any() => targets?.Any() ?? false;
+
+        public bool Any()
+        {
+            return targets?.Any() ?? false;
+        }
+
         public bool TryGetTarget(uint id, out CombatTarget target)
         {
             target = null;
@@ -52,6 +54,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
         }
 
         #region Target Event Handlers
+
         private void AttachToTargetEvents(ICombatActor creature)
         {
             creature.OnKilled += OnTargetDie;
@@ -59,6 +62,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
             creature.OnCreatureMoved += OnTargetMoved;
             if (creature is IPlayer player) player.OnLoggedOut += OnTargetRemoved;
         }
+
         private void DettachFromTargetEvents(ICombatActor creature)
         {
             creature.OnKilled -= OnTargetDie;
@@ -66,28 +70,51 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
             creature.OnCreatureMoved -= OnTargetMoved;
             if (creature is IPlayer player) player.OnLoggedOut -= OnTargetRemoved;
         }
-        private void OnTargetDie(ICreature creature, IThing by, ILoot loot) => RemoveTarget(creature);
+
+        private void OnTargetDie(ICreature creature, IThing by, ILoot loot)
+        {
+            RemoveTarget(creature);
+        }
+
         private void OnTargetDisappeared(ICreature creature)
         {
             if (monster.CanSee(creature)) return;
             RemoveTarget(creature);
         }
+
         private void HandleTargetMoved(IWalkableCreature creature, bool lastStep = false)
         {
             if (!monster.CanSee(creature.Location))
             {
                 RemoveTarget(creature);
-                return;
             }
         }
-        private void OnTargetMoved(IWalkableCreature creature, Location fromLocation, Location toLocation, ICylinderSpectator[] spectators) => HandleTargetMoved(creature);
-        private void OnTargetRemoved(ICreature creature) => RemoveTarget(creature);
+
+        private void OnTargetMoved(IWalkableCreature creature, Location fromLocation, Location toLocation,
+            ICylinderSpectator[] spectators)
+        {
+            HandleTargetMoved(creature);
+        }
+
+        private void OnTargetRemoved(ICreature creature)
+        {
+            RemoveTarget(creature);
+        }
+
         #endregion
 
         #region IEnumerable Implementations
-        public IEnumerator GetEnumerator() => targets?.Values?.GetEnumerator();
-        IEnumerator<CombatTarget> IEnumerable<CombatTarget>.GetEnumerator() => targets?.Values?.GetEnumerator();
-        #endregion
 
+        public IEnumerator GetEnumerator()
+        {
+            return targets?.Values?.GetEnumerator();
+        }
+
+        IEnumerator<CombatTarget> IEnumerable<CombatTarget>.GetEnumerator()
+        {
+            return targets?.Values?.GetEnumerator();
+        }
+
+        #endregion
     }
 }

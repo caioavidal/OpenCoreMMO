@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using System.Collections.Generic;
+using System.Dynamic;
+using NeoServer.Game.Contracts.Creatures;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Collections.Generic;
-using System.Dynamic;
 
 namespace NeoServer.Loaders.Npcs
 {
@@ -20,14 +20,9 @@ namespace NeoServer.Loaders.Npcs
 
             var map = new Dictionary<string, dynamic>();
 
-            foreach (var item in list)
-            {
-                map.TryAdd(item.key, item.value);
-
-            }
+            foreach (var item in list) map.TryAdd(item.key, item.value);
 
             type.CustomAttributes.Add("custom-data", map);
-
         }
     }
 }

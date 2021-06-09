@@ -1,11 +1,11 @@
 ﻿#define GAME_FEATURE_MESSAGE_LEVEL
+using System;
+using System.Collections.Generic;
+using System.Text;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Party;
 using NeoServer.Game.Contracts.Creatures;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeoServer.Game.Creatures
 {
@@ -20,22 +20,22 @@ namespace NeoServer.Game.Creatures
 
             if (known)
             {
-                cache.AddRange(BitConverter.GetBytes((ushort)0x62));
+                cache.AddRange(BitConverter.GetBytes((ushort) 0x62));
                 cache.AddRange(BitConverter.GetBytes(creature.CreatureId));
             }
             else
             {
-                cache.AddRange(BitConverter.GetBytes((ushort)0x61));
+                cache.AddRange(BitConverter.GetBytes((ushort) 0x61));
                 cache.AddRange(BitConverter.GetBytes(playerRequesting.ChooseToRemoveFromKnownSet()));
                 cache.AddRange(BitConverter.GetBytes(creature.CreatureId));
 
                 var creatureNameBytes = Encoding.Default.GetBytes(creature.Name);
-                cache.AddRange(BitConverter.GetBytes((ushort)creatureNameBytes.Length));
+                cache.AddRange(BitConverter.GetBytes((ushort) creatureNameBytes.Length));
                 cache.AddRange(creatureNameBytes);
             }
 
-            cache.Add((byte)Math.Min(100, creature.HealthPoints * 100 / creature.MaxHealthPoints));
-            cache.Add((byte)creature.SafeDirection);
+            cache.Add((byte) Math.Min(100, creature.HealthPoints * 100 / creature.MaxHealthPoints));
+            cache.Add((byte) creature.SafeDirection);
 
             if (playerRequesting.CanSee(creature))
             {
@@ -57,8 +57,8 @@ namespace NeoServer.Game.Creatures
             }
             else
             {
-                cache.AddRange(BitConverter.GetBytes((ushort)0));
-                cache.AddRange(BitConverter.GetBytes((ushort)0));
+                cache.AddRange(BitConverter.GetBytes((ushort) 0));
+                cache.AddRange(BitConverter.GetBytes((ushort) 0));
             }
 
             cache.Add(creature.LightBrightness);
@@ -67,20 +67,19 @@ namespace NeoServer.Game.Creatures
             cache.AddRange(BitConverter.GetBytes(creature.Speed));
 
             cache.Add(creature.Skull);
-            cache.Add((byte)GetPartyEmblem(playerRequesting, creature));
+            cache.Add((byte) GetPartyEmblem(playerRequesting, creature));
 
             if (!known)
             {
                 if (creature is IPlayer player)
                 {
-                    if (player.GuildId == 0) cache.Add((byte)GuildEmblem.None); //guild emblem
-                    else if (playerRequesting.GuildId == player.GuildId) cache.Add((byte)GuildEmblem.Ally);
-                    else cache.Add((byte)GuildEmblem.Neutral); //guild emblem
+                    if (player.GuildId == 0) cache.Add((byte) GuildEmblem.None); //guild emblem
+                    else if (playerRequesting.GuildId == player.GuildId) cache.Add((byte) GuildEmblem.Ally);
+                    else cache.Add((byte) GuildEmblem.Neutral); //guild emblem
                 }
                 else
                 {
-
-                    cache.Add((byte)GuildEmblem.None);
+                    cache.Add((byte) GuildEmblem.None);
                 }
             }
 
@@ -97,7 +96,8 @@ namespace NeoServer.Game.Creatures
 
             if (player.Party is not IParty party) return PartyEmblem.None;
 
-            if (playerRequesting.Party is not null && party != playerRequesting.Party) return PartyEmblem.NotFromYourParty;
+            if (playerRequesting.Party is not null && party != playerRequesting.Party)
+                return PartyEmblem.NotFromYourParty;
 
             if (party.IsLeader(player))
             {
@@ -108,8 +108,6 @@ namespace NeoServer.Game.Creatures
 
             if (playerRequesting.Party is null) return PartyEmblem.None;
             return PartyEmblem.Member;
-
         }
-
     }
 }

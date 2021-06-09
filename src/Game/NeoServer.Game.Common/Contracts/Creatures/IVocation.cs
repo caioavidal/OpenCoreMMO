@@ -25,5 +25,4 @@ namespace NeoServer.Game.Contracts.Creatures
         byte SoulMax { get; set; }
         byte VocationType { get; }
     }
-
 }

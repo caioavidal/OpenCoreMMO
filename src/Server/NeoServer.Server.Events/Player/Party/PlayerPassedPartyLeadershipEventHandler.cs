@@ -25,13 +25,11 @@ namespace NeoServer.Server.Events.Player
                 if (!game.CreatureManager.GetPlayerConnection(member.CreatureId, out var connection)) continue;
 
                 if (member == newLeader)
-                {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket($"You are now the leader of the party.", TextMessageOutgoingType.Description));
-                }
+                    connection.OutgoingPackets.Enqueue(new TextMessagePacket("You are now the leader of the party.",
+                        TextMessageOutgoingType.Description));
                 else
-                {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket($"{newLeader.Name} is now the leader of the party", TextMessageOutgoingType.Description));
-                }
+                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(
+                        $"{newLeader.Name} is now the leader of the party", TextMessageOutgoingType.Description));
 
                 connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(newLeader, PartyEmblem.Leader));
                 connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(oldLeader, PartyEmblem.Member));

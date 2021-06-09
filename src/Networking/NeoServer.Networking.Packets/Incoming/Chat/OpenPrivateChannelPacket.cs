@@ -4,10 +4,11 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class OpenPrivateChannelPacket : IncomingPacket
     {
-        public string Receiver { get; set; }
         public OpenPrivateChannelPacket(IReadOnlyNetworkMessage message)
         {
             Receiver = message.GetString();
         }
+
+        public string Receiver { get; set; }
     }
 }

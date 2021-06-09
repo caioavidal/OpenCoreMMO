@@ -3,6 +3,7 @@
 namespace NeoServer.OTBM.Structure
 {
     #region OTBM Structure
+
     /*
 	OTBM_ROOTV1
 	|
@@ -26,36 +27,37 @@ namespace NeoServer.OTBM.Structure
 	|
 	|--- OTBM_ITEM_DEF (not implemented)
 */
+
     #endregion
 
     /// <summary>
-    /// OTBM class which represents the OTBM structure
+    ///     OTBM class which represents the OTBM structure
     /// </summary>
     public class OTBM
     {
         /// <summary>
-        /// OTBM Header data
+        ///     OTBM Header data
         /// </summary>
         public Header Header { get; set; }
+
         /// <summary>
-        /// OTBM Map metadata
+        ///     OTBM Map metadata
         /// </summary>
         public MapData MapData { get; set; }
 
         /// <summary>
-        /// OTBM Tile Areas
+        ///     OTBM Tile Areas
         /// </summary>
         public IEnumerable<TileArea> TileAreas { get; set; }
 
         /// <summary>
-        /// OTBM Towns
+        ///     OTBM Towns
         /// </summary>
         public IEnumerable<TownNode> Towns { get; set; }
 
         /// <summary>
-        /// OTBM Waypoints
+        ///     OTBM Waypoints
         /// </summary>
         public IEnumerable<WaypointNode> Waypoints { get; set; }
-
     }
 }

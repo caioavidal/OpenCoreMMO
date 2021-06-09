@@ -1,17 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Interfaces;
+using NeoServer.Data.Model;
 
 namespace NeoServer.Data.Repositories
 {
-    public class PlayerDepotItemRepositoryNeo : BaseRepository<PlayerDepotItemModel, NeoContext>, IPlayerDepotItemRepositoryNeo
+    public class PlayerDepotItemRepositoryNeo : BaseRepository<PlayerDepotItemModel, NeoContext>,
+        IPlayerDepotItemRepositoryNeo
     {
         #region constructors
 
-        public PlayerDepotItemRepositoryNeo(NeoContext context) : base(context) { }
+        public PlayerDepotItemRepositoryNeo(NeoContext context) : base(context)
+        {
+        }
 
         #endregion
 
@@ -29,12 +32,10 @@ namespace NeoServer.Data.Repositories
             if (!Context.Database.IsRelational())
             {
                 var items = Context.PlayerDepotItems.Where(x => x.PlayerId == playerId);
-                foreach (var item in items)
-                {
-                    await Delete(item);
-                }
+                foreach (var item in items) await Delete(item);
                 return;
             }
+
             await Context.Database.ExecuteSqlRawAsync($"delete from player_depot_items where player_id = {playerId}");
         }
 

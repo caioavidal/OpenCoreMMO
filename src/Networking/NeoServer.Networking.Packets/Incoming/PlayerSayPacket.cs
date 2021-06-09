@@ -5,14 +5,9 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class PlayerSayPacket : IncomingPacket
     {
-        public virtual SpeechType TalkType { get; }
-        public virtual string Receiver { get; set; }
-        public virtual string Message { get; }
-        public virtual ushort ChannelId { get; set; }
-
         public PlayerSayPacket(IReadOnlyNetworkMessage message)
         {
-            TalkType = (SpeechType)message.GetByte();
+            TalkType = (SpeechType) message.GetByte();
 
             switch (TalkType)
             {
@@ -39,5 +34,10 @@ namespace NeoServer.Networking.Packets.Incoming
 
             Message = message.GetString();
         }
+
+        public virtual SpeechType TalkType { get; }
+        public virtual string Receiver { get; set; }
+        public virtual string Message { get; }
+        public virtual ushort ChannelId { get; set; }
     }
 }

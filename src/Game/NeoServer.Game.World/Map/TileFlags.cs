@@ -1,9 +1,8 @@
 namespace NeoServer.Game.World
 {
-
     /// <summary>
-    /// This enum is meant to store in a memory-efficient way a collection
-    /// of properties that a Tile can have.
+    ///     This enum is meant to store in a memory-efficient way a collection
+    ///     of properties that a Tile can have.
     /// </summary>
     public enum TileFlags : uint
     {

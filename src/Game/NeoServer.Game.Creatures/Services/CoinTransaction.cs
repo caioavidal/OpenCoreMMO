@@ -1,10 +1,10 @@
-﻿using NeoServer.Game.Common.Contracts.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Services
 {
@@ -24,11 +24,10 @@ namespace NeoServer.Game.Creatures.Services
             var changeCoins = itemFactory.CreateCoins(amount).ToList();
 
             player.ReceivePayment(changeCoins, amount);
-
         }
 
         /// <summary>
-        /// Removes coins from player and adds change to the bag
+        ///     Removes coins from player and adds change to the bag
         /// </summary>
         /// <param name="player"></param>
         /// <param name="amount"></param>
@@ -45,7 +44,7 @@ namespace NeoServer.Game.Creatures.Services
         }
 
         /// <summary>
-        /// Removes coins from player but not add change
+        ///     Removes coins from player but not add change
         /// </summary>
         /// <param name="player"></param>
         /// <param name="amount"></param>
@@ -76,6 +75,7 @@ namespace NeoServer.Game.Creatures.Services
                         containers.Enqueue(childContainer);
                         continue;
                     }
+
                     if (item is not ICoin coin) continue;
 
                     if (moneyMap.TryGetValue(coin.Worth, out var coinSlots))
@@ -84,7 +84,7 @@ namespace NeoServer.Game.Creatures.Services
                         continue;
                     }
 
-                    coinSlots = new List<ICoin>() { coin };
+                    coinSlots = new List<ICoin> {coin};
                     moneyMap.Add(coin.Worth, coinSlots);
                 }
 
@@ -104,10 +104,10 @@ namespace NeoServer.Game.Creatures.Services
                         }
                         else if (coin.Worth > amount)
                         {
-                            uint worth = coin.Worth / coin.Amount;
-                            uint removeCount = (uint)Math.Ceiling((decimal)(coin.Worth / worth));
+                            var worth = coin.Worth / coin.Amount;
+                            var removeCount = (uint) Math.Ceiling((decimal) (coin.Worth / worth));
 
-                            change += (worth * removeCount) - amount;
+                            change += worth * removeCount - amount;
 
                             container.RemoveItem(coin, coin.Amount);
 

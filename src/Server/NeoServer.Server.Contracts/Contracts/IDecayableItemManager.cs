@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Contracts.Items;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Server.Contracts
 {
@@ -10,5 +10,4 @@ namespace NeoServer.Server.Contracts
         void Add(IDecayable decayable);
         void Clean();
     }
-
 }

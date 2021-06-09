@@ -1,7 +1,7 @@
-using NeoServer.OTB.Enums;
-using NeoServer.OTB.Parsers;
 using System;
 using System.Collections.Generic;
+using NeoServer.OTB.Enums;
+using NeoServer.OTB.Parsers;
 using Xunit;
 
 namespace NeoServer.OTB.Tests
@@ -26,18 +26,19 @@ namespace NeoServer.OTB.Tests
         [Fact]
         public void Instance_Stream_ReturnsAllAttributes()
         {
-            var stream = new OTBParsingStream(new ReadOnlyMemory<byte>(new byte[]{
+            var stream = new OTBParsingStream(new ReadOnlyMemory<byte>(new byte[]
+            {
                 0x10, //serverId
                 0x02, //data length 2
                 0x00,
-                0xA4,// serverId
+                0xA4, // serverId
                 0x00,
                 0x11, //clientId
                 0x02, //data length 2
                 0x00,
                 0x86,
                 0x00,
-                0x2A,  //light
+                0x2A, //light
                 0x04,
                 0x00,
                 0x22, //light level
@@ -62,44 +63,43 @@ namespace NeoServer.OTB.Tests
 
             var instance = new OTBParsingItemAttribute(stream);
 
-            var expected = new Dictionary<OTBItemAttribute, IConvertible>(){
-                {OTBItemAttribute.ServerId, (ushort)164},
-                {OTBItemAttribute.ClientId, (ushort)134},
-                {OTBItemAttribute.LightLevel, (byte)34},
-                {OTBItemAttribute.LightColor, (byte)36},
-                {OTBItemAttribute.Speed, (ushort)204},
-                {OTBItemAttribute.TopOrder, (byte)5},
-                {OTBItemAttribute.WareId, (ushort)90},
+            var expected = new Dictionary<OTBItemAttribute, IConvertible>
+            {
+                {OTBItemAttribute.ServerId, (ushort) 164},
+                {OTBItemAttribute.ClientId, (ushort) 134},
+                {OTBItemAttribute.LightLevel, (byte) 34},
+                {OTBItemAttribute.LightColor, (byte) 36},
+                {OTBItemAttribute.Speed, (ushort) 204},
+                {OTBItemAttribute.TopOrder, (byte) 5},
+                {OTBItemAttribute.WareId, (ushort) 90}
             };
 
-            foreach (var expect in expected)
-            {
-                Assert.Equal(expect.Value, instance.Attributes[expect.Key]);
-            }
+            foreach (var expect in expected) Assert.Equal(expect.Value, instance.Attributes[expect.Key]);
         }
 
         [Fact]
         public void Instance_DuplicatedAttributeStream_ReturnsAllSingleAttributes()
         {
-            var stream = new OTBParsingStream(new ReadOnlyMemory<byte>(new byte[]{
+            var stream = new OTBParsingStream(new ReadOnlyMemory<byte>(new byte[]
+            {
                 0x10, //serverId
                 0x02, //data length 2
                 0x00,
-                0xA4,// serverId
+                0xA4, // serverId
                 0x00,
                 0x11, //clientId
                 0x02, //data length 2
                 0x00,
                 0x86,
                 0x00,
-                0x2A,  //light
+                0x2A, //light
                 0x04,
                 0x00,
                 0x22, //light level
                 0x00,
                 0x24, //light color
                 0x00,
-                0x2A,  //light
+                0x2A, //light
                 0x04,
                 0x00,
                 0x22, //light level
@@ -124,20 +124,18 @@ namespace NeoServer.OTB.Tests
 
             var instance = new OTBParsingItemAttribute(stream);
 
-            var expected = new Dictionary<OTBItemAttribute, IConvertible>(){
-                {OTBItemAttribute.ServerId, (ushort)164},
-                {OTBItemAttribute.ClientId, (ushort)134},
-                {OTBItemAttribute.LightLevel, (byte)34},
-                {OTBItemAttribute.LightColor, (byte)36},
-                {OTBItemAttribute.Speed, (ushort)204},
-                {OTBItemAttribute.TopOrder, (byte)5},
-                {OTBItemAttribute.WareId, (ushort)90},
+            var expected = new Dictionary<OTBItemAttribute, IConvertible>
+            {
+                {OTBItemAttribute.ServerId, (ushort) 164},
+                {OTBItemAttribute.ClientId, (ushort) 134},
+                {OTBItemAttribute.LightLevel, (byte) 34},
+                {OTBItemAttribute.LightColor, (byte) 36},
+                {OTBItemAttribute.Speed, (ushort) 204},
+                {OTBItemAttribute.TopOrder, (byte) 5},
+                {OTBItemAttribute.WareId, (ushort) 90}
             };
 
-            foreach (var expect in expected)
-            {
-                Assert.Equal(expect.Value, instance.Attributes[expect.Key]);
-            }
+            foreach (var expect in expected) Assert.Equal(expect.Value, instance.Attributes[expect.Key]);
         }
     }
 }

@@ -14,13 +14,16 @@ namespace NeoServer.Server.Events.Player
         {
             this.game = game;
         }
+
         public void Execute(IPlayer player, Slot slot)
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
                 connection.OutgoingPackets.Enqueue(new PlayerInventoryItemPacket(player.Inventory, slot));
 
-                if (player.Shopping) connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, player.TradingWithNpc?.ShopItems?.Values));
+                if (player.Shopping)
+                    connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
+                        player.TradingWithNpc?.ShopItems?.Values));
 
                 connection.Send();
             }

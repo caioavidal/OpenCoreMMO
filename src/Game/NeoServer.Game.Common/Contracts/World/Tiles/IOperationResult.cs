@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Contracts.Items;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.World.Tiles
 {

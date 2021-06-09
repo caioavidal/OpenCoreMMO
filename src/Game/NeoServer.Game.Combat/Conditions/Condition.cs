@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures.Players;
-using System;
+﻿using System;
+using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Common.Conditions
 {
@@ -17,5 +17,4 @@ namespace NeoServer.Game.Common.Conditions
 
         public override ConditionType Type { get; }
     }
-
 }

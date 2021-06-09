@@ -8,21 +8,22 @@ namespace NeoServer.Server.Events
 {
     public class CreatureTurnedToDirectionEventHandler
     {
-        private readonly IMap map;
         private readonly IGameServer game;
+        private readonly IMap map;
 
         public CreatureTurnedToDirectionEventHandler(IMap map, IGameServer game)
         {
             this.map = map;
             this.game = game;
         }
+
         public void Execute(IWalkableCreature creature, Direction direction)
         {
             if (Guard.AnyNull(creature, direction)) return;
 
             if (creature.IsInvisible) return;
 
-            foreach (var spectator in map.GetSpectators(creature.Location, onlyPlayers: true))
+            foreach (var spectator in map.GetSpectators(creature.Location, true))
             {
                 if (!spectator.CanSee(creature.Location)) continue;
 
@@ -35,7 +36,6 @@ namespace NeoServer.Server.Events
                 connection.OutgoingPackets.Enqueue(new TurnToDirectionPacket(creature, direction, stackPosition));
 
                 connection.Send();
-
             }
         }
     }

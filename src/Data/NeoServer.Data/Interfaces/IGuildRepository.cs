@@ -1,6 +1,6 @@
-﻿using NeoServer.Data.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using NeoServer.Data.Model;
 
 namespace NeoServer.Data.Interfaces
 {

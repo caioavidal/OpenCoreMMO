@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
@@ -9,7 +10,6 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Player.UseItem;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
-using System;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -52,23 +52,16 @@ namespace NeoServer.Server.Commands.Player
             if (item is null) return;
 
             if (item is IContainer container)
-            {
-                action = () => player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
-            }
+                action = () =>
+                    player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
             else if (item is IUseable useable)
-            {
                 action = () => player.Use(useable);
-            }
-            else if (item is IUseableOn useableOn)
-            {
-                action = () => player.Use(useableOn, player);
-            }
+            else if (item is IUseableOn useableOn) action = () => player.Use(useableOn, player);
 
             if (action is null) return;
 
             if (useItemPacket.Location.Type == LocationType.Ground)
             {
-
                 action?.Invoke();
                 return;
             }

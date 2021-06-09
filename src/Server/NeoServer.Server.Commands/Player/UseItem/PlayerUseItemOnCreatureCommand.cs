@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
@@ -7,7 +8,6 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Player.UseItem;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
-using System;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -19,14 +19,14 @@ namespace NeoServer.Server.Commands.Player
         public PlayerUseItemOnCreatureCommand(IGameServer game, HotkeyService hotKeyCache)
         {
             this.game = game;
-            this.hotKeyService = hotKeyCache;
+            hotKeyService = hotKeyCache;
         }
 
         public void Execute(IPlayer player, UseItemOnCreaturePacket useItemPacket)
         {
             if (!game.CreatureManager.TryGetCreature(useItemPacket.CreatureId, out var creature)) return;
 
-            IThing itemToUse = GetItem(player, useItemPacket);
+            var itemToUse = GetItem(player, useItemPacket);
 
             if (itemToUse is not IUseableOn useableOn) return;
 
@@ -43,10 +43,7 @@ namespace NeoServer.Server.Commands.Player
 
         private IThing GetItem(IPlayer player, UseItemOnCreaturePacket useItemPacket)
         {
-            if (useItemPacket.FromLocation.IsHotkey)
-            {
-                return hotKeyService.GetItem(player, useItemPacket.ClientId);
-            }
+            if (useItemPacket.FromLocation.IsHotkey) return hotKeyService.GetItem(player, useItemPacket.ClientId);
 
             if (useItemPacket.FromLocation.Type == LocationType.Ground)
             {
@@ -63,7 +60,8 @@ namespace NeoServer.Server.Commands.Player
 
             if (useItemPacket.FromLocation.Type == LocationType.Container)
             {
-                if (player.Containers[useItemPacket.FromLocation.ContainerId][useItemPacket.FromLocation.ContainerSlot] is not IThing thing) return null;
+                if (player.Containers[useItemPacket.FromLocation.ContainerId][useItemPacket.FromLocation.ContainerSlot]
+                    is not IThing thing) return null;
                 return thing;
             }
 

@@ -7,6 +7,7 @@ namespace NeoServer.Networking.Packets.Outgoing
     public class PlayerSkillsPacket : OutgoingPacket
     {
         private readonly IPlayer player;
+
         public PlayerSkillsPacket(IPlayer player)
         {
             this.player = player;
@@ -14,7 +15,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.PlayerSkills);
+            message.AddByte((byte) GameOutgoingPacketType.PlayerSkills);
             message.AddByte(player.GetSkillInfo(SkillType.Fist));
             message.AddByte(player.GetSkillPercent(SkillType.Fist));
 

@@ -1,18 +1,20 @@
-﻿using NeoServer.Game.Contracts;
+﻿using System;
+using System.Linq;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
-using System;
-using System.Linq;
 
 namespace NeoServer.Game.World.Spawns
 {
     public class SpawnManager
     {
-        private readonly World _world;
-        private readonly IMap _map;
         private readonly ICreatureFactory _creatureFactory;
         private readonly ICreatureGameInstance _creatureGameInstance;
-        public SpawnManager(World world, IMap map, ICreatureGameInstance creatureGameInstance, ICreatureFactory creatureFactory)
+        private readonly IMap _map;
+        private readonly World _world;
+
+        public SpawnManager(World world, IMap map, ICreatureGameInstance creatureGameInstance,
+            ICreatureFactory creatureFactory)
         {
             _world = world;
 
@@ -32,20 +34,11 @@ namespace NeoServer.Game.World.Spawns
                 {
                     var spawnTime = TimeSpan.FromSeconds(monster.Spawn.SpawnTime);
 
-                    if (DateTime.Now.TimeOfDay < deathTime + spawnTime)
-                    {
-                        continue;
-                    }
-                    if (_map.ArePlayersAround(monster.Location))
-                    {
-                        continue;
-                    }
+                    if (DateTime.Now.TimeOfDay < deathTime + spawnTime) continue;
+                    if (_map.ArePlayersAround(monster.Location)) continue;
                 }
 
-                if (_creatureGameInstance.TryRemoveFromKilledMonsters(monster.CreatureId))
-                {
-                    monster.Reborn();
-                }
+                if (_creatureGameInstance.TryRemoveFromKilledMonsters(monster.CreatureId)) monster.Reborn();
             }
         }
 

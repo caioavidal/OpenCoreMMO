@@ -11,8 +11,10 @@ namespace NeoServer.Server.Compiler
 
             var compiler = new Compiler();
 
-            var bin = Directory.GetDirectories(sourcesPath, "bin", new EnumerationOptions { RecurseSubdirectories = true });
-            var obj = Directory.GetDirectories(sourcesPath, "obj", new EnumerationOptions { RecurseSubdirectories = true });
+            var bin = Directory.GetDirectories(sourcesPath, "bin",
+                new EnumerationOptions {RecurseSubdirectories = true});
+            var obj = Directory.GetDirectories(sourcesPath, "obj",
+                new EnumerationOptions {RecurseSubdirectories = true});
 
             if (bin.FirstOrDefault() is string binFolder) Directory.Delete(binFolder, true);
             if (obj.FirstOrDefault() is string objFolder) Directory.Delete(objFolder, true);

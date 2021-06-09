@@ -1,19 +1,12 @@
-﻿using NeoServer.Networking.Packets.Messages;
+﻿using System;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Security;
-using System;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
     public class PlayerLogInPacket : IncomingPacket
     {
-        public string Account { get; set; }
-        public string Password { get; set; }
-        public string CharacterName { get; set; }
-        public bool GameMaster { get; set; }
-        public byte[] GameServerNonce { get; set; }
-        public ushort OS { get; set; }
-        public ushort Version { get; set; }
         public PlayerLogInPacket(IReadOnlyNetworkMessage message)
         {
             var packetLength = message.GetUInt16();
@@ -39,5 +32,13 @@ namespace NeoServer.Networking.Packets.Incoming
             Password = data.GetString();
             GameServerNonce = data.GetBytes(5);
         }
+
+        public string Account { get; set; }
+        public string Password { get; set; }
+        public string CharacterName { get; set; }
+        public bool GameMaster { get; set; }
+        public byte[] GameServerNonce { get; set; }
+        public ushort OS { get; set; }
+        public ushort Version { get; set; }
     }
 }

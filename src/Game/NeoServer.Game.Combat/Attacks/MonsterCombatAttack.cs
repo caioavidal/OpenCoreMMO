@@ -1,21 +1,18 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using System;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Contracts.Combat.Attacks;
-using System;
 
 namespace NeoServer.Game.Combat.Attacks
 {
-
     public struct MonsterCombatAttack : IMonsterCombatAttack
     {
         public int Interval
         {
-            set
-            {
-                Cooldown = new CooldownTime(DateTime.Now, value);
-            }
+            set => Cooldown = new CooldownTime(DateTime.Now, value);
         }
+
         public byte Chance { get; set; }
         public byte Target { get; set; }
         public DamageType DamageType { get; set; }

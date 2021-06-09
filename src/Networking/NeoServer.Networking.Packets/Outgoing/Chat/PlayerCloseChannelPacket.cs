@@ -4,7 +4,6 @@ namespace NeoServer.Networking.Packets.Outgoing
 {
     public class PlayerCloseChannelPacket : OutgoingPacket
     {
-
         private readonly ushort channelId;
 
         public PlayerCloseChannelPacket(ushort channelId)
@@ -14,7 +13,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.CloseChannel);
+            message.AddByte((byte) GameOutgoingPacketType.CloseChannel);
             message.AddUInt16(channelId);
         }
     }

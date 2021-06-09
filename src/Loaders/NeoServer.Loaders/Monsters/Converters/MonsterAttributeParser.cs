@@ -4,7 +4,6 @@ namespace NeoServer.Loaders.Monsters.Converters
 {
     public class MonsterAttributeParser
     {
-
         public static EffectT ParseAreaEffect(string type)
         {
             return type switch
@@ -17,6 +16,5 @@ namespace NeoServer.Loaders.Monsters.Converters
                 _ => EffectT.None
             };
         }
-
     }
 }

@@ -7,3 +7,4 @@
 //        void Dispatch<TEvent>(TEvent evt) where TEvent : IEvent;
 //    }
 //}
+

@@ -1,4 +1,5 @@
-﻿using NeoServer.Data.Model;
+﻿using System.Collections.Generic;
+using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Contracts.Creatures;
@@ -6,14 +7,13 @@ using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using Serilog.Core;
-using System.Collections.Generic;
 
 namespace NeoServer.Loaders.Guilds
 {
     public class GuildLoader : ICustomLoader
     {
-        private readonly Logger logger;
         private readonly ChatChannelFactory chatChannelFactory;
+        private readonly Logger logger;
 
         public GuildLoader(Logger logger, ChatChannelFactory chatChannelFactory)
         {
@@ -25,7 +25,7 @@ namespace NeoServer.Loaders.Guilds
         {
             if (guildModel is not GuildModel) return;
 
-            var guild = GuildStore.Data.Get((ushort)guildModel.Id);
+            var guild = GuildStore.Data.Get((ushort) guildModel.Id);
 
             var shouldAddToStore = false;
             if (guild is null)
@@ -33,8 +33,9 @@ namespace NeoServer.Loaders.Guilds
                 shouldAddToStore = true;
                 guild = new Guild
                 {
-                    Id = (ushort)guildModel.Id,
-                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel", (ushort)guildModel.Id)
+                    Id = (ushort) guildModel.Id,
+                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel",
+                        (ushort) guildModel.Id)
                 };
             }
 
@@ -47,7 +48,8 @@ namespace NeoServer.Loaders.Guilds
             foreach (var member in guildModel.Members)
             {
                 if (member.Rank is null) continue;
-                guild.GuildLevels.Add((ushort)member.Rank.Id, new GuildLevel((GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
+                guild.GuildLevels.Add((ushort) member.Rank.Id,
+                    new GuildLevel((GuildRank) (member.Rank?.Level ?? (int) GuildRank.Member), member.Rank?.Name));
             }
 
             if (shouldAddToStore)

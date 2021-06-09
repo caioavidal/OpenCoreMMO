@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Useables;
@@ -7,7 +8,6 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Player.UseItem;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Commands;
-using System;
 
 namespace NeoServer.Server.Commands.Player
 {
@@ -39,7 +39,8 @@ namespace NeoServer.Server.Commands.Player
             }
             else if (useItemPacket.ToLocation.Type == LocationType.Container)
             {
-                if (player.Containers[useItemPacket.ToLocation.ContainerId][useItemPacket.ToLocation.ContainerSlot] is not IItem item) return;
+                if (player.Containers[useItemPacket.ToLocation.ContainerId][useItemPacket.ToLocation.ContainerSlot] is
+                    not IItem item) return;
                 onItem = item;
             }
 
@@ -52,7 +53,6 @@ namespace NeoServer.Server.Commands.Player
             if (useItemPacket.Location.IsHotkey)
             {
                 thingToUse = hotkeyService.GetItem(player, useItemPacket.ClientId);
-
             }
             else if (useItemPacket.Location.Type == LocationType.Ground)
             {
@@ -65,7 +65,8 @@ namespace NeoServer.Server.Commands.Player
             }
             else if (useItemPacket.Location.Type == LocationType.Container)
             {
-                thingToUse = player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
+                thingToUse =
+                    player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
             }
 
             if (thingToUse is not IUseableOn itemToUse) return;
@@ -80,6 +81,5 @@ namespace NeoServer.Server.Commands.Player
 
             action?.Invoke();
         }
-
     }
 }

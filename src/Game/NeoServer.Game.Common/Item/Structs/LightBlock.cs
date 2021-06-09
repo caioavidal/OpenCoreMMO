@@ -11,5 +11,4 @@
             LightColor = lightColor;
         }
     }
-
 }

@@ -39,4 +39,3 @@ namespace NeoServer.OTB.Enums
         LightColor
     }
 }
-

@@ -9,7 +9,9 @@ namespace NeoServer.Scripts.Events
     {
         private readonly CreatureDroppedLootEventHandler creatureDroppedLootEventHandler;
         private readonly CreatureKilledEventHandler creatureKilledEventHandler;
-        public CreatureEventSubscriber(CreatureDroppedLootEventHandler creatureDroppedLootEventHandler, CreatureKilledEventHandler creatureKilledEventHandler)
+
+        public CreatureEventSubscriber(CreatureDroppedLootEventHandler creatureDroppedLootEventHandler,
+            CreatureKilledEventHandler creatureKilledEventHandler)
         {
             this.creatureDroppedLootEventHandler = creatureDroppedLootEventHandler;
             this.creatureKilledEventHandler = creatureKilledEventHandler;
@@ -22,10 +24,8 @@ namespace NeoServer.Scripts.Events
                 actor.OnKilled += creatureKilledEventHandler.Execute;
                 actor.OnKilled += creatureDroppedLootEventHandler.Execute;
             }
-            if (creature is INpc npc)
-            {
-                npc.OnAnswer += NpcActionHandler.OnAnswer;
-            }
+
+            if (creature is INpc npc) npc.OnAnswer += NpcActionHandler.OnAnswer;
         }
 
         public void Unsubscribe(ICreature creature)
@@ -35,10 +35,8 @@ namespace NeoServer.Scripts.Events
                 actor.OnKilled -= creatureKilledEventHandler.Execute;
                 actor.OnKilled -= creatureDroppedLootEventHandler.Execute;
             }
-            if (creature is INpc npc)
-            {
-                npc.OnAnswer -= NpcActionHandler.OnAnswer;
-            }
+
+            if (creature is INpc npc) npc.OnAnswer -= NpcActionHandler.OnAnswer;
         }
     }
 }

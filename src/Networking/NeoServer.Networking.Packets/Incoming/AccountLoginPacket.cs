@@ -6,10 +6,6 @@ namespace NeoServer.Networking.Packets.Incoming
 {
     public class AccountLoginPacket : IncomingPacket
     {
-        public string Account { get; }
-        public string Password { get; }
-        public ushort ProtocolVersion { get; }
-
         public AccountLoginPacket(IReadOnlyNetworkMessage message)
         {
             var packetPayload = message.GetUInt16();
@@ -32,7 +28,13 @@ namespace NeoServer.Networking.Packets.Incoming
             Password = data.GetString();
         }
 
-        public bool IsValid() => !(string.IsNullOrWhiteSpace(Account) || string.IsNullOrWhiteSpace(Password));
+        public string Account { get; }
+        public string Password { get; }
+        public ushort ProtocolVersion { get; }
 
+        public bool IsValid()
+        {
+            return !(string.IsNullOrWhiteSpace(Account) || string.IsNullOrWhiteSpace(Password));
+        }
     }
 }

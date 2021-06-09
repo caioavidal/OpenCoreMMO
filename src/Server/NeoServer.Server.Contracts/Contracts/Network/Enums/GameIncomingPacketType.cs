@@ -32,7 +32,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         ItemUse = 0x82, // use item
         ItemUseOn = 0x83, // use item
         ItemUseOnCreature = 0x84, // battle window
-        ItemRotate = 0x85,  // rotate item
+        ItemRotate = 0x85, // rotate item
         ContainerClose = 0x87, // close container
         ContainerUp = 0x88, // "up-arrow" - container
         WindowText = 0x89,
@@ -40,7 +40,7 @@ namespace NeoServer.Server.Contracts.Network.Enums
         LookAt = 0x8C, // look at item
         LookInBattleList = 0x8D,
         JoinAgression = 0x8E,
-        Speech = 0x96,  // say something
+        Speech = 0x96, // say something
         ChannelListRequest = 0x97, // request Channels
         ChannelOpen = 0x98, // open Channel
         ChannelClose = 0x99, // close Channel
@@ -63,7 +63,9 @@ namespace NeoServer.Server.Contracts.Network.Enums
         ChannelExclude = 0xAC,
         StopAllActions = 0xBE, // cancel move
         ResendTile = 0xC9, // client request to resend the tile
-        ResentContainer = 0xCA, // client request to resend the container (happens when you store more than container maxsize)
+
+        ResentContainer =
+            0xCA, // client request to resend the container (happens when you store more than container maxsize)
         OutfitChangeRequest = 0xD2, // request outfit
         OutfitChangeCompleted = 0xD3, // set outfit
         AddVip = 0xDC,
@@ -71,6 +73,6 @@ namespace NeoServer.Server.Contracts.Network.Enums
         ReportBug = 0xE6,
         ReportViolation = 0xE7,
         ReportDebugAssertion = 0xE8,
-        Any = 0xFF, // Do not send
+        Any = 0xFF // Do not send
     }
 }

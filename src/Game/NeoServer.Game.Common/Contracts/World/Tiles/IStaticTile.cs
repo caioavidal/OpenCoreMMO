@@ -7,6 +7,5 @@ namespace NeoServer.Game.World.Map.Tiles
     {
         byte[] Raw { get; }
         byte[] GetRaw(IItem[] items);
-
     }
 }

@@ -20,14 +20,12 @@ namespace NeoServer.Scripts.Spells.Commands
             var map = Map.Instance;
 
             foreach (var neighbour in actor.Location.Neighbours)
-            {
-
                 if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
                 {
                     monster.Born(neighbour);
                     return true;
                 }
-            }
+
             error = InvalidOperation.NotEnoughRoom;
             return false;
         }

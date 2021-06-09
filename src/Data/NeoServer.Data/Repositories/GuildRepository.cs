@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NeoServer.Data.Repositories
 {
@@ -10,7 +10,9 @@ namespace NeoServer.Data.Repositories
     {
         #region constructors
 
-        public GuildRepository(NeoContext context) : base(context) { }
+        public GuildRepository(NeoContext context) : base(context)
+        {
+        }
 
         #endregion
 

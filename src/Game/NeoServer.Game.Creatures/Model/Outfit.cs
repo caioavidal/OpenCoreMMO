@@ -2,10 +2,8 @@ using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creature.Model
 {
-
     public class Outfit : IOutfit
     {
-
         public ushort LookType { get; set; }
 
         public ushort Id { get; set; }
@@ -32,8 +30,7 @@ namespace NeoServer.Game.Creature.Model
 
         public IOutfit Clone()
         {
-            return (IOutfit)MemberwiseClone();
+            return (IOutfit) MemberwiseClone();
         }
     }
-
 }

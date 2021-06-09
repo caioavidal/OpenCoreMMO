@@ -29,7 +29,6 @@
         Perioddamage,
         Isbuff,
         Subid,
-        End = 254,  //reserved for serialization
-
+        End = 254 //reserved for serialization
     }
 }

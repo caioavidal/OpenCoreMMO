@@ -1,21 +1,19 @@
-using NeoServer.Game.Contracts.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creature
 {
-
     public class CreatureGameInstance : ICreatureGameInstance
     {
         private readonly Dictionary<uint, ICreature> _creatures;
         private readonly Dictionary<uint, IPlayer> _playersLogged;
 
-        private Dictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
+        private readonly Dictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
 
         public CreatureGameInstance()
         {
-
             _creatures = new Dictionary<uint, ICreature>();
             _killedMonsters = new Dictionary<uint, Tuple<IMonster, TimeSpan>>();
             _playersLogged = new Dictionary<uint, IPlayer>();
@@ -23,68 +21,78 @@ namespace NeoServer.Game.Creature
 
         public void AddKilledMonsters(IMonster monster)
         {
-            if (!monster.FromSpawn)
-            {
-                return;
-            }
+            if (!monster.FromSpawn) return;
 
             _killedMonsters.TryAdd(monster.CreatureId, new Tuple<IMonster, TimeSpan>(monster, DateTime.Now.TimeOfDay));
         }
 
-        public bool TryGetCreature(uint id, out ICreature creature) => _creatures.TryGetValue(id, out creature);
-        public bool TryGetPlayer(uint playerId, out IPlayer player) => _playersLogged.TryGetValue(playerId, out player);
+        public bool TryGetCreature(uint id, out ICreature creature)
+        {
+            return _creatures.TryGetValue(id, out creature);
+        }
 
-        public IEnumerable<ICreature> All() => _creatures.Values.ToImmutableArray();
-        public IEnumerable<IPlayer> AllLoggedPlayers() => _playersLogged.Values;
+        public bool TryGetPlayer(uint playerId, out IPlayer player)
+        {
+            return _playersLogged.TryGetValue(playerId, out player);
+        }
 
-        public ImmutableList<Tuple<IMonster, TimeSpan>> AllKilledMonsters() => _killedMonsters.Values.ToImmutableList();
+        public IEnumerable<ICreature> All()
+        {
+            return _creatures.Values.ToImmutableArray();
+        }
+
+        public IEnumerable<IPlayer> AllLoggedPlayers()
+        {
+            return _playersLogged.Values;
+        }
+
+        public ImmutableList<Tuple<IMonster, TimeSpan>> AllKilledMonsters()
+        {
+            return _killedMonsters.Values.ToImmutableList();
+        }
 
         public void Add(ICreature creature)
         {
             if (!_creatures.TryAdd(creature.CreatureId, creature))
-            {
                 // TODO: proper logging
                 Console.WriteLine($"WARNING: Failed to add {creature.Name} to the global dictionary.");
-            }
         }
+
         public void AddPlayer(IPlayer player)
         {
             if (!_playersLogged.TryAdd(player.Id, player))
-            {
                 // TODO: proper logging
                 Console.WriteLine($"WARNING: Failed to add {player.Name} to the global dictionary.");
-            }
         }
 
         public bool TryRemoveFromKilledMonsters(uint id)
         {
-            if (!_killedMonsters.Remove(id, out Tuple<IMonster, TimeSpan> creature))
+            if (!_killedMonsters.Remove(id, out var creature))
             {
                 // TODO: proper logging
-                Console.WriteLine($"WARNING: Failed to remove {creature.Item1.Name} from the killed monsters dictionary.");
+                Console.WriteLine(
+                    $"WARNING: Failed to remove {creature.Item1.Name} from the killed monsters dictionary.");
                 return false;
             }
+
             return true;
         }
 
         public bool TryRemove(uint id)
         {
-            if (!_creatures.Remove(id, out ICreature creature))
-            {
+            if (!_creatures.Remove(id, out var creature))
                 // TODO: proper logging
                 // Console.WriteLine($"WARNING: Failed to remove {creature.Name} from the global dictionary.");
                 return false;
-            }
             return true;
         }
+
         public bool TryRemoveFromLoggedPlayers(uint id)
         {
-            if (!_playersLogged.Remove(id, out IPlayer player))
-            {
+            if (!_playersLogged.Remove(id, out var player))
                 // TODO: proper logging
                 // Console.WriteLine($"WARNING: Failed to remove {creature.Name} from the global dictionary.");
                 return false;
-            }
             return true;
         }
     }

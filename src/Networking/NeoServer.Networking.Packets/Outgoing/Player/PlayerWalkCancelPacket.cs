@@ -10,12 +10,12 @@ namespace NeoServer.Networking.Packets.Outgoing
         public PlayerWalkCancelPacket(IPlayer player)
         {
             this.player = player;
-
         }
+
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.PlayerWalkCancel);
-            message.AddByte((byte)player.Direction);
+            message.AddByte((byte) GameOutgoingPacketType.PlayerWalkCancel);
+            message.AddByte((byte) player.Direction);
         }
     }
 }

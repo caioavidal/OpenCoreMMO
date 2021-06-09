@@ -1,10 +1,12 @@
-﻿using NeoServer.Game.Common.Talks;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Chats
 {
-    public delegate void AddMessage(ISociableCreature creature, IChatChannel channel, SpeechType speechType, string message);
+    public delegate void AddMessage(ISociableCreature creature, IChatChannel channel, SpeechType speechType,
+        string message);
+
     public interface IChatChannel
     {
         ushort Id { get; }
@@ -22,7 +24,10 @@ namespace NeoServer.Game.Contracts.Chats
         bool PlayerCanWrite(IPlayer player);
         bool PlayerIsMuted(IPlayer player, out string cancelMessage);
         bool RemoveUser(IPlayer player);
-        bool WriteMessage(ISociableCreature creature, string message, out string cancelMessage, SpeechType speechType = SpeechType.None);
+
+        bool WriteMessage(ISociableCreature creature, string message, out string cancelMessage,
+            SpeechType speechType = SpeechType.None);
+
         bool WriteMessage(string message, out string cancelMessage, SpeechType speechType = SpeechType.None);
     }
 

@@ -4,12 +4,6 @@ namespace NeoServer.Networking.Packets.Incoming.Shop
 {
     public class PlayerPurchasePacket : IncomingPacket
     {
-        public ushort ItemClientId { get; }
-        public byte Count { get; }
-        public byte Amount { get; set; }
-        public bool IgnoreCapacity { get; set; }
-        public bool InBackpacks { get; set; }
-
         public PlayerPurchasePacket(IReadOnlyNetworkMessage message)
         {
             ItemClientId = message.GetUInt16();
@@ -18,5 +12,11 @@ namespace NeoServer.Networking.Packets.Incoming.Shop
             IgnoreCapacity = message.GetByte() != 0;
             InBackpacks = message.GetByte() != 0;
         }
+
+        public ushort ItemClientId { get; }
+        public byte Count { get; }
+        public byte Amount { get; set; }
+        public bool IgnoreCapacity { get; set; }
+        public bool InBackpacks { get; set; }
     }
 }

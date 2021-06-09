@@ -1,4 +1,7 @@
-﻿using NeoServer.Game.Contracts;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Talks;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
@@ -8,8 +11,9 @@ namespace NeoServer.Game.Items.Events
 {
     public class ItemUsedEventHandler : IGameEventHandler
     {
-        private readonly IMap map;
         private readonly IItemFactory itemFactory;
+        private readonly IMap map;
+
         public ItemUsedEventHandler(IMap map, IItemFactory itemFactory)
         {
             this.map = map;
@@ -30,24 +34,22 @@ namespace NeoServer.Game.Items.Events
 
             if (map[creature.Location] is not IDynamicTile tile) return;
 
-            if (item?.Location.Type == Common.Location.LocationType.Ground)
-            {
-                tile.AddItem(createdItem);
-            }
-            if (item?.Location.Type == Common.Location.LocationType.Container)
+            if (item?.Location.Type == LocationType.Ground) tile.AddItem(createdItem);
+            if (item?.Location.Type == LocationType.Container)
             {
                 var container = player.Containers[item.Location.ContainerId] ?? player.Inventory?.BackpackSlot;
 
-                var result = container is not null ? container.AddItem(createdItem) : new Common.Result<Common.OperationResult<IItem>>(Common.InvalidOperation.NotPossible);
+                var result = container is not null
+                    ? container.AddItem(createdItem)
+                    : new Result<OperationResult<IItem>>(InvalidOperation.NotPossible);
                 if (!result.IsSuccess) tile.AddItem(createdItem);
             }
         }
+
         private void Say(ICreature creature, IItem item)
         {
             if (item is IConsumable consumable && !string.IsNullOrWhiteSpace(consumable.Sentence))
-            {
-                creature.Say(consumable.Sentence, Common.Talks.SpeechType.MonsterSay);
-            }
+                creature.Say(consumable.Sentence, SpeechType.MonsterSay);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace NeoServer.Server.Handlers.Player
     public class PlayerCloseContainerHandler : PacketHandler
     {
         private readonly IGameServer game;
+
         public PlayerCloseContainerHandler(IGameServer game)
         {
             this.game = game;
@@ -18,7 +19,6 @@ namespace NeoServer.Server.Handlers.Player
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             game.Dispatcher.AddEvent(new Event(() => player.Containers.CloseContainer(containerId)));
-
         }
     }
 }

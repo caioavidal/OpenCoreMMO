@@ -1,25 +1,22 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System;
+using NeoServer.Game.Common.Location;
 using NeoServer.Server.Contracts.Network;
-using System;
 
 namespace NeoServer.Networking.Packets.Incoming
 {
     public class AutoWalkPacket : IncomingPacket
     {
-        public byte StepDistance { get; }
-        public Direction[] Steps { get; }
-
         public AutoWalkPacket(IReadOnlyNetworkMessage message)
         {
             StepDistance = message.GetByte();
 
             Steps = new Direction[StepDistance];
 
-            for (int i = 0; i < StepDistance; i++)
-            {
-                Steps[i] = ParseByte(message.GetByte());
-            }
+            for (var i = 0; i < StepDistance; i++) Steps[i] = ParseByte(message.GetByte());
         }
+
+        public byte StepDistance { get; }
+        public Direction[] Steps { get; }
 
         private Direction ParseByte(byte b)
         {

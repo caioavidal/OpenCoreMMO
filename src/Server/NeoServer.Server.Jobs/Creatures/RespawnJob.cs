@@ -1,12 +1,13 @@
-﻿using NeoServer.Game.World.Spawns;
-using System;
+﻿using System;
+using NeoServer.Game.World.Spawns;
 
 namespace NeoServer.Server.Jobs.Creatures
 {
     public class RespawnJob
     {
         private const int INTERVAL = 10000;
-        private static long _lastRespawn = 0;
+        private static long _lastRespawn;
+
         public static void Execute(SpawnManager spawnManager)
         {
             var now = DateTime.Now.Ticks;

@@ -1,6 +1,6 @@
-﻿using NeoServer.Loaders.Interfaces;
+﻿using System.Collections.Generic;
+using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Contracts;
-using System.Collections.Generic;
 
 namespace NeoServer.Scripts
 {

@@ -9,10 +9,12 @@ namespace NeoServer.Server.Handlers.Player
     public class PlayerSaleHandler : PacketHandler
     {
         private readonly IGameServer game;
+
         public PlayerSaleHandler(IGameServer game)
         {
             this.game = game;
         }
+
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var playerSalePacket = new PlayerSalePacket(message);
@@ -22,7 +24,8 @@ namespace NeoServer.Server.Handlers.Player
 
             if (!ItemTypeStore.Data.TryGetValue(serverId, out var itemType)) return;
 
-            game.Dispatcher.AddEvent(new Event(() => player.Sell(itemType, playerSalePacket.Amount, playerSalePacket.IgnoreEquipped)));
+            game.Dispatcher.AddEvent(new Event(() =>
+                player.Sell(itemType, playerSalePacket.Amount, playerSalePacket.IgnoreEquipped)));
         }
     }
 }

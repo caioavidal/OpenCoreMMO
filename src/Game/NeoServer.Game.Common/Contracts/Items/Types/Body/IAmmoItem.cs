@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Item;
-using System;
+﻿using System;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Contracts.Items.Types.Body
 {

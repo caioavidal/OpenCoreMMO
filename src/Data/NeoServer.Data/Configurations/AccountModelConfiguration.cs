@@ -13,8 +13,8 @@ namespace NeoServer.Data.Configurations
             builder.HasKey(e => e.AccountId);
 
             builder.HasIndex(e => e.Name)
-                 .HasDatabaseName("name")
-                 .IsUnique();
+                .HasDatabaseName("name")
+                .IsUnique();
 
             builder.Property(e => e.AccountId)
                 .HasColumnName("id")
@@ -73,7 +73,7 @@ namespace NeoServer.Data.Configurations
         public void Seed(EntityTypeBuilder<AccountModel> builder)
         {
             builder.HasData
-                (
+            (
                 new AccountModel
                 {
                     AccountId = 1,
@@ -82,7 +82,7 @@ namespace NeoServer.Data.Configurations
                     Password = "1",
                     PremiumTime = 1
                 }
-              );
+            );
         }
     }
 }

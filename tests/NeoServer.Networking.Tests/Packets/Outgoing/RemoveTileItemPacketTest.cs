@@ -17,6 +17,7 @@ namespace NeoServer.Networking.Tests.Packets.Outgoing
 
             return new Item(type, new Location(100, 100, 7));
         }
+
         [Fact]
         public void Constructor_Item_Null_Returns()
         {
@@ -24,6 +25,7 @@ namespace NeoServer.Networking.Tests.Packets.Outgoing
             Assert.Equal(default, sut.location);
             Assert.Equal(default, sut.stackPosition);
         }
+
         [Fact]
         public void WriteToMessage_Adds_Bytes_To_NetworkMessage()
         {
@@ -31,7 +33,7 @@ namespace NeoServer.Networking.Tests.Packets.Outgoing
             var message = new NetworkMessage();
             sut.WriteToMessage(message);
 
-            var expected = new byte[] { 0x6A, 100, 0, 100, 0, 7, 1, 20, 0 };
+            var expected = new byte[] {0x6A, 100, 0, 100, 0, 7, 1, 20, 0};
 
             Assert.Equal(expected, message.GetMessageInBytes());
         }

@@ -12,9 +12,16 @@ namespace NeoServer.Game.Chats
         {
             GuildId = guildId;
         }
-        public override bool Opened { get => true; init => base.Opened = value; }
+
         public ushort GuildId { get; }
         public IGuild Guild => GuildStore.Data.Get(GuildId);
+
+        public override bool Opened
+        {
+            get => true;
+            init => base.Opened = value;
+        }
+
         public override bool AddUser(IPlayer player)
         {
             if (player.GuildId == 0) return false;
@@ -24,6 +31,7 @@ namespace NeoServer.Game.Chats
 
             return base.AddUser(player);
         }
+
         public override SpeechType GetTextColor(IPlayer player)
         {
             if (Guild.GetMemberLevel(player) is not IGuildLevel guildMember) return SpeechType.ChannelYellowText;
@@ -33,7 +41,6 @@ namespace NeoServer.Game.Chats
                 GuildRank.Leader => SpeechType.ChannelOrangeText,
                 _ => SpeechType.ChannelYellowText
             };
-
         }
     }
 }

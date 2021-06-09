@@ -8,7 +8,6 @@ namespace NeoServer.Server.Events.Player
 {
     public class PlayerInviteToPartyEventHandler
     {
-
         private readonly IGameServer game;
 
         public PlayerInviteToPartyEventHandler(IGameServer game)

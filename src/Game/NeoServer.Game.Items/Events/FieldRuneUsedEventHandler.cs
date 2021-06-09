@@ -12,8 +12,9 @@ namespace NeoServer.Game.Items.Events
 {
     public class FieldRuneUsedEventHandler : IGameEventHandler
     {
-        private readonly IMap map;
         private readonly IItemFactory itemFactory;
+        private readonly IMap map;
+
         public FieldRuneUsedEventHandler(IMap map, IItemFactory itemFactory)
         {
             this.map = map;
@@ -55,10 +56,7 @@ namespace NeoServer.Game.Items.Events
 
             if (!onTile.HasCreature) return;
 
-            foreach (var creature in onTile.Creatures)
-            {
-                field.CauseDamage(creature.Value);
-            }
+            foreach (var creature in onTile.Creatures) field.CauseDamage(creature.Value);
         }
     }
 }

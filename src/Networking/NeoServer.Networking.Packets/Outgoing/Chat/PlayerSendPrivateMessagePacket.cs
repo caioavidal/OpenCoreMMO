@@ -16,11 +16,12 @@ namespace NeoServer.Networking.Packets.Outgoing
         public ISociableCreature From { get; }
         public SpeechType TalkType { get; }
         public string Message { get; }
+
         public override void WriteToMessage(INetworkMessage message)
         {
             if (TalkType == SpeechType.None) return;
 
-            message.AddByte((byte)GameOutgoingPacketType.SendPrivateMessage);
+            message.AddByte((byte) GameOutgoingPacketType.SendPrivateMessage);
             uint statementId = 0;
 
             message.AddUInt32(++statementId);
@@ -35,7 +36,8 @@ namespace NeoServer.Networking.Packets.Outgoing
             {
                 message.AddUInt16(0x00);
             }
-            message.AddByte((byte)TalkType);
+
+            message.AddByte((byte) TalkType);
             message.AddString(Message);
         }
     }

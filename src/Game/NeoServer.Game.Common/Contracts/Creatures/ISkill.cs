@@ -3,12 +3,11 @@
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void OnLevelAdvance(SkillType skillType, int fromLevel, int toLevel);
+
     public delegate void OnIncreaseSkillPoints(SkillType skillType);
+
     public interface ISkill
     {
-        event OnLevelAdvance OnAdvance;
-        event OnIncreaseSkillPoints OnIncreaseSkillPoints;
-
         SkillType Type { get; }
 
         ushort Level { get; }
@@ -21,6 +20,8 @@ namespace NeoServer.Game.Contracts.Creatures
 
         double BaseIncrease { get; }
         double Percentage { get; }
+        event OnLevelAdvance OnAdvance;
+        event OnIncreaseSkillPoints OnIncreaseSkillPoints;
 
         void IncreaseCounter(double value);
     }

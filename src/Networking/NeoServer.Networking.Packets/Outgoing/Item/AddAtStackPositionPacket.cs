@@ -7,6 +7,7 @@ namespace NeoServer.Networking.Packets.Outgoing
     {
         private readonly ICreature creature;
         private readonly byte stackPosition;
+
         public AddAtStackPositionPacket(ICreature creature, byte stackPosition)
         {
             this.creature = creature;
@@ -15,7 +16,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
+            message.AddByte((byte) GameOutgoingPacketType.AddAtStackpos);
             message.AddLocation(creature.Location);
             message.AddByte(stackPosition);
         }

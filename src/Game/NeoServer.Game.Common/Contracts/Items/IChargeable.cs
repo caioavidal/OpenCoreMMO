@@ -4,6 +4,5 @@
     {
         byte Charges { get; }
         void DecreaseCharges();
-
     }
 }

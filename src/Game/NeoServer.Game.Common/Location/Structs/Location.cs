@@ -1,12 +1,11 @@
-using NeoServer.Game.Common.Players;
 using System;
 using System.Buffers;
+using NeoServer.Game.Common.Players;
 
 namespace NeoServer.Game.Common.Location.Structs
 {
     public struct Location : IEquatable<Location>
     {
-
         public Location(ushort x, ushort y, byte z)
         {
             X = x;
@@ -16,14 +15,15 @@ namespace NeoServer.Game.Common.Location.Structs
 
         public Location(Coordinate coordinate) : this()
         {
-            X = (ushort)coordinate.X;
-            Y = (ushort)coordinate.Y;
-            Z = (byte)coordinate.Z;
+            X = (ushort) coordinate.X;
+            Y = (ushort) coordinate.Y;
+            Z = (byte) coordinate.Z;
         }
+
         public Location(Slot slot) : this()
         {
             X = 0xFFFF;
-            Y = (byte)slot;
+            Y = (byte) slot;
         }
 
         public void Update(ushort x, ushort y, byte z)
@@ -44,21 +44,18 @@ namespace NeoServer.Game.Common.Location.Structs
         public bool IsAboveSurface => Z < 7;
         public bool IsSurface => Z == 7;
 
-        public int GetOffSetZ(Location location) => Z - location.Z;
+        public int GetOffSetZ(Location location)
+        {
+            return Z - location.Z;
+        }
 
         public LocationType Type
         {
             get
             {
-                if (X != 0xFFFF)
-                {
-                    return LocationType.Ground;
-                }
+                if (X != 0xFFFF) return LocationType.Ground;
 
-                if ((Y & 0x40) != 0)
-                {
-                    return LocationType.Container;
-                }
+                if ((Y & 0x40) != 0) return LocationType.Container;
 
                 return LocationType.Slot;
             }
@@ -66,35 +63,28 @@ namespace NeoServer.Game.Common.Location.Structs
 
         public static Coordinate operator +(Location location1, Location location2)
         {
-            return new Coordinate(
-            x: (location1.X + location2.X),
-            y: (location1.Y + location2.Y),
-            z: (sbyte)(location1.Z + location2.Z)
+            return new(
+                location1.X + location2.X,
+                location1.Y + location2.Y,
+                (sbyte) (location1.Z + location2.Z)
             );
         }
 
         public static Coordinate operator -(Location location1, Location location2)
         {
-            return new Coordinate
-            (
-                x: location2.X - location1.X,
-                y: location2.Y - location1.Y,
-                z: (sbyte)(location2.Z - location1.Z)
+            return new(
+                location2.X - location1.X,
+                location2.Y - location1.Y,
+                (sbyte) (location2.Z - location1.Z)
             );
         }
 
-        public Slot Slot => (Slot)Convert.ToByte(Y);
+        public Slot Slot => (Slot) Convert.ToByte(Y);
 
         // public byte Container => Convert.ToByte(Y - 0x40);
         public byte ContainerId => Convert.ToByte(Y & 0x0F);
 
-        public sbyte ContainerSlot
-        {
-            get
-            {
-                return Convert.ToSByte(Z);
-            }
-        }
+        public sbyte ContainerSlot => Convert.ToSByte(Z);
 
         public int MaxValueIn2D => Math.Max(Math.Abs(X), Math.Abs(Y));
 
@@ -165,19 +155,20 @@ namespace NeoServer.Game.Common.Location.Structs
 
         public static long[] GetOffsetBetween(Location origin, Location targetLocation)
         {
-            return new[] {
-                (long)origin.X - targetLocation.X,
-                (long)origin.Y - targetLocation.Y,
-                (long)origin.Z - targetLocation.Z
+            return new[]
+            {
+                (long) origin.X - targetLocation.X,
+                (long) origin.Y - targetLocation.Y,
+                (long) origin.Z - targetLocation.Z
             };
         }
 
         public bool IsDiagonalMovement(Location targetLocation)
         {
             return DirectionTo(targetLocation, true) == Direction.NorthEast ||
-                DirectionTo(targetLocation, true) == Direction.NorthWest ||
-                DirectionTo(targetLocation, true) == Direction.SouthEast ||
-                DirectionTo(targetLocation, true) == Direction.SouthWest;
+                   DirectionTo(targetLocation, true) == Direction.NorthWest ||
+                   DirectionTo(targetLocation, true) == Direction.SouthEast ||
+                   DirectionTo(targetLocation, true) == Direction.SouthWest;
         }
 
         public Location GetNextLocation(Direction direction)
@@ -214,7 +205,6 @@ namespace NeoServer.Game.Common.Location.Structs
                     toLocation.X -= 1;
                     toLocation.Y += 1;
                     break;
-
             }
 
             return toLocation;
@@ -240,25 +230,18 @@ namespace NeoServer.Game.Common.Location.Structs
                 if (directionX == Direction.None && directionY == Direction.None) return Direction.None;
 
                 return GetSqmDistanceX(targetLocation) >= GetSqmDistanceY(targetLocation) ? directionX : directionY;
-
             }
 
             if (locationDiff.X < 0)
             {
-                if (locationDiff.Y < 0)
-                {
-                    return Direction.NorthWest;
-                }
+                if (locationDiff.Y < 0) return Direction.NorthWest;
 
                 return locationDiff.Y > 0 ? Direction.SouthWest : Direction.West;
             }
 
             if (locationDiff.X > 0)
             {
-                if (locationDiff.Y < 0)
-                {
-                    return Direction.NorthEast;
-                }
+                if (locationDiff.Y < 0) return Direction.NorthEast;
 
                 return locationDiff.Y > 0 ? Direction.SouthEast : Direction.East;
             }
@@ -268,16 +251,30 @@ namespace NeoServer.Game.Common.Location.Structs
 
         public ushort GetSqmDistance(Location dest)
         {
-
             var offset = GetOffsetBetween(this, dest);
 
-            return (ushort)(Math.Abs(offset[0]) + Math.Abs(offset[1]));
+            return (ushort) (Math.Abs(offset[0]) + Math.Abs(offset[1]));
         }
-        public int GetMaxSqmDistance(Location dest) => Math.Max(GetSqmDistanceX(dest), GetSqmDistanceY(dest));
-        public int GetSumSqmDistance(Location dest) => GetSqmDistanceX(dest) + GetSqmDistanceY(dest);
 
-        public int GetSqmDistanceX(Location dest) => (ushort)Math.Abs(X - dest.X);
-        public int GetSqmDistanceY(Location dest) => (ushort)Math.Abs(Y - dest.Y);
+        public int GetMaxSqmDistance(Location dest)
+        {
+            return Math.Max(GetSqmDistanceX(dest), GetSqmDistanceY(dest));
+        }
+
+        public int GetSumSqmDistance(Location dest)
+        {
+            return GetSqmDistanceX(dest) + GetSqmDistanceY(dest);
+        }
+
+        public int GetSqmDistanceX(Location dest)
+        {
+            return (ushort) Math.Abs(X - dest.X);
+        }
+
+        public int GetSqmDistanceY(Location dest)
+        {
+            return (ushort) Math.Abs(Y - dest.Y);
+        }
 
         public Location[] Neighbours
         {
@@ -297,26 +294,40 @@ namespace NeoServer.Game.Common.Location.Structs
 
                 pool.Return(locations);
 
-                return locations[0..8];
+                return locations[..8];
             }
         }
 
-        public static Location Zero => new Location(0, 0, 0);
-        public static Location Inventory(Slot slot) => new Location(0xFFFF, (byte)slot, 0);
-        public static Location Container(int id, byte containerSlot) => new Location(0xFFFF, (ushort)(id + 64), containerSlot);
+        public static Location Zero => new(0, 0, 0);
+
+        public static Location Inventory(Slot slot)
+        {
+            return new(0xFFFF, (byte) slot, 0);
+        }
+
+        public static Location Container(int id, byte containerSlot)
+        {
+            return new(0xFFFF, (ushort) (id + 64), containerSlot);
+        }
 
         /// <summary>
-        /// Check whether location is 1 sqm next to dest
+        ///     Check whether location is 1 sqm next to dest
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public bool IsNextTo(Location dest) => Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
+        public bool IsNextTo(Location dest)
+        {
+            return Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
+        }
 
         public override bool Equals(object obj)
         {
             return obj is Location && Equals(obj);
         }
 
-        public Coordinate Translate() => new Coordinate(X, Y, (sbyte)Z);
+        public Coordinate Translate()
+        {
+            return new(X, Y, (sbyte) Z);
+        }
     }
 }

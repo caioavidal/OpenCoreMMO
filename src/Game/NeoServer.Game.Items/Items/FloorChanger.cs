@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 
@@ -10,20 +11,24 @@ namespace NeoServer.Game.Items.Items
         {
             Location = location;
         }
+
         public void Use(IPlayer player)
         {
             if (!player.Location.IsNextTo(Location)) return;
-            Location toLocation = Location.Zero;
+            var toLocation = Location.Zero;
 
-            var floorChange = Metadata.Attributes.GetAttribute(Common.ItemAttribute.FloorChange);
+            var floorChange = Metadata.Attributes.GetAttribute(ItemAttribute.FloorChange);
 
-            if (floorChange == "up") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z - 1));
-            if (floorChange == "down") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z + 1));
+            if (floorChange == "up") toLocation.Update(Location.X, Location.Y, (byte) (Location.Z - 1));
+            if (floorChange == "down") toLocation.Update(Location.X, Location.Y, (byte) (Location.Z + 1));
 
             player.TeleportTo(toLocation);
-            return;
-
         }
-        public static bool IsApplicable(IItemType type) => type.Attributes.HasAttribute(Common.ItemAttribute.FloorChange) && type.HasFlag(Common.ItemFlag.Useable);
+
+        public static bool IsApplicable(IItemType type)
+        {
+            return type.Attributes.HasAttribute(ItemAttribute.FloorChange) &&
+                   type.HasFlag(ItemFlag.Useable);
+        }
     }
 }

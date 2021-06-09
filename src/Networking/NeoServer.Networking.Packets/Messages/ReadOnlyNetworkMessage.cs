@@ -1,50 +1,14 @@
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Network.Enums;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Contracts.Network.Enums;
 
 namespace NeoServer.Networking.Packets.Messages
 {
     public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     {
-        public byte[] Buffer { get; protected set; }
-        public int Length { get; protected set; } = 0;
-
-        /// <summary>
-        /// Get the message's buffer
-        /// </summary>
-        public byte[] GetMessageInBytes()
-        {
-            if (Length.IsLessThanZero()) return Array.Empty<byte>();
-            return Length == 0 ? Buffer : Buffer[0..Length];
-        }
-
-        public int BytesRead { get; private set; } = 0;
-
-        public GameIncomingPacketType IncomingPacket { get; private set; } = GameIncomingPacketType.None;
-
-        public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
-        {
-
-            if (isAuthenticated)
-            {
-                if (Buffer.Length.IsLessThan(9)) return GameIncomingPacketType.None;
-
-                SkipBytes(6);
-                var length = GetUInt16();
-
-                var packetType = (GameIncomingPacketType)GetByte();
-                IncomingPacket = packetType;
-                return packetType;
-            }
-
-            if (Buffer.Length.IsLessThan(6)) return GameIncomingPacketType.None;
-            IncomingPacket = (GameIncomingPacketType)Buffer[6];
-            return (GameIncomingPacketType)Buffer[6];
-        }
-
         public ReadOnlyNetworkMessage(byte[] buffer, int length)
         {
             if (buffer.IsNull()) return;
@@ -54,59 +18,81 @@ namespace NeoServer.Networking.Packets.Messages
             BytesRead = 0;
         }
 
-        private void IncreaseByteRead(int length) => BytesRead += length;
+        public byte[] Buffer { get; protected set; }
+        public int Length { get; protected set; }
 
-        private static int SizeOf<T>() where T : struct => Marshal.SizeOf(default(T));
-
-        private T Convert<T>(Func<byte[], int, T> converter) where T : struct
+        /// <summary>
+        ///     Get the message's buffer
+        /// </summary>
+        public byte[] GetMessageInBytes()
         {
-            var result = converter(Buffer, BytesRead);
-            IncreaseByteRead(SizeOf<T>());
-            return result;
+            if (Length.IsLessThanZero()) return Array.Empty<byte>();
+            return Length == 0 ? Buffer : Buffer[..Length];
         }
 
-        private T Convert<T>(Func<byte[], int, T> converter, int length)
+        public int BytesRead { get; private set; }
+
+        public GameIncomingPacketType IncomingPacket { get; private set; } = GameIncomingPacketType.None;
+
+        public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
         {
-            var result = converter(Buffer, BytesRead);
-            IncreaseByteRead(length);
-            return result;
+            if (isAuthenticated)
+            {
+                if (Buffer.Length.IsLessThan(9)) return GameIncomingPacketType.None;
+
+                SkipBytes(6);
+                var length = GetUInt16();
+
+                var packetType = (GameIncomingPacketType) GetByte();
+                IncomingPacket = packetType;
+                return packetType;
+            }
+
+            if (Buffer.Length.IsLessThan(6)) return GameIncomingPacketType.None;
+            IncomingPacket = (GameIncomingPacketType) Buffer[6];
+            return (GameIncomingPacketType) Buffer[6];
         }
 
-        public ushort GetUInt16() => Convert(BitConverter.ToUInt16);
+        public ushort GetUInt16()
+        {
+            return Convert(BitConverter.ToUInt16);
+        }
 
-        public uint GetUInt32() => Convert(BitConverter.ToUInt32);
+        public uint GetUInt32()
+        {
+            return Convert(BitConverter.ToUInt32);
+        }
 
         public void SkipBytes(int length)
         {
             if (length + BytesRead > Buffer.Length)
-            {
                 throw new ArgumentOutOfRangeException("Cannot skip bytes that exceeds the buffer length");
-            }
             IncreaseByteRead(length);
         }
 
-        public byte GetByte() => Convert((buffer, index) => Buffer[BytesRead]);
+        public byte GetByte()
+        {
+            return Convert((buffer, index) => Buffer[BytesRead]);
+        }
 
-        public byte[] GetBytes(int length) =>
-            Convert((buffer, index) =>
+        public byte[] GetBytes(int length)
+        {
+            return Convert((buffer, index) =>
             {
                 var to = BytesRead + length;
                 return Buffer[BytesRead..to];
             }, length);
+        }
 
         /// <summary>
-        /// Get string value based on payload length
+        ///     Get string value based on payload length
         /// </summary>
         /// <returns></returns>
         public string GetString()
         {
-
             var length = GetUInt16();
 
-            return Convert((buffer, index) =>
-            {
-                return Encoding.UTF8.GetString(Buffer, BytesRead, length);
-            }, length);
+            return Convert((buffer, index) => { return Encoding.UTF8.GetString(Buffer, BytesRead, length); }, length);
         }
 
         public void Resize(int length)
@@ -124,8 +110,33 @@ namespace NeoServer.Networking.Packets.Messages
             Length = 0;
         }
 
-        public Location GetLocation() => new Location() { X = GetUInt16(), Y = GetUInt16(), Z = GetByte() };
+        public Location GetLocation()
+        {
+            return new() {X = GetUInt16(), Y = GetUInt16(), Z = GetByte()};
+        }
 
+        private void IncreaseByteRead(int length)
+        {
+            BytesRead += length;
+        }
+
+        private static int SizeOf<T>() where T : struct
+        {
+            return Marshal.SizeOf(default(T));
+        }
+
+        private T Convert<T>(Func<byte[], int, T> converter) where T : struct
+        {
+            var result = converter(Buffer, BytesRead);
+            IncreaseByteRead(SizeOf<T>());
+            return result;
+        }
+
+        private T Convert<T>(Func<byte[], int, T> converter, int length)
+        {
+            var result = converter(Buffer, BytesRead);
+            IncreaseByteRead(length);
+            return result;
+        }
     }
-
 }

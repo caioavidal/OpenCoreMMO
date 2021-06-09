@@ -1,12 +1,8 @@
-﻿using Autofac;
+﻿using System;
+using System.IO;
+using Autofac;
 using Microsoft.Extensions.Configuration;
 using NeoServer.Game.Common;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Standalone.IoC
 {
@@ -17,22 +13,22 @@ namespace NeoServer.Server.Standalone.IoC
             var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
             var builder = new ConfigurationBuilder()
-                       .SetBasePath(Directory.GetCurrentDirectory())
-                       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                       .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
-                       .AddEnvironmentVariables();//.Build();
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{environmentName}.json", true, true)
+                .AddEnvironmentVariables(); //.Build();
 
             //only add secrets in development
             if (environmentName.Equals("Local", StringComparison.InvariantCultureIgnoreCase))
-            {
                 builder.AddUserSecrets<Program>();
-            }
             return builder.Build();
         }
 
-        public static ContainerBuilder AddConfigurations(this ContainerBuilder builder, IConfigurationRoot configuration)
+        public static ContainerBuilder AddConfigurations(this ContainerBuilder builder,
+            IConfigurationRoot configuration)
         {
-            ServerConfiguration serverConfiguration = new(0, null, null, null, string.Empty, string.Empty, new(3600));
+            ServerConfiguration serverConfiguration =
+                new(0, null, null, null, string.Empty, string.Empty, new SaveConfiguration(3600));
             GameConfiguration gameConfiguration = new();
             LogConfiguration logConfiguration = new(null);
 

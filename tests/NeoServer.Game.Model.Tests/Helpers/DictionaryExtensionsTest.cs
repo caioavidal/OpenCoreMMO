@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Helpers;
 using Xunit;
 
 namespace NeoServer.Game.Common.Tests.Helpers
@@ -15,10 +15,11 @@ namespace NeoServer.Game.Common.Tests.Helpers
             Assert.Single(sut);
             Assert.Equal(1, sut["1"]);
         }
+
         [Fact]
         public void AddOrUpdate_When_Map_Has_Key_Update_Value()
         {
-            IDictionary<string, int> sut = new Dictionary<string, int>() { { "a", 1 } };
+            IDictionary<string, int> sut = new Dictionary<string, int> {{"a", 1}};
             sut.AddOrUpdate("a", 2);
 
             Assert.Single(sut);

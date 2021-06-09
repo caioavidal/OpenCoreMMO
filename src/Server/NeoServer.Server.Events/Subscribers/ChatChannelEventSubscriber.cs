@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Contracts.Chats;
+﻿using System;
+using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Server.Events.Chat;
 
@@ -20,7 +21,7 @@ namespace NeoServer.Server.Events
 
         public void Unsubscribe(IChatChannel chatChannel)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

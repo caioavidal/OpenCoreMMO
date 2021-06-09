@@ -14,6 +14,5 @@
         public byte Amount { get; }
         public uint PossibleAmountOnInventory { get; }
         public uint PossibleAmountOnBackpack { get; }
-
     }
 }

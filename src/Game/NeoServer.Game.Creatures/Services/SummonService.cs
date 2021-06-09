@@ -10,8 +10,9 @@ namespace NeoServer.Game.Creatures.Services
     public class SummonService : ISummonService
     {
         private readonly ICreatureFactory creatureFactory;
-        private readonly IMap map;
         private readonly Logger logger;
+        private readonly IMap map;
+
         public SummonService(ICreatureFactory creatureFactory, IMap map, Logger logger)
         {
             this.creatureFactory = creatureFactory;
@@ -28,14 +29,12 @@ namespace NeoServer.Game.Creatures.Services
             }
 
             foreach (var neighbour in master.Location.Neighbours)
-            {
-
                 if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
                 {
                     summon.Born(toTile.Location);
                     return summon;
                 }
-            }
+
             return null;
         }
     }

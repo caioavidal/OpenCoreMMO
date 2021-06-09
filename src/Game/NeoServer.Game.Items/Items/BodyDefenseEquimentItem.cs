@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Common.Item;
+﻿using System.Collections.Immutable;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types.Body;
-using System.Collections.Immutable;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -15,15 +15,16 @@ namespace NeoServer.Game.Items.Items
             //todo damage protection
         }
 
-        public bool Pickupable => true;
-
         public ImmutableHashSet<VocationType> AllowedVocations { get; }
+
+        public bool Pickupable => true;
         public ImmutableDictionary<DamageType, byte> DamageProtection { get; }
 
         public Slot Slot => Metadata.WeaponType == WeaponType.Shield ? Slot.Right : Metadata.BodyPosition;
 
-        public static bool IsApplicable(IItemType type) =>
-            type.BodyPosition switch
+        public static bool IsApplicable(IItemType type)
+        {
+            return type.BodyPosition switch
             {
                 Slot.Body => true,
                 Slot.Legs => true,
@@ -32,5 +33,6 @@ namespace NeoServer.Game.Items.Items
                 Slot.Right => true,
                 _ => false
             } || type.WeaponType == WeaponType.Shield;
+        }
     }
 }

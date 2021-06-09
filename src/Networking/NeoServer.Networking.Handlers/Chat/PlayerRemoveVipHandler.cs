@@ -8,13 +8,15 @@ namespace NeoServer.Server.Handlers.Player
 {
     public class PlayerRemoveVipHandler : PacketHandler
     {
-        private readonly IGameServer game;
         private readonly IAccountRepository accountRepository;
+        private readonly IGameServer game;
+
         public PlayerRemoveVipHandler(IGameServer game, IAccountRepository accountRepository)
         {
             this.game = game;
             this.accountRepository = accountRepository;
         }
+
         public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
@@ -23,8 +25,7 @@ namespace NeoServer.Server.Handlers.Player
 
             game.Dispatcher.AddEvent(new Event(() => player.RemoveFromVip(removeVipPacket.PlayerId)));
 
-            await accountRepository.RemoveFromVipList((int)player.AccountId, (int)removeVipPacket.PlayerId);
+            await accountRepository.RemoveFromVipList((int) player.AccountId, (int) removeVipPacket.PlayerId);
         }
     }
 }
-

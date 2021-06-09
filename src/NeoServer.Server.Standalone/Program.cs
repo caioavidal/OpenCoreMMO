@@ -1,5 +1,10 @@
-﻿using Autofac;
-using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Autofac;
 using NeoServer.Data;
 using NeoServer.Game.Common;
 using NeoServer.Game.World.Spawns;
@@ -26,12 +31,6 @@ using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
 using Serilog;
 using Serilog.Core;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class Program
 {
@@ -49,7 +48,8 @@ public class Program
 
         var container = Container.CompositionRoot();
 
-        var (serverConfiguration, gameConfiguration, logConfiguration) = (container.Resolve<ServerConfiguration>(), container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
+        var (serverConfiguration, gameConfiguration, logConfiguration) = (container.Resolve<ServerConfiguration>(),
+            container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
         var (logger, loggerConfiguration) = (container.Resolve<Logger>(), container.Resolve<LoggerConfiguration>());
 
         logger.Information("Welcome to OpenCoreMMO Server!");
@@ -57,12 +57,14 @@ public class Program
         logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
         logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
-        logger.Step("Building extensions...", "Extensions builded", () => ScriptCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
+        logger.Step("Building extensions...", "Extensions builded",
+            () => ScriptCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
         var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
         var context = container.Resolve<NeoContext>();
 
-        logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreatedAsync(), databaseConfiguration.Active);
+        logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreatedAsync(),
+            databaseConfiguration.Active);
 
         RSA.LoadPem(serverConfiguration.Data);
 
@@ -108,22 +110,19 @@ public class Program
             GC.WaitForPendingFinalizers();
         });
 
-        logger.Information("Memory usage: {mem} MB", Math.Round((Process.GetCurrentProcess().WorkingSet64 / 1024f) / 1024f, 2));
+        logger.Information("Memory usage: {mem} MB",
+            Math.Round(Process.GetCurrentProcess().WorkingSet64 / 1024f / 1024f, 2));
 
         logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
 
         listeningTask.Wait(cancellationToken);
     }
-    static async Task StartListening(IContainer container, CancellationToken token)
+
+    private static async Task StartListening(IContainer container, CancellationToken token)
     {
         container.Resolve<LoginListener>().BeginListening();
         container.Resolve<GameListener>().BeginListening();
 
-        while (!token.IsCancellationRequested)
-        {
-            await Task.Delay(TimeSpan.FromSeconds(1), token);
-        }
+        while (!token.IsCancellationRequested) await Task.Delay(TimeSpan.FromSeconds(1), token);
     }
 }
-
-

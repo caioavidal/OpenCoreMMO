@@ -1,10 +1,10 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.World.Map.Tiles;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.World.Tests
 {
@@ -12,14 +12,14 @@ namespace NeoServer.Game.World.Tests
     {
         private static ITile CreateTile(Coordinate coord, params IItem[] item)
         {
-            var topItems = new List<IItem>()
+            var topItems = new List<IItem>
             {
-                ItemTestData.CreateTopItem(id: 1, topOrder: 1),
-                ItemTestData.CreateTopItem(id: 2, topOrder: 2)
+                ItemTestData.CreateTopItem(1, 1),
+                ItemTestData.CreateTopItem(2, 2)
             };
 
-            var items = new List<IItem> {
-
+            var items = new List<IItem>
+            {
                 ItemTestData.CreateRegularItem(100),
                 ItemTestData.CreateRegularItem(200)
             };

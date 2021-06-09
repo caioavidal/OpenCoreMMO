@@ -9,6 +9,6 @@
         Green = 6,
         Yellow = 8,
         White = 9,
-        Purple = 2,
+        Purple = 2
     }
 }

@@ -18,6 +18,7 @@ namespace NeoServer.Game.World.Tests
             Assert.True(result);
             Assert.Equal(new Location(51, 50, 7), player.Location);
         }
+
         [Fact]
         public void TryMoveCreature_when_Teleport_Should_Move_Creature()
         {

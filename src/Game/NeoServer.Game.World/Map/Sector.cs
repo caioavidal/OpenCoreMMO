@@ -1,10 +1,10 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Server.Model.World.Map;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.World.Map
 {
@@ -12,18 +12,19 @@ namespace NeoServer.Game.World.Map
     {
         public const byte MAP_MAX_LAYERS = 16;
         public const byte SECTOR_MASK = Region.SECTOR_SIZE - 1;
-        public Sector South { get; private set; }
-        public Sector East { get; private set; }
-        public uint Floors { get; private set; }
-        public HashSet<ICreature> Creatures { get; private set; } = new HashSet<ICreature>();
-        public HashSet<ICreature> Players { get; private set; } = new HashSet<ICreature>();
-        public List<ICreature> SpectatorsCache { get; private set; } = new List<ICreature>(32);
-        private ITile[,,] Tiles = new ITile[MAP_MAX_LAYERS, Region.SECTOR_SIZE, Region.SECTOR_SIZE];
+        private readonly ITile[,,] Tiles = new ITile[MAP_MAX_LAYERS, Region.SECTOR_SIZE, Region.SECTOR_SIZE];
 
         public Sector(Sector north, Sector south, Sector west, Sector east)
         {
             UpdateNeighborsSetors(north, south, west, east);
         }
+
+        public Sector South { get; private set; }
+        public Sector East { get; private set; }
+        public uint Floors { get; private set; }
+        public HashSet<ICreature> Creatures { get; } = new();
+        public HashSet<ICreature> Players { get; } = new();
+        public List<ICreature> SpectatorsCache { get; } = new(32);
 
         public void AddTile(ITile tile)
         {
@@ -40,7 +41,10 @@ namespace NeoServer.Game.World.Map
             Tiles[z, x & SECTOR_MASK, y & SECTOR_MASK] = tile;
         }
 
-        public void CreateFloor(byte z) => Floors |= (uint)(1 << z);
+        public void CreateFloor(byte z)
+        {
+            Floors |= (uint) (1 << z);
+        }
 
         public void UpdateNeighborsSetors(Sector north, Sector south, Sector west, Sector east)
         {
@@ -60,12 +64,10 @@ namespace NeoServer.Game.World.Map
         public void AddCreature(ICreature creature)
         {
             Creatures.Add(creature);
-            if (creature is IPlayer player)
-            {
-                Players.Add(player);
-            }
+            if (creature is IPlayer player) Players.Add(player);
             SpectatorsCache.Clear();
         }
+
         public void RemoveCreature(ICreature creature)
         {
             Creatures.Remove(creature);
@@ -92,13 +94,14 @@ namespace NeoServer.Game.World.Map
         public Location CenterPosition { get; }
         public bool Multifloor { get; }
 
-        public SpectatorSearch(ref Location center, bool multifloor, int minRangeX, int maxRangeX, int minRangeY, int maxRangeY, bool onlyPlayers)
+        public SpectatorSearch(ref Location center, bool multifloor, int minRangeX, int maxRangeX, int minRangeY,
+            int maxRangeY, bool onlyPlayers)
         {
             Multifloor = multifloor;
-            int minY = minRangeY == 0 ? (int)MapViewPort.ViewPortY : minRangeY;
-            int minX = minRangeX == 0 ? (int)MapViewPort.ViewPortX : minRangeX;
-            int maxY = maxRangeY == 0 ? (int)MapViewPort.ViewPortY : maxRangeY;
-            int maxX = maxRangeX == 0 ? (int)MapViewPort.ViewPortX : maxRangeX;
+            var minY = minRangeY == 0 ? (int) MapViewPort.ViewPortY : minRangeY;
+            var minX = minRangeX == 0 ? (int) MapViewPort.ViewPortX : minRangeX;
+            var maxY = maxRangeY == 0 ? (int) MapViewPort.ViewPortY : maxRangeY;
+            var maxX = maxRangeX == 0 ? (int) MapViewPort.ViewPortX : maxRangeX;
 
             RangeX = new MinMax(minX, maxX);
             RangeY = new MinMax(minY, maxY);
@@ -116,8 +119,8 @@ namespace NeoServer.Game.World.Map
             {
                 if (center.IsUnderground)
                 {
-                    minRangeZ = (byte)Math.Max(center.Z - 2, 0);
-                    maxRangeZ = (byte)Math.Max(center.Z + 2, Sector.MAP_MAX_LAYERS - 1);
+                    minRangeZ = (byte) Math.Max(center.Z - 2, 0);
+                    maxRangeZ = (byte) Math.Max(center.Z + 2, Sector.MAP_MAX_LAYERS - 1);
                 }
                 else if (center.Z == 6)
                 {
@@ -139,5 +142,4 @@ namespace NeoServer.Game.World.Map
             return new MinMax(minRangeZ, maxRangeZ);
         }
     }
-
 }

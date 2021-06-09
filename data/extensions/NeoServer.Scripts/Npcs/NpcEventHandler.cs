@@ -10,13 +10,13 @@ namespace NeoServer.Scripts.Npcs.Modules
         {
             switch (dialog.Action)
             {
-                case "teleport": Teleport(from); break;
-                default:
+                case "teleport":
+                    Teleport(from);
                     break;
             }
         }
 
-        static void Teleport(ICreature creature)
+        private static void Teleport(ICreature creature)
         {
             if (creature is IPlayer player)
                 player.TeleportTo((player.Location + new Location(1, 0, 0)).Location);

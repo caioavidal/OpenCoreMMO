@@ -3,11 +3,6 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Server.Commands.Player.UseItem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeoServer.Server.Standalone.IoC
 {

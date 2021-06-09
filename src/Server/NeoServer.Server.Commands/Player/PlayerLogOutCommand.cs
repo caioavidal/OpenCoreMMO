@@ -18,8 +18,6 @@ namespace NeoServer.Server.Commands
             if (!player.Logout(forced) && !forced) return;
 
             game.CreatureManager.RemovePlayer(player);
-            return;
-
         }
     }
 }

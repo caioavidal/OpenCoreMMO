@@ -33,7 +33,7 @@ namespace NeoServer.Data.Configurations
                 .HasColumnType("int(11)")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
             entity.Property(e => e.PlayerType)
-              .HasColumnName("player_type");
+                .HasColumnName("player_type");
             entity.Property(e => e.Capacity)
                 .HasColumnName("cap")
                 .HasColumnType("int(11)")
@@ -213,6 +213,5 @@ namespace NeoServer.Data.Configurations
 
             PlayerModelSeed.Seed(entity);
         }
-
     }
 }

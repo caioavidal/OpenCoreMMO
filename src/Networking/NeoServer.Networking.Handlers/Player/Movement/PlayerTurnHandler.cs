@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts;
 using NeoServer.Server.Contracts.Network;
 using NeoServer.Server.Contracts.Network.Enums;
@@ -22,9 +21,9 @@ namespace NeoServer.Server.Handlers.Players
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            Direction direction = ParseTurnPacket(message.IncomingPacket);
+            var direction = ParseTurnPacket(message.IncomingPacket);
 
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out IPlayer player)) return;
+            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             game.Dispatcher.AddEvent(new Event(() => player.TurnTo(direction)));
         }

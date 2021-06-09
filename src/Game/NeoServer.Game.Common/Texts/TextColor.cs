@@ -22,6 +22,6 @@
         Orange = 198,
         Yellow = 210,
         White = 215,
-        None = byte.MaxValue,
+        None = byte.MaxValue
     }
 }

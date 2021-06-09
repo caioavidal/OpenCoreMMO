@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Effects.Magical;
 using Xunit;
 
@@ -9,7 +10,7 @@ namespace NeoServer.Game.Effects.Tests
         [Fact]
         public void Create_When_Length_Is_3_And_Spread_Is_1_Should_Create_3_Rows_And_1_Column()
         {
-            var coordinates = SpreadEffect.Create(Common.Location.Direction.North, 3, 1);
+            var coordinates = SpreadEffect.Create(Direction.North, 3, 1);
 
             Assert.Equal(3, coordinates.Length);
 
@@ -17,10 +18,11 @@ namespace NeoServer.Game.Effects.Tests
             Assert.Contains(new Coordinate(0, -2, 0), coordinates);
             Assert.Contains(new Coordinate(0, -3, 0), coordinates);
         }
+
         [Fact]
         public void Create_When_Length_Is_5_And_Spread_Is_1_Should_Create_5_Rows_And_1_Column()
         {
-            var coordinates = SpreadEffect.Create(Common.Location.Direction.North, 5, 1);
+            var coordinates = SpreadEffect.Create(Direction.North, 5, 1);
 
             Assert.Equal(5, coordinates.Length);
 
@@ -29,12 +31,12 @@ namespace NeoServer.Game.Effects.Tests
             Assert.Contains(new Coordinate(0, -3, 0), coordinates);
             Assert.Contains(new Coordinate(0, -4, 0), coordinates);
             Assert.Contains(new Coordinate(0, -5, 0), coordinates);
-
         }
+
         [Fact]
         public void Create_When_Length_Is_8_And_Spread_Is_3_Should_Create_8_Rows_And_5_Columns()
         {
-            var coordinates = SpreadEffect.Create(Common.Location.Direction.North, 8, 3);
+            var coordinates = SpreadEffect.Create(Direction.North, 8, 3);
 
             Assert.Equal(26, coordinates.Length);
 
@@ -70,7 +72,6 @@ namespace NeoServer.Game.Effects.Tests
             Assert.Contains(new Coordinate(0, -8, 0), coordinates);
             Assert.Contains(new Coordinate(1, -8, 0), coordinates);
             Assert.Contains(new Coordinate(2, -8, 0), coordinates);
-
         }
     }
 }

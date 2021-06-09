@@ -10,7 +10,6 @@ namespace NeoServer.Server.Events.Player
 {
     public class PlayerLeftPartyEventHandler
     {
-
         private readonly IGameServer game;
 
         public PlayerLeftPartyEventHandler(IGameServer game)
@@ -25,7 +24,9 @@ namespace NeoServer.Server.Events.Player
             game.CreatureManager.GetPlayerConnection(oldMember.CreatureId, out var oldMemberConnection);
 
             oldMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(oldMember, PartyEmblem.None));
-            oldMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket(!party.IsOver ? "You have left the party" : TextConstants.PartyHasBeenDisbanded, TextMessageOutgoingType.Description));
+            oldMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket(
+                !party.IsOver ? "You have left the party" : TextConstants.PartyHasBeenDisbanded,
+                TextMessageOutgoingType.Description));
 
             foreach (var member in party.Members)
             {
@@ -33,7 +34,10 @@ namespace NeoServer.Server.Events.Player
 
                 if (!game.CreatureManager.GetPlayerConnection(member.CreatureId, out var memberConnection)) continue;
 
-                if (!party.IsOver) memberConnection.OutgoingPackets.Enqueue(new TextMessagePacket($"{oldMember.Name} has left the party", TextMessageOutgoingType.Description));
+                if (!party.IsOver)
+                    memberConnection.OutgoingPackets.Enqueue(
+                        new TextMessagePacket($"{oldMember.Name} has left the party",
+                            TextMessageOutgoingType.Description));
 
                 if (member.CanSee(oldMember.Location))
                 {

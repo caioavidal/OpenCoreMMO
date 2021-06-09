@@ -11,6 +11,7 @@ namespace NeoServer.Server.Handlers.Authentication
     {
         private readonly IAccountRepository _repositoryNeo;
         private readonly ServerConfiguration serverConfiguration;
+
         public AccountLoginHandler(IAccountRepository repositoryNeo, ServerConfiguration serverConfiguration)
         {
             _repositoryNeo = repositoryNeo;
@@ -24,7 +25,8 @@ namespace NeoServer.Server.Handlers.Authentication
             connection.SetXtea(account.Xtea);
 
             if (account == null)
-            { //todo: use option
+            {
+                //todo: use option
                 connection.Disconnect("Invalid account.");
                 return;
             }
@@ -35,7 +37,8 @@ namespace NeoServer.Server.Handlers.Authentication
                 return;
             }
 
-            var foundedAccount = await _repositoryNeo.GetAccount(account.Account, account.Password).Include(x => x.Players).SingleOrDefaultAsync();
+            var foundedAccount = await _repositoryNeo.GetAccount(account.Account, account.Password)
+                .Include(x => x.Players).SingleOrDefaultAsync();
 
             if (foundedAccount == null)
             {

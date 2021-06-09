@@ -10,6 +10,5 @@
 
         public int Min { get; }
         public int Max { get; }
-
     }
 }

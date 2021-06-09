@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Creatures.Guilds;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Contracts.Chats;
 using NeoServer.Game.Contracts.Creatures;
-using System;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Guilds
 {
@@ -12,14 +12,20 @@ namespace NeoServer.Game.Creatures.Guilds
         public string Name { get; set; }
         public IDictionary<ushort, IGuildLevel> GuildLevels { get; set; }
         public IChatChannel Channel { get; set; }
-        public bool HasMember(IPlayer player) => player.GuildId == Id;
-        public IGuildLevel GetMemberLevel(IPlayer player) => GuildLevels is null ? null : GuildLevels.TryGetValue(player.Level, out var level) ? level : null;
+
+        public bool HasMember(IPlayer player)
+        {
+            return player.GuildId == Id;
+        }
+
+        public IGuildLevel GetMemberLevel(IPlayer player)
+        {
+            return GuildLevels is null ? null : GuildLevels.TryGetValue(player.Level, out var level) ? level : null;
+        }
     }
 
     public class GuildLevel : IGuildLevel, IEquatable<GuildLevel>
     {
-        public ushort Id { get; init; }
-        public GuildRank Level { get; private set; }
         private string levelName;
 
         public GuildLevel(GuildRank level = GuildRank.Member, string levelName = null)
@@ -27,6 +33,8 @@ namespace NeoServer.Game.Creatures.Guilds
             Level = level;
             LevelName = levelName;
         }
+
+        public ushort Id { get; init; }
 
         public string LevelName
         {
@@ -51,10 +59,12 @@ namespace NeoServer.Game.Creatures.Guilds
         {
             return other.Id == Id;
         }
+
+        public GuildRank Level { get; }
+
         public override int GetHashCode()
         {
             return HashCode.Combine(Id);
         }
     }
-
 }

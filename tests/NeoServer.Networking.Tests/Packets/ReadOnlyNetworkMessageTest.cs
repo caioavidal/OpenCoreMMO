@@ -1,21 +1,16 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Networking.Packets.Messages;
-using NeoServer.Server.Contracts.Network.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Contracts.Network.Enums;
 using Xunit;
 
 namespace NeoServer.Networking.Tests.Packets
 {
     public class ReadOnlyNetworkMessageShould
     {
-        public ReadOnlyNetworkMessageShould()
-        {
-
-        }
-
         [Fact]
         public void Return_Ushort()
         {
@@ -23,7 +18,7 @@ namespace NeoServer.Networking.Tests.Packets
             var dataBytes = BitConverter.GetBytes(data);
             var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            var expected = new byte[] { 141, 54 };
+            var expected = new byte[] {141, 54};
             Assert.Equal(BitConverter.ToUInt16(expected, 0), sut.GetUInt16());
         }
 
@@ -34,13 +29,13 @@ namespace NeoServer.Networking.Tests.Packets
             var dataBytes = Encoding.ASCII.GetBytes(data);
             var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            Assert.Equal(BitConverter.ToUInt16(new byte[] { 49, 54 }, 0), sut.GetUInt16());
+            Assert.Equal(BitConverter.ToUInt16(new byte[] {49, 54}, 0), sut.GetUInt16());
 
-            Assert.Equal(BitConverter.ToUInt32(new byte[] { 53, 50, 51, 54 }, 0), sut.GetUInt32());
+            Assert.Equal(BitConverter.ToUInt32(new byte[] {53, 50, 51, 54}, 0), sut.GetUInt32());
 
             sut.SkipBytes(3);
 
-            Assert.Equal((byte)56, sut.GetByte());
+            Assert.Equal((byte) 56, sut.GetByte());
 
             var s = sut.GetString();
 
@@ -69,7 +64,6 @@ namespace NeoServer.Networking.Tests.Packets
 
             sut.GetString();
             Assert.Equal(22, sut.BytesRead);
-
         }
 
         [Fact]
@@ -79,7 +73,7 @@ namespace NeoServer.Networking.Tests.Packets
             var dataBytes = BitConverter.GetBytes(data);
 
             var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
-            Assert.Equal((uint)1652365, sut.GetUInt32());
+            Assert.Equal((uint) 1652365, sut.GetUInt32());
         }
 
         [Fact]
@@ -114,7 +108,7 @@ namespace NeoServer.Networking.Tests.Packets
 
             var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            var expected = (byte)141;
+            var expected = (byte) 141;
             Assert.Equal(expected, sut.GetByte());
         }
 
@@ -123,13 +117,13 @@ namespace NeoServer.Networking.Tests.Packets
         {
             var data = new List<byte>();
 
-            data.AddRange(BitConverter.GetBytes((ushort)1000));
-            data.AddRange(BitConverter.GetBytes((ushort)900));
+            data.AddRange(BitConverter.GetBytes((ushort) 1000));
+            data.AddRange(BitConverter.GetBytes((ushort) 900));
             data.Add(7);
 
             var sut = new ReadOnlyNetworkMessage(data.ToArray(), data.Count);
 
-            var expected = new Location { X = 1000, Y = 900, Z = 7 };
+            var expected = new Location {X = 1000, Y = 900, Z = 7};
             Assert.Equal(expected, sut.GetLocation());
         }
 
@@ -141,7 +135,7 @@ namespace NeoServer.Networking.Tests.Packets
 
             var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
-            var expected = new byte[] { 141, 54, 25 };
+            var expected = new byte[] {141, 54, 25};
             Assert.Equal(expected, sut.GetBytes(3));
         }
 
@@ -167,6 +161,7 @@ namespace NeoServer.Networking.Tests.Packets
 
             Assert.Equal(expected, sut.GetMessageInBytes());
         }
+
         [Fact]
         public void ReturnEntireBuffer_When_Length_Equals_0_GetMessageInBytes()
         {
@@ -204,7 +199,6 @@ namespace NeoServer.Networking.Tests.Packets
         [Fact]
         public void Return_None_When_IncomingPacket_Is_Not_Setted()
         {
-
             var sut = new ReadOnlyNetworkMessage(new byte[4], 4);
 
             Assert.Equal(GameIncomingPacketType.None, sut.IncomingPacket);
@@ -213,7 +207,7 @@ namespace NeoServer.Networking.Tests.Packets
         [Fact]
         public void Return_IncomingPacket_When_Setted()
         {
-            var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0x01 };
+            var data = new byte[9] {0, 0, 0, 0, 0, 0, 0, 0, 0x01};
 
             var sut = new ReadOnlyNetworkMessage(data, 9);
 
@@ -225,16 +219,17 @@ namespace NeoServer.Networking.Tests.Packets
         [Fact]
         public void Return_IncomingPacket_When_GetIncomingPacketType_Authenticated()
         {
-            var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0x14 };
+            var data = new byte[9] {0, 0, 0, 0, 0, 0, 0, 0, 0x14};
 
             var sut = new ReadOnlyNetworkMessage(data, 9);
 
             Assert.Equal(GameIncomingPacketType.PlayerLogOut, sut.GetIncomingPacketType(true));
         }
+
         [Fact]
         public void Return_IncomingPacket_When_GetIncomingPacketType_Not_Authenticated()
         {
-            var data = new byte[9] { 0, 0, 0, 0, 0, 0, 0x14, 0, 0 };
+            var data = new byte[9] {0, 0, 0, 0, 0, 0, 0x14, 0, 0};
 
             var sut = new ReadOnlyNetworkMessage(data, 9);
 
@@ -244,16 +239,17 @@ namespace NeoServer.Networking.Tests.Packets
         [Fact]
         public void GetIncomingPacketType_When_Is_Authenticated_And_Buffer_Less_Than_9_Bytes_Returns_None()
         {
-            var data = new byte[3] { 0, 0, 0 };
+            var data = new byte[3] {0, 0, 0};
 
             var sut = new ReadOnlyNetworkMessage(data, 3);
 
             Assert.Equal(GameIncomingPacketType.None, sut.GetIncomingPacketType(false));
         }
+
         [Fact]
         public void GetIncomingPacketType_When_Is_Not_And_Buffer_Less_Than_6_Bytes_Returns_None()
         {
-            var data = new byte[3] { 0, 0, 0 };
+            var data = new byte[3] {0, 0, 0};
 
             var sut = new ReadOnlyNetworkMessage(data, 3);
 
@@ -287,6 +283,5 @@ namespace NeoServer.Networking.Tests.Packets
             Assert.Equal(5, sut.Length);
             Assert.Equal(0, sut.BytesRead);
         }
-
     }
 }

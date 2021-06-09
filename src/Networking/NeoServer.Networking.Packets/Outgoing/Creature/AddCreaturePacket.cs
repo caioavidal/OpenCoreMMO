@@ -7,6 +7,7 @@ namespace NeoServer.Networking.Packets.Outgoing
     {
         private readonly IWalkableCreature creatureToAdd;
         private readonly IPlayer player;
+
         public AddCreaturePacket(IPlayer player, IWalkableCreature creatureToAdd)
         {
             this.creatureToAdd = creatureToAdd;
@@ -14,7 +15,9 @@ namespace NeoServer.Networking.Packets.Outgoing
         }
 
         //todo: this code is duplicated?
-        public override void WriteToMessage(INetworkMessage message) => message.AddBytes(creatureToAdd.GetRaw(player));
-
+        public override void WriteToMessage(INetworkMessage message)
+        {
+            message.AddBytes(creatureToAdd.GetRaw(player));
+        }
     }
 }

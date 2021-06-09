@@ -6,8 +6,6 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public class Summon : Monster
     {
-        public ICreature Master { get; }
-        public override bool IsSummon => true;
         public Summon(IMonsterType type, ICreature master) : base(type, null)
         {
             Master = master;
@@ -18,6 +16,9 @@ namespace NeoServer.Game.Creatures.Monsters
             }
         }
 
+        public ICreature Master { get; }
+        public override bool IsSummon => true;
+
         public override void SetAsEnemy(ICreature creature)
         {
             if (Master == creature) return;
@@ -26,6 +27,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
             base.SetAsEnemy(creature);
         }
+
         public void Die()
         {
             OnDeath(this);
@@ -48,6 +50,7 @@ namespace NeoServer.Game.Creatures.Monsters
             master.OnTargetChanged -= OnMasterTargetChange;
             Die();
         }
+
         private void OnMasterTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId)
         {
             Targets.Clear();

@@ -4,38 +4,37 @@ using NeoServer.OTB.Structure;
 namespace NeoServer.OTBM.Structure
 {
     /// <summary>
-    /// OTBM Header data
+    ///     OTBM Header data
     /// </summary>
     public struct Header
     {
         /// <summary>
-        /// OTBM version
+        ///     OTBM version
         /// </summary>
         public uint Version { get; set; }
 
         /// <summary>
-        /// Major version items accepted
+        ///     Major version items accepted
         /// </summary>
         public byte MajorVersionItems { get; set; }
 
         /// <summary>
-        /// Minor version items accepted
+        ///     Minor version items accepted
         /// </summary>
         public uint MinorVersionItems { get; set; }
 
         /// <summary>
-        /// Map width
+        ///     Map width
         /// </summary>
         public ushort Width { get; set; }
 
         /// <summary>
-        /// Map height
+        ///     Map height
         /// </summary>
         public ushort Heigth { get; set; }
 
         public Header(OTBNode node)
         {
-
             var stream = new OTBParsingStream(node.Data);
 
             Version = stream.ReadUInt32();
@@ -46,8 +45,6 @@ namespace NeoServer.OTBM.Structure
             MinorVersionItems = stream.ReadUInt32();
 
             //todo: needs version validation 
-
         }
-
     }
 }

@@ -19,7 +19,8 @@ namespace NeoServer.Networking.Handlers.Player
         {
             var leaderId = message.GetUInt32();
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-            if (!game.CreatureManager.TryGetPlayer(leaderId, out var leader) || !game.CreatureManager.IsPlayerLogged(leader))
+            if (!game.CreatureManager.TryGetPlayer(leaderId, out var leader) ||
+                !game.CreatureManager.IsPlayerLogged(leader))
             {
                 connection.Send(new TextMessagePacket("Player is not online.", TextMessageOutgoingType.Small));
                 return;

@@ -15,7 +15,7 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.ChangeSpeed);
+            message.AddByte((byte) GameOutgoingPacketType.ChangeSpeed);
 
             message.AddUInt32(_creaturedId);
             message.AddUInt16(_speed);

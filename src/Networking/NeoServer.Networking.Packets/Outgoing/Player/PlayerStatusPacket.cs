@@ -1,13 +1,14 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts.Network;
-using System;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
     public class PlayerStatusPacket : OutgoingPacket
     {
         private readonly IPlayer player;
+
         public PlayerStatusPacket(IPlayer player)
         {
             this.player = player;
@@ -15,12 +16,13 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.PlayerStatus);
-            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.HealthPoints));
-            message.AddUInt16((ushort)Math.Min(ushort.MaxValue, player.MaxHealthPoints));
-            message.AddUInt32((uint)player.CarryStrength * 100);
+            message.AddByte((byte) GameOutgoingPacketType.PlayerStatus);
+            message.AddUInt16((ushort) Math.Min(ushort.MaxValue, player.HealthPoints));
+            message.AddUInt16((ushort) Math.Min(ushort.MaxValue, player.MaxHealthPoints));
+            message.AddUInt32((uint) player.CarryStrength * 100);
 
-            message.AddUInt32(Math.Min(0x7FFFFFFF, player.Experience)); // Experience: Client debugs after 2,147,483,647 exp
+            message.AddUInt32(Math.Min(0x7FFFFFFF,
+                player.Experience)); // Experience: Client debugs after 2,147,483,647 exp
 
             message.AddUInt16(player.Level);
             message.AddByte(player.LevelPercent);

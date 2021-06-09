@@ -1,25 +1,36 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using System;
+using System.Linq;
+using System.Text;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.DataStore;
-using System;
-using System.Linq;
-using System.Text;
 
 namespace NeoServer.Game.Items.Items.Containers
 {
     public class LootContainer : Container, ILootContainer
     {
+        private readonly DateTime CreatedAt;
+
         public LootContainer(IItemType type, Location location, ILoot loot) : base(type, location)
         {
             Loot = loot;
             CreatedAt = DateTime.Now;
         }
 
-        private DateTime CreatedAt;
         public ILoot Loot { get; }
         public bool LootCreated { get; private set; }
+
+        public bool CanBeOpenedBy(IPlayer player)
+        {
+            return Allowed(player);
+        }
+
+        public void MarkAsLootCreated()
+        {
+            LootCreated = true;
+        }
 
         private bool Allowed(IPlayer player)
         {
@@ -31,9 +42,11 @@ namespace NeoServer.Game.Items.Items.Containers
 
             return false;
         }
-        public bool CanBeOpenedBy(IPlayer player) => Allowed(player);
-        public bool CanBeMovedBy(IPlayer player) => Allowed(player);
-        public void MarkAsLootCreated() => LootCreated = true;
+
+        public bool CanBeMovedBy(IPlayer player)
+        {
+            return Allowed(player);
+        }
 
         public override string ToString()
         {

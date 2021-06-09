@@ -8,8 +8,8 @@ namespace NeoServer.Data
 {
     public class NeoContext : DbContext
     {
-
         private readonly Logger logger;
+
         public NeoContext(DbContextOptions<NeoContext> options, Logger logger)
             : base(options)
         {
@@ -27,8 +27,8 @@ namespace NeoServer.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            optionsBuilder.LogTo((m) => logger.Verbose(m), (eventId, logLevel) => eventId.Name == $"{DbLoggerCategory.Database.Command.Name}.CommandExecuted");
+            optionsBuilder.LogTo(m => logger.Verbose(m),
+                (eventId, logLevel) => eventId.Name == $"{DbLoggerCategory.Database.Command.Name}.CommandExecuted");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

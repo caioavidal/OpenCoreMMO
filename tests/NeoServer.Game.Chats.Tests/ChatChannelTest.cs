@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Tests;
-using System.Threading;
+﻿using System.Threading;
+using NeoServer.Game.Tests;
 using Xunit;
 
 namespace NeoServer.Game.Chats.Tests
@@ -38,6 +38,5 @@ namespace NeoServer.Game.Chats.Tests
             Thread.Sleep(5000);
             Assert.False(sut.PlayerIsMuted(player, out cancelMessage));
         }
-
     }
 }

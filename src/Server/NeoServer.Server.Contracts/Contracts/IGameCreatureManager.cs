@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Server.Contracts.Network;
-using System.Collections.Generic;
 
 namespace NeoServer.Server.Contracts
 {

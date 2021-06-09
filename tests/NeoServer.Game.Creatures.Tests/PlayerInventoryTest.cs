@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Players;
@@ -12,8 +14,6 @@ using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Server.Model.Players;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests
@@ -21,112 +21,156 @@ namespace NeoServer.Game.Creatures.Tests
     public class PlayerInventoryTest
     {
         public static IEnumerable<object[]> SlotItemsData =>
-       new List<object[]>
-       {
-           new object[] {Slot.Backpack, ItemTestData.CreateBackpack()},
-            new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10)},
-            new object[] {Slot.Head, ItemTestData.CreateBodyEquipmentItem(100,"head") },
-            new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100,"axe")},
-            new object[] {Slot.Body, ItemTestData.CreateBodyEquipmentItem(100, "body") },
-            new object[] {Slot.Feet, ItemTestData.CreateBodyEquipmentItem(100, "feet") },
-            new object[] {Slot.Right, ItemTestData.CreateBodyEquipmentItem(100, "","shield") },
-            new object[] {Slot.Ring, ItemTestData.CreateBodyEquipmentItem(100,"ring")},
-            new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100,"sword",true)},
-            new object[] {Slot.Necklace, ItemTestData.CreateBodyEquipmentItem(100,"necklace")},
-
-       };
+            new List<object[]>
+            {
+                new object[] {Slot.Backpack, ItemTestData.CreateBackpack()},
+                new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10)},
+                new object[] {Slot.Head, ItemTestData.CreateBodyEquipmentItem(100, "head")},
+                new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100, "axe")},
+                new object[] {Slot.Body, ItemTestData.CreateBodyEquipmentItem(100, "body")},
+                new object[] {Slot.Feet, ItemTestData.CreateBodyEquipmentItem(100, "feet")},
+                new object[] {Slot.Right, ItemTestData.CreateBodyEquipmentItem(100, "", "shield")},
+                new object[] {Slot.Ring, ItemTestData.CreateBodyEquipmentItem(100, "ring")},
+                new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100, "sword", true)},
+                new object[] {Slot.Necklace, ItemTestData.CreateBodyEquipmentItem(100, "necklace")}
+            };
 
         public static IEnumerable<object[]> BackpackSlotAddItemsData =>
-     new List<object[]>
-     {
-            new object[] {ItemTestData.CreateAmmoItem(100, 10)},
-            new object[] {ItemTestData.CreateBodyEquipmentItem(100,"head") },
-            new object[] {ItemTestData.CreateWeaponItem(100,"axe")},
-            new object[] {ItemTestData.CreateBodyEquipmentItem(100, "body") },
-            new object[] {ItemTestData.CreateBodyEquipmentItem(100, "feet") },
-            new object[] { ItemTestData.CreateBodyEquipmentItem(100, "","shield") },
-            new object[] {ItemTestData.CreateBodyEquipmentItem(100,"ring")},
-            new object[] {ItemTestData.CreateWeaponItem(100,"sword",true)},
-            new object[] {ItemTestData.CreateBodyEquipmentItem(100,"necklace")},
-            new object[] {ItemTestData.CreateCumulativeItem(100,87)},
+            new List<object[]>
+            {
+                new object[] {ItemTestData.CreateAmmoItem(100, 10)},
+                new object[] {ItemTestData.CreateBodyEquipmentItem(100, "head")},
+                new object[] {ItemTestData.CreateWeaponItem(100, "axe")},
+                new object[] {ItemTestData.CreateBodyEquipmentItem(100, "body")},
+                new object[] {ItemTestData.CreateBodyEquipmentItem(100, "feet")},
+                new object[] {ItemTestData.CreateBodyEquipmentItem(100, "", "shield")},
+                new object[] {ItemTestData.CreateBodyEquipmentItem(100, "ring")},
+                new object[] {ItemTestData.CreateWeaponItem(100, "sword", true)},
+                new object[] {ItemTestData.CreateBodyEquipmentItem(100, "necklace")},
+                new object[] {ItemTestData.CreateCumulativeItem(100, 87)}
+            };
 
-     };
         public static IEnumerable<object[]> SlotSwapItemsData =>
-     new List<object[]>
-     {
-            new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10),ItemTestData.CreateAmmoItem(102, 10)},
-            new object[] {Slot.Head, ItemTestData.CreateBodyEquipmentItem(100,"head"),ItemTestData.CreateBodyEquipmentItem(102,"head") },
-            new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100,"axe"),ItemTestData.CreateWeaponItem(102,"axe")},
-            new object[] {Slot.Body, ItemTestData.CreateBodyEquipmentItem(100, "body"), ItemTestData.CreateBodyEquipmentItem(102, "body")},
-            new object[] {Slot.Feet, ItemTestData.CreateBodyEquipmentItem(100, "feet"), ItemTestData.CreateBodyEquipmentItem(102, "feet") },
-            new object[] {Slot.Right, ItemTestData.CreateBodyEquipmentItem(100, "","shield"), ItemTestData.CreateBodyEquipmentItem(102, "","shield") },
-            new object[] {Slot.Ring, ItemTestData.CreateBodyEquipmentItem(100,"ring"), ItemTestData.CreateBodyEquipmentItem(102,"ring")},
-            new object[] {Slot.Left, ItemTestData.CreateWeaponItem(100,"sword",true),ItemTestData.CreateWeaponItem(102,"sword",true)},
-            new object[] {Slot.Necklace, ItemTestData.CreateBodyEquipmentItem(100,"necklace"), ItemTestData.CreateBodyEquipmentItem(102,"necklace")},
-            //new object[] {Slot.Backpack, ItemTestData.CreateBackpack(), ItemTestData.CreateBackpack()},
-
-     };
+            new List<object[]>
+            {
+                new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10), ItemTestData.CreateAmmoItem(102, 10)},
+                new object[]
+                {
+                    Slot.Head, ItemTestData.CreateBodyEquipmentItem(100, "head"),
+                    ItemTestData.CreateBodyEquipmentItem(102, "head")
+                },
+                new object[]
+                    {Slot.Left, ItemTestData.CreateWeaponItem(100, "axe"), ItemTestData.CreateWeaponItem(102, "axe")},
+                new object[]
+                {
+                    Slot.Body, ItemTestData.CreateBodyEquipmentItem(100, "body"),
+                    ItemTestData.CreateBodyEquipmentItem(102, "body")
+                },
+                new object[]
+                {
+                    Slot.Feet, ItemTestData.CreateBodyEquipmentItem(100, "feet"),
+                    ItemTestData.CreateBodyEquipmentItem(102, "feet")
+                },
+                new object[]
+                {
+                    Slot.Right, ItemTestData.CreateBodyEquipmentItem(100, "", "shield"),
+                    ItemTestData.CreateBodyEquipmentItem(102, "", "shield")
+                },
+                new object[]
+                {
+                    Slot.Ring, ItemTestData.CreateBodyEquipmentItem(100, "ring"),
+                    ItemTestData.CreateBodyEquipmentItem(102, "ring")
+                },
+                new object[]
+                {
+                    Slot.Left, ItemTestData.CreateWeaponItem(100, "sword", true),
+                    ItemTestData.CreateWeaponItem(102, "sword", true)
+                },
+                new object[]
+                {
+                    Slot.Necklace, ItemTestData.CreateBodyEquipmentItem(100, "necklace"),
+                    ItemTestData.CreateBodyEquipmentItem(102, "necklace")
+                }
+                //new object[] {Slot.Backpack, ItemTestData.CreateBackpack(), ItemTestData.CreateBackpack()},
+            };
 
         public static IEnumerable<object[]> SlotJoinItemsData =>
-     new List<object[]>
-     {
-                new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10),ItemTestData.CreateAmmoItem(100, 10), ItemTestData.CreateAmmoItem(100, 20) },
-                new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10),ItemTestData.CreateAmmoItem(100, 90), ItemTestData.CreateAmmoItem(100, 100) },
-                new object[] {Slot.Ammo, ItemTestData.CreateAmmoItem(100, 50),ItemTestData.CreateAmmoItem(100, 90), ItemTestData.CreateAmmoItem(100, 100) },
-                new object[] {Slot.Left, ItemTestData.CreateThrowableDistanceItem(100, 1),ItemTestData.CreateThrowableDistanceItem(100, 5), ItemTestData.CreateThrowableDistanceItem(100, 6) }
-     };
+            new List<object[]>
+            {
+                new object[]
+                {
+                    Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10), ItemTestData.CreateAmmoItem(100, 10),
+                    ItemTestData.CreateAmmoItem(100, 20)
+                },
+                new object[]
+                {
+                    Slot.Ammo, ItemTestData.CreateAmmoItem(100, 10), ItemTestData.CreateAmmoItem(100, 90),
+                    ItemTestData.CreateAmmoItem(100, 100)
+                },
+                new object[]
+                {
+                    Slot.Ammo, ItemTestData.CreateAmmoItem(100, 50), ItemTestData.CreateAmmoItem(100, 90),
+                    ItemTestData.CreateAmmoItem(100, 100)
+                },
+                new object[]
+                {
+                    Slot.Left, ItemTestData.CreateThrowableDistanceItem(100, 1),
+                    ItemTestData.CreateThrowableDistanceItem(100, 5), ItemTestData.CreateThrowableDistanceItem(100, 6)
+                }
+            };
+
+        public static IEnumerable<object[]> WrongSlotItemsData => GenerateWrongSlotItemsData();
 
         private static List<object[]> GenerateWrongSlotItemsData()
         {
             var result = new List<object[]>();
-            foreach (var slot in new List<Slot>() { Slot.Head, Slot.Ammo, Slot.Backpack, Slot.Body, Slot.Feet, Slot.Left, Slot.Right, Slot.Ring, Slot.TwoHanded,
-                Slot.Legs, Slot.Necklace })
+            foreach (var slot in new List<Slot>
+            {
+                Slot.Head, Slot.Ammo, Slot.Backpack, Slot.Body, Slot.Feet, Slot.Left, Slot.Right, Slot.Ring,
+                Slot.TwoHanded,
+                Slot.Legs, Slot.Necklace
+            })
             {
                 if (slot != Slot.Body)
-                    result.Add(new object[] { slot, ItemTestData.CreateBodyEquipmentItem(100, "body") });
+                    result.Add(new object[] {slot, ItemTestData.CreateBodyEquipmentItem(100, "body")});
 
                 if (slot != Slot.Ammo)
-                    result.Add(new object[] { slot, ItemTestData.CreateAmmoItem(100, 10) });
+                    result.Add(new object[] {slot, ItemTestData.CreateAmmoItem(100, 10)});
 
                 if (slot != Slot.Legs)
-                    result.Add(new object[] { slot, ItemTestData.CreateBodyEquipmentItem(100, "legs") });
+                    result.Add(new object[] {slot, ItemTestData.CreateBodyEquipmentItem(100, "legs")});
 
                 if (slot != Slot.Feet)
-                    result.Add(new object[] { slot, ItemTestData.CreateBodyEquipmentItem(100, "feet") });
+                    result.Add(new object[] {slot, ItemTestData.CreateBodyEquipmentItem(100, "feet")});
 
                 if (slot != Slot.Right)
-                    result.Add(new object[] { slot, ItemTestData.CreateBodyEquipmentItem(100, "", "shield") });
+                    result.Add(new object[] {slot, ItemTestData.CreateBodyEquipmentItem(100, "", "shield")});
 
                 if (slot != Slot.Left)
-                    result.Add(new object[] { slot, ItemTestData.CreateWeaponItem(100, "axe") });
+                    result.Add(new object[] {slot, ItemTestData.CreateWeaponItem(100, "axe")});
 
                 if (slot != Slot.Ring)
-                    result.Add(new object[] { slot, ItemTestData.CreateRing(100) });
+                    result.Add(new[] {slot, ItemTestData.CreateRing(100)});
 
                 if (slot != Slot.Necklace)
-                    result.Add(new object[] { slot, ItemTestData.CreateNecklace(100) });
+                    result.Add(new[] {slot, ItemTestData.CreateNecklace(100)});
 
                 if (slot != Slot.Backpack)
-                    result.Add(new object[] { slot, ItemTestData.CreateBackpack() });
+                    result.Add(new object[] {slot, ItemTestData.CreateBackpack()});
 
                 if (slot != Slot.Head)
-                    result.Add(new object[] { slot, ItemTestData.CreateBodyEquipmentItem(100, "head") });
+                    result.Add(new object[] {slot, ItemTestData.CreateBodyEquipmentItem(100, "head")});
             }
+
             return result;
-
         }
-
-        public static IEnumerable<object[]> WrongSlotItemsData => GenerateWrongSlotItemsData();
 
         [Theory]
         [MemberData(nameof(SlotItemsData))]
-
         public void AddItemToSlot_AddItem_When_Slot_Is_Empty(Slot slot, IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             sut.TryAddItemToSlot(slot, item);
 
             Assert.Same(item, sut[slot]);
@@ -134,13 +178,10 @@ namespace NeoServer.Game.Creatures.Tests
 
         [Theory]
         [MemberData(nameof(WrongSlotItemsData))]
-
         public void AddItemToSlot_AddItem_On_Wrong_Slot_Returns_False(Slot slot, IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var result = sut.TryAddItemToSlot(slot, item);
 
             Assert.False(result.IsSuccess);
@@ -150,10 +191,8 @@ namespace NeoServer.Game.Creatures.Tests
         [Fact]
         public void AddItemToSlot_AddTwoHanded_And_Shield_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var twoHanded = ItemTestData.CreateWeaponItem(100, "axe", true);
             var result = sut.TryAddItemToSlot(Slot.Left, twoHanded);
@@ -171,13 +210,12 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.Null(sut[Slot.Right]);
         }
+
         [Fact]
         public void AddItemToSlot_Add_Shield_And_TwoHanded_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
 
@@ -200,10 +238,8 @@ namespace NeoServer.Game.Creatures.Tests
         [Fact]
         public void AddItemToSlot_When_Exceeds_Capacity_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 100), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
             var feet = ItemTestData.CreateBodyEquipmentItem(101, "feet");
@@ -218,15 +254,13 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
-
         }
+
         [Fact]
         public void AddItemToBackpack_When_Exceeds_Capacity_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 130), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(130),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
             var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
@@ -252,10 +286,8 @@ namespace NeoServer.Game.Creatures.Tests
         [Fact]
         public void AddItemToBackpack_When_Already_Has_Backpack_Add_Item_To_It()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 200), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(200),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
             var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
@@ -280,10 +312,8 @@ namespace NeoServer.Game.Creatures.Tests
         [Fact]
         public void TotalWeight_Returns_Total_Weight_Of_Inventory()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 2000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(2000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
             var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
@@ -293,7 +323,7 @@ namespace NeoServer.Game.Creatures.Tests
             var ring = ItemTestData.CreateBodyEquipmentItem(100, "ring");
             var shield = ItemTestData.CreateBodyEquipmentItem(100, "shield", "shield");
             var ammo = ItemTestData.CreateAmmoItem(100, 100);
-            var weapon = ItemTestData.CreateWeaponItem(100, "club", false);
+            var weapon = ItemTestData.CreateWeaponItem(100, "club");
 
             sut.TryAddItemToSlot(Slot.Legs, legs);
             sut.TryAddItemToSlot(Slot.Body, body);
@@ -311,15 +341,14 @@ namespace NeoServer.Game.Creatures.Tests
             container.TryAddItem(ItemTestData.CreateCumulativeItem(100, 60));
 
             Assert.Equal(500, sut.TotalWeight);
-
         }
 
         [Theory]
         [MemberData(nameof(SlotSwapItemsData))]
-
         public void AddItemToSlot_AddItem_When_Slot_Has_Item_Swap_Item(Slot slot, IPickupable item, IPickupable newItem)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(slot, item);
 
@@ -340,10 +369,11 @@ namespace NeoServer.Game.Creatures.Tests
 
         [Theory]
         [MemberData(nameof(SlotJoinItemsData))]
-
-        public void AddItemToSlot_When_Slot_Has_Cumulative_Item_Join_Item(Slot slot, ICumulative item, ICumulative newItem, ICumulative resultItem)
+        public void AddItemToSlot_When_Slot_Has_Cumulative_Item_Join_Item(Slot slot, ICumulative item,
+            ICumulative newItem, ICumulative resultItem)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(slot, item);
 
@@ -354,10 +384,12 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(sut[slot], item);
             Assert.Equal((sut[slot] as Cumulative).Amount, resultItem.Amount);
         }
+
         [Fact]
         public void AddItemToSlot_When_Item_Is_Cumulative_Raises_Event_When_Reduced()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
             var result = sut.TryAddItemToSlot(Slot.Ammo, item);
 
@@ -366,17 +398,19 @@ namespace NeoServer.Game.Creatures.Tests
 
             item.OnReduced += (a, b) => eventRaised = true;
             sut.OnItemRemovedFromSlot += (a, b, c, d) =>
-            itemRemovedEventRaised = true;
+                itemRemovedEventRaised = true;
 
             item.Throw();
 
             Assert.True(eventRaised);
             Assert.True(itemRemovedEventRaised);
         }
+
         [Fact]
         public void AddItemToSlot_When_Swap_Item_Is_Cumulative_Raises_Event_When_Reduced()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var initialItem = ItemTestData.CreateAmmoItem(101, 1) as AmmoItem;
             var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
 
@@ -388,16 +422,18 @@ namespace NeoServer.Game.Creatures.Tests
 
             item.OnReduced += (a, b) => eventRaised = true;
             sut.OnItemRemovedFromSlot += (a, b, c, d) =>
-            itemRemovedEventRaised = true;
+                itemRemovedEventRaised = true;
             item.Throw();
 
             Assert.True(eventRaised);
             Assert.True(itemRemovedEventRaised);
         }
+
         [Fact]
         public void TryAddItemToSlot_SwappedItem_Should_Not_Raise_Event_When_Reduced()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var initialItem = ItemTestData.CreateAmmoItem(101, 3) as AmmoItem;
             var item = ItemTestData.CreateAmmoItem(100, 100) as AmmoItem;
 
@@ -406,7 +442,7 @@ namespace NeoServer.Game.Creatures.Tests
 
             var itemRemovedEventRaised = false;
 
-            var swapped = (result.Value as AmmoItem);
+            var swapped = result.Value as AmmoItem;
 
             sut.OnItemRemovedFromSlot += (a, b, c, d) => itemRemovedEventRaised = true;
 
@@ -416,9 +452,11 @@ namespace NeoServer.Game.Creatures.Tests
         }
 
         [Fact]
-        public void AddItemToSlot_AddItem_When_Slot_Has_Cumulative_Item_And_Exceeds_Join_Item_And_Returns_Exceeding_Amount()
+        public void
+            AddItemToSlot_AddItem_When_Slot_Has_Cumulative_Item_And_Exceeds_Join_Item_And_Returns_Exceeding_Amount()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(Slot.Ammo, ItemTestData.CreateAmmoItem(100, 50));
 
@@ -433,7 +471,8 @@ namespace NeoServer.Game.Creatures.Tests
         [MemberData(nameof(BackpackSlotAddItemsData))]
         public void AddItemToSlot_When_BackpackSlot_Has_Backpack_Add_Item_To_It(IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var backpack = ItemTestData.CreateBackpack();
 
             sut.TryAddItemToSlot(Slot.Backpack, backpack);
@@ -445,29 +484,34 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(sut[Slot.Backpack], backpack);
             Assert.Equal(1, backpack.SlotsUsed);
         }
+
         [Theory]
         [MemberData(nameof(SlotItemsData))]
         public void AddItemToSlot_Changes_Item_Location(Slot slot, IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(slot, item);
 
             Assert.Equal(Location.Inventory(slot), item.Location);
         }
+
         [Fact]
         public void SendTo_When_Send_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var item = ItemTestData.CreateWeaponItem(100, "sword");
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] {item});
 
-            var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte) Slot.Left);
 
             Assert.True(result.IsSuccess);
             Assert.Equal(sut[Slot.Left], item);
             Assert.Null(tile.TopItemOnStack);
         }
+
         [Fact]
         public void SendTo_When_Send_From_Tile_To_Inventory_Must_Swap_Item()
         {
@@ -478,42 +522,46 @@ namespace NeoServer.Game.Creatures.Tests
 
             var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), dictionary);
             var item = ItemTestData.CreateWeaponItem(100, "sword");
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] {item});
 
-            var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte) Slot.Left);
 
             Assert.True(result.IsSuccess);
             Assert.Equal(sut[Slot.Left], item);
             Assert.Equal(itemOnInventory, tile.TopItemOnStack);
         }
+
         [Fact]
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var item = ItemTestData.CreateAmmoItem(100, 20);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] {item});
 
-            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 20, 0, (byte)Slot.Ammo);
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 20, 0, (byte) Slot.Ammo);
 
             Assert.True(result.IsSuccess);
             Assert.Equal(20, sut[Slot.Ammo].Amount);
 
             Assert.Null(tile.TopItemOnStack);
         }
+
         [Fact]
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Join_To_Inventory()
         {
             var itemOnInventory = ItemTestData.CreateAmmoItem(100, 51);
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-                { Slot.Ammo, new Tuple<IPickupable, ushort>(itemOnInventory, 100) }
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Ammo, new Tuple<IPickupable, ushort>(itemOnInventory, 100)}
+                });
 
             var item = ItemTestData.CreateAmmoItem(100, 100);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] {item});
 
-            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 100, 0, (byte)Slot.Ammo);
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte) Slot.Ammo);
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
@@ -521,19 +569,21 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.Equal(51, tile.TopItemOnStack.Amount);
         }
+
         [Fact]
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Do_Nothing_When_Error()
         {
             var itemOnInventory = ItemTestData.CreateWeaponItem(100, "sword");
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-                { Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 100) }
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 100)}
+                });
 
             var item = ItemTestData.CreateThrowableDistanceItem(200, 100);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] {item});
 
-            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 100, 0, (byte)Slot.Ammo);
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte) Slot.Ammo);
 
             Assert.False(result.IsSuccess);
             Assert.Equal(itemOnInventory, sut[Slot.Left]);
@@ -541,19 +591,21 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Equal(item, tile.TopItemOnStack);
             Assert.Equal(100, tile.TopItemOnStack.Amount);
         }
+
         [Fact]
         public void SendTo_When_Send_Cumulative_To_Backpack_Move_Item()
         {
             var backpack = ItemTestData.CreateBackpack();
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-                { Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
-            });
+            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100)}
+                });
 
             var item = ItemTestData.CreateAmmoItem(200, 100);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] {item});
 
-            var result = tile.SendTo(sut, tile.TopItemOnStack, amount: 100, 0, (byte)Slot.Backpack);
+            var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte) Slot.Backpack);
 
             Assert.True(result.IsSuccess);
             Assert.Equal(item, (sut[Slot.Backpack] as IContainer)[item.Location.ContainerSlot]);
@@ -561,23 +613,26 @@ namespace NeoServer.Game.Creatures.Tests
             Assert.Null(tile.TopItemOnStack);
             Assert.Equal(100, (sut[Slot.Backpack] as IContainer)[item.Location.ContainerSlot].Amount);
         }
+
         [Fact]
         public void SendTo_When_Send_From_Right_To_Tile_Must_Remove_From_Inventory_And_Add_To_Tile()
         {
             var item = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-                 {
-                { Slot.Right, new Tuple<IPickupable, ushort>(item,100) }
-            });
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Right, new Tuple<IPickupable, ushort>(item, 100)}
+                });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] {item});
 
-            var result = sut.SendTo(tile, item, 1, (byte)Slot.Right, 0);
+            var result = sut.SendTo(tile, item, 1, (byte) Slot.Right, 0);
 
             Assert.True(result.IsSuccess);
             Assert.Null(sut[Slot.Right]);
             Assert.Equal(item, tile.TopItemOnStack);
         }
+
         [Fact]
         public void SendTo_When_Send_From_Container_To_Ammo_Must_Remove_From_Container_And_Add_To_Inventory()
         {
@@ -585,15 +640,17 @@ namespace NeoServer.Game.Creatures.Tests
             var ammo = ItemTestData.CreateAmmoItem(100, 1);
             container.AddItem(ammo);
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
-            var result = container.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+            var result = container.SendTo(sut, ammo, 1, (byte) ammo.Location.ContainerSlot, (byte) Slot.Ammo);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal((uint)2, container.FreeSlotsCount);
+            Assert.Equal((uint) 2, container.FreeSlotsCount);
             Assert.Equal(ammo, sut[Slot.Ammo]);
             Assert.Equal(1, sut[Slot.Ammo].Amount);
         }
+
         [Fact]
         public void SendTo_When_Send_From_Backpack_To_Ammo_Must_Remove_From_Backpack_And_Add_To_Inventory()
         {
@@ -601,15 +658,16 @@ namespace NeoServer.Game.Creatures.Tests
             var ammo = ItemTestData.CreateAmmoItem(100, 1);
             backpack.AddItem(ammo);
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-                {Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
-            });
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100)}
+                });
 
-            var result = backpack.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+            var result = backpack.SendTo(sut, ammo, 1, (byte) ammo.Location.ContainerSlot, (byte) Slot.Ammo);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal((uint)20, backpack.FreeSlotsCount);
+            Assert.Equal((uint) 20, backpack.FreeSlotsCount);
             Assert.Equal(ammo, sut[Slot.Ammo]);
             Assert.Equal(1, sut[Slot.Ammo].Amount);
         }
@@ -618,7 +676,8 @@ namespace NeoServer.Game.Creatures.Tests
         public void CanAddItem_When_Item_Is_Not_Dressable_Returns_Error()
         {
             var item = ItemTestData.CreateRegularItem(1);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.CanAddItem(item.Metadata);
 
@@ -639,12 +698,13 @@ namespace NeoServer.Game.Creatures.Tests
         public void CanAddItem_When_Slot_Is_Empty_And_Adding_Regular_Item_Returns_Success(string bodyPosition)
         {
             var item = ItemTestData.CreateBodyEquipmentItem(1, bodyPosition);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.CanAddItem(item.Metadata);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal((uint)1, result.Value);
+            Assert.Equal((uint) 1, result.Value);
         }
 
         [Fact]
@@ -653,11 +713,12 @@ namespace NeoServer.Game.Creatures.Tests
             var bodyItem = ItemTestData.CreateBodyEquipmentItem(1, "body");
             var weapon = ItemTestData.CreateBodyEquipmentItem(3, "weapon");
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-                {Slot.Body, new Tuple<IPickupable,ushort>(bodyItem,1) },
-                {Slot.Left, new Tuple<IPickupable,ushort>(weapon,3) },
-            });
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Body, new Tuple<IPickupable, ushort>(bodyItem, 1)},
+                    {Slot.Left, new Tuple<IPickupable, ushort>(weapon, 3)}
+                });
 
             var bodyItemToAdd = ItemTestData.CreateBodyEquipmentItem(1, "body");
             var weaponToAdd = ItemTestData.CreateBodyEquipmentItem(2, "weapon");
@@ -685,12 +746,13 @@ namespace NeoServer.Game.Creatures.Tests
         public void CanAddItem_When_Slot_Is_Empty_And_Adding_Cumulative_Item_Returns_Success(string bodyPosition)
         {
             var item = ItemTestData.CreateCumulativeItem(1, 100, bodyPosition);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.CanAddItem(item.Metadata);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal((uint)100, result.Value);
+            Assert.Equal((uint) 100, result.Value);
         }
 
         [InlineData(40, 60)]
@@ -700,27 +762,32 @@ namespace NeoServer.Game.Creatures.Tests
         [InlineData(5, 95)]
         [InlineData(50, 50)]
         [Theory]
-        public void CanAddItem_When_Slot_Has_Same_Culative_Item_And_Adding_Cumulative_Item_Returns_Success(byte amount, uint expected)
+        public void CanAddItem_When_Slot_Has_Same_Culative_Item_And_Adding_Cumulative_Item_Returns_Success(byte amount,
+            uint expected)
         {
             var item = ItemTestData.CreateAmmoItem(1, 100);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-                { Slot.Ammo, new Tuple<IPickupable, ushort>( ItemTestData.CreateAmmoItem(1, amount), 1) }
-            });
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(1, amount), 1)}
+                });
 
             var result = sut.CanAddItem(item.Metadata);
 
             Assert.True(result.IsSuccess);
             Assert.Equal(expected, result.Value);
         }
+
         [Fact]
-        public void CanAddItem_When_Slot_Has_Different_Culative_Item_And_Adding_Cumulative_Item_Returns_Not_Enough_Room()
+        public void
+            CanAddItem_When_Slot_Has_Different_Culative_Item_And_Adding_Cumulative_Item_Returns_Not_Enough_Room()
         {
             var item = ItemTestData.CreateAmmoItem(2, 100);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000), new Dictionary<Slot, Tuple<IPickupable, ushort>>()
-            {
-                { Slot.Ammo, new Tuple<IPickupable, ushort>( ItemTestData.CreateAmmoItem(1, 50), 1) }
-            });
+            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(1000),
+                new Dictionary<Slot, Tuple<IPickupable, ushort>>
+                {
+                    {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(1, 50), 1)}
+                });
 
             var result = sut.CanAddItem(item.Metadata);
 
@@ -729,4 +796,3 @@ namespace NeoServer.Game.Creatures.Tests
         }
     }
 }
-

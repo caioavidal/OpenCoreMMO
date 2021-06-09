@@ -48,6 +48,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             Assert.False(invited);
         }
+
         [Fact]
         public void InviteToParty_Should_Invite()
         {

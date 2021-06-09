@@ -22,8 +22,8 @@ namespace NeoServer.Loaders.Items
             public string Key { get; set; }
             public dynamic Value { get; set; }
             public IEnumerable<Attribute> Attributes { get; set; }
-
         }
+
         public struct Requirement
         {
             public string Vocation { get; set; }

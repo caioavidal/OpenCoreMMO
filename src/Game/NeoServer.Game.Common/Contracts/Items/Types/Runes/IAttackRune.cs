@@ -7,19 +7,22 @@ namespace NeoServer.Game.Contracts.Items.Types.Runes
     public interface IAttackRune : IUseableAttackOnCreature, IUseableAttackOnTile, IRune
     {
         /// <summary>
-        /// Rune's Damage Type 
+        ///     Rune's Damage Type
         /// </summary>
         DamageType DamageType { get; }
+
         /// <summary>
-        /// Shoot Type
+        ///     Shoot Type
         /// </summary>
         ShootType ShootType { get; }
+
         /// <summary>
-        /// Damage Effect
+        ///     Damage Effect
         /// </summary>
         EffectT Effect { get; }
+
         /// <summary>
-        /// True when damage is not in area
+        ///     True when damage is not in area
         /// </summary>
         bool NeedTarget { get; }
     }

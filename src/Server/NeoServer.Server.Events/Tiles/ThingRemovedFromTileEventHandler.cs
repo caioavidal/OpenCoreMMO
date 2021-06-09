@@ -16,6 +16,7 @@ namespace NeoServer.Server.Events
         {
             this.game = game;
         }
+
         public void Execute(IThing thing, ICylinder cylinder)
         {
             if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
@@ -27,30 +28,21 @@ namespace NeoServer.Server.Events
             {
                 var creature = spectator.Spectator;
 
-                if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
-                {
-                    continue;
-                }
+                if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) continue;
 
                 if (creature is not IPlayer player) continue;
 
-                if (player.IsDead && thing != player)
-                {
-                    continue;
-                }
+                if (player.IsDead && thing != player) continue;
 
                 var stackPosition = spectator.FromStackPosition;
 
-                if ((thing is IPlayer p && !p.IsDead) || (thing is IMonster monsterRemoved && monsterRemoved.IsSummon))
-                {
+                if (thing is IPlayer p && !p.IsDead || thing is IMonster monsterRemoved && monsterRemoved.IsSummon)
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
-                }
 
                 connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));
 
                 connection.Send();
             }
-
         }
     }
 }

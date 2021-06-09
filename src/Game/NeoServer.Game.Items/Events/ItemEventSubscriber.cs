@@ -7,9 +7,11 @@ namespace NeoServer.Game.Items.Events
 {
     public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
     {
-        private readonly ItemUsedEventHandler itemUsedEventHandler;
         private readonly FieldRuneUsedEventHandler fieldRuneUsedEventHandler;
-        public ItemEventSubscriber(ItemUsedEventHandler itemUsedEventHandler, FieldRuneUsedEventHandler fieldRuneUsedEventHandler)
+        private readonly ItemUsedEventHandler itemUsedEventHandler;
+
+        public ItemEventSubscriber(ItemUsedEventHandler itemUsedEventHandler,
+            FieldRuneUsedEventHandler fieldRuneUsedEventHandler)
         {
             this.itemUsedEventHandler = itemUsedEventHandler;
             this.fieldRuneUsedEventHandler = fieldRuneUsedEventHandler;
@@ -17,26 +19,14 @@ namespace NeoServer.Game.Items.Events
 
         public void Subscribe(IItem item)
         {
-            if (item is IConsumable consumable)
-            {
-                consumable.OnUsed += itemUsedEventHandler.Execute;
-            }
-            if (item is IFieldRune fieldRune)
-            {
-                fieldRune.OnUsedOnTile += fieldRuneUsedEventHandler.Execute;
-            }
+            if (item is IConsumable consumable) consumable.OnUsed += itemUsedEventHandler.Execute;
+            if (item is IFieldRune fieldRune) fieldRune.OnUsedOnTile += fieldRuneUsedEventHandler.Execute;
         }
 
         public void Unsubscribe(IItem item)
         {
-            if (item is IConsumable consumable)
-            {
-                consumable.OnUsed -= itemUsedEventHandler.Execute;
-            }
-            if (item is IFieldRune fieldRune)
-            {
-                fieldRune.OnUsedOnTile -= fieldRuneUsedEventHandler.Execute;
-            }
+            if (item is IConsumable consumable) consumable.OnUsed -= itemUsedEventHandler.Execute;
+            if (item is IFieldRune fieldRune) fieldRune.OnUsedOnTile -= fieldRuneUsedEventHandler.Execute;
         }
     }
 }

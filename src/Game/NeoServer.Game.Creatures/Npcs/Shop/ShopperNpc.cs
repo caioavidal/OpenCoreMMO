@@ -1,23 +1,26 @@
-﻿using NeoServer.Game.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Players;
 using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.World;
 using NeoServer.Game.DataStore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
     public class ShopperNpc : Npc, IShopperNpc
     {
-
-        public event ShowShop OnShowShop;
-        public ShopperNpc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type, spawnPoint, outfit, healthPoints)
+        public ShopperNpc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(
+            type, spawnPoint, outfit, healthPoints)
         {
         }
+
+        public event ShowShop OnShowShop;
 
         public IDictionary<ushort, IShopItem> ShopItems
         {
@@ -29,24 +32,6 @@ namespace NeoServer.Game.Creatures.Npcs
 
                 return shopItems;
             }
-        }
-
-        public override void SendMessageTo(ISociableCreature to, SpeechType type, IDialog dialog)
-        {
-            base.SendMessageTo(to, type, dialog);
-            if (dialog.Action == "shop") ShowShopItems(to);
-
-        }
-
-        public virtual void ShowShopItems(ISociableCreature to)
-        {
-            if (to is not IPlayer player) return;
-
-            if (ShopItems?.Values is not IEnumerable<IShopItem> shopItems) return;
-
-            player.StartShopping(this);
-
-            OnShowShop?.Invoke(this, to, shopItems);
         }
 
         public virtual void StopSellingToCustomer(ISociableCreature creature)
@@ -71,14 +56,15 @@ namespace NeoServer.Game.Creatures.Npcs
 
             var coins = CoinCalculator.Calculate(CoinTypeStore.Data.Map, value);
 
-            IItem[] items = new IItem[coins.Count()];
+            var items = new IItem[coins.Count()];
 
             var i = 0;
             foreach (var coin in coins)
             {
                 var (coinType, amount) = coin;
 
-                var item = CreateNewItem(coinType, Common.Location.Structs.Location.Inventory(Common.Players.Slot.Backpack), new Dictionary<ItemAttribute, IConvertible>() { { ItemAttribute.Count, amount } });
+                var item = CreateNewItem(coinType, Location.Inventory(Slot.Backpack),
+                    new Dictionary<ItemAttribute, IConvertible> {{ItemAttribute.Count, amount}});
 
                 if (item is null) continue;
                 items[i++] = item;
@@ -97,6 +83,23 @@ namespace NeoServer.Game.Creatures.Npcs
             if (!shopItems.TryGetValue(itemType.TypeId, out var shopItem)) return 0;
 
             return (shopItem?.BuyPrice ?? 0) * amount;
+        }
+
+        public override void SendMessageTo(ISociableCreature to, SpeechType type, IDialog dialog)
+        {
+            base.SendMessageTo(to, type, dialog);
+            if (dialog.Action == "shop") ShowShopItems(to);
+        }
+
+        public virtual void ShowShopItems(ISociableCreature to)
+        {
+            if (to is not IPlayer player) return;
+
+            if (ShopItems?.Values is not IEnumerable<IShopItem> shopItems) return;
+
+            player.StartShopping(this);
+
+            OnShowShop?.Invoke(this, to, shopItems);
         }
     }
 }

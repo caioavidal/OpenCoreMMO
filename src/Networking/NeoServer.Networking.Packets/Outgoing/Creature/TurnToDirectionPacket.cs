@@ -9,6 +9,7 @@ namespace NeoServer.Networking.Packets.Outgoing
         private readonly ICreature creature;
         private readonly Direction direction;
         private readonly byte stackPosition;
+
         public TurnToDirectionPacket(ICreature creature, Direction direction, byte stackPosition)
         {
             this.creature = creature;
@@ -18,12 +19,12 @@ namespace NeoServer.Networking.Packets.Outgoing
 
         public override void WriteToMessage(INetworkMessage message)
         {
-            message.AddByte((byte)GameOutgoingPacketType.TransformThing);
+            message.AddByte((byte) GameOutgoingPacketType.TransformThing);
             message.AddLocation(creature.Location);
             message.AddByte(stackPosition);
             message.AddUInt16(0x63);
             message.AddUInt32(creature.CreatureId);
-            message.AddByte((byte)direction);
+            message.AddByte((byte) direction);
         }
     }
 }

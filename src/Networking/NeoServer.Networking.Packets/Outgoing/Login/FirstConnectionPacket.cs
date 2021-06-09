@@ -1,5 +1,5 @@
-﻿using NeoServer.Server.Contracts.Network;
-using System;
+﻿using System;
+using NeoServer.Server.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing
 {
@@ -9,10 +9,10 @@ namespace NeoServer.Networking.Packets.Outgoing
         {
             message.AddUInt16(0x0006);
             message.AddByte(0x1F);
-            message.AddUInt32((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+            message.AddUInt32((uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
-            Random rnd = new Random();
-            var randomByte = (byte)rnd.Next(byte.MinValue, byte.MaxValue);
+            var rnd = new Random();
+            var randomByte = (byte) rnd.Next(byte.MinValue, byte.MaxValue);
             message.AddByte(randomByte);
         }
     }

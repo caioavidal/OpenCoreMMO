@@ -1,14 +1,17 @@
-﻿using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Players;
 using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Contracts.Items.Types;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Contracts.Creatures
 {
     public delegate void RemoveItemFromSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
+
     public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
+
     public delegate void FailAddItemToSlot(InvalidOperation invalidOperation);
+
     public interface IInventory : IStore
     {
         IPlayer Owner { get; }
@@ -20,7 +23,7 @@ namespace NeoServer.Game.Contracts.Creatures
         byte TotalArmor { get; }
 
         byte AttackRange { get; }
-        Items.Types.IContainer BackpackSlot { get; }
+        IContainer BackpackSlot { get; }
         IWeapon Weapon { get; }
         bool HasShield { get; }
         float TotalWeight { get; }

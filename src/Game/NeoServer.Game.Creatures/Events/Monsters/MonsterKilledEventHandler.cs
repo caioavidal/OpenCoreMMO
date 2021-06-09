@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts;
+﻿using System.Linq;
+using NeoServer.Game.Contracts;
 using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Contracts.Items;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Events
 {
@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures.Events
                 var exp = damagePercent * monster.Experience / 100;
 
                 if (enemyDamage.Key is not ICombatActor actor) continue;
-                actor.GainExperience((uint)exp);
+                actor.GainExperience((uint) exp);
             }
         }
     }
