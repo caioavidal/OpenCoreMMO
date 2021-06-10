@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate string ReplaceKeyword(string message, object replace);
 
@@ -17,7 +16,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
     public delegate void CustomerLeft(ICreature creature);
 
-    public delegate IItem CreateItem(ushort typeId, Location location,
+    public delegate IItem CreateItem(ushort typeId, Location.Structs.Location location,
         IDictionary<ItemAttribute, IConvertible> attributes);
 
     public interface INpc : IWalkableCreature, ISociableCreature

@@ -1,12 +1,11 @@
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Creatures.Enums;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate void OnCreatureStateChange();
 
@@ -155,7 +154,7 @@ namespace NeoServer.Game.Contracts.Creatures
         ///     Checks if creature can see location
         /// </summary>
         /// <returns></returns>
-        bool CanSee(Location pos);
+        bool CanSee(Location.Structs.Location pos);
 
         /// <summary>
         ///     Change creature outfit
@@ -167,7 +166,7 @@ namespace NeoServer.Game.Contracts.Creatures
         /// </summary>
         void BackToOldOutfit();
 
-        void OnCreatureAppear(Location location, ICylinderSpectator[] spectators);
+        void OnCreatureAppear(Location.Structs.Location location, ICylinderSpectator[] spectators);
 
         /// <summary>
         ///     Says a message

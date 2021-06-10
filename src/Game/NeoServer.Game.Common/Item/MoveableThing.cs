@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Model
+﻿namespace NeoServer.Game.Common.Item
 {
     //public abstract class MoveableThing : IMoveableThing
     //{

@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 
-namespace NeoServer.Game.Contracts.Items.Types.Useables
+namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
 {
     public delegate void UseOnTile(ICreature usedBy, ITile tile, IUseableOnTile item);
 

@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts.Chats;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing
+namespace NeoServer.Networking.Packets.Outgoing.Chat
 {
     public class PlayerChannelListPacket : OutgoingPacket
     {

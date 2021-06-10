@@ -1,6 +1,4 @@
-﻿using NeoServer.Server.Model.Players;
-
-namespace NeoServer.Data.Model
+﻿namespace NeoServer.Data.Model
 {
     public class PlayerItemModel
     {

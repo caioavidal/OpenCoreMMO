@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.World.Map;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.World.Map
 {

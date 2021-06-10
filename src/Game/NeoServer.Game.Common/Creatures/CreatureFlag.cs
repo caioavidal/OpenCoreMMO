@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Creatures.Enums
+﻿namespace NeoServer.Game.Common.Creatures
 {
     public enum CreatureFlag : uint
     {

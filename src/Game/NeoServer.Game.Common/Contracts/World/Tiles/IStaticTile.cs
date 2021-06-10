@@ -1,7 +1,6 @@
-﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
+﻿using NeoServer.Game.Common.Contracts.Items;
 
-namespace NeoServer.Game.World.Map.Tiles
+namespace NeoServer.Game.Common.Contracts.World.Tiles
 {
     public interface IStaticTile : ITile
     {

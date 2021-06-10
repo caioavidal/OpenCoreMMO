@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts.Items;
 
 namespace NeoServer.Game.Items
 {

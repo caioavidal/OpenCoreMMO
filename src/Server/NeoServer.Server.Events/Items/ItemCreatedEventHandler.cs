@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Server.Contracts;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Items
 {
     public class ItemCreatedEventHandler
     {

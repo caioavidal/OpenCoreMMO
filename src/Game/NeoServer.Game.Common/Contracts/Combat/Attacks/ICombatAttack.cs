@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Contracts.Combat.Attacks
+namespace NeoServer.Game.Common.Contracts.Combat.Attacks
 {
     public interface ICombatAttack
     {

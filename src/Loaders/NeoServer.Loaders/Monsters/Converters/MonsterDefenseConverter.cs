@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Combat.Defenses;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Combat.Defenses;
+using NeoServer.Game.Common.Contracts.Combat;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
 

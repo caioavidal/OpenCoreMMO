@@ -1,6 +1,7 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Combat;
+using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Contracts.Combat.Defenses
+namespace NeoServer.Game.Combat.Defenses
 {
     public abstract class BaseCombatDefense : ICombatDefense
     {

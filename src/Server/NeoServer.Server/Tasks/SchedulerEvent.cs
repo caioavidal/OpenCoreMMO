@@ -1,5 +1,5 @@
 ﻿using System;
-using NeoServer.Server.Contracts.Tasks;
+using NeoServer.Server.Common.Contracts.Tasks;
 
 namespace NeoServer.Server.Tasks
 {

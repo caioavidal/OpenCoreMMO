@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface INpcType : ICreatureType
     {

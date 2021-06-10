@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Combat.Attacks
+namespace NeoServer.Game.Common.Contracts.Combat.Attacks
 {
     public interface IMonsterCombatAttack
     {

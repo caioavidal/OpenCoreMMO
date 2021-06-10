@@ -1,7 +1,7 @@
 ﻿using System;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {

@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using NeoServer.Game.Chats;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Creatures;
-using NeoServer.Game.Items;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Creatures.Factories;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Items.Factories;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Server.Handlers;
-using NeoServer.Server.Handlers.Authentication;
-using NeoServer.Server.Model.Players;
+using NeoServer.Networking.Handlers;
+using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Network.Enums;
 using Serilog.Core;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC.Modules
 {
     public static class FactoryInjection
     {

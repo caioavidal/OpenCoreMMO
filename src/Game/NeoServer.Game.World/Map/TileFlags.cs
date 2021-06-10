@@ -1,4 +1,4 @@
-namespace NeoServer.Game.World
+namespace NeoServer.Game.World.Map
 {
     /// <summary>
     ///     This enum is meant to store in a memory-efficient way a collection

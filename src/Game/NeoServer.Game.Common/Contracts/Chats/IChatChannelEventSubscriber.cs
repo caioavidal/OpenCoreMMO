@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Contracts.Chats;
-
-namespace NeoServer.Game.Contracts.Items
+﻿namespace NeoServer.Game.Common.Contracts.Chats
 {
     public interface IChatChannelEventSubscriber
     {

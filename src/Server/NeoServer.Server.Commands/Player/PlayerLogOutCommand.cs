@@ -1,8 +1,8 @@
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Commands;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Commands;
 
-namespace NeoServer.Server.Commands
+namespace NeoServer.Server.Commands.Player
 {
     public class PlayerLogOutCommand : ICommand
     {

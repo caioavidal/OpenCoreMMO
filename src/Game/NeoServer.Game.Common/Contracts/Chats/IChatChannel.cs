@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Contracts.Chats
+namespace NeoServer.Game.Common.Contracts.Chats
 {
     public delegate void AddMessage(ISociableCreature creature, IChatChannel channel, SpeechType speechType,
         string message);

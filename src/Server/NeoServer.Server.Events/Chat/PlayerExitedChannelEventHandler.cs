@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
+﻿using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Networking.Packets.Outgoing.Chat;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Chat
 {
     public class PlayerExitedChannelEventHandler
     {

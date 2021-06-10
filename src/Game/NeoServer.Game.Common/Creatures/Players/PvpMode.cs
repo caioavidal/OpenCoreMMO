@@ -1,4 +1,4 @@
-namespace NeoServer.Server.Model.Players
+namespace NeoServer.Game.Common.Creatures.Players
 
 {
     public enum PvpMode

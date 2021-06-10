@@ -1,45 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CSharp.RuntimeBinder;
-using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Chats;
-using NeoServer.Game.Combat.Spells;
-using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Model;
-using NeoServer.Game.DataStore;
-using NeoServer.Networking.Packets.Incoming;
-using Newtonsoft.Json;
 
 namespace NeoServer.Server.Compiler
 {
     internal class Compiler
     {
-        public byte[] CompileSource(params string[] sourceCodes)
+        private static byte[] CompileSource(params string[] sourceCodes)
         {
-            using (var peStream = new MemoryStream())
-            {
-                var result = GenerateCode(sourceCodes).Emit(peStream);
+            using var peStream = new MemoryStream();
+            var result = GenerateCode(sourceCodes).Emit(peStream);
 
-                if (!result.Success)
-                    throw new Exception(string.Join("\n", result.Diagnostics.Select(x => x.GetMessage())));
+            if (!result.Success)
+                throw new Exception(string.Join("\n", result.Diagnostics.Select(x => x.GetMessage())));
 
-                peStream.Seek(0, SeekOrigin.Begin);
+            peStream.Seek(0, SeekOrigin.Begin);
 
-                return peStream.ToArray();
-            }
+            return peStream.ToArray();
         }
 
-        public byte[] Compile(params string[] filepaths)
+        public byte[] Compile(params string[] filePaths)
         {
-            var sources = filepaths.Select(x => File.ReadAllText(x)).ToArray();
+            var sources = filePaths.Select(File.ReadAllText).ToArray();
             return CompileSource(sources);
         }
 
@@ -48,47 +33,48 @@ namespace NeoServer.Server.Compiler
             var syntaxTrees = new SyntaxTree[sourceCodes.Length];
             var i = 0;
 
+            var rewriter = new ScriptRewriter();
+
             foreach (var source in sourceCodes)
             {
-                var codeString = SourceText.From(source);
-                var rewriter = new ScriptRewriter();
+                var newSource = AddAttribute(source, rewriter);
                 var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Latest);
 
-                var syntaxTree = SyntaxFactory.ParseSyntaxTree(codeString, options);
-                var result = rewriter.Visit(syntaxTree.GetRoot());
-
-                syntaxTrees[i++] = result.SyntaxTree;
+                syntaxTrees[i++] = CSharpSyntaxTree.ParseText(newSource, options);
             }
 
-            var references = new HashSet<MetadataReference>
-            {
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Console).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(AssemblyTargetedPatchBandAttribute).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(CSharpArgumentInfo).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(EffectT).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(ICreature).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Creature).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(BaseSpell).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(ChatChannel).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(ChatChannelStore).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(IncomingPacket).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(InvalidOperation).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(JsonConvert).Assembly.Location)
-            };
+            var references = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Where(a => !a.IsDynamic)
+                .Select(a => a.Location)
+                .Where(s => !string.IsNullOrEmpty(s))
+                .Where(s => !s.Contains("xunit"))
+                .Select(s => MetadataReference.CreateFromFile(s))
+                .ToList();
 
-            foreach (var assembly in typeof(JsonConvert).Assembly.GetReferencedAssemblies())
-                references.Add(MetadataReference.CreateFromFile(Assembly.Load(assembly.FullName).Location));
-
-            Assembly.GetEntryAssembly().GetReferencedAssemblies()
+            AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic)
+                ?.SelectMany(x => x.GetReferencedAssemblies())
+                .Where(a => a.Name?.Contains("NeoServer") ?? false)
                 .ToList()
                 .ForEach(a => references.Add(MetadataReference.CreateFromFile(Assembly.Load(a).Location)));
-            return CSharpCompilation.Create("Scripts.dll",
+
+            return CSharpCompilation.Create("Extensions.dll",
                 syntaxTrees,
                 references,
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
+                    checkOverflow: true,
                     optimizationLevel: OptimizationLevel.Release,
                     assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default).WithPlatform(Platform.AnyCpu));
+        }
+
+        private static string AddAttribute(string source, ScriptRewriter rewriter)
+        {
+            var syntaxTree = CSharpSyntaxTree.ParseText(source);
+
+            var newNode = rewriter.Visit(syntaxTree.GetRoot());
+
+            return newNode.ToFullString();
         }
     }
 }

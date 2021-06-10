@@ -1,10 +1,8 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-
-namespace NeoServer.Game.Contracts.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface IWalkableMonster
     {
-        void Escape(Location fromLocation);
+        void Escape(Location.Structs.Location fromLocation);
         bool LookForNewEnemy();
     }
 }

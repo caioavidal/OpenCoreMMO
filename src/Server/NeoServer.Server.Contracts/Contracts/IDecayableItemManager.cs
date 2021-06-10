@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items;
 
-namespace NeoServer.Server.Contracts
+namespace NeoServer.Server.Common.Contracts
 {
     public interface IDecayableItemManager
     {

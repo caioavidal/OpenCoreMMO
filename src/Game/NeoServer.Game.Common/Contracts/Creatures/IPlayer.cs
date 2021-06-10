@@ -1,19 +1,16 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Items.Types.Useables;
-using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Contracts.World;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate void CancelWalk(IPlayer player);
 
@@ -188,7 +185,7 @@ namespace NeoServer.Game.Contracts.Creatures
 
         void ResetIdleTime();
         void CancelWalk();
-        bool CanMoveThing(Location location);
+        bool CanMoveThing(Location.Structs.Location location);
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
         bool HasEnoughLevel(ushort level);

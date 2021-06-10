@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using NeoServer.Enums.Creatures.Enums;
+using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Conditions;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Creatures.Enums;
 
 namespace NeoServer.Game.Combat.Spells
 {

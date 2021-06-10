@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.World.Map;
+﻿using NeoServer.Game.World.Algorithms;
+using NeoServer.Game.World.Map;
 using Xunit;
 
 namespace NeoServer.Game.World.Tests

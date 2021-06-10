@@ -1,10 +1,8 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-
-namespace NeoServer.Game.Contracts.Items
+﻿namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IThing
     {
-        Location Location { get; set; }
+        Location.Structs.Location Location { get; set; }
         string Name { get; }
         string InspectionText => $"{Name}";
         string CloseInspectionText => InspectionText;

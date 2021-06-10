@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Map.Tiles;
 

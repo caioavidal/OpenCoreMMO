@@ -2,7 +2,7 @@
 using System.Linq;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Effects.Explosion
+namespace NeoServer.Game.Common.Effects.Magical
 {
     public class ExplosionEffect
     {
@@ -39,7 +39,7 @@ namespace NeoServer.Game.Effects.Explosion
             return points;
         }
 
-        public static IEnumerable<Coordinate> Create(Location location, int radius)
+        public static IEnumerable<Coordinate> Create(Location.Structs.Location location, int radius)
         {
             var i = 0;
 

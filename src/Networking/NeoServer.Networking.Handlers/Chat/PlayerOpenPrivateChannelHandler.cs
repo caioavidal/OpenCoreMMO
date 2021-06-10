@@ -1,11 +1,12 @@
 ﻿using System;
 using NeoServer.Data.Interfaces;
-using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Networking.Packets.Incoming.Chat;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Networking.Packets.Outgoing.Chat;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Server.Handlers.Player
+namespace NeoServer.Networking.Handlers.Chat
 {
     public class PlayerOpenPrivateChannelHandler : PacketHandler
     {

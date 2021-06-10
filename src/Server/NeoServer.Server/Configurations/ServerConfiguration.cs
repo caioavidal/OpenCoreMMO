@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeoServer.Server.Standalone
+namespace NeoServer.Server.Configurations
 {
     public enum DatabaseType
     {

@@ -2,14 +2,16 @@
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using NeoServer.Data;
+using NeoServer.Data.Contexts;
+using NeoServer.Data.Factory;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Providers.InMemoryDB.Extensions;
-using NeoServer.Data.Providers.MySQL.Extensions;
-using NeoServer.Data.Providers.SQLite.Extensions;
+using NeoServer.Data.Providers.InMemory;
+using NeoServer.Data.Providers.MySQL;
+using NeoServer.Data.Providers.SQLite;
 using NeoServer.Data.Repositories;
+using NeoServer.Server.Configurations;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC.Modules
 {
     public static class DatabaseInjection
     {

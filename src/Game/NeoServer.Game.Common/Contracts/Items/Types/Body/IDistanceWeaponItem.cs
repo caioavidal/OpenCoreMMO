@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Items.Types.Body
+namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
     public interface IDistanceWeaponItem : IWeapon, IBodyEquipmentItem
     {

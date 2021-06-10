@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Contracts.World;
+using NeoServer.Game.Common.Contracts.World;
 
 namespace NeoServer.Game.DataStore
 {

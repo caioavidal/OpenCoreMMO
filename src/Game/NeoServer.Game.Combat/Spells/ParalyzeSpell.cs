@@ -1,10 +1,8 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Combat.Spells;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Creatures.Spells
+namespace NeoServer.Game.Combat.Spells
 {
     public class ParalyzeSpell : Spell<ParalyzeSpell>
     {

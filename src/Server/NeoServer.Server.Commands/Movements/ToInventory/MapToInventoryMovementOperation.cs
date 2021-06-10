@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 
-namespace NeoServer.Server.Commands.Movement
+namespace NeoServer.Server.Commands.Movements.ToInventory
 {
     public sealed class MapToInventoryMovementOperation
     {

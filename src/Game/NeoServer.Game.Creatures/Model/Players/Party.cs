@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {

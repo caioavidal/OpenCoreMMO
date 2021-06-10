@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items;
 using NeoServer.OTB.Parsers;
 using Newtonsoft.Json.Linq;
 
-namespace NeoServer.Loaders.Items
+namespace NeoServer.Loaders.Items.Parsers
 {
     public class ItemTypeMetadataParser
     {

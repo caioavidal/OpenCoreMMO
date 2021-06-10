@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Data
+﻿namespace NeoServer.Data.Factory
 {
     public class DbContextFactory
     {

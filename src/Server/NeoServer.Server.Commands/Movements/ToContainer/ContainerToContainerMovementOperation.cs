@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 
-namespace NeoServer.Server.Commands.Movement
+namespace NeoServer.Server.Commands.Movements.ToContainer
 {
     public class ContainerToContainerMovementOperation
     {

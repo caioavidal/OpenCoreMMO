@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface IShopItem
     {

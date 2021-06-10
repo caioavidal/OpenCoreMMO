@@ -1,8 +1,7 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate void RemoveItemFromOpenedContainer(IPlayer player, byte containerId, byte slotIndex, IItem item);
 
@@ -29,7 +28,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void CloseContainer(byte containerId);
         void CloseDistantContainers();
         void GoBackContainer(byte containerId);
-        void MoveItemBetweenContainers(Location fromLocation, Location toLocation, byte count = 1);
-        void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null);
+        void MoveItemBetweenContainers(Location.Structs.Location fromLocation, Location.Structs.Location toLocation, byte count = 1);
+        void OpenContainerAt(Location.Structs.Location location, byte containerLevel, IContainer containerToOpen = null);
     }
 }

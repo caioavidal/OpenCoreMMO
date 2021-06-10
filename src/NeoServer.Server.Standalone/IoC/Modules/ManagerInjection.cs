@@ -1,11 +1,11 @@
 ﻿using Autofac;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creature;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Creatures;
 using NeoServer.Game.World.Spawns;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Instances;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Managers;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC.Modules
 {
     public static class ManagerInjection
     {

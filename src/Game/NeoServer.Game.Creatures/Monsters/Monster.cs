@@ -4,24 +4,22 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
+using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Combat;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Combat.Attacks;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Creatures.Model.Monsters.Loots;
-using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Monsters.Combats;
+using NeoServer.Game.Creatures.Monsters.Loots;
 
-namespace NeoServer.Game.Creatures.Model.Monsters
+namespace NeoServer.Game.Creatures.Monsters
 {
     public class Monster : WalkableMonster, IMonster
     {

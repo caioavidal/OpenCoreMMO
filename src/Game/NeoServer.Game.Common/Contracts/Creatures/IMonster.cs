@@ -1,12 +1,11 @@
 ﻿using System.Collections.Immutable;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.World;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
-    public delegate void Born(IMonster monster, Location location);
+    public delegate void Born(IMonster monster, Location.Structs.Location location);
 
     public delegate void MonsterChangeState(IMonster monster, MonsterState fromState, MonsterState toState);
 
@@ -73,7 +72,7 @@ namespace NeoServer.Game.Contracts.Creatures
         void ChangeState();
 
         void Escape();
-        void Born(Location location);
+        void Born(Location.Structs.Location location);
         void Summon(ISummonService summonService);
     }
 }

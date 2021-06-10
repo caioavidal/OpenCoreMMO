@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Creature.Model;
-using NeoServer.Game.Creatures.Enums;
 
-namespace NeoServer.Game.Creatures.Model
+namespace NeoServer.Game.Creatures.Model.Bases
 {
     public abstract class Creature : IEquatable<Creature>, ICreature
     {

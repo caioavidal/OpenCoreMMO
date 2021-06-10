@@ -1,4 +1,4 @@
-﻿using NeoServer.Server.Contracts;
+﻿using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Tasks;
 

@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
+﻿using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Networking.Packets.Outgoing.Creature;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Talks
 {
     public class CreatureHearEventHandler
     {

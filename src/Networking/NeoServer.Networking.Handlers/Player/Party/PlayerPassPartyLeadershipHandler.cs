@@ -1,10 +1,9 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Handlers;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Player
+namespace NeoServer.Networking.Handlers.Player.Party
 {
     public class PlayerPassPartyLeadershipHandler : PacketHandler
     {

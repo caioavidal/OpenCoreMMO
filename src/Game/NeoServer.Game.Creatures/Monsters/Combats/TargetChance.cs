@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Creatures.Model.Monsters
+namespace NeoServer.Game.Creatures.Monsters.Combats
 {
     public struct IntervalChance : IIntervalChance
     {

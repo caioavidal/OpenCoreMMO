@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using NeoServer.Data.Model;
-using NeoServer.Game.Common.Players;
+using NeoServer.Game.Common.Creatures.Players;
 
-namespace NeoServer.Server.Model.Players
+namespace NeoServer.Data.Model
 {
     public class PlayerModel
     {

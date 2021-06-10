@@ -1,10 +1,10 @@
-﻿using NeoServer.Game.Common;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items.Containers
 {
     public class PickupableContainer : Container, IPickupableContainer
     {

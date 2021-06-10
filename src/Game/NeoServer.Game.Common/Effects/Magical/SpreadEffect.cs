@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Effects.Magical
+namespace NeoServer.Game.Common.Effects.Magical
 {
     public class SpreadEffect
     {
@@ -49,7 +49,7 @@ namespace NeoServer.Game.Effects.Magical
             return points[..count];
         }
 
-        public static Coordinate[] Create(Location location, Direction direction, int length, int spread = 1)
+        public static Coordinate[] Create(Location.Structs.Location location, Direction direction, int length, int spread = 1)
         {
             var i = 0;
 

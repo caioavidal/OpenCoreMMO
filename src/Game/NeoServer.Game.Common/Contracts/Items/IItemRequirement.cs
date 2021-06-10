@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
-using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Items
+namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IItemRequirement : IItem
     {

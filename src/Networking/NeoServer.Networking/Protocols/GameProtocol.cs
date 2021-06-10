@@ -1,7 +1,7 @@
 ﻿using System;
+using NeoServer.Networking.Handlers;
 using NeoServer.Networking.Packets.Security;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Handlers;
+using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Protocols
 {

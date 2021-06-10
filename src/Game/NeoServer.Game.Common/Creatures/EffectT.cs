@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Enums.Creatures.Enums
+﻿namespace NeoServer.Game.Common.Creatures
 {
     public enum EffectT : byte
     {

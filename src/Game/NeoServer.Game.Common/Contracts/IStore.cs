@@ -1,7 +1,6 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
 
-namespace NeoServer.Game.Contracts
+namespace NeoServer.Game.Common.Contracts
 {
     /// <summary>
     ///     A contract to represent anything that can store things

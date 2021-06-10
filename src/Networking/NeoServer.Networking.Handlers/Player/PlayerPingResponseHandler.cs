@@ -1,9 +1,9 @@
 ﻿using System;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Handlers.Player
+namespace NeoServer.Networking.Handlers.Player
 {
     public sealed class PlayerPingResponseHandler : PacketHandler
     {

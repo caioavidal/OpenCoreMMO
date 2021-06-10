@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Structs;
-using NeoServer.Game.Creatures.Enums;
 
 namespace NeoServer.Game.Creatures
 {

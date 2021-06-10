@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items;
 
-namespace NeoServer.Game.Contracts.World.Tiles
+namespace NeoServer.Game.Common.Contracts.World.Tiles
 {
     public interface IOperationResult
     {

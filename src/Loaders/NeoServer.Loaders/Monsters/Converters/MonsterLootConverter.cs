@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures;
-using NeoServer.Game.Creatures.Model.Monsters.Loots;
+using NeoServer.Game.Creatures.Monsters.Loots;
 using static NeoServer.Loaders.Monsters.MonsterData;
 
 namespace NeoServer.Loaders.Monsters.Converters

@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing
+namespace NeoServer.Networking.Packets.Outgoing.Effect
 {
     public class DistanceEffectPacket : OutgoingPacket
     {

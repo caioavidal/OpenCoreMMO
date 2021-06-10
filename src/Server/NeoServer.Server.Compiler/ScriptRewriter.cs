@@ -1,10 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using NeoServer.Server.Attributes;
 
 namespace NeoServer.Server.Compiler
 {
-    public class ScriptRewriter : CSharpSyntaxRewriter
+    internal class ScriptRewriter : CSharpSyntaxRewriter
     {
         public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
         {
@@ -24,13 +25,13 @@ namespace NeoServer.Server.Compiler
 
         private AttributeListSyntax CreateAttribute()
         {
+            var attributeType = typeof(ExtensionAttribute);
             return SyntaxFactory.AttributeList(
                 SyntaxFactory.SingletonSeparatedList(
                     SyntaxFactory.Attribute(
-                        SyntaxFactory.IdentifierName("Script")
-                    )
-                )
-            );
+                        SyntaxFactory.QualifiedName(
+                            SyntaxFactory.IdentifierName(attributeType.Namespace ?? string.Empty),
+                            SyntaxFactory.IdentifierName(attributeType.Name?.Replace("Attribute", string.Empty)))))).NormalizeWhitespace();
         }
     }
 }

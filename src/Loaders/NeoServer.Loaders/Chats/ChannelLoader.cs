@@ -2,17 +2,16 @@
 using System.IO;
 using System.Linq;
 using NeoServer.Game.Chats;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Chats.Rules;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.DataStore;
-using NeoServer.Loaders;
-using NeoServer.Loaders.Chats;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Standalone;
+using NeoServer.Server.Configurations;
 using Newtonsoft.Json;
 using Serilog.Core;
 
-namespace NeoServer.Scripts.Chats
+namespace NeoServer.Loaders.Chats
 {
     public class ChannelLoader : IStartupLoader
     {

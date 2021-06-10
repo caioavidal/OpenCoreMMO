@@ -1,8 +1,9 @@
 ﻿using Moq;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests;
+using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players

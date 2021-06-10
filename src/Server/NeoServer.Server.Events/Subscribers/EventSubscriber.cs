@@ -1,10 +1,15 @@
 ﻿using Autofac;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Server.Events.Combat;
+using NeoServer.Server.Events.Creature;
+using NeoServer.Server.Events.Items;
+using NeoServer.Server.Events.Player;
+using NeoServer.Server.Events.Tiles;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Subscribers
 {
     public class EventSubscriber
     {

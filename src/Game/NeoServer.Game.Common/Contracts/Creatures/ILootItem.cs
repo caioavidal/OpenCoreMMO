@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Contracts.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface ILootItem
     {

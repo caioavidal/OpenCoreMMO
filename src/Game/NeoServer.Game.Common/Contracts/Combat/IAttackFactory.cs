@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Contracts.Combat
+﻿namespace NeoServer.Game.Common.Contracts.Combat
 {
     //public interface IAttackFactory
     //{

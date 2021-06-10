@@ -3,7 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Effects.Magical
+namespace NeoServer.Game.Common.Effects.Magical
 {
     public partial class AreaEffect
     {
@@ -35,7 +35,7 @@ namespace NeoServer.Game.Effects.Magical
             return points[..count];
         }
 
-        public static Coordinate[] Create(Location location, string areaType, byte[,] areaTemplate)
+        public static Coordinate[] Create(Location.Structs.Location location, string areaType, byte[,] areaTemplate)
         {
             var i = 0;
 

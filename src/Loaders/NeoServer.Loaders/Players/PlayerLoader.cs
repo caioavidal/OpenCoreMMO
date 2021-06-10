@@ -4,16 +4,18 @@ using System.Linq;
 using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Creature.Model;
+using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Loaders.Players
 {

@@ -1,9 +1,8 @@
 ﻿using System;
-using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 
-namespace NeoServer.Game.Contracts.Bases
+namespace NeoServer.Game.Common.Contracts.Bases
 {
     public abstract class Store : IStore
     {

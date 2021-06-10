@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
+using NeoServer.Networking.Handlers.Chat;
+using NeoServer.Networking.Handlers.LogIn;
 using NeoServer.Networking.Handlers.Player;
-using NeoServer.Server.Contracts.Network.Enums;
-using NeoServer.Server.Handlers.Authentication;
-using NeoServer.Server.Handlers.Player;
-using NeoServer.Server.Handlers.Players;
+using NeoServer.Networking.Handlers.Player.Movement;
+using NeoServer.Networking.Handlers.Player.Party;
+using NeoServer.Networking.Handlers.Shop;
+using NeoServer.Server.Common.Contracts.Network.Enums;
 
-namespace NeoServer.Networking.Packets.Incoming
+namespace NeoServer.Networking.Handlers
 {
     public sealed class InputHandlerMap
     {

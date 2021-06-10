@@ -3,8 +3,9 @@ using System.IO;
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using NeoServer.Game.Common;
+using NeoServer.Server.Configurations;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC.Modules
 {
     public static class ConfigurationInjection
     {

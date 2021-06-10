@@ -1,14 +1,15 @@
 ﻿using System.Linq;
-using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Parsers.Effects;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Networking.Packets.Outgoing.Effect;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Combat
 {

@@ -1,10 +1,9 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Creatures.Model.Monsters;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Monsters;
 using Serilog.Core;
 
-namespace NeoServer.Game.Creatures
+namespace NeoServer.Game.Creatures.Factories
 {
     public class MonsterFactory : IMonsterFactory
     {

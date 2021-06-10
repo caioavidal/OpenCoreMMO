@@ -1,6 +1,6 @@
 using NeoServer.OTB.Parsers;
 
-namespace NeoServer.OTBM.Structure
+namespace NeoServer.OTBM.Structure.TileArea
 {
     public struct CustomAttribute
     {

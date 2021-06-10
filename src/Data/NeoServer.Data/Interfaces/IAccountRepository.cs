@@ -3,8 +3,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using NeoServer.Data.Model;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players;
+using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Data.Interfaces
 {

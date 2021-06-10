@@ -1,11 +1,12 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Spells;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
+using NeoServer.Networking.Packets.Outgoing.Effect;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Player
 {
     public class PlayerCannotUseSpellEventHandler
     {

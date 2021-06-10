@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NeoServer.Data.Model;
 using NeoServer.Data.Seeds;
-using NeoServer.Server.Model.Players;
 
-namespace NeoServer.Data.Configurations
+namespace NeoServer.Data.Configurations.ForSqLite
 {
     public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<PlayerModel>
     {

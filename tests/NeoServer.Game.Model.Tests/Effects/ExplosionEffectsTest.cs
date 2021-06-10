@@ -1,7 +1,7 @@
-using NeoServer.Game.Effects.Explosion;
+using NeoServer.Game.Common.Effects.Magical;
 using Xunit;
 
-namespace NeoServer.Game.Effects.Tests
+namespace NeoServer.Game.Common.Tests.Effects
 {
     public class ExplosionEffectsTest
     {

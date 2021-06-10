@@ -1,12 +1,12 @@
 ﻿using System.Linq;
-using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.DataStore;
-using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Networking.Packets.Incoming.Chat;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Handlers.Player
+namespace NeoServer.Networking.Handlers.Chat
 {
     public class PlayerCloseChannelHandler : PacketHandler
     {

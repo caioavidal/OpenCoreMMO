@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Server.Events.Creature.Monsters
 {

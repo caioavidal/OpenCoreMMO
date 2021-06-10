@@ -1,4 +1,4 @@
-namespace NeoServer.OTBM.Structure
+namespace NeoServer.OTBM.Structure.TileArea
 {
     public interface ITileNode
     {

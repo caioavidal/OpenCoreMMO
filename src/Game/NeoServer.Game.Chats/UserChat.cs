@@ -1,6 +1,7 @@
 ﻿using System;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Chats.Rules;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Game.Chats
 {

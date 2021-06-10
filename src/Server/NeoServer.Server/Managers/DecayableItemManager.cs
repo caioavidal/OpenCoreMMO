@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Server.Contracts;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Instances
+namespace NeoServer.Server.Managers
 {
     public class DecayableItemManager : IDecayableItemManager
     {

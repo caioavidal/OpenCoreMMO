@@ -1,9 +1,8 @@
-﻿using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Magical;
+﻿using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Effects.Magical;
 
-namespace NeoServer.Game.Creatures.Combat.Attacks
+namespace NeoServer.Game.Combat.Attacks
 {
     public class SpreadCombatAttack : CombatAttack
     {

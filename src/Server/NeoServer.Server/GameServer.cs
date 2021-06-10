@@ -1,7 +1,8 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Tasks;
-using NeoServer.Server.Instances;
+﻿using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Tasks;
+using NeoServer.Server.Common.Enums;
+using NeoServer.Server.Managers;
 
 namespace NeoServer.Server
 {

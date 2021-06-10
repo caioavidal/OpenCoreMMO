@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Items
+namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface ILiquidPoolFactory : IFactory
     {
-        ILiquid Create(Location location, LiquidColor color);
-        ILiquid CreateDamageLiquidPool(Location location, LiquidColor color);
+        ILiquid Create(Location.Structs.Location location, LiquidColor color);
+        ILiquid CreateDamageLiquidPool(Location.Structs.Location location, LiquidColor color);
     }
 }

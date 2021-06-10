@@ -1,7 +1,8 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Server.Contracts.Tasks;
+﻿using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Server.Common.Contracts.Tasks;
+using NeoServer.Server.Common.Enums;
 
-namespace NeoServer.Server.Contracts
+namespace NeoServer.Server.Common.Contracts
 {
     public interface IGameServer
     {
