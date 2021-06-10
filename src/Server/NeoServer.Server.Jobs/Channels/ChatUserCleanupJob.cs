@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using NeoServer.Game.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Chats;
 
-namespace NeoServer.Server.Jobs.Creatures
+namespace NeoServer.Server.Jobs.Channels
 {
     public class ChatUserCleanupJob
     {

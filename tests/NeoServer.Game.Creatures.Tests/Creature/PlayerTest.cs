@@ -1,12 +1,12 @@
 ﻿using Moq;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Tests;
+using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
-namespace NeoServer.Game.Creatures.Tests.Players
+namespace NeoServer.Game.Creatures.Tests.Creature
 {
     public class PlayerTest
     {

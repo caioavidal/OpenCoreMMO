@@ -1,7 +1,7 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Parsers.Effects
+namespace NeoServer.Game.Common.Effects.Parsers
 {
     public class DamageEffectParser
     {

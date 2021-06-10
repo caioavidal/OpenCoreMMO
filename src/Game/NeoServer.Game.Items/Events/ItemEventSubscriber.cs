@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Items.Types.Runes;
+﻿using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Runes;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
 
 namespace NeoServer.Game.Items.Events
 {

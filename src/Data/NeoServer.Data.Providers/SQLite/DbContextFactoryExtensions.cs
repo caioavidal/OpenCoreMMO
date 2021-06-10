@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Contexts;
+using NeoServer.Data.Factory;
 
-namespace NeoServer.Data.Providers.SQLite.Extensions
+namespace NeoServer.Data.Providers.SQLite
 {
     public static class DbContextFactoryExtensions
     {

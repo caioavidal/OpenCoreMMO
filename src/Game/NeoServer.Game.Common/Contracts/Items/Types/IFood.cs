@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common;
+﻿using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types
 {
     public interface IFood : IItem
     {

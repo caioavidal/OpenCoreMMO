@@ -1,4 +1,4 @@
-namespace NeoServer.Server.Contracts.Network.Enums
+namespace NeoServer.Server.Common.Contracts.Network.Enums
 {
     public enum GameIncomingPacketType : byte
     {

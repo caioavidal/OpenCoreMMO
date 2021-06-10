@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Combat.Attacks
 {

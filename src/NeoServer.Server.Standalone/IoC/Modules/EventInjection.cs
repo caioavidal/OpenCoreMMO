@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Reflection;
 using Autofac;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Server.Events;
+using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Server.Events.Player;
+using NeoServer.Server.Events.Subscribers;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC.Modules
 {
     public static class EventInjection
     {

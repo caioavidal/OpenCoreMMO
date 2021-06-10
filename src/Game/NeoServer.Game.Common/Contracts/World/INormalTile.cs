@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
 
-namespace NeoServer.Game.Contracts
+namespace NeoServer.Game.Common.Contracts.World
 {
     public delegate void RemoveThing(IThing thing, INormalTile tile, byte stackPosition);
 
@@ -19,7 +17,7 @@ namespace NeoServer.Game.Contracts
 
         IEnumerable<IItem> ItemsWithSeparation { get; }
 
-        Location Location { get; }
+        Location.Structs.Location Location { get; }
 
         byte Flags { get; }
 

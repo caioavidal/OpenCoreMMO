@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using NeoServer.Game.Common.Effects;
 using NeoServer.Game.DataStore;
-using NeoServer.Game.Effects;
 using NeoServer.Loaders.Interfaces;
 
 namespace NeoServer.Loaders.Effects

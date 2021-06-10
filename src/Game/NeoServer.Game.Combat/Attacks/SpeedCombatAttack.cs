@@ -1,11 +1,9 @@
-﻿using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Spells;
+﻿using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Spells;
 
-namespace NeoServer.Game.Creatures.Combat.Attacks
+namespace NeoServer.Game.Combat.Attacks
 {
     public class SpeedCombatAttack : DistanceCombatAttack
     {

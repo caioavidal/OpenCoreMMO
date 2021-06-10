@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Common.Creatures.Players
+﻿namespace NeoServer.Game.Common.Creatures
 {
     public enum ConditionAttribute
     {

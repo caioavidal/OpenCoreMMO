@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

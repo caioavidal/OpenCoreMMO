@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Effects.Explosion;
 
-namespace NeoServer.Game.Creatures.Combat.Attacks
+namespace NeoServer.Game.Combat.Attacks
 {
     public class DistanceAreaCombatAttack : DistanceCombatAttack
     {

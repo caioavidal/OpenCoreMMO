@@ -1,12 +1,12 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Party;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Texts;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Party;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player.Party
 {
     public class PlayerLeftPartyEventHandler
     {

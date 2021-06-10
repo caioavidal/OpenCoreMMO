@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Items.UsableItems.Runes;
+
+namespace NeoServer.Extensions.Runes
+{
+    public class HealingRune : Rune, IConsumable, IUseableOnCreature, IUseableOn
+    {
+        public HealingRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
+            base(type, location, attributes)
+        {
+        }
+
+        public override ushort Duration => 0;
+        public event Use OnUsed;
+        public EffectT Effect => EffectT.GlitterBlue;
+
+        public void Use(IPlayer usedBy, ICreature creature)
+        {
+            var minMax = Formula(usedBy, usedBy.Level, usedBy.Skills[SkillType.Magic].Level);
+            var healValue = (ushort) GameRandom.Random.Next(minMax.Min, maxValue: minMax.Max);
+            if (creature is ICombatActor actor) actor.Heal(healValue);
+
+            Reduce();
+
+            OnUsed?.Invoke(usedBy, creature, this);
+        }
+    }
+}

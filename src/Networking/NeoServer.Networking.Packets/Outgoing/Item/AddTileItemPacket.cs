@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts.Items;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing
+namespace NeoServer.Networking.Packets.Outgoing.Item
 {
     public class AddTileItemPacket : OutgoingPacket
     {

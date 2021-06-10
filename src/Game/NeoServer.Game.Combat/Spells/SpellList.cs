@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Game.Contracts.Spells;
+using NeoServer.Game.Common.Contracts.Spells;
 
-namespace NeoServer.Game.Creatures.Spells
+namespace NeoServer.Game.Combat.Spells
 {
     public class SpellList
     {

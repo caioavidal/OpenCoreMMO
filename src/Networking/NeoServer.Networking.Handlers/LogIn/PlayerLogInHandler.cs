@@ -1,13 +1,14 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Commands;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Standalone;
+using NeoServer.Server.Commands.Player;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Common.Enums;
+using NeoServer.Server.Configurations;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Handlers.Authentication
+namespace NeoServer.Networking.Handlers.LogIn
 {
     public class PlayerLogInHandler : PacketHandler
     {

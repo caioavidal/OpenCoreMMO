@@ -5,12 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Model.Players;
+using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Data.Repositories
 {

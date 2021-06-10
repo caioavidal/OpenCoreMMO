@@ -1,12 +1,14 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types.Runes;
-using NeoServer.Game.Contracts.Items.Types.Useables;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
+﻿using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Runes;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.DataStore;
-using NeoServer.Game.Effects.Magical;
+using NeoServer.Game.Items.Factories;
 
 namespace NeoServer.Game.Items.Events
 {

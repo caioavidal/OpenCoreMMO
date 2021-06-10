@@ -1,8 +1,8 @@
 ﻿using System;
-using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 
-namespace NeoServer.Game.Contracts.Items
+namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IItem : IThing
     {

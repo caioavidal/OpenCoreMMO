@@ -2,7 +2,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTB.Structure;
 
-namespace NeoServer.OTBM.Structure
+namespace NeoServer.OTBM.Structure.Towns
 {
     public class TownNode
     {

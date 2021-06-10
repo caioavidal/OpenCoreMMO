@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Creatures.Spells;
+using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
-using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog.Core;

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types.Useables;
-using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Creatures.Enums;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate void OnAttackTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId);
 

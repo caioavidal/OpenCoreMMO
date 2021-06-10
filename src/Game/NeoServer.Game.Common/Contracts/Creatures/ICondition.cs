@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Creatures.Players;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface ICondition
     {

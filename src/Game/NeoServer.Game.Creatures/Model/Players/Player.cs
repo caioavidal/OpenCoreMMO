@@ -1,10 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Combat.Conditions;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Conditions;
+using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
@@ -12,27 +22,13 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Common.Talks;
 using NeoServer.Game.Common.Texts;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Items.Types.Body;
-using NeoServer.Game.Contracts.Items.Types.Useables;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Contracts.World.Tiles;
-using NeoServer.Game.Creatures.Enums;
-using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.Creatures.Spells;
+using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.DataStore;
 
-namespace NeoServer.Server.Model.Players
+namespace NeoServer.Game.Creatures.Model.Players
 {
     public class Player : CombatActor, IPlayer
     {

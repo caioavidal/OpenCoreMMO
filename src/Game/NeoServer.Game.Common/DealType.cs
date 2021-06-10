@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Creatures.Npcs.Shop
+﻿namespace NeoServer.Game.Common
 {
     public enum DealType
     {

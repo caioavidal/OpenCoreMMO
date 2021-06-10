@@ -1,9 +1,9 @@
-using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Item.Structs;
 using NeoServer.Game.Items;
 using NeoServer.OTB.Structure;
 
-namespace NeoServer.Loaders.Items
+namespace NeoServer.Loaders.Items.Parsers
 {
     public class ItemNodeParser
     {

@@ -1,6 +1,6 @@
 using System;
 using System.Buffers;
-using NeoServer.Game.Common.Players;
+using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Common.Location.Structs
 {

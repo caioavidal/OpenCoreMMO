@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Creatures.Model.Monsters
+﻿namespace NeoServer.Game.Creatures.Monsters.Combats
 {
     public struct CombatStrategy
     {

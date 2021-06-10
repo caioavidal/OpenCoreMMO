@@ -1,8 +1,9 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using NeoServer.Networking.Packets.Connection;
 using NeoServer.Networking.Protocols;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Network;
 using Serilog.Core;
 
 namespace NeoServer.Networking.Listeners

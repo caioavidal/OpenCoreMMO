@@ -1,11 +1,10 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Players;
 
-namespace NeoServer.Game.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
     public interface IInventoryItem : IItemRequirement, IItem
     {

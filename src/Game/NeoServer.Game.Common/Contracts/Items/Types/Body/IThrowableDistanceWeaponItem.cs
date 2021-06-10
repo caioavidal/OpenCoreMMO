@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace NeoServer.Game.Contracts.Items.Types.Body
+namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
     public interface IThrowableDistanceWeaponItem : ICumulative, IWeapon, IBodyEquipmentItem
     {

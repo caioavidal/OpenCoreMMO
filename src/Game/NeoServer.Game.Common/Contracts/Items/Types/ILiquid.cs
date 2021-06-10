@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Items
+namespace NeoServer.Game.Common.Contracts.Items.Types
 {
     public interface ILiquid : IDecayable, IItem
     {

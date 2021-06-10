@@ -2,15 +2,14 @@
 using System.Threading.Tasks;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Parsers;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Contracts.Items.Types.Containers;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Networking.Packets.Outgoing.Player;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Player
 {
     public class PlayerClosedContainerEventHandler
     {

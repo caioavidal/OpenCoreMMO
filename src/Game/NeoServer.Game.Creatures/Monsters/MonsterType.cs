@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using NeoServer.Game.Common.Contracts.Combat;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Creatures.Monsters;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Contracts.Combat;
-using NeoServer.Game.Contracts.Combat.Attacks;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Creatures.Monsters.Combats;
 
-namespace NeoServer.Game.Creatures.Model.Monsters
+namespace NeoServer.Game.Creatures.Monsters
 {
     public sealed class MonsterType : IMonsterType
     {

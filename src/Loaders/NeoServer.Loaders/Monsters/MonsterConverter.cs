@@ -2,9 +2,10 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Creatures.Model.Monsters;
+using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Creatures.Monsters.Combats;
 using NeoServer.Loaders.Monsters.Converters;
 using Serilog.Core;
 

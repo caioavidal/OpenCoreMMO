@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Contracts.Items.Types.Useables
+namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
 {
     public interface IUseableOnCreature : IUseableOn, IItem
     {

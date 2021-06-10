@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Server.Contracts;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Jobs.Creatures

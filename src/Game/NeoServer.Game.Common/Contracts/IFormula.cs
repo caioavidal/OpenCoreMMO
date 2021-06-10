@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeoServer.Game.Contracts
+namespace NeoServer.Game.Common.Contracts
 {
     public interface IFormula
     {

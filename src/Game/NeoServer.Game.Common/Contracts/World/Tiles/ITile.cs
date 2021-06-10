@@ -1,12 +1,11 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 
-namespace NeoServer.Game.Contracts.World
+namespace NeoServer.Game.Common.Contracts.World.Tiles
 {
     public interface ITile : IStore
     {
-        Location Location { get; }
+        Location.Structs.Location Location { get; }
 
         IItem TopItemOnStack { get; }
         ICreature TopCreatureOnStack { get; }

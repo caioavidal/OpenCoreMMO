@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Bases;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
+﻿using NeoServer.Game.Common.Contracts.Bases;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Map.Tiles
 {

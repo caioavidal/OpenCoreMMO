@@ -4,7 +4,7 @@
 // See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace NeoServer.Game.Contracts.Items
+namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IItemEventFunction
     {

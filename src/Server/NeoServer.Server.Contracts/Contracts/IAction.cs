@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Server.Contracts
+﻿namespace NeoServer.Server.Common.Contracts
 {
     //public interface IAction
     //{

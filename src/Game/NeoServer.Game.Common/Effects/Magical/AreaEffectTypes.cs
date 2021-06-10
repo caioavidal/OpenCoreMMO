@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Effects.Magical
+﻿namespace NeoServer.Game.Common.Effects.Magical
 {
     public partial class AreaEffect
     {

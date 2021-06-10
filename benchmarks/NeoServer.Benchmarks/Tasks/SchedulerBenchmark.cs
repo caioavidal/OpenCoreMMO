@@ -1,25 +1,17 @@
-﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Columns;
-using BenchmarkDotNet.Configs;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Engines;
-using BenchmarkDotNet.Loggers;
-using NeoServer.Server.Contracts.Tasks;
+using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 
 namespace NeoServer.Benchmarks.Tasks
 {
     [HardwareCounters(HardwareCounter.TotalCycles)]
-    [RankColumn, MemoryDiagnoser]
-    [SimpleJob(RunStrategy.ColdStart, launchCount: 1)]
+    [RankColumn]
+    [MemoryDiagnoser]
+    [SimpleJob(RunStrategy.ColdStart, 1)]
     public class SchedulerBenchmark
     {
         [GlobalSetup]
@@ -37,18 +29,17 @@ namespace NeoServer.Benchmarks.Tasks
 
             scheduler.Start(cancellationToken);
 
-            for (int i = 0; i < 1000_000; i++)
-            {
+            for (var i = 0; i < 1000_000; i++)
                 scheduler.AddEvent(new SchedulerEvent(100, Action));
-                //scheduler.AddEvent(new SchedulerEvent(1000, Action));
-                //scheduler.AddEvent(new SchedulerEvent(5000, Action));
-            }
+            //scheduler.AddEvent(new SchedulerEvent(1000, Action));
+            //scheduler.AddEvent(new SchedulerEvent(5000, Action));
 
             //Thread.Sleep(100);
-           // while (scheduler.Count < 1000) { Thread.Sleep(1); }
+            // while (scheduler.Count < 1000) { Thread.Sleep(1); }
 
             return scheduler.Count;
         }
+
         [Benchmark]
         public ulong SchedulerWithDelayTask()
         {
@@ -58,14 +49,12 @@ namespace NeoServer.Benchmarks.Tasks
 
             scheduler.Start(cancellationToken);
 
-            for (int i = 0; i < 1000_000; i++)
-            {
+            for (var i = 0; i < 1000_000; i++)
                 scheduler.AddEvent(new SchedulerEvent(100, Action));
-                //scheduler.AddEvent(new SchedulerEvent(1000, Action));
-                //scheduler.AddEvent(new SchedulerEvent(5000, Action));
-            }
+            //scheduler.AddEvent(new SchedulerEvent(1000, Action));
+            //scheduler.AddEvent(new SchedulerEvent(5000, Action));
 
-           // Thread.Sleep(100);
+            // Thread.Sleep(100);
 
             //            while (scheduler.Count < 1000) { }
             //Thread.Sleep(1000);
@@ -73,6 +62,7 @@ namespace NeoServer.Benchmarks.Tasks
 
             return scheduler.Count;
         }
+
         [Benchmark]
         public ulong SchedulerWithDelay1Ms()
         {
@@ -82,20 +72,20 @@ namespace NeoServer.Benchmarks.Tasks
 
             scheduler.Start(cancellationToken);
 
-            for (int i = 0; i < 1000_000; i++)
-            {
+            for (var i = 0; i < 1000_000; i++)
                 scheduler.AddEvent(new SchedulerEvent(100, Action));
-                //scheduler.AddEvent(new SchedulerEvent(1000, Action));
-                //scheduler.AddEvent(new SchedulerEvent(5000, Action));
-            }
+            //scheduler.AddEvent(new SchedulerEvent(1000, Action));
+            //scheduler.AddEvent(new SchedulerEvent(5000, Action));
             //while (scheduler.Count < 1000) { Thread.Sleep(1); }
-           // Thread.Sleep(100);
+            // Thread.Sleep(100);
             //Thread.Sleep(1000);
 
             return scheduler.Count;
         }
 
-        public void Action() { }
+        public void Action()
+        {
+        }
     }
 
 
@@ -103,7 +93,6 @@ namespace NeoServer.Benchmarks.Tasks
     {
         public CustomOptimizedScheduler(IDispatcher dispatcher) : base(dispatcher)
         {
-
         }
 
         public override bool DispatchEvent(ISchedulerEvent evt)
@@ -113,10 +102,11 @@ namespace NeoServer.Benchmarks.Tasks
                 activeEventIds.TryRemove(evt.EventId, out _);
 
                 preQueue.Enqueue(evt);
-                lock (preQueueMonitor)                 // Let's now wake up the thread by
+                lock (preQueueMonitor) // Let's now wake up the thread by
                 {
                     Monitor.Pulse(preQueueMonitor);
                 }
+
                 return false;
             }
 
@@ -131,7 +121,6 @@ namespace NeoServer.Benchmarks.Tasks
 
             return false;
         }
-
     }
 
     public class SchedulerWithDelay : Scheduler
@@ -140,7 +129,6 @@ namespace NeoServer.Benchmarks.Tasks
 
         public SchedulerWithDelay(IDispatcher dispatcher) : base(dispatcher)
         {
-
         }
 
         public override void Start(CancellationToken token)
@@ -148,17 +136,12 @@ namespace NeoServer.Benchmarks.Tasks
             Task.Run(async () =>
             {
                 while (await reader.WaitToReadAsync())
-                {
                     // Fast loop around available jobs
-                    while (reader.TryRead(out var evt))
-                    {
-                        if (EventIsCancelled(evt.EventId))
-                        {
-                            continue;
-                        }
+                while (reader.TryRead(out var evt))
+                {
+                    if (EventIsCancelled(evt.EventId)) continue;
 
-                        DispatchEvent2(evt);
-                    }
+                    DispatchEvent2(evt);
                 }
             });
         }
@@ -184,34 +167,29 @@ namespace NeoServer.Benchmarks.Tasks
 
         public SchedulerWithDelay1Ms(IDispatcher dispatcher) : base(dispatcher)
         {
-
         }
 
         public override void Start(CancellationToken token)
         {
-
             Task.Run(async () =>
             {
                 while (await reader.WaitToReadAsync())
-                {
                     // Fast loop around available jobs
-                    while (reader.TryRead(out var evt))
-                    {
-                        if (EventIsCancelled(evt.EventId))
-                        {
-                            continue;
-                        }
+                while (reader.TryRead(out var evt))
+                {
+                    if (EventIsCancelled(evt.EventId)) continue;
 
-                        if (!evt.HasExpired)
-                        {
-                            SendBack(evt);
-                            continue;
-                        }
-                        DispatchEvent(evt);
+                    if (!evt.HasExpired)
+                    {
+                        SendBack(evt);
+                        continue;
                     }
+
+                    DispatchEvent(evt);
                 }
             });
         }
+
         private async ValueTask SendBack(ISchedulerEvent evt)
         {
             await Task.Delay(1);
@@ -229,6 +207,7 @@ namespace NeoServer.Benchmarks.Tasks
                 activeEventIds.TryRemove(evt.EventId, out _);
                 return true;
             }
+
             return false;
         }
     }

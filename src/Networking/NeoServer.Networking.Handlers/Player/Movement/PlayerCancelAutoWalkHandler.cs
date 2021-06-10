@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Handlers.Players
+namespace NeoServer.Networking.Handlers.Player.Movement
 {
     public class PlayerCancelAutoWalkHandler : PacketHandler
     {

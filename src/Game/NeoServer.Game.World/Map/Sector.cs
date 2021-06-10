@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Server.Model.World.Map;
 
 namespace NeoServer.Game.World.Map
 {

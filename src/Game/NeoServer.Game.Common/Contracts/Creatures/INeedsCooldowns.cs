@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Contracts.Spells;
+﻿using NeoServer.Game.Common.Contracts.Spells;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface INeedsCooldowns
     {

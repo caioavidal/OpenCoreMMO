@@ -1,10 +1,9 @@
 ﻿using Autofac;
 using NeoServer.Game.Common.Contracts.Services;
-using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Server.Commands.Player.UseItem;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC.Modules
 {
     public static class ServiceInjection
     {

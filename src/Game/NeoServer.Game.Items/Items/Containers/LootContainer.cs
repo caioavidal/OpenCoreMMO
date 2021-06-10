@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Items.Items.Containers

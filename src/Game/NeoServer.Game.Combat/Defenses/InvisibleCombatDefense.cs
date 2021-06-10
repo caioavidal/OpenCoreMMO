@@ -1,9 +1,9 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Spells;
-using NeoServer.Game.Creatures.Spells;
+﻿using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Contracts.Combat.Defenses
+namespace NeoServer.Game.Combat.Defenses
 {
     public class InvisibleCombatDefense : BaseCombatDefense
     {

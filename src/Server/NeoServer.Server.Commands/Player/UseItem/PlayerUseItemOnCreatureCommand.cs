@@ -1,15 +1,14 @@
 ﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types.Useables;
-using NeoServer.Game.Contracts.World;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Player.UseItem;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Commands;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Commands;
 
-namespace NeoServer.Server.Commands.Player
+namespace NeoServer.Server.Commands.Player.UseItem
 {
     public class PlayerUseItemOnCreatureCommand : ICommand
     {

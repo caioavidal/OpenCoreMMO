@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
+using NeoServer.Game.Creatures.Npcs.Shop;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
+using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
-using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
 

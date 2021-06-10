@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Enums.Creatures.Enums;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Item.Structs;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Effects.Parsers;
 
 namespace NeoServer.Game.Items
 {

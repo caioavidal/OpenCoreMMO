@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Contracts.Creatures;
-
-namespace NeoServer.Game.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public interface IPlayerFactory
     {

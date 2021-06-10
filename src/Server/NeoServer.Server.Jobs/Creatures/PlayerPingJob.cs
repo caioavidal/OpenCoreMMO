@@ -1,10 +1,10 @@
 ﻿using System;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Commands;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Commands.Player;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Jobs
+namespace NeoServer.Server.Jobs.Creatures
 {
     public class PlayerPingJob
     {

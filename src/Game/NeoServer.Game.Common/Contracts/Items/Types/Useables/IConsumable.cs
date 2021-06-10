@@ -1,8 +1,7 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items.Types.Useables;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
 {
     public delegate void Use(ICreature usedBy, ICreature creature, IItem item);
 

@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Creatures.Combat.Attacks
+﻿namespace NeoServer.Game.Combat.Attacks
 {
     //public class ManaDrainCombatAttack : DistanceCombatAttack
     //{

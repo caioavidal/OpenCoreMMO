@@ -1,12 +1,10 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-
-namespace NeoServer.Game.Contracts.Items
+﻿namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IMoveableThing : IThing
     {
         void OnMoved();
 
-        void SetNewLocation(Location location)
+        void SetNewLocation(Location.Structs.Location location)
         {
             Location = location;
         }

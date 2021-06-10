@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate void OnLevelAdvance(SkillType skillType, int fromLevel, int toLevel);
 

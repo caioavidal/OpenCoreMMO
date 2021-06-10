@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Contracts.World;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing
+namespace NeoServer.Networking.Packets.Outgoing.Item
 {
     public class RemoveTileThingPacket : OutgoingPacket
     {

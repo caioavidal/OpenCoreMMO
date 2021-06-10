@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Contracts.Chats;
+﻿using NeoServer.Game.Common.Contracts.Chats;
 
 namespace NeoServer.Game.DataStore
 {

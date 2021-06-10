@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Contracts.World.Tiles
+namespace NeoServer.Game.Common.Contracts.World.Tiles
 {
     public interface ITileEnterRule
     {

@@ -1,9 +1,10 @@
-﻿using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Movement;
-using NeoServer.Server.Commands.Movement.ToInventory;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Commands;
+using NeoServer.Server.Commands.Movements;
+using NeoServer.Server.Commands.Movements.ToContainer;
+using NeoServer.Server.Commands.Movements.ToInventory;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Commands;
 
 namespace NeoServer.Server.Commands.Player
 {

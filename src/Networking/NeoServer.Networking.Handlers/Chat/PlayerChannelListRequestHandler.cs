@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using NeoServer.Game.DataStore;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Networking.Packets.Outgoing.Chat;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Server.Handlers.Player
+namespace NeoServer.Networking.Handlers.Chat
 {
     public class PlayerChannelListRequestHandler : PacketHandler
     {

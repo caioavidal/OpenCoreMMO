@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Common
+﻿namespace NeoServer.Game.Common.Item
 {
     public enum ItemEventType : byte
     {

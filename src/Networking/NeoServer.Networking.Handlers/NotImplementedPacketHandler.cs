@@ -1,9 +1,9 @@
 ﻿using System;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Network.Enums;
+using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Network.Enums;
 using Serilog.Core;
 
-namespace NeoServer.Server.Handlers.Authentication
+namespace NeoServer.Networking.Handlers
 {
     public class NotImplementedPacketHandler : PacketHandler
     {

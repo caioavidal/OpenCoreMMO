@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Data.Model;
 using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Commands;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Model.Players;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Commands;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Server.Commands
+namespace NeoServer.Server.Commands.Player
 {
     public class PlayerLogInCommand : ICommand
     {

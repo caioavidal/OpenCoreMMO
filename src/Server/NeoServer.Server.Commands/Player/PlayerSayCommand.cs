@@ -1,13 +1,13 @@
 ﻿using System.Linq;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Commands;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Commands;
+using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Commands.Player
 {

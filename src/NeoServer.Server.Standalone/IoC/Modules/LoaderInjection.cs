@@ -7,9 +7,9 @@ using NeoServer.Loaders.Spawns;
 using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Loaders.World;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC.Modules
 {
     public static class LoaderInjection
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Configurations;
+using NeoServer.Data.Configurations.ForSqLite;
 using NeoServer.Data.Model;
-using NeoServer.Server.Model.Players;
 using Serilog.Core;
 
-namespace NeoServer.Data
+namespace NeoServer.Data.Contexts
 {
     public class NeoContext : DbContext
     {

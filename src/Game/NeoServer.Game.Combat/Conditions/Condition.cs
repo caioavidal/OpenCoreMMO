@@ -1,7 +1,7 @@
 ﻿using System;
-using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Common.Conditions
+namespace NeoServer.Game.Combat.Conditions
 {
     public class Condition : BaseCondition
     {

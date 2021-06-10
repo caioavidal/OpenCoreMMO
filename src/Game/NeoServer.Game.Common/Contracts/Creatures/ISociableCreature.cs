@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Talks;
+﻿using NeoServer.Game.Common.Chats;
 
-namespace NeoServer.Game.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate void Hear(ICreature from, ISociableCreature receiver, SpeechType speechType, string message);
 

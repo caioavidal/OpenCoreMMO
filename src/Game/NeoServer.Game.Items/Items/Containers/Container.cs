@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items.Containers
 {
     public class Container : MoveableItem, IContainer, IItem
     {

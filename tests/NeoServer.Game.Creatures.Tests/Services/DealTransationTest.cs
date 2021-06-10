@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Moq;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
 using NeoServer.Game.Creatures.Events;
+using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests;
-using NeoServer.Server.Model.Players;
+using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services

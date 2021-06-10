@@ -1,11 +1,10 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Contracts.Items
+namespace NeoServer.Game.Common.Contracts.Items.Types
 {
     public interface IMagicField
     {
-        Location Location { get; }
+        Location.Structs.Location Location { get; }
         IItemType Metadata { get; }
 
         void CauseDamage(ICreature toCreature);

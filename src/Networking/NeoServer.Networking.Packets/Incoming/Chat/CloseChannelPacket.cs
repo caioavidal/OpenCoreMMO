@@ -1,6 +1,6 @@
-﻿using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Incoming
+namespace NeoServer.Networking.Packets.Incoming.Chat
 {
     public class CloseChannelPacket : IncomingPacket
     {

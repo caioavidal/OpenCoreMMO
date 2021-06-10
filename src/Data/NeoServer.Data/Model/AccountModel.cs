@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NeoServer.Data.Enums;
 using NeoServer.Data.Helpers;
-using NeoServer.Server.Model.Players;
 
 namespace NeoServer.Data.Model
 {

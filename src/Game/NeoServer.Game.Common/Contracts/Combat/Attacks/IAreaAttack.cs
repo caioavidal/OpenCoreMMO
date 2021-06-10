@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Contracts.Combat
+namespace NeoServer.Game.Common.Contracts.Combat.Attacks
 {
     public interface IAreaAttack
     {

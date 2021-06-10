@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Moq;
-using NeoServer.Server.Contracts.Tasks;
+using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Tasks;
 using Xunit;
 

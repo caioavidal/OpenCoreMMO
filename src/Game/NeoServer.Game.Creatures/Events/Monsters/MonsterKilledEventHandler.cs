@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 
-namespace NeoServer.Game.Creatures.Events
+namespace NeoServer.Game.Creatures.Events.Monsters
 {
     public class MonsterKilledEventHandler : IGameEventHandler
     {

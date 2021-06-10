@@ -3,8 +3,10 @@ using System.Linq;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Structure;
 using NeoServer.OTBM.Structure;
+using NeoServer.OTBM.Structure.TileArea;
+using NeoServer.OTBM.Structure.Towns;
 
-namespace NeoServer.OTBM
+namespace NeoServer.OTBM.Loaders
 {
     /// <summary>
     ///     A class to parse <see cref="OTBNode"></see> structure to <see cref="Structure.OTBM" /> instance

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Server.Contracts.Network
+namespace NeoServer.Server.Common.Contracts.Network
 {
     public interface IConnection
     {

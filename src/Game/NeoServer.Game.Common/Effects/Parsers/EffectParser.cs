@@ -1,6 +1,6 @@
-﻿using NeoServer.Enums.Creatures.Enums;
+﻿using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Effects.Parsers
+namespace NeoServer.Game.Common.Effects.Parsers
 {
     public class EffectParser
     {

@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Item;
+﻿using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Texts;
 
-namespace NeoServer.Game.Parsers.Effects
+namespace NeoServer.Game.Common.Effects.Parsers
 {
     public class DamageTextColorParser
     {

@@ -5,7 +5,6 @@ using System.Text;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Party;
-using NeoServer.Game.Contracts.Creatures;
 
 namespace NeoServer.Game.Creatures
 {

@@ -1,9 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Network.Enums;
+using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Network.Enums;
 
 namespace NeoServer.Networking.Packets.Messages
 {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Standalone;
+using NeoServer.Networking.Packets.Outgoing.Login;
+using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Configurations;
 
-namespace NeoServer.Server.Handlers.Authentication
+namespace NeoServer.Networking.Handlers.LogIn
 {
     public class AccountLoginHandler : PacketHandler
     {

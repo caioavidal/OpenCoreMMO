@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Contexts;
+using NeoServer.Data.Factory;
 
-namespace NeoServer.Data.Providers.InMemoryDB.Extensions
+namespace NeoServer.Data.Providers.InMemory
 {
     public static class DbContextFactoryExtensions
     {

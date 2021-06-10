@@ -1,7 +1,7 @@
 ﻿using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Player
 {
     public class PlayerOperationFailedEventHandler
     {

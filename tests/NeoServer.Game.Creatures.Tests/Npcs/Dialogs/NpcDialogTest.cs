@@ -1,5 +1,5 @@
 ﻿using Moq;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Dialogs;
 using Xunit;

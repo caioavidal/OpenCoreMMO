@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Conditions;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Combat.Conditions;
+using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Server.Jobs.Creatures
 {

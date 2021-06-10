@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts.World;
+﻿using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Handlers.Player
+namespace NeoServer.Networking.Handlers.Player
 {
     public class PlayerLookAtHandler : PacketHandler
     {

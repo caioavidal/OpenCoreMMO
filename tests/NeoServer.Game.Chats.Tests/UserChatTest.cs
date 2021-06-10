@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using NeoServer.Game.Chats.Rules;
 using Xunit;
 
 namespace NeoServer.Game.Chats.Tests

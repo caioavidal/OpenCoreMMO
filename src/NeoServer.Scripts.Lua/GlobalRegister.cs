@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Server.Contracts;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
-using NeoServer.Server.Standalone;
 using Serilog.Core;
 
 namespace NeoServer.Scripts.Lua

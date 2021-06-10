@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
 
-namespace NeoServer.Game.Contracts.World.Tiles
+namespace NeoServer.Game.Common.Contracts.World.Tiles
 {
     public interface IDynamicTile : ITile
     {

@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Common.Location;
-using NeoServer.Game.Contracts;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
-using NeoServer.Server.Contracts.Network.Enums;
+﻿using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Location;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Network.Enums;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Handlers.Players
+namespace NeoServer.Networking.Handlers.Player.Movement
 {
     public class PlayerTurnHandler : PacketHandler
     {

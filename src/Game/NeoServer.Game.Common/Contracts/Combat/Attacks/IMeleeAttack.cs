@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Contracts.Combat.Attacks
+﻿namespace NeoServer.Game.Common.Contracts.Combat.Attacks
 {
     public interface IMeleeAttack
     {

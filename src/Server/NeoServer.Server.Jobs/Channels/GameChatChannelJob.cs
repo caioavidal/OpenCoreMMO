@@ -1,9 +1,8 @@
 ﻿using NeoServer.Game.DataStore;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Jobs.Creatures;
+using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Jobs.Items
+namespace NeoServer.Server.Jobs.Channels
 {
     public class GameChatChannelJob
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Items.Types.Body;
 
-namespace NeoServer.Game.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
 {
     public delegate void RemoveItem(byte slotIndex, IItem item);
 

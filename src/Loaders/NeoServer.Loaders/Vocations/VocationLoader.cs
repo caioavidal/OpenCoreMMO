@@ -5,11 +5,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using NeoServer.Game.Common;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Helpers.JsonConverters;
-using NeoServer.Server.Standalone;
 using Newtonsoft.Json;
 using Serilog.Core;
 

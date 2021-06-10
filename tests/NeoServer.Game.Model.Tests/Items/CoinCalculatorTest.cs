@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Contracts.Items;
 using NeoServer.Game.Items;
 using Xunit;
 

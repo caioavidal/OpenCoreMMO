@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Creatures.Structs;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types.Runes;
 
 namespace NeoServer.Game.Items.Items.UsableItems.Runes
 {

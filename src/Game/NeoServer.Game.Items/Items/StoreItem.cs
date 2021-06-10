@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Common;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Bases;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Bases;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Items.Items
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Contracts.Creatures;
 
-namespace NeoServer.Game.Creatures.Model.Monsters.Loots
+namespace NeoServer.Game.Creatures.Monsters.Loots
 {
     public record Loot(ILootItem[] Items, HashSet<ICreature> Owners, decimal LootRate = 1) : ILoot
     {

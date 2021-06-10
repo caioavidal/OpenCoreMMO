@@ -1,11 +1,11 @@
 ﻿using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming.Shop;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Handlers.Player
+namespace NeoServer.Networking.Handlers.Shop
 {
     public class PlayerPurchaseHandler : PacketHandler
     {

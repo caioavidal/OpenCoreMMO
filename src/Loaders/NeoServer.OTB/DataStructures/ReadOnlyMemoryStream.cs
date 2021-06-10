@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.OTB.DataStructures
 {

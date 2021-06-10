@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common.Creatures.Guilds;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Chats

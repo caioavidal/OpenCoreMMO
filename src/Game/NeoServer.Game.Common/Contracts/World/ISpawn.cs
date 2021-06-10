@@ -1,10 +1,8 @@
-﻿using NeoServer.Game.Common.Location.Structs;
-
-namespace NeoServer.Game.Contracts.World
+﻿namespace NeoServer.Game.Common.Contracts.World
 {
     public interface ISpawn
     {
-        Location Location { get; set; }
+        Location.Structs.Location Location { get; set; }
         byte Radius { get; set; }
         ICreature[] Monsters { get; set; }
         ICreature[] Npcs { get; set; }
@@ -18,7 +16,7 @@ namespace NeoServer.Game.Contracts.World
 
     public interface ISpawnPoint
     {
-        Location Location { get; }
+        Location.Structs.Location Location { get; }
         ushort SpawnTime { get; }
     }
 }

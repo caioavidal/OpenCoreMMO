@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Players;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items.Types;
-using NeoServer.Game.Creature.Model;
-using NeoServer.Server.Model.Players;
+using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.Creatures.Model.Players;
 
-namespace NeoServer.Game.Tests
+namespace NeoServer.Game.Tests.Helpers
 {
     public class PlayerTestDataBuilder
     {

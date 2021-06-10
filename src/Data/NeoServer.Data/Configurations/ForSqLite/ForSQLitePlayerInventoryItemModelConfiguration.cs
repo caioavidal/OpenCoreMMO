@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Model;
 using NeoServer.Data.Seeds;
 
-namespace NeoServer.Data.Configurations
+namespace NeoServer.Data.Configurations.ForSqLite
 {
     public class ForSQLitePlayerInventoryItemModelConfiguration : IEntityTypeConfiguration<PlayerInventoryItemModel>
     {

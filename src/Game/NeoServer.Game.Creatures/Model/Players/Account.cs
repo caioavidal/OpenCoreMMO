@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Server.Model.Players;
 
-namespace NeoServer.Server.Model
+namespace NeoServer.Game.Creatures.Model.Players
 {
     public class Account
     {

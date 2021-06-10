@@ -1,9 +1,7 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Contracts.Spells
+namespace NeoServer.Game.Common.Contracts.Spells
 {
     public delegate void InvokeSpell(ICombatActor creature, ISpell spell);
 

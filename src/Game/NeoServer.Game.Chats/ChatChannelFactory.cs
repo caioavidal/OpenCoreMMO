@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Chats;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
+using NeoServer.Game.Chats.Rules;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Chats

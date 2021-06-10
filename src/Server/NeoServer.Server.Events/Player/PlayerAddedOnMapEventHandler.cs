@@ -1,12 +1,14 @@
-﻿using NeoServer.Enums.Creatures.Enums;
-using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
+using NeoServer.Networking.Packets.Outgoing.Creature;
+using NeoServer.Networking.Packets.Outgoing.Effect;
+using NeoServer.Networking.Packets.Outgoing.Item;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Server.Events
+namespace NeoServer.Server.Events.Player
 {
     public class PlayerAddedOnMapEventHandler : IEventHandler
     {

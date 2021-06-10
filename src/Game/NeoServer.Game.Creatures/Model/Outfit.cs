@@ -1,6 +1,6 @@
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Creature.Model
+namespace NeoServer.Game.Creatures.Model
 {
     public class Outfit : IOutfit
     {

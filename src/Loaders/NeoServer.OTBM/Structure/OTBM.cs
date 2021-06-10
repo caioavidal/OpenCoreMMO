@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NeoServer.OTBM.Structure.Towns;
 
 namespace NeoServer.OTBM.Structure
 {
@@ -48,7 +49,7 @@ namespace NeoServer.OTBM.Structure
         /// <summary>
         ///     OTBM Tile Areas
         /// </summary>
-        public IEnumerable<TileArea> TileAreas { get; set; }
+        public IEnumerable<TileArea.TileArea> TileAreas { get; set; }
 
         /// <summary>
         ///     OTBM Towns

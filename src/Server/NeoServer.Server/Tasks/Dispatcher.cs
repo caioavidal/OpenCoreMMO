@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using NeoServer.Server.Contracts.Tasks;
+using NeoServer.Server.Common.Contracts.Tasks;
 using Serilog.Core;
 
 namespace NeoServer.Server.Tasks

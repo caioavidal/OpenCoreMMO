@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using NeoServer.Game.Tests.Helpers;
+using Xunit;
 
 namespace NeoServer.Game.Items.Tests
 {

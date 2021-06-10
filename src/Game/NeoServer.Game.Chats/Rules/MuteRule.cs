@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Chats
+﻿namespace NeoServer.Game.Chats.Rules
 {
     public struct MuteRule
     {

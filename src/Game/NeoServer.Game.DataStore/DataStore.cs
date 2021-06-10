@@ -12,7 +12,7 @@ namespace NeoServer.Game.DataStore
         {
             get
             {
-                data = data ?? new DataStore<TStore, TKey, TValue>();
+                data ??= new DataStore<TStore, TKey, TValue>();
                 return data;
             }
         }

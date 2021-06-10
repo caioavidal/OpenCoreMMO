@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Effects.Explosion
+namespace NeoServer.Game.Common.Effects.Magical
 {
     public class WaveEffect
     {

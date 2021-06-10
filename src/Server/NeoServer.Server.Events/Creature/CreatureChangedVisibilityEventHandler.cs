@@ -1,7 +1,9 @@
-﻿using NeoServer.Game.Contracts;
-using NeoServer.Game.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Contracts;
+using NeoServer.Networking.Packets.Outgoing.Creature;
+using NeoServer.Networking.Packets.Outgoing.Item;
+using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Server.Events.Creature
 {

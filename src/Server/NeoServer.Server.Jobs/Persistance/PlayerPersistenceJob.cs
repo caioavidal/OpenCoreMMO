@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Data.Interfaces;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Standalone;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Configurations;
 using Serilog.Core;
 
 namespace NeoServer.Server.Jobs.Persistance

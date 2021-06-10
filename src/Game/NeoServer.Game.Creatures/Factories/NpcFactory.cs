@@ -1,13 +1,14 @@
-﻿using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Contracts.Creatures;
-using NeoServer.Game.Contracts.Items;
-using NeoServer.Game.Contracts.World;
-using NeoServer.Game.Creature.Model;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Npcs;
+using NeoServer.Game.Creatures.Npcs.Shop;
 using NeoServer.Game.DataStore;
 using Serilog.Core;
 
-namespace NeoServer.Game.Creatures
+namespace NeoServer.Game.Creatures.Factories
 {
     public class NpcFactory : INpcFactory
     {

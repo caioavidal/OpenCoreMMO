@@ -1,10 +1,10 @@
 ﻿using Moq;
-using NeoServer.Game.Common.Talks;
-using NeoServer.Game.Contracts.Creatures;
+using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Player;
-using NeoServer.Server.Contracts;
-using NeoServer.Server.Contracts.Network;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 using Xunit;
 
 namespace NeoServer.Server.Tests.Commands
