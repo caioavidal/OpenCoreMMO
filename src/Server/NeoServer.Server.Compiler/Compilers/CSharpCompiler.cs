@@ -5,9 +5,9 @@ using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace NeoServer.Server.Compiler
+namespace NeoServer.Server.Compiler.Compilers
 {
-    internal class Compiler
+    internal class CSharpCompiler
     {
         private static byte[] CompileSource(params string[] sourceCodes)
         {
@@ -22,9 +22,8 @@ namespace NeoServer.Server.Compiler
             return peStream.ToArray();
         }
 
-        public byte[] Compile(params string[] filePaths)
+        public byte[] Compile(params string[] sources)
         {
-            var sources = filePaths.Select(File.ReadAllText).ToArray();
             return CompileSource(sources);
         }
 
@@ -59,12 +58,12 @@ namespace NeoServer.Server.Compiler
                 .ToList()
                 .ForEach(a => references.Add(MetadataReference.CreateFromFile(Assembly.Load(a).Location)));
 
-            return CSharpCompilation.Create("Extensions.dll",
+            return CSharpCompilation.Create("Extensions",
                 syntaxTrees,
                 references,
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                    checkOverflow: true,
                     optimizationLevel: OptimizationLevel.Release,
+                    allowUnsafe:true,
                     assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default).WithPlatform(Platform.AnyCpu));
         }
 

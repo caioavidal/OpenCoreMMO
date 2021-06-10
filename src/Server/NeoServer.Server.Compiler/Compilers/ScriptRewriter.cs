@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NeoServer.Server.Attributes;
 
-namespace NeoServer.Server.Compiler
+namespace NeoServer.Server.Compiler.Compilers
 {
     internal class ScriptRewriter : CSharpSyntaxRewriter
     {

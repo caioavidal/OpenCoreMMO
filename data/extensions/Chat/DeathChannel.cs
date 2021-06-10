@@ -2,7 +2,6 @@
 using NeoServer.Game.Chats.Rules;
 using NeoServer.Game.Common.Chats;
 
-
 namespace NeoServer.Extensions.Chat
 {
     public class DeathChannel : ChatChannel

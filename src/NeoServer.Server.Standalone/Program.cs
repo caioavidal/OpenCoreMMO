@@ -41,8 +41,6 @@ namespace NeoServer.Server.Standalone
         {
             Console.Title = "OpenCoreMMO Server";
 
-            var stepSw = new Stopwatch();
-
             var sw = new Stopwatch();
             sw.Start();
 
@@ -51,22 +49,22 @@ namespace NeoServer.Server.Standalone
 
             var container = Container.CompositionRoot();
 
-            var (serverConfiguration, gameConfiguration, logConfiguration) = (container.Resolve<ServerConfiguration>(),
+            var (serverConfiguration, _, logConfiguration) = (container.Resolve<ServerConfiguration>(),
                 container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
-            var (logger, loggerConfiguration) = (container.Resolve<Logger>(), container.Resolve<LoggerConfiguration>());
+            var (logger, _) = (container.Resolve<Logger>(), container.Resolve<LoggerConfiguration>());
 
             logger.Information("Welcome to OpenCoreMMO Server!");
 
             logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
             logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
-            logger.Step("Building extensions...", "Extensions builded",
-                () => ScriptCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
+            logger.Step("Building extensions...", "{files} extensions builded",
+                () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
             var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
             var context = container.Resolve<NeoContext>();
 
-            logger.Step("Loading database: {db}", "{db} database loaded", () => context.Database.EnsureCreatedAsync(),
+            logger.Step("Loading database: {db}", "{db} database loaded", action:() => context.Database.EnsureCreatedAsync(),
                 databaseConfiguration.Active);
 
             RSA.LoadPem(serverConfiguration.Data);
