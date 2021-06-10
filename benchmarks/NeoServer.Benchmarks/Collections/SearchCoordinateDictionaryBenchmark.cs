@@ -1,14 +1,14 @@
-﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
-using NeoServer.Game.Common.Location.Structs.Helpers;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
+using NeoServer.Game.Common.Location.Structs.Helpers;
 
 namespace NeoServer.Benchmarks.Collections
 {
     [MemoryDiagnoser]
-    [SimpleJob(RunStrategy.ColdStart, launchCount: 1)]
+    [SimpleJob(RunStrategy.ColdStart, 1)]
     public class SearchCoordinateDictionaryBenchmark
     {
         private ConcurrentDictionary<CoordinateWithHashCode, string> data;
@@ -19,33 +19,27 @@ namespace NeoServer.Benchmarks.Collections
         {
             data = new ConcurrentDictionary<CoordinateWithHashCode, string>();
             data2 = new ConcurrentDictionary<CoordinateWithHashCodeAndEquals, string>();
-            for (int x = 0; x < 2000; x++)
+            for (var x = 0; x < 2000; x++)
+            for (var y = 0; y < 2000; y++)
             {
-                for (int y = 0; y < 2000; y++)
-                {
-                    data.TryAdd(new CoordinateWithHashCode(x, y, 7), string.Empty);
-                    data2.TryAdd(new CoordinateWithHashCodeAndEquals(x, y, 7), string.Empty);
-                }
+                data.TryAdd(new CoordinateWithHashCode(x, y, 7), string.Empty);
+                data2.TryAdd(new CoordinateWithHashCodeAndEquals(x, y, 7), string.Empty);
             }
         }
 
         [Benchmark]
         public string GetItemWithHashSet()
         {
-            for (int i = 0; i < 1000; i++)
-            {
-                data.TryGetValue(new CoordinateWithHashCode(i, i, 7), out string value);
-            }
+            for (var i = 0; i < 1000; i++) data.TryGetValue(new CoordinateWithHashCode(i, i, 7), out var value);
 
             return string.Empty;
         }
+
         [Benchmark]
         public string GetItemWithHashSetAndEquals()
         {
-            for (int i = 0; i < 1000; i++)
-            {
-                data2.TryGetValue(new CoordinateWithHashCodeAndEquals(i, i, 7), out string value);
-            }
+            for (var i = 0; i < 1000; i++)
+                data2.TryGetValue(new CoordinateWithHashCodeAndEquals(i, i, 7), out var value);
 
             return string.Empty;
         }
@@ -88,7 +82,10 @@ namespace NeoServer.Benchmarks.Collections
             return other.X == X && other.Y == Y && other.Z == Z;
         }
 
-        public override int GetHashCode() => HashCode.Combine(X, Y, Z);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y, Z);
+        }
     }
 
     public struct CoordinateWithHashCodeAndEquals : IEquatable<CoordinateWithHashCodeAndEquals>
@@ -114,9 +111,12 @@ namespace NeoServer.Benchmarks.Collections
             return other is CoordinateWithHashCodeAndEquals o && Equals(o);
         }
 
-        public override int GetHashCode() => HashHelper.Start
+        public override int GetHashCode()
+        {
+            return HashHelper.Start
                 .CombineHashCode(X)
                 .CombineHashCode(Y)
                 .CombineHashCode(Z);
+        }
     }
 }

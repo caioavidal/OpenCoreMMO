@@ -1,28 +1,22 @@
-﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
-using System;
+﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
 
 namespace NeoServer.Benchmarks.Collections
 {
-    [SimpleJob(RunStrategy.ColdStart, launchCount: 100)]
-
+    [SimpleJob(RunStrategy.ColdStart, 100)]
     [MemoryDiagnoser]
     public class ArrayPoolVsDynamicArrayBenchmark
     {
-
         [Benchmark]
         public byte[] GetBytesUsingPool()
         {
             var pool = ArrayPool<byte>.Shared;
             var data = pool.Rent(1_00_000);
 
-            for (int i = 0; i < 1_00_000; i++)
-            {
-
-                data[i] = default;
-            }
+            for (var i = 0; i < 1_00_000; i++) data[i] = default;
 
             var streamResult = data.AsSpan(0, data.Length).ToArray();
 
@@ -35,10 +29,7 @@ namespace NeoServer.Benchmarks.Collections
         {
             var data = new List<byte>();
 
-            for (int i = 0; i < 1_00_000; i++)
-            {
-                data.Add(default);
-            }
+            for (var i = 0; i < 1_00_000; i++) data.Add(default);
             return data.ToArray();
         }
     }

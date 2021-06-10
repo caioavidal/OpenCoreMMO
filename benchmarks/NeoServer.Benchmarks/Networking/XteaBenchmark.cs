@@ -1,17 +1,19 @@
-﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
-using NeoServer.Networking.Packets;
-using NeoServer.Server.Contracts.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
+using NeoServer.Networking.Packets.Messages;
+using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Benchmarks.Networking
 {
-    [SimpleJob(RunStrategy.ColdStart, launchCount: 30)]
+    [SimpleJob(RunStrategy.ColdStart, 30)]
     public class XteaBenchmark
     {
+        private readonly uint[] keys = new uint[4] {2742731963, 828439173, 895464428, 91929452};
+
         private INetworkMessage GetNetworkMessage()
         {
             var input = new NetworkMessage();
@@ -19,15 +21,17 @@ namespace NeoServer.Benchmarks.Networking
             return input;
         }
 
-        private uint[] keys = new uint[4] { 2742731963, 828439173, 895464428, 91929452 };
+        [Benchmark]
+        public INetworkMessage WithoutSpan()
+        {
+            return Xtea.Encrypt(GetNetworkMessage(), keys);
+        }
 
         [Benchmark]
-
-        public INetworkMessage WithoutSpan() => Xtea.Encrypt(GetNetworkMessage(), keys);
-        [Benchmark]
-
-        public INetworkMessage WithSpan() => Xtea.EncryptWithSpan(GetNetworkMessage(), keys);
-
+        public INetworkMessage WithSpan()
+        {
+            return Xtea.EncryptWithSpan(GetNetworkMessage(), keys);
+        }
     }
 
     public class Xtea
@@ -37,32 +41,28 @@ namespace NeoServer.Benchmarks.Networking
             if (key == null)
                 throw new ArgumentException("Key invalid");
 
-            int pad = msg.Length % 8;
-            if (pad > 0)
-            {
-                msg.AddPaddingBytes(8 - pad);
-            }
+            var pad = msg.Length % 8;
+            if (pad > 0) msg.AddPaddingBytes(8 - pad);
 
             var words = Split(msg.GetMessageInBytes()).ToArray();
 
-            for (int pos = 0; pos < msg.Length / 4; pos += 2)
+            for (var pos = 0; pos < msg.Length / 4; pos += 2)
             {
                 uint x_sum = 0, x_delta = 0x9e3779b9, x_count = 32;
 
                 while (x_count-- > 0)
                 {
-                    words[pos] += (words[pos + 1] << 4 ^ words[pos + 1] >> 5) + words[pos + 1] ^ x_sum
-                        + key[x_sum & 3];
+                    words[pos] += (((words[pos + 1] << 4) ^ (words[pos + 1] >> 5)) + words[pos + 1]) ^ (x_sum
+                        + key[x_sum & 3]);
                     x_sum += x_delta;
-                    words[pos + 1] += (words[pos] << 4 ^ words[pos] >> 5) + words[pos] ^ x_sum
-                        + key[x_sum >> 11 & 3];
+                    words[pos + 1] += (((words[pos] << 4) ^ (words[pos] >> 5)) + words[pos]) ^ (x_sum
+                        + key[(x_sum >> 11) & 3]);
                 }
             }
 
             var newBytes = words.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
 
             return new NetworkMessage(newBytes, msg.Length);
-
         }
 
         public static INetworkMessage EncryptWithSpan(INetworkMessage msg, uint[] key)
@@ -70,39 +70,35 @@ namespace NeoServer.Benchmarks.Networking
             if (key == null)
                 throw new ArgumentException("Key invalid");
 
-            int pad = msg.Length % 8;
-            if (pad > 0)
-            {
-                msg.AddPaddingBytes(8 - pad);
-            }
+            var pad = msg.Length % 8;
+            if (pad > 0) msg.AddPaddingBytes(8 - pad);
 
             var words = NewSplit(msg.Buffer.AsSpan(0, msg.Length));
 
-            for (int pos = 0; pos < msg.Length / 4; pos += 2)
+            for (var pos = 0; pos < msg.Length / 4; pos += 2)
             {
                 uint x_sum = 0, x_delta = 0x9e3779b9, x_count = 32;
 
                 while (x_count-- > 0)
                 {
-                    words[pos] += (words[pos + 1] << 4 ^ words[pos + 1] >> 5) + words[pos + 1] ^ x_sum
-                        + key[x_sum & 3];
+                    words[pos] += (((words[pos + 1] << 4) ^ (words[pos + 1] >> 5)) + words[pos + 1]) ^ (x_sum
+                        + key[x_sum & 3]);
                     x_sum += x_delta;
-                    words[pos + 1] += (words[pos] << 4 ^ words[pos] >> 5) + words[pos] ^ x_sum
-                        + key[x_sum >> 11 & 3];
+                    words[pos + 1] += (((words[pos] << 4) ^ (words[pos] >> 5)) + words[pos]) ^ (x_sum
+                        + key[(x_sum >> 11) & 3]);
                 }
             }
 
             var newBytes = ConvertToBytes(words); //words.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
 
             return new NetworkMessage(newBytes, msg.Length);
-
         }
 
         private static byte[] ConvertToBytes(Span<uint> array)
         {
             var bytes = new byte[array.Length * 4];
             var index = 0;
-            for (int i = 0; i < array.Length; i++)
+            for (var i = 0; i < array.Length; i++)
             {
                 var newBytes = BitConverter.GetBytes(array[i]);
 
@@ -113,6 +109,7 @@ namespace NeoServer.Benchmarks.Networking
 
                 index += 4;
             }
+
             return bytes;
         }
 
@@ -136,9 +133,8 @@ namespace NeoServer.Benchmarks.Networking
                 newArray[index] = BitConverter.ToUInt32(array.Slice(i, 4));
                 index++;
             }
+
             return newArray.AsSpan();
         }
-
     }
-
 }
