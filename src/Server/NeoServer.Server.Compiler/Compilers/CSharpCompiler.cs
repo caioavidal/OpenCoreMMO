@@ -32,10 +32,11 @@ namespace NeoServer.Server.Compiler.Compilers
             var syntaxTrees = new SyntaxTree[sourceCodes.Length];
             var i = 0;
 
-            var rewriter = new ScriptRewriter();
+          
 
             foreach (var source in sourceCodes)
             {
+                var rewriter = new ScriptRewriter();
                 var newSource = AddAttribute(source, rewriter);
                 var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Latest);
 
