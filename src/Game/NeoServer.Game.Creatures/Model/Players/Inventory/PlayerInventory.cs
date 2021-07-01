@@ -19,12 +19,10 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
     {
         public PlayerInventory(IPlayer owner, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory)
         {
-            if (owner == null) throw new ArgumentNullException(nameof(owner));
-
-            Owner = owner;
+            Owner = owner ?? throw new ArgumentNullException(nameof(owner));
             Inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
 
-            foreach (var item in inventory) TryAddItemToSlot(item.Key, item.Value.Item1);
+            foreach (var (key, value) in inventory) TryAddItemToSlot(key, value.Item1);
         }
 
         private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
@@ -48,12 +46,16 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             {
                 ushort attack = 0;
 
-                if (Weapon is IWeaponItem weapon) return weapon.Attack;
-
-                if (Weapon is IDistanceWeaponItem distance)
+                switch (Weapon)
                 {
-                    attack += distance.ExtraAttack;
-                    if (Ammo != null) attack += distance.ExtraAttack;
+                    case IWeaponItem weapon:
+                        return weapon.Attack;
+                    case IDistanceWeaponItem distance:
+                    {
+                        attack += distance.ExtraAttack;
+                        if (Ammo != null) attack += distance.ExtraAttack;
+                        break;
+                    }
                 }
 
                 return attack;
@@ -69,10 +71,10 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
 
                 totalDefense += Shield?.DefenseValue ?? 0;
 
-                return (ushort) totalDefense;
+                return (ushort)totalDefense;
             }
         }
-
+        
         public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
 
         public IDictionary<ushort, uint> Map
@@ -81,22 +83,23 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             {
                 var map = BackpackSlot?.Map ?? new Dictionary<ushort, uint>();
 
-                Action<IItem> addOrUpdate = item =>
+                void AddOrUpdate(IItem item)
                 {
                     if (item is null) return;
                     if (map.TryGetValue(item.Metadata.TypeId, out var val))
                         map[item.Metadata.TypeId] = val + item.Amount;
-                    else map.Add(item.Metadata.TypeId, item.Amount);
-                };
+                    else
+                        map.Add(item.Metadata.TypeId, item.Amount);
+                }
 
-                addOrUpdate(this[Slot.Head]);
-                addOrUpdate(this[Slot.Necklace]);
-                addOrUpdate(this[Slot.Body]);
-                addOrUpdate(this[Slot.Right]);
-                addOrUpdate(this[Slot.Left]);
-                addOrUpdate(this[Slot.Legs]);
-                addOrUpdate(this[Slot.Ring]);
-                addOrUpdate(this[Slot.Ammo]);
+                AddOrUpdate(this[Slot.Head]);
+                AddOrUpdate(this[Slot.Necklace]);
+                AddOrUpdate(this[Slot.Body]);
+                AddOrUpdate(this[Slot.Right]);
+                AddOrUpdate(this[Slot.Left]);
+                AddOrUpdate(this[Slot.Legs]);
+                AddOrUpdate(this[Slot.Ring]);
+                AddOrUpdate(this[Slot.Ammo]);
 
                 return map;
             }
@@ -118,14 +121,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             return total;
         }
 
-        public ulong TotalMoney
-        {
-            get
-            {
-                if (BackpackSlot?.Map is null) return 0;
-                return GetTotalMoney(BackpackSlot.Map);
-            }
-        }
+        public ulong TotalMoney => BackpackSlot?.Map is null ? 0 : GetTotalMoney(BackpackSlot.Map);
 
         public bool HasShield => Inventory.ContainsKey(Slot.Right);
 
@@ -135,15 +131,14 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             {
                 byte totalArmor = 0;
 
-                Func<Slot, ushort> getDefenseValue = slot =>
-                    Inventory[slot].Item1 is IDefenseEquipmentItem equipment ? equipment.DefenseValue : default;
+                ushort GetDefenseValue(Slot slot) => Inventory[slot].Item1 is IDefenseEquipmentItem equipment ? equipment.DefenseValue : default;
 
-                totalArmor += (byte) (Inventory.ContainsKey(Slot.Necklace) ? getDefenseValue(Slot.Necklace) : 0);
-                totalArmor += (byte) (Inventory.ContainsKey(Slot.Head) ? getDefenseValue(Slot.Head) : 0);
-                totalArmor += (byte) (Inventory.ContainsKey(Slot.Body) ? getDefenseValue(Slot.Body) : 0);
-                totalArmor += (byte) (Inventory.ContainsKey(Slot.Legs) ? getDefenseValue(Slot.Legs) : 0);
-                totalArmor += (byte) (Inventory.ContainsKey(Slot.Feet) ? getDefenseValue(Slot.Feet) : 0);
-                totalArmor += (byte) (Inventory.ContainsKey(Slot.Ring) ? getDefenseValue(Slot.Ring) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Necklace) ? GetDefenseValue(Slot.Necklace) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Head) ? GetDefenseValue(Slot.Head) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Body) ? GetDefenseValue(Slot.Body) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Legs) ? GetDefenseValue(Slot.Legs) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Feet) ? GetDefenseValue(Slot.Feet) : 0);
+                totalArmor += (byte)(Inventory.ContainsKey(Slot.Ring) ? GetDefenseValue(Slot.Ring) : 0);
 
                 return totalArmor;
             }
@@ -155,7 +150,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             {
                 var rangeLeft = 0;
                 var rangeRight = 0;
-                var twoHanded = 0;
+                const int twoHanded = 0;
 
                 if (Inventory.ContainsKey(Slot.Left) && Inventory[Slot.Left] is IAmmoItem leftWeapon)
                     rangeLeft = leftWeapon.Range;
@@ -164,7 +159,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 if (Inventory.ContainsKey(Slot.TwoHanded) && Inventory[Slot.TwoHanded] is IAmmoItem twoHandedWeapon)
                     rangeRight = twoHandedWeapon.Range;
 
-                return (byte) Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
+                return (byte)Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
             }
         }
 
@@ -189,8 +184,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             removedItem = null;
 
             if (amount == 0) return false;
-            if (Inventory[slot].Item1 is not IPickupable item) return false;
-            if (item is null) return false;
+            if (Inventory[slot].Item1 is not { } item) return false;
 
             if (item is ICumulative cumulative && amount < cumulative.Amount)
             {
@@ -203,6 +197,8 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 Inventory.Remove(slot);
                 removedItem = item;
             }
+
+            if(removedItem is IProtectionItem protectionItem) protectionItem.UndressFrom(Owner);
 
             OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
             return true;
@@ -229,7 +225,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                     return new Result<IPickupable>(null,
-                        (Inventory[slot].Item1 as IPickupableContainer).AddItem(item).Error);
+                        ((IPickupableContainer) Inventory[slot].Item1).AddItem(item).Error);
                 if (item is IPickupableContainer container) container.SetParent(Owner);
             }
 
@@ -248,7 +244,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                     }
                     else
                     {
-                        (Inventory[slot].Item1 as ICumulative).TryJoin(ref cumulative);
+                        ((ICumulative) Inventory[slot].Item1).TryJoin(ref cumulative);
                         if (cumulative?.Amount > 0)
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
                     }
@@ -260,6 +256,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                     itemToSwap = SwapItem(slot, item);
                 }
 
+                if (item is IProtectionItem protectionItem) protectionItem.DressedIn(Owner);
                 OnItemAddedToSlot?.Invoke(this, item, slot);
                 return itemToSwap == null ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
             }
@@ -272,6 +269,8 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             Inventory.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
 
             item.SetNewLocation(Location.Inventory(slot));
+
+            if (item is IProtectionItem protection) protection.DressedIn(Owner);
 
             OnItemAddedToSlot?.Invoke(this, item, slot);
             return new Result<IPickupable>();
@@ -381,9 +380,9 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
         public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
         {
             if (thing is not IPickupable item) return Result.NotPossible;
-            if (!CanCarryItem(item, (Slot) slot, amount)) return new Result(InvalidOperation.TooHeavy);
+            if (!CanCarryItem(item, (Slot)slot, amount)) return new Result(InvalidOperation.TooHeavy);
 
-            return CanAddItemToSlot((Slot) slot, item).ResultValue;
+            return CanAddItemToSlot((Slot)slot, item).ResultValue;
         }
 
         public override Result<uint> CanAddItem(IItemType itemType)
@@ -399,7 +398,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             if (ICumulative.IsApplicable(itemType))
             {
                 var amountOnSlot = this[itemType.BodyPosition]?.Amount ?? 0;
-                possibleAmountToAdd = (byte) Math.Abs(100 - amountOnSlot);
+                possibleAmountToAdd = (byte)Math.Abs(100 - amountOnSlot);
             }
             else
             {
@@ -416,7 +415,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
         {
             if (toPosition is null) return 0;
 
-            var slot = (Slot) toPosition;
+            var slot = (Slot)toPosition;
 
             if (slot == Slot.Backpack)
             {
@@ -429,7 +428,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             if (item is not ICumulative) return 1;
             if (item is ICumulative c1 && this[slot] is IItem i && c1.ClientId != i.ClientId) return 100;
             if (item is ICumulative && this[slot] is null) return 100;
-            if (item is ICumulative cumulative) return (uint) (100 - this[slot].Amount);
+            if (item is ICumulative cumulative) return (uint)(100 - this[slot].Amount);
 
             return 0;
         }
@@ -443,11 +442,9 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
         {
             if (thing is not IPickupable item) return Result<OperationResult<IItem>>.NotPossible;
 
-            position = position ?? (byte) thing.Metadata.BodyPosition;
+            position ??= (byte)thing.Metadata.BodyPosition;
 
-            if (position is null) return Result<OperationResult<IItem>>.NotPossible;
-
-            var swappedItem = TryAddItemToSlot((Slot) position, item);
+            var swappedItem = TryAddItemToSlot((Slot)position, item);
 
             if (swappedItem.Value is null) return Result<OperationResult<IItem>>.Success;
 
@@ -458,7 +455,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             out IItem removedThing)
         {
             removedThing = null;
-            if (!RemoveItemFromSlot((Slot) fromPosition, amount, out var removedItem))
+            if (!RemoveItemFromSlot((Slot)fromPosition, amount, out var removedItem))
                 return Result<OperationResult<IItem>>.NotPossible;
 
             removedThing = removedItem;

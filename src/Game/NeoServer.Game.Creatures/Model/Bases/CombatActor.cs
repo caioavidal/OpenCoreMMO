@@ -63,7 +63,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void ResetHealthPoints()
         {
-            Heal((ushort) MaxHealthPoints);
+            Heal((ushort)MaxHealthPoints);
         }
 
         public virtual void GainExperience(uint exp)
@@ -85,7 +85,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
                     block();
                     OnBlockedAttack?.Invoke(this, BlockType.Shield);
-                    attack.SetNewDamage((ushort) damage);
+                    attack.SetNewDamage((ushort)damage);
                     return attack;
                 }
             }
@@ -98,7 +98,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 OnBlockedAttack?.Invoke(this, BlockType.Armor);
             }
 
-            attack.SetNewDamage((ushort) damage);
+            attack.SetNewDamage((ushort)damage);
 
             attack = OnImmunityDefense(attack);
 
@@ -144,7 +144,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             OnAttackEnemy?.Invoke(this, enemy, combat);
 
-            Cooldowns.Start(CooldownType.Combat, (int) BaseAttackSpeed);
+            Cooldowns.Start(CooldownType.Combat, (int)BaseAttackSpeed);
 
             return true;
         }
@@ -196,7 +196,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StartSpellCooldown(ISpell spell)
         {
-            Cooldowns.Start(spell.Name, (int) spell.Cooldown);
+            Cooldowns.Start(spell.Name, (int)spell.Cooldown);
         }
 
         public bool SpellCooldownHasExpired(ISpell spell)
@@ -211,9 +211,12 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public virtual bool ReceiveAttack(IThing enemy, CombatDamage damage)
         {
-            if (enemy.Equals(this)) return false;
+
+            if (enemy?.Equals(this) ?? false) return false;
             if (!CanBeAttacked) return false;
             if (IsDead) return false;
+
+            OnAttacked?.Invoke(enemy, this, ref damage);
 
             if (this is ICreature c) SetAsEnemy(c);
 
@@ -316,7 +319,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event GainExperience OnGainedExperience;
         public event AddCondition OnAddedCondition;
         public event RemoveCondition OnRemovedCondition;
-
+        public event Attacked OnAttacked;
         #endregion
 
         #region Properties

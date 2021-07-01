@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.Protections;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
 using NeoServer.Game.Items.Items.Weapons;

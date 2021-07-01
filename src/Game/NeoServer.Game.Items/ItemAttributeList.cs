@@ -280,6 +280,12 @@ namespace NeoServer.Game.Items
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPhysical) ?? false)
                     dictionary.TryAdd(DamageType.LifeDrain, GetAttribute<byte>(ItemAttribute.AbsorbPercentPhysical));
 
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPoison) ?? false)
+                    dictionary.TryAdd(DamageType.Earth, GetAttribute<byte>(ItemAttribute.AbsorbPercentPoison));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentFire) ?? false)
+                    dictionary.TryAdd(DamageType.Fire, GetAttribute<byte>(ItemAttribute.AbsorbPercentFire));
+
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
                     dictionary.TryAdd(DamageType.AbsorbPercentMagic,
                         GetAttribute<byte>(ItemAttribute.AbsorbPercentMagic));

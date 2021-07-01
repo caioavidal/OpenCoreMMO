@@ -1048,14 +1048,16 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
         {
-            if (fromTile.ProtectionZone is false && toTile.ProtectionZone is true)
+            switch (fromTile.ProtectionZone)
             {
-                RemoveCondition(ConditionType.InFight);
-                AddCondition(new Condition(ConditionType.Pacified, 0));
+                case false when toTile.ProtectionZone is true:
+                    RemoveCondition(ConditionType.InFight);
+                    AddCondition(new Condition(ConditionType.Pacified, 0));
+                    break;
+                case true when toTile.ProtectionZone is false:
+                    RemoveCondition(ConditionType.Pacified);
+                    break;
             }
-
-            if (fromTile.ProtectionZone is true && toTile.ProtectionZone is false)
-                RemoveCondition(ConditionType.Pacified);
         }
 
         public override bool TryWalkTo(params Direction[] directions)
@@ -1081,7 +1083,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 damage.SetNewDamage(0);
                 return damage;
             }
-
+            
             return damage;
         }
 
@@ -1092,8 +1094,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public override bool CanBlock(DamageType damage)
         {
-            if (!Inventory.HasShield) return false;
-            return base.CanBlock(damage);
+            return Inventory.HasShield && base.CanBlock(damage);
         }
 
         public void HealSoul(ushort increasing)
