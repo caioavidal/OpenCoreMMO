@@ -15,10 +15,7 @@ namespace NeoServer.Networking.Protocols
 
         public void PostProcessMessage(object sender, IConnectionEventArgs args)
         {
-            if (!KeepConnectionOpen)
-            {
-                args.Connection.Close();
-            }
+            if (!KeepConnectionOpen) args.Connection.Close();
         }
 
         public abstract void ProcessMessage(object sender, IConnectionEventArgs connection);
