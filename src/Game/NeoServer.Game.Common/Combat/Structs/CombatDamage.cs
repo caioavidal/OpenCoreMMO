@@ -57,6 +57,16 @@ namespace NeoServer.Game.Common.Combat.Structs
             Damage = newDamage;
         }
 
+
+        /// <summary>
+        ///     Sets a new damage
+        /// </summary>
+        /// <param name="newDamage"></param>
+        public void ReduceDamageByPercent(ushort percent)
+        {
+            Damage = (ushort) ((100 - percent) *  Damage/100);
+        }
+
         /// <summary>
         ///     Increase damage by value of param
         /// </summary>

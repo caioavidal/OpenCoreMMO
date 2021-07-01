@@ -87,10 +87,7 @@ namespace NeoServer.Networking.Packets.Connection
                     return;
                 }
 
-                if (OutgoingPackets == null || !OutgoingPackets.Any() || force)
-                {
-                    CloseSocket();
-                }
+                if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
             }
 
             // Tells the subscribers of this event that this connection has been closed.

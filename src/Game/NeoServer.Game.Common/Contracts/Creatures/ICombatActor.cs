@@ -12,6 +12,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public delegate void OnAttackTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId);
 
     public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamage damage);
+    public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamage damage);
+
 
     public delegate void StopAttack(ICombatActor actor);
 
@@ -55,6 +57,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event GainExperience OnGainedExperience;
         event RemoveCondition OnRemovedCondition;
         event AddCondition OnAddedCondition;
+        event Attacked OnAttacked;
 
         int ArmorDefend(int attack);
 
