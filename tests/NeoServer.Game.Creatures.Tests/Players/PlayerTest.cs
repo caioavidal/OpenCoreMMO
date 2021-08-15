@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -53,6 +54,24 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.OnDamage(enemy, new CombatDamage(5, DamageType.ManaDrain));
 
             Assert.Equal((uint) 25, sut.Mana);
+        }
+
+        [Fact]
+        public void FlagIsEnabled_Enabled_ReturnsTrue()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+            sut.SetFlag(PlayerFlag.CanBeSeen);
+            var result = sut.FlagIsEnabled(PlayerFlag.CanBeSeen);
+
+            result.Should().BeTrue();
+        }
+        [Fact]
+        public void FlagIsEnabled_Disabled_ReturnsTrue()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var result = sut.FlagIsEnabled(PlayerFlag.CanBeSeen);
+
+            result.Should().BeFalse();
         }
     }
 }

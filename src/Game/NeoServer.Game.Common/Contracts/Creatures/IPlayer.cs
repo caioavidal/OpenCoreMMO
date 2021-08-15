@@ -110,6 +110,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         byte MaxSoulPoints { get; }
 
         string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
+        HashSet<uint> VipList { get; set; }
         event UseSpell OnUsedSpell;
         event SendMessageTo OnSentMessage;
 
