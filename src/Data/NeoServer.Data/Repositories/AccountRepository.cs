@@ -130,22 +130,22 @@ namespace NeoServer.Data.Repositories
                 posy = player.Location.Y,
                 posz = player.Location.Z,
 
-                skill_fist = player.Skills[SkillType.Fist].Level,
-                skill_fist_tries = player.Skills[SkillType.Fist].Count,
-                skill_club = player.Skills[SkillType.Club].Level,
-                skill_club_tries = player.Skills[SkillType.Club].Count,
-                skill_sword = player.Skills[SkillType.Sword].Level,
-                skill_sword_tries = player.Skills[SkillType.Sword].Count,
-                skill_axe = player.Skills[SkillType.Axe].Level,
-                skill_axe_tries = player.Skills[SkillType.Axe].Count,
-                skill_dist = player.Skills[SkillType.Distance].Level,
-                skill_dist_tries = player.Skills[SkillType.Distance].Count,
-                skill_shielding = player.Skills[SkillType.Shielding].Level,
-                skill_shielding_tries = player.Skills[SkillType.Shielding].Count,
-                skill_fishing = player.Skills[SkillType.Fishing].Level,
-                skill_fishing_tries = player.Skills[SkillType.Fishing].Count,
-                MagicLevel = player.Skills[SkillType.Magic].Level,
-                MagicLevelTries = player.Skills[SkillType.Magic].Count,
+                skill_fist = player.GetSkillLevel(SkillType.Fist),
+                skill_fist_tries = player.GetSkillTries(SkillType.Fist),
+                skill_club = player.GetSkillLevel(SkillType.Club),
+                skill_club_tries = player.GetSkillTries(SkillType.Club),
+                skill_sword = player.GetSkillLevel(SkillType.Sword),
+                skill_sword_tries = player.GetSkillTries(SkillType.Sword),
+                skill_axe = player.GetSkillLevel(SkillType.Axe),
+                skill_axe_tries = player.GetSkillTries(SkillType.Axe),
+                skill_dist = player.GetSkillLevel(SkillType.Distance),
+                skill_dist_tries = player.GetSkillTries(SkillType.Distance),
+                skill_shielding = player.GetSkillLevel(SkillType.Shielding),
+                skill_shielding_tries = player.GetSkillTries(SkillType.Shielding),
+                skill_fishing = player.GetSkillLevel(SkillType.Fishing),
+                skill_fishing_tries = player.GetSkillTries(SkillType.Fishing),
+                MagicLevel = player.GetSkillLevel(SkillType.Magic),
+                MagicLevelTries = player.GetSkillTries(SkillType.Magic),
                 player.Experience,
                 player.ChaseMode,
                 player.FightMode,
@@ -155,13 +155,10 @@ namespace NeoServer.Data.Repositories
             }, commandTimeout: 5);
 
 
-            if (conn is null)
-                using (var connection = Context.Database.GetDbConnection())
-                {
-                    return executeQuery.Invoke(connection);
-                }
+            if (conn is not null) return executeQuery.Invoke(conn);
 
-            return executeQuery.Invoke(conn);
+            using var connection = Context.Database.GetDbConnection();
+            return executeQuery.Invoke(connection);
         }
 
         public async Task UpdatePlayers(IEnumerable<IPlayer> players)
@@ -218,7 +215,7 @@ namespace NeoServer.Data.Repositories
                         sid = item?.Metadata?.TypeId ?? 0,
                         count = item?.Amount ?? 0,
                         playerId = player.Id,
-                        pid = (int) slot
+                        pid = (int)slot
                     }, commandTimeout: 5));
                 }
 

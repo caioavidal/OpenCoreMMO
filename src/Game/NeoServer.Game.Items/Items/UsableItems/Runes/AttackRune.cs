@@ -44,7 +44,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             if (creature is not ICombatActor enemy) return false;
             if (usedBy is not IPlayer player) return false;
 
-            var minMaxDamage = Formula(player, player.Level, player.Skills[SkillType.Magic].Level);
+            var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
             var damage = (ushort) GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
             if (enemy.ReceiveAttack(player, new CombatDamage(damage, DamageType, HasNoInjureEffect)))
@@ -71,14 +71,14 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
             if (NeedTarget)
             {
-                if (tile is IDynamicTile t && t.HasCreature)
+                if (tile is IDynamicTile {HasCreature: true} t)
                     return Use(usedBy, t.TopCreatureOnStack, out combatAttackType);
                 return false;
             }
 
             if (usedBy is not IPlayer player) return false;
 
-            var minMaxDamage = Formula(player, player.Level, player.Skills[SkillType.Magic].Level);
+            var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
             var damage = (ushort) GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
             combatAttackType.DamageType = DamageType;

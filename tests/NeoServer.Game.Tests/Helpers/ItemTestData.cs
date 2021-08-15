@@ -116,7 +116,7 @@ namespace NeoServer.Game.Tests.Helpers
             return new Ring(type, new Location(100, 100, 7));
         }
 
-        public static object CreateNecklace(ushort id)
+        public static IPickupable CreateNecklace(ushort id)
         {
             var type = new ItemType();
             type.SetClientId(id);

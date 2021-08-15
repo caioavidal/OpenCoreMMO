@@ -72,7 +72,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
         float CarryStrength { get; }
 
-        IDictionary<SkillType, ISkill> Skills { get; }
         ushort StaminaMinutes { get; }
 
         FightMode FightMode { get; }
@@ -159,7 +158,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         /// </summary>
         /// <param name="skillType"></param>
         /// <returns></returns>
-        byte GetSkillInfo(SkillType skillType);
+        ushort GetSkillLevel(SkillType skillType);
 
         /// <summary>
         ///     Changes player's fight mode
@@ -243,5 +242,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         void RejectInvite();
         void JoinParty(IParty party);
         void PassPartyLeadership(IPlayer player);
+        byte GetSkillTries(SkillType skillType);
     }
 }
