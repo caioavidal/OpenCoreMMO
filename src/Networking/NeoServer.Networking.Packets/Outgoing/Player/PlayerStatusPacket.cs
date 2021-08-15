@@ -28,7 +28,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Player
             message.AddByte(player.LevelPercent);
             message.AddUInt16(Math.Min(ushort.MaxValue, player.Mana));
             message.AddUInt16(Math.Min(ushort.MaxValue, player.MaxMana));
-            message.AddByte(player.GetSkillInfo(SkillType.Magic));
+            message.AddByte((byte) player.GetSkillLevel(SkillType.Magic));
             message.AddByte(player.GetSkillPercent(SkillType.Magic));
 
             message.AddByte(player.SoulPoints);

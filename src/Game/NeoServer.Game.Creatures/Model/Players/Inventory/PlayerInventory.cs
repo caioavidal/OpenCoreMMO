@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Bases;
@@ -8,6 +9,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -26,6 +28,9 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
         }
 
         private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
+
+        private IEnumerable<IPickupable> InventoryCollection => Inventory.Select(x => x.Value.Item1).ToList();
+
 
         public IAmmoItem Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoItem ammo
             ? Inventory[Slot.Ammo].Item1 as IAmmoItem
@@ -51,17 +56,26 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                     case IWeaponItem weapon:
                         return weapon.Attack;
                     case IDistanceWeaponItem distance:
-                    {
-                        attack += distance.ExtraAttack;
-                        if (Ammo != null) attack += distance.ExtraAttack;
-                        break;
-                    }
+                        {
+                            attack += distance.ExtraAttack;
+                            if (Ammo != null) attack += distance.ExtraAttack;
+                            break;
+                        }
                 }
 
                 return attack;
             }
         }
 
+        public Dictionary<SkillType, int> TotalSkillBonus
+        {
+            get
+            {
+                var skillsBonus = InventoryCollection.Where(x => x is ISkillBonus).Select(x => ((ISkillBonus)x).SkillBonus).ToArray();
+                return skillsBonus.SelectMany(x => x).ToLookup(pair => pair.Key, pair => pair.Value)
+                    .ToDictionary(group => group.Key, group => group.Sum(x => x));
+            }
+        }
         public ushort TotalDefense
         {
             get
@@ -74,7 +88,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 return (ushort)totalDefense;
             }
         }
-        
+
         public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
 
         public IDictionary<ushort, uint> Map
@@ -198,7 +212,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 removedItem = item;
             }
 
-            if(removedItem is IProtectionItem protectionItem) protectionItem.UndressFrom(Owner);
+            if (removedItem is IProtectionItem protectionItem) protectionItem.UndressFrom(Owner);
 
             OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
             return true;
@@ -225,7 +239,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             {
                 if (Inventory.ContainsKey(Slot.Backpack))
                     return new Result<IPickupable>(null,
-                        ((IPickupableContainer) Inventory[slot].Item1).AddItem(item).Error);
+                        ((IPickupableContainer)Inventory[slot].Item1).AddItem(item).Error);
                 if (item is IPickupableContainer container) container.SetParent(Owner);
             }
 
@@ -244,7 +258,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                     }
                     else
                     {
-                        ((ICumulative) Inventory[slot].Item1).TryJoin(ref cumulative);
+                        ((ICumulative)Inventory[slot].Item1).TryJoin(ref cumulative);
                         if (cumulative?.Amount > 0)
                             itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
                     }

@@ -156,7 +156,7 @@ namespace NeoServer.Game.Creatures.Tests
                     result.Add(new[] {slot, ItemTestData.CreateRing(100)});
 
                 if (slot != Slot.Necklace)
-                    result.Add(new[] {slot, ItemTestData.CreateNecklace(100)});
+                    result.Add(new object[] {slot, ItemTestData.CreateNecklace(100)});
 
                 if (slot != Slot.Backpack)
                     result.Add(new object[] {slot, ItemTestData.CreateBackpack()});

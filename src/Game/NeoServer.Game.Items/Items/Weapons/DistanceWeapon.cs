@@ -41,7 +41,7 @@ namespace NeoServer.Game.Items.Items.Weapons
             var distance = (byte) actor.Location.GetSqmDistance(enemy.Location);
 
             var hitChance =
-                (byte) (DistanceHitChanceCalculation.CalculateFor2Hands(player.Skills[player.SkillInUse].Level,
+                (byte) (DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse),
                     distance) + ExtraHitChance);
             combatType.ShootType = ammo.ShootType;
 

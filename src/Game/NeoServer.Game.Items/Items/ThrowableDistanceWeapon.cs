@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Calculations;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
@@ -27,20 +24,17 @@ namespace NeoServer.Game.Items.Items
 
         public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
 
-        public ImmutableHashSet<VocationType> AllowedVocations { get; }
-
         public byte Attack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
         public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
         {
-            var result = false;
             combatType = new CombatAttackType(Metadata.ShootType);
 
-            if (!(actor is IPlayer player)) return false;
+            if (actor is not IPlayer player) return false;
 
             var hitChance =
-                (byte) (DistanceHitChanceCalculation.CalculateFor1Hand(player.Skills[player.SkillInUse].Level, Range) +
+                (byte) (DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
                         ExtraHitChance);
             var missed = DistanceCombatAttack.MissedAttack(hitChance);
 
@@ -54,13 +48,11 @@ namespace NeoServer.Game.Items.Items
 
             var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
-            if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
-            {
-                enemy.ReceiveAttack(actor, damage);
-                result = true;
-            }
+            if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
 
-            return result;
+            enemy.ReceiveAttack(actor, damage);
+
+            return true;
         }
 
         public static bool IsApplicable(IItemType type)

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -22,11 +25,11 @@ namespace NeoServer.Game.Items.Items.Protections
             Duration = duration;
         }
 
+        public Dictionary<SkillType, byte> SkillBonus => Metadata.Attributes.SkillBonus;
         public ImmutableHashSet<VocationType> AllowedVocations => null;
 
         public byte Charges { get; private set; }
         public byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Armor);
-
         public bool Expired => Duration <= 0 && Charges <= 0;
 
         public ushort Duration { get; }
@@ -48,5 +51,7 @@ namespace NeoServer.Game.Items.Items.Protections
             DecreaseCharges();
             base.Protect(ref damage);
         }
+
+      
     }
 }

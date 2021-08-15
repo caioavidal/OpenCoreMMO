@@ -180,7 +180,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public uint AccountId { get; init; }
         public override IOutfit Outfit { get; protected set; }
-        public IDictionary<SkillType, ISkill> Skills { get; }
+        private IDictionary<SkillType, ISkill> Skills { get; }
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public IShopperNpc TradingWithNpc { get; private set; }
@@ -288,9 +288,15 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public bool IsInParty => Party is not null;
 
-        public byte GetSkillInfo(SkillType skill)
+        public ushort GetSkillLevel(SkillType skillType)
         {
-            return (byte) Skills[skill].Level;
+            Inventory.TotalSkillBonus.TryGetValue(skillType, out var skillBonus);
+
+            return (ushort) ((Skills.TryGetValue(skillType, out var skill) ? skill.Level : 1) * (100 + skillBonus)/ 100);
+        }
+        public byte GetSkillTries(SkillType skillType)
+        {
+            return (byte)(Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
         }
 
         public byte GetSkillPercent(SkillType skill)
