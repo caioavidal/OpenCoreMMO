@@ -73,5 +73,17 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             result.Should().BeFalse();
         }
+
+        [Fact]
+        public void SetFightMode_ChangesMode()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+            sut.SetFightMode(FightMode.Defense);
+
+            sut.FightMode.Should().Be(FightMode.Defense);
+            sut.SetFightMode(FightMode.Attack);
+
+            sut.FightMode.Should().Be(FightMode.Attack);
+        }
     }
 }
