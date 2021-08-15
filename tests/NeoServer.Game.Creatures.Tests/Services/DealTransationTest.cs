@@ -89,7 +89,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(coin2);
             container.AddItem(coin3);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                     {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
@@ -117,7 +117,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                     {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
@@ -157,7 +157,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
             container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                     {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
@@ -184,7 +184,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
             var player =
-                PlayerTestDataBuilder.BuildPlayer(1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+                PlayerTestDataBuilder.BuildPlayer(capacity:1000, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             player.LoadBank(500);
 
@@ -214,7 +214,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(1, current), 1)},
@@ -254,7 +254,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var container = ItemTestData.CreateBackpack();
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)},
@@ -296,7 +296,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var container = ItemTestData.CreateBackpack();
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                     {{Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)}});
 
@@ -337,7 +337,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var container = ItemTestData.CreateBackpack();
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)},
@@ -386,7 +386,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             container.AddItem(ItemTestData.CreateWeaponItem(11, "axe"));
             container.AddItem(platinum);
 
-            var player = PlayerTestDataBuilder.BuildPlayer(1000,
+            var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Backpack, new Tuple<IPickupable, ushort>(container, 1)}

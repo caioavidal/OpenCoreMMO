@@ -44,5 +44,6 @@ namespace NeoServer.Game.Common.Helpers
                     return true;
             return false;
         }
+
     }
 }

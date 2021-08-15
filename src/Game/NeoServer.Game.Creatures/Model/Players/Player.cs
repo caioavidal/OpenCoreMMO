@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
@@ -108,6 +109,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
         public ushort GuildLevel { get; set; }
+        private IDictionary<SkillType, ISkill> Skills { get; }
 
         public event PlayerLevelAdvance OnLevelAdvanced;
         public event PlayerGainSkillPoint OnGainedSkillPoint;
@@ -161,6 +163,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void LoadVipList(IEnumerable<(uint, string)> vips)
         {
+            if (Guard.AnyNull(vips)) return;
             var vipList = new HashSet<(uint, string)>();
             foreach (var vip in vips)
             {
@@ -180,7 +183,6 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public uint AccountId { get; init; }
         public override IOutfit Outfit { get; protected set; }
-        private IDictionary<SkillType, ISkill> Skills { get; }
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public IShopperNpc TradingWithNpc { get; private set; }
@@ -292,11 +294,13 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             Inventory.TotalSkillBonus.TryGetValue(skillType, out var skillBonus);
 
-            return (ushort) ((Skills.TryGetValue(skillType, out var skill) ? skill.Level : 1) * (100 + skillBonus)/ 100);
+            return (ushort) ((Skills.TryGetValue(skillType, out var skill) ? skill.Level : 1) * (100 + skillBonus) /
+                             100);
         }
+
         public byte GetSkillTries(SkillType skillType)
         {
-            return (byte)(Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
+            return (byte) (Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
         }
 
         public byte GetSkillPercent(SkillType skill)
@@ -785,6 +789,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public bool AddToVip(IPlayer player)
         {
+            if(Guard.AnyNull(player)) return false;
             if (string.IsNullOrWhiteSpace(player.Name)) return false;
 
             if (VipList?.Count > 200)
@@ -1089,7 +1094,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 damage.SetNewDamage(0);
                 return damage;
             }
-            
+
             return damage;
         }
 
