@@ -142,5 +142,16 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             sut.IsFollowing.Should().BeFalse();
         }
+
+        [Fact]
+        public void ChangeSecureMode_ChangesSecureMode()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+
+            sut.ChangeSecureMode(0);
+            sut.SecureMode.Should().Be(0);
+            sut.ChangeSecureMode(1);
+            sut.SecureMode.Should().Be(1);
+        }
     }
 }
