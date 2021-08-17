@@ -388,12 +388,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             TradingWithNpc = npc;
         }
 
-        public void SetFightMode(FightMode mode)
+        public void ChangeFightMode(FightMode mode)
         {
             FightMode = mode;
         }
 
-        public void SetChaseMode(ChaseMode mode)
+        public void ChangeChaseMode(ChaseMode mode)
         {
             ChaseMode = mode;
             FollowModeEnabled = mode == ChaseMode.Follow;
@@ -406,7 +406,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             StopFollowing();
         }
 
-        public void SetSecureMode(byte mode)
+        public void ChangeSecureMode(byte mode)
         {
             SecureMode = mode;
         }
@@ -414,7 +414,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public void CancelWalk()
         {
             StopWalking();
-            OnCancelledWalk(this);
+            OnCancelledWalk?.Invoke(this);
         }
 
         public override int ShieldDefend(int attack)

@@ -78,10 +78,10 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void SetFightMode_ChangesMode()
         {
             var sut = PlayerTestDataBuilder.BuildPlayer();
-            sut.SetFightMode(FightMode.Defense);
+            sut.ChangeFightMode(FightMode.Defense);
 
             sut.FightMode.Should().Be(FightMode.Defense);
-            sut.SetFightMode(FightMode.Attack);
+            sut.ChangeFightMode(FightMode.Attack);
 
             sut.FightMode.Should().Be(FightMode.Attack);
         }
