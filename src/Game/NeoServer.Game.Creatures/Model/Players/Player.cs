@@ -81,6 +81,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 skill.OnAdvance += OnLevelAdvance;
                 skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
             }
+
         }
 
         private bool IsPartyLeader => Party?.IsLeader(this) ?? false;
@@ -138,6 +139,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event PassPartyLeadership OnPassedPartyLeadership;
         public event Exhaust OnExhausted;
         public event Hear OnHear;
+        public event ChangeChaseMode OnChangedChaseMode;
 
         public ushort GuildId { get; init; }
         public bool HasGuild => GuildId > 0;
@@ -395,15 +397,18 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void ChangeChaseMode(ChaseMode mode)
         {
+            var oldChaseMode = ChaseMode;
             ChaseMode = mode;
-            FollowModeEnabled = mode == ChaseMode.Follow;
-            if (FollowModeEnabled && AutoAttackTarget is not null)
+            
+            if (ChaseMode == ChaseMode.Follow && AutoAttackTarget is not null)
             {
                 Follow(AutoAttackTarget as IWalkableCreature, PathSearchParams);
                 return;
             }
 
             StopFollowing();
+
+            OnChangedChaseMode?.Invoke(this, oldChaseMode, mode);
         }
 
         public void ChangeSecureMode(byte mode)
@@ -1146,5 +1151,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             return null;
         }
+
+    
     }
+
 }

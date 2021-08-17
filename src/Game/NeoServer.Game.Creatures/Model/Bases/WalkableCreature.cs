@@ -37,7 +37,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public ICreature Following { get; private set; }
         public bool IsFollowing => Following is not null;
         public bool HasNextStep => WalkingQueue.Count > 0;
-        public bool FollowModeEnabled { get; protected set; }
 
         public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {

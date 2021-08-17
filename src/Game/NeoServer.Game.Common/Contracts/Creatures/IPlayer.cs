@@ -12,6 +12,8 @@ using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
+    public delegate void ChangeChaseMode(IPlayer player, ChaseMode oldChaseMode, ChaseMode newChaseMode);
+
     public delegate void CancelWalk(IPlayer player);
 
     public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);

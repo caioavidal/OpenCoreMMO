@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using Moq;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -84,6 +87,60 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.ChangeFightMode(FightMode.Attack);
 
             sut.FightMode.Should().Be(FightMode.Attack);
+        }
+
+        [Fact]
+        public void ChangeChaseMode_ChangesChaseMode()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+            sut.ChangeChaseMode(ChaseMode.Stand);
+
+            sut.ChaseMode.Should().Be(ChaseMode.Stand);
+            sut.ChangeChaseMode(ChaseMode.Follow);
+
+            sut.ChaseMode.Should().Be(ChaseMode.Follow);
+        }
+
+        [Fact]
+        public void ChangeChaseMode_Follow_InvokeFollow()
+        {
+
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            GameToolStore.PathFinder = new Mock<IPathFinder>().Object;
+
+            var called = false;
+            sut.OnStartedFollowing += (_, _, _) =>
+            {
+                called = true;
+            };
+
+            sut.ChangeChaseMode(ChaseMode.Stand);
+
+            sut.SetAttackTarget(enemy);
+
+            called.Should().BeFalse();
+
+            sut.ChangeChaseMode(ChaseMode.Follow);
+
+            called.Should().BeTrue();
+        }
+        [Fact]
+        public void ChangeChaseMode_Stand_SetsFollowingToFalse()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            GameToolStore.PathFinder = new Mock<IPathFinder>().Object;
+
+            sut.SetAttackTarget(enemy);
+
+            sut.ChangeChaseMode(ChaseMode.Follow);
+            
+            sut.IsFollowing.Should().BeTrue();
+
+            sut.ChangeChaseMode(ChaseMode.Stand);
+
+            sut.IsFollowing.Should().BeFalse();
         }
     }
 }
