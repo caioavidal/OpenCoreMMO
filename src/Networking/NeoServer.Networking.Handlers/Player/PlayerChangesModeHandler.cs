@@ -22,9 +22,9 @@ namespace NeoServer.Networking.Handlers.Player
 
             game.Dispatcher.AddEvent(new Event(() =>
             {
-                player.SetFightMode(changeMode.FightMode);
-                player.SetChaseMode(changeMode.ChaseMode);
-                player.SetSecureMode(changeMode.SecureMode);
+                player.ChangeFightMode(changeMode.FightMode);
+                player.ChangeChaseMode(changeMode.ChaseMode);
+                player.ChangeSecureMode(changeMode.SecureMode);
             }));
         }
     }

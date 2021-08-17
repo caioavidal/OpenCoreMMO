@@ -165,19 +165,19 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ///     Changes player's fight mode
         /// </summary>
         /// <param name="fightMode"></param>
-        void SetFightMode(FightMode fightMode);
+        void ChangeFightMode(FightMode fightMode);
 
         /// <summary>
         ///     Changes player's chase mode
         /// </summary>
         /// <param name="chaseMode"></param>
-        void SetChaseMode(ChaseMode chaseMode);
+        void ChangeChaseMode(ChaseMode chaseMode);
 
         /// <summary>
         ///     Toogle Secure Mode
         /// </summary>
         /// <param name="secureMode"></param>
-        void SetSecureMode(byte secureMode);
+        void ChangeSecureMode(byte secureMode);
 
         byte GetSkillPercent(SkillType type);
 
