@@ -11,7 +11,7 @@ namespace NeoServer.Game.Common.Contracts.Services
         /// <returns>
         ///     Whether the experience from the killed monster can be shared.
         /// </returns>
-        bool CanPartyReceiveSharedExperience(IParty party, IMonster monster);
+        bool CanPartyReceiveSharedExperience(IMonster monster);
 
         /// <summary>
         /// Calculates the amount of experience the whole party will receive in total from killing the monster.
@@ -21,6 +21,6 @@ namespace NeoServer.Game.Common.Contracts.Services
         /// <returns>
         ///     The amount of experience (unrounded) to be split among the party members.
         /// </returns>
-        double GetTotalPartyExperience(IParty party, IMonster monster);
+        double GetTotalPartyExperience(IMonster monster);
     }
 }

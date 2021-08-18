@@ -14,23 +14,25 @@ namespace NeoServer.Game.Creatures.Services
     public class PartyShareExperienceService : IPartyShareExperienceService
     {
         private readonly IPartyShareExperienceConfiguration Configuration;
+        private readonly IParty Party;
 
-        public PartyShareExperienceService(IPartyShareExperienceConfiguration configuration)
+        public PartyShareExperienceService(IParty party, IPartyShareExperienceConfiguration configuration)
         {
-            Configuration = configuration;
+            Party = party ?? throw new ArgumentNullException(nameof(party));
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         /// <summary>
         /// Combines all of the experience sharing requirements into a single check.
         /// </summary>
         /// <param name="monster">The monster killed by the party.</param>
-        public bool CanPartyReceiveSharedExperience(IParty party, IMonster monster)
+        public bool CanPartyReceiveSharedExperience(IMonster monster)
         {
-            return IsExperienceSharingTurnedOn(party)
+            return IsExperienceSharingTurnedOn()
                 && DoesMonsterQualify(monster)
-                && ArePartyCloseEnoughToEachOther(party)
-                && ArePartyLevelsInProperRange(party)
-                && IsEveryMemberActive(party, monster);
+                && ArePartyCloseEnoughToEachOther()
+                && ArePartyLevelsInProperRange()
+                && IsEveryMemberActive(monster);
         }
 
         /// <summary>
@@ -38,11 +40,11 @@ namespace NeoServer.Game.Creatures.Services
         /// This is the total experience, not individual player experience.
         /// </summary>
         /// <param name="monster">The monster killed by the party.</param>
-        public double GetTotalPartyExperience(IParty party, IMonster monster)
+        public double GetTotalPartyExperience(IMonster monster)
         {
-            if (CanPartyReceiveSharedExperience(party, monster) == false) { return 0; }
+            if (CanPartyReceiveSharedExperience(monster) == false) { return 0; }
 
-            var uniqueVocationCount = party.Members.GroupBy(x => x.Vocation.Name).Count();
+            var uniqueVocationCount = Party.Members.GroupBy(x => x.Vocation.Name).Count();
             var bonusExperienceFactor = GetUniqueVocationCountBonusFactor(uniqueVocationCount);
             return monster.Experience * bonusExperienceFactor;
         }
@@ -50,9 +52,9 @@ namespace NeoServer.Game.Creatures.Services
         /// <summary>
         /// Checks if the party has experience sharing turned on.
         /// </summary>
-        private bool IsExperienceSharingTurnedOn(IParty party)
+        public bool IsExperienceSharingTurnedOn()
         {
-            return Configuration.IsSharedExperienceAlwaysOn || false; // TODO: Add setting to party?
+            return Configuration.IsSharedExperienceAlwaysOn || Party.ExperienceSharingEnabled;
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace NeoServer.Game.Creatures.Services
         /// if the defeated creature usually yields at least 20 experience points.
         /// </summary>
         /// <param name="monster">The creature defeated by the party.</param>
-        private bool DoesMonsterQualify(IMonster monster)
+        public bool DoesMonsterQualify(IMonster monster)
         {
             return monster.Experience >= Configuration.MinimumMonsterExperienceToBeShared;
         }
@@ -70,14 +72,14 @@ namespace NeoServer.Game.Creatures.Services
         /// To be more precise, the lowest character in a party may not have less than two-thirds of the levels of the highest character.
         /// This means a level 40 can share experience with a level 60 but not with a level 20; or a level 200 can share experience with a level 300.
         /// </summary>
-        private bool ArePartyLevelsInProperRange(IParty party)
+        public bool ArePartyLevelsInProperRange()
         {
             if (Configuration.RequirePartyMemberLevelProximity == false) { return true; }
 
-            var lowestLevel = 0;
+            var lowestLevel = int.MaxValue;
             var highestLevel = 0;
 
-            foreach (var member in party.Members)
+            foreach (var member in Party.Members)
             {
                 lowestLevel = Math.Min(lowestLevel, member.Level);
                 highestLevel = Math.Max(highestLevel, member.Level);
@@ -90,11 +92,11 @@ namespace NeoServer.Game.Creatures.Services
         /// The distance of all party members to the leader must be smaller or equal to 30 fields, 
         /// this works also if you are one floor up or down.
         /// </summary>
-        private bool ArePartyCloseEnoughToEachOther(IParty party)
+        public bool ArePartyCloseEnoughToEachOther()
         {
             if (Configuration.RequirePartyProximity == false) { return true; }
 
-            var members = party.Members;
+            var members = Party.Members;
 
             foreach (var memberA in members)
             {
@@ -117,11 +119,11 @@ namespace NeoServer.Game.Creatures.Services
         /// Finally, all party members must be actively involved. 
         /// This means they must either have healed another member or attacked an aggressive monster.
         /// </summary>
-        private bool IsEveryMemberActive(IParty party, IMonster monster)
+        public bool IsEveryMemberActive(IMonster monster)
         {
             if (Configuration.RequirePartyMemberParticipation == false) { return true; }
 
-            foreach (var member in party.Members)
+            foreach (var member in Party.Members)
             {
                 // TODO: Figure out how to track heals.
 
@@ -138,7 +140,7 @@ namespace NeoServer.Game.Creatures.Services
         /// and if party members of all 4 vocations participate, the bonus will even be raised to 100%. 
         /// </summary>
         /// <param name="uniqueVocationCount">The number of unique vocations in the party.</param>
-        private double GetUniqueVocationCountBonusFactor(int uniqueVocationCount)
+        public double GetUniqueVocationCountBonusFactor(int uniqueVocationCount)
         {
             var maxVocations = Configuration.UniqueVocationBonusExperienceFactor.Count;
             uniqueVocationCount = Math.Min(maxVocations, Math.Max(1, uniqueVocationCount)); // Force vocation count to be between 1 and 4*.
