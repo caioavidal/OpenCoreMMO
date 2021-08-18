@@ -173,7 +173,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             if (HealthPoints == MaxHealthPoints) return;
 
             HealthPoints = HealthPoints + increasing >= MaxHealthPoints ? MaxHealthPoints : HealthPoints + increasing;
-            OnHeal?.Invoke(this, increasing);
+            OnHeal?.Invoke(this, healedBy, increasing);
         }
 
         public virtual void TurnInvisible()

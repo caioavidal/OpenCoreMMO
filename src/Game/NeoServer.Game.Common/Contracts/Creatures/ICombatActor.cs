@@ -14,7 +14,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamage damage);
     public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamage damage);
 
-    public delegate void Heal(ICombatActor creature, ushort amount);
+    public delegate void Heal(ICombatActor healedCreature, ICombatActor healingCreature, ushort amount);
 
     public delegate void StopAttack(ICombatActor actor);
 

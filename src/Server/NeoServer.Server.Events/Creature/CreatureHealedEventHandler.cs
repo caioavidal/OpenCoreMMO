@@ -18,16 +18,16 @@ namespace NeoServer.Server.Events.Creature
             this.game = game;
         }
 
-        public void Execute(ICreature creature, ushort amount)
+        public void Execute(ICreature healedCreature, ICreature healer, ushort amount)
         {
-            foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in map.GetPlayersAtPositionZone(healedCreature.Location))
             {
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-                if (creature == spectator) //myself
-                    connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer) creature));
+                if (healedCreature == spectator) //myself
+                    connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer) healedCreature));
 
-                connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(creature));
+                connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(healedCreature));
 
                 connection.Send();
             }
