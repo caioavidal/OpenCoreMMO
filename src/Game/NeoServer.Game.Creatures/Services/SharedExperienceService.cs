@@ -12,6 +12,8 @@ namespace NeoServer.Game.Creatures.Services
     /// <remarks>
     /// Comments reflect values matching tibia, but configuration allows for any specific value to be changed.
     /// </remarks>
+    /// TODO: Learn how/when experience is applied and determine method for applying shared experience bonus.
+    /// TODO: Create a function if necessary to distribute experience based on contribution to the party.
     public class SharedExperienceService : ISharedExperienceService
     {
         public bool ExperienceSharingEnabled { get; set; }
