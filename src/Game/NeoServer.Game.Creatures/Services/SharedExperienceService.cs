@@ -14,7 +14,6 @@ namespace NeoServer.Game.Creatures.Services
     /// </remarks>
     /// TODO: Learn how/when experience is applied and determine method for applying shared experience bonus.
     /// TODO: Create a function if necessary to distribute experience based on contribution to the party.
-    /// TODO: "ERR: Incoming packet not handled: EnableSharedExp"
     public class SharedExperienceService : ISharedExperienceService
     {
         public bool ExperienceSharingEnabled { get; set; }

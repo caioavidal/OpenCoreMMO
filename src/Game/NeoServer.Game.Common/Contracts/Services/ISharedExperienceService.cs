@@ -5,6 +5,11 @@ namespace NeoServer.Game.Common.Contracts.Services
     public interface ISharedExperienceService
     {
         /// <summary>
+        /// Does the party have experience sharing enabled?
+        /// </summary>
+        bool ExperienceSharingEnabled { get; set; }
+
+        /// <summary>
         /// Sets the party the service is tracking.
         /// </summary>
         /// <param name="party">Party to be tracked by the service.</param>
