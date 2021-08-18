@@ -26,22 +26,28 @@ namespace NeoServer.Game.Creatures.Services
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             PartyMemberHeals = new List<PartyMemberHealed>();
 
+            Party.OnPlayerJoin += StartTrackingPlayerHeals;
+            Party.OnPlayerLeave += StopTrackingPlayerHeals;
             foreach (var player in party.Members)
             {
-                StartTrackingPlayerHeals(player);
+                StartTrackingPlayerHeals(Party, player);
             }
-
-            // TODO: Events on Party for members joining and leaving.
         }
 
-        public void StartTrackingPlayerHeals(IPlayer player)
+        public void StartTrackingPlayerHeals(IParty party, IPlayer player)
         {
             player.OnHeal += TrackPlayerHeals;
         }
 
-        public void StopTrackingPlayerHeals(IPlayer player)
+        public void StopTrackingPlayerHeals(IParty party, IPlayer player)
         {
             player.OnHeal -= TrackPlayerHeals;
+
+            var healsInvolvingPlayer = PartyMemberHeals.Where(x => x.Healer == player || x.Healed == player);
+            foreach (var heal in healsInvolvingPlayer)
+            {
+                PartyMemberHeals.Remove(heal);
+            }
         }
 
         /// <summary>
@@ -59,6 +65,20 @@ namespace NeoServer.Game.Creatures.Services
             if (healerCreature is not IPlayer healer) { return; }
 
             PartyMemberHeals.Add(new PartyMemberHealed(healer, healed));
+            RemoveTrackedHealsConsideredInactive();
+        }
+
+        /// <summary>
+        /// Removes heals older than <see cref="Configuration.SecondsBetweenHealsToBeConsideredActive"/> seconds.
+        /// </summary>
+        public void RemoveTrackedHealsConsideredInactive()
+        {
+            var recentHealCutoffTime = DateTime.UtcNow.AddSeconds(Configuration.SecondsBetweenHealsToBeConsideredActive);
+            var inactiveHeals = PartyMemberHeals.Where(x => x.HealedOn > recentHealCutoffTime);
+            foreach (var inactiveHeal in inactiveHeals)
+            {
+                PartyMemberHeals.Remove(inactiveHeal);
+            }
         }
 
         /// <summary>
