@@ -18,17 +18,10 @@ namespace NeoServer.Game.Creatures.Tests.Services
     public class PartyShareExperienceServiceTest
     {
         [Fact]
-        public void PartyShareExperienceService_ThrowsNullArgumentException_WhenPartyIsNull()
-        {
-            var config = new Mock<ISharedExperienceConfiguration>().Object;
-            Assert.Throws<ArgumentNullException>(() => new SharedExperienceService(null, config));
-        }
-
-        [Fact]
         public void PartyShareExperienceService_ThrowsNullArgumentException_WhenConfigurationIsNull()
         {
             var party = new Mock<IParty>().Object;
-            Assert.Throws<ArgumentNullException>(() => new SharedExperienceService(party, null));
+            Assert.Throws<ArgumentNullException>(() => new SharedExperienceService(null));
         }
 
 
@@ -39,7 +32,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             configMock.Setup(x => x.IsSharedExperienceAlwaysOn).Returns(true);
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             Assert.True(service.IsExperienceSharingTurnedOn());
         }
@@ -52,7 +46,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
 
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
             service.ExperienceSharingEnabled = true;
 
             Assert.True(service.IsExperienceSharingTurnedOn());
@@ -62,9 +57,12 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void IsExperienceSharingTurnedOn_ReturnsFalse_WhenPartySharedExperienceDisabled()
         {
             var configMock = new Mock<ISharedExperienceConfiguration>();
+
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             Assert.False(service.IsExperienceSharingTurnedOn());
         }
@@ -87,7 +85,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
 
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             var monsterMock = new Mock<IMonster>();
             monsterMock.Setup(x => x.Experience).Returns(monsterExperience);
@@ -118,7 +117,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(new List<IPlayer>(partyMembers));
 
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             Assert.Equal(expectedResult, service.ArePartyLevelsInProperRange());
         }
@@ -156,7 +156,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(partyMembers);
 
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             Assert.Equal(expectedResult, service.ArePartyCloseEnoughToEachOther());
         }
@@ -194,7 +195,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             configMock.Setup(x => x.RequirePartyMemberParticipation).Returns(true);
             configMock.Setup(x => x.SecondsBetweenHealsToBeConsideredActive).Returns(30);
 
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             var monsterMock = new Mock<IMonster>();
             var damages = new Dictionary<ICreature, ushort>().ToImmutableDictionary();
@@ -239,7 +241,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             configMock.Setup(x => x.RequirePartyMemberParticipation).Returns(true);
             configMock.Setup(x => x.SecondsBetweenHealsToBeConsideredActive).Returns(30);
 
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             var monsterMock = new Mock<IMonster>();
             var damages = new Dictionary<ICreature, ushort>()
@@ -273,7 +276,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
             configMock.Setup(x => x.RequirePartyMemberParticipation).Returns(true);
             configMock.Setup(x => x.SecondsBetweenHealsToBeConsideredActive).Returns(30);
 
-            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(configMock.Object);
+            service.StartTrackingPartyMembers(partyMock.Object);
 
             var monsterMock = new Mock<IMonster>();
             var damages = new Dictionary<ICreature, ushort>()

@@ -5,6 +5,12 @@ namespace NeoServer.Game.Common.Contracts.Services
     public interface ISharedExperienceService
     {
         /// <summary>
+        /// Sets the party the service is tracking.
+        /// </summary>
+        /// <param name="party">Party to be tracked by the service.</param>
+        void StartTrackingPartyMembers(IParty party);
+
+        /// <summary>
         /// Checks if the experience from the killed monster can be shared with party.
         /// </summary>
         /// <param name="monster">The monster killed by the party.</param>

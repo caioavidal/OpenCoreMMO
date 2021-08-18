@@ -14,25 +14,33 @@ namespace NeoServer.Game.Creatures.Services
     /// </remarks>
     /// TODO: Learn how/when experience is applied and determine method for applying shared experience bonus.
     /// TODO: Create a function if necessary to distribute experience based on contribution to the party.
+    /// TODO: "ERR: Incoming packet not handled: EnableSharedExp"
     public class SharedExperienceService : ISharedExperienceService
     {
         public bool ExperienceSharingEnabled { get; set; }
 
         private readonly ISharedExperienceConfiguration Configuration;
-        private readonly IParty Party;
         private readonly ICollection<PartyMemberHealed> PartyMemberHeals;
 
-        public SharedExperienceService(IParty party, ISharedExperienceConfiguration configuration)
+        private IParty Party;
+
+        public SharedExperienceService(ISharedExperienceConfiguration configuration)
         {
-            Party = party ?? throw new ArgumentNullException(nameof(party));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             PartyMemberHeals = new List<PartyMemberHealed>();
+        }
 
-            Party.OnPlayerJoin += StartTrackingPlayerHeals;
-            Party.OnPlayerLeave += StopTrackingPlayerHeals;
-            foreach (var player in party.Members)
+        public void StartTrackingPartyMembers(IParty party)
+        {
+            if (Party == null)
             {
-                StartTrackingPlayerHeals(Party, player);
+                Party = party;
+                Party.OnPlayerJoin += StartTrackingPlayerHeals;
+                Party.OnPlayerLeave += StopTrackingPlayerHeals;
+                foreach (var player in Party.Members)
+                {
+                    StartTrackingPlayerHeals(Party, player);
+                }
             }
         }
 

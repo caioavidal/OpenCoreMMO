@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
-    public class PartySharedExperienceConfiguration : ISharedExperienceConfiguration
+    public class SharedExperienceConfiguration : ISharedExperienceConfiguration
     {
         public bool IsSharedExperienceAlwaysOn { get; }
         public bool RequirePartyProximity { get; }
@@ -16,16 +16,16 @@ namespace NeoServer.Game.Creatures.Model.Players
         public int SecondsBetweenHealsToBeConsideredActive { get; }
         public IDictionary<int, double> UniqueVocationBonusExperienceFactor { get; }
 
-        public PartySharedExperienceConfiguration(
-            bool? isSharedExperienceAlwaysOn,
-            bool? requirePartyProximity,
-            int? maximumPartyDistanceToReceiveExperienceSharing,
-            int? maximumPartyVerticalDistanceToReceiveExperienceSharing,
-            bool? requirePartyMemberLevelProximity,
-            bool? requirePartyMemberParticipation,
-            uint? minimumMonsterExperienceToBeShared,
-            IDictionary<int, double> uniqueVocationBonusExperienceFactor,
-            double? lowestLevelSupportedMultipler
+        public SharedExperienceConfiguration(
+            bool? isSharedExperienceAlwaysOn = null,
+            bool? requirePartyProximity = null,
+            int? maximumPartyDistanceToReceiveExperienceSharing = null,
+            int? maximumPartyVerticalDistanceToReceiveExperienceSharing = null,
+            bool? requirePartyMemberLevelProximity = null,
+            bool? requirePartyMemberParticipation = null,
+            uint? minimumMonsterExperienceToBeShared = null,
+            IDictionary<int, double> uniqueVocationBonusExperienceFactor = null,
+            double? lowestLevelSupportedMultipler = null
         )
         {
             IsSharedExperienceAlwaysOn = isSharedExperienceAlwaysOn ?? false;
