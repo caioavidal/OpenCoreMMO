@@ -5,6 +5,8 @@ using NeoServer.Game.Common.Contracts.Services;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
+    public delegate void PlayerJoinedParty(IParty party, IPlayer player);
+    public delegate void PlayerLeftParty(IParty party, IPlayer player);
     public interface IParty
     {
         IReadOnlyCollection<IPlayer> Members { get; }
@@ -15,6 +17,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ISharedExperienceService SharedExperienceService { get; }
 
         event Action OnPartyOver;
+        event PlayerJoinedParty OnPlayerJoin;
+        event PlayerLeftParty OnPlayerLeave;
 
         Result ChangeLeadership(IPlayer from, IPlayer to);
         Result Invite(IPlayer by, IPlayer invitedPlayer);

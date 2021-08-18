@@ -42,6 +42,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public event Action OnPartyOver;
+        public event PlayerJoinedParty OnPlayerJoin;
+        public event PlayerLeftParty OnPlayerLeave;
 
         public IPlayer Leader { get; private set; }
 
@@ -97,6 +99,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             members.Add(player.CreatureId, new PartyMember(player, ++memberCount));
 
             player.JoinChannel(Channel);
+            OnPlayerJoin?.Invoke(this, player);
             return true;
         }
 
@@ -126,6 +129,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             members.Remove(player.CreatureId);
             player.ExitChannel(Channel);
 
+            OnPlayerLeave?.Invoke(this, player);
             if (IsOver) OnPartyOver?.Invoke();
         }
 
