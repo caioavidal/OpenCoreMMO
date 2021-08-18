@@ -36,7 +36,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
             var value = (ushort) GameRandom.Random.Next(Min, maxValue: Max);
 
             if (Type.Equals("hp", StringComparison.InvariantCultureIgnoreCase))
-                actor.Heal(value);
+                actor.Heal(value, usedBy);
             else if (creature is IPlayer player) player.HealMana(value);
 
             Reduce();
