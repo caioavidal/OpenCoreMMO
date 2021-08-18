@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Services
 {
-    public interface IPartyShareExperienceService
+    public interface ISharedExperienceService
     {
         /// <summary>
         /// Checks if the experience from the killed monster can be shared with party.

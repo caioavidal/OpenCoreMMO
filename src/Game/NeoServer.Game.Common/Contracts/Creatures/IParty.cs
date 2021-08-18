@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Services;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
@@ -11,6 +12,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         IPlayer Leader { get; }
         IReadOnlyCollection<uint> Invites { get; }
         IChatChannel Channel { get; }
+        ISharedExperienceService SharedExperienceService { get; }
 
         event Action OnPartyOver;
 

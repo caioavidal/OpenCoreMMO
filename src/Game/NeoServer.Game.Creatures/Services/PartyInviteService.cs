@@ -9,10 +9,12 @@ namespace NeoServer.Game.Creatures.Services
     public class PartyInviteService : IPartyInviteService
     {
         private readonly ChatChannelFactory chatChannelFactory;
+        private readonly ISharedExperienceService sharedExperienceService;
 
-        public PartyInviteService(ChatChannelFactory chatChannelFactory)
+        public PartyInviteService(ChatChannelFactory chatChannelFactory, ISharedExperienceService sharedExperienceService)
         {
             this.chatChannelFactory = chatChannelFactory;
+            this.sharedExperienceService = sharedExperienceService;
         }
 
         public void Invite(IPlayer player, IPlayer invitedPlayer)
@@ -31,7 +33,7 @@ namespace NeoServer.Game.Creatures.Services
             if (partyCreatedNow)
             {
                 var partyChannel = chatChannelFactory.CreatePartyChannel();
-                party = new Party(player, partyChannel);
+                party = new Party(player, partyChannel, sharedExperienceService);
             }
 
             player.InviteToParty(invitedPlayer, party);

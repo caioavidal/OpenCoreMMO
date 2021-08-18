@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Services
 {
-    public interface IPartyShareExperienceConfiguration
+    public interface ISharedExperienceConfiguration
     {
         /// <summary>
         /// If enabled, removes the need for party leaders to enable experience sharing.
@@ -45,15 +45,21 @@ namespace NeoServer.Game.Common.Contracts.Services
         uint MinimumMonsterExperienceToBeShared { get; }
 
         /// <summary>
-        /// Bonus factor of monster experience based on the number of unique vocations in the party.
-        /// </summary>
-        IDictionary<int, double> UniqueVocationBonusExperienceFactor { get; }
-
-        /// <summary>
         /// For the party to be eligable for shared experience one of the following must be true:
         /// 1) RequirePartyMemberLevelProximity must be false.
         /// 2) This value multiplied by the lowest level in the party must be greater than or equal to the highest level in the party.
         /// </summary>
         double LowestLevelSupportedMultipler { get; }
+
+        /// <summary>
+        /// All party members must be active for experience sharing to occur.
+        /// Either they must have attacked the monster or healed in the past X seconds to be considered active.
+        /// </summary>
+        int SecondsBetweenHealsToBeConsideredActive { get; }
+
+        /// <summary>
+        /// Bonus factor of monster experience based on the number of unique vocations in the party.
+        /// </summary>
+        IDictionary<int, double> UniqueVocationBonusExperienceFactor { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NeoServer.Game.Creatures.Services
@@ -11,15 +12,53 @@ namespace NeoServer.Game.Creatures.Services
     /// <remarks>
     /// Comments reflect values matching tibia, but configuration allows for any specific value to be changed.
     /// </remarks>
-    public class PartyShareExperienceService : IPartyShareExperienceService
+    public class SharedExperienceService : ISharedExperienceService
     {
-        private readonly IPartyShareExperienceConfiguration Configuration;
-        private readonly IParty Party;
+        public bool ExperienceSharingEnabled { get; set; }
 
-        public PartyShareExperienceService(IParty party, IPartyShareExperienceConfiguration configuration)
+        private readonly ISharedExperienceConfiguration Configuration;
+        private readonly IParty Party;
+        private readonly ICollection<PartyMemberHealed> PartyMemberHeals;
+
+        public SharedExperienceService(IParty party, ISharedExperienceConfiguration configuration)
         {
             Party = party ?? throw new ArgumentNullException(nameof(party));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            PartyMemberHeals = new List<PartyMemberHealed>();
+
+            foreach (var player in party.Members)
+            {
+                StartTrackingPlayerHeals(player);
+            }
+
+            // TODO: Events on Party for members joining and leaving.
+        }
+
+        public void StartTrackingPlayerHeals(IPlayer player)
+        {
+            player.OnHeal += TrackPlayerHeals;
+        }
+
+        public void StopTrackingPlayerHeals(IPlayer player)
+        {
+            player.OnHeal -= TrackPlayerHeals;
+        }
+
+        /// <summary>
+        /// Maintains <see cref="PartyMembersByHealer"/> 
+        /// where the key is the AccountId of the healing player
+        /// and the value is the list of party members recently healed by the player.
+        /// </summary>
+        /// <param name="healedCreature">The one that received the healing.</param>
+        /// <param name="healer">The one that caused the healing.</param>
+        /// <param name="amount">Amount the creature was healed.</param>
+        public void TrackPlayerHeals(ICombatActor healedCreature, ICombatActor healerCreature, ushort amount)
+        {
+            if (amount <= 0) { return; }
+            if (healedCreature is not IPlayer healed) { return; }
+            if (healerCreature is not IPlayer healer) { return; }
+
+            PartyMemberHeals.Add(new PartyMemberHealed(healer, healed));
         }
 
         /// <summary>
@@ -54,7 +93,7 @@ namespace NeoServer.Game.Creatures.Services
         /// </summary>
         public bool IsExperienceSharingTurnedOn()
         {
-            return Configuration.IsSharedExperienceAlwaysOn || Party.ExperienceSharingEnabled;
+            return Configuration.IsSharedExperienceAlwaysOn || ExperienceSharingEnabled;
         }
 
         /// <summary>
@@ -123,9 +162,12 @@ namespace NeoServer.Game.Creatures.Services
         {
             if (Configuration.RequirePartyMemberParticipation == false) { return true; }
 
+            var recentHealCutoffTime = DateTime.UtcNow.AddSeconds(Configuration.SecondsBetweenHealsToBeConsideredActive);
+            var recentNonSelfHeals = PartyMemberHeals.Where(x => x.HealedOn <= recentHealCutoffTime && x.IsSelfHeal == false);
+
             foreach (var member in Party.Members)
             {
-                // TODO: Figure out how to track heals.
+                if (recentNonSelfHeals.Any(x => x.Healer == member)) { continue; }
 
                 monster.Damages.TryGetValue(member, out var damageDealt);
                 if (damageDealt <= 0) { return false; }
@@ -147,6 +189,22 @@ namespace NeoServer.Game.Creatures.Services
             return Configuration.UniqueVocationBonusExperienceFactor.TryGetValue(uniqueVocationCount, out var bonusFactor)
                  ? bonusFactor
                  : 0;
+        }
+
+        private class PartyMemberHealed
+        {
+            public IPlayer Healer { get; }
+            public IPlayer Healed { get; }
+            public DateTime HealedOn { get; }
+            public bool IsSelfHeal { get; }
+
+            public PartyMemberHealed(IPlayer healer, IPlayer healed)
+            {
+                Healer = healer;
+                Healed = healed;
+                HealedOn = DateTime.UtcNow;
+                IsSelfHeal = healer == healed;
+            }
         }
     }
 }

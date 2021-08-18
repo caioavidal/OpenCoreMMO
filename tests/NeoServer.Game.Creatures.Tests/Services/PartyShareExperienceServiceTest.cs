@@ -1,10 +1,15 @@
 ﻿using Moq;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Services;
+using NeoServer.Game.Tests.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Xunit;
 
@@ -15,25 +20,26 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [Fact]
         public void PartyShareExperienceService_ThrowsNullArgumentException_WhenPartyIsNull()
         {
-            var config = new Mock<IPartyShareExperienceConfiguration>().Object;
-            Assert.Throws<ArgumentNullException>(() => new PartyShareExperienceService(null, config));
+            var config = new Mock<ISharedExperienceConfiguration>().Object;
+            Assert.Throws<ArgumentNullException>(() => new SharedExperienceService(null, config));
         }
 
         [Fact]
         public void PartyShareExperienceService_ThrowsNullArgumentException_WhenConfigurationIsNull()
         {
             var party = new Mock<IParty>().Object;
-            Assert.Throws<ArgumentNullException>(() => new PartyShareExperienceService(party, null));
+            Assert.Throws<ArgumentNullException>(() => new SharedExperienceService(party, null));
         }
 
 
         [Fact]
         public void IsExperienceSharingTurnedOn_ReturnsTrue_WhenConfiguredToAlwaysBeOn()
         {
-            var configMock = new Mock<IPartyShareExperienceConfiguration>();
+            var configMock = new Mock<ISharedExperienceConfiguration>();
             configMock.Setup(x => x.IsSharedExperienceAlwaysOn).Returns(true);
             var partyMock = new Mock<IParty>();
-            var service = new PartyShareExperienceService(partyMock.Object, configMock.Object);
+            partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
 
             Assert.True(service.IsExperienceSharingTurnedOn());
         }
@@ -41,10 +47,13 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [Fact]
         public void IsExperienceSharingTurnedOn_ReturnsTrue_WhenPartySharedExperienceEnabled()
         {
-            var configMock = new Mock<IPartyShareExperienceConfiguration>();
+            var configMock = new Mock<ISharedExperienceConfiguration>();
+
             var partyMock = new Mock<IParty>();
-            partyMock.Setup(x => x.ExperienceSharingEnabled).Returns(true);
-            var service = new PartyShareExperienceService(partyMock.Object, configMock.Object);
+            partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
+
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+            service.ExperienceSharingEnabled = true;
 
             Assert.True(service.IsExperienceSharingTurnedOn());
         }
@@ -52,9 +61,10 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [Fact]
         public void IsExperienceSharingTurnedOn_ReturnsFalse_WhenPartySharedExperienceDisabled()
         {
-            var configMock = new Mock<IPartyShareExperienceConfiguration>();
+            var configMock = new Mock<ISharedExperienceConfiguration>();
             var partyMock = new Mock<IParty>();
-            var service = new PartyShareExperienceService(partyMock.Object, configMock.Object);
+            partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
 
             Assert.False(service.IsExperienceSharingTurnedOn());
         }
@@ -71,12 +81,13 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [Theory]
         public void DoesMonsterQuality_ReturnsTrue_WhenMonsterExperienceGreaterThanOrEqualToConfiguredMinimumExperience(uint monsterExperience, uint minimumExperience, bool expectedResult)
         {
-            var configMock = new Mock<IPartyShareExperienceConfiguration>();
+            var configMock = new Mock<ISharedExperienceConfiguration>();
             configMock.Setup(x => x.MinimumMonsterExperienceToBeShared).Returns(minimumExperience);
 
             var partyMock = new Mock<IParty>();
+            partyMock.Setup(x => x.Members).Returns(new List<IPlayer>());
 
-            var service = new PartyShareExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
 
             var monsterMock = new Mock<IMonster>();
             monsterMock.Setup(x => x.Experience).Returns(monsterExperience);
@@ -93,7 +104,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [Theory]
         public void ArePartyLevelsInProperRange(bool requirePartyMemberLevelProximity, double lowestLevelSupportedMultiplier, bool expectedResult, params int[] partyLevels)
         {
-            var configMock = new Mock<IPartyShareExperienceConfiguration>();
+            var configMock = new Mock<ISharedExperienceConfiguration>();
             configMock.Setup(x => x.RequirePartyMemberLevelProximity).Returns(requirePartyMemberLevelProximity);
             configMock.Setup(x => x.LowestLevelSupportedMultipler).Returns(lowestLevelSupportedMultiplier);
 
@@ -107,7 +118,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(new List<IPlayer>(partyMembers));
 
-            var service = new PartyShareExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
 
             Assert.Equal(expectedResult, service.ArePartyLevelsInProperRange());
         }
@@ -125,7 +136,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [Theory]
         public void ArePartyMembersCloseEnoughToEachOther(bool requirePartyProximity, int maxDistance, int maxVerticalDistance, bool expectedResult, int x, int y, int z)
         {
-            var configMock = new Mock<IPartyShareExperienceConfiguration>();
+            var configMock = new Mock<ISharedExperienceConfiguration>();
             configMock.Setup(x => x.RequirePartyProximity).Returns(requirePartyProximity);
             configMock.Setup(x => x.MaximumPartyDistanceToReceiveExperienceSharing).Returns(maxDistance);
             configMock.Setup(x => x.MaximumPartyVerticalDistanceToReceiveExperienceSharing).Returns(maxVerticalDistance);
@@ -145,9 +156,134 @@ namespace NeoServer.Game.Creatures.Tests.Services
             var partyMock = new Mock<IParty>();
             partyMock.Setup(x => x.Members).Returns(partyMembers);
 
-            var service = new PartyShareExperienceService(partyMock.Object, configMock.Object);
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
 
             Assert.Equal(expectedResult, service.ArePartyCloseEnoughToEachOther());
+        }
+
+        [Fact]
+        public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveHealedAnotherRecently()
+        {
+            var playerOneMock = new Mock<IPlayer>();
+            playerOneMock.Setup(x => x.HealthPoints).Returns(99);
+            playerOneMock.Setup(x => x.MaxHealthPoints).Returns(100);
+
+            var playerTwoMock = new Mock<IPlayer>();
+            playerTwoMock.Setup(x => x.HealthPoints).Returns(99);
+            playerTwoMock.Setup(x => x.MaxHealthPoints).Returns(100);
+
+            playerOneMock.Setup(x => x.Heal(It.IsAny<ushort>(), It.IsAny<ICombatActor>()))
+                      .Raises(player => player.OnHeal += It.IsAny<Heal>(), playerOneMock.Object, playerTwoMock.Object, (ushort)1);
+
+            playerTwoMock.Setup(x => x.Heal(It.IsAny<ushort>(), It.IsAny<ICombatActor>()))
+                      .Raises(player => player.OnHeal += It.IsAny<Heal>(), playerTwoMock.Object, playerOneMock.Object, (ushort)1);
+
+            var playerOne = playerOneMock.Object;
+            var playerTwo = playerTwoMock.Object;
+
+            var partyMembers = new List<IPlayer>()
+            {
+                playerOne,
+                playerTwo
+            };
+
+            var partyMock = new Mock<IParty>();
+            partyMock.Setup(x => x.Members).Returns(partyMembers);
+
+            var configMock = new Mock<ISharedExperienceConfiguration>();
+            configMock.Setup(x => x.RequirePartyMemberParticipation).Returns(true);
+            configMock.Setup(x => x.SecondsBetweenHealsToBeConsideredActive).Returns(30);
+
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+
+            var monsterMock = new Mock<IMonster>();
+            var damages = new Dictionary<ICreature, ushort>().ToImmutableDictionary();
+            monsterMock.Setup(x => x.Damages).Returns(damages);
+
+            // Reduce each others' health.
+            playerOne.Attack(playerTwo);
+            playerTwo.Attack(playerOne);
+
+            // Heal each other to record a recent heal.
+            playerOne.Heal(1, playerTwo);
+            playerTwo.Heal(1, playerOne);
+
+            Assert.True(service.IsEveryMemberActive(monsterMock.Object));
+        }
+
+        [Fact]
+        public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveAttackedTheMonster()
+        {
+            var playerOne = new Mock<IPlayer>().Object;
+
+            var playerTwoMock = new Mock<IPlayer>();
+            playerTwoMock.Setup(x => x.HealthPoints).Returns(99);
+            playerTwoMock.Setup(x => x.MaxHealthPoints).Returns(100);
+
+
+            playerTwoMock.Setup(x => x.Heal(It.IsAny<ushort>(), It.IsAny<ICombatActor>()))
+                      .Raises(player => player.OnHeal += It.IsAny<Heal>(), playerTwoMock.Object, playerOne, (ushort)1);
+
+            var playerTwo = playerTwoMock.Object;
+
+            var partyMembers = new List<IPlayer>()
+            {
+                playerOne,
+                playerTwo
+            };
+
+            var partyMock = new Mock<IParty>();
+            partyMock.Setup(x => x.Members).Returns(partyMembers);
+
+            var configMock = new Mock<ISharedExperienceConfiguration>();
+            configMock.Setup(x => x.RequirePartyMemberParticipation).Returns(true);
+            configMock.Setup(x => x.SecondsBetweenHealsToBeConsideredActive).Returns(30);
+
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+
+            var monsterMock = new Mock<IMonster>();
+            var damages = new Dictionary<ICreature, ushort>()
+            {
+                { playerTwo, 10 } // Player two attacks the monster.
+            }.ToImmutableDictionary();
+            monsterMock.Setup(x => x.Damages).Returns(damages);
+
+            // Player one heals player two.
+            playerTwo.Heal(1, playerOne);
+
+            Assert.True(service.IsEveryMemberActive(monsterMock.Object));
+        }
+
+        [Fact]
+        public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveAttackedTheMonsterOrHealedAPartyMember()
+        {
+            var playerOne = new Mock<IPlayer>().Object;
+            var playerTwo = new Mock<IPlayer>().Object;
+
+            var partyMembers = new List<IPlayer>()
+            {
+                playerOne,
+                playerTwo
+            };
+
+            var partyMock = new Mock<IParty>();
+            partyMock.Setup(x => x.Members).Returns(partyMembers);
+
+            var configMock = new Mock<ISharedExperienceConfiguration>();
+            configMock.Setup(x => x.RequirePartyMemberParticipation).Returns(true);
+            configMock.Setup(x => x.SecondsBetweenHealsToBeConsideredActive).Returns(30);
+
+            var service = new SharedExperienceService(partyMock.Object, configMock.Object);
+
+            var monsterMock = new Mock<IMonster>();
+            var damages = new Dictionary<ICreature, ushort>()
+            {
+                { playerOne, 10 },
+                { playerTwo, 10 }
+            }.ToImmutableDictionary();
+            monsterMock.Setup(x => x.Damages).Returns(damages);
+
+            Assert.True(service.IsEveryMemberActive(monsterMock.Object));
         }
     }
 }

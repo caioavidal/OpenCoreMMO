@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
-    public class PartySharedExperienceConfiguration : IPartyShareExperienceConfiguration
+    public class PartySharedExperienceConfiguration : ISharedExperienceConfiguration
     {
         public bool IsSharedExperienceAlwaysOn { get; }
         public bool RequirePartyProximity { get; }
@@ -13,6 +13,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public bool RequirePartyMemberParticipation { get; }
         public uint MinimumMonsterExperienceToBeShared { get; }
         public double LowestLevelSupportedMultipler { get; }
+        public int SecondsBetweenHealsToBeConsideredActive { get; }
         public IDictionary<int, double> UniqueVocationBonusExperienceFactor { get; }
 
         public PartySharedExperienceConfiguration(
