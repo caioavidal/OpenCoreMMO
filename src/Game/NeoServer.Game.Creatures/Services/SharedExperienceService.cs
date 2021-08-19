@@ -36,21 +36,18 @@ namespace NeoServer.Game.Creatures.Services
                 Party = party;
                 Party.OnPlayerJoin += StartTrackingPlayerHeals;
                 Party.OnPlayerLeave += StopTrackingPlayerHeals;
-                foreach (var player in Party.Members)
-                {
-                    StartTrackingPlayerHeals(Party, player);
-                }
+                StartTrackingPlayerHeals(party, party.Leader);
             }
         }
 
         public void StartTrackingPlayerHeals(IParty party, IPlayer player)
         {
-            player.OnHeal += TrackPlayerHeals;
+            player.OnHeal += TrackPlayerHeal;
         }
 
         public void StopTrackingPlayerHeals(IParty party, IPlayer player)
         {
-            player.OnHeal -= TrackPlayerHeals;
+            player.OnHeal -= TrackPlayerHeal;
 
             var healsInvolvingPlayer = PartyMemberHeals.Where(x => x.Healer == player || x.Healed == player);
             foreach (var heal in healsInvolvingPlayer)
@@ -67,7 +64,7 @@ namespace NeoServer.Game.Creatures.Services
         /// <param name="healedCreature">The one that received the healing.</param>
         /// <param name="healer">The one that caused the healing.</param>
         /// <param name="amount">Amount the creature was healed.</param>
-        public void TrackPlayerHeals(ICombatActor healedCreature, ICombatActor healerCreature, ushort amount)
+        public void TrackPlayerHeal(ICombatActor healedCreature, ICombatActor healerCreature, ushort amount)
         {
             if (amount <= 0) { return; }
             if (healedCreature is not IPlayer healed) { return; }

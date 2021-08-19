@@ -23,7 +23,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             SharedExperienceService = sharedExperienceService;
             sharedExperienceService.StartTrackingPartyMembers(this);
             player.JoinChannel(channel);
-            members.Add(player.CreatureId, new PartyMember(player, ++memberCount));
         }
 
         private PartyMember FirstMemberJoined
