@@ -145,8 +145,8 @@ namespace NeoServer.Game.Creatures.Events.Monsters
         /// <returns>Amount of experience that should be provided to the actor or party.</returns>
         private uint BasicExperienceCalculation(ushort damageToMonster, int totalDamageMonsterReceived, uint baseMonsterExperience)
         {
-            var percentDamageToMonster = damageToMonster * 100 / totalDamageMonsterReceived;
-            var experience = percentDamageToMonster * baseMonsterExperience / 100;
+            var percentDamageToMonster = damageToMonster / (double)totalDamageMonsterReceived;
+            var experience = Math.Round(percentDamageToMonster * baseMonsterExperience);
             return Convert.ToUInt32(experience);
         }
     }
