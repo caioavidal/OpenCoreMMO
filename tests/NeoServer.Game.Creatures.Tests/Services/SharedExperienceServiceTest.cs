@@ -23,7 +23,6 @@ namespace NeoServer.Game.Creatures.Tests.Services
             Assert.Throws<ArgumentNullException>(() => new SharedExperienceService(null));
         }
 
-
         [Fact]
         public void IsExperienceSharingTurnedOn_ReturnsTrue_WhenConfiguredToAlwaysBeOn()
         {
