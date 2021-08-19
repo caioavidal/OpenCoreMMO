@@ -28,10 +28,10 @@ namespace NeoServer.Game.Common.Contracts.Services
         /// Calculates the amount of experience the whole party will receive in total from killing the monster.
         /// This is the total experience, not individual player experience.
         /// </summary>
-        /// <param name="monster">The monster killed by the party.</param>
+        /// <param name="monsterExperience">The experience provided from killing the monster.</param>
         /// <returns>
         ///     The amount of experience (unrounded) to be split among the party members.
         /// </returns>
-        double GetTotalPartyExperience(IMonster monster);
+        double GetTotalPartyBonusExperience(uint monsterExperience);
     }
 }

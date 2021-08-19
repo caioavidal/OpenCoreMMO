@@ -107,14 +107,12 @@ namespace NeoServer.Game.Creatures.Services
         /// Calculates the amount of experience the party will receive in total from killing the monster.
         /// This is the total experience, not individual player experience.
         /// </summary>
-        /// <param name="monster">The monster killed by the party.</param>
-        public double GetTotalPartyExperience(IMonster monster)
+        /// <param name="monsterExperience">The experience provided from killing the monster.</param>
+        public double GetTotalPartyBonusExperience(uint monsterExperience)
         {
-            if (CanPartyReceiveSharedExperience(monster) == false) { return 0; }
-
             var uniqueVocationCount = Party.Members.GroupBy(x => x.Vocation.Name).Count();
             var bonusExperienceFactor = GetUniqueVocationCountBonusFactor(uniqueVocationCount);
-            return monster.Experience * bonusExperienceFactor;
+            return monsterExperience * bonusExperienceFactor;
         }
 
         /// <summary>
