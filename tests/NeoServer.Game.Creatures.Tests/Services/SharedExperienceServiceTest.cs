@@ -15,7 +15,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services
 {
-    public class PartyShareExperienceServiceTest
+    public class SharedExperienceServiceTest
     {
         [Fact]
         public void PartyShareExperienceService_ThrowsNullArgumentException_WhenConfigurationIsNull()
