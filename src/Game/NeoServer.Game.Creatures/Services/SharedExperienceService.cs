@@ -107,7 +107,7 @@ namespace NeoServer.Game.Creatures.Services
         /// <param name="monsterExperience">The experience provided from killing the monster.</param>
         public double GetTotalPartyBonusExperience(uint monsterExperience)
         {
-            var uniqueVocationCount = Party.Members.GroupBy(x => x.Vocation.Name).Count();
+            var uniqueVocationCount = Party.Members.GroupBy(x => x.Vocation.Id).Count();
             var bonusExperienceFactor = GetUniqueVocationCountBonusFactor(uniqueVocationCount);
             return monsterExperience * bonusExperienceFactor;
         }
