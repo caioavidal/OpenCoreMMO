@@ -16,59 +16,24 @@ namespace NeoServer.Game.Creatures.Tests.Services
 {
     public class SharedExperienceServiceTest
     {
-        [Fact]
-        public void PartyShareExperienceService_ThrowsNullArgumentException_WhenConfigurationIsNull()
-        {
-            var party = new Mock<IParty>().Object;
-            Assert.Throws<ArgumentNullException>(() => new SharedExperienceService(null));
-        }
-
-        [Fact]
-        public void IsExperienceSharingTurnedOn_ReturnsTrue_WhenConfiguredToAlwaysBeOn()
+        [InlineData(true, true, true)]
+        [InlineData(true, false, true)]
+        [InlineData(false, true, true)]
+        [InlineData(false, false, false)]
+        [Theory]
+        public void IsExperienceSharingTurnedOn(bool alwaysOn, bool enabled, bool expectedResult)
         {
             var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1);
             var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2);
 
-            var config = PartyTestDataBuilder.CreateSharedExperienceConfiguration(isSharedExperienceAlwaysOn: true);
+            var config = PartyTestDataBuilder.CreateSharedExperienceConfiguration(isSharedExperienceAlwaysOn: alwaysOn);
             var inviteService = PartyTestDataBuilder.CreateInviteService(config);
             var party = PartyTestDataBuilder.CreateParty(inviteService, playerOne, playerTwo);
 
-            party.SharedExperienceService.ExperienceSharingEnabled = false;
+            party.SharedExperienceService.ExperienceSharingEnabled = enabled;
 
             var service = (SharedExperienceService)party.SharedExperienceService;
-            Assert.True(service.IsExperienceSharingTurnedOn());
-        }
-
-        [Fact]
-        public void IsExperienceSharingTurnedOn_ReturnsTrue_WhenPartySharedExperienceEnabled()
-        {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2);
-
-            var config = PartyTestDataBuilder.CreateSharedExperienceConfiguration(isSharedExperienceAlwaysOn: false);
-            var inviteService = PartyTestDataBuilder.CreateInviteService(config);
-            var party = PartyTestDataBuilder.CreateParty(inviteService, playerOne, playerTwo);
-
-            party.SharedExperienceService.ExperienceSharingEnabled = true;
-
-            var service = (SharedExperienceService)party.SharedExperienceService;
-            Assert.True(service.IsExperienceSharingTurnedOn());
-        }
-
-        [Fact]
-        public void IsExperienceSharingTurnedOn_ReturnsFalse_WhenPartySharedExperienceDisabled()
-        {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2);
-
-            var config = PartyTestDataBuilder.CreateSharedExperienceConfiguration(isSharedExperienceAlwaysOn: false);
-            var inviteService = PartyTestDataBuilder.CreateInviteService(config);
-            var party = PartyTestDataBuilder.CreateParty(inviteService, playerOne, playerTwo);
-
-            party.SharedExperienceService.ExperienceSharingEnabled = false;
-
-            var service = (SharedExperienceService)party.SharedExperienceService;
-            Assert.False(service.IsExperienceSharingTurnedOn());
+            Assert.Equal(expectedResult, service.IsExperienceSharingTurnedOn());
         }
 
         [InlineData(1, 0, true)]
@@ -81,7 +46,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [InlineData(10, 20, false)]
         [InlineData(15, 20, false)]
         [Theory]
-        public void DoesMonsterQuality_ReturnsTrue_WhenMonsterExperienceGreaterThanOrEqualToConfiguredMinimumExperience(uint monsterExperience, uint minimumExperience, bool expectedResult)
+        public void DoesMonsterQualify(uint monsterExperience, uint minimumExperience, bool expectedResult)
         {
             var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1);
             var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2);
@@ -156,6 +121,24 @@ namespace NeoServer.Game.Creatures.Tests.Services
         }
 
         [Fact]
+        public void IsEveryMemberActive_ReturnsTrue_WhenNotRequired()
+        {
+            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1, hp: 99);
+            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2, hp: 99);
+
+            var config = PartyTestDataBuilder.CreateSharedExperienceConfiguration(
+                requirePartyMemberParticipation: false
+            );
+            var inviteService = PartyTestDataBuilder.CreateInviteService(config);
+            var party = PartyTestDataBuilder.CreateParty(inviteService, playerOne, playerTwo);
+
+            var monsterMock = new Mock<IMonster>();
+
+            var service = (SharedExperienceService)party.SharedExperienceService;
+            Assert.True(service.IsEveryMemberActive(monsterMock.Object));
+        }
+
+        [Fact]
         public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveHealedAnotherRecently()
         {
             var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1, hp: 99);
@@ -219,7 +202,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
         }
 
         [Fact]
-        public void SharedExperienceService_IntegrationTest()
+        public void GetTotalPartyBonusExperience_ReturnsTwenty_WhenMonsterProvidesOneHundredAndPartyHasTwoVocations()
         {
             // Setup the party members (with sanity checks).
             var partyLeader = PlayerTestDataBuilder.BuildPlayer(id: 1, vocation: 1);
@@ -274,6 +257,36 @@ namespace NeoServer.Game.Creatures.Tests.Services
             // Party contains 2 vocations, so +20% bonus experience.
             // Expected Bonus Experience: 20 Experience.
             Assert.Equal(20, party.SharedExperienceService.GetTotalPartyBonusExperience(monsterMock.Object.Experience));
+        }
+
+        [Fact]
+        public void GetUniqueVocationCountBonusFactor_ReturnsTwo_WithTwoDruidsAndTwoKnights()
+        {
+            // Setup the party members (with sanity checks).
+            var partyLeader = PlayerTestDataBuilder.BuildPlayer(id: 1, vocation: 1);
+            var invitedPlayer = PlayerTestDataBuilder.BuildPlayer(id: 2, vocation: 2);
+
+            // Create the party.
+            var bonusRates = new Dictionary<int, double>()
+            {
+                { 1, 0.0 },
+                { 2, 1.0 },
+                { 3, 2.0 },
+                { 4, 2.5 },
+            };
+            var config = PartyTestDataBuilder.CreateSharedExperienceConfiguration(
+                uniqueVocationBonusExperienceFactor: bonusRates
+            );
+            var inviteService = PartyTestDataBuilder.CreateInviteService(config);
+            var party = PartyTestDataBuilder.CreateParty(inviteService, partyLeader, invitedPlayer);
+
+            var service = (SharedExperienceService)party.SharedExperienceService;
+            for (var i = 1; i < 4; i++)
+            {
+                Assert.Equal(bonusRates[i], service.GetUniqueVocationCountBonusFactor(i));
+            }
+            Assert.Equal(0, service.GetUniqueVocationCountBonusFactor(0));
+            Assert.Equal(bonusRates.Last().Value, service.GetUniqueVocationCountBonusFactor(25));
         }
     }
 }
