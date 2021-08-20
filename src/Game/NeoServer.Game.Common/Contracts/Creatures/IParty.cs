@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Services;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
+    public delegate void PlayerJoinedParty(IParty party, IPlayer player);
+    public delegate void PlayerLeftParty(IParty party, IPlayer player);
     public interface IParty
     {
         IReadOnlyCollection<IPlayer> Members { get; }
@@ -11,8 +14,11 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         IPlayer Leader { get; }
         IReadOnlyCollection<uint> Invites { get; }
         IChatChannel Channel { get; }
+        ISharedExperienceService SharedExperienceService { get; }
 
         event Action OnPartyOver;
+        event PlayerJoinedParty OnPlayerJoin;
+        event PlayerLeftParty OnPlayerLeave;
 
         Result ChangeLeadership(IPlayer from, IPlayer to);
         Result Invite(IPlayer by, IPlayer invitedPlayer);

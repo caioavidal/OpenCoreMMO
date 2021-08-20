@@ -565,7 +565,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void Recover()
         {
-            if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount);
+            if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount, this);
             if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
             if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealSoul(1);
 

@@ -4,6 +4,7 @@ using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Creatures.Model.Players
@@ -15,10 +16,12 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         private readonly Dictionary<uint, PartyMember> members = new();
 
-        public Party(IPlayer player, IChatChannel channel)
+        public Party(IPlayer player, IChatChannel channel, ISharedExperienceService sharedExperienceService)
         {
             Leader = player;
             Channel = channel;
+            SharedExperienceService = sharedExperienceService;
+            sharedExperienceService.StartTrackingPartyMembers(this);
             player.JoinChannel(channel);
         }
 
@@ -40,6 +43,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public event Action OnPartyOver;
+        public event PlayerJoinedParty OnPlayerJoin;
+        public event PlayerLeftParty OnPlayerLeave;
 
         public IPlayer Leader { get; private set; }
 
@@ -57,6 +62,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         public IReadOnlyCollection<uint> Invites => invites.ToList();
         public IChatChannel Channel { get; }
         public bool IsOver => !members.Any();
+        public ISharedExperienceService SharedExperienceService { get; }
+        
 
         public bool IsMember(IPlayer player)
         {
@@ -93,6 +100,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             members.Add(player.CreatureId, new PartyMember(player, ++memberCount));
 
             player.JoinChannel(Channel);
+            OnPlayerJoin?.Invoke(this, player);
             return true;
         }
 
@@ -122,6 +130,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             members.Remove(player.CreatureId);
             player.ExitChannel(Channel);
 
+            OnPlayerLeave?.Invoke(this, player);
             if (IsOver) OnPartyOver?.Invoke();
         }
 

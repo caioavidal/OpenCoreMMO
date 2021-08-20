@@ -26,7 +26,7 @@ namespace NeoServer.Extensions.Runes
         {
             var minMax = Formula(usedBy, usedBy.Level, usedBy.GetSkillLevel(SkillType.Magic));
             var healValue = (ushort) GameRandom.Random.Next(minMax.Min, maxValue: minMax.Max);
-            if (creature is ICombatActor actor) actor.Heal(healValue);
+            if (creature is ICombatActor actor) actor.Heal(healValue, usedBy);
 
             Reduce();
 

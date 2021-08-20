@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Server.Commands.Player.UseItem;
 
@@ -12,6 +13,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             //Game services
             builder.RegisterType<DealTransaction>().As<IDealTransaction>().SingleInstance();
             builder.RegisterType<CoinTransaction>().As<ICoinTransaction>().SingleInstance();
+            builder.RegisterType<SharedExperienceService>().As<ISharedExperienceService>().SingleInstance();
+            builder.RegisterType<SharedExperienceConfiguration>().As<ISharedExperienceConfiguration>().SingleInstance();
             builder.RegisterType<PartyInviteService>().As<IPartyInviteService>().SingleInstance();
             builder.RegisterType<SummonService>().As<ISummonService>().SingleInstance();
 
