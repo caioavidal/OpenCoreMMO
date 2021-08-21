@@ -1,12 +1,17 @@
 ﻿namespace NeoServer.Game.Creatures.Experience
 {
     /// <summary>
-    /// When multiple experience bonuses of the same type exist, they will be added together.
-    /// When multiple experience bonuses of different types exist, they will be multiplied together.
+    /// Bonuses of the same group are added together and then multiplied to the base (monster) experience to get the bonus experience.
+    /// Bonuses of different groups are multiplied together.
+    /// Formula:
+    ///     GE = ME * (1 + Standard) * (1 + Stamina) * (1 + GlobalBonus)
+    ///     WHERE:
+    ///         GE = Gained Expereince
+    ///         ME = Monster Experience
     /// </summary>
     public enum ExperienceBonusType
     {
-        Standard,
+        Standard, // e.g. Prey Bonus, Party Shared Experience Bonus, etc.
         Stamina,
         GlobalBonus
     }
