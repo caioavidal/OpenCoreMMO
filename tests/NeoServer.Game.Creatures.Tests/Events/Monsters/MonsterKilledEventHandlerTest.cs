@@ -5,6 +5,7 @@ using NeoServer.Game.Creatures.Events.Monsters;
 using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.Tests.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -131,8 +132,9 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
             MockVocations(1, 2);
 
             var party = PartyTestDataBuilder.CreateParty(null, playerOne, playerTwo);
-            party.SharedExperienceService.ExperienceSharingEnabled = true;
+            party.IsSharedExperienceEnabled = true;
 
+            var heals = new Dictionary<IPlayer, DateTime>();
             var damages = new Dictionary<ICreature, ushort>()
             {
                 // The party was 3/4 of the overall contribution, so the party gets 75 monster experience + 15 bonus (+20% from two vocations).

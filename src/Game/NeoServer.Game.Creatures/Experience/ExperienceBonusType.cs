@@ -6,7 +6,7 @@
     /// </summary>
     public enum ExperienceBonusType
     {
-        Standard = 0,
+        Standard,
         Stamina,
         GlobalBonus
     }

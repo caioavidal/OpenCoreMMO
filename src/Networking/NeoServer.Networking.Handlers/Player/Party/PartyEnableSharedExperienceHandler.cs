@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Handlers.Player.Party
         {
             var experienceSharingActive = message.GetByte() == 1;
             if (!Game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) { return; }
-            player.Party.SharedExperienceService.ExperienceSharingEnabled = experienceSharingActive;
+            player.Party.IsSharedExperienceEnabled = experienceSharingActive;
             connection.Send(new TextMessagePacket($"Party experience sharing is now {(experienceSharingActive ? "enabled" : "disabled")}.", TextMessageOutgoingType.Small));
         }
     }

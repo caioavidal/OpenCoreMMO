@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
-using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
 using System.Collections.Generic;
@@ -24,8 +23,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
             {
                 ChannelEventSubscribers = new List<IChatChannelEventSubscriber>()
             };
-            var sharedExperienceService = new SharedExperienceService(new SharedExperienceConfiguration());
-            var partyInviteService = new PartyInviteService(chatChannelFactory, sharedExperienceService);
+            var partyInviteService = new PartyInviteService(chatChannelFactory);
 
             partyInviteService.Invite(partyLeader, invitedPlayer);
 
