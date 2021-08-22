@@ -137,13 +137,9 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
             var heals = new Dictionary<IPlayer, DateTime>();
             var damages = new Dictionary<ICreature, ushort>()
             {
-                // The party was 3/4 of the overall contribution, so the party gets 75 monster experience + 15 bonus (+20% from two vocations).
-                // Player one was 2/3 of the party contribution, so they will get 60 exp.
-                // Player two was 1/3 of the party contribution, so they will get 30 exp.
-                // Player three was 1/4 of the overall contribution, so they will get 25 exp.
-                { playerOne, 200 },
-                { playerTwo, 100 },
-                { playerThree, 100 }
+                { playerOne, 200 }, // 100 * 0.5 * (1 + 0.2) = 60
+                { playerTwo, 100 }, // 100 * 0.25 * (1 + 0.2) = 30
+                { playerThree, 100 } // 100 * 0.25 = 25
             };
 
             var monsterMock = new Mock<IMonster>();
