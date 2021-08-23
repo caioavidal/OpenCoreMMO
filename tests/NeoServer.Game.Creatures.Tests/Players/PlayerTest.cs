@@ -105,10 +105,9 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void ChangeChaseMode_Follow_InvokeFollow()
         {
 
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.BuildPlayer(pathFinder: new Mock<IPathFinder>().Object);
             var enemy = PlayerTestDataBuilder.BuildPlayer();
-            GameToolStore.PathFinder = new Mock<IPathFinder>().Object;
-
+            
             var called = false;
             sut.OnStartedFollowing += (_, _, _) =>
             {
