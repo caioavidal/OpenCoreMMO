@@ -12,6 +12,8 @@ using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
+    public delegate void ChangeChaseMode(IPlayer player, ChaseMode oldChaseMode, ChaseMode newChaseMode);
+
     public delegate void CancelWalk(IPlayer player);
 
     public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
@@ -186,8 +188,18 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         void ResetIdleTime();
         void CancelWalk();
         bool CanMoveThing(Location.Structs.Location location);
+        /// <summary>
+        /// Checks if the player has specified mana points
+        /// </summary>
+        /// <param name="mana"></param>
+        /// <returns></returns>
         bool HasEnoughMana(ushort mana);
         void ConsumeMana(ushort mana);
+        /// <summary>
+        /// Checks if the player has specified level points
+        /// </summary>
+        /// <param name="mana"></param>
+        /// <returns></returns>
         bool HasEnoughLevel(ushort level);
         bool Logout(bool forced = false);
         ushort CalculateAttackPower(float attackRate, ushort attack);
