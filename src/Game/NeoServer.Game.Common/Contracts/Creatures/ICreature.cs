@@ -21,8 +21,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
     public delegate void StartWalk(IWalkableCreature creature);
 
-    public delegate void Heal(ICombatActor creature, ushort amount);
-
     public delegate void Say(ICreature creature, SpeechType type, string message, ICreature receiver = null);
 
     public delegate void AddCondition(ICreature creature, ICondition condition);

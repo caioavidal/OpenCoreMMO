@@ -570,7 +570,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void Recover()
         {
-            if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount);
+            if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount, this);
             if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
             if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealSoul(1);
 
@@ -657,7 +657,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Cooldowns.Start(CooldownType.UseItem, 1000);
         }
 
-        public void Use(IUseableOn item, ITile onTile)
+        public void Use(IUseableOn item, ITile targetTile)
         {
             if (!Cooldowns.Expired(CooldownType.UseItem))
             {
@@ -673,22 +673,22 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             var use = new Action(() =>
             {
-                if (onTile.TopItemOnStack is not IItem onItem) return;
+                if (targetTile.TopItemOnStack is not IItem onItem) return;
 
                 var result = false;
 
-                if (item is IUseableAttackOnTile useableAttackOnTile) result = Attack(onTile, useableAttackOnTile);
-                else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, onTile);
+                if (item is IUseableAttackOnTile useableAttackOnTile) result = Attack(targetTile, useableAttackOnTile);
+                else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, targetTile);
                 else if (item is IUseableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
 
                 if (result) OnUsedItem?.Invoke(this, onItem, item);
                 Cooldowns.Start(CooldownType.UseItem, 1000);
             });
 
-            if (!Location.IsNextTo(onTile.Location))
+            if (!Location.IsNextTo(item.Location))
             {
-                if (!CanSee(onTile.Location) || Location.Z != onTile.Location.Z) return;
-                WalkToMechanism.WalkTo(this, use, onTile.Location);
+                if (!CanSee(targetTile.Location) || Location.Z != targetTile.Location.Z) return;
+                WalkToMechanism.WalkTo(this, use, item.Location);
                 return;
             }
 

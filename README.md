@@ -49,6 +49,11 @@ git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run -p "NeoServer.Server.Standalone"
 ```
+When connecting to the self-hosted server for development connect using the following:
+1. IP Address: 127.0.0.1
+2. Port: 7171
+3. Account Name: 1
+4. Password: 1
 
 ## What we have done so far
 
@@ -75,7 +80,7 @@ dotnet run -p "NeoServer.Server.Standalone"
   - [ ] Shared Experience
 - [x] NPC System
 - [x] Lua Scripting
-- [x] C# Scripting
+- [x] C# Extensions
 
 ## Technologies
 

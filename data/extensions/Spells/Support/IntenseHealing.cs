@@ -15,7 +15,7 @@ namespace NeoServer.Extensions.Spells.Support
         public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {
             error = InvalidOperation.None;
-            actor.Heal(100);
+            actor.Heal(100, actor);
             return true;
         }
     }

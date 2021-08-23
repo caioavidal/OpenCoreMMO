@@ -57,7 +57,8 @@ namespace NeoServer.Networking.Handlers
                 {GameIncomingPacketType.PartyRevoke, typeof(PlayerRevokeInvitePartyHandler)},
                 {GameIncomingPacketType.PartyJoin, typeof(PlayerJoinPartyHandler)},
                 {GameIncomingPacketType.PartyLeave, typeof(PlayerLeavePartyHandler)},
-                {GameIncomingPacketType.PartyPassLeadership, typeof(PlayerPassPartyLeadershipHandler)}
+                {GameIncomingPacketType.PartyPassLeadership, typeof(PlayerPassPartyLeadershipHandler)},
+                {GameIncomingPacketType.EnableSharedExp, typeof(PartyEnableSharedExperienceHandler)}
             };
     }
 }

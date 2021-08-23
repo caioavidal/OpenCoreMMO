@@ -1,9 +1,14 @@
 ﻿using Moq;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Tests.Helpers;
+using System;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Creature
@@ -219,6 +224,37 @@ namespace NeoServer.Game.Creatures.Tests.Creature
 
             sut.UnsetFlag(PlayerFlag.CanBeSeen);
             Assert.False(sut.CanBeSeen);
+        }
+
+        [Fact]
+        public void Use_WalksToItem_WhenUsedOnTargetTile()
+        {
+            var walkLocation = Location.Zero;
+
+            // Hook into the WalkToMechanism the player uses to move to the target item.
+            // When the WalkToMechanism is triggered set the walkLocation variable to the destination.
+            var walkMechanismMock = new Mock<IWalkToMechanism>();
+            walkMechanismMock.Setup(x => x.WalkTo(It.IsAny<IPlayer>(), It.IsAny<Action>(), It.IsAny<Location>(), It.IsAny<bool>()))
+                .Callback((IPlayer player, Action action, Location location, bool something) =>
+                {
+                    walkLocation = location;
+                });
+            GameToolStore.WalkToMechanism = walkMechanismMock.Object;
+
+            // Build our player, used item, and targetTile. Each should have a different location.
+            var player = PlayerTestDataBuilder.BuildPlayer(1);
+
+            var itemLocation = new Location(105, 105, 7);
+            var usedItemMock = new Mock<IUseableOn>();
+            usedItemMock.Setup(x => x.Location).Returns(itemLocation);
+
+            var tileLocation = new Location(101, 101, 7);
+            var targetTileMock = new Mock<ITile>();
+            targetTileMock.Setup(x => x.Location).Returns(tileLocation);
+
+            player.Use(usedItemMock.Object, targetTileMock.Object);
+
+            Assert.Equal(itemLocation, walkLocation);
         }
     }
 }

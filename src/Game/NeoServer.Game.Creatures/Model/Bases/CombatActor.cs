@@ -63,7 +63,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void ResetHealthPoints()
         {
-            Heal((ushort)MaxHealthPoints);
+            Heal((ushort)MaxHealthPoints, this);
         }
 
         public virtual void GainExperience(uint exp)
@@ -166,14 +166,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnTargetChanged?.Invoke(this, oldAttackTarget, target?.CreatureId ?? default);
         }
 
-        public void Heal(ushort increasing)
+        public void Heal(ushort increasing, ICombatActor healedBy)
         {
             if (increasing <= 0) return;
 
             if (HealthPoints == MaxHealthPoints) return;
 
             HealthPoints = HealthPoints + increasing >= MaxHealthPoints ? MaxHealthPoints : HealthPoints + increasing;
-            OnHeal?.Invoke(this, increasing);
+            OnHeal?.Invoke(this, healedBy, increasing);
         }
 
         public virtual void TurnInvisible()

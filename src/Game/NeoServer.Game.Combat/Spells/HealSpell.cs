@@ -27,7 +27,7 @@ namespace NeoServer.Game.Combat.Spells
             error = InvalidOperation.None;
 
             var hpToIncrease = GameRandom.Random.NextInRange(Min, Max);
-            actor.Heal((ushort) hpToIncrease);
+            actor.Heal((ushort)hpToIncrease, actor);
             return true;
         }
 
