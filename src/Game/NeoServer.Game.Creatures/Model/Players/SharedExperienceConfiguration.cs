@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Contracts.Services;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
@@ -14,7 +13,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public uint MinimumMonsterExperienceToBeShared { get; }
         public double LowestLevelSupportedMultipler { get; }
         public int SecondsBetweenHealsToBeConsideredActive { get; }
-        public IDictionary<int, double> UniqueVocationBonusExperienceFactor { get; }
+        public double[] UniqueVocationBonusExperienceFactor { get; }
 
         public SharedExperienceConfiguration(
             bool? isSharedExperienceAlwaysOn = null,
@@ -24,7 +23,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             bool? requirePartyMemberLevelProximity = null,
             bool? requirePartyMemberParticipation = null,
             uint? minimumMonsterExperienceToBeShared = null,
-            IDictionary<int, double> uniqueVocationBonusExperienceFactor = null,
+            double[] uniqueVocationBonusExperienceFactor = null,
             double? lowestLevelSupportedMultipler = null
         )
         {
@@ -36,13 +35,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             RequirePartyMemberParticipation = requirePartyMemberParticipation ?? true;
             MinimumMonsterExperienceToBeShared = minimumMonsterExperienceToBeShared ?? 20;
             LowestLevelSupportedMultipler = lowestLevelSupportedMultipler ?? (3/2);
-            UniqueVocationBonusExperienceFactor = uniqueVocationBonusExperienceFactor ?? new Dictionary<int, double>()
-            {
-                { 1, 0.0 },
-                { 2, 0.2 },
-                { 3, 0.6 },
-                { 4, 1.0 }
-            };
+            UniqueVocationBonusExperienceFactor = uniqueVocationBonusExperienceFactor ?? new double[] { 0.0, 0.2, 0.6, 1.0 };
         }
     }
 }

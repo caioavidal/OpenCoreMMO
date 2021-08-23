@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NeoServer.Game.Common.Contracts.Services
+﻿namespace NeoServer.Game.Common.Contracts.Services
 {
     public interface ISharedExperienceConfiguration
     {
@@ -58,8 +56,9 @@ namespace NeoServer.Game.Common.Contracts.Services
         int SecondsBetweenHealsToBeConsideredActive { get; }
 
         /// <summary>
-        /// Bonus factor of monster experience based on the number of unique vocations in the party.
+        /// Bonus experience factor based on the number of unique vocations in the party.
+        /// The index corresponds to the number of unique vocations and the value is the bonus experience factor.
         /// </summary>
-        IDictionary<int, double> UniqueVocationBonusExperienceFactor { get; }
+        double[] UniqueVocationBonusExperienceFactor { get; }
     }
 }

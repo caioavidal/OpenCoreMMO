@@ -13,7 +13,6 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             //Game services
             builder.RegisterType<DealTransaction>().As<IDealTransaction>().SingleInstance();
             builder.RegisterType<CoinTransaction>().As<ICoinTransaction>().SingleInstance();
-            builder.RegisterType<SharedExperienceService>().As<ISharedExperienceService>().SingleInstance();
             builder.RegisterType<SharedExperienceConfiguration>().As<ISharedExperienceConfiguration>().SingleInstance();
             builder.RegisterType<PartyInviteService>().As<IPartyInviteService>().SingleInstance();
             builder.RegisterType<SummonService>().As<ISummonService>().SingleInstance();
