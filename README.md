@@ -74,10 +74,10 @@ When connecting to the self-hosted server for development connect using the foll
   - [x] Loot and Death Channels
   - [x] Vip List
 - [ ] PvP Combat
-- [ ] Party
+- [x] Party
   - [x] Basics
   - [x] Share Loot
-  - [ ] Shared Experience
+  - [x] Shared Experience
 - [x] NPC System
 - [x] Lua Scripting
 - [x] C# Extensions
