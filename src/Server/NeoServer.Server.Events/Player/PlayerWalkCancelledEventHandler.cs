@@ -13,13 +13,14 @@ namespace NeoServer.Server.Events.Player
             this.game = game;
         }
 
-        public void Execute(IPlayer player)
+        public void Execute(ICreature creature)
         {
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-            {
-                connection.OutgoingPackets.Enqueue(new PlayerWalkCancelPacket(player));
-                connection.Send();
-            }
+            if (creature is not IPlayer player) return;
+
+            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+
+            connection.OutgoingPackets.Enqueue(new PlayerWalkCancelPacket(player));
+            connection.Send();
         }
     }
 }
