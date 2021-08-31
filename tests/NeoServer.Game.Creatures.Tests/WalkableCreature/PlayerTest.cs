@@ -38,7 +38,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         public void IsFollowing_Returns_True_When_Player_Is_Following_Someone()
         {
             var pathFinder = new Mock<IPathFinder>();
-            var directions = new[] {Direction.North};
+            var directions = new[] { Direction.North };
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
                 It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
             GameToolStore.PathFinder = pathFinder.Object;
@@ -92,25 +92,24 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         [Fact]
         public void Follow_Should_Emmit_Follow_And_Walk_Event()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300);
-            var followEventEmitted = false;
-            var walkEventEmitted = false;
-
-            var directions = new[] {Direction.North, Direction.East};
+            var directions = new[] { Direction.North, Direction.East };
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
                 It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            GameToolStore.PathFinder = pathFinder.Object;
 
-            sut.OnStartedWalking += creature => walkEventEmitted = true;
-            sut.OnStartedFollowing += (creature, to, fpp) => followEventEmitted = true;
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300, pathFinder: pathFinder.Object);
+            var followEventEmitted = false;
+            var walkEventEmitted = false;
+            
+            sut.OnStartedWalking += _ => walkEventEmitted = true;
+            sut.OnStartedFollowing += (_, _, _) => followEventEmitted = true;
 
             var creature = new Mock<ICreature>();
             creature.Setup(x => x.Location).Returns(new Location(100, 105, 7));
             creature.Setup(x => x.CreatureId).Returns(123);
 
             var tile = new Mock<IDynamicTile>();
-            tile.Setup(x => x.Ground.StepSpeed).Returns(100);
+            tile.Setup(x => x.Ground.StepSpeed).Returns(1000);
             tile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
 
             sut.SetCurrentTile(tile.Object);
@@ -130,7 +129,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300);
             var stoppedWalkEventEmitted = false;
 
-            var directions = new[] {Direction.North, Direction.East};
+            var directions = new[] { Direction.North, Direction.East };
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
                 It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
@@ -160,16 +159,16 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         [Fact]
         public void WalkTo_Should_Emit_Events_And_Add_Next_Steps()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300);
-            var startedWalkingEvent = false;
-
-            var directions = new[] {Direction.North, Direction.East};
+            var directions = new[] { Direction.North, Direction.East };
             var pathFinder = new Mock<IPathFinder>();
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
                 It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            GameToolStore.PathFinder = pathFinder.Object;
 
-            sut.OnStoppedWalking += creature => startedWalkingEvent = true;
+            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300, pathFinder: pathFinder.Object);
+
+            var stoppedWalkingEvent = false;
+            
+            sut.OnStoppedWalking += _ => stoppedWalkingEvent = true;
 
             var tile = new Mock<IDynamicTile>();
             tile.Setup(x => x.Ground.StepSpeed).Returns(100);
@@ -179,7 +178,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             sut.WalkTo(new Location(102, 100, 7));
 
             Assert.True(sut.HasNextStep);
-            Assert.True(startedWalkingEvent);
+            Assert.True(stoppedWalkingEvent);
             Assert.Equal(Direction.North, sut.GetNextStep());
             Assert.Equal(Direction.East, sut.GetNextStep());
         }
