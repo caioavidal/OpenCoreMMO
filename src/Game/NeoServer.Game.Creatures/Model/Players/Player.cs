@@ -344,11 +344,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             return uint.MinValue; // 0
         }
 
-        public void ChangeOutfit(IOutfit outfit)
-        {
-            Outfit = outfit;
-        }
-
         public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {
             TogglePacifiedCondition(fromTile, toTile);

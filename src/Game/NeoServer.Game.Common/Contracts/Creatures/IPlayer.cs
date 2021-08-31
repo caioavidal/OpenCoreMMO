@@ -139,11 +139,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event PassPartyLeadership OnPassedPartyLeadership;
         event Exhaust OnExhausted;
 
-        /// <summary>
-        /// Changes player outfit
-        /// </summary>
-        /// <param name="outfit"></param>
-        void ChangeOutfit(IOutfit outfit);
 
         uint ChooseToRemoveFromKnownSet();
 
