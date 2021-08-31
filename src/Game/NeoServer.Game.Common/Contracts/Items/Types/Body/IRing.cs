@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IRing : IChargeable, IDurable, IBodyEquipmentItem
+    public interface IRing : IChargeable, IBodyEquipmentItem, IDecayable, IProtectionItem
     {
         bool Expired { get; }
         byte Defense { get; }
