@@ -24,7 +24,13 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnCompleteWalking += ExecuteNextAction;
         }
 
-        protected virtual IPathFinder PathFinder => GameToolStore.PathFinder;
+        private IPathFinder pathFinder;
+        public virtual IPathFinder PathFinder
+        {
+            protected get => pathFinder ?? GameToolStore.PathFinder;
+            init => pathFinder = value;
+        }
+
         protected virtual IWalkToMechanism WalkToMechanism => GameToolStore.WalkToMechanism;
 
 
@@ -37,7 +43,6 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public ICreature Following { get; private set; }
         public bool IsFollowing => Following is not null;
         public bool HasNextStep => WalkingQueue.Count > 0;
-        public bool FollowModeEnabled { get; protected set; }
 
         public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {
@@ -66,7 +71,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                     return 0;
 
                 if (Speed == 0) return 0;
-                return (int) (Tile.StepSpeed / (decimal) Speed * 1000 * lastStepCost);
+                return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * lastStepCost);
             }
         }
 
@@ -258,7 +263,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void ChangeSpeed(int newSpeed)
         {
-            Speed = (ushort) newSpeed;
+            Speed = (ushort)newSpeed;
             OnChangedSpeed?.Invoke(this, Speed);
         }
 
