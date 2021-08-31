@@ -6,19 +6,19 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IInventoryItem : IItemRequirement, IItem
+    public interface IInventoryItem : IItemRequirement
     {
         public Slot Slot => Metadata.BodyPosition;
     }
 
-    public interface IBodyEquipmentItem : IMoveableThing, IPickupable, IInventoryItem
+    public interface IBodyEquipmentItem : IPickupable, IInventoryItem
     {
         bool Pickupable => true;
 
         ushort MinimumLevelRequired => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
 
         public ImmutableDictionary<SkillType, byte> SkillBonus =>
-            Metadata.Attributes.SkillBonus.ToImmutableDictionary();
+            Metadata.Attributes.SkillBonuses.ToImmutableDictionary();
 
         public WeaponType WeaponType => Metadata.WeaponType;
 

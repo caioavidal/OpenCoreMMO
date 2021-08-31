@@ -33,12 +33,12 @@ namespace NeoServer.Game.Items.Items.Protections
             return !DamageProtection.TryGetValue(damageType, out var value) ? (byte) 0 : value;
         }
 
-        protected virtual void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
+        public virtual void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
         {
             Protect(ref damage);
         }
 
-        protected virtual void Protect(ref CombatDamage damage)
+        public virtual void Protect(ref CombatDamage damage)
         {
             var protection = GetProtection(damage.Type);
             damage.ReduceDamageByPercent(protection);

@@ -20,9 +20,12 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
         double BaseIncrease { get; }
         double Percentage { get; }
+        byte Bonus { get; }
         event OnLevelAdvance OnAdvance;
         event OnIncreaseSkillPoints OnIncreaseSkillPoints;
 
         void IncreaseCounter(double value);
+        void AddBonus(byte increase);
+        void RemoveBonus(byte decrease);
     }
 }

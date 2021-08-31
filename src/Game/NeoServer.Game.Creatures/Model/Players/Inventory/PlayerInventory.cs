@@ -71,7 +71,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
         {
             get
             {
-                var skillsBonus = InventoryCollection.Where(x => x is ISkillBonus).Select(x => ((ISkillBonus)x).SkillBonus).ToArray();
+                var skillsBonus = InventoryCollection.Where(x => x is ISkillBonus).Select(x => ((ISkillBonus)x).SkillBonuses).ToArray();
                 return skillsBonus.SelectMany(x => x).ToLookup(pair => pair.Key, pair => pair.Value)
                     .ToDictionary(group => group.Key, group => group.Sum(x => x));
             }

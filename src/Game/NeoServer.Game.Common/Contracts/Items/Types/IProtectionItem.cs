@@ -9,9 +9,9 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types
 {
-    public interface IProtectionItem : IItem
+    public interface IProtectionItem : IDressable, IItem
     {
-        void DressedIn(IPlayer player);
-        void UndressFrom(IPlayer player);
+        void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage);
+        void Protect(ref CombatDamage damage);
     }
 }
