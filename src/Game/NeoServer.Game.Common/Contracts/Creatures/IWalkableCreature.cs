@@ -21,6 +21,9 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public delegate void Moved(IWalkableCreature creature, Location.Structs.Location fromLocation, Location.Structs.Location toLocation,
         ICylinderSpectator[] spectators);
 
+    public delegate void CancelWalk(IWalkableCreature creature);
+
+
     public interface IWalkableCreature : ICreature
     {
         ICreature Following { get; }
@@ -116,5 +119,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
         void TurnTo(Direction direction);
         void Follow(ICreature creature);
+        void CancelWalk();
+        event CancelWalk OnCancelledWalk;
     }
 }

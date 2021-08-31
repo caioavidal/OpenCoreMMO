@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AutoFixture;
 using FluentAssertions;
 using Moq;
 using NeoServer.Game.Common.Combat.Structs;
@@ -18,7 +19,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
 {
-    public class PlayerTest
+    public class PlayerTests
     {
         [Theory]
         [InlineData(100, 111, true)]
@@ -151,6 +152,31 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.SecureMode.Should().Be(0);
             sut.ChangeSecureMode(1);
             sut.SecureMode.Should().Be(1);
+        }
+
+        [Fact]
+        public void KnowsCreatureWithId_DontKnow_ReturnsFalse()
+        {
+            var fixture = new Fixture();
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+
+            var unknownCreature = fixture.Create<uint>();
+
+            var actual = sut.KnowsCreatureWithId(unknownCreature);
+            actual.Should().BeFalse();
+        }
+        [Fact]
+        public void KnowsCreatureWithId_Knows_ReturnsTrue()
+        {
+            var fixture = new Fixture();
+            var sut = PlayerTestDataBuilder.BuildPlayer();
+
+            var knownCreature = fixture.Create<uint>();
+
+            sut.AddKnownCreature(knownCreature);
+
+            var actual = sut.KnowsCreatureWithId(knownCreature);
+            actual.Should().BeTrue();
         }
     }
 }

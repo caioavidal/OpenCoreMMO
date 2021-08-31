@@ -114,9 +114,6 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public event PlayerLevelAdvance OnLevelAdvanced;
         public event PlayerGainSkillPoint OnGainedSkillPoint;
-
-        public event CancelWalk OnCancelledWalk;
-
         public event ReduceMana OnStatusChanged;
         public event CannotUseSpell OnCannotUseSpell;
         public event LookAt OnLookedAt;
@@ -344,11 +341,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             return uint.MinValue; // 0
         }
 
-        public void ChangeOutfit(IOutfit outfit)
-        {
-            Outfit = outfit;
-        }
-
         public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {
             TogglePacifiedCondition(fromTile, toTile);
@@ -416,11 +408,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             SecureMode = mode;
         }
 
-        public void CancelWalk()
-        {
-            StopWalking();
-            OnCancelledWalk?.Invoke(this);
-        }
+      
 
         public override int ShieldDefend(int attack)
         {

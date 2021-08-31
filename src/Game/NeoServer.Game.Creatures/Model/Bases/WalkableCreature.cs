@@ -74,7 +74,11 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * lastStepCost);
             }
         }
-
+        public void CancelWalk()
+        {
+            StopWalking();
+            OnCancelledWalk?.Invoke(this);
+        }
         public bool FirstStep { get; private set; }
 
         public void StopWalking()
@@ -277,6 +281,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event ChangeSpeed OnChangedSpeed;
         public event TeleportTo OnTeleported;
         public event Moved OnCreatureMoved;
+        public event CancelWalk OnCancelledWalk;
 
         #endregion
     }

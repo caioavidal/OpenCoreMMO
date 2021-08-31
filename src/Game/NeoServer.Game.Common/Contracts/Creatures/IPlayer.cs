@@ -14,8 +14,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 {
     public delegate void ChangeChaseMode(IPlayer player, ChaseMode oldChaseMode, ChaseMode newChaseMode);
 
-    public delegate void CancelWalk(IPlayer player);
-
     public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
 
     public delegate void OpenedContainer(IPlayer player, byte containerId, IContainer container);
@@ -116,7 +114,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event UseSpell OnUsedSpell;
         event SendMessageTo OnSentMessage;
 
-        event CancelWalk OnCancelledWalk;
         event CannotUseSpell OnCannotUseSpell;
         event LookAt OnLookedAt;
         event PlayerGainSkillPoint OnGainedSkillPoint;
@@ -139,15 +136,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event PassPartyLeadership OnPassedPartyLeadership;
         event Exhaust OnExhausted;
 
-        //  IAction PendingAction { get; }
-
-        /// <summary>
-        ///     Changes player outfit
-        /// </summary>
-        /// <param name="outfit"></param>
-        void ChangeOutfit(IOutfit outfit);
-
-        uint ChooseToRemoveFromKnownSet();
+        
+        uint ChooseToRemoveFromKnownSet();//todo: looks like implementation detail
 
         /// <summary>
         ///     Checks if player knows creature with given id
@@ -184,9 +174,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         byte GetSkillPercent(SkillType type);
 
         void AddKnownCreature(uint creatureId);
-
-        void ResetIdleTime();
-        void CancelWalk();
         bool CanMoveThing(Location.Structs.Location location);
         /// <summary>
         /// Checks if the player has specified mana points
