@@ -139,8 +139,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event PassPartyLeadership OnPassedPartyLeadership;
         event Exhaust OnExhausted;
 
-
-        uint ChooseToRemoveFromKnownSet();
+        
+        uint ChooseToRemoveFromKnownSet();//todo: looks like implementation detail
 
         /// <summary>
         ///     Checks if player knows creature with given id
