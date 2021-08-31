@@ -11,7 +11,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Protections
 {
-    public class Necklace : ProtectionItem, INecklace
+    public class Necklace : Accessory, INecklace
     {
         public Necklace(IItemType type, Location location) : base(type, location)
         {
@@ -27,7 +27,7 @@ namespace NeoServer.Game.Items.Items.Protections
 
         public ImmutableHashSet<VocationType> AllowedVocations => null;
 
-        public Dictionary<SkillType, byte> SkillBonus => Metadata.Attributes.SkillBonus;
+        public Dictionary<SkillType, byte> SkillBonuses => Metadata.Attributes.SkillBonuses;
 
         public byte Charges { get; private set; }
         public byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Armor);
@@ -60,7 +60,7 @@ namespace NeoServer.Game.Items.Items.Protections
             return type.BodyPosition == Slot.Necklace;
         }
 
-        protected override void Protect(ref CombatDamage damage)
+        public override void Protect(ref CombatDamage damage)
         {
             if (Expired) return;
             DecreaseCharges();

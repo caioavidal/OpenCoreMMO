@@ -231,7 +231,7 @@ namespace NeoServer.Game.Items
             return null;
         }
 
-        public Dictionary<SkillType, byte> SkillBonus
+        public Dictionary<SkillType, byte> SkillBonuses
         {
             get
             {

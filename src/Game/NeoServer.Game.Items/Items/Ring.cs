@@ -12,7 +12,7 @@ using NeoServer.Game.Items.Items.Protections;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class Ring : MoveableItem, IRing
+    public class Ring : Accessory, IRing
     {
         private bool inUse;
 
@@ -22,7 +22,7 @@ namespace NeoServer.Game.Items.Items
 
         public ImmutableHashSet<VocationType> AllowedVocations => new HashSet<VocationType>().ToImmutableHashSet();
 
-        public Dictionary<DamageType, byte> DamageProtection => Metadata.Attributes.DamageProtection;
+    
         public byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Armor);
 
         public Span<byte> GetRaw()

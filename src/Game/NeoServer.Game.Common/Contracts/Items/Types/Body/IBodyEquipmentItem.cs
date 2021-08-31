@@ -18,7 +18,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
         ushort MinimumLevelRequired => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
 
         public ImmutableDictionary<SkillType, byte> SkillBonus =>
-            Metadata.Attributes.SkillBonus.ToImmutableDictionary();
+            Metadata.Attributes.SkillBonuses.ToImmutableDictionary();
 
         public WeaponType WeaponType => Metadata.WeaponType;
 
