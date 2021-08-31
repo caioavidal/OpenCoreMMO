@@ -8,7 +8,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services
 {
-    public class PartyInviceServiceTest
+    public class PartyInviteServiceTest
     {
         [Fact]
         public void Invite_CreatesParty_WhenNeitherPlayerAreInAParty()

@@ -189,20 +189,20 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var player = PlayerTestDataBuilder.BuildPlayer();
             var targetPlayer = PlayerTestDataBuilder.BuildPlayer();
 
-            var itemAttirbuteListMock = new Mock<IItemAttributeList>();
+            var itemAttributeListMock = new Mock<IItemAttributeList>();
 
-            itemAttirbuteListMock
+            itemAttributeListMock
                 .Setup(x => x.GetAttribute<bool>(It.IsAny<ItemAttribute>()))
                 .Returns(true);
 
-            itemAttirbuteListMock
+            itemAttributeListMock
                 .Setup(x => x.GetAttributeArray(It.IsAny<string>()))
                 .Returns(new dynamic[] { "0.0", "0.0" });
 
             var itemTypeMock = new Mock<IItemType>();
             itemTypeMock
                 .Setup(x => x.Attributes)
-                .Returns(itemAttirbuteListMock.Object);
+                .Returns(itemAttributeListMock.Object);
 
             var rune = new AttackRune(itemTypeMock.Object, new Location(100, 100, 7), (byte)10);
 
@@ -249,20 +249,20 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var player = PlayerTestDataBuilder.BuildPlayer();
             var targetPlayer = PlayerTestDataBuilder.BuildPlayer();
 
-            var itemAttirbuteListMock = new Mock<IItemAttributeList>();
+            var itemAttributeListMock = new Mock<IItemAttributeList>();
 
-            itemAttirbuteListMock
+            itemAttributeListMock
                 .Setup(x => x.GetAttribute<bool>(It.IsAny<ItemAttribute>()))
                 .Returns(true);
 
-            itemAttirbuteListMock
+            itemAttributeListMock
                 .Setup(x => x.GetAttributeArray(It.IsAny<string>()))
                 .Returns(new dynamic[] { "0.0", "0.0" });
 
             var itemTypeMock = new Mock<IItemType>();
             itemTypeMock
                 .Setup(x => x.Attributes)
-                .Returns(itemAttirbuteListMock.Object);
+                .Returns(itemAttributeListMock.Object);
 
             var rune = new HealingRune(itemTypeMock.Object, new Location(100, 100, 7), new Dictionary<ItemAttribute, IConvertible>());
 
