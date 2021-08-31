@@ -25,10 +25,10 @@ namespace NeoServer.Server.Events.Player.Party
                 {
                     if (spectator == invited)
                         connection.OutgoingPackets.Enqueue(
-                            new TextMessagePacket($"{@by.Name} has revoked her invitation",
+                            new TextMessagePacket($"{by.Name} has revoked her invitation",
                                 TextMessageOutgoingType.Small)); //todo set correct gender
 
-                    if (spectator == @by)
+                    if (spectator == by)
                         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
                             $"Invitation for {invited.Name} has been revoked",
                             TextMessageOutgoingType.Small)); //todo set correct gender

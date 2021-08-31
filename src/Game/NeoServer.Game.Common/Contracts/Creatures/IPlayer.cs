@@ -135,7 +135,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event JoinParty OnJoinedParty;
         event PassPartyLeadership OnPassedPartyLeadership;
         event Exhaust OnExhausted;
-
         
         uint ChooseToRemoveFromKnownSet();//todo: looks like implementation detail
 
@@ -174,13 +173,18 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         byte GetSkillPercent(SkillType type);
 
         void AddKnownCreature(uint creatureId);
-        bool CanMoveThing(Location.Structs.Location location);
+
         /// <summary>
         /// Checks if the player has specified mana points
         /// </summary>
         /// <param name="mana"></param>
         /// <returns></returns>
         bool HasEnoughMana(ushort mana);
+
+        /// <summary>
+        /// Consume mana points
+        /// </summary>
+        /// <param name="mana"></param>
         void ConsumeMana(ushort mana);
         /// <summary>
         /// Checks if the player has specified level points
