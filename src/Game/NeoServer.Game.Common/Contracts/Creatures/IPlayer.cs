@@ -139,10 +139,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event PassPartyLeadership OnPassedPartyLeadership;
         event Exhaust OnExhausted;
 
-        //  IAction PendingAction { get; }
-
         /// <summary>
-        ///     Changes player outfit
+        /// Changes player outfit
         /// </summary>
         /// <param name="outfit"></param>
         void ChangeOutfit(IOutfit outfit);
