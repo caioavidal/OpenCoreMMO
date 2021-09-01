@@ -26,6 +26,20 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             sut.GetSkillBonus(SkillType.Axe).Should().Be(0);
         }
+
+        [Fact]
+        public void AddSkillBonus_Add10ButMissingSkill_CreateOneAndAdd()
+        {
+            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            {
+                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+            });
+
+            sut.AddSkillBonus(SkillType.Sword, 10);
+
+            sut.GetSkillBonus(SkillType.Sword).Should().Be(10);
+        }
+
         [Fact]
         public void AddSkillBonus_0_DoNotCallEvent()
         {
@@ -161,5 +175,6 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.RemoveSkillBonus(SkillType.Axe, 20);
             sut.GetSkillBonus(SkillType.Axe).Should().Be(0);
         }
+
     }
 }

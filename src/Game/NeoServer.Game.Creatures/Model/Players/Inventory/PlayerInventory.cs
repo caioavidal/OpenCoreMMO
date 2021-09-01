@@ -66,16 +66,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 return attack;
             }
         }
-
-        public Dictionary<SkillType, int> TotalSkillBonus
-        {
-            get
-            {
-                var skillsBonus = InventoryCollection.Where(x => x is ISkillBonus).Select(x => ((ISkillBonus)x).SkillBonuses).ToArray();
-                return skillsBonus.SelectMany(x => x).ToLookup(pair => pair.Key, pair => pair.Value)
-                    .ToDictionary(group => group.Key, group => group.Sum(x => x));
-            }
-        }
+        
         public ushort TotalDefense
         {
             get
@@ -212,7 +203,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 removedItem = item;
             }
 
-            if (removedItem is IProtectionItem protectionItem) protectionItem.UndressFrom(Owner);
+            if (removedItem is IProtectionItem dressable) dressable.UndressFrom(Owner);
 
             OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
             return true;
@@ -270,7 +261,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                     itemToSwap = SwapItem(slot, item);
                 }
 
-                if (item is IProtectionItem protectionItem) protectionItem.DressedIn(Owner);
+                if (item is IDressable dressableItem) dressableItem.DressedIn(Owner);
                 OnItemAddedToSlot?.Invoke(this, item, slot);
                 return itemToSwap == null ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
             }
@@ -284,7 +275,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
 
             item.SetNewLocation(Location.Inventory(slot));
 
-            if (item is IProtectionItem protection) protection.DressedIn(Owner);
+            if (item is IDressable dressable) dressable.DressedIn(Owner);
 
             OnItemAddedToSlot?.Invoke(this, item, slot);
             return new Result<IPickupable>();
