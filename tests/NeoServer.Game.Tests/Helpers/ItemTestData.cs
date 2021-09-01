@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -105,7 +106,7 @@ namespace NeoServer.Game.Tests.Helpers
             return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
         }
 
-        public static object CreateRing(ushort id)
+        public static IRing CreateRing(ushort id)
         {
             var type = new ItemType();
             type.SetClientId(id);

@@ -50,7 +50,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Location location)
             : base(
                 new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
-                    new Dictionary<LookType, ushort> {{LookType.Corpse, 3058}}), outfit, healthPoints)
+                    new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), outfit, healthPoints)
         {
             Id = id;
             CharacterName = characterName;
@@ -85,7 +85,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         private bool IsPartyLeader => Party?.IsLeader(this) ?? false;
-        private ushort LevelBasesSpeed => (ushort) (220 + 2 * (Level - 1));
+        private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
         public string CharacterName { get; }
         public Dictionary<uint, long> KnownCreatures { get; }
         public Gender Gender { get; }
@@ -153,9 +153,9 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void LoadBank(ulong amount) => BankAmount = amount;
 
-        public void UnsetFlag(PlayerFlag flag) => flags &= ~(ulong) flag;
+        public void UnsetFlag(PlayerFlag flag) => flags &= ~(ulong)flag;
 
-        public void SetFlag(PlayerFlag flag) => flags |= (ulong) flag;
+        public void SetFlag(PlayerFlag flag) => flags |= (ulong)flag;
 
         public void LoadVipList(IEnumerable<(uint, string)> vips)
         {
@@ -172,7 +172,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             OnLoadedVipList?.Invoke(this, vipList);
         }
 
-        public bool FlagIsEnabled(PlayerFlag flag) => (flags & (ulong) flag) != 0;
+        public bool FlagIsEnabled(PlayerFlag flag) => (flags & (ulong)flag) != 0;
 
         public uint AccountId { get; init; }
         public override IOutfit Outfit { get; protected set; }
@@ -213,7 +213,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             get
             {
-                if (Skills.TryGetValue(SkillType.Level, out var skill)) return (uint) skill.Count;
+                if (Skills.TryGetValue(SkillType.Level, out var skill)) return (uint)skill.Count;
                 return 0;
             }
         }
@@ -259,10 +259,10 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
-        public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort) (attackRate * DamageFactor * attack * Skills[SkillInUse].Level + Level / 5);
+        public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + Level / 5);
 
         public uint Id { get; }
-        public override ushort MinimumAttackPower => (ushort) (Level / 5);
+        public override ushort MinimumAttackPower => (ushort)(Level / 5);
 
         public override ushort ArmorRating => Inventory.TotalArmor;
         public byte SecureMode { get; private set; }
@@ -278,32 +278,32 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public ushort GetSkillLevel(SkillType skillType)
         {
-            Inventory.TotalSkillBonus.TryGetValue(skillType, out var skillBonus);
-
-            return (ushort) ((Skills.TryGetValue(skillType, out var skill) ? skill.Level : 1) * (100 + skillBonus) /
-                             100);
+            var hasSkill = Skills.TryGetValue(skillType, out var skill);
+            return (ushort)((hasSkill ? skill.Level : 1) * (100 + (skill?.Bonus ?? 0)) / 100);
         }
 
-        public byte GetSkillTries(SkillType skillType) => (byte) (Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
+        public byte GetSkillTries(SkillType skillType) => (byte)(Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
 
         public byte GetSkillBonus(SkillType skill) => Skills[skill].Bonus;
-      
-        public void AddSkillBonus(SkillType skill, byte increase)
+
+        public void AddSkillBonus(SkillType skillType, byte increase)
         {
             if (increase == 0) return;
-            Skills[skill]?.AddBonus(increase);
+            if (!Skills.TryGetValue(skillType, out var skill)) Skills.Add(skillType, new Skill(skillType,1,1,0)); //todo: review those skill values
+            
+            Skills[skillType]?.AddBonus(increase);
             OnAddedSkillBonus?.Invoke(this, increase);
         }
 
-        public void RemoveSkillBonus(SkillType skill,byte decrease)
+        public void RemoveSkillBonus(SkillType skillType, byte decrease)
         {
             if (decrease == 0) return;
 
-            Skills[skill]?.RemoveBonus(decrease);
+            Skills[skillType]?.RemoveBonus(decrease);
             OnRemovedSkillBonus?.Invoke(this, decrease);
         }
 
-        public byte GetSkillPercent(SkillType skill) => (byte) Skills[skill].Percentage;
+        public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
 
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
 
@@ -371,7 +371,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             var oldChaseMode = ChaseMode;
             ChaseMode = mode;
-            
+
             if (ChaseMode == ChaseMode.Follow && AutoAttackTarget is not null)
             {
                 Follow(AutoAttackTarget as IWalkableCreature, PathSearchParams);
@@ -387,7 +387,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public override int ShieldDefend(int attack)
         {
-            var resultDamage = (int) (attack -
+            var resultDamage = (int)(attack -
                                       Inventory.TotalDefense * Skills[SkillType.Shielding].Level *
                                       (DefenseFactor / 100d) - attack / 100d * ArmorRating);
             if (resultDamage <= 0) IncreaseSkillCounter(SkillType.Shielding, 1);
@@ -399,12 +399,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             switch (ArmorRating)
             {
                 case > 3:
-                {
-                    var min = ArmorRating / 2;
-                    var max = ArmorRating / 2 * 2 - 1;
-                    damage -= (ushort) GameRandom.Random.NextInRange(min, max);
-                    break;
-                }
+                    {
+                        var min = ArmorRating / 2;
+                        var max = ArmorRating / 2 * 2 - 1;
+                        damage -= (ushort)GameRandom.Random.NextInRange(min, max);
+                        break;
+                    }
                 case > 0:
                     --damage;
                     break;
@@ -516,7 +516,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (Mana == MaxMana) return;
 
-            Mana = Mana + increasing >= MaxMana ? MaxMana : (ushort) (Mana + increasing);
+            Mana = Mana + increasing >= MaxMana ? MaxMana : (ushort)(Mana + increasing);
             OnStatusChanged?.Invoke(this);
         }
 
@@ -651,8 +651,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             if (food is null) return false;
 
-            var regenerationMs = (uint) food.Duration * 1000;
-            var maxRegenerationTime = (uint) 1200 * 1000;
+            var regenerationMs = (uint)food.Duration * 1000;
+            var maxRegenerationTime = (uint)1200 * 1000;
 
             if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
             {
@@ -746,7 +746,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public bool AddToVip(IPlayer player)
         {
-            if(Guard.AnyNull(player)) return false;
+            if (Guard.AnyNull(player)) return false;
             if (string.IsNullOrWhiteSpace(player.Name)) return false;
 
             if (VipList?.Count > 200)
@@ -832,7 +832,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
                 if (possibleAmountOnInventory > 0)
                 {
-                    possibleAmountOnInventory = (uint) Math.Max(0, (int) possibleAmountOnInventory - item.Amount);
+                    possibleAmountOnInventory = (uint)Math.Max(0, (int)possibleAmountOnInventory - item.Amount);
                     var result = Inventory.AddItem(item);
                     if (result.IsSuccess)
                     {
@@ -958,9 +958,9 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (type == SkillType.Level)
             {
                 var levelDiff = toLevel - fromLevel;
-                MaxHealthPoints += (uint) (levelDiff * Vocation.GainHp);
-                MaxMana += (ushort) (levelDiff * Vocation.GainMana);
-                TotalCapacity += (uint) (levelDiff * Vocation.GainCap);
+                MaxHealthPoints += (uint)(levelDiff * Vocation.GainHp);
+                MaxMana += (ushort)(levelDiff * Vocation.GainMana);
+                TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
                 ResetHealthPoints();
                 ResetMana();
                 ChangeSpeed(LevelBasesSpeed);
@@ -971,7 +971,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public virtual void SetFlags(params PlayerFlag[] flags)
         {
-            foreach (var flag in flags) this.flags |= (ulong) flag;
+            foreach (var flag in flags) this.flags |= (ulong)flag;
         }
 
         public void ResetMana() => HealMana(MaxMana);
@@ -1046,7 +1046,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (SoulPoints == MaxSoulPoints) return;
 
-            SoulPoints = SoulPoints + increasing >= MaxSoulPoints ? MaxSoulPoints : (byte) (SoulPoints + increasing);
+            SoulPoints = SoulPoints + increasing >= MaxSoulPoints ? MaxSoulPoints : (byte)(SoulPoints + increasing);
             OnStatusChanged?.Invoke(this);
         }
 

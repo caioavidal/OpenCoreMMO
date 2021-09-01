@@ -10,12 +10,13 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items
 {
-    public abstract class Accessory : MoveableItem, IProtectionItem, IChargeable, ISkillBonus//IDecayable //ISkillBonus, IDefenseEquipmentItem, IChargeable
+    public abstract class Accessory : MoveableItem, IProtectionItem, IChargeable, ISkillBonus//IDecayable, IDefenseEquipmentItem
     {
         protected Accessory(IItemType type, Location location) : base(type, location)
         {
@@ -24,8 +25,7 @@ namespace NeoServer.Game.Items.Items
         #region Protection
 
         public Dictionary<DamageType, byte> DamageProtection => Metadata.Attributes.DamageProtection;
-
-
+        
         public byte GetProtection(DamageType damageType)
         {
             if (DamageProtection is null || damageType == DamageType.None) return 0;
@@ -41,6 +41,7 @@ namespace NeoServer.Game.Items.Items
         public virtual void Protect(ref CombatDamage damage)
         {
             var protection = GetProtection(damage.Type);
+            if (protection == 0) return;
             damage.ReduceDamageByPercent(protection);
         }
 
@@ -59,13 +60,13 @@ namespace NeoServer.Game.Items.Items
         public Dictionary<SkillType, byte> SkillBonuses => Metadata.Attributes.SkillBonuses;
         public void AddSkillBonus(IPlayer player)
         {
-            if (SkillBonuses is null) return;
+            if (Guard.AnyNull(SkillBonuses, player)) return;
             foreach (var (skillType, bonus) in SkillBonuses) player.AddSkillBonus(skillType, bonus);
         }
 
         public void RemoveSkillBonus(IPlayer player)
         {
-            if (SkillBonuses is null) return;
+            if (Guard.AnyNull(SkillBonuses, player)) return;
             foreach (var (skillType, bonus) in SkillBonuses) player.RemoveSkillBonus(skillType, bonus);
         }
 

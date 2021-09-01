@@ -149,7 +149,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool KnowsCreatureWithId(uint creatureId);
 
         /// <summary>
-        ///     Get skill info
+        ///     Get skillType info
         /// </summary>
         /// <param name="skillType"></param>
         /// <returns></returns>
@@ -250,8 +250,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         void JoinParty(IParty party);
         void PassPartyLeadership(IPlayer player);
         byte GetSkillTries(SkillType skillType);
-        void AddSkillBonus(SkillType skill, byte increase);
-        void RemoveSkillBonus(SkillType skill, byte decrease);
+        void AddSkillBonus(SkillType skillType, byte increase);
+        void RemoveSkillBonus(SkillType skillType, byte decrease);
         event AddSkillBonus OnAddedSkillBonus;
         event RemoveSkillBonus OnRemovedSkillBonus;
         byte GetSkillBonus(SkillType skill);
