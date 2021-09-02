@@ -30,9 +30,7 @@ namespace NeoServer.Game.Items.Items.Weapons
 
             if (actor is not IPlayer player) return false;
 
-            if (player?.Inventory[Slot.Ammo] == null) return false;
-
-            if (!(player?.Inventory[Slot.Ammo] is IAmmoItem ammo)) return false;
+            if (player?.Inventory[Slot.Ammo] is not IAmmoItem ammo) return false;
 
             if (ammo.AmmoType != Metadata.AmmoType) return false;
 

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Moq;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Npcs.Shop;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Protections;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -144,8 +137,6 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             player.ReceiveAttack(enemy, damage);
 
             Assert.Equal(200, resultDamage);
-
-
         }
     }
 }

@@ -59,7 +59,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event RemoveCondition OnRemovedCondition;
         event AddCondition OnAddedCondition;
         event Attacked OnAttacked;
-
         int ArmorDefend(int attack);
 
         //bool Attack(ICombatActor enemy, ICombatAttack combatAttack);

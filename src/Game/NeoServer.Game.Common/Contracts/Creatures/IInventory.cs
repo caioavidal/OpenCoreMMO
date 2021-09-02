@@ -32,7 +32,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         float TotalWeight { get; }
         IDictionary<ushort, uint> Map { get; }
         ulong TotalMoney { get; }
-        Dictionary<SkillType, int> TotalSkillBonus { get; }
 
         IItem this[Slot slot] { get; }
 

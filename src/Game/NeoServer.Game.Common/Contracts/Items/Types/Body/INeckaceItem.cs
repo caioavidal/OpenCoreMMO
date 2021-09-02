@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface INecklace : IChargeable, IDurable, IBodyEquipmentItem, IProtectionItem, ISkillBonus
+    public interface INecklace : IChargeable, IDecayable, IBodyEquipmentItem, IProtectionItem, ISkillBonus
     {
         bool Expired { get; }
         byte Defense { get; }
