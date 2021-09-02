@@ -57,17 +57,8 @@ namespace NeoServer.Game.Items.Items
         public bool StartedToDecay { get; }
         public long StartedToDecayTime { get; }
         public bool ShouldDisappear { get; }
+
         public bool Decay()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DressedIn(IPlayer player)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UndressFrom(IPlayer player)
         {
             throw new NotImplementedException();
         }
