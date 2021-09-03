@@ -7,5 +7,7 @@ namespace NeoServer.Game.Common.Contracts.Items
         ushort Charges { get; }
         bool NoCharges => Charges == 0;
         void DecreaseCharges();
+
+        bool InfiniteCharges { get; }
     }
 }

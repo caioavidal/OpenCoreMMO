@@ -102,11 +102,63 @@ namespace NeoServer.Game.Items.Tests.Items
         public void NoCharges_0Charges_ReturnsTrue()
         {
             //arrange
+            var sut = ItemTestData.CreateRing(1, charges: 1);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
+
+            //act
+            sut.DecreaseCharges();
+
+            //assert
+            sut.NoCharges.Should().BeTrue();
+        }
+
+        [Fact]
+        public void InfiniteCharges_10Charges_ReturnsFalse()
+        {
+            //arrange
+            var sut = ItemTestData.CreateRing(1, charges: 10);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
+
+            //assert
+            sut.NoCharges.Should().BeFalse();
+        }
+        [Fact]
+        public void InfiniteCharges_0Charges_ReturnsTrue()
+        {
+            //arrange
             var sut = ItemTestData.CreateRing(1, charges: 0);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
 
             //assert
             sut.NoCharges.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Protect_InfiniteCharges_Protect()
+        {
+            //arrange
+            var defender = PlayerTestDataBuilder.BuildPlayer();
+            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var oldHp = defender.HealthPoints;
+
+            var totalDamage = 0;
+            defender.OnInjured += (enemy, victim, damage) =>
+            {
+                totalDamage = damage.Damage;
+            };
+
+            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
+
+            var sut = ItemTestData.CreateRing(1, charges: 0);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
+            sut.DressedIn(defender);
+
+            //act
+            attacker.Attack(defender, hmm);
+
+            //assert
+            totalDamage.Should().Be(0);
+            defender.HealthPoints.Should().Be(oldHp);
         }
 
         [Fact]
@@ -125,13 +177,14 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min:100,max:100);
 
-            var sut = ItemTestData.CreateRing(1, charges: 0);
+            var sut = ItemTestData.CreateRing(1, charges: 1);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
             sut.DressedIn(defender);
 
             //act
             attacker.Attack(defender, hmm);
-            
+            attacker.Attack(defender, hmm);
+
             //assert
             totalDamage.Should().NotBe(0);
             defender.HealthPoints.Should().BeLessThan(oldHp);
@@ -164,5 +217,6 @@ namespace NeoServer.Game.Items.Tests.Items
             totalDamage.Should().Be(0);
             defender.HealthPoints.Should().Be(oldHp);
         }
+
     }
 }

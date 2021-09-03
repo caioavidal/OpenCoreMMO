@@ -41,7 +41,7 @@ namespace NeoServer.Game.Items.Items
 
         public virtual void Protect(ref CombatDamage damage)
         {
-            if (NoCharges) return;
+            if (NoCharges && !InfiniteCharges) return;
 
             var protection = GetProtection(damage.Type);
             if (protection == 0) return;
@@ -60,6 +60,9 @@ namespace NeoServer.Game.Items.Items
         {
             Charges--;
         }
+
+        public bool InfiniteCharges => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges) == 0;
+
         #endregion
 
         #region Skill Bonus
