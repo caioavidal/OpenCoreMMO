@@ -62,5 +62,29 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             player.GetSkillBonus(SkillType.Axe).Should().Be(0);
         }
+
+
+        [Fact]
+        public void Decrease_DefendedAttack_DecreaseCharges()
+        {
+            //arrange
+            var defender = PlayerTestDataBuilder.BuildPlayer();
+            var attacker = PlayerTestDataBuilder.BuildPlayer();
+
+            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy);
+
+            var sut = ItemTestData.CreateRing(1, charges:50);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
+            
+            sut.DressedIn(defender);
+
+            //act
+            attacker.Attack(defender, hmm);
+            
+            //assert
+            sut.Charges.Should().Be(49);
+        }
+
+
     }
 }

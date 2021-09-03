@@ -2,7 +2,7 @@
 {
     public interface IChargeable
     {
-        byte Charges { get; }
+        ushort Charges { get; }
         void DecreaseCharges();
     }
 }

@@ -2,12 +2,15 @@
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Protections;
+using NeoServer.Game.Items.Items.UsableItems.Runes;
 using NeoServer.Game.Items.Items.Weapons;
 
 namespace NeoServer.Game.Tests.Helpers
@@ -106,12 +109,13 @@ namespace NeoServer.Game.Tests.Helpers
             return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
         }
 
-        public static IRing CreateRing(ushort id)
+        public static IRing CreateRing(ushort id, ushort charges = 10)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
             type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "ring");
+            type.Attributes.SetAttribute(ItemAttribute.Charges, charges);
             type.SetName("item");
 
             return new Ring(type, new Location(100, 100, 7));
@@ -167,6 +171,17 @@ namespace NeoServer.Game.Tests.Helpers
             type.Flags.Add(ItemFlag.Stackable);
 
             return new Coin(type, new Location(100, 100, 7), amount);
+        }
+        public static IAttackRune CreateAttackRune(ushort id, DamageType damageType = DamageType.Energy, bool needTarget = true)
+        {
+            var type = new ItemType();
+            type.SetClientId(id);
+            type.SetId(id);
+            type.SetName("hmm");
+            type.Attributes.SetAttribute(ItemAttribute.Damage, DamageTypeParser.Parse(damageType));
+            type.Attributes.SetAttribute(ItemAttribute.NeedTarget, needTarget);
+
+            return new AttackRune(type, new Location(100, 100, 7),100);
         }
 
         public static IItem CreateTopItem(ushort id, byte topOrder)

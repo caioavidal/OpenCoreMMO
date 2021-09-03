@@ -30,15 +30,18 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
         {
             get
             {
-                Func<string, double> parse = value =>
-                    double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) ? v : default;
+                static double Parse(string value) => double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) ? v : default;
 
                 var x = Metadata.Attributes.GetAttributeArray("x");
                 var y = Metadata.Attributes.GetAttributeArray("y");
+
+                x ??= new dynamic[] {"0", "0"};
+                y ??= new dynamic[] {"0", "0"};
+
                 var dictionary = new Dictionary<string, (double, double)>(2)
                 {
-                    {"x", (parse(x[0]), parse(x[1]))},
-                    {"y", (parse(y[0]), parse(y[1]))}
+                    {"x", (Parse(x[0]), Parse(x[1]))},
+                    {"y", (Parse(y[0]), Parse(y[1]))}
                 };
                 return dictionary;
             }
@@ -50,8 +53,8 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             variables.TryGetValue("x", out var x);
             variables.TryGetValue("y", out var y);
 
-            var min = (int) (level / 5 + magicLevel * Math.Min(x.Item1, x.Item2) + Math.Min(y.Item1, y.Item2));
-            var max = (int) (level / 5 + magicLevel * Math.Max(x.Item1, x.Item2) + Math.Min(y.Item1, y.Item2));
+            var min = (int)(level / 5 + magicLevel * Math.Min(x.Item1, x.Item2) + Math.Min(y.Item1, y.Item2));
+            var max = (int)(level / 5 + magicLevel * Math.Max(x.Item1, x.Item2) + Math.Min(y.Item1, y.Item2));
 
             return new MinMax(min, max);
         }

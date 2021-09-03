@@ -20,6 +20,7 @@ namespace NeoServer.Game.Items.Items
     {
         protected Accessory(IItemType type, Location location) : base(type, location)
         {
+            Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
         }
 
         #region Protection
@@ -43,12 +44,15 @@ namespace NeoServer.Game.Items.Items
             var protection = GetProtection(damage.Type);
             if (protection == 0) return;
             damage.ReduceDamageByPercent(protection);
+            DecreaseCharges();
         }
 
         #endregion
 
         #region Charges
-        public byte Charges { get; private set; }
+
+        public ushort Charges { get; private set; } 
+        
 
         public void DecreaseCharges()
         {
