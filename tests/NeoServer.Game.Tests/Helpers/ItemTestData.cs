@@ -172,7 +172,7 @@ namespace NeoServer.Game.Tests.Helpers
 
             return new Coin(type, new Location(100, 100, 7), amount);
         }
-        public static IAttackRune CreateAttackRune(ushort id, DamageType damageType = DamageType.Energy, bool needTarget = true)
+        public static IAttackRune CreateAttackRune(ushort id, DamageType damageType = DamageType.Energy, bool needTarget = true, ushort min = 100, ushort max = 100)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -180,8 +180,10 @@ namespace NeoServer.Game.Tests.Helpers
             type.SetName("hmm");
             type.Attributes.SetAttribute(ItemAttribute.Damage, DamageTypeParser.Parse(damageType));
             type.Attributes.SetAttribute(ItemAttribute.NeedTarget, needTarget);
+            type.Attributes.SetCustomAttribute("x", new[] { min.ToString(), max.ToString() });
+            type.Attributes.SetCustomAttribute("y", new[] { min.ToString(), max.ToString() });
 
-            return new AttackRune(type, new Location(100, 100, 7),100);
+            return new AttackRune(type, new Location(100, 100, 7), 100);
         }
 
         public static IItem CreateTopItem(ushort id, byte topOrder)

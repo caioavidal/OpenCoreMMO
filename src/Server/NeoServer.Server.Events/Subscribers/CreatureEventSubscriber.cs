@@ -70,7 +70,7 @@ namespace NeoServer.Server.Events.Subscribers
             if (creature is ICombatActor combatActor)
             {
                 combatActor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
-                combatActor.OnDamaged += _creatureReceiveDamageEventHandler.Execute;
+                combatActor.OnInjured += _creatureReceiveDamageEventHandler.Execute;
                 combatActor.OnKilled += _creatureKilledEventHandler.Execute;
                 combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
                 combatActor.OnAttackEnemy += _creatureAttackEventHandler.Execute;
@@ -100,7 +100,7 @@ namespace NeoServer.Server.Events.Subscribers
             if (creature is ICombatActor combatActor)
             {
                 combatActor.OnTargetChanged -= _creatureChangedAttackTargetEventHandler.Execute;
-                combatActor.OnDamaged -= _creatureReceiveDamageEventHandler.Execute;
+                combatActor.OnInjured -= _creatureReceiveDamageEventHandler.Execute;
                 combatActor.OnKilled -= _creatureKilledEventHandler.Execute;
                 combatActor.OnBlockedAttack -= _creatureBlockedAttackEventHandler.Execute;
                 combatActor.OnAttackEnemy -= _creatureAttackEventHandler.Execute;

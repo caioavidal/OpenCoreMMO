@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Items;
@@ -104,6 +107,62 @@ namespace NeoServer.Game.Items.Tests.Items
 
             //assert
             sut.NoCharges.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Protect_NoCharges_DoNotProtect()
+        {
+            //arrange
+            var defender = PlayerTestDataBuilder.BuildPlayer();
+            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var oldHp = defender.HealthPoints;
+
+            var totalDamage = 0;
+            defender.OnInjured += (enemy, victim, damage) =>
+            {
+                totalDamage = damage.Damage;
+            };
+
+            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min:100,max:100);
+
+            var sut = ItemTestData.CreateRing(1, charges: 0);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
+            sut.DressedIn(defender);
+
+            //act
+            attacker.Attack(defender, hmm);
+            
+            //assert
+            totalDamage.Should().NotBe(0);
+            defender.HealthPoints.Should().BeLessThan(oldHp);
+        }
+        [Fact]
+        public void Protect_1Charge_ProtectFromDamage()
+        {
+            //arrange
+            var defender = PlayerTestDataBuilder.BuildPlayer();
+            var attacker = PlayerTestDataBuilder.BuildPlayer();
+
+            var oldHp = defender.HealthPoints;
+
+           var totalDamage = 0;
+            defender.OnInjured += (enemy, victim, damage) =>
+            {
+                totalDamage = damage.Damage;
+            };
+
+            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
+
+            var sut = ItemTestData.CreateRing(1, charges: 1);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
+            sut.DressedIn(defender);
+
+            //act
+            attacker.Attack(defender, hmm);
+
+            //assert
+            totalDamage.Should().Be(0);
+            defender.HealthPoints.Should().Be(oldHp);
         }
     }
 }

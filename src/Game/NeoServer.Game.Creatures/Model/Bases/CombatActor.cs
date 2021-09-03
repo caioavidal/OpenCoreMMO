@@ -299,7 +299,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private void OnDamage(IThing enemy, ICombatActor actor, CombatDamage damage)
         {
             OnDamage(enemy, damage);
-            OnDamaged?.Invoke(enemy, this, damage);
+            OnInjured?.Invoke(enemy, this, damage);
             if (IsDead) OnDeath(enemy);
         }
 
@@ -311,7 +311,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event StopAttack OnStoppedAttack;
         public event BlockAttack OnBlockedAttack;
         public event Attack OnAttackEnemy;
-        public event Damage OnDamaged;
+        public event Damage OnInjured;
         public event Die OnKilled;
         public event OnAttackTargetChange OnTargetChanged;
         public event ChangeVisibility OnChangedVisibility;

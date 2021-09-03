@@ -41,6 +41,8 @@ namespace NeoServer.Game.Items.Items
 
         public virtual void Protect(ref CombatDamage damage)
         {
+            if (NoCharges) return;
+
             var protection = GetProtection(damage.Type);
             if (protection == 0) return;
             damage.ReduceDamageByPercent(protection);
@@ -51,9 +53,9 @@ namespace NeoServer.Game.Items.Items
 
         #region Charges
 
-        public ushort Charges { get; private set; } 
-        
+        public ushort Charges { get; private set; }
 
+        public bool NoCharges => Charges == 0;
         public void DecreaseCharges()
         {
             Charges--;

@@ -32,7 +32,7 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             sut.DressedIn(player);
 
             var resultDamage = 0;
-            player.OnDamaged += (_, _, damage) =>
+            player.OnInjured += (_, _, damage) =>
             {
                 resultDamage = damage.Damage;
             };
@@ -62,7 +62,7 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             sut.DressedIn(player);
 
             var resultDamage = 0;
-            player.OnDamaged += (_, _, damage) =>
+            player.OnInjured += (_, _, damage) =>
             {
                 resultDamage = damage.Damage;
             };
@@ -92,7 +92,7 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             sut.DressedIn(player);
 
             var resultDamage = 0;
-            player.OnDamaged += (_, _, damage) =>
+            player.OnInjured += (_, _, damage) =>
             {
                 resultDamage = damage.Damage;
             };
@@ -122,7 +122,7 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             sut.DressedIn(player);
 
             var resultDamage = 0;
-            player.OnDamaged += (_, _, damage) =>
+            player.OnInjured += (_, _, damage) =>
             {
                 resultDamage = damage.Damage;
             };
