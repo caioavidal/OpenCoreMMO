@@ -75,12 +75,14 @@ namespace NeoServer.Game.Items.Items
         #region Dressable
         public void DressedIn(IPlayer player)
         {
+            if (Guard.AnyNull(player)) return;
             player.OnAttacked += OnPlayerAttackedHandler;
             AddSkillBonus(player);
         }
 
         public void UndressFrom(IPlayer player)
         {
+            if (Guard.AnyNull(player)) return;
             player.OnAttacked -= OnPlayerAttackedHandler;
             RemoveSkillBonus(player);
         }
