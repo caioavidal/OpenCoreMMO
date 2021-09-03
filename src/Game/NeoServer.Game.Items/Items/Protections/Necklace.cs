@@ -59,12 +59,5 @@ namespace NeoServer.Game.Items.Items.Protections
         {
             return type.BodyPosition == Slot.Necklace;
         }
-
-        public override void Protect(ref CombatDamage damage)
-        {
-            if (Expired) return;
-            DecreaseCharges();
-            base.Protect(ref damage);
-        }
     }
 }

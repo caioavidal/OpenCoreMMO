@@ -4,11 +4,8 @@
     {
         int DecaysTo { get; }
         int Duration { get; }
-        bool Expired { get; }
-        bool StartedToDecay { get; }
-        long StartedToDecayTime { get; }
         bool ShouldDisappear { get; }
-
+        bool Expired { get; }
         bool Decay();
     }
 }

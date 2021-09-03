@@ -29,8 +29,11 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(skills: PlayerTestDataBuilder.GenerateSkills(10));
-            var sut = ItemTestData.CreateRing(1);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
+            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, 5),
+                (ItemAttribute.Duration, 100)
+            });
             //act
             sut.DressedIn(player);
 
@@ -42,8 +45,11 @@ namespace NeoServer.Game.Items.Tests.Items
         public void UndressFrom_Null_DoNotThrow()
         {
             //arrange
-            var sut = ItemTestData.CreateRing(1);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
+            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, 5),
+                (ItemAttribute.Duration, 100)
+            });
             //act
             sut.UndressFrom(null);
         }
@@ -52,8 +58,11 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(skills: PlayerTestDataBuilder.GenerateSkills(10));
-            var sut = ItemTestData.CreateRing(1);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
+            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, 5),
+                (ItemAttribute.Duration, 100)
+            });
 
             //act
             sut.DressedIn(player);
@@ -149,8 +158,12 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
 
-            var sut = ItemTestData.CreateRing(1, charges: 0);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
+            var sut = ItemTestData.CreateRing(1, charges: 0,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.Duration, 100)
+                });
             sut.DressedIn(defender);
 
             //act
@@ -206,8 +219,11 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
+            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.AbsorbPercentEnergy, 100),
+                (ItemAttribute.Duration, 100)
+            });
             sut.DressedIn(defender);
 
             //act

@@ -1,51 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Items
 {
-    public abstract class Accessory : MoveableItem, IProtectionItem, IChargeable, ISkillBonus//IDecayable, IDefenseEquipmentItem
+    public abstract class
+        Accessory : MoveableItem, IProtectionItem, IChargeable, ISkillBonus, IDecayable //, IDefenseEquipmentItem
     {
         protected Accessory(IItemType type, Location location) : base(type, location)
         {
             Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
+            Decayable = new Decayable(this, DecaysTo, Duration);
+            Protection = new Protection(DamageProtection);
+            SkillBonus = new SkillBonus(SkillBonuses);
+
+            Decayable.OnDecayed += Decayed;
+        }
+
+        public Decayable Decayable { get; }
+        public Protection Protection { get; }
+        public SkillBonus SkillBonus { get; }
+        public IPlayer PlayerDressing { get; private set; }
+
+        private void Decayed(IDecayable item)
+        {
+            RemoveSkillBonus(PlayerDressing);
+        }
+
+        private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
+        {
+            Protect(ref damage);
         }
 
         #region Protection
 
         public Dictionary<DamageType, byte> DamageProtection => Metadata.Attributes.DamageProtection;
-        
-        public byte GetProtection(DamageType damageType)
-        {
-            if (DamageProtection is null || damageType == DamageType.None) return 0;
 
-            return !DamageProtection.TryGetValue(damageType, out var value) ? (byte)0 : value;
-        }
-
-        public virtual void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
-        {
-            Protect(ref damage);
-        }
-
-        public virtual void Protect(ref CombatDamage damage)
+        public void Protect(ref CombatDamage damage)
         {
             if (NoCharges && !InfiniteCharges) return;
-
-            var protection = GetProtection(damage.Type);
-            if (protection == 0) return;
-            damage.ReduceDamageByPercent(protection);
+            Protection.Protect(ref damage);
             DecreaseCharges();
         }
 
@@ -54,11 +55,11 @@ namespace NeoServer.Game.Items.Items
         #region Charges
 
         public ushort Charges { get; private set; }
-
         public bool NoCharges => Charges == 0;
+
         public void DecreaseCharges()
         {
-            Charges--;
+            Charges -= (ushort) (Charges == 0 ? 0 : 1);
         }
 
         public bool InfiniteCharges => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges) == 0;
@@ -66,26 +67,29 @@ namespace NeoServer.Game.Items.Items
         #endregion
 
         #region Skill Bonus
+
         public Dictionary<SkillType, byte> SkillBonuses => Metadata.Attributes.SkillBonuses;
+
         public void AddSkillBonus(IPlayer player)
         {
-            if (Guard.AnyNull(SkillBonuses, player)) return;
-            foreach (var (skillType, bonus) in SkillBonuses) player.AddSkillBonus(skillType, bonus);
+            if (Decayable.Expired) return;
+            SkillBonus.AddSkillBonus(player);
         }
 
         public void RemoveSkillBonus(IPlayer player)
         {
-            if (Guard.AnyNull(SkillBonuses, player)) return;
-            foreach (var (skillType, bonus) in SkillBonuses) player.RemoveSkillBonus(skillType, bonus);
+            SkillBonus.RemoveSkillBonus(player);
         }
 
         #endregion
 
         #region Dressable
+
         public void DressedIn(IPlayer player)
         {
             if (Guard.AnyNull(player)) return;
             player.OnAttacked += OnPlayerAttackedHandler;
+            PlayerDressing = player;
             AddSkillBonus(player);
         }
 
@@ -93,8 +97,24 @@ namespace NeoServer.Game.Items.Items
         {
             if (Guard.AnyNull(player)) return;
             player.OnAttacked -= OnPlayerAttackedHandler;
+            PlayerDressing = null;
             RemoveSkillBonus(player);
         }
+
+        #endregion
+
+        #region Decay
+
+        public int DecaysTo => Metadata.Attributes.GetAttribute<int>(ItemAttribute.ExpireTarget);
+        public int Duration => Metadata.Attributes.GetAttribute<int>(ItemAttribute.Duration);
+        public bool ShouldDisappear => Decayable.ShouldDisappear;
+        public bool Expired => Decayable.Expired;
+
+        public bool Decay()
+        {
+            return Decayable.Decay();
+        }
+
         #endregion
     }
 }
