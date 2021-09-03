@@ -85,6 +85,25 @@ namespace NeoServer.Game.Items.Tests.Items
             sut.Charges.Should().Be(49);
         }
 
+        [Fact]
+        public void NoCharges_10Charges_ReturnsFalse()
+        {
+            //arrange
+            var sut = ItemTestData.CreateRing(1, charges: 10);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
+            
+            //assert
+            sut.NoCharges.Should().BeFalse();
+        }
+        [Fact]
+        public void NoCharges_0Charges_ReturnsTrue()
+        {
+            //arrange
+            var sut = ItemTestData.CreateRing(1, charges: 0);
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
 
+            //assert
+            sut.NoCharges.Should().BeTrue();
+        }
     }
 }
