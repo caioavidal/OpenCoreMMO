@@ -23,6 +23,7 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             {
                 {DamageType.Fire, 20}
             });
+            itemType.Setup(x => x.Attributes.GetAttribute<ushort>(ItemAttribute.Charges)).Returns(10);
 
             var sut = new Necklace(itemType.Object, Location.Zero, 5, 0);
 
@@ -84,6 +85,8 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
                 {DamageType.Fire, 100}
             });
 
+            itemType.Setup(x => x.Attributes.GetAttribute<ushort>(ItemAttribute.Charges)).Returns(10);
+
             var sut = new Necklace(itemType.Object, Location.Zero, 5, 0);
 
             var player = PlayerTestDataBuilder.BuildPlayer();
@@ -113,6 +116,7 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             {
                 {DamageType.Fire, 100}
             });
+            itemType.Setup(x => x.Attributes.GetAttribute<ushort>(ItemAttribute.Charges)).Returns(10);
 
             var sut = new Necklace(itemType.Object, Location.Zero, 5, 0);
 
