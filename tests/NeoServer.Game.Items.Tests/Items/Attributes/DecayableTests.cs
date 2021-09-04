@@ -95,5 +95,57 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             sut.Elapsed.Should().BeGreaterThan(elapsed);
         }
+        [Fact]
+        public void ShouldDisappear_DecaysTo0_ReturnsTrue()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var sut = new Decayable(item, 0, 20);
+
+            //assert
+            sut.ShouldDisappear.Should().BeTrue();
+        }
+        [Fact]
+        public void ShouldDisappear_DecaysTo10_ReturnsFalse()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var sut = new Decayable(item, 10, 20);
+
+            //assert
+            sut.ShouldDisappear.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Elapsed_2Secs_Returns2()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var sut = new Decayable(item, 10, 20);
+
+            //act
+            sut.Start();
+            Thread.Sleep(2000);
+            sut.Pause();
+
+            //assert
+            sut.Elapsed.Should().Be(2);
+        }
+        [Fact]
+        public void Elapsed_AfterPause_DoNotChange()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var sut = new Decayable(item, 10, 20);
+
+            //act
+            sut.Start();
+            Thread.Sleep(2000);
+            sut.Pause();
+            Thread.Sleep(2000);
+
+            //assert
+            sut.Elapsed.Should().Be(2);
+        }
     }
 }

@@ -17,8 +17,8 @@ namespace NeoServer.Game.Items.Items.Attributes
         public IDecayable Item { get; }
         public int DecaysTo { get; }
         public int Duration { get; }
-        public long StartedToDecayTime { get; private set; }
-        public bool StartedToDecay => StartedToDecayTime != default;
+        private long _startedToDecayTime;
+        public bool StartedToDecay => _startedToDecayTime != default;
 
         public int Elapsed { get; private set; }
         public bool Expired => StartedToDecay && Elapsed >= Duration;
@@ -26,10 +26,10 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public void Start()
         {
-            StartedToDecayTime = DateTime.Now.Ticks;
+            _startedToDecayTime = DateTime.Now.Ticks;
         }
 
-        public void Pause() => Elapsed += (int)((DateTime.Now.Ticks - StartedToDecayTime) / TimeSpan.TicksPerSecond);
+        public void Pause() => Elapsed += (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
 
         public bool Decay()
         {
@@ -39,7 +39,7 @@ namespace NeoServer.Game.Items.Items.Attributes
             if (!ItemTypeStore.Data.TryGetValue((ushort)DecaysTo, out var newItem)) return false;
 
             //Metadata = newItem;
-            StartedToDecayTime = DateTime.Now.Ticks;
+            _startedToDecayTime = DateTime.Now.Ticks;
             
             return true;
         }
