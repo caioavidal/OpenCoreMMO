@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
@@ -26,9 +27,11 @@ namespace NeoServer.Game.Items.Tests.Items
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
             var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
 
-            var sut = ItemTestData.CreateRing(1);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillShield, 15);
+            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, 5),
+                (ItemAttribute.SkillShield, 15)
+            });
 
             sut.AddSkillBonus(player);
             
