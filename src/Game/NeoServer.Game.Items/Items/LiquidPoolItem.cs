@@ -26,6 +26,7 @@ namespace NeoServer.Game.Items.Items
             Location = location;
             LiquidColor = LiquidColor.Empty;
             StartedToDecayTime = default;
+            Elapsed = 0;
             LiquidColor = GetLiquidColor(attributes);
         }
 
@@ -35,6 +36,7 @@ namespace NeoServer.Game.Items.Items
             Location = location;
             LiquidColor = LiquidColor.Empty;
             StartedToDecayTime = DateTime.Now.Ticks;
+            Elapsed = 0;
             LiquidColor = GetLiquidColor(color);
         }
 
@@ -77,6 +79,7 @@ namespace NeoServer.Game.Items.Items
         public long StartedToDecayTime { get; private set; }
         public bool StartedToDecay => StartedToDecayTime != default;
         public bool Expired => StartedToDecayTime + TimeSpan.TicksPerSecond * Duration < DateTime.Now.Ticks;
+        public int Elapsed { get; }
         public bool ShouldDisappear => DecaysTo == 0;
 
         public bool Decay()

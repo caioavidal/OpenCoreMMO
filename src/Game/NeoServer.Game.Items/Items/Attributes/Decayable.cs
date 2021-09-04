@@ -1,14 +1,10 @@
 ﻿using System;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.DataStore;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items.Attributes
 {
-    public  delegate void DecayDelegate(IDecayable item);
-    public class Decayable
+    public class Decayable: IDecayable
     {
         public event DecayDelegate OnDecayed;
         public Decayable(IDecayable item, int decaysTo, int duration)
@@ -23,8 +19,17 @@ namespace NeoServer.Game.Items.Items
         public int Duration { get; }
         public long StartedToDecayTime { get; private set; }
         public bool StartedToDecay => StartedToDecayTime != default;
-        public bool Expired => StartedToDecay && StartedToDecayTime + TimeSpan.TicksPerSecond * Duration < DateTime.Now.Ticks;
+
+        public int Elapsed { get; private set; }
+        public bool Expired => StartedToDecay && Elapsed >= Duration;
         public bool ShouldDisappear => DecaysTo == 0;
+
+        public void Start()
+        {
+            StartedToDecayTime = DateTime.Now.Ticks;
+        }
+
+        public void Pause() => Elapsed += (int)((DateTime.Now.Ticks - StartedToDecayTime) / TimeSpan.TicksPerSecond);
 
         public bool Decay()
         {

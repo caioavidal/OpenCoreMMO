@@ -109,6 +109,7 @@ namespace NeoServer.Game.Items.Items
         public int Duration => Metadata.Attributes.GetAttribute<int>(ItemAttribute.Duration);
         public bool ShouldDisappear => Decayable.ShouldDisappear;
         public bool Expired => Decayable.Expired;
+        public int Elapsed => Decayable.Elapsed;
 
         public bool Decay()
         {
