@@ -47,7 +47,7 @@ namespace NeoServer.Game.Creatures.Events
             if (creature is ICombatActor combatActor)
             {
                 combatActor.OnKilled += creatureKilledEventHandler.Execute;
-                combatActor.OnDamaged += creatureDamagedEventHandler.Execute;
+                combatActor.OnInjured += creatureDamagedEventHandler.Execute;
                 combatActor.OnPropagateAttack += creaturePropagatedAttackEventHandler.Execute;
             }
 
@@ -75,7 +75,7 @@ namespace NeoServer.Game.Creatures.Events
             if (creature is ICombatActor combatActor)
             {
                 combatActor.OnKilled -= creatureKilledEventHandler.Execute;
-                combatActor.OnDamaged -= creatureDamagedEventHandler.Execute;
+                combatActor.OnInjured -= creatureDamagedEventHandler.Execute;
                 combatActor.OnPropagateAttack -= creaturePropagatedAttackEventHandler.Execute;
             }
 

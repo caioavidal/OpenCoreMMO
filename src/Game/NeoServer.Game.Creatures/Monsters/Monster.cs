@@ -36,7 +36,7 @@ namespace NeoServer.Game.Creatures.Monsters
             Spawn = spawn;
             damages = new ConcurrentDictionary<ICreature, ushort>();
             State = MonsterState.Sleeping;
-            OnDamaged += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
+            OnInjured += (enemy, victim, damage) => RecordDamage(enemy, damage.Damage);
             Targets = new TargetList(this);
         }
 

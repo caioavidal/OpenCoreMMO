@@ -1,8 +1,13 @@
-﻿namespace NeoServer.Game.Common.Contracts.Items
+﻿using System;
+
+namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IChargeable
     {
-        byte Charges { get; }
+        ushort Charges { get; }
+        bool NoCharges => Charges == 0;
         void DecreaseCharges();
+
+        bool InfiniteCharges { get; }
     }
 }

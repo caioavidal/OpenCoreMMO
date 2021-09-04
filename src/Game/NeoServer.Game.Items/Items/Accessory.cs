@@ -20,6 +20,7 @@ namespace NeoServer.Game.Items.Items
     {
         protected Accessory(IItemType type, Location location) : base(type, location)
         {
+            Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
         }
 
         #region Protection
@@ -40,20 +41,28 @@ namespace NeoServer.Game.Items.Items
 
         public virtual void Protect(ref CombatDamage damage)
         {
+            if (NoCharges && !InfiniteCharges) return;
+
             var protection = GetProtection(damage.Type);
             if (protection == 0) return;
             damage.ReduceDamageByPercent(protection);
+            DecreaseCharges();
         }
 
         #endregion
 
         #region Charges
-        public byte Charges { get; private set; }
 
+        public ushort Charges { get; private set; }
+
+        public bool NoCharges => Charges == 0;
         public void DecreaseCharges()
         {
             Charges--;
         }
+
+        public bool InfiniteCharges => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges) == 0;
+
         #endregion
 
         #region Skill Bonus
@@ -75,12 +84,14 @@ namespace NeoServer.Game.Items.Items
         #region Dressable
         public void DressedIn(IPlayer player)
         {
+            if (Guard.AnyNull(player)) return;
             player.OnAttacked += OnPlayerAttackedHandler;
             AddSkillBonus(player);
         }
 
         public void UndressFrom(IPlayer player)
         {
+            if (Guard.AnyNull(player)) return;
             player.OnAttacked -= OnPlayerAttackedHandler;
             RemoveSkillBonus(player);
         }

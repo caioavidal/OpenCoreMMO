@@ -48,7 +48,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ICreature AutoAttackTarget { get; }
         event Attack OnAttackEnemy;
         event BlockAttack OnBlockedAttack;
-        event Damage OnDamaged;
+        event Damage OnInjured;
         event Heal OnHeal;
         event Die OnKilled;
         event StopAttack OnStoppedAttack;

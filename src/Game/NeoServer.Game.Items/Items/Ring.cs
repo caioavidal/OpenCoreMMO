@@ -46,11 +46,7 @@ namespace NeoServer.Game.Items.Items
         }
 
         public byte Charges { get; }
-        public void DecreaseCharges()
-        {
-            throw new NotImplementedException();
-        }
-
+   
         public int DecaysTo { get; }
         public int Duration { get; }
         public bool Expired { get; }
