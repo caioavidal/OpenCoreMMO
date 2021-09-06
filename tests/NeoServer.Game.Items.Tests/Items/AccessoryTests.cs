@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Items;
+using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -85,9 +86,11 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy);
 
-            var sut = ItemTestData.CreateRing(1, charges:50);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
-            
+            var sut = ItemTestData.CreateRing(1, charges:50, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.AbsorbPercentEnergy,10)
+            });
+
             sut.DressedIn(defender);
 
             //act

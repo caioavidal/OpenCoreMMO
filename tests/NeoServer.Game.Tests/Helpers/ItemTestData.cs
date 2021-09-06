@@ -128,6 +128,7 @@ namespace NeoServer.Game.Tests.Helpers
 
             return new Ring(type, new Location(100, 100, 7));
         }
+     
 
         public static IPickupable CreateNecklace(ushort id)
         {

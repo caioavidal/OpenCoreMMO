@@ -8,9 +8,9 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Protections
 {
-    public abstract class ProtectionItem : MoveableItem, IProtectionItem
+    public abstract class Protection : MoveableItem, IProtection
     {
-        protected ProtectionItem(IItemType type, Location location) : base(type, location)
+        protected Protection(IItemType type, Location location) : base(type, location)
         {
         }
 

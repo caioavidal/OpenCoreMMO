@@ -20,7 +20,7 @@ namespace NeoServer.Game.Items.Items
         public IItemType Metadata { get; private set; }
         public ushort ClientId => Metadata.ClientId;
 
-        public LiquidPoolItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+        public LiquidPoolItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : this()
         {
             Metadata = type;
             Location = location;
@@ -30,13 +30,14 @@ namespace NeoServer.Game.Items.Items
             LiquidColor = GetLiquidColor(attributes);
         }
 
-        public LiquidPoolItem(IItemType type, Location location, LiquidColor color)
+        public LiquidPoolItem(IItemType type, Location location, LiquidColor color) : this()
         {
             Metadata = type;
             Location = location;
             LiquidColor = LiquidColor.Empty;
             StartedToDecayTime = DateTime.Now.Ticks;
             Elapsed = 0;
+      
             LiquidColor = GetLiquidColor(color);
         }
 
@@ -80,6 +81,7 @@ namespace NeoServer.Game.Items.Items
         public bool StartedToDecay => StartedToDecayTime != default;
         public bool Expired => StartedToDecayTime + TimeSpan.TicksPerSecond * Duration < DateTime.Now.Ticks;
         public int Elapsed { get; }
+        public int Remaining => Duration - Elapsed;
         public bool ShouldDisappear => DecaysTo == 0;
 
         public bool Decay()
@@ -91,5 +93,10 @@ namespace NeoServer.Game.Items.Items
             StartedToDecayTime = DateTime.Now.Ticks;
             return true;
         }
+
+        public event DecayDelegate OnDecayed;
+
+        public event PauseDecay OnPaused;
+        public event StartDecay OnStarted;
     }
 }

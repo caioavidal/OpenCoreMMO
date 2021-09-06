@@ -203,7 +203,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 removedItem = item;
             }
 
-            if (removedItem is IProtectionItem dressable) dressable.UndressFrom(Owner);
+            if (removedItem is IDressable dressable) dressable.UndressFrom(Owner);
 
             OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
             return true;

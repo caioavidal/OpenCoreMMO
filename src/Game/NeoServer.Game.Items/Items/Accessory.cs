@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -11,22 +12,23 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Items
 {
-    public abstract class
-        Accessory : MoveableItem, IProtectionItem, IChargeable, ISkillBonus, IDecayable //, IDefenseEquipmentItem
+    public abstract class Accessory : MoveableItem, IProtection, IChargeable, ISkillBonus, IDecayable, IDressable //, IDefenseEquipmentItem
     {
         protected Accessory(IItemType type, Location location) : base(type, location)
         {
-            Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
             Decayable = new Decayable(this, DecaysTo, Duration);
             Protection = new Protection(DamageProtection);
             SkillBonus = new SkillBonus(SkillBonuses);
 
+            Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
+            
             Decayable.OnDecayed += Decayed;
+
         }
 
-        public Decayable Decayable { get; }
-        public Protection Protection { get; }
-        public SkillBonus SkillBonus { get; }
+        public IDecayable Decayable { get;  }
+        public IProtection Protection { get; }
+        public ISkillBonus SkillBonus { get; }
         public IPlayer PlayerDressing { get; private set; }
 
         private void Decayed(IDecayable item)
@@ -59,7 +61,7 @@ namespace NeoServer.Game.Items.Items
 
         public void DecreaseCharges()
         {
-            Charges -= (ushort) (Charges == 0 ? 0 : 1);
+            Charges -= (ushort)(Charges == 0 ? 0 : 1);
         }
 
         public bool InfiniteCharges => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges) == 0;
@@ -110,11 +112,15 @@ namespace NeoServer.Game.Items.Items
         public bool ShouldDisappear => Decayable.ShouldDisappear;
         public bool Expired => Decayable.Expired;
         public int Elapsed => Decayable.Elapsed;
-
+        public int Remaining => Decayable.Remaining;
         public bool Decay()
         {
             return Decayable.Decay();
         }
+
+        public event DecayDelegate OnDecayed;
+        public event PauseDecay OnPaused;
+        public event StartDecay OnStarted;
 
         #endregion
     }

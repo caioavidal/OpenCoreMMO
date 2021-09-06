@@ -7,6 +7,9 @@ namespace NeoServer.Game.Items.Items.Attributes
     public class Decayable: IDecayable
     {
         public event DecayDelegate OnDecayed;
+        public event PauseDecay OnPaused;
+        public event StartDecay OnStarted;
+
         public Decayable(IDecayable item, int decaysTo, int duration)
         {
             Item = item;
@@ -19,6 +22,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         public int Duration { get; }
         private long _startedToDecayTime;
         public bool StartedToDecay => _startedToDecayTime != default;
+        public int Remaining => Math.Max(0, Duration - Elapsed);
 
         public int Elapsed { get; private set; }
         public bool Expired => StartedToDecay && Elapsed >= Duration;
@@ -26,10 +30,16 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public void Start()
         {
+            if (Expired) return;
             _startedToDecayTime = DateTime.Now.Ticks;
+            OnStarted?.Invoke(this);
         }
 
-        public void Pause() => Elapsed += (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
+        public void Pause()
+        {
+            Elapsed += (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
+            OnPaused?.Invoke(this);
+        }
 
         public bool Decay()
         {
