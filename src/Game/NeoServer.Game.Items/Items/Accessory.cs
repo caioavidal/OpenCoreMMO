@@ -110,12 +110,12 @@ namespace NeoServer.Game.Items.Items
         public bool ShouldDisappear => Decayable.ShouldDisappear;
         public bool Expired => Decayable.Expired;
         public int Elapsed => Decayable.Elapsed;
-
+        public int Remaining => Decayable.Remaining;
         public bool Decay()
         {
             return Decayable.Decay();
         }
-
+        
         #endregion
     }
 }

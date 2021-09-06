@@ -147,5 +147,46 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             sut.Elapsed.Should().Be(2);
         }
+
+        [Fact]
+        public void Remaining_DidNotStarted_ReturnsDuration()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var sut = new Decayable(item, 10, 20);
+            
+            //assert
+            sut.Remaining.Should().Be(20);
+        }
+        [Fact]
+        public void Remaining_Elapsed2SecsOf20_Returns18()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var sut = new Decayable(item, 10, 20);
+
+            //act
+            sut.Start();
+            Thread.Sleep(2000);
+            sut.Pause();
+
+            //assert
+            sut.Remaining.Should().Be(18);
+        }
+        [Fact]
+        public void Remaining_Elapsed2SecsOf2_Returns0()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var sut = new Decayable(item, 10, 2);
+
+            //act
+            sut.Start();
+            Thread.Sleep(2000);
+            sut.Pause();
+
+            //assert
+            sut.Remaining.Should().Be(0);
+        }
     }
 }

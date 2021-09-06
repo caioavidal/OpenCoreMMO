@@ -2,6 +2,8 @@
 {
     public delegate void DecayDelegate(IDecayable item);
 
+    public delegate void PauseDecay(IDecayable item);
+    public delegate void StartDecay(IDecayable item);
     public interface IDecayable
     {
         int DecaysTo { get; }
@@ -9,6 +11,7 @@
         bool ShouldDisappear { get; }
         bool Expired { get; }
         int Elapsed { get; }
+        int Remaining { get; }
         bool Decay();
     }
 }
