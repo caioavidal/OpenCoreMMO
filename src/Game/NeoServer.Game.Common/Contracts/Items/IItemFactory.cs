@@ -14,5 +14,6 @@ namespace NeoServer.Game.Common.Contracts.Items
         IItem Create(string name, Location.Structs.Location location, IDictionary<ItemAttribute, IConvertible> attributes);
         IEnumerable<ICoin> CreateCoins(ulong amount);
         IItem CreateLootCorpse(ushort typeId, Location.Structs.Location location, ILoot loot);
+        IItem Create(IItemType itemType, Location.Structs.Location location, IDictionary<ItemAttribute, IConvertible> attributes);
     }
 }

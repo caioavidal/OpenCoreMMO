@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
@@ -14,22 +15,24 @@ namespace NeoServer.Loaders.Monsters
     public class MonsterLoader
     {
         private readonly IMonsterDataManager _monsterManager;
-        private readonly GameConfiguration gameConfiguration;
-        private readonly Logger logger;
-        private readonly ServerConfiguration serverConfiguration;
+        private readonly GameConfiguration _gameConfiguration;
+        private readonly Logger _logger;
+        private readonly ServerConfiguration _serverConfiguration;
+        private readonly ItemTypeStore _itemTypeStore;
 
         public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, Logger logger,
-            ServerConfiguration serverConfiguration)
+            ServerConfiguration serverConfiguration, ItemTypeStore itemTypeStore)
         {
             _monsterManager = monsterManager;
-            this.gameConfiguration = gameConfiguration;
-            this.logger = logger;
-            this.serverConfiguration = serverConfiguration;
+            _gameConfiguration = gameConfiguration;
+            _logger = logger;
+            _serverConfiguration = serverConfiguration;
+            _itemTypeStore = itemTypeStore;
         }
 
         public void Load()
         {
-            logger.Step("Loading monsters...", "{n} monsters loaded", () =>
+            _logger.Step("Loading monsters...", "{n} monsters loaded", () =>
             {
                 var monsters = GetMonsterDataList().ToList();
                 _monsterManager.Load(monsters);
@@ -39,7 +42,7 @@ namespace NeoServer.Loaders.Monsters
 
         private IEnumerable<(string, IMonsterType)> GetMonsterDataList()
         {
-            var basePath = $"{serverConfiguration.Data}/monsters";
+            var basePath = $"{_serverConfiguration.Data}/monsters";
             var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));
             var monstersPath = JsonConvert.DeserializeObject<List<IDictionary<string, string>>>(jsonString);
 
@@ -59,7 +62,7 @@ namespace NeoServer.Loaders.Monsters
                 }
             });
 
-            return MonsterConverter.Convert(monster, gameConfiguration, _monsterManager, logger);
+            return MonsterConverter.Convert(monster, _gameConfiguration, _monsterManager, _logger, _itemTypeStore);
         }
     }
 }

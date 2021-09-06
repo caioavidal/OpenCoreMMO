@@ -106,7 +106,7 @@ namespace NeoServer.Loaders.World
                 if (item.CanBeMoved && tileNode.NodeType == NodeType.HouseTile)
                 {
                     //yield return item;
-                    //logger.Warning($"Moveable item with ID: {itemNode.ItemId} in house at position {tileNode.Coordinate}.");
+                    //logger.Warning($"Moveable item with ID: {itemNode.ItemType} in house at position {tileNode.Coordinate}.");
                 }
 
                 items[i++] = item;

@@ -64,7 +64,7 @@ namespace NeoServer.Game.Items.Items.Containers
 
             foreach (var item in items)
             {
-                var itemType = ItemTypeStore.Data.Get(item.ItemId);
+                var itemType = item.ItemType?.Invoke();
                 if (item.Amount > 1) stringBuilder.Append($"{item.Amount} {itemType.Name}");
                 else stringBuilder.Append($"{itemType.Name}");
 

@@ -44,19 +44,5 @@ namespace NeoServer.Game.Items.Items
         {
             return type.BodyPosition == Slot.Ring;
         }
-
-        public byte Charges { get; }
-   
-        public int DecaysTo { get; }
-        public int Duration { get; }
-        public bool Expired { get; }
-        public bool StartedToDecay { get; }
-        public long StartedToDecayTime { get; }
-        public bool ShouldDisappear { get; }
-
-        public bool Decay()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

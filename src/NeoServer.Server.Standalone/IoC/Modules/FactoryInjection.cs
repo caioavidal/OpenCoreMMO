@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Networking.Handlers;
 using NeoServer.Server.Common.Contracts.Network;
@@ -18,8 +19,14 @@ namespace NeoServer.Server.Standalone.IoC.Modules
     {
         public static ContainerBuilder AddFactories(this ContainerBuilder builder)
         {
+            builder.RegisterType<AccessoryFactory>().SingleInstance();
+
             builder.RegisterType<ItemFactory>().As<IItemFactory>().OnActivated(e =>
-                    e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>())
+                {
+                    e.Instance.AccessoryFactory = e.Context.Resolve<AccessoryFactory>();
+                    e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>();
+                    e.Instance.ItemTypeStore = e.Context.Resolve<ItemTypeStore>();
+                })
                 .SingleInstance();
             builder.RegisterType<ChatChannelFactory>().OnActivated(e =>
                     e.Instance.ChannelEventSubscribers = e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>())

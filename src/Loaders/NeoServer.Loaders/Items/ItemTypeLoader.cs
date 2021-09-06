@@ -19,11 +19,13 @@ namespace NeoServer.Loaders.Items
     {
         private readonly Logger logger;
         private readonly ServerConfiguration serverConfiguration;
+        private readonly ItemTypeStore _itemTypeStore;
 
-        public ItemTypeLoader(Logger logger, ServerConfiguration serverConfiguration)
+        public ItemTypeLoader(Logger logger, ServerConfiguration serverConfiguration, ItemTypeStore itemTypeStore)
         {
             this.logger = logger;
             this.serverConfiguration = serverConfiguration;
+            _itemTypeStore = itemTypeStore;
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace NeoServer.Loaders.Items
 
                 foreach (var item in itemTypes)
                 {
-                    ItemTypeStore.Data.Add(item.Key, item.Value);
+                    _itemTypeStore.Add(item.Key, item.Value);
                     ItemIdMapStore.Data.Add(item.Value.ClientId, item.Key);
 
                     if (item.Value.Attributes.GetAttribute(ItemAttribute.Type)

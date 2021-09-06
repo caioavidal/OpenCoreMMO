@@ -44,7 +44,7 @@ namespace NeoServer.Game.Creatures.Events.Players
 
                 if (item.Amount > 1) attributes.TryAdd(ItemAttribute.Count, item.Amount);
 
-                var itemToDrop = itemFactory.Create(item.ItemId, container.Location, attributes);
+                var itemToDrop = itemFactory.Create(item.ItemType?.Invoke(), container.Location, attributes);
 
                 if (itemToDrop is IContainer && item.Items?.Length == 0) continue;
 

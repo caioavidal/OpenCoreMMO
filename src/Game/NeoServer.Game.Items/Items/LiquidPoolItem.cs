@@ -75,21 +75,21 @@ namespace NeoServer.Game.Items.Items
                    type.Group == ItemGroup.ITEM_GROUP_FLUID;
         }
 
-        public int DecaysTo => Metadata.Attributes.GetAttribute<int>(ItemAttribute.ExpireTarget);
+        public Func<IItemType> DecaysTo { get; init; }
         public int Duration => Metadata.Attributes.GetAttribute<int>(ItemAttribute.Duration);
         public long StartedToDecayTime { get; private set; }
         public bool StartedToDecay => StartedToDecayTime != default;
         public bool Expired => StartedToDecayTime + TimeSpan.TicksPerSecond * Duration < DateTime.Now.Ticks;
         public int Elapsed { get; }
         public int Remaining => Duration - Elapsed;
-        public bool ShouldDisappear => DecaysTo == 0;
+        public bool ShouldDisappear => DecaysTo?.Invoke() == null;
 
         public bool Decay()
         {
-            if (DecaysTo <= 0) return false;
-            if (!ItemTypeStore.Data.TryGetValue((ushort) DecaysTo, out var newItem)) return false;
+            if (ShouldDisappear) return false;
+            //if (!ItemTypeStore.Data.TryGetValue((ushort) DecaysTo, out var newItem)) return false;
 
-            Metadata = newItem;
+            Metadata = DecaysTo?.Invoke();
             StartedToDecayTime = DateTime.Now.Ticks;
             return true;
         }

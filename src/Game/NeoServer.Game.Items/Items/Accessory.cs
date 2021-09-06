@@ -12,7 +12,8 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Items
 {
-    public abstract class Accessory : MoveableItem, IProtection, IChargeable, ISkillBonus, IDecayable, IDressable //, IDefenseEquipmentItem
+    public abstract class Accessory : MoveableItem, IProtection, IChargeable, ISkillBonus, IDecayable, IDressable,
+        ITransformable //, IDefenseEquipmentItem
     {
         protected Accessory(IItemType type, Location location) : base(type, location)
         {
@@ -21,17 +22,17 @@ namespace NeoServer.Game.Items.Items
             SkillBonus = new SkillBonus(SkillBonuses);
 
             Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
-            
+
             Decayable.OnDecayed += Decayed;
 
         }
 
-        public IDecayable Decayable { get;  }
+        public IDecayable Decayable { get; }
         public IProtection Protection { get; }
         public ISkillBonus SkillBonus { get; }
         public IPlayer PlayerDressing { get; private set; }
 
-        private void Decayed(IDecayable item)
+        private void Decayed(IDecayable item, IItemType _)
         {
             RemoveSkillBonus(PlayerDressing);
         }
@@ -107,12 +108,13 @@ namespace NeoServer.Game.Items.Items
 
         #region Decay
 
-        public int DecaysTo => Metadata.Attributes.GetAttribute<int>(ItemAttribute.ExpireTarget);
+        public Func<IItemType> DecaysTo { get; init; }
         public int Duration => Metadata.Attributes.GetAttribute<int>(ItemAttribute.Duration);
         public bool ShouldDisappear => Decayable.ShouldDisappear;
         public bool Expired => Decayable.Expired;
         public int Elapsed => Decayable.Elapsed;
         public int Remaining => Decayable.Remaining;
+
         public bool Decay()
         {
             return Decayable.Decay();
@@ -123,5 +125,18 @@ namespace NeoServer.Game.Items.Items
         public event StartDecay OnStarted;
 
         #endregion
+
+        #region Transformable
+
+        public void Transform()
+        {
+            Metadata = OnEquipItem?.Invoke();
+        }
+
+        public Func<IItemType> OnEquipItem { get; init; }
+        public Func<IItemType> OnDequipItem { get; init; }
+        
+        #endregion
+
     }
 }
