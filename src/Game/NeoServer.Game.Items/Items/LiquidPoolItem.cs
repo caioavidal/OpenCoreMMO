@@ -94,6 +94,8 @@ namespace NeoServer.Game.Items.Items
             return true;
         }
 
+        public event DecayDelegate OnDecayed;
+
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
     }

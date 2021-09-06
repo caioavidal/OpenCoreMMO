@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {
-    public sealed class Protection
+    public sealed class Protection: IProtection
     {
         public Protection(Dictionary<DamageType, byte> damageProtection)
         {

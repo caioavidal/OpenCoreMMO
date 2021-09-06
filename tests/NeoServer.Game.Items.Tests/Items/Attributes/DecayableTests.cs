@@ -188,5 +188,20 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             sut.Remaining.Should().Be(0);
         }
+        //[Fact]
+        //public void Pause_EmitEvent()
+        //{
+        //    //arrange
+        //    var item = ItemTestData.CreateRing(1);
+        //    var sut = new Decayable(item, 10, 2);
+
+        //    //act
+        //    sut.Start();
+        //    Thread.Sleep(2000);
+        //    sut.Pause();
+
+        //    //assert
+        //    sut.Remaining.Should().Be(0);
+        //}
     }
 }

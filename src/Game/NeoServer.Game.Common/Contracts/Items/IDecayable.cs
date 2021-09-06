@@ -13,5 +13,8 @@
         int Elapsed { get; }
         int Remaining { get; }
         bool Decay();
+        event DecayDelegate OnDecayed;
+        event PauseDecay OnPaused;
+        event StartDecay OnStarted;
     }
 }

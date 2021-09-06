@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {
-    public sealed class SkillBonus
+    public sealed class SkillBonus: ISkillBonus
     {
         public SkillBonus(Dictionary<SkillType, byte> skillBonuses)
         {
@@ -20,8 +17,6 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public void AddSkillBonus(IPlayer player)
         {
-            //if (Decayable.Expired) return;
-
             if (Guard.AnyNull(SkillBonuses, player)) return;
             foreach (var (skillType, bonus) in SkillBonuses) player.AddSkillBonus(skillType, bonus);
         }
