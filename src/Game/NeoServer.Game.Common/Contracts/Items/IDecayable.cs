@@ -18,5 +18,7 @@ namespace NeoServer.Game.Common.Contracts.Items
         event DecayDelegate OnDecayed;
         event PauseDecay OnPaused;
         event StartDecay OnStarted;
+        void StartDecay();
+        void PauseDecay();
     }
 }

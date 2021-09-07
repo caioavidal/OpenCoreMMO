@@ -26,9 +26,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => item.Metadata, 60);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2000);
-            sut.Pause();
+            sut.PauseDecay();
             //assert
             sut.Expired.Should().BeFalse();
         }
@@ -40,9 +40,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => item.Metadata, 2);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2500);
-            sut.Pause();
+            sut.PauseDecay();
             //assert
             sut.Expired.Should().BeTrue();
         }
@@ -55,9 +55,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => item.Metadata, 2);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2500);
-            sut.Pause();
+            sut.PauseDecay();
             //assert
             sut.StartedToDecay.Should().BeTrue();
         }
@@ -79,18 +79,18 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => item.Metadata, 20);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(1000);
-            sut.Pause();
+            sut.PauseDecay();
 
             //assert
             var elapsed = sut.Elapsed;
             sut.Elapsed.Should().BeGreaterThan(0);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(1000);
-            sut.Pause();
+            sut.PauseDecay();
 
             //assert
             sut.Elapsed.Should().BeGreaterThan(elapsed);
@@ -129,9 +129,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => decayToItem.Metadata, 20);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2000);
-            sut.Pause();
+            sut.PauseDecay();
 
             //assert
             sut.Elapsed.Should().Be(2);
@@ -145,9 +145,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => decayToItem.Metadata, 20);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2000);
-            sut.Pause();
+            sut.PauseDecay();
             Thread.Sleep(2000);
 
             //assert
@@ -176,9 +176,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => decayToItem.Metadata, 20);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2000);
-            sut.Pause();
+            sut.PauseDecay();
 
             //assert
             sut.Remaining.Should().Be(18);
@@ -193,9 +193,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Decayable(item, () => decayToItem.Metadata, 2);
 
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2000);
-            sut.Pause();
+            sut.PauseDecay();
 
             //assert
             sut.Remaining.Should().Be(0);
@@ -212,9 +212,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var emitted = false;
             sut.OnPaused += _ => emitted = true;
             //act
-            sut.Start();
+            sut.StartDecay();
             Thread.Sleep(2000);
-            sut.Pause();
+            sut.PauseDecay();
 
             //assert
             emitted.Should().BeTrue();
@@ -231,7 +231,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var emitted = false;
             sut.OnStarted += _ => emitted = true;
             //act
-            sut.Start();
+            sut.StartDecay();
             //assert
             emitted.Should().BeTrue();
         }
