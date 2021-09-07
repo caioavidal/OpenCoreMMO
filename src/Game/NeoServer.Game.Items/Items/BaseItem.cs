@@ -5,7 +5,7 @@ namespace NeoServer.Game.Items.Items
 {
     public abstract class BaseItem : IItem
     {
-        public BaseItem(IItemType metadata)
+        protected BaseItem(IItemType metadata)
         {
             Metadata = metadata;
         }

@@ -27,19 +27,22 @@ namespace NeoServer.Game.Items.Factories
         {
             if (Ring.IsApplicable(itemType))
             {
+                Func<IItemType> transformEquipItem = () => _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.TransformEquipTo));
                 return new Ring(itemType, location)
                 {
-                    OnEquipItem = () => _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.TransformEquipTo)),
-                    OnDequipItem = () => _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo)),
+                    TransformEquipItem = transformEquipItem,
+                    TransformDequipItem = () => transformEquipItem?.Invoke() is { } type ?  _itemTypeStore.Get(type.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo)) : null,
                     DecaysTo = ()=> _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.DecayTo))
                 };
             }
             if (Necklace.IsApplicable(itemType))
             {
+                Func<IItemType> transformEquipItem = () => _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.TransformEquipTo));
+
                 return new Necklace(itemType, location)
                 {
-                    OnEquipItem = () => _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.TransformEquipTo)),
-                    OnDequipItem = () => _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo)),
+                    TransformEquipItem = transformEquipItem,
+                    TransformDequipItem = () => transformEquipItem?.Invoke() is { } type ? _itemTypeStore.Get(type.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo)) : null,
                     DecaysTo = () => _itemTypeStore.Get(itemType.Attributes.GetAttribute<ushort>(ItemAttribute.DecayTo))
                 };
             }

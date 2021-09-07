@@ -29,10 +29,7 @@ namespace NeoServer.Game.Items.Items
         {
             Span<byte> cache = stackalloc byte[2];
 
-            var clientId = 0;
-
-            if (inUse) clientId = Metadata.ClientId;
-            var idBytes = BitConverter.GetBytes(inUse ? Metadata.TransformTo : Metadata.ClientId);
+            var idBytes = BitConverter.GetBytes(Metadata.ClientId);
 
             cache[0] = idBytes[0];
             cache[1] = idBytes[1];

@@ -94,6 +94,7 @@ namespace NeoServer.Game.Items.Items
             player.OnAttacked += OnPlayerAttackedHandler;
             PlayerDressing = player;
             AddSkillBonus(player);
+            TransformOnEquip();
         }
 
         public void UndressFrom(IPlayer player)
@@ -102,6 +103,7 @@ namespace NeoServer.Game.Items.Items
             player.OnAttacked -= OnPlayerAttackedHandler;
             PlayerDressing = null;
             RemoveSkillBonus(player);
+            TransformOnDequip();
         }
 
         #endregion
@@ -128,14 +130,27 @@ namespace NeoServer.Game.Items.Items
 
         #region Transformable
 
-        public void Transform()
+        public void TransformOnEquip()
         {
-            Metadata = OnEquipItem?.Invoke();
+            if (TransformEquipItem?.Invoke() is not { } itemType) return;
+            var before = Metadata;
+            
+            Metadata = itemType;
+            OnTransformed?.Invoke(before, Metadata);
+        }
+        public void TransformOnDequip()
+        {
+            if (TransformDequipItem?.Invoke() is not { } itemType) return;
+
+            var before = Metadata;
+            Metadata = itemType;
+            OnTransformed?.Invoke(before, Metadata);
         }
 
-        public Func<IItemType> OnEquipItem { get; init; }
-        public Func<IItemType> OnDequipItem { get; init; }
-        
+        public Func<IItemType> TransformEquipItem { get; init; }
+        public Func<IItemType> TransformDequipItem { get; init; }
+        public event Transform OnTransformed;
+
         #endregion
 
     }
