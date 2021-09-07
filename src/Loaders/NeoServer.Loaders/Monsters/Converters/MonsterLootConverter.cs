@@ -3,19 +3,20 @@ using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.Creatures.Monsters.Loots;
+using NeoServer.Game.DataStore;
 using static NeoServer.Loaders.Monsters.MonsterData;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
     public class MonsterLootConverter
     {
-        public static ILoot Convert(MonsterData data, decimal lootRate)
+        public static ILoot Convert(MonsterData data, decimal lootRate, ItemTypeStore itemTypeStore)
         {
             if (data.Loot is null) return null;
 
             var items = new List<ILootItem>();
 
-            foreach (var item in Normalize(data.Loot)) items.Add(ConvertToLootItem(item));
+            foreach (var item in Normalize(data.Loot)) items.Add(ConvertToLootItem(item, itemTypeStore));
 
             return new Loot(items.ToArray(), null, lootRate);
         }
@@ -31,7 +32,7 @@ namespace NeoServer.Loaders.Monsters.Converters
             })?.ToList();
         }
 
-        private static ILootItem ConvertToLootItem(LootData item)
+        private static ILootItem ConvertToLootItem(LootData item, ItemTypeStore itemTypeStore)
         {
             byte.TryParse(item.Countmax, out var amount);
             ushort.TryParse(item.Id, out var id);
@@ -41,9 +42,9 @@ namespace NeoServer.Loaders.Monsters.Converters
 
             if (item?.Items?.Count > 0)
                 foreach (var child in item?.Items)
-                    items.Add(ConvertToLootItem(child));
+                    items.Add(ConvertToLootItem(child, itemTypeStore));
 
-            return new LootItem(id, amount == 0 ? (byte) 1 : amount, chance, items.ToArray());
+            return new LootItem(() => itemTypeStore.Get(id), amount == 0 ? (byte)1 : amount, chance, items.ToArray());
         }
     }
 }

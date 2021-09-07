@@ -110,7 +110,8 @@ namespace NeoServer.Game.Tests.Helpers
             return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
         }
 
-        public static IRing CreateRing(ushort id, ushort charges = 10, (ItemAttribute, IConvertible)[] attributes = null)
+        public static IRing CreateRing(ushort id, ushort charges = 10, (ItemAttribute, IConvertible)[] attributes = null,
+            Func<IItemType> transformOnEquipItem = null, Func<IItemType> transformOnDequipItem = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -126,7 +127,11 @@ namespace NeoServer.Game.Tests.Helpers
                 type.Attributes.SetAttribute(attributeType, value);
             }
 
-            return new Ring(type, new Location(100, 100, 7));
+            return new Ring(type, new Location(100, 100, 7))
+            {
+                TransformEquipItem = transformOnEquipItem,
+                TransformDequipItem = transformOnDequipItem
+            };
         }
      
 

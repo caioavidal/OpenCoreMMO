@@ -33,16 +33,6 @@ namespace NeoServer.Game.Items.Items.Protections
         public byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Armor);
         int IDecayable.Duration => Duration;
 
-        public bool Expired => Duration <= 0 && Charges <= 0;
-        public bool StartedToDecay { get; }
-        public long StartedToDecayTime { get; }
-        public bool ShouldDisappear { get; }
-        public bool Decay()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int DecaysTo { get; }
         public ushort Duration { get; }
 
         public void DecreaseCharges()
@@ -50,11 +40,7 @@ namespace NeoServer.Game.Items.Items.Protections
             Charges--;
         }
 
-        public void StartDecaying()
-        {
-            throw new NotImplementedException();
-        }
-
+    
         public static bool IsApplicable(IItemType type)
         {
             return type.BodyPosition == Slot.Necklace;

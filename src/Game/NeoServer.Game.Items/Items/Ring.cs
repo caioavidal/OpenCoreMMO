@@ -29,10 +29,7 @@ namespace NeoServer.Game.Items.Items
         {
             Span<byte> cache = stackalloc byte[2];
 
-            var clientId = 0;
-
-            if (inUse) clientId = Metadata.ClientId;
-            var idBytes = BitConverter.GetBytes(inUse ? Metadata.TransformTo : Metadata.ClientId);
+            var idBytes = BitConverter.GetBytes(Metadata.ClientId);
 
             cache[0] = idBytes[0];
             cache[1] = idBytes[1];
@@ -43,20 +40,6 @@ namespace NeoServer.Game.Items.Items
         public static bool IsApplicable(IItemType type)
         {
             return type.BodyPosition == Slot.Ring;
-        }
-
-        public byte Charges { get; }
-   
-        public int DecaysTo { get; }
-        public int Duration { get; }
-        public bool Expired { get; }
-        public bool StartedToDecay { get; }
-        public long StartedToDecayTime { get; }
-        public bool ShouldDisappear { get; }
-
-        public bool Decay()
-        {
-            throw new NotImplementedException();
         }
     }
 }

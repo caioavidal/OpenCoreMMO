@@ -30,11 +30,13 @@ namespace NeoServer.Game.Items.Factories
 
         public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
         public event CreateItem OnItemCreated;
+        public AccessoryFactory AccessoryFactory { get; set; }
+        public ItemTypeStore ItemTypeStore { get; set; }
 
 
         public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
         {
-            if (!ItemTypeStore.Data.TryGetValue(typeId, out var itemType)) return null;
+            if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
             var createdItem = new LootContainer(itemType, location, loot);
 
@@ -45,7 +47,7 @@ namespace NeoServer.Game.Items.Factories
 
         public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            if (!ItemTypeStore.Data.TryGetValue(typeId, out var itemType)) return null;
+            if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
             var createdItem = CreateItem(itemType, location, attributes);
 
@@ -53,6 +55,15 @@ namespace NeoServer.Game.Items.Factories
 
             return createdItem;
         }
+        public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+        {
+            var createdItem = CreateItem(itemType, location, attributes);
+
+            SubscribeEvents(createdItem);
+
+            return createdItem;
+        }
+
 
         public IEnumerable<ICoin> CreateCoins(ulong amount)
         {
@@ -70,7 +81,7 @@ namespace NeoServer.Game.Items.Factories
 
         public IItem Create(string name, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            var item = ItemTypeStore.Data.All.FirstOrDefault(x =>
+            var item = ItemTypeStore.All.FirstOrDefault(x =>
                 x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
             if (item is null) return null;
@@ -115,8 +126,9 @@ namespace NeoServer.Game.Items.Factories
             if (PickupableContainer.IsApplicable(itemType)) return new PickupableContainer(itemType, location);
             if (Container.IsApplicable(itemType)) return new Container(itemType, location);
             if (BodyDefenseEquimentItem.IsApplicable(itemType)) return new BodyDefenseEquimentItem(itemType, location);
-            if (Ring.IsApplicable(itemType)) return new Ring(itemType, location);
-            if (Necklace.IsApplicable(itemType)) return new Necklace(itemType, location);
+
+            if(AccessoryFactory.Create(itemType, location) is Accessory accessory) return accessory;
+            
             if (MagicWeapon.IsApplicable(itemType)) return new MagicWeapon(itemType, location);
             if (ICumulative.IsApplicable(itemType))
             {

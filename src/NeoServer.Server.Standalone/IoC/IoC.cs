@@ -49,7 +49,8 @@ namespace NeoServer.Server.Standalone.IoC
                 .AddLogger(configuration)
                 .AddCommands()
                 .AddLua()
-                .AddJobs();
+                .AddJobs()
+                .AddDataStores();
 
             //creature
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();

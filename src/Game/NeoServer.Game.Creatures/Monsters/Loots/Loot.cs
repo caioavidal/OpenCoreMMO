@@ -34,7 +34,7 @@ namespace NeoServer.Game.Creatures.Monsters.Loots
 
                 if (amount == 0) continue;
 
-                itemToDrop = new LootItem(itemToDrop.ItemId, Math.Min(amount, (byte) 100), itemToDrop.Chance,
+                itemToDrop = new LootItem(itemToDrop.ItemType, Math.Min(amount, (byte) 100), itemToDrop.Chance,
                     childrenItems);
                 drop.Add(itemToDrop);
             }

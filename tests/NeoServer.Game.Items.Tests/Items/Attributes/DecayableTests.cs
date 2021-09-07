@@ -13,7 +13,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 0,60);
+            var sut = new Decayable(item, ()=>item.Metadata,60);
 
             //assert
             sut.Expired.Should().BeFalse();
@@ -23,7 +23,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 0, 60);
+            var sut = new Decayable(item, () => item.Metadata, 60);
 
             //act
             sut.Start();
@@ -37,7 +37,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 0, 2);
+            var sut = new Decayable(item, () => item.Metadata, 2);
 
             //act
             sut.Start();
@@ -52,7 +52,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 0, 2);
+            var sut = new Decayable(item, () => item.Metadata, 2);
 
             //act
             sut.Start();
@@ -66,7 +66,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 0, 2);
+            var sut = new Decayable(item, () => item.Metadata, 2);
             
             //assert
             sut.StartedToDecay.Should().BeFalse();
@@ -76,7 +76,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 0, 20);
+            var sut = new Decayable(item, () => item.Metadata, 20);
 
             //act
             sut.Start();
@@ -96,11 +96,11 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             sut.Elapsed.Should().BeGreaterThan(elapsed);
         }
         [Fact]
-        public void ShouldDisappear_DecaysTo0_ReturnsTrue()
+        public void ShouldDisappear_DecaysToNull_ReturnsTrue()
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 0, 20);
+            var sut = new Decayable(item, () => null, 20);
 
             //assert
             sut.ShouldDisappear.Should().BeTrue();
@@ -110,7 +110,10 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 10, 20);
+
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
 
             //assert
             sut.ShouldDisappear.Should().BeFalse();
@@ -121,7 +124,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 10, 20);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
 
             //act
             sut.Start();
@@ -136,7 +141,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 10, 20);
+            var decayToItem = ItemTestData.CreateRing(10);
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
 
             //act
             sut.Start();
@@ -153,7 +159,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 10, 20);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
             
             //assert
             sut.Remaining.Should().Be(20);
@@ -163,7 +171,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 10, 20);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
 
             //act
             sut.Start();
@@ -178,7 +188,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var item = ItemTestData.CreateRing(1);
-            var sut = new Decayable(item, 10, 2);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 2);
 
             //act
             sut.Start();
@@ -188,20 +200,40 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             sut.Remaining.Should().Be(0);
         }
-        //[Fact]
-        //public void Pause_EmitEvent()
-        //{
-        //    //arrange
-        //    var item = ItemTestData.CreateRing(1);
-        //    var sut = new Decayable(item, 10, 2);
+        [Fact]
+        public void Pause_EmitEvent()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
 
-        //    //act
-        //    sut.Start();
-        //    Thread.Sleep(2000);
-        //    sut.Pause();
+            var sut = new Decayable(item, () => decayToItem.Metadata, 2);
 
-        //    //assert
-        //    sut.Remaining.Should().Be(0);
-        //}
+            var emitted = false;
+            sut.OnPaused += _ => emitted = true;
+            //act
+            sut.Start();
+            Thread.Sleep(2000);
+            sut.Pause();
+
+            //assert
+            emitted.Should().BeTrue();
+        }
+        [Fact]
+        public void Start_EmitEvent()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 2);
+
+            var emitted = false;
+            sut.OnStarted += _ => emitted = true;
+            //act
+            sut.Start();
+            //assert
+            emitted.Should().BeTrue();
+        }
     }
 }

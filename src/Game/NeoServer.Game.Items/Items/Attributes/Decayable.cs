@@ -10,7 +10,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
 
-        public Decayable(IDecayable item, int decaysTo, int duration)
+        public Decayable(IDecayable item, Func<IItemType> decaysTo, int duration)
         {
             Item = item;
             DecaysTo = decaysTo;
@@ -18,7 +18,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         }
 
         public IDecayable Item { get; }
-        public int DecaysTo { get; }
+        public Func<IItemType> DecaysTo { get; }
         public int Duration { get; }
         private long _startedToDecayTime;
         public bool StartedToDecay => _startedToDecayTime != default;
@@ -26,7 +26,7 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public int Elapsed { get; private set; }
         public bool Expired => StartedToDecay && Elapsed >= Duration;
-        public bool ShouldDisappear => DecaysTo == 0;
+        public bool ShouldDisappear => DecaysTo?.Invoke() is null;
 
         public void Start()
         {
@@ -43,14 +43,14 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public bool Decay()
         {
-            OnDecayed?.Invoke(Item);
-            
-            if (DecaysTo <= 0) return false;
-            if (!ItemTypeStore.Data.TryGetValue((ushort)DecaysTo, out var newItem)) return false;
+           // if (!ItemTypeStore.Data.TryGetValue((ushort)DecaysTo, out var newItem)) return false;
 
-            //Metadata = newItem;
-            _startedToDecayTime = DateTime.Now.Ticks;
-            
+           // OnDecayed?.Invoke(Item, newItem);
+
+            // if (DecaysTo == null) return false;
+
+            //_startedToDecayTime = DateTime.Now.Ticks;
+
             return true;
         }
     }

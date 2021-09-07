@@ -9,26 +9,28 @@ namespace NeoServer.Networking.Handlers.Shop
 {
     public class PlayerPurchaseHandler : PacketHandler
     {
-        private readonly IDealTransaction dealTransaction;
-        private readonly IGameServer game;
+        private readonly IDealTransaction _dealTransaction;
+        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IGameServer _game;
 
-        public PlayerPurchaseHandler(IGameServer game, IDealTransaction dealTransaction)
+        public PlayerPurchaseHandler(IGameServer game, IDealTransaction dealTransaction, ItemTypeStore itemTypeStore)
         {
-            this.game = game;
-            this.dealTransaction = dealTransaction;
+            _game = game;
+            _dealTransaction = dealTransaction;
+            _itemTypeStore = itemTypeStore;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var playerPurchasePacket = new PlayerPurchasePacket(message);
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+            if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             var serverId = ItemIdMapStore.Data.Get(playerPurchasePacket.ItemClientId);
 
-            if (!ItemTypeStore.Data.TryGetValue(serverId, out var itemType)) return;
+            if (!_itemTypeStore.TryGetValue(serverId, out var itemType)) return;
 
-            game.Dispatcher.AddEvent(new Event(() =>
-                dealTransaction?.Buy(player, player.TradingWithNpc, itemType, playerPurchasePacket.Amount)));
+            _game.Dispatcher.AddEvent(new Event(() =>
+                _dealTransaction?.Buy(player, player.TradingWithNpc, itemType, playerPurchasePacket.Amount)));
         }
     }
 }

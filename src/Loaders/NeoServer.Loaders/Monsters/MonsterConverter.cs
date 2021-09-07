@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Monsters.Combats;
+using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Monsters.Converters;
 using Serilog.Core;
 
@@ -14,7 +15,7 @@ namespace NeoServer.Loaders.Monsters
     public class MonsterConverter
     {
         public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration,
-            IMonsterDataManager monsters, Logger logger)
+            IMonsterDataManager monsters, Logger logger, ItemTypeStore itemTypeStore)
         {
             var data = monsterData;
             var monster = new MonsterType
@@ -51,7 +52,7 @@ namespace NeoServer.Loaders.Monsters
 
             monster.Defenses = MonsterDefenseConverter.Convert(data, monsters);
 
-            monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate);
+            monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate, itemTypeStore);
 
             var summons = MonsterSummonConverter.Convert(data);
             monster.MaxSummons = (byte) summons.Item1;
