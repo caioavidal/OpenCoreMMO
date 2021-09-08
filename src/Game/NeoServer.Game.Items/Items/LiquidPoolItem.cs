@@ -85,7 +85,7 @@ namespace NeoServer.Game.Items.Items
         public int Remaining => Duration - Elapsed;
         public bool ShouldDisappear => DecaysTo?.Invoke() == null;
 
-        public bool Decay()
+        public bool TryDecay()
         {
             if (ShouldDisappear) return false;
             //if (!ItemTypeStore.Data.TryGetValue((ushort) DecaysTo, out var newItem)) return false;

@@ -11,7 +11,8 @@ namespace NeoServer.Game.Common.Contracts.Items
         /// </summary>
         IItemType Metadata { get; }
 
-        protected string LookText => $"{Metadata.Article} {Metadata.Name}";
+        string CustomLookText {  get; }
+        protected string LookText => CustomLookText ?? $"{Metadata.Article} {Metadata.Name}";
         string Plural => Metadata.Plural;
 
         ushort ClientId => Metadata.ClientId;

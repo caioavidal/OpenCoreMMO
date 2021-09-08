@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using FluentAssertions;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -235,5 +236,179 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             emitted.Should().BeTrue();
         }
+
+        [Fact]
+        public void Elapsed_AfterStarted_Changes()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1000);
+            //assert
+            sut.Elapsed.Should().Be(1);
+            Thread.Sleep(1000);
+            sut.Elapsed.Should().Be(2);
+        }
+        [Fact]
+        public void Remaining_AfterStarted_Changes()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1000);
+            //assert
+            sut.Remaining.Should().Be(19);
+            Thread.Sleep(1000);
+            sut.Remaining.Should().Be(18);
+        }
+
+        [Fact]
+        public void ToString_DidNotStart_ReturnBrandNewMessage()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 20);
+            
+            //assert
+            sut.ToString().Should().Be("is brand-new");
+        }
+        [Fact]
+        public void ToString_DidStart_ReturnTimeRemaining()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 180);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(2000);
+            //assert
+            sut.ToString().Should().Be("will expire in 2 minutes and 58 seconds");
+        }
+        [Fact]
+        public void ToString_DidStart_ReturnTimeRemainingWellFormatted()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 62);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1000);
+            //assert
+            sut.ToString().Should().Be("will expire in 1 minute and 1 second");
+        }
+        [Fact]
+        public void Decay_DidNotExpire_ReturnsFalse()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 62);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1000);
+            var actual = sut.TryDecay();
+            //assert
+            actual.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Decay_DidNotExpire_DoNotEmitEvent()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, 62);
+            var emitted = false;
+            sut.OnDecayed += (_, _) => emitted = true;
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1000);
+            sut.TryDecay();
+            //assert
+            emitted.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Decay_Expired_ReturnsTrue()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, duration:1);
+        
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            var actual = sut.TryDecay();
+            //assert
+            actual.Should().BeTrue();
+        }
+        [Fact]
+        public void Decay_Expired_EmitEvent()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+            var decayToItem = ItemTestData.CreateRing(10);
+
+            var sut = new Decayable(item, () => decayToItem.Metadata, duration: 1);
+
+            IItemType toItem = null;
+            sut.OnDecayed += (_, to) =>
+            {
+                toItem = to;
+            };
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            var actual = sut.TryDecay();
+            //assert
+            toItem.Should().Be(decayToItem.Metadata);
+        }
+        [Fact]
+        public void Decay_ExpiredAndDecaysToNull_EmitEvent()
+        {
+            //arrange
+            var item = ItemTestData.CreateRing(1);
+
+            var sut = new Decayable(item, () => null, duration: 1);
+
+            IItemType toItem = null;
+            sut.OnDecayed += (_, to) =>
+            {
+                toItem = to;
+            };
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            var actual = sut.TryDecay();
+            //assert
+            toItem.Should().BeNull();
+        }
+
     }
 }

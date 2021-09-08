@@ -14,7 +14,7 @@ namespace NeoServer.Game.Common.Contracts.Items
         bool Expired { get; }
         int Elapsed { get; }
         int Remaining { get; }
-        bool Decay();
+        bool TryDecay();
         event DecayDelegate OnDecayed;
         event PauseDecay OnPaused;
         event StartDecay OnStarted;

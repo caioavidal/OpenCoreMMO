@@ -34,9 +34,10 @@ namespace NeoServer.Game.Items.Items
         public ISkillBonus SkillBonus { get; }
         public IPlayer PlayerDressing { get; private set; }
 
-        private void Decayed(IDecayable item, IItemType _)
+        private void Decayed(IDecayable item, IItemType to)
         {
-            RemoveSkillBonus(PlayerDressing);
+            if (to is null)
+                PlayerDressing.Inventory.RemoveItem(this, 1, (byte) Metadata.BodyPosition, out var removedThing);
         }
 
         private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
@@ -112,7 +113,7 @@ namespace NeoServer.Game.Items.Items
 
         #endregion
 
-        #region Decay
+        #region TryDecay
 
         public Func<IItemType> DecaysTo { get; init; }
         public int Duration => Metadata.Attributes.GetAttribute<int>(ItemAttribute.Duration);
@@ -121,10 +122,7 @@ namespace NeoServer.Game.Items.Items
         public int Elapsed => Decayable?.Elapsed ?? 0;
         public int Remaining => Decayable?.Remaining ?? default;
 
-        public bool Decay()
-        {
-            return Decayable?.Decay() ?? default;
-        }
+        public bool TryDecay() => Decayable?.TryDecay() ?? default;
 
         public event DecayDelegate OnDecayed;
         public event PauseDecay OnPaused;
