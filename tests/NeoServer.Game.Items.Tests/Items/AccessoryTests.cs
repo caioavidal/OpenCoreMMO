@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
@@ -392,6 +395,38 @@ namespace NeoServer.Game.Items.Tests.Items
             sut.Metadata.ClientId.Should().Be(3);
             itemBefore.Should().BeEquivalentTo(beforeUndress);
             itemNow.Should().BeEquivalentTo(sut.Metadata);
+        }
+
+        [Fact]
+        public void OnDecayed_NoItemToDecayTo_UndressFromPlayer()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+            
+            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.AbsorbPercentEnergy, 100),
+                (ItemAttribute.Duration, 1)
+            }, decaysTo: () => null);
+
+            var slotRemoved = Slot.None;
+            IPickupable itemRemoved = null;
+            player.Inventory.OnItemRemovedFromSlot += (_, item, slot, _) =>
+            {
+                slotRemoved = slot;
+                itemRemoved = item;
+            };
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+
+            player.Inventory[Slot.Ring].Should().BeNull();
+            slotRemoved.Should().Be(Slot.Ring);
+            itemRemoved.Should().Be(sut);
         }
 
     }
