@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -13,13 +15,12 @@ using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Weapons;
-using NeoServer.Game.Items.Tests;
-using NeoServer.Game.Tests;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map.Tiles;
+using Org.BouncyCastle.Security;
 using Xunit;
 
-namespace NeoServer.Game.Creatures.Tests
+namespace NeoServer.Game.Creatures.Tests.Players
 {
     public class PlayerInventoryTest
     {
@@ -765,7 +766,7 @@ namespace NeoServer.Game.Creatures.Tests
         [InlineData(5, 95)]
         [InlineData(50, 50)]
         [Theory]
-        public void CanAddItem_When_Slot_Has_Same_Culative_Item_And_Adding_Cumulative_Item_Returns_Success(byte amount,
+        public void CanAddItem_When_Slot_Has_Same_Cumulative_Item_And_Adding_Cumulative_Item_Returns_Success(byte amount,
             uint expected)
         {
             var item = ItemTestData.CreateAmmoItem(1, 100);
@@ -783,7 +784,7 @@ namespace NeoServer.Game.Creatures.Tests
 
         [Fact]
         public void
-            CanAddItem_When_Slot_Has_Different_Culative_Item_And_Adding_Cumulative_Item_Returns_Not_Enough_Room()
+            CanAddItem_When_Slot_Has_Different_Cumulative_Item_And_Adding_Cumulative_Item_Returns_Not_Enough_Room()
         {
             var item = ItemTestData.CreateAmmoItem(2, 100);
             IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity:1000),
@@ -796,6 +797,27 @@ namespace NeoServer.Game.Creatures.Tests
 
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
+        }
+        [Fact]
+        public void
+            DressingItems_PlayerHasAllItems_ReturnAllExceptBag()
+        {
+            //arrange
+            var inventory = PlayerTestDataBuilder.GenerateInventory();
+            var player = PlayerTestDataBuilder.BuildPlayer(inventory: inventory, capacity:500_000);
+            var expected = inventory.Where(x=>x.Key != Slot.Backpack).Select(x => (IItem)x.Value.Item1);
+
+            //assert
+            player.Inventory.DressingItems.Should().HaveSameCount(expected);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Head].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Necklace].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Ring].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Body].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Left].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Ammo].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Legs].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Ring].Item1);
+            player.Inventory.DressingItems.Should().ContainSingle(x => x == inventory[Slot.Feet].Item1);
         }
     }
 }
