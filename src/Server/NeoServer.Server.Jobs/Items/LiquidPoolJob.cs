@@ -13,7 +13,7 @@ namespace NeoServer.Server.Jobs.Items
             if (item.Expired)
             {
                 var tile = game.Map[(item as IItem).Location] as IDynamicTile;
-                if (item.Decay()) game.Map.CreateBloodPool(liquid, tile);
+                if (item.TryDecay()) game.Map.CreateBloodPool(liquid, tile); //todo: need to review this
 
                 if (item.ShouldDisappear) game.Map.CreateBloodPool(null, tile);
             }

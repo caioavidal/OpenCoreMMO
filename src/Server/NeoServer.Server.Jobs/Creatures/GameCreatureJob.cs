@@ -12,47 +12,48 @@ namespace NeoServer.Server.Jobs.Creatures
     public class GameCreatureJob
     {
         private const ushort EVENT_CHECK_CREATURE_INTERVAL = 500;
-        private readonly IGameServer game;
-        private readonly PlayerLogOutCommand playerLogOutCommand;
-        private readonly SpawnManager spawnManager;
-        private readonly ISummonService summonService;
+        private readonly IGameServer _game;
+        private readonly PlayerLogOutCommand _playerLogOutCommand;
+        private readonly SpawnManager _spawnManager;
+        private readonly ISummonService _summonService;
 
         public GameCreatureJob(IGameServer game, SpawnManager spawnManager, PlayerLogOutCommand playerLogOutCommand,
             ISummonService summonService)
         {
-            this.game = game;
-            this.spawnManager = spawnManager;
-            this.playerLogOutCommand = playerLogOutCommand;
-            this.summonService = summonService;
+            _game = game;
+            _spawnManager = spawnManager;
+            _playerLogOutCommand = playerLogOutCommand;
+            _summonService = summonService;
         }
 
         public void StartChecking()
         {
-            game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartChecking));
+            _game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartChecking));
 
-            foreach (var creature in game.CreatureManager.GetCreatures())
+            foreach (var creature in _game.CreatureManager.GetCreatures())
             {
-                if (creature is ICombatActor actor && actor.IsDead) continue;
+                if (creature is ICombatActor {IsDead: true}) continue;
                 if (creature is null) continue;
 
                 if (creature is IPlayer player)
                 {
-                    PlayerPingJob.Execute(player, playerLogOutCommand, game);
-                    PlayerRecoveryJob.Execute(player, game);
+                    PlayerPingJob.Execute(player, _playerLogOutCommand, _game);
+                    PlayerRecoveryJob.Execute(player, _game);
+                    PlayerItemJob.Execute(player);
                 }
 
                 if (creature is ICombatActor combatActor) CreatureConditionJob.Execute(combatActor);
 
                 if (creature is IMonster monster)
                 {
-                    CreatureDefenseJob.Execute(monster, game);
-                    MonsterStateJob.Execute(monster, summonService);
+                    CreatureDefenseJob.Execute(monster, _game);
+                    MonsterStateJob.Execute(monster, _summonService);
                     MonsterYellJob.Execute(monster);
                 }
 
                 if (creature is INpc npc) NpcJob.Execute(npc);
 
-                RespawnJob.Execute(spawnManager);
+                RespawnJob.Execute(_spawnManager);
             }
         }
     }

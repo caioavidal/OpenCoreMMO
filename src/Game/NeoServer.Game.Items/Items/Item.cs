@@ -11,6 +11,8 @@ namespace NeoServer.Game.Items.Items
             Location = location;
         }
 
+        public string CustomLookText => null; //todo: revise
+
         public IItemType Metadata { get; }
 
         public Location Location { get; set; }

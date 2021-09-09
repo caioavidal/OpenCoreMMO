@@ -22,6 +22,7 @@ namespace NeoServer.Game.Items.Items
 
         public Location Location { get; set; }
         public IItemType Metadata { get; }
+        public string CustomLookText => "You see a magic field"; //todo: add type
 
         public byte DamageCount => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Field)
             ?.GetAttribute<byte>(ItemAttribute.Count) ?? 0;

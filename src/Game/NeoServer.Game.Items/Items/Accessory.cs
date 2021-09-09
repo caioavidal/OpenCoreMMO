@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -17,13 +18,14 @@ namespace NeoServer.Game.Items.Items
     {
         protected Accessory(IItemType type, Location location) : base(type, location)
         {
-            Decayable = new Decayable(this, DecaysTo, Duration);
+            if(Duration > 0) Decayable = new Decayable(this, DecaysTo, Duration);
+
             Protection = new Protection(DamageProtection);
             SkillBonus = new SkillBonus(SkillBonuses);
 
             Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
 
-            Decayable.OnDecayed += Decayed;
+            if(Decayable is not null) Decayable.OnDecayed += Decayed;
 
         }
 
@@ -32,9 +34,10 @@ namespace NeoServer.Game.Items.Items
         public ISkillBonus SkillBonus { get; }
         public IPlayer PlayerDressing { get; private set; }
 
-        private void Decayed(IDecayable item, IItemType _)
+        private void Decayed(IDecayable item, IItemType to)
         {
-            RemoveSkillBonus(PlayerDressing);
+            if (to is null)
+                PlayerDressing.Inventory.RemoveItem(this, 1, (byte) Metadata.BodyPosition, out var removedThing);
         }
 
         private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
@@ -62,7 +65,7 @@ namespace NeoServer.Game.Items.Items
 
         public void DecreaseCharges()
         {
-            Charges -= (ushort)(Charges == 0 ? 0 : 1);
+            Charges -= (ushort) (Charges == 0 ? 0 : 1);
         }
 
         public bool InfiniteCharges => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges) == 0;
@@ -75,7 +78,7 @@ namespace NeoServer.Game.Items.Items
 
         public void AddSkillBonus(IPlayer player)
         {
-            if (Decayable.Expired) return;
+            if (Expired) return;
             SkillBonus.AddSkillBonus(player);
         }
 
@@ -95,6 +98,7 @@ namespace NeoServer.Game.Items.Items
             PlayerDressing = player;
             AddSkillBonus(player);
             TransformOnEquip();
+            StartDecay();
         }
 
         public void UndressFrom(IPlayer player)
@@ -104,27 +108,27 @@ namespace NeoServer.Game.Items.Items
             PlayerDressing = null;
             RemoveSkillBonus(player);
             TransformOnDequip();
+            PauseDecay();
         }
 
         #endregion
 
-        #region Decay
+        #region TryDecay
 
         public Func<IItemType> DecaysTo { get; init; }
         public int Duration => Metadata.Attributes.GetAttribute<int>(ItemAttribute.Duration);
-        public bool ShouldDisappear => Decayable.ShouldDisappear;
-        public bool Expired => Decayable.Expired;
-        public int Elapsed => Decayable.Elapsed;
-        public int Remaining => Decayable.Remaining;
+        public bool ShouldDisappear => Decayable?.ShouldDisappear ?? false;
+        public bool Expired => Decayable?.Expired ?? false;
+        public int Elapsed => Decayable?.Elapsed ?? 0;
+        public int Remaining => Decayable?.Remaining ?? default;
 
-        public bool Decay()
-        {
-            return Decayable.Decay();
-        }
+        public bool TryDecay() => Decayable?.TryDecay() ?? default;
 
         public event DecayDelegate OnDecayed;
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
+        public void StartDecay() => Decayable?.StartDecay();
+        public void PauseDecay() => Decayable?.PauseDecay();
 
         #endregion
 
@@ -134,10 +138,11 @@ namespace NeoServer.Game.Items.Items
         {
             if (TransformEquipItem?.Invoke() is not { } itemType) return;
             var before = Metadata;
-            
+
             Metadata = itemType;
             OnTransformed?.Invoke(before, Metadata);
         }
+
         public void TransformOnDequip()
         {
             if (TransformDequipItem?.Invoke() is not { } itemType) return;
@@ -153,5 +158,20 @@ namespace NeoServer.Game.Items.Items
 
         #endregion
 
+        public override string CustomLookText
+        {
+            get
+            {
+                var stringBuilder = new StringBuilder();
+                stringBuilder.Append(base.CustomLookText);
+                if (Decayable is not null)
+                {
+                    stringBuilder.Append($" that {Decayable}");
+                }
+
+                return stringBuilder.ToString();
+            }
+
+        }
     }
 }

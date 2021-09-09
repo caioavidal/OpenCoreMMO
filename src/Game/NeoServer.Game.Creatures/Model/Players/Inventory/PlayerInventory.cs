@@ -66,7 +66,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 return attack;
             }
         }
-        
+
         public ushort TotalDefense
         {
             get
@@ -81,6 +81,23 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
         }
 
         public IWeapon Weapon => Inventory.ContainsKey(Slot.Left) ? Inventory[Slot.Left].Item1 as IWeapon : null;
+
+        /// <summary>
+        /// Gets all items that player is wearing expect the bag
+        /// </summary>
+        public IEnumerable<IItem> DressingItems =>
+            new List<IItem>
+            {
+                this[Slot.Head],
+                this[Slot.Necklace],
+                this[Slot.Body],
+                this[Slot.Right],
+                this[Slot.Left],
+                this[Slot.Legs],
+                this[Slot.Ring],
+                this[Slot.Ammo],
+                this[Slot.Feet],
+            };
 
         public IDictionary<ushort, uint> Map
         {

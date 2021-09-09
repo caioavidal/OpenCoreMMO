@@ -4,7 +4,7 @@ using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {
-    public class Decayable: IDecayable
+    public class Decayable : IDecayable
     {
         public event DecayDelegate OnDecayed;
         public event PauseDecay OnPaused;
@@ -24,34 +24,44 @@ namespace NeoServer.Game.Items.Items.Attributes
         public bool StartedToDecay => _startedToDecayTime != default;
         public int Remaining => Math.Max(0, Duration - Elapsed);
 
-        public int Elapsed { get; private set; }
+        private int _lastElapsed;
+        private bool _isPaused = true;
+        public int Elapsed => _isPaused ? _lastElapsed : _lastElapsed + (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
         public bool Expired => StartedToDecay && Elapsed >= Duration;
         public bool ShouldDisappear => DecaysTo?.Invoke() is null;
 
-        public void Start()
+        public void StartDecay()
         {
             if (Expired) return;
+            _isPaused = false;
             _startedToDecayTime = DateTime.Now.Ticks;
             OnStarted?.Invoke(this);
         }
 
-        public void Pause()
+        public void PauseDecay()
         {
-            Elapsed += (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
+            _isPaused = true;
+            _lastElapsed += (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
             OnPaused?.Invoke(this);
         }
 
-        public bool Decay()
+        public bool TryDecay()
         {
-           // if (!ItemTypeStore.Data.TryGetValue((ushort)DecaysTo, out var newItem)) return false;
+            if (!Expired) return false;
 
-           // OnDecayed?.Invoke(Item, newItem);
-
-            // if (DecaysTo == null) return false;
-
-            //_startedToDecayTime = DateTime.Now.Ticks;
-
+            OnDecayed?.Invoke(Item, DecaysTo?.Invoke());
             return true;
+
+        }
+
+        public override string ToString()
+        {
+            if (Elapsed == 0) return "is brand-new";
+
+            var minutes = Remaining / 60;
+            var seconds = (int)Math.Truncate(Remaining % 60d);
+            return $"will expire in {minutes} minute{(minutes > 1 ? "s" : "")} and {seconds} second{(seconds > 1 ? "s" : "")}";
+
         }
     }
 }

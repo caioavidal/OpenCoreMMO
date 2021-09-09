@@ -18,6 +18,7 @@ namespace NeoServer.Game.Items.Items
         public Location Location { get; set; }
 
         public IItemType Metadata { get; private set; }
+        public string CustomLookText => "You see a liquid pool"; //todo: revise
         public ushort ClientId => Metadata.ClientId;
 
         public LiquidPoolItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : this()
@@ -84,7 +85,7 @@ namespace NeoServer.Game.Items.Items
         public int Remaining => Duration - Elapsed;
         public bool ShouldDisappear => DecaysTo?.Invoke() == null;
 
-        public bool Decay()
+        public bool TryDecay()
         {
             if (ShouldDisappear) return false;
             //if (!ItemTypeStore.Data.TryGetValue((ushort) DecaysTo, out var newItem)) return false;
@@ -98,5 +99,14 @@ namespace NeoServer.Game.Items.Items
 
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
+        public void StartDecay()
+        {
+            
+        }
+
+        public void PauseDecay()
+        {
+            
+        }
     }
 }

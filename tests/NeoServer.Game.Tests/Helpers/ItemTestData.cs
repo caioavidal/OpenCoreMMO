@@ -111,7 +111,7 @@ namespace NeoServer.Game.Tests.Helpers
         }
 
         public static IRing CreateRing(ushort id, ushort charges = 10, (ItemAttribute, IConvertible)[] attributes = null,
-            Func<IItemType> transformOnEquipItem = null, Func<IItemType> transformOnDequipItem = null)
+            Func<IItemType> transformOnEquipItem = null, Func<IItemType> transformOnDequipItem = null, Func<IItemType> decaysTo = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -130,7 +130,8 @@ namespace NeoServer.Game.Tests.Helpers
             return new Ring(type, new Location(100, 100, 7))
             {
                 TransformEquipItem = transformOnEquipItem,
-                TransformDequipItem = transformOnDequipItem
+                TransformDequipItem = transformOnDequipItem,
+                DecaysTo = decaysTo
             };
         }
      
