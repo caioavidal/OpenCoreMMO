@@ -16,12 +16,11 @@ namespace NeoServer.Server.Managers
     /// </summary>
     public class GameCreatureManager : IGameCreatureManager
     {
+        private readonly ICreatureGameInstance creatureInstances;
         private readonly Logger logger;
+        private readonly IMap map;
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
-
-        private readonly ICreatureGameInstance creatureInstances;
-        private readonly IMap map;
 
         public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Logger logger)
         {

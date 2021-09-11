@@ -4,12 +4,13 @@ using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items
 {
-    public class BodyDefenseEquimentItem : MoveableItem, IDefenseEquipmentItem
+    public class BodyDefenseEquipment : Equipment, IDefenseEquipment
     {
-        public BodyDefenseEquimentItem(IItemType itemType, Location location)
+        public BodyDefenseEquipment(IItemType itemType, Location location)
             : base(itemType, location)
         {
             //todo damage protection
@@ -31,6 +32,8 @@ namespace NeoServer.Game.Items.Items
                 Slot.Head => true,
                 Slot.Feet => true,
                 Slot.Right => true,
+                Slot.Ring => true,
+                Slot.Necklace => true,
                 _ => false
             } || type.WeaponType == WeaponType.Shield;
         }

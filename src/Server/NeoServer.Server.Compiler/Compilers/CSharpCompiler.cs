@@ -32,7 +32,6 @@ namespace NeoServer.Server.Compiler.Compilers
             var syntaxTrees = new SyntaxTree[sourceCodes.Length];
             var i = 0;
 
-          
 
             foreach (var source in sourceCodes)
             {
@@ -64,7 +63,7 @@ namespace NeoServer.Server.Compiler.Compilers
                 references,
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
                     optimizationLevel: OptimizationLevel.Release,
-                    allowUnsafe:true,
+                    allowUnsafe: true,
                     assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default).WithPlatform(Platform.AnyCpu));
         }
 

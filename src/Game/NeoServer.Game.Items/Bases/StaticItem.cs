@@ -1,11 +1,11 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Bases
 {
-    public class Item : IItem
+    public class StaticItem : IItem
     {
-        public Item(IItemType metadata, Location location)
+        public StaticItem(IItemType metadata, Location location)
         {
             Metadata = metadata;
             Location = location;

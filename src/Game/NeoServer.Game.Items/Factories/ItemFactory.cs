@@ -11,15 +11,12 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
-using NeoServer.Game.Items.Items.Protections;
 using NeoServer.Game.Items.Items.UsableItems;
-using NeoServer.Game.Items.Items.UsableItems.Runes;
-using NeoServer.Game.Items.Items.Weapons;
 using CreateItem = NeoServer.Game.Common.Contracts.Items.CreateItem;
 
 namespace NeoServer.Game.Items.Factories
 {
-    public class ItemFactory : IItemFactory, IFactory
+    public class ItemFactory : IItemFactory
     {
         public ItemFactory()
         {
@@ -29,9 +26,16 @@ namespace NeoServer.Game.Items.Factories
         public static IItemFactory Instance { get; private set; }
 
         public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
-        public event CreateItem OnItemCreated;
-        public AccessoryFactory AccessoryFactory { get; set; }
+
+        public DefenseEquipmentFactory DefenseEquipmentFactory { get; set; }
+        public WeaponFactory WeaponFactory { get; set; }
+        public ContainerFactory ContainerFactory { get; set; }
+        public RuneFactory RuneFactory { get; set; }
+        public GroundFactory GroundFactory { get; set; }
+        public CumulativeFactory CumulativeFactory { get; set; }
+        public GenericItemFactory GenericItemFactory { get; set; }
         public ItemTypeStore ItemTypeStore { get; set; }
+        public event CreateItem OnItemCreated;
 
 
         public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
@@ -55,6 +59,7 @@ namespace NeoServer.Game.Items.Factories
 
             return createdItem;
         }
+
         public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         {
             var createdItem = CreateItem(itemType, location, attributes);
@@ -84,9 +89,7 @@ namespace NeoServer.Game.Items.Factories
             var item = ItemTypeStore.All.FirstOrDefault(x =>
                 x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
-            if (item is null) return null;
-
-            return Create(item.TypeId, location, attributes);
+            return item is null ? null : Create(item.TypeId, location, attributes);
         }
 
         private void SubscribeEvents(IItem createdItem)
@@ -107,7 +110,7 @@ namespace NeoServer.Game.Items.Factories
 
             if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED) return null;
 
-            if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is string script &&
+            if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script &&
                 !string.IsNullOrWhiteSpace(script))
             {
                 var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
@@ -117,49 +120,27 @@ namespace NeoServer.Game.Items.Factories
                     Activator.CreateInstance(type, itemType, location, attributes) is IItem instance) return instance;
             }
 
-            if (GroundItem.IsApplicable(itemType)) return new GroundItem(itemType, location);
-            if (MeleeWeapon.IsApplicable(itemType)) return new MeleeWeapon(itemType, location);
-            if (DistanceWeapon.IsApplicable(itemType)) return new DistanceWeapon(itemType, location);
 
-            if (Depot.IsApplicable(itemType)) return new Depot(itemType, location);
+            if (DefenseEquipmentFactory.Create(itemType, location) is { } equipment) return equipment;
+            if (WeaponFactory.Create(itemType, location, attributes) is { } weapon) return weapon;
+            if (ContainerFactory.Create(itemType, location) is { } container) return container;
+            if (RuneFactory.Create(itemType, location, attributes) is { } rune) return rune;
+            if (GroundFactory.Create(itemType, location) is { } ground) return ground;
 
-            if (PickupableContainer.IsApplicable(itemType)) return new PickupableContainer(itemType, location);
-            if (Container.IsApplicable(itemType)) return new Container(itemType, location);
-            if (BodyDefenseEquimentItem.IsApplicable(itemType)) return new BodyDefenseEquimentItem(itemType, location);
+            if (CumulativeFactory.Create(itemType, location, attributes) is { } cumulative) return cumulative;
 
-            if(AccessoryFactory.Create(itemType, location) is Accessory accessory) return accessory;
-            
-            if (MagicWeapon.IsApplicable(itemType)) return new MagicWeapon(itemType, location);
-            if (ICumulative.IsApplicable(itemType))
-            {
-                if (Coin.IsApplicable(itemType)) return new Coin(itemType, location, attributes);
-                if (ThrowableDistanceWeapon.IsApplicable(itemType))
-                    return new ThrowableDistanceWeapon(itemType, location, attributes);
-                if (AmmoItem.IsApplicable(itemType)) return new AmmoItem(itemType, location, attributes);
-                if (HealingItem.IsApplicable(itemType)) return new HealingItem(itemType, location, attributes);
-                if (Food.IsApplicable(itemType)) return new Food(itemType, location, attributes);
-                if (Rune.IsApplicable(itemType))
-                {
-                    if (AttackRune.IsApplicable(itemType)) return new AttackRune(itemType, location, attributes);
-                    if (FieldRune.IsApplicable(itemType)) return new FieldRune(itemType, location, attributes);
-                }
-
-                return new Cumulative(itemType, location, attributes);
-            }
-
-            if (LiquidPoolItem.IsApplicable(itemType)) return new LiquidPoolItem(itemType, location, attributes);
+            if (LiquidPool.IsApplicable(itemType)) return new LiquidPool(itemType, location, attributes);
             if (MagicField.IsApplicable(itemType)) return new MagicField(itemType, location);
             if (FloorChanger.IsApplicable(itemType)) return new FloorChanger(itemType, location);
+
             if (UseableOnItem.IsApplicable(itemType))
             {
                 if (FloorChangerUsableItem.IsApplicable(itemType))
                     return new FloorChangerUsableItem(itemType, location);
                 if (TransformerUsableItem.IsApplicable(itemType)) return new TransformerUsableItem(itemType, location);
-
-                //return new UseableOnItem(itemType, location);
             }
 
-            return new Item(itemType, location);
+            return GenericItemFactory.Create(itemType, location);
         }
     }
 }

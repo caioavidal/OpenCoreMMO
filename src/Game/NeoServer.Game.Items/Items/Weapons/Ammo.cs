@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Weapons
 {
-    public class AmmoItem : Cumulative, IAmmoItem
+    public class Ammo : Cumulative, IAmmoItem
     {
-        public AmmoItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
+        public Ammo(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
             type, location, attributes)
         {
         }
 
-        public AmmoItem(IItemType type, Location location, byte amount) : base(type, location, amount)
+        public Ammo(IItemType type, Location location, byte amount) : base(type, location, amount)
         {
         }
 
@@ -45,6 +47,15 @@ namespace NeoServer.Game.Items.Items.Weapons
         public static bool IsApplicable(IItemType type)
         {
             return type.WeaponType == WeaponType.Ammunition;
+        }
+
+        public void DressedIn(IPlayer player)
+        {
+            
+        }
+
+        public void UndressFrom(IPlayer player)
+        {
         }
     }
 }

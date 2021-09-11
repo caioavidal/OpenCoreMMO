@@ -24,7 +24,7 @@ namespace NeoServer.Game.Items.Tests.Items
         [Fact]
         public void DressedIn_Null_DoNotThrow()
         {
-            var sut = ItemTestData.CreateRing(1);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
             sut.DressedIn(null);
         }
@@ -33,7 +33,7 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(skills: PlayerTestDataBuilder.GenerateSkills(10));
-            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.SkillAxe, 5),
                 (ItemAttribute.Duration, 100)
@@ -49,7 +49,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void UndressFrom_Null_DoNotThrow()
         {
             //arrange
-            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.SkillAxe, 5),
                 (ItemAttribute.Duration, 100)
@@ -62,7 +62,7 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(skills: PlayerTestDataBuilder.GenerateSkills(10));
-            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.SkillAxe, 5),
                 (ItemAttribute.Duration, 100)
@@ -89,7 +89,7 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy);
 
-            var sut = ItemTestData.CreateRing(1, charges: 50, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 50, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy,10)
             });
@@ -107,7 +107,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void NoCharges_10Charges_ReturnsFalse()
         {
             //arrange
-            var sut = ItemTestData.CreateRing(1, charges: 10);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
 
             //assert
@@ -117,7 +117,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void NoCharges_0Charges_ReturnsTrue()
         {
             //arrange
-            var sut = ItemTestData.CreateRing(1, charges: 1);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
 
             //act
@@ -131,7 +131,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void InfiniteCharges_10Charges_ReturnsFalse()
         {
             //arrange
-            var sut = ItemTestData.CreateRing(1, charges: 10);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
 
             //assert
@@ -141,7 +141,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void InfiniteCharges_0Charges_ReturnsTrue()
         {
             //arrange
-            var sut = ItemTestData.CreateRing(1, charges: 0);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 0);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
 
             //assert
@@ -164,7 +164,7 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
 
-            var sut = ItemTestData.CreateRing(1, charges: 0,
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 0,
                 attributes: new (ItemAttribute, IConvertible)[]
                 {
                     (ItemAttribute.AbsorbPercentEnergy, 100),
@@ -196,7 +196,7 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
             sut.DressedIn(defender);
 
@@ -218,14 +218,14 @@ namespace NeoServer.Game.Items.Tests.Items
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 100)
@@ -245,7 +245,7 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
 
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 100)
@@ -266,9 +266,9 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
 
-            var transformToItem = ItemTestData.CreateRing(2);
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 100)
@@ -288,9 +288,9 @@ namespace NeoServer.Game.Items.Tests.Items
         public void TransformOnDequip_NoItemToTransformTo_DoNotTransform()
         {
             //arrange
-            var transformToItem = ItemTestData.CreateRing(2);
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 100)
@@ -309,9 +309,9 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
 
-            var transformToItem = ItemTestData.CreateRing(2);
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 100)
@@ -332,9 +332,9 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
-            var transformToItem = ItemTestData.CreateRing(2);
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 100)
@@ -364,10 +364,10 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
-            var transformToItem = ItemTestData.CreateRing(2);
-            var transformOnDequipItem = ItemTestData.CreateRing(3);
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2);
+            var transformOnDequipItem = ItemTestData.CreateDefenseEquipmentItem(3);
 
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 100)
@@ -403,7 +403,7 @@ namespace NeoServer.Game.Items.Tests.Items
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
             
-            var sut = ItemTestData.CreateRing(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot:"ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 1)

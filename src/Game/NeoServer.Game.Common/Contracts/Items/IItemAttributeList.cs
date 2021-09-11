@@ -32,5 +32,6 @@ namespace NeoServer.Game.Common.Contracts.Items
         void SetCustomAttribute(string attribute, dynamic values);
         void SetCustomAttribute(string attribute, IConvertible attributeValue, IItemAttributeList attrs);
         Dictionary<TKey, TValue> ToDictionary<TKey, TValue>();
+        bool TryGetAttribute<T>(ItemAttribute attribute, out T attrValue) where T : struct;
     }
 }

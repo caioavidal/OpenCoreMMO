@@ -45,11 +45,10 @@ namespace NeoServer.Benchmarks.Tasks
 
     public class SchedulerQueue : ISchedulerQueue<ISchedulerEvent>
     {
+        private readonly ConcurrentDictionary<uint, byte> cancelledEventIds = new();
         private readonly ChannelReader<ISchedulerEvent> reader;
 
         private readonly ChannelWriter<ISchedulerEvent> writer;
-
-        private readonly ConcurrentDictionary<uint, byte> cancelledEventIds = new();
         private uint lastId;
 
         public SchedulerQueue()

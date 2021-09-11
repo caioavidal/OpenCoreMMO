@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
@@ -30,12 +29,12 @@ namespace NeoServer.Game.Items
         public ushort TypeId { get; private set; }
 
         /// <summary>
-        ///     Item's name
+        ///     ItemType's name
         /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
-        ///     Item's description
+        ///     ItemType's description
         /// </summary>
         public string Description => Attributes.GetAttribute(ItemAttribute.Description);
 

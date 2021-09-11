@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Items.Items
 {
-    public struct LiquidPoolItem : ILiquid
+    public struct LiquidPool : ILiquid
     {
         public bool IsLiquidPool => Metadata.Group == ItemGroup.Splash;
         public bool IsLiquidSource => Metadata.Flags.Contains(ItemFlag.LiquidSource);
@@ -21,7 +19,8 @@ namespace NeoServer.Game.Items.Items
         public string CustomLookText => "You see a liquid pool"; //todo: revise
         public ushort ClientId => Metadata.ClientId;
 
-        public LiquidPoolItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : this()
+        public LiquidPool(IItemType type, Location location,
+            IDictionary<ItemAttribute, IConvertible> attributes) : this()
         {
             Metadata = type;
             Location = location;
@@ -31,14 +30,14 @@ namespace NeoServer.Game.Items.Items
             LiquidColor = GetLiquidColor(attributes);
         }
 
-        public LiquidPoolItem(IItemType type, Location location, LiquidColor color) : this()
+        public LiquidPool(IItemType type, Location location, LiquidColor color) : this()
         {
             Metadata = type;
             Location = location;
             LiquidColor = LiquidColor.Empty;
             StartedToDecayTime = DateTime.Now.Ticks;
             Elapsed = 0;
-      
+
             LiquidColor = GetLiquidColor(color);
         }
 
@@ -99,14 +98,13 @@ namespace NeoServer.Game.Items.Items
 
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
+
         public void StartDecay()
         {
-            
         }
 
         public void PauseDecay()
         {
-            
         }
     }
 }

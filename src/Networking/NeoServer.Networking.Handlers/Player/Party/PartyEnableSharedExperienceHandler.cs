@@ -16,10 +16,12 @@ namespace NeoServer.Networking.Handlers.Player.Party
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var experienceSharingActive = message.GetByte() == 1;
-            if (!Game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) { return; }
-            if (player == null || player.IsInParty == false) { return; }
+            if (!Game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+            if (player == null || player.IsInParty == false) return;
             player.Party.IsSharedExperienceEnabled = experienceSharingActive;
-            connection.Send(new TextMessagePacket($"Party experience sharing is now {(experienceSharingActive ? "enabled" : "disabled")}.", TextMessageOutgoingType.Small));
+            connection.Send(new TextMessagePacket(
+                $"Party experience sharing is now {(experienceSharingActive ? "enabled" : "disabled")}.",
+                TextMessageOutgoingType.Small));
         }
     }
 }

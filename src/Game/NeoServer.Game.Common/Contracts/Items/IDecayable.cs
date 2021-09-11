@@ -2,10 +2,12 @@
 
 namespace NeoServer.Game.Common.Contracts.Items
 {
-    public delegate void DecayDelegate(IDecayable item, IItemType decaysTo);
+    public delegate void DecayDelegate(IItemType decaysTo);
 
     public delegate void PauseDecay(IDecayable item);
+
     public delegate void StartDecay(IDecayable item);
+
     public interface IDecayable
     {
         Func<IItemType> DecaysTo { get; }

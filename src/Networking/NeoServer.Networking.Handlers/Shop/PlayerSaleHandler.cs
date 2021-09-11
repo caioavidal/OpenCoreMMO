@@ -8,8 +8,8 @@ namespace NeoServer.Networking.Handlers.Shop
 {
     public class PlayerSaleHandler : PacketHandler
     {
-        private readonly IGameServer game;
         private readonly ItemTypeStore _itemTypeStore;
+        private readonly IGameServer game;
 
         public PlayerSaleHandler(IGameServer game, ItemTypeStore itemTypeStore)
         {

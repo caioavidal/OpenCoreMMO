@@ -9,7 +9,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items.Weapons
 {
     public class ThrowableDistanceWeapon : Cumulative, IThrowableDistanceWeaponItem
     {
@@ -59,6 +59,15 @@ namespace NeoServer.Game.Items.Items
         {
             return type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "distance" &&
                    type.HasFlag(ItemFlag.Stackable);
+        }
+
+        public void DressedIn(IPlayer player)
+        {
+            
+        }
+
+        public void UndressFrom(IPlayer player)
+        {
         }
     }
 }

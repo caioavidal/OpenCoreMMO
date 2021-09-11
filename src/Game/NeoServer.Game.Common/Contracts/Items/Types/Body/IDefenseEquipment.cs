@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IDefenseEquipmentItem : IBodyEquipmentItem
+    public interface IDefenseEquipment : IBodyEquipmentItem ,IChargeable, IEquipment
     {
         ImmutableDictionary<DamageType, byte> DamageProtection { get; }
 

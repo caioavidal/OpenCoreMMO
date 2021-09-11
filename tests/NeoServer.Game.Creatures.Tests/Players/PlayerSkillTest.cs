@@ -45,7 +45,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 {SkillType.Axe, new Skill(SkillType.Axe,1,12,0)}
             }, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
             {
-                {Slot.Necklace, new Tuple<IPickupable, ushort>(ItemTestData.CreateNecklace(100),1)}
+                {Slot.Necklace, new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(id: 100),1)}
             });
             var level = player.GetSkillLevel(SkillType.Axe);
 
@@ -60,7 +60,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 {SkillType.Axe, new Skill(SkillType.Axe,1,12,0)}
             }, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
             {
-                {Slot.Necklace, new Tuple<IPickupable, ushort>(ItemTestData.CreateNecklace(100),1)}
+                {Slot.Necklace, new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(id: 100),1)}
             });
             var level = player.GetSkillLevel(SkillType.Axe);
 

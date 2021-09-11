@@ -11,7 +11,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
         public Slot Slot => Metadata.BodyPosition;
     }
 
-    public interface IBodyEquipmentItem : IPickupable, IInventoryItem
+    public interface IBodyEquipmentItem : IDressable, IPickupable, IInventoryItem
     {
         bool Pickupable => true;
 

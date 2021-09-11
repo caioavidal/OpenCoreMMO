@@ -1,9 +1,7 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items;
-using NeoServer.Game.Items.Items;
-using NeoServer.Networking.Packets;
+using NeoServer.Game.Items.Bases;
 using NeoServer.Networking.Packets.Messages;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using Xunit;
 

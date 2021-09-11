@@ -84,9 +84,7 @@ namespace NeoServer.Networking.Handlers.LogIn
             }
 
             if (game.State == GameState.Closed)
-            {
                 connection.Send(new GameServerDisconnectPacket("Server is currently closed.\nPlease try again later."));
-            }
         }
     }
 }

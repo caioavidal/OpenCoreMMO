@@ -8,10 +8,11 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Weapons
 {
-    public class MagicWeapon : MoveableItem, IDistanceWeaponItem
+    public class MagicWeapon : Equipment, IDistanceWeaponItem
     {
         public MagicWeapon(IItemType type, Location location) : base(type, location)
         {

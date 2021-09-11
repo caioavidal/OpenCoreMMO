@@ -64,7 +64,8 @@ namespace NeoServer.Server.Standalone
             var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
             var context = container.Resolve<NeoContext>();
 
-            logger.Step("Loading database: {db}", "{db} database loaded", action:() => context.Database.EnsureCreatedAsync(),
+            logger.Step("Loading database: {db}", "{db} database loaded",
+                action: () => context.Database.EnsureCreatedAsync(),
                 databaseConfiguration.Active);
 
             RSA.LoadPem(serverConfiguration.Data);
