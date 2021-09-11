@@ -313,9 +313,9 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event Attack OnAttackEnemy;
         public event Damage OnInjured;
         public event Die OnKilled;
-        public event OnAttackTargetChange OnTargetChanged;
+        public event AttackTargetChange OnTargetChanged;
         public event ChangeVisibility OnChangedVisibility;
-        public event OnPropagateAttack OnPropagateAttack;
+        public event PropagateAttack OnPropagateAttack;
         public event GainExperience OnGainedExperience;
         public event AddCondition OnAddedCondition;
         public event RemoveCondition OnRemovedCondition;

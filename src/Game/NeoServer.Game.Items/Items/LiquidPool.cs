@@ -11,7 +11,7 @@ namespace NeoServer.Game.Items.Items
     {
         public bool IsLiquidPool => Metadata.Group == ItemGroup.Splash;
         public bool IsLiquidSource => Metadata.Flags.Contains(ItemFlag.LiquidSource);
-        public bool IsLiquidContainer => Metadata.Group == ItemGroup.ITEM_GROUP_FLUID;
+        public bool IsLiquidContainer => Metadata.Group == ItemGroup.ItemGroupFluid;
         public LiquidColor LiquidColor { get; }
         public Location Location { get; set; }
 
@@ -72,7 +72,7 @@ namespace NeoServer.Game.Items.Items
         {
             return type.Group == ItemGroup.Splash ||
                    type.Flags.Contains(ItemFlag.LiquidSource) ||
-                   type.Group == ItemGroup.ITEM_GROUP_FLUID;
+                   type.Group == ItemGroup.ItemGroupFluid;
         }
 
         public Func<IItemType> DecaysTo { get; init; }

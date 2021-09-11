@@ -144,26 +144,26 @@ namespace NeoServer.Game.Items
             switch ((ItemGroup) type)
             {
                 case ItemGroup.GroundContainer:
-                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_CONTAINER;
+                    TypeAttribute = ItemTypeAttribute.ItemTypeContainer;
                     break;
-                case ItemGroup.ITEM_GROUP_DOOR:
+                case ItemGroup.ItemGroupDoor:
                     //not used
-                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_DOOR;
+                    TypeAttribute = ItemTypeAttribute.ItemTypeDoor;
                     break;
-                case ItemGroup.ITEM_GROUP_MAGICFIELD:
+                case ItemGroup.ItemGroupMagicField:
                     //not used
-                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_MAGICFIELD;
+                    TypeAttribute = ItemTypeAttribute.ItemTypeMagicfield;
                     break;
-                case ItemGroup.ITEM_GROUP_TELEPORT:
+                case ItemGroup.ItemGroupTeleport:
                     //not used
-                    TypeAttribute = ItemTypeAttribute.ITEM_TYPE_TELEPORT;
+                    TypeAttribute = ItemTypeAttribute.ItemTypeTeleport;
                     break;
                 case ItemGroup.None:
                 case ItemGroup.Ground:
                 case ItemGroup.Splash:
-                case ItemGroup.ITEM_GROUP_FLUID:
-                case ItemGroup.ITEM_GROUP_CHARGES:
-                case ItemGroup.ITEM_GROUP_DEPRECATED:
+                case ItemGroup.ItemGroupFluid:
+                case ItemGroup.ItemGroupCharges:
+                case ItemGroup.ItemGroupDeprecated:
                     break;
             }
         }

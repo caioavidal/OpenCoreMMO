@@ -30,7 +30,7 @@ namespace NeoServer.Server.Commands.Player
 
             if (!game.CreatureManager.TryGetLoggedPlayer((uint) playerRecord.PlayerId, out var player))
             {
-                if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader)
+                if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not { } playerLoader)
                     return;
 
                 guildLoader.Load(playerRecord?.GuildMember?.Guild);

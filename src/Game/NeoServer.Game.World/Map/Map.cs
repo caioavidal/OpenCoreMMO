@@ -230,8 +230,8 @@ namespace NeoServer.Game.World.Map
         }
 
         public IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground,
-            byte windowSizeX = MapConstants.DefaultMapWindowSizeX,
-            byte windowSizeY = MapConstants.DefaultMapWindowSizeY)
+            byte windowSizeX = MapConstants.DEFAULT_MAP_WINDOW_SIZE_X,
+            byte windowSizeY = MapConstants.DEFAULT_MAP_WINDOW_SIZE_Y)
         {
             var tempBytes = new List<byte>();
 

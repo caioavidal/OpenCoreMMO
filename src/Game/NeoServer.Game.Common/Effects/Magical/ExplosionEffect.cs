@@ -6,7 +6,7 @@ namespace NeoServer.Game.Common.Effects.Magical
 {
     public class ExplosionEffect
     {
-        private static readonly byte[,] _area = new byte[13, 13]
+        private static readonly byte[,] Area = new byte[,]
         {
             {0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 8, 8, 7, 8, 8, 0, 0, 0, 0},
@@ -29,7 +29,7 @@ namespace NeoServer.Game.Common.Effects.Magical
 
             for (var row = 0; row < 13; row++)
             for (var col = 0; col < 13; col++)
-                if (_area[row, col] > 0 && _area[row, col] <= radius)
+                if (Area[row, col] > 0 && Area[row, col] <= radius)
                 {
                     var y = row - 6;
                     var x = col - 6;
@@ -44,9 +44,10 @@ namespace NeoServer.Game.Common.Effects.Magical
             var i = 0;
 
             var affectedLocations = Create(radius);
-            var affectedArea = new Coordinate[affectedLocations.Count()];
+            var coordinates = affectedLocations.ToList();
+            var affectedArea = new Coordinate[coordinates.Count];
 
-            foreach (var affectedLocation in affectedLocations)
+            foreach (var affectedLocation in coordinates)
                 affectedArea[i++] = location.Translate() + affectedLocation;
             return affectedArea;
         }

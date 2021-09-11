@@ -81,7 +81,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ChaseMode ChaseMode { get; }
         byte SecureMode { get; }
 
-        bool InFight { get; }
+        new bool InFight { get; }
         IPlayerContainerList Containers { get; }
 
         IInventory Inventory { get; }
@@ -189,10 +189,10 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         /// </summary>
         /// <param name="mana"></param>
         void ConsumeMana(ushort mana);
+
         /// <summary>
         /// Checks if the player has specified level points
         /// </summary>
-        /// <param name="mana"></param>
         /// <returns></returns>
         bool HasEnoughLevel(ushort level);
         bool Logout(bool forced = false);

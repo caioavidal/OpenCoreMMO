@@ -8,7 +8,6 @@ namespace NeoServer.Game.Common.Contracts.Spells
     public interface ISpell
     {
         EffectT Effect { get; }
-        ConditionType ConditionType { get; }
         ushort Mana { get; set; }
         ushort MinLevel { get; set; }
         string Name { get; set; }

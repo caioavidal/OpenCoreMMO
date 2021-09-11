@@ -4,29 +4,21 @@ namespace NeoServer.Game.Common.Helpers
 {
     public class GameRandom : Random
     {
-        private static GameRandom Instance;
+        private static GameRandom _instance;
 
-        public static GameRandom Random
-        {
-            get
-            {
-                if (Instance == null) Instance = new GameRandom();
-
-                return Instance;
-            }
-        }
+        public static GameRandom Random => _instance ??= new GameRandom();
 
         public double Next(double mu = 0, double sigma = 1)
         {
             var u1 = NextDouble();
             var u2 = NextDouble();
 
-            var rand_std_normal = Math.Sqrt(-2.0 * Math.Log(u1)) *
+            var randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
                                   Math.Sin(2.0 * Math.PI * u2);
 
-            var rand_normal = mu + sigma * rand_std_normal;
+            var randNormal = mu + sigma * randStdNormal;
 
-            return rand_normal;
+            return randNormal;
         }
 
         public T Next<T>(T[] values)

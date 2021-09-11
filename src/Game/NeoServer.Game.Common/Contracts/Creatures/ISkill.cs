@@ -2,9 +2,9 @@
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
-    public delegate void OnLevelAdvance(SkillType skillType, int fromLevel, int toLevel);
+    public delegate void LevelAdvance(SkillType skillType, int fromLevel, int toLevel);
 
-    public delegate void OnIncreaseSkillPoints(SkillType skillType);
+    public delegate void IncreaseSkillPoints(SkillType skillType);
 
     public interface ISkill
     {
@@ -21,8 +21,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         double BaseIncrease { get; }
         double Percentage { get; }
         byte Bonus { get; }
-        event OnLevelAdvance OnAdvance;
-        event OnIncreaseSkillPoints OnIncreaseSkillPoints;
+        event LevelAdvance OnAdvance;
+        event IncreaseSkillPoints OnIncreaseSkillPoints;
 
         void IncreaseCounter(double value);
         void AddBonus(byte increase);

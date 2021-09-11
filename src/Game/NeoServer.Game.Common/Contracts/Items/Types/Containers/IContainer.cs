@@ -9,11 +9,9 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
 
     public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
 
-    public delegate void DeleteContainer(IContainer container);
-
     public delegate void Move(IContainer container);
 
-    public interface IContainer : IItem, IInventoryItem, IStore
+    public interface IContainer : IInventoryItem, IStore
     {
         IItem this[int index] { get; }
 

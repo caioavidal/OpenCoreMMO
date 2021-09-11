@@ -9,7 +9,9 @@ namespace NeoServer.Game.Common.Effects.Magical
         /// <summary>
         ///     Creates a spread effect based on length
         /// </summary>
+        /// <param name="direction"></param>
         /// <param name="length"></param>
+        /// <param name="spread"></param>
         /// <returns></returns>
         public static Coordinate[] Create(Direction direction, int length, int spread)
         {
@@ -56,8 +58,8 @@ namespace NeoServer.Game.Common.Effects.Magical
             var affectedLocations = Create(direction, length, spread);
             var affectedArea = new Coordinate[affectedLocations.Length];
 
-            foreach (var affectedlocation in affectedLocations)
-                affectedArea[i++] = location.Translate() + affectedlocation;
+            foreach (var affectedLocation in affectedLocations)
+                affectedArea[i++] = location.Translate() + affectedLocation;
             return affectedArea;
         }
     }

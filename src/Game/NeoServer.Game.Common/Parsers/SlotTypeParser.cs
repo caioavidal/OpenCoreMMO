@@ -10,7 +10,7 @@ namespace NeoServer.Game.Common.Parsers
         {
             var slotType = itemAttributes?.GetAttribute(ItemAttribute.BodyPosition);
 
-            if (slotType is null && itemAttributes.HasAttribute(ItemAttribute.WeaponType)) slotType = "weapon";
+            if (itemAttributes != null && slotType is null && itemAttributes.HasAttribute(ItemAttribute.WeaponType)) slotType = "weapon";
 
             return slotType switch
             {

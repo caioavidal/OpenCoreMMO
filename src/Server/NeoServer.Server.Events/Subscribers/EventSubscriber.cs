@@ -35,7 +35,7 @@ namespace NeoServer.Server.Events.Subscribers
             map.OnThingUpdatedOnTile += container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
             BaseSpell.OnSpellInvoked += container.Resolve<SpellInvokedEventHandler>().Execute;
             itemFactory.OnItemCreated += container.Resolve<ItemCreatedEventHandler>().Execute;
-            OperationFailService.OperationFailed += container.Resolve<PlayerOperationFailedEventHandler>().Execute;
+            OperationFailService.OnOperationFailed += container.Resolve<PlayerOperationFailedEventHandler>().Execute;
         }
     }
 }

@@ -83,7 +83,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 if (!player.Location.IsNextTo(containerToOpen.Location)) return;
                 if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player))
                 {
-                    OperationFailService.Display(player.CreatureId, TextConstants.YouAreNotTheOwner);
+                    OperationFailService.Display(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
                     return;
                 }
 

@@ -21,7 +21,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
 
         public void AddTarget(ICombatActor creature)
         {
-            if (targets is null) targets = new Dictionary<uint, CombatTarget>(150);
+            targets ??= new Dictionary<uint, CombatTarget>(150);
 
             if (!targets.TryAdd(creature.CreatureId, new CombatTarget(creature))) return;
             AttachToTargetEvents(creature);

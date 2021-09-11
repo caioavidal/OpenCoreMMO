@@ -15,14 +15,14 @@ namespace NeoServer.Game.World.Map.Tiles
 {
     public class Tile : BaseTile, IDynamicTile
     {
-        private byte[] cache;
+        private byte[] _cache;
 
-        private uint flags;
+        private uint _flags;
 
         public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
             Location = new Location((ushort) coordinate.X, (ushort) coordinate.Y, (byte) coordinate.Z);
-            flags |= (byte) tileFlag;
+            _flags |= (byte) tileFlag;
             AddContent(ground, topItems, items);
         }
 
@@ -158,7 +158,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public byte[] GetRaw(IPlayer playerRequesting)
         {
-            if (cache != null && !(Creatures?.Any() ?? false)) return cache;
+            if (_cache != null && !(Creatures?.Any() ?? false)) return _cache;
 
             Span<byte> stream = stackalloc byte[930]; //max possible length
 
@@ -212,8 +212,8 @@ namespace NeoServer.Game.World.Map.Tiles
                     countBytes += raw.Length;
                 }
 
-            cache = stream.Slice(0, countBytes).ToArray();
-            return cache;
+            _cache = stream.Slice(0, countBytes).ToArray();
+            return _cache;
         }
 
         private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
@@ -340,17 +340,17 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private bool HasFlag(TileFlags flag)
         {
-            return ((uint) flag & flags) != 0;
+            return ((uint) flag & _flags) != 0;
         }
 
         private void SetFlag(TileFlags flag)
         {
-            flags |= (uint) flag;
+            _flags |= (uint) flag;
         }
 
         private void RemoveFlag(TileFlags flag)
         {
-            flags &= ~(uint) flag;
+            _flags &= ~(uint) flag;
         }
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
@@ -379,7 +379,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private void SetCacheAsExpired()
         {
-            cache = null;
+            _cache = null;
         }
 
         public Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICreature removedCreature)

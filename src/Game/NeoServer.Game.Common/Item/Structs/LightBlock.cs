@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Game.Common.Item.Structs
 {
-    public struct LightBlock
+    public readonly struct LightBlock
     {
         public byte LightLevel { get; }
         public byte LightColor { get; }

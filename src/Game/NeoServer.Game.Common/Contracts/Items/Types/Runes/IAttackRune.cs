@@ -12,18 +12,8 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Runes
         DamageType DamageType { get; }
 
         /// <summary>
-        ///     Shoot Type
-        /// </summary>
-        ShootType ShootType { get; }
-
-        /// <summary>
         ///     Damage Effect
         /// </summary>
-        EffectT Effect { get; }
-
-        /// <summary>
-        ///     True when damage is not in area
-        /// </summary>
-        bool NeedTarget { get; }
+        new EffectT Effect { get; }
     }
 }

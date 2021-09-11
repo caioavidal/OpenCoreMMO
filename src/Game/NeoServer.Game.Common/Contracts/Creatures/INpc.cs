@@ -19,14 +19,12 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public delegate IItem CreateItem(ushort typeId, Location.Structs.Location location,
         IDictionary<ItemAttribute, IConvertible> attributes);
 
-    public interface INpc : IWalkableCreature, ISociableCreature
+    public interface INpc : ISociableCreature
     {
         INpcType Metadata { get; }
         ISpawnPoint SpawnPoint { get; }
 
         event Answer OnAnswer;
-        event DialogAction OnDialogAction;
-        event CustomerLeft OnCustomerLeft;
 
         void Advertise();
         void BackInDialog(ISociableCreature creature, byte count);

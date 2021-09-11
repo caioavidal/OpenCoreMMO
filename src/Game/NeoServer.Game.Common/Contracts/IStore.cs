@@ -11,6 +11,7 @@ namespace NeoServer.Game.Common.Contracts
         ///     Checks if thing can be added to store
         /// </summary>
         /// <param name="item"></param>
+        /// <param name="amount"></param>
         /// <param name="slot"></param>
         /// <returns></returns>
         Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
@@ -19,6 +20,7 @@ namespace NeoServer.Game.Common.Contracts
         ///     Gives amount that can be added to store
         /// </summary>
         /// <param name="thing"></param>
+        /// <param name="toPosition"></param>
         /// <returns></returns>
         uint PossibleAmountToAdd(IItem thing, byte? toPosition = null);
 
@@ -50,10 +52,6 @@ namespace NeoServer.Game.Common.Contracts
         /// <summary>
         ///     Sends thing to another store
         /// </summary>
-        /// <param name="destination">store destination</param>
-        /// <param name="thing">thing to send</param>
-        /// <param name="fromPosition">position source in store</param>
-        /// <param name="toPosition">position destination in store</param>
         /// <returns></returns>
         Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition,
             byte? toPosition);

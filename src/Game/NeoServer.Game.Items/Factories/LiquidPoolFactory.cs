@@ -22,7 +22,7 @@ namespace NeoServer.Game.Items.Factories
         {
             if (!_itemTypeStore.TryGetValue(2016, out var itemType)) return null;
 
-            if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED) return null;
+            if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 
             var item = new LiquidPool(itemType, location, color);
             OnItemCreated?.Invoke(item);
@@ -33,7 +33,7 @@ namespace NeoServer.Game.Items.Factories
         {
             if (!_itemTypeStore.TryGetValue(2019, out var itemType)) return null;
 
-            if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED) return null;
+            if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 
             var item = new LiquidPool(itemType, location, color);
             OnItemCreated?.Invoke(item);

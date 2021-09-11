@@ -25,7 +25,7 @@ namespace NeoServer.Server.Events.Player.Party
 
             oldMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(oldMember, PartyEmblem.None));
             oldMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket(
-                !party.IsOver ? "You have left the party" : TextConstants.PartyHasBeenDisbanded,
+                !party.IsOver ? "You have left the party" : TextConstants.PARTY_HAS_BEEN_DISBANDED,
                 TextMessageOutgoingType.Description));
 
             foreach (var member in party.Members)

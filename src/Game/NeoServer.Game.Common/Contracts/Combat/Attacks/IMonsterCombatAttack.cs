@@ -10,9 +10,6 @@ namespace NeoServer.Game.Common.Contracts.Combat.Attacks
         ICombatAttack CombatAttack { get; set; }
         DamageType DamageType { get; set; }
         int Interval { set; }
-        bool IsMelee { get; }
-        ushort MaxDamage { get; set; }
-        ushort MinDamage { get; set; }
         byte Target { get; set; }
 
         CooldownTime Cooldown { get; }

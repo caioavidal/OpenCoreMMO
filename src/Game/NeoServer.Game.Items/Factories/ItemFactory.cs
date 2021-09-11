@@ -108,7 +108,7 @@ namespace NeoServer.Game.Items.Factories
         {
             if (itemType is null || itemType.TypeId < 100) return null;
 
-            if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED) return null;
+            if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 
             if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script &&
                 !string.IsNullOrWhiteSpace(script))

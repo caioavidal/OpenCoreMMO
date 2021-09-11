@@ -19,7 +19,7 @@ namespace NeoServer.Extensions.Players
             IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed, Location location) :
             base(id, characterName, vocation, gender, online, skills, outfit, inventory, speed, location)
         {
-            SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVIP);
+            SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVip);
         }
 
         public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);

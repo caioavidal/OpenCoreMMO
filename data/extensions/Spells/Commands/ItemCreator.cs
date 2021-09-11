@@ -5,6 +5,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Factories;
 
@@ -12,6 +13,7 @@ namespace NeoServer.Extensions.Spells.Commands
 {
     public class ItemCreator : CommandSpell
     {
+
         public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
         {
             error = InvalidOperation.NotPossible;

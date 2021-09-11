@@ -113,7 +113,7 @@ namespace NeoServer.Benchmarks.Collections
 
         public override int GetHashCode()
         {
-            return HashHelper.Start
+            return HashHelper.START
                 .CombineHashCode(X)
                 .CombineHashCode(Y)
                 .CombineHashCode(Z);

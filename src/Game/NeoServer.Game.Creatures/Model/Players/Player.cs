@@ -755,10 +755,10 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return false;
             }
 
-            if (player.FlagIsEnabled(PlayerFlag.SpecialVIP))
-                if (!FlagIsEnabled(PlayerFlag.SpecialVIP))
+            if (player.FlagIsEnabled(PlayerFlag.SpecialVip))
+                if (!FlagIsEnabled(PlayerFlag.SpecialVip))
                 {
-                    OperationFailService.Display(CreatureId, TextConstants.CannotAddPlayerToVipList);
+                    OperationFailService.Display(CreatureId, TextConstants.CANNOT_ADD_PLAYER_TO_VIP_LIST);
                     return false;
                 }
 
@@ -859,7 +859,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (!result.IsSuccess)
             {
-                OperationFailService.Display(CreatureId, TextConstants.OnlyLeadersCanInviteToParty);
+                OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_INVITE_TO_PARTY);
                 return;
             }
 
@@ -896,7 +896,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public void LeaveParty()
         {
             if (Party is null) return;
-            if (InFight) OperationFailService.Display(CreatureId, TextConstants.YouCannotLeavePartyWhenInFight);
+            if (InFight) OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_LEAVE_PARTY_WHEN_IN_FIGHT);
 
             Party.OnPartyOver -= PartyEmptyHandler;
 
@@ -916,7 +916,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (party is null) return;
             if (Party is not null)
             {
-                OperationFailService.Display(CreatureId, TextConstants.AlreadyInParty);
+                OperationFailService.Display(CreatureId, TextConstants.ALREADY_IN_PARTY);
                 return;
             }
 
@@ -945,10 +945,10 @@ namespace NeoServer.Game.Creatures.Model.Players
             switch (result.Error)
             {
                 case InvalidOperation.NotAPartyMember:
-                    OperationFailService.Display(CreatureId, TextConstants.PlayerIsNotPartyMember);
+                    OperationFailService.Display(CreatureId, TextConstants.PLAYER_IS_NOT_PARTY_MEMBER);
                     break;
                 case InvalidOperation.NotAPartyLeader:
-                    OperationFailService.Display(CreatureId, TextConstants.OnlyLeadersCanPassLeadership);
+                    OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_PASS_LEADERSHIP);
                     break;
             }
         }
