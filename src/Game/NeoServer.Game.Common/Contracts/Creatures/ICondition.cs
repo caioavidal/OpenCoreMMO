@@ -7,9 +7,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ConditionIcon Icons { get; }
         ConditionType Type { get; }
 
-        long EndTime { get; }
-
-        bool IsPersistent { get; }
         bool HasExpired { get; }
 
         /// <summary>
@@ -24,6 +21,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ///     Extends condition duration in milliseconds
         /// </summary>
         /// <param name="duration"></param>
+        /// <param name="maxDuration"></param>
         void Extend(uint duration, uint maxDuration = uint.MaxValue);
     }
 }

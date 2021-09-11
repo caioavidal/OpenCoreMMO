@@ -8,7 +8,7 @@
         }
 
         public InvalidOperation Error { get; }
-        public readonly bool IsSuccess => Error == InvalidOperation.None;
+        public bool IsSuccess => Error == InvalidOperation.None;
         public static Result Success => new(InvalidOperation.None);
         public static Result NotPossible => new(InvalidOperation.NotPossible);
     }
@@ -31,7 +31,7 @@
 
         public T Value { get; }
         public InvalidOperation Error { get; }
-        public readonly bool IsSuccess => Error == InvalidOperation.None;
+        public bool IsSuccess => Error == InvalidOperation.None;
         public static Result<T> Success => new(InvalidOperation.None);
 
         public static Result<T> NotPossible => new(InvalidOperation.NotPossible);

@@ -8,6 +8,7 @@ namespace NeoServer.Server.Tasks
 {
     public class Scheduler : IScheduler
     {
+        private readonly IDispatcher dispatcher;
         protected readonly ChannelReader<ISchedulerEvent> reader;
         protected readonly ChannelWriter<ISchedulerEvent> writer;
 
@@ -16,8 +17,6 @@ namespace NeoServer.Server.Tasks
         protected ConcurrentDictionary<uint, byte> activeEventIds = new();
 
         protected Channel<ISchedulerEvent> channel;
-
-        private readonly IDispatcher dispatcher;
 
         protected uint lastEventId;
 

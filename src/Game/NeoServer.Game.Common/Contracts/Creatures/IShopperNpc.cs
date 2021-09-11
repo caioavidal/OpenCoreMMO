@@ -13,7 +13,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
         void StopSellingToCustomer(ISociableCreature creature);
         bool BuyFromCustomer(ISociableCreature creature, IItemType item, byte amount);
-        bool Pay(ISociableCreature to, uint value);
         ulong CalculateCost(IItemType itemType, byte amount);
     }
 }

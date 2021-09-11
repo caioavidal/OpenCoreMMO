@@ -7,20 +7,20 @@ using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public delegate bool OnAttack(ICombatActor actor, ICombatActor enemy, DamageType damageType, int minDamage,
+    public delegate bool AttackEnemy(ICombatActor actor, ICombatActor enemy, DamageType damageType, int minDamage,
         int maxDamage, out CombatDamage damage);
 
     public interface IWeapon : IBodyEquipmentItem
     {
         bool TwoHanded => Metadata.BodyPosition == Slot.TwoHanded;
 
-        Slot Slot => Slot.Left;
+        new Slot Slot => Slot.Left;
         public WeaponType Type => Metadata.WeaponType;
 
         bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combat);
     }
 
-    public interface IWeaponItem : IWeapon, IBodyEquipmentItem
+    public interface IWeaponItem : IWeapon
     {
         ushort Attack { get; }
         byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.WeaponDefendValue);

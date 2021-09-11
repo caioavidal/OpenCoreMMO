@@ -8,7 +8,10 @@ namespace NeoServer.Server.Compiler.Compilers
     internal class ExtensionsAssembly
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static Assembly Load(byte[] compiledAssembly) => Assembly.Load(compiledAssembly);
+        public static Assembly Load(byte[] compiledAssembly)
+        {
+            return Assembly.Load(compiledAssembly);
+        }
 
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -21,14 +24,13 @@ namespace NeoServer.Server.Compiler.Compilers
 
             Assembly.LoadFrom(path);
         }
+
         public static void Save(Assembly assembly, byte[] compiledAssembly)
         {
-
             if (assembly?.ManifestModule?.ScopeName != null)
-            {
-                File.WriteAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assembly.ManifestModule.ScopeName),
+                File.WriteAllBytes(
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assembly.ManifestModule.ScopeName),
                     compiledAssembly);
-            }
         }
     }
 }

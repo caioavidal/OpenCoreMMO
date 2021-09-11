@@ -36,8 +36,8 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             ? Inventory[Slot.Ammo].Item1 as IAmmoItem
             : null;
 
-        public IDefenseEquipmentItem Shield => Inventory.ContainsKey(Slot.Right)
-            ? Inventory[Slot.Right].Item1 as IDefenseEquipmentItem
+        public IDefenseEquipment Shield => Inventory.ContainsKey(Slot.Right)
+            ? Inventory[Slot.Right].Item1 as IDefenseEquipment
             : null;
 
         public event AddItemToSlot OnItemAddedToSlot;
@@ -153,7 +153,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             {
                 byte totalArmor = 0;
 
-                ushort GetDefenseValue(Slot slot) => Inventory[slot].Item1 is IDefenseEquipmentItem equipment ? equipment.DefenseValue : default;
+                ushort GetDefenseValue(Slot slot) => Inventory[slot].Item1 is IDefenseEquipment equipment ? equipment.DefenseValue : default;
 
                 totalArmor += (byte)(Inventory.ContainsKey(Slot.Necklace) ? GetDefenseValue(Slot.Necklace) : 0);
                 totalArmor += (byte)(Inventory.ContainsKey(Slot.Head) ? GetDefenseValue(Slot.Head) : 0);

@@ -23,7 +23,7 @@ namespace NeoServer.Server.Events.Player
         {
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.Puff));
-            connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextConstants.YouAreExhausted,
+            connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextConstants.YOU_ARE_EXHAUSTED,
                 TextMessageOutgoingType.Small));
             connection.Send();
         }

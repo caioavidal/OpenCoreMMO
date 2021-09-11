@@ -9,7 +9,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
-    public delegate void OnAttackTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId);
+    public delegate void AttackTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId);
 
     public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamage damage);
     public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamage damage);
@@ -26,7 +26,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
     public delegate void ChangeVisibility(ICombatActor actor);
 
-    public delegate void OnPropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
+    public delegate void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
 
     public delegate void DropLoot(ICombatActor actor, ILoot loot);
 
@@ -52,9 +52,9 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event Heal OnHeal;
         event Die OnKilled;
         event StopAttack OnStoppedAttack;
-        event OnAttackTargetChange OnTargetChanged;
+        event AttackTargetChange OnTargetChanged;
         event ChangeVisibility OnChangedVisibility;
-        event OnPropagateAttack OnPropagateAttack;
+        event PropagateAttack OnPropagateAttack;
         event GainExperience OnGainedExperience;
         event RemoveCondition OnRemovedCondition;
         event AddCondition OnAddedCondition;
@@ -89,7 +89,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         /// <summary>
         ///     Set creature as enemy. If monster can't see creature it will be forgotten
         /// </summary>
-        /// <param name="creature"></param>
         void SetAsEnemy(ICreature actor);
 
         void GainExperience(uint exp);

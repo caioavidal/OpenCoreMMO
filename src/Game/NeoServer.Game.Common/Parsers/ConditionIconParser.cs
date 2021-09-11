@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Common.Parsers
 {

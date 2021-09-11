@@ -6,7 +6,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types
 
     public interface ICumulative : IPickupable
     {
-        public byte Amount { get; set; }
+        public new byte Amount { get; set; }
 
         bool HasMany => Amount > 1;
         new float Weight { get; }

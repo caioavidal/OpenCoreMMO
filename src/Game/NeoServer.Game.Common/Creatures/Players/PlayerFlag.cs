@@ -32,7 +32,7 @@
         NotGainHealth = 1 << 27,
         NotGainSkill = 1 << 28,
         SetMaxSpeed = 1 << 29,
-        SpecialVIP = 1 << 30,
+        SpecialVip = 1 << 30,
         NotGenerateLoot = (ulong) 1 << 31,
         CanTalkRedChannelAnonymous = 1 << 32,
         IgnoreProtectionZone = 1 << 33,

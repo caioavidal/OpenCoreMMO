@@ -17,7 +17,7 @@ namespace NeoServer.Game.Common.Contracts.World
 
         IEnumerable<IItem> ItemsWithSeparation { get; }
 
-        Location.Structs.Location Location { get; }
+        new Location.Structs.Location Location { get; }
 
         byte Flags { get; }
 

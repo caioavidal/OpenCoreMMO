@@ -55,11 +55,10 @@ namespace NeoServer.Game.Creatures.Model.Players
             AddItemOnOpenedContainer addItemAction, UpdateItemOnOpenedContainer updateItemAction,
             MoveOpenedContainer moveOpenedContainer)
         {
-            if (RemoveItem == null) RemoveItem += removeItemAction;
-            if (AddItem == null) AddItem += addItemAction;
-            if (UpdateItem == null) UpdateItem += updateItemAction;
-            if (UpdateItem == null) UpdateItem += updateItemAction;
-            if (MoveOpenedContainer is null) MoveOpenedContainer += moveOpenedContainer;
+            RemoveItem ??= removeItemAction;
+            AddItem ??= addItemAction;
+            UpdateItem ??= updateItemAction ?? updateItemAction;
+            MoveOpenedContainer ??= moveOpenedContainer;
         }
 
         public void AttachContainerEvent()

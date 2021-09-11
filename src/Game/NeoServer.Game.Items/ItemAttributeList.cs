@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
@@ -87,6 +86,18 @@ namespace NeoServer.Game.Items
                 return (T) Convert.ChangeType(value.Item1, typeof(T));
 
             return default;
+        }
+
+        public bool TryGetAttribute<T>(ItemAttribute attribute, out T attrValue) where T : struct
+        {
+            attrValue = default;
+
+            if (_defaultAttributes is null) return false;
+
+            if (!_defaultAttributes.TryGetValue(attribute, out var value)) return false;
+
+            attrValue = (T) Convert.ChangeType(value.Item1, typeof(T));
+            return true;
         }
 
         public string GetAttribute(ItemAttribute attribute)

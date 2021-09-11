@@ -7,9 +7,9 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
-    public delegate void OnCreatureStateChange();
+    public delegate void CreatureStateChange();
 
-    public delegate void OnTurnedToDirection(IWalkableCreature creature, Direction direction);
+    public delegate void TurnedToDirection(IWalkableCreature creature, Direction direction);
 
     public delegate void RemoveCreature(ICreature creature);
 

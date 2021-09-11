@@ -3,7 +3,6 @@
     public interface ISpawn
     {
         Location.Structs.Location Location { get; set; }
-        byte Radius { get; set; }
         ICreature[] Monsters { get; set; }
         ICreature[] Npcs { get; set; }
 

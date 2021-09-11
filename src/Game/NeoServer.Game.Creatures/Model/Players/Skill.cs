@@ -33,8 +33,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             Count = count;
         }
 
-        public event OnLevelAdvance OnAdvance;
-        public event OnIncreaseSkillPoints OnIncreaseSkillPoints;
+        public event LevelAdvance OnAdvance;
+        public event IncreaseSkillPoints OnIncreaseSkillPoints;
 
         public byte Bonus { get; private set; }
 

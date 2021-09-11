@@ -8,9 +8,10 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Items;
+using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items;
+using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Items.Items.Containers;
-using NeoServer.Game.Items.Items.Protections;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
 using NeoServer.Game.Items.Items.Weapons;
 
@@ -110,43 +111,30 @@ namespace NeoServer.Game.Tests.Helpers
             return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
         }
 
-        public static IRing CreateRing(ushort id, ushort charges = 10, (ItemAttribute, IConvertible)[] attributes = null,
-            Func<IItemType> transformOnEquipItem = null, Func<IItemType> transformOnDequipItem = null, Func<IItemType> decaysTo = null)
+        public static IDefenseEquipment CreateDefenseEquipmentItem(ushort id, string slot = "", ushort charges = 10,
+            (ItemAttribute, IConvertible)[] attributes = null,
+            Func<IItemType> transformOnEquipItem = null, Func<IItemType> transformOnDequipItem = null,
+            Func<IItemType> decaysTo = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
-            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "ring");
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
             type.Attributes.SetAttribute(ItemAttribute.Charges, charges);
             type.SetName("item");
 
             attributes ??= new (ItemAttribute, IConvertible)[0];
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
 
-            foreach (var (attributeType,value) in attributes)
+            return new BodyDefenseEquipment(type, new Location(100, 100, 7))
             {
-                type.Attributes.SetAttribute(attributeType, value);
-            }
-
-            return new Ring(type, new Location(100, 100, 7))
-            {
-                TransformEquipItem = transformOnEquipItem,
-                TransformDequipItem = transformOnDequipItem,
-                DecaysTo = decaysTo
+                Decayable = type.Attributes.GetAttribute<ushort>(ItemAttribute.Duration) == 0 ? null : new Decayable(decaysTo, type.Attributes.GetAttribute<ushort>(ItemAttribute.Duration)),
+                Transformable = new Transformable(type){ TransformEquipItem = transformOnEquipItem, TransformDequipItem = transformOnDequipItem },
+                Protection = type.Attributes.DamageProtection is null ? null : new Protection(type.Attributes.DamageProtection),
+                SkillBonus = type.Attributes.SkillBonuses is null ? null : new SkillBonus(type.Attributes.SkillBonuses)
             };
         }
-     
-
-        public static IPickupable CreateNecklace(ushort id)
-        {
-            var type = new ItemType();
-            type.SetClientId(id);
-            type.SetId(id);
-            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "necklace");
-            type.SetName("item");
-
-            return new Necklace(type, new Location(100, 100, 7));
-        }
-
+        
         public static IPickupable CreateBodyEquipmentItem(ushort id, string slot, string weaponType = "")
         {
             var type = new ItemType();
@@ -157,7 +145,7 @@ namespace NeoServer.Game.Tests.Helpers
             type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
             type.SetName("item");
 
-            return new BodyDefenseEquimentItem(type, new Location(100, 100, 7));
+            return new BodyDefenseEquipment(type, new Location(100, 100, 7));
         }
 
         public static IPickupable CreateAmmoItem(ushort id, byte amount)
@@ -171,7 +159,7 @@ namespace NeoServer.Game.Tests.Helpers
             type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
             type.Flags.Add(ItemFlag.Stackable);
 
-            return new AmmoItem(type, new Location(100, 100, 7), amount);
+            return new Ammo(type, new Location(100, 100, 7), amount);
         }
 
         public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)
@@ -187,7 +175,9 @@ namespace NeoServer.Game.Tests.Helpers
 
             return new Coin(type, new Location(100, 100, 7), amount);
         }
-        public static IAttackRune CreateAttackRune(ushort id, DamageType damageType = DamageType.Energy, bool needTarget = true, ushort min = 100, ushort max = 100)
+
+        public static IAttackRune CreateAttackRune(ushort id, DamageType damageType = DamageType.Energy,
+            bool needTarget = true, ushort min = 100, ushort max = 100)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -195,8 +185,8 @@ namespace NeoServer.Game.Tests.Helpers
             type.SetName("hmm");
             type.Attributes.SetAttribute(ItemAttribute.Damage, DamageTypeParser.Parse(damageType));
             type.Attributes.SetAttribute(ItemAttribute.NeedTarget, needTarget);
-            type.Attributes.SetCustomAttribute("x", new[] { min.ToString(), max.ToString() });
-            type.Attributes.SetCustomAttribute("y", new[] { min.ToString(), max.ToString() });
+            type.Attributes.SetCustomAttribute("x", new[] {min.ToString(), max.ToString()});
+            type.Attributes.SetCustomAttribute("y", new[] {min.ToString(), max.ToString()});
 
             return new AttackRune(type, new Location(100, 100, 7), 100);
         }

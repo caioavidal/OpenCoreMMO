@@ -55,8 +55,8 @@ namespace NeoServer.Game.Tests.Helpers
                 [Slot.Body] = new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(5, "body"), 5),
                 [Slot.Feet] = new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(6, "feet"), 6),
                 [Slot.Right] = new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(7, "", "shield"), 7),
-                [Slot.Ring] = new Tuple<IPickupable, ushort>(ItemTestData.CreateRing(id: 8), 8),
-                [Slot.Necklace] = new Tuple<IPickupable, ushort>(ItemTestData.CreateNecklace(id: 10), 10),
+                [Slot.Ring] = new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(id: 8, slot:"ring"), 8),
+                [Slot.Necklace] = new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(id: 10, slot: "necklace"), 10),
                 [Slot.Legs] = new Tuple<IPickupable, ushort>(ItemTestData.CreateBodyEquipmentItem(11, "legs"), 11)
             };
     }

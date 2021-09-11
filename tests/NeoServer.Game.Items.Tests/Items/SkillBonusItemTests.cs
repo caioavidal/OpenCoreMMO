@@ -16,7 +16,7 @@ namespace NeoServer.Game.Items.Tests.Items
         [Fact]
         public void AddSkillBonus_Null_DoNotThrow()
         {
-            var sut = ItemTestData.CreateRing(1);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1);
 
             sut.AddSkillBonus(null);
         }
@@ -27,7 +27,7 @@ namespace NeoServer.Game.Items.Tests.Items
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
             var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
 
-            var sut = ItemTestData.CreateRing(1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateDefenseEquipmentItem(id:1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.SkillAxe, 5),
                 (ItemAttribute.SkillShield, 15)
@@ -49,7 +49,7 @@ namespace NeoServer.Game.Items.Tests.Items
         [Fact]
         public void RemoveSkillBonus_Null_DoNotThrow()
         {
-            var sut = ItemTestData.CreateRing(1);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1);
 
             sut.RemoveSkillBonus(null);
         }
@@ -60,7 +60,7 @@ namespace NeoServer.Game.Items.Tests.Items
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
             var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
 
-            var sut = ItemTestData.CreateRing(1);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillShield, 15);
 

@@ -5,7 +5,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
 {
     public delegate void Use(ICreature usedBy, ICreature creature, IItem item);
 
-    public interface IConsumable : IItemRequirement, IUseableOnCreature, IItem
+    public interface IConsumable : IItemRequirement, IUseableOnCreature
     {
         public string Sentence => Metadata.Attributes.GetAttribute(ItemAttribute.Sentence);
         public event Use OnUsed;

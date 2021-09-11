@@ -276,7 +276,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public event StopWalk OnStoppedWalking;
         public event StopWalk OnCompleteWalking;
         public event StartWalk OnStartedWalking;
-        public event OnTurnedToDirection OnTurnedToDirection;
+        public event TurnedToDirection OnTurnedToDirection;
         public event StartFollow OnStartedFollowing;
         public event ChangeSpeed OnChangedSpeed;
         public event TeleportTo OnTeleported;

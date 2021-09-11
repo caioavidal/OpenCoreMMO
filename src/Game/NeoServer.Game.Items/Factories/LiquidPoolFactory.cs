@@ -10,20 +10,21 @@ namespace NeoServer.Game.Items.Factories
     public class LiquidPoolFactory : ILiquidPoolFactory
     {
         private readonly ItemTypeStore _itemTypeStore;
-        public event CreateItem OnItemCreated;
 
         public LiquidPoolFactory(ItemTypeStore itemTypeStore)
         {
             _itemTypeStore = itemTypeStore;
         }
 
+        public event CreateItem OnItemCreated;
+
         public ILiquid Create(Location location, LiquidColor color)
         {
             if (!_itemTypeStore.TryGetValue(2016, out var itemType)) return null;
 
-            if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED) return null;
+            if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 
-            var item = new LiquidPoolItem(itemType, location, color);
+            var item = new LiquidPool(itemType, location, color);
             OnItemCreated?.Invoke(item);
             return item;
         }
@@ -32,9 +33,9 @@ namespace NeoServer.Game.Items.Factories
         {
             if (!_itemTypeStore.TryGetValue(2019, out var itemType)) return null;
 
-            if (itemType.Group == ItemGroup.ITEM_GROUP_DEPRECATED) return null;
+            if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 
-            var item = new LiquidPoolItem(itemType, location, color);
+            var item = new LiquidPool(itemType, location, color);
             OnItemCreated?.Invoke(item);
             return item;
         }

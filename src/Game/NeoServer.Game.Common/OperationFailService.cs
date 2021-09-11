@@ -4,11 +4,11 @@ namespace NeoServer.Game.Common
 {
     public class OperationFailService
     {
-        public static event Action<uint, string> OperationFailed;
+        public static event Action<uint, string> OnOperationFailed;
 
         public static void Display(uint playerId, string message)
         {
-            OperationFailed?.Invoke(playerId, message);
+            OnOperationFailed?.Invoke(playerId, message);
         }
     }
 }

@@ -23,7 +23,7 @@
         DecayingState = 17, // ATTR_DECAYING_STATE = 17,
         WrittenDate = 18, // ATTR_WRITTENDATE = 18,
         WrittenBy = 19, // ATTR_WRITTENBY = 19,
-        SleeperGUID = 20, // ATTR_SLEEPERGUID = 20,
+        SleeperGuid = 20, // ATTR_SLEEPERGUID = 20,
         SleepStart = 21, // ATTR_SLEEPSTART = 21,
         Charges = 22, // ATTR_CHARGES = 22,
         ContainerItems = 23, // ATTR_CONTAINER_ITEMS = 23,

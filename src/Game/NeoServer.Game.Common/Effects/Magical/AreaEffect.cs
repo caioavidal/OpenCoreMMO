@@ -7,7 +7,7 @@ namespace NeoServer.Game.Common.Effects.Magical
 {
     public partial class AreaEffect
     {
-        public static Dictionary<string, (byte, byte)> originPoints = new();
+        public static Dictionary<string, (byte, byte)> OriginPoints = new();
 
         public static Coordinate[] Create(string areaType, byte[,] areaTemplate)
         {
@@ -49,7 +49,7 @@ namespace NeoServer.Game.Common.Effects.Magical
 
         private static (byte, byte) FindOriginPoint(string areaType, byte[,] array)
         {
-            if (originPoints.TryGetValue(areaType, out var origin)) return origin;
+            if (OriginPoints.TryGetValue(areaType, out var origin)) return origin;
 
             var length = array.GetLength(0);
 
@@ -60,7 +60,7 @@ namespace NeoServer.Game.Common.Effects.Magical
                 if (value == 3)
                 {
                     origin = ((byte) i, (byte) y);
-                    originPoints.TryAdd(areaType, origin);
+                    OriginPoints.TryAdd(areaType, origin);
                     return origin;
                 }
             }

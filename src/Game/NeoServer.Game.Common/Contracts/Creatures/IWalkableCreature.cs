@@ -34,7 +34,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool FirstStep { get; } //remove
         event StartWalk OnStartedWalking;
         event StopWalk OnStoppedWalking;
-        event OnTurnedToDirection OnTurnedToDirection;
+        event TurnedToDirection OnTurnedToDirection;
         event StartFollow OnStartedFollowing;
         event ChangeSpeed OnChangedSpeed;
         event StopWalk OnCompleteWalking;
@@ -59,6 +59,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ///     Follow creature
         /// </summary>
         /// <param name="creature"></param>
+        /// <param name="findPathParams"></param>
         void Follow(ICreature creature, FindPathParams findPathParams);
 
         void StopFollowing();
@@ -107,7 +108,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         /// <summary>
         ///     Get creature's next step direction
         /// </summary>
-        /// <param name="direction"></param>
         /// <returns>Returns None when there is no next direction</returns>
         Direction GetNextStep();
 

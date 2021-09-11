@@ -2,7 +2,7 @@
 {
     public static class HashHelper
     {
-        public const int Start = 1610612741;
+        public const int START = 1610612741;
 
         /// <summary>
         ///     Combines the current hashcode with the hashcode of another object.

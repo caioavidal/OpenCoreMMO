@@ -73,7 +73,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public override int GetHashCode()
         {
-            return HashHelper.Start
+            return HashHelper.START
                 .CombineHashCode(Raw);
         }
 

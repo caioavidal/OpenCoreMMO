@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IThrowableDistanceWeaponItem : ICumulative, IWeapon, IBodyEquipmentItem
+    public interface IThrowableDistanceWeaponItem : ICumulative, IWeapon
     {
         byte Attack { get; }
         byte Range { get; }
@@ -21,7 +21,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
                 if (!string.IsNullOrWhiteSpace(range)) stringBuilder.Append($"{range}, ");
                 if (!string.IsNullOrWhiteSpace(atk)) stringBuilder.Append($"{atk}, ");
 
-                stringBuilder?.Remove(stringBuilder.Length - 2, 2);
+                stringBuilder.Remove(stringBuilder.Length - 2, 2);
 
                 return $"({stringBuilder})";
             }

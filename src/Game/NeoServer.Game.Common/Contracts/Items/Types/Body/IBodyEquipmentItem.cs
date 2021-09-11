@@ -11,7 +11,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
         public Slot Slot => Metadata.BodyPosition;
     }
 
-    public interface IBodyEquipmentItem : IPickupable, IInventoryItem
+    public interface IBodyEquipmentItem : IDressable, IPickupable, IInventoryItem
     {
         bool Pickupable => true;
 
@@ -28,16 +28,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
             {
                 var stringBuilder = new StringBuilder();
                 var sufix = "\nIt can only be wielded properly by";
-
-                for (var i = 0; i < Vocations?.Length; i++)
-                {
-                    //stringBuilder.Append($"{VocationTypeParser.Parse(Vocations[i]).ToLower()}s");
-                    //if (i + 1 < Vocations.Length)
-                    //{
-                    //    stringBuilder.Append(", ");
-                    //}
-                }
-
+                //todo: add vocations 
                 if (MinLevel > 0) stringBuilder.Append($" of level {MinLevel} or higher");
 
                 return $"{sufix} {stringBuilder}";

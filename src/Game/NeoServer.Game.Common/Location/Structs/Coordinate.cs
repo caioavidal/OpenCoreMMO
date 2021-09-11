@@ -24,8 +24,6 @@ namespace NeoServer.Game.Common.Location.Structs
     /// </remarks>
     public readonly struct Coordinate : IEquatable<Coordinate>
     {
-        public const byte TFSGroundFloorZCoordinate = 7;
-
         /// <summary>
         ///     The x coordinate of this instance.
         /// </summary>
@@ -68,33 +66,11 @@ namespace NeoServer.Game.Common.Location.Structs
             Z = z;
         }
 
-        /// <summary>
-        ///     Creates a <see cref="Coordinate" /> from the coordinates of a
-        ///     "TFS Location". See the remarks of <see cref="Coordinate" /> to know more
-        ///     about the differences between the coordinate systems.
-        /// </summary>
-        public static Coordinate FromTFSCoordinates(ushort x, ushort y, byte z)
-        {
-            return new(
-                x,
-                -y,
-                (sbyte) -(z - TFSGroundFloorZCoordinate));
-        }
-
-        /// <summary>
-        ///     Creates a new <see cref="Coordinate" /> whose coordinates are equal to this instance's
-        ///     plus the provided offesets.
-        /// </summary>
-        public Coordinate Translate(int xOffset, int yOffset)
-        {
-            return Translate(xOffset, yOffset, 0);
-        }
-
         public Location Location => new((ushort) X, (ushort) Y, (byte) Z);
 
         /// <summary>
         ///     Creates a new <see cref="Coordinate" /> whose coordinates are equal to this instance's
-        ///     plus the provided offesets.
+        ///     plus the provided offsets.
         /// </summary>
         public Coordinate Translate(int xOffset, int yOffset, sbyte zOffset)
         {
@@ -104,12 +80,6 @@ namespace NeoServer.Game.Common.Location.Structs
                 (sbyte) (Z + zOffset));
         }
 
-        /// <summary>
-        /// Returns the hash code of this instance.
-        /// </summary>
-        //public override int GetHashCode() => System.HashCode.Combine(X, Y, Z);
-
-        //public override bool Equals(object obj) => obj is Coordinate c && Equals(c);
         /// <summary>
         ///     Returns a string representation of this instance.
         /// </summary>

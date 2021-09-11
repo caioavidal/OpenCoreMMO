@@ -5,14 +5,14 @@ namespace NeoServer.Game.Common.Effects.Magical
 {
     public class WaveEffect
     {
-        public static byte[,] AreaWave3 = new byte[3, 3]
+        public static byte[,] AreaWave3 = new byte[,]
         {
             {1, 1, 1},
             {1, 1, 1},
             {0, 3, 0}
         };
 
-        public static byte[,] AreaWave4 = new byte[4, 5]
+        public static byte[,] AreaWave4 = new byte[,]
         {
             {1, 1, 1, 1, 1},
             {0, 1, 1, 1, 0},
@@ -20,14 +20,14 @@ namespace NeoServer.Game.Common.Effects.Magical
             {0, 0, 3, 0, 0}
         };
 
-        public static byte[,] AreaWave6 = new byte[3, 5]
+        public static byte[,] AreaWave6 = new byte[,]
         {
             {0, 0, 0, 0, 0},
             {0, 1, 3, 1, 0},
             {0, 0, 0, 0, 0}
         };
 
-        public static byte[,] AreaSquareWave5 = new byte[5, 3]
+        public static byte[,] AreaSquareWave5 = new byte[,]
         {
             {1, 1, 1},
             {1, 1, 1},
@@ -36,7 +36,7 @@ namespace NeoServer.Game.Common.Effects.Magical
             {0, 3, 0}
         };
 
-        public static byte[,] DiagonalWave4 = new byte[13, 13]
+        public static byte[,] DiagonalWave4 = new byte[,]
         {
             {0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 8, 8, 7, 8, 8, 0, 0, 0, 0},

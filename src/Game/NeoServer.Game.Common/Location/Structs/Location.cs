@@ -313,7 +313,6 @@ namespace NeoServer.Game.Common.Location.Structs
         /// <summary>
         ///     Check whether location is 1 sqm next to dest
         /// </summary>
-        /// <param name="location"></param>
         /// <returns></returns>
         public bool IsNextTo(Location dest)
         {
