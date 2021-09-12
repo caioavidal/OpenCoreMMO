@@ -21,9 +21,8 @@ namespace NeoServer.Game.Items
         {
             get
             {
-                customAttributes = customAttributes ??
-                                   new Dictionary<string, (dynamic, IItemAttributeList)>(StringComparer
-                                       .InvariantCultureIgnoreCase);
+                customAttributes ??= new Dictionary<string, (dynamic, IItemAttributeList)>(StringComparer
+                    .InvariantCultureIgnoreCase);
                 return customAttributes;
             }
         }
