@@ -28,14 +28,12 @@ namespace NeoServer.Game.Items.Items.Attributes
         }
         
 
-        public void Protect(ref CombatDamage damage)
+        public bool Protect(ref CombatDamage damage)
         {
-            //if (NoCharges && !InfiniteCharges) return;
-
             var protection = GetProtection(damage.Type);
-            if (protection == 0) return;
+            if (protection == 0) return false;
             damage.ReduceDamageByPercent(protection);
-            //DecreaseCharges();
+            return true;
         }
     }
 }
