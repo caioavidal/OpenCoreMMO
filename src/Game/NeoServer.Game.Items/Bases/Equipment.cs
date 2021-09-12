@@ -14,14 +14,13 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases
 {
-    public abstract class Equipment : MoveableItem, IChargeable, IEquipment
+    public abstract class Equipment : MoveableItem, IEquipment
     {
         private readonly IDecayable _decayable;
         private readonly ITransformable _transformable;
 
         protected Equipment(IItemType type, Location location) : base(type, location)
         {
-            Charges = Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges);
         }
 
         public IDecayable Decayable
@@ -37,6 +36,7 @@ namespace NeoServer.Game.Items.Bases
 
         public IProtection Protection { get; init; }
         public ISkillBonus SkillBonus { get; init; }
+        public IChargeable Chargeable { get; init; }
 
         public ITransformable Transformable
         {
@@ -59,7 +59,7 @@ namespace NeoServer.Game.Items.Bases
                 var stringBuilder = new StringBuilder();
                 stringBuilder.Append(base.CustomLookText);
                 if (Decayable is not null) stringBuilder.Append($" that {Decayable}");
-                if (!InfiniteCharges) stringBuilder.Append($" that has {(Charges > 0 ? Charges : "no")} charge{(Charges == 1 ? string.Empty : "s")} left");
+                if (Chargeable is not null && Chargeable.ShowCharges) stringBuilder.Append($" that {Chargeable}");
                 return stringBuilder.ToString();
             }
         }
@@ -68,7 +68,7 @@ namespace NeoServer.Game.Items.Bases
 
         public bool Protect(ref CombatDamage damage)
         {
-            if (NoCharges && !InfiniteCharges) return false;
+            if (NoCharges) return false;
             var @protected = Protection?.Protect(ref damage) ?? false;
             if (@protected) DecreaseCharges();
             return true;
@@ -95,16 +95,10 @@ namespace NeoServer.Game.Items.Bases
 
         #region Charges
 
-        public ushort Charges { get; private set; }
-        public bool NoCharges => Charges == 0;
-
-        public void DecreaseCharges()
-        {
-            Charges -= (ushort)(Charges == 0 ? 0 : 1);
-        }
-
-        public bool InfiniteCharges => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges) == 0;
-
+        public ushort Charges => Chargeable?.Charges ?? 0;
+        public bool NoCharges => Chargeable?.NoCharges ?? false;
+        public bool ShowCharges => Chargeable?.ShowCharges ?? false;
+        public void DecreaseCharges() => Chargeable?.DecreaseCharges();
         #endregion
 
         #region Skill Bonus

@@ -46,7 +46,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<DecayableFactory>().SingleInstance();
             builder.RegisterType<SkillBonusFactory>().SingleInstance();
             builder.RegisterType<TransformableFactory>().SingleInstance();
-
+            builder.RegisterType<ChargeableFactory>().SingleInstance();
+            
             builder.RegisterType<ChatChannelFactory>().OnActivated(e =>
                     e.Instance.ChannelEventSubscribers = e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>())
                 .SingleInstance();

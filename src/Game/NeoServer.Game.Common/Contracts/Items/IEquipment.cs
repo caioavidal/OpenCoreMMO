@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Items
 {
-    public interface IEquipment: IDecayable, ISkillBonus, IDressable, IProtection, ITransformable
+    public interface IEquipment: IDecayable, ISkillBonus, IDressable, IProtection, ITransformable, IChargeable
     {
     }
 }

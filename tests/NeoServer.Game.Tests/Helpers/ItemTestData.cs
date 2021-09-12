@@ -129,12 +129,13 @@ namespace NeoServer.Game.Tests.Helpers
             return new BodyDefenseEquipment(type, new Location(100, 100, 7))
             {
                 Decayable = type.Attributes.GetAttribute<ushort>(ItemAttribute.Duration) == 0 ? null : new Decayable(decaysTo, type.Attributes.GetAttribute<ushort>(ItemAttribute.Duration)),
-                Transformable = new Transformable(type){ TransformEquipItem = transformOnEquipItem, TransformDequipItem = transformOnDequipItem },
+                Transformable = new Transformable(type) { TransformEquipItem = transformOnEquipItem, TransformDequipItem = transformOnDequipItem },
                 Protection = type.Attributes.DamageProtection is null ? null : new Protection(type.Attributes.DamageProtection),
-                SkillBonus = type.Attributes.SkillBonuses is null ? null : new SkillBonus(type.Attributes.SkillBonuses)
+                SkillBonus = type.Attributes.SkillBonuses is null ? null : new SkillBonus(type.Attributes.SkillBonuses),
+                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null
             };
         }
-        
+
         public static IPickupable CreateBodyEquipmentItem(ushort id, string slot, string weaponType = "")
         {
             var type = new ItemType();
@@ -185,8 +186,8 @@ namespace NeoServer.Game.Tests.Helpers
             type.SetName("hmm");
             type.Attributes.SetAttribute(ItemAttribute.Damage, DamageTypeParser.Parse(damageType));
             type.Attributes.SetAttribute(ItemAttribute.NeedTarget, needTarget);
-            type.Attributes.SetCustomAttribute("x", new[] {min.ToString(), max.ToString()});
-            type.Attributes.SetCustomAttribute("y", new[] {min.ToString(), max.ToString()});
+            type.Attributes.SetCustomAttribute("x", new[] { min.ToString(), max.ToString() });
+            type.Attributes.SetCustomAttribute("y", new[] { min.ToString(), max.ToString() });
 
             return new AttackRune(type, new Location(100, 100, 7), 100);
         }
