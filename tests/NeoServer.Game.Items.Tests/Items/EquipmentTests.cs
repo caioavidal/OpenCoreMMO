@@ -107,7 +107,7 @@ namespace NeoServer.Game.Items.Tests.Items
         }
 
         [Fact]
-        public void InfiniteCharges_10Charges_ReturnsFalse()
+        public void NoChargess_10Charges_ReturnsFalse()
         {
             //arrange
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10);
@@ -117,18 +117,15 @@ namespace NeoServer.Game.Items.Tests.Items
             sut.NoCharges.Should().BeFalse();
         }
         [Fact]
-        public void InfiniteCharges_0Charges_ReturnsTrue()
+        public void NoCharges_NonChargeable_ReturnsFalse()
         {
             //arrange
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 0);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 10);
 
             //assert
-            sut.NoCharges.Should().BeTrue();
+            sut.NoCharges.Should().BeFalse();
         }
-
-
-
         [Fact]
         public void TransformOnEquip_NoItemToTransformTo_DoNotTransform()
         {
@@ -322,7 +319,10 @@ namespace NeoServer.Game.Items.Tests.Items
         public void CustomLookText_HasCharges_ShowChargesCount()
         {
             //arrange
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 2);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 2, attributes:new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.ShowCharges, true)
+            });
 
             //assert
             sut.CustomLookText.Should().Be(" item that has 2 charges left");

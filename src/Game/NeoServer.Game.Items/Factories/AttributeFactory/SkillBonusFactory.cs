@@ -2,18 +2,14 @@
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Factories.AttributeFactory
 {
     public class SkillBonusFactory : IFactory
     {
-        private readonly ItemTypeStore _itemTypeStore;
-
-        public SkillBonusFactory(ItemTypeStore itemTypeStore)
+        public SkillBonusFactory()
         {
-            _itemTypeStore = itemTypeStore;
         }
 
         public event CreateItem OnItemCreated;
