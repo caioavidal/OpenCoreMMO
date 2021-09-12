@@ -19,7 +19,7 @@ using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items
 {
-    public class AccessoryTests
+    public class EquipmentTests
     {
         [Fact]
         public void DressedIn_Null_DoNotThrow()
@@ -80,28 +80,7 @@ namespace NeoServer.Game.Items.Tests.Items
         }
 
 
-        [Fact]
-        public void Decrease_DefendedAttack_DecreaseCharges()
-        {
-            //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
 
-            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy);
-
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 50, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy,10)
-            });
-
-            sut.DressedIn(defender);
-
-            //act
-            attacker.Attack(defender, hmm);
-
-            //assert
-            sut.Charges.Should().Be(49);
-        }
 
         [Fact]
         public void NoCharges_10Charges_ReturnsFalse()
@@ -148,97 +127,7 @@ namespace NeoServer.Game.Items.Tests.Items
             sut.NoCharges.Should().BeTrue();
         }
 
-        [Fact]
-        public void Protect_InfiniteCharges_Protect()
-        {
-            //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
-            var oldHp = defender.HealthPoints;
 
-            var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
-            {
-                totalDamage = damage.Damage;
-            };
-
-            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
-
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 0,
-                attributes: new (ItemAttribute, IConvertible)[]
-                {
-                    (ItemAttribute.AbsorbPercentEnergy, 100),
-                    (ItemAttribute.Duration, 100)
-                });
-            sut.DressedIn(defender);
-
-            //act
-            attacker.Attack(defender, hmm);
-
-            //assert
-            totalDamage.Should().Be(0);
-            defender.HealthPoints.Should().Be(oldHp);
-        }
-
-        [Fact]
-        public void Protect_NoCharges_DoNotProtect()
-        {
-            //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
-            var oldHp = defender.HealthPoints;
-
-            var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
-            {
-                totalDamage = damage.Damage;
-            };
-
-            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
-
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1);
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
-            sut.DressedIn(defender);
-
-            //act
-            attacker.Attack(defender, hmm);
-            attacker.Attack(defender, hmm);
-
-            //assert
-            totalDamage.Should().NotBe(0);
-            defender.HealthPoints.Should().BeLessThan(oldHp);
-        }
-        [Fact]
-        public void Protect_1Charge_ProtectFromDamage()
-        {
-            //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
-
-            var oldHp = defender.HealthPoints;
-
-            var totalDamage = 0;
-            defender.OnInjured += (_, _, damage) =>
-            {
-                totalDamage = damage.Damage;
-            };
-
-            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
-
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.Duration, 100)
-            });
-            sut.DressedIn(defender);
-
-            //act
-            attacker.Attack(defender, hmm);
-
-            //assert
-            totalDamage.Should().Be(0);
-            defender.HealthPoints.Should().Be(oldHp);
-        }
 
         [Fact]
         public void TransformOnEquip_NoItemToTransformTo_DoNotTransform()
@@ -402,8 +291,8 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
-            
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot:"ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 1)
@@ -427,6 +316,20 @@ namespace NeoServer.Game.Items.Tests.Items
             player.Inventory[Slot.Ring].Should().BeNull();
             slotRemoved.Should().Be(Slot.Ring);
             itemRemoved.Should().Be(sut);
+        }
+
+        [Fact]
+        public void CustomLookText_HasCharges_ShowChargesCount()
+        {
+            //arrange
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 2);
+
+            //assert
+            sut.CustomLookText.Should().Be(" item that has 2 charges left");
+            sut.DecreaseCharges();
+            sut.CustomLookText.Should().Be(" item that has 1 charge left");
+            sut.DecreaseCharges();
+            sut.CustomLookText.Should().Be(" item that has no charges left");
         }
 
     }

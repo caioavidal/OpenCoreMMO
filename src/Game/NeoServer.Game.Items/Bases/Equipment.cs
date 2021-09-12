@@ -59,18 +59,19 @@ namespace NeoServer.Game.Items.Bases
                 var stringBuilder = new StringBuilder();
                 stringBuilder.Append(base.CustomLookText);
                 if (Decayable is not null) stringBuilder.Append($" that {Decayable}");
-
+                if (!InfiniteCharges) stringBuilder.Append($" that has {(Charges > 0 ? Charges : "no")} charge{(Charges == 1 ? string.Empty : "s")} left");
                 return stringBuilder.ToString();
             }
         }
 
         #region Protection
 
-        public void Protect(ref CombatDamage damage)
+        public bool Protect(ref CombatDamage damage)
         {
-            if (NoCharges && !InfiniteCharges) return;
-            Protection?.Protect(ref damage);
-            DecreaseCharges();
+            if (NoCharges && !InfiniteCharges) return false;
+            var @protected = Protection?.Protect(ref damage) ?? false;
+            if (@protected) DecreaseCharges();
+            return true;
         }
 
         #endregion
@@ -78,13 +79,13 @@ namespace NeoServer.Game.Items.Bases
         private void Decayed(IItemType to)
         {
             if (to is null)
-                PlayerDressing.Inventory.RemoveItem(this, 1, (byte) Metadata.BodyPosition, out var removedThing);
+                PlayerDressing.Inventory.RemoveItem(this, 1, (byte)Metadata.BodyPosition, out var removedThing);
         }
 
         private void Transformed(IItemType from, IItemType to)
         {
             Metadata = to;
-            OnTransformed?.Invoke(from,to);
+            OnTransformed?.Invoke(from, to);
         }
 
         private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
@@ -99,7 +100,7 @@ namespace NeoServer.Game.Items.Bases
 
         public void DecreaseCharges()
         {
-            Charges -= (ushort) (Charges == 0 ? 0 : 1);
+            Charges -= (ushort)(Charges == 0 ? 0 : 1);
         }
 
         public bool InfiniteCharges => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Charges) == 0;
