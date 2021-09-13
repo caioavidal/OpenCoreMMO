@@ -13,18 +13,18 @@ namespace NeoServer.Game.Items.Items.Attributes
 {
     public sealed class Protection: IProtection
     {
-        public Protection(Dictionary<DamageType, byte> damageProtection)
+        public Protection(Dictionary<DamageType, sbyte> damageProtection)
         {
             DamageProtection = damageProtection;
         }
 
-        public Dictionary<DamageType, byte> DamageProtection { get; }
+        public Dictionary<DamageType, sbyte> DamageProtection { get; }
 
-        private byte GetProtection(DamageType damageType)
+        private sbyte GetProtection(DamageType damageType)
         {
             if (DamageProtection is null || damageType == DamageType.None) return 0;
 
-            return !DamageProtection.TryGetValue(damageType, out var value) ? (byte)0 : value;
+            return !DamageProtection.TryGetValue(damageType, out var value) ? (sbyte)0 : value;
         }
         
 

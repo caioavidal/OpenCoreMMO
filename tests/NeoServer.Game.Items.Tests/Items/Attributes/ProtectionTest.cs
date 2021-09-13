@@ -43,7 +43,7 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
 
             itemType.SetupGet(x => x.Attributes).Returns(new ItemAttributeList());
 
-            itemType.SetupGet(x => x.Attributes.DamageProtection).Returns(new Dictionary<DamageType, byte>
+            itemType.SetupGet(x => x.Attributes.DamageProtection).Returns(new Dictionary<DamageType, sbyte>
             {
                 {DamageType.Earth, 20}
             });
@@ -272,5 +272,44 @@ namespace NeoServer.Game.Items.Tests.Items.Protections
             totalDamage.Should().Be(0);
             defender.HealthPoints.Should().Be(oldHp);
         }
+
+        #region Negative protection
+
+        [Theory]
+        [InlineData(-100,400, 100 )]
+        [InlineData(-50, 300, 200)]
+        [InlineData(-5, 210, 290)]
+        public void DressedIn_When_Player_Has_Negative_Damage_Protection_Should_Increase_Damage(sbyte protection, ushort expectedDamage, ushort remainingHp)
+        {
+            //arrange
+            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500);
+            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var oldHp = defender.HealthPoints;
+
+            var totalDamage = 0;
+            defender.OnInjured += (enemy, victim, damage) =>
+            {
+                totalDamage = damage.Damage;
+            };
+
+            var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy, min: 100, max: 100);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 0,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, protection),
+                });
+            sut.DressedIn(defender);
+
+            //act
+            var damage = new CombatDamage(200, DamageType.Energy);
+            defender.ReceiveAttack(attacker, damage);
+
+            //assert
+            totalDamage.Should().Be(expectedDamage);
+            defender.HealthPoints.Should().Be(remainingHp);
+        }
+
+        #endregion
     }
 }

@@ -67,7 +67,7 @@ namespace NeoServer.Loaders.Items.Parsers
                 var itemAttribute = ItemAttributeTranslationMap.TranslateAttributeName(attribute.Key, out var success);
 
                 var value = itemAttribute == ItemAttribute.Weight
-                    ? (int.Parse(attribute.Value) / 100).ToString()
+                    ? (int.Parse(attribute.Value) / 100f).ToString()
                     : attribute.Value; //todo place this code in another place
 
                 if (attribute.Attributes is null || !attribute.Attributes.Any())
