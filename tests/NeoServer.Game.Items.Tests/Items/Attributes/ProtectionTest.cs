@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
+using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -562,6 +563,63 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             //assert
             totalDamage.Should().Be(200);
+        }
+        [Fact]
+        public void ToString_ReturnsLookText()
+        {
+            //arrange
+            var sut = new Protection(new Dictionary<DamageType, sbyte>()
+            {
+                [DamageType.Energy] = 10,
+                [DamageType.Fire] = 20,
+                [DamageType.Death] = -25,
+                [DamageType.ManaDrain] = 30,
+                [DamageType.LifeDrain] = 45,
+                [DamageType.Ice] = 50,
+                [DamageType.Physical] = -65,
+                [DamageType.Drown] = 80,
+                [DamageType.Earth] = 100
+            });
+
+            //assert
+            sut.ToString().Should().Be("protection energy 10%, fire 20%, death -25%, mana drain 30%, life drain 45%, ice 50%, physical -65%, drown 80%, earth 100%");
+        }
+        [Fact]
+        public void ToString_AllProtection_ReturnsLookText()
+        {
+            //arrange
+            var sut = new Protection(new Dictionary<DamageType, sbyte>()
+            {
+                [DamageType.All] = 10
+            });
+
+            //assert
+            sut.ToString().Should().Be("protection all 10%");
+        }
+        [Fact]
+        public void ToString_ElementalProtection_ReturnsLookText()
+        {
+            //arrange
+            var sut = new Protection(new Dictionary<DamageType, sbyte>()
+            {
+                [DamageType.Elemental] = 10
+            });
+
+            //assert
+            sut.ToString().Should().Be("protection elemental 10%");
+        }
+        [Fact]
+        public void ToString_0Protection_Ignores()
+        {
+            //arrange
+            var sut = new Protection(new Dictionary<DamageType, sbyte>()
+            {
+                [DamageType.Elemental] = 10,
+                [DamageType.Death] = 0
+            });
+
+            //assert
+            sut.ToString().Should().Be("protection elemental 10%");
         }
     }
 }

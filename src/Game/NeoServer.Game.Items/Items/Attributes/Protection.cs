@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {
@@ -47,8 +48,31 @@ namespace NeoServer.Game.Items.Items.Attributes
         {
             var protection = GetProtection(damage);
             if (protection == 0) return false;
-            damage.ReduceDamageByPercent(protection);
+
+            var protectionValue = Math.Max((sbyte)-100, Math.Min((byte) 100, protection));
+            damage.ReduceDamageByPercent(protectionValue);
             return true;
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append("protection ");
+            foreach (var (damageType, value) in DamageProtection)
+            {
+                if (value == 0) continue;
+
+                var protectionValue = Math.Max((sbyte)-100, Math.Min((byte)100, value));
+                var damage = DamageTypeParser.Parse(damageType);
+
+                if (damageType == DamageType.LifeDrain) damage = "life drain";
+                if (damageType == DamageType.ManaDrain) damage = "mana drain";
+
+                stringBuilder.Append($"{damage} {protectionValue}%, ");
+            }
+
+            stringBuilder.Remove(stringBuilder.Length - 2, 2);
+            return stringBuilder.ToString();
         }
     }
 }

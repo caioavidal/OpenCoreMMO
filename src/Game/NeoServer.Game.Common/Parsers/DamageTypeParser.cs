@@ -21,6 +21,8 @@ namespace NeoServer.Game.Common.Parsers
                 DamageType.Holy => "holy",
                 DamageType.Death => "death",
                 DamageType.LifeDrain => "lifedrain",
+                DamageType.All => "all",
+                DamageType.Elemental => "elemental",
                 _ => "physical"
             };
         }
