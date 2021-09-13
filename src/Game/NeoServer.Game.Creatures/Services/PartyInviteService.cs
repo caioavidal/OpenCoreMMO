@@ -9,7 +9,6 @@ namespace NeoServer.Game.Creatures.Services
     public class PartyInviteService : IPartyInviteService
     {
         private readonly ChatChannelFactory chatChannelFactory;
-        private readonly ISharedExperienceService sharedExperienceService;
 
         public PartyInviteService(ChatChannelFactory chatChannelFactory)
         {
