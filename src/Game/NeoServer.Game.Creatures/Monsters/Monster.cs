@@ -197,7 +197,7 @@ namespace NeoServer.Game.Creatures.Monsters
         {
             if (!Targets.TryGetTarget(AutoAttackTargetId, out var combatTarget)) return;
 
-            if (!IsInPerfectPostionToCombat(combatTarget)) return;
+            if (!IsInPerfectPositionToCombat(combatTarget)) return;
 
             MoveAroundEnemy(combatTarget.Creature.Location);
         }
@@ -314,7 +314,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
                 AttachToSummonEvents(createdSummon);
 
-                AliveSummons = AliveSummons ?? new Dictionary<string, byte>();
+                AliveSummons ??= new Dictionary<string, byte>();
 
                 if (foundAliveSummon) AliveSummons[summon.Name] = (byte) (count + 1);
                 else
@@ -334,7 +334,7 @@ namespace NeoServer.Game.Creatures.Monsters
             Cooldowns.Start(CooldownType.Awaken, 10000);
         }
 
-        public bool IsInPerfectPostionToCombat(CombatTarget target)
+        public bool IsInPerfectPositionToCombat(CombatTarget target)
         {
             if (KeepDistance)
             {

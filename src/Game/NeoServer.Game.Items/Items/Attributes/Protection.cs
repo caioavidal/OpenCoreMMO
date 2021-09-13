@@ -11,7 +11,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {
-    public sealed class Protection: IProtection
+    public sealed class Protection : IProtection
     {
         public Protection(Dictionary<DamageType, sbyte> damageProtection)
         {
@@ -20,17 +20,32 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public Dictionary<DamageType, sbyte> DamageProtection { get; }
 
-        private sbyte GetProtection(DamageType damageType)
+        private sbyte GetProtection(CombatDamage combatDamage)
         {
-            if (DamageProtection is null || damageType == DamageType.None) return 0;
+            var damageType = combatDamage.Type;
+            if (DamageProtection is null || !DamageProtection.Any() || damageType == DamageType.None) return 0;
+            
+            if (DamageProtection.TryGetValue(damageType, out var value)) return value;
 
-            return !DamageProtection.TryGetValue(damageType, out var value) ? (sbyte)0 : value;
+            if (damageType == DamageType.Melee)
+            {
+                if (DamageProtection.TryGetValue(DamageType.Physical, out var meleeProtection)) return meleeProtection;
+            }
+
+            if (combatDamage.IsElementalDamage)
+            {
+                if (DamageProtection.TryGetValue(DamageType.Elemental, out var elementalProtection)) return elementalProtection;
+            }
+            
+            if (DamageProtection.TryGetValue(DamageType.All, out var protectionValue)) return protectionValue;
+
+            return 0;
         }
-        
+
 
         public bool Protect(ref CombatDamage damage)
         {
-            var protection = GetProtection(damage.Type);
+            var protection = GetProtection(damage);
             if (protection == 0) return false;
             damage.ReduceDamageByPercent(protection);
             return true;

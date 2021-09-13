@@ -17,6 +17,7 @@
         FireField,
         Melee,
         Drown,
-        Drunk
+        Drunk,
+        Elemental
     }
 }
