@@ -20,7 +20,7 @@ namespace NeoServer.Game.Tests.Helpers
             byte vocation = 1, IPathFinder pathFinder = null)
         {
             inventory ??= new Dictionary<Slot, Tuple<IPickupable, ushort>>();
-            var sut = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocation, Gender.Male, true, mana, 30,
+            var sut = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocation, Gender.Male, true, mana, mana,
                 FightMode.Attack,
                 100, 100,
                 skills ?? new Dictionary<SkillType, ISkill> { { SkillType.Level, new Skill(SkillType.Level, 1, 10, 1) } },
