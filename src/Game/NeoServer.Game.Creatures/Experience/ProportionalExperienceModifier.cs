@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures.Monsters;
-using System.Linq;
 
 namespace NeoServer.Game.Creatures.Experience
 {
@@ -13,15 +12,32 @@ namespace NeoServer.Game.Creatures.Experience
 
         public uint GetModifiedBaseExperience(IPlayer player, IMonster monster, uint baseExperience)
         {
-            var totalDamage = monster.Damages.Sum(x => x.Value);
-            var playerDamage = monster.Damages.Where(x =>
+            var totalDamage = GetTotalMonsterDamage(monster);
+            var playerDamage = GetTotalPlayerDamage(monster, player);
+            var percentDamageFactor = playerDamage / (double)totalDamage;
+            var experience = (uint)(baseExperience * percentDamageFactor);
+            return experience;
+        }
+
+        private int GetTotalMonsterDamage(IMonster monster)
+        {
+            var damage = 0;
+            foreach (var kvp in monster.Damages)
             {
-                if (x.Key == player) { return true; }
-                if ((x.Key as Summon)?.Master == player) { return true; }
-                return false;
-            }).Sum(x => x.Value);
-            var percentDamageFactor = (double)playerDamage / (double)totalDamage;
-            return (uint)(baseExperience * percentDamageFactor);
+                damage += kvp.Value;
+            }
+            return damage;
+        }
+
+        private int GetTotalPlayerDamage(IMonster monster, IPlayer player)
+        {
+            var damage = 0;
+            foreach (var kvp in monster.Damages)
+            {
+                if (kvp.Key != player && (kvp.Key as Summon)?.Master != player) { continue; }
+                damage += kvp.Value;
+            }
+            return damage;
         }
 
         public bool IsEnabled(IPlayer player, IMonster monster)
