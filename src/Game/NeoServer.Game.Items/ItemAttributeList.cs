@@ -21,9 +21,8 @@ namespace NeoServer.Game.Items
         {
             get
             {
-                customAttributes = customAttributes ??
-                                   new Dictionary<string, (dynamic, IItemAttributeList)>(StringComparer
-                                       .InvariantCultureIgnoreCase);
+                customAttributes ??= new Dictionary<string, (dynamic, IItemAttributeList)>(StringComparer
+                    .InvariantCultureIgnoreCase);
                 return customAttributes;
             }
         }
@@ -83,7 +82,7 @@ namespace NeoServer.Game.Items
             if (_defaultAttributes is null) return default;
 
             if (_defaultAttributes.TryGetValue(attribute, out var value))
-                return (T) Convert.ChangeType(value.Item1, typeof(T));
+                return (T)Convert.ChangeType(value.Item1, typeof(T));
 
             return default;
         }
@@ -96,7 +95,7 @@ namespace NeoServer.Game.Items
 
             if (!_defaultAttributes.TryGetValue(attribute, out var value)) return false;
 
-            attrValue = (T) Convert.ChangeType(value.Item1, typeof(T));
+            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
             return true;
         }
 
@@ -104,7 +103,7 @@ namespace NeoServer.Game.Items
         {
             if (_defaultAttributes is null) return default;
 
-            if (_defaultAttributes.TryGetValue(attribute, out var value)) return (string) value.Item1;
+            if (_defaultAttributes.TryGetValue(attribute, out var value)) return (string)value.Item1;
 
             return default;
         }
@@ -143,10 +142,10 @@ namespace NeoServer.Game.Items
 
             if (_defaultAttributes is not null)
                 foreach (var item in _defaultAttributes)
-                    dictionary.Add((TKey) Convert.ChangeType(item.Key, typeof(TKey)), (TValue) item.Value.Item1);
+                    dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey)), (TValue)item.Value.Item1);
             if (_customAttributes is not null)
                 foreach (var item in _customAttributes)
-                    dictionary.Add((TKey) Convert.ChangeType(item.Key, typeof(TKey)), (TValue) item.Value.Item1);
+                    dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey)), (TValue)item.Value.Item1);
             return dictionary;
         }
 
@@ -186,7 +185,7 @@ namespace NeoServer.Game.Items
         {
             if (_defaultAttributes is null) return default;
 
-            if (_defaultAttributes.TryGetValue(ItemAttribute.Vocation, out var value)) return (byte[]) value.Item1;
+            if (_defaultAttributes.TryGetValue(ItemAttribute.Vocation, out var value)) return (byte[])value.Item1;
 
             return default;
         }
@@ -279,33 +278,57 @@ namespace NeoServer.Game.Items
             }
         }
 
-        public Dictionary<DamageType, byte> DamageProtection
+        public Dictionary<DamageType, sbyte> DamageProtection
         {
             get
             {
-                var dictionary = new Dictionary<DamageType, byte>();
+                var dictionary = new Dictionary<DamageType, sbyte>();
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentDeath) ?? false)
-                    dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentDeath));
+                    dictionary.TryAdd(DamageType.Death, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentDeath));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentEnergy) ?? false)
-                    dictionary.TryAdd(DamageType.Energy, GetAttribute<byte>(ItemAttribute.AbsorbPercentEnergy));
+                    dictionary.TryAdd(DamageType.Energy, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentEnergy));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPhysical) ?? false)
-                    dictionary.TryAdd(DamageType.LifeDrain, GetAttribute<byte>(ItemAttribute.AbsorbPercentPhysical));
+                    dictionary.TryAdd(DamageType.Physical, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentPhysical));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPoison) ?? false)
-                    dictionary.TryAdd(DamageType.Earth, GetAttribute<byte>(ItemAttribute.AbsorbPercentPoison));
+                    dictionary.TryAdd(DamageType.Earth, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentPoison));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentFire) ?? false)
-                    dictionary.TryAdd(DamageType.Fire, GetAttribute<byte>(ItemAttribute.AbsorbPercentFire));
+                    dictionary.TryAdd(DamageType.Fire, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentFire));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentDrown) ?? false)
+                    dictionary.TryAdd(DamageType.Drown, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentDrown));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentHoly) ?? false)
+                    dictionary.TryAdd(DamageType.Holy, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentHoly));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentIce) ?? false)
+                    dictionary.TryAdd(DamageType.Ice, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentIce));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentManaDrain) ?? false)
+                    dictionary.TryAdd(DamageType.ManaDrain, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentManaDrain));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentLifeDrain) ?? false)
+                    dictionary.TryAdd(DamageType.LifeDrain, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentLifeDrain));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
                     dictionary.TryAdd(DamageType.AbsorbPercentMagic,
-                        GetAttribute<byte>(ItemAttribute.AbsorbPercentMagic));
+                        GetAttribute<sbyte>(ItemAttribute.AbsorbPercentMagic));
 
                 if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentAll) ?? false)
-                    dictionary.TryAdd(DamageType.Death, GetAttribute<byte>(ItemAttribute.AbsorbPercentAll));
+                    dictionary.TryAdd(DamageType.All, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentAll));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentElements) ?? false)
+                    dictionary.TryAdd(DamageType.Elemental, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentElements));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
+                    dictionary.TryAdd(DamageType.Elemental, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentMagic));
+
+                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentAll) ?? false)
+                    dictionary.TryAdd(DamageType.Death, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentAll));
 
                 return dictionary;
             }

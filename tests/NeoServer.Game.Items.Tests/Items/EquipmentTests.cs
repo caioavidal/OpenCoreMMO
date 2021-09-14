@@ -174,8 +174,6 @@ namespace NeoServer.Game.Items.Tests.Items
         public void TransformOnDequip_NoItemToTransformTo_DoNotTransform()
         {
             //arrange
-            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2);
-
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.AbsorbPercentEnergy, 100),

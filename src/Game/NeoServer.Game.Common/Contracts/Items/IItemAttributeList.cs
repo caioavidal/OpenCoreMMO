@@ -8,7 +8,7 @@ namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IItemAttributeList
     {
-        Dictionary<DamageType, byte> DamageProtection { get; }
+        Dictionary<DamageType, sbyte> DamageProtection { get; }
         Dictionary<SkillType, byte> SkillBonuses { get; }
 
         string GetAttribute(ItemAttribute attribute);
