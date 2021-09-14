@@ -39,11 +39,12 @@ namespace NeoServer.Game.Creatures.Events.Monsters
                 }
 
                 // Determine each grouping of bonuses. All bonuses of the same type are added together.
-                var applicableBonuses = ExperienceBonuses.Where(x => x.IsEnabled(player, monster));
-                var bonusesByGroup = applicableBonuses.GroupBy(x => x.BonusType)
+                var bonusesByGroup = ExperienceBonuses
+                    .Where(x => x.IsEnabled(player, monster))
+                    .GroupBy(x => x.BonusType)
                     .ToDictionary(
-                        keySelector: g => g.Key,
-                        elementSelector: g => g.Sum(x => x.GetBonusFactorAmount(player, monster))
+                        x => x.Key,
+                        x => CalculateTotalExperienceBonus(x, player, monster)
                     );
 
                 // Multiply the base experience by each bonus group value.
@@ -57,6 +58,16 @@ namespace NeoServer.Game.Creatures.Events.Monsters
                 // Now that it's been calculated. Grant the player experience.
                 player.GainExperience(experience);
             }
+        }
+
+        private static double CalculateTotalExperienceBonus(IEnumerable<IExperienceBonus> bonuses, IPlayer player, IMonster monster)
+        {
+            var amount = 0.0;
+            foreach (var bonus in bonuses)
+            {
+                amount += bonus.GetBonusFactorAmount(player, monster);
+            }
+            return amount;
         }
     }
 }
