@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Server.Events.Chat;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Items;
@@ -24,7 +25,7 @@ namespace NeoServer.Server.Events.Subscribers
             PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler,
             PlayerOperationFailedEventHandler playerOperationFailedEventHandler,
             PlayerLookedAtEventHandler playerLookedAtEventHandler,
-            PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler,
+            PlayerUpdatedSkillPointsEventHandler playerUpdatedSkillPointsEventHandler,
             PlayerUsedItemEventHandler playerUsedItemEventHandler,
             PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler,
             PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler,
@@ -41,13 +42,13 @@ namespace NeoServer.Server.Events.Subscribers
             PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler,
             PlayerExhaustedEventHandler playerExhaustedEventHandler)
         {
-            this.playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
-            this.playerClosedContainerEventHandler = playerClosedContainerEventHandler;
-            this.playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
-            this.contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
-            this.itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
-            this.invalidOperationEventHandler = invalidOperationEventHandler;
-            this.creatureStopedAttackEventHandler = creatureStopedAttackEventHandler;
+            _playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
+            _playerClosedContainerEventHandler = playerClosedContainerEventHandler;
+            _playerOpenedContainerEventHandler = playerOpenedContainerEventHandler;
+            _contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
+            _itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
+            _invalidOperationEventHandler = invalidOperationEventHandler;
+            _creatureStopedAttackEventHandler = creatureStopedAttackEventHandler;
             _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
             _playerManaReducedEventHandler = playerManaReducedEventHandler;
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
@@ -55,52 +56,52 @@ namespace NeoServer.Server.Events.Subscribers
             _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
             _playerLevelAdvancedEventHandler = playerLevelAdvancedEventHandler;
             _playerOperationFailedEventHandler = playerOperationFailedEventHandler;
-            this.playerLookedAtEventHandler = playerLookedAtEventHandler;
-            this.playerGainedSkillPointsEventHandler = playerGainedSkillPointsEventHandler;
-            this.playerUsedItemEventHandler = playerUsedItemEventHandler;
-            this.playerSelfAppearOnMapEventHandler = playerSelfAppearOnMapEventHandler;
-            this.playerJoinedChannelEventHandler = playerJoinedChannelEventHandler;
-            this.playerExitedChannelEventHandler = playerExitedChannelEventHandler;
-            this.playerAddedToVipListEventHandler = playerAddedToVipListEventHandler;
-            this.playerLoadedVipListEvent = playerLoadedVipListEvent;
-            this.playerChangedOnlineStatusEventHandler = playerChangedOnlineStatusEventHandler;
-            this.playerSentMessageEventHandler = playerSentMessageEventHandler;
-            this.playerInviteToPartyEventHandler = playerInviteToPartyEventHandler;
-            this.playerRevokedPartyInviteEventHandler = playerRevokedPartyInviteEventHandler;
-            this.playerLeftPartyEventHandler = playerLeftPartyEventHandler;
-            this.playerInvitedToPartyEventHandler = playerInvitedToPartyEventHandler;
-            this.playerJoinedPartyEventHandler = playerJoinedPartyEventHandler;
-            this.playerPassedPartyLeadershipEventHandler = playerPassedPartyLeadershipEventHandler;
-            this.playerExhaustedEventHandler = playerExhaustedEventHandler;
+            _playerLookedAtEventHandler = playerLookedAtEventHandler;
+            _playerUpdatedSkillPointsEventHandler = playerUpdatedSkillPointsEventHandler;
+            _playerUsedItemEventHandler = playerUsedItemEventHandler;
+            _playerSelfAppearOnMapEventHandler = playerSelfAppearOnMapEventHandler;
+            _playerJoinedChannelEventHandler = playerJoinedChannelEventHandler;
+            _playerExitedChannelEventHandler = playerExitedChannelEventHandler;
+            _playerAddedToVipListEventHandler = playerAddedToVipListEventHandler;
+            _playerLoadedVipListEvent = playerLoadedVipListEvent;
+            _playerChangedOnlineStatusEventHandler = playerChangedOnlineStatusEventHandler;
+            _playerSentMessageEventHandler = playerSentMessageEventHandler;
+            _playerInviteToPartyEventHandler = playerInviteToPartyEventHandler;
+            _playerRevokedPartyInviteEventHandler = playerRevokedPartyInviteEventHandler;
+            _playerLeftPartyEventHandler = playerLeftPartyEventHandler;
+            _playerInvitedToPartyEventHandler = playerInvitedToPartyEventHandler;
+            _playerJoinedPartyEventHandler = playerJoinedPartyEventHandler;
+            _playerPassedPartyLeadershipEventHandler = playerPassedPartyLeadershipEventHandler;
+            _playerExhaustedEventHandler = playerExhaustedEventHandler;
         }
 
         public void Subscribe(ICreature creature)
         {
             if (creature is not IPlayer player) return;
 
-            player.OnCancelledWalk += playerWalkCancelledEventHandler.Execute;
-            player.Containers.OnClosedContainer += playerClosedContainerEventHandler.Execute;
-            player.Containers.OnOpenedContainer += playerOpenedContainerEventHandler.Execute;
+            player.OnCancelledWalk += _playerWalkCancelledEventHandler.Execute;
+            player.Containers.OnClosedContainer += _playerClosedContainerEventHandler.Execute;
+            player.Containers.OnOpenedContainer += _playerOpenedContainerEventHandler.Execute;
 
             player.Containers.RemoveItemAction += (player, containerId, slotIndex, item) =>
-                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
+                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
                     slotIndex, item);
 
             player.Containers.AddItemAction += (player, containerId, item) =>
-                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0,
+                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0,
                     item);
 
             player.Containers.UpdateItemAction += (player, containerId, slotIndex, item, amount) =>
-                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId,
+                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId,
                     slotIndex, item);
 
             player.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) =>
-                itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+                _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
             player.Inventory.OnItemRemovedFromSlot += (inventory, item, slot, amount) =>
-                itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+                _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
 
-            player.Inventory.OnFailedToAddToSlot += error => invalidOperationEventHandler?.Execute(player, error);
-            player.OnStoppedAttack += creatureStopedAttackEventHandler.Execute;
+            player.Inventory.OnFailedToAddToSlot += error => _invalidOperationEventHandler?.Execute(player, error);
+            player.OnStoppedAttack += _creatureStopedAttackEventHandler.Execute;
             player.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
             player.OnStatusChanged += _playerManaReducedEventHandler.Execute;
@@ -109,53 +110,56 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
             player.OnRemovedCondition += _playerConditionChangedEventHandler.Execute;
             player.OnLevelAdvanced += _playerLevelAdvancedEventHandler.Execute;
-            player.OnLookedAt += playerLookedAtEventHandler.Execute;
-            player.OnGainedSkillPoint += playerGainedSkillPointsEventHandler.Execute;
-            player.OnUsedItem += playerUsedItemEventHandler.Execute;
-            player.OnLoggedIn += playerSelfAppearOnMapEventHandler.Execute;
-            player.OnJoinedChannel += playerJoinedChannelEventHandler.Execute;
-            player.OnExitedChannel += playerExitedChannelEventHandler.Execute;
-            player.OnAddedToVipList += playerAddedToVipListEventHandler.Execute;
-            player.OnLoadedVipList += playerLoadedVipListEvent.Execute;
-            player.OnChangedOnlineStatus += playerChangedOnlineStatusEventHandler.Execute;
-            player.OnSentMessage += playerSentMessageEventHandler.Execute;
-            player.OnInviteToParty += playerInviteToPartyEventHandler.Execute;
-            player.OnRevokePartyInvite += playerRevokedPartyInviteEventHandler.Execute;
-            player.OnLeftParty += playerLeftPartyEventHandler.Execute;
-            player.OnInvitedToParty += playerInvitedToPartyEventHandler.Execute;
-            player.OnRejectedPartyInvite += playerLeftPartyEventHandler.Execute;
-            player.OnJoinedParty += playerJoinedPartyEventHandler.Execute;
-            player.OnPassedPartyLeadership += playerPassedPartyLeadershipEventHandler.Execute;
-            player.OnExhausted += playerExhaustedEventHandler.Execute;
+            player.OnLookedAt += _playerLookedAtEventHandler.Execute;
+            player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
+            player.OnUsedItem += _playerUsedItemEventHandler.Execute;
+            player.OnLoggedIn += _playerSelfAppearOnMapEventHandler.Execute;
+            player.OnJoinedChannel += _playerJoinedChannelEventHandler.Execute;
+            player.OnExitedChannel += _playerExitedChannelEventHandler.Execute;
+            player.OnAddedToVipList += _playerAddedToVipListEventHandler.Execute;
+            player.OnLoadedVipList += _playerLoadedVipListEvent.Execute;
+            player.OnChangedOnlineStatus += _playerChangedOnlineStatusEventHandler.Execute;
+            player.OnSentMessage += _playerSentMessageEventHandler.Execute;
+            player.OnInviteToParty += _playerInviteToPartyEventHandler.Execute;
+            player.OnRevokePartyInvite += _playerRevokedPartyInviteEventHandler.Execute;
+            player.OnLeftParty += _playerLeftPartyEventHandler.Execute;
+            player.OnInvitedToParty += _playerInvitedToPartyEventHandler.Execute;
+            player.OnRejectedPartyInvite += _playerLeftPartyEventHandler.Execute;
+            player.OnJoinedParty += _playerJoinedPartyEventHandler.Execute;
+            player.OnPassedPartyLeadership += _playerPassedPartyLeadershipEventHandler.Execute;
+            player.OnExhausted += _playerExhaustedEventHandler.Execute;
+            player.OnAddedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
+            player.OnRemovedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
+
         }
 
         public void Unsubscribe(ICreature creature)
         {
             if (creature is not IPlayer player) return;
 
-            player.OnCancelledWalk -= playerWalkCancelledEventHandler.Execute;
-            player.Containers.OnClosedContainer -= playerClosedContainerEventHandler.Execute;
-            player.Containers.OnOpenedContainer -= playerOpenedContainerEventHandler.Execute;
+            player.OnCancelledWalk -= _playerWalkCancelledEventHandler.Execute;
+            player.Containers.OnClosedContainer -= _playerClosedContainerEventHandler.Execute;
+            player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
 
             player.Containers.RemoveItemAction -= (player, containerId, slotIndex, item) =>
-                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
+                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
                     slotIndex, item);
 
             player.Containers.AddItemAction -= (player, containerId, item) =>
-                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0,
+                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0,
                     item);
 
             player.Containers.UpdateItemAction -= (player, containerId, slotIndex, item, amount) =>
-                contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId,
+                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId,
                     slotIndex, item);
 
             player.Inventory.OnItemAddedToSlot -= (inventory, item, slot, amount) =>
-                itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+                _itemAddedToInventoryEventHandler.Execute(inventory.Owner, slot);
             player.Inventory.OnItemRemovedFromSlot -= (inventory, item, slot, amount) =>
-                itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+                _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
 
-            player.Inventory.OnFailedToAddToSlot -= error => invalidOperationEventHandler?.Execute(player, error);
-            player.OnStoppedAttack -= creatureStopedAttackEventHandler.Execute;
+            player.Inventory.OnFailedToAddToSlot -= error => _invalidOperationEventHandler?.Execute(player, error);
+            player.OnStoppedAttack -= _creatureStopedAttackEventHandler.Execute;
             player.OnGainedExperience -= _playerGainedExperienceEventHandler.Execute;
 
             player.OnStatusChanged -= _playerManaReducedEventHandler.Execute;
@@ -164,33 +168,36 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnAddedCondition -= _playerConditionChangedEventHandler.Execute;
             player.OnRemovedCondition -= _playerConditionChangedEventHandler.Execute;
             player.OnLevelAdvanced -= _playerLevelAdvancedEventHandler.Execute;
-            player.OnLookedAt -= playerLookedAtEventHandler.Execute;
-            player.OnGainedSkillPoint -= playerGainedSkillPointsEventHandler.Execute;
-            player.OnUsedItem -= playerUsedItemEventHandler.Execute;
-            player.OnLoggedIn -= playerSelfAppearOnMapEventHandler.Execute;
-            player.OnJoinedChannel -= playerJoinedChannelEventHandler.Execute;
-            player.OnExitedChannel -= playerExitedChannelEventHandler.Execute;
-            player.OnAddedToVipList -= playerAddedToVipListEventHandler.Execute;
-            player.OnLoadedVipList -= playerLoadedVipListEvent.Execute;
-            player.OnChangedOnlineStatus -= playerChangedOnlineStatusEventHandler.Execute;
-            player.OnSentMessage -= playerSentMessageEventHandler.Execute;
-            player.OnInviteToParty -= playerInviteToPartyEventHandler.Execute;
-            player.OnRevokePartyInvite -= playerRevokedPartyInviteEventHandler.Execute;
-            player.OnLeftParty -= playerLeftPartyEventHandler.Execute;
-            player.OnInvitedToParty -= playerInvitedToPartyEventHandler.Execute;
-            player.OnJoinedParty -= playerJoinedPartyEventHandler.Execute;
-            player.OnPassedPartyLeadership -= playerPassedPartyLeadershipEventHandler.Execute;
+            player.OnLookedAt -= _playerLookedAtEventHandler.Execute;
+            player.OnGainedSkillPoint -= _playerUpdatedSkillPointsEventHandler.Execute;
+            player.OnUsedItem -= _playerUsedItemEventHandler.Execute;
+            player.OnLoggedIn -= _playerSelfAppearOnMapEventHandler.Execute;
+            player.OnJoinedChannel -= _playerJoinedChannelEventHandler.Execute;
+            player.OnExitedChannel -= _playerExitedChannelEventHandler.Execute;
+            player.OnAddedToVipList -= _playerAddedToVipListEventHandler.Execute;
+            player.OnLoadedVipList -= _playerLoadedVipListEvent.Execute;
+            player.OnChangedOnlineStatus -= _playerChangedOnlineStatusEventHandler.Execute;
+            player.OnSentMessage -= _playerSentMessageEventHandler.Execute;
+            player.OnInviteToParty -= _playerInviteToPartyEventHandler.Execute;
+            player.OnRevokePartyInvite -= _playerRevokedPartyInviteEventHandler.Execute;
+            player.OnLeftParty -= _playerLeftPartyEventHandler.Execute;
+            player.OnInvitedToParty -= _playerInvitedToPartyEventHandler.Execute;
+            player.OnJoinedParty -= _playerJoinedPartyEventHandler.Execute;
+            player.OnPassedPartyLeadership -= _playerPassedPartyLeadershipEventHandler.Execute;
+
+            player.OnAddedSkillBonus -= _playerUpdatedSkillPointsEventHandler.Execute;
+            player.OnRemovedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
         }
 
         #region event handlers
 
-        private readonly PlayerWalkCancelledEventHandler playerWalkCancelledEventHandler;
-        private readonly PlayerClosedContainerEventHandler playerClosedContainerEventHandler;
-        private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
-        private readonly ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler;
-        private readonly PlayerChangedInventoryEventHandler itemAddedToInventoryEventHandler;
-        private readonly InvalidOperationEventHandler invalidOperationEventHandler;
-        private readonly CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler;
+        private readonly PlayerWalkCancelledEventHandler _playerWalkCancelledEventHandler;
+        private readonly PlayerClosedContainerEventHandler _playerClosedContainerEventHandler;
+        private readonly PlayerOpenedContainerEventHandler _playerOpenedContainerEventHandler;
+        private readonly ContentModifiedOnContainerEventHandler _contentModifiedOnContainerEventHandler;
+        private readonly PlayerChangedInventoryEventHandler _itemAddedToInventoryEventHandler;
+        private readonly InvalidOperationEventHandler _invalidOperationEventHandler;
+        private readonly CreatureStoppedAttackEventHandler _creatureStopedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
         private readonly PlayerManaChangedEventHandler _playerManaReducedEventHandler;
         private readonly SpellInvokedEventHandler _playerUsedSpellEventHandler;
@@ -198,23 +205,23 @@ namespace NeoServer.Server.Events.Subscribers
         private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
         private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
         private readonly PlayerOperationFailedEventHandler _playerOperationFailedEventHandler;
-        private readonly PlayerLookedAtEventHandler playerLookedAtEventHandler;
-        private readonly PlayerGainedSkillPointsEventHandler playerGainedSkillPointsEventHandler;
-        private readonly PlayerUsedItemEventHandler playerUsedItemEventHandler;
-        private readonly PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler;
-        private readonly PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler;
-        private readonly PlayerExitedChannelEventHandler playerExitedChannelEventHandler;
-        private readonly PlayerAddToVipListEventHandler playerAddedToVipListEventHandler;
-        private readonly PlayerLoadedVipListEventHandler playerLoadedVipListEvent;
-        private readonly PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler;
-        private readonly PlayerSentMessageEventHandler playerSentMessageEventHandler;
-        private readonly PlayerInviteToPartyEventHandler playerInviteToPartyEventHandler;
-        private readonly PlayerRevokedPartyInviteEventHandler playerRevokedPartyInviteEventHandler;
-        private readonly PlayerLeftPartyEventHandler playerLeftPartyEventHandler;
-        private readonly PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler;
-        private readonly PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler;
-        private readonly PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler;
-        private readonly PlayerExhaustedEventHandler playerExhaustedEventHandler;
+        private readonly PlayerLookedAtEventHandler _playerLookedAtEventHandler;
+        private readonly PlayerUpdatedSkillPointsEventHandler _playerUpdatedSkillPointsEventHandler;
+        private readonly PlayerUsedItemEventHandler _playerUsedItemEventHandler;
+        private readonly PlayerSelfAppearOnMapEventHandler _playerSelfAppearOnMapEventHandler;
+        private readonly PlayerJoinedChannelEventHandler _playerJoinedChannelEventHandler;
+        private readonly PlayerExitedChannelEventHandler _playerExitedChannelEventHandler;
+        private readonly PlayerAddToVipListEventHandler _playerAddedToVipListEventHandler;
+        private readonly PlayerLoadedVipListEventHandler _playerLoadedVipListEvent;
+        private readonly PlayerChangedOnlineStatusEventHandler _playerChangedOnlineStatusEventHandler;
+        private readonly PlayerSentMessageEventHandler _playerSentMessageEventHandler;
+        private readonly PlayerInviteToPartyEventHandler _playerInviteToPartyEventHandler;
+        private readonly PlayerRevokedPartyInviteEventHandler _playerRevokedPartyInviteEventHandler;
+        private readonly PlayerLeftPartyEventHandler _playerLeftPartyEventHandler;
+        private readonly PlayerInvitedToPartyEventHandler _playerInvitedToPartyEventHandler;
+        private readonly PlayerJoinedPartyEventHandler _playerJoinedPartyEventHandler;
+        private readonly PlayerPassedPartyLeadershipEventHandler _playerPassedPartyLeadershipEventHandler;
+        private readonly PlayerExhaustedEventHandler _playerExhaustedEventHandler;
 
         #endregion
     }

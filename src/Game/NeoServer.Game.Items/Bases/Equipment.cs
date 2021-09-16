@@ -102,9 +102,6 @@ namespace NeoServer.Game.Items.Bases
         #endregion
 
         #region Skill Bonus
-
-        public Dictionary<SkillType, byte> SkillBonuses => Metadata.Attributes.SkillBonuses;
-
         public void AddSkillBonus(IPlayer player)
         {
             if (Expired) return;
@@ -116,6 +113,7 @@ namespace NeoServer.Game.Items.Bases
             SkillBonus?.RemoveSkillBonus(player);
         }
 
+        public void ChangeSkillBonuses(Dictionary<SkillType, byte> skillBonuses) => SkillBonus?.ChangeSkillBonuses(skillBonuses);
         #endregion
 
         #region Dressable
@@ -123,20 +121,22 @@ namespace NeoServer.Game.Items.Bases
         public void DressedIn(IPlayer player)
         {
             if (Guard.AnyNull(player)) return;
+            TransformOnEquip();
+
             player.OnAttacked += OnPlayerAttackedHandler;
             PlayerDressing = player;
             AddSkillBonus(player);
-            TransformOnEquip();
             StartDecay();
         }
 
         public void UndressFrom(IPlayer player)
         {
             if (Guard.AnyNull(player)) return;
+            TransformOnDequip();
+
             player.OnAttacked -= OnPlayerAttackedHandler;
             PlayerDressing = null;
             RemoveSkillBonus(player);
-            TransformOnDequip();
             PauseDecay();
         }
 
@@ -167,7 +167,12 @@ namespace NeoServer.Game.Items.Bases
 
         #region Transformable
 
-        public void TransformOnEquip() => Transformable?.TransformOnEquip();
+        public void TransformOnEquip()
+        {
+            Transformable?.TransformOnEquip();
+            ChangeSkillBonuses(Metadata.Attributes.SkillBonuses);
+        }
+
         public void TransformOnDequip() => Transformable?.TransformOnDequip();
         public Func<IItemType> TransformEquipItem => Transformable?.TransformEquipItem;
         public Func<IItemType> TransformDequipItem => Transformable?.TransformDequipItem;

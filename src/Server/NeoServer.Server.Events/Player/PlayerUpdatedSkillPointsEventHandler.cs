@@ -5,16 +5,25 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Server.Events.Player
 {
-    public class PlayerGainedSkillPointsEventHandler
+    public class PlayerUpdatedSkillPointsEventHandler
     {
         private readonly IGameServer game;
 
-        public PlayerGainedSkillPointsEventHandler(IGameServer game)
+        public PlayerUpdatedSkillPointsEventHandler(IGameServer game)
         {
             this.game = game;
         }
 
         public void Execute(IPlayer player, SkillType skill)
+        {
+            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
+            {
+                connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
+                connection.Send();
+            }
+        }
+
+        public void Execute(IPlayer player, SkillType skill, byte increased)
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
