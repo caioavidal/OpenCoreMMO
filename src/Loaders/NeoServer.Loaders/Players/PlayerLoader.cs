@@ -21,16 +21,16 @@ namespace NeoServer.Loaders.Players
 {
     public class PlayerLoader : IPlayerLoader
     {
-        private readonly ChatChannelFactory chatChannelFactory;
-        private readonly ICreatureFactory creatureFactory;
-        private readonly IItemFactory itemFactory;
+        private readonly ChatChannelFactory _chatChannelFactory;
+        private readonly ICreatureFactory _creatureFactory;
+        private readonly IItemFactory _itemFactory;
 
         public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
             ChatChannelFactory chatChannelFactory)
         {
-            this.itemFactory = itemFactory;
-            this.creatureFactory = creatureFactory;
-            this.chatChannelFactory = chatChannelFactory;
+            _itemFactory = itemFactory;
+            _creatureFactory = creatureFactory;
+            _chatChannelFactory = chatChannelFactory;
         }
 
         public virtual bool IsApplicable(PlayerModel player)
@@ -78,7 +78,7 @@ namespace NeoServer.Loaders.Players
 
             AddExistingPersonalChannels(player);
 
-            return creatureFactory.CreatePlayer(player);
+            return _creatureFactory.CreatePlayer(player);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace NeoServer.Loaders.Players
             {
                 if (channel == typeof(PersonalChatChannel)) continue;
 
-                var createdChannel = chatChannelFactory.Create(channel, null, player);
+                var createdChannel = _chatChannelFactory.Create(channel, null, player);
                 player.AddPersonalChannel(createdChannel);
             }
         }
@@ -149,7 +149,7 @@ namespace NeoServer.Loaders.Players
                 attrs[ItemAttribute.Count] = (byte) item.Amount;
                 var location = item.SlotId <= 10 ? Location.Inventory((Slot) item.SlotId) : Location.Container(0, 0);
 
-                if (!(itemFactory.Create((ushort) item.ServerId, location, attrs) is IPickupable createdItem)) continue;
+                if (!(_itemFactory.Create((ushort) item.ServerId, location, attrs) is IPickupable createdItem)) continue;
 
                 if (item.SlotId == (int) Slot.Backpack)
                 {
@@ -190,7 +190,7 @@ namespace NeoServer.Loaders.Players
 
             var itemModel = items[index];
 
-            var item = itemFactory.Create((ushort) itemModel.ServerId, location,
+            var item = _itemFactory.Create((ushort) itemModel.ServerId, location,
                 new Dictionary<ItemAttribute, IConvertible>
                 {
                     {ItemAttribute.Count, (byte) itemModel.Amount}

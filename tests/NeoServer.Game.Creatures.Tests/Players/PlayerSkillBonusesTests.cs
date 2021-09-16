@@ -49,7 +49,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             });
 
             var called = false;
-            sut.OnAddedSkillBonus += (player, increased) =>
+            sut.OnAddedSkillBonus += (player, _, increased) =>
             {
                 called = true;
             };
@@ -85,7 +85,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var eventEncreased = 0;
             IPlayer eventPlayer = null;
-            sut.OnAddedSkillBonus += (player, increased) =>
+            sut.OnAddedSkillBonus += (player, _, increased) =>
             {
                 eventPlayer = player;
                 eventEncreased = increased;
@@ -117,7 +117,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             });
 
             var called = false;
-            sut.OnRemovedSkillBonus += (player, increased) =>
+            sut.OnRemovedSkillBonus += (player, _, increased) =>
             {
                 called = true;
             };
@@ -151,7 +151,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var eventDecreased = 0;
             IPlayer eventPlayer = null;
-            sut.OnRemovedSkillBonus += (player, decreased) =>
+            sut.OnRemovedSkillBonus += (player, _, decreased) =>
             {
                 eventPlayer = player;
                 eventDecreased = decreased;

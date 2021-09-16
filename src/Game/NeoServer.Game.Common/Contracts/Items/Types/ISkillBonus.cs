@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types
 {
@@ -6,5 +8,6 @@ namespace NeoServer.Game.Common.Contracts.Items.Types
     {
         void AddSkillBonus(IPlayer player);
         void RemoveSkillBonus(IPlayer player);
+        void ChangeSkillBonuses(Dictionary<SkillType, byte> skillBonuses);
     }
 }

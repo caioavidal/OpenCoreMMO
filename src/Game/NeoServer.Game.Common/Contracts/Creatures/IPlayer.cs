@@ -61,8 +61,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
     public delegate void Exhaust(IPlayer player);
 
-    public delegate void AddSkillBonus(IPlayer player, byte increased);
-    public delegate void RemoveSkillBonus(IPlayer player, byte decreased);
+    public delegate void AddSkillBonus(IPlayer player, SkillType skillType, byte increased);
+    public delegate void RemoveSkillBonus(IPlayer player, SkillType skillType, byte decreased);
 
     public interface IPlayer : ICombatActor, ISociableCreature
     {

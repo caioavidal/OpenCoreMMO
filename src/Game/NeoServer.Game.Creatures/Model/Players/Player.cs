@@ -35,12 +35,12 @@ namespace NeoServer.Game.Creatures.Model.Players
     {
         private const int KnownCreatureLimit = 250; //todo: for version 8.60
 
-        private ulong flags;
+        private ulong _flags;
 
-        private uint IdleTime;
-        private IParty PartyInvite;
-        private IDictionary<ushort, IChatChannel> personalChannels;
-        private byte soulPoints;
+        private uint _idleTime;
+        private IParty _partyInvite;
+        private IDictionary<ushort, IChatChannel> _personalChannels;
+        private byte _soulPoints;
 
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, uint healthPoints,
             uint maxHealthPoints, byte vocation,
@@ -56,6 +56,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             CharacterName = characterName;
             ChaseMode = chaseMode;
             TotalCapacity = capacity;
+            Skills = skills;
             Inventory = new PlayerInventory(this, inventory);
             VocationType = vocation;
             Gender = gender;
@@ -65,7 +66,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             FightMode = fightMode;
             MaxSoulPoints = soulMax;
             SoulPoints = soulPoints;
-            Skills = skills;
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
             Speed = speed == 0 ? LevelBasesSpeed : speed;
@@ -142,8 +142,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event AddSkillBonus OnAddedSkillBonus;
         public event RemoveSkillBonus OnRemovedSkillBonus;
         #endregion
-
-
+        
         public ushort GuildId { get; init; }
         public bool HasGuild => GuildId > 0;
         public IGuild Guild => GuildStore.Data.Get(GuildId);
@@ -153,9 +152,9 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void LoadBank(ulong amount) => BankAmount = amount;
 
-        public void UnsetFlag(PlayerFlag flag) => flags &= ~(ulong)flag;
+        public void UnsetFlag(PlayerFlag flag) => _flags &= ~(ulong)flag;
 
-        public void SetFlag(PlayerFlag flag) => flags |= (ulong)flag;
+        public void SetFlag(PlayerFlag flag) => _flags |= (ulong)flag;
 
         public void LoadVipList(IEnumerable<(uint, string)> vips)
         {
@@ -172,7 +171,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             OnLoadedVipList?.Invoke(this, vipList);
         }
 
-        public bool FlagIsEnabled(PlayerFlag flag) => (flags & (ulong)flag) != 0;
+        public bool FlagIsEnabled(PlayerFlag flag) => (_flags & (ulong)flag) != 0;
 
         public uint AccountId { get; init; }
         public override IOutfit Outfit { get; protected set; }
@@ -201,8 +200,8 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public byte SoulPoints
         {
-            get => soulPoints;
-            private set => soulPoints = value > MaxSoulPoints ? MaxSoulPoints : value;
+            get => _soulPoints;
+            private set => _soulPoints = value > MaxSoulPoints ? MaxSoulPoints : value;
         }
 
         public byte MaxSoulPoints { get; }
@@ -218,17 +217,17 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
-        public IEnumerable<IChatChannel> PersonalChannels => personalChannels?.Values;
+        public IEnumerable<IChatChannel> PersonalChannels => _personalChannels?.Values;
 
         public void AddPersonalChannel(IChatChannel channel)
         {
-            personalChannels ??= new Dictionary<ushort, IChatChannel>();
-            personalChannels.Add(channel.Id, channel);
+            _personalChannels ??= new Dictionary<ushort, IChatChannel>();
+            _personalChannels.Add(channel.Id, channel);
         }
 
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
-        public void ResetIdleTime() => IdleTime = 0;
+        public void ResetIdleTime() => _idleTime = 0;
 
         public override void GainExperience(uint exp)
         {
@@ -289,10 +288,11 @@ namespace NeoServer.Game.Creatures.Model.Players
         public void AddSkillBonus(SkillType skillType, byte increase)
         {
             if (increase == 0) return;
-            if (!Skills.TryGetValue(skillType, out var skill)) Skills.Add(skillType, new Skill(skillType,1,1,0)); //todo: review those skill values
+            if (Skills is null) return;
+            if (!Skills.TryGetValue(skillType, out _)) Skills.Add(skillType, new Skill(skillType,1,1,0)); //todo: review those skill values
             
             Skills[skillType]?.AddBonus(increase);
-            OnAddedSkillBonus?.Invoke(this, increase);
+            OnAddedSkillBonus?.Invoke(this, skillType, increase);
         }
 
         public void RemoveSkillBonus(SkillType skillType, byte decrease)
@@ -300,7 +300,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (decrease == 0) return;
 
             Skills[skillType]?.RemoveBonus(decrease);
-            OnRemovedSkillBonus?.Invoke(this, decrease);
+            OnRemovedSkillBonus?.Invoke(this, skillType, decrease);
         }
 
         public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
@@ -872,18 +872,18 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void ReceivePartyInvite(IPlayer leader, IParty party)
         {
-            PartyInvite = party;
+            _partyInvite = party;
             OnInvitedToParty?.Invoke(leader, this, party);
             party.OnPartyOver += RejectInvite;
         }
 
         public void RejectInvite()
         {
-            if (PartyInvite is null) return;
-            PartyInvite.OnPartyOver -= RejectInvite;
+            if (_partyInvite is null) return;
+            _partyInvite.OnPartyOver -= RejectInvite;
 
-            OnRejectedPartyInvite?.Invoke(this, PartyInvite);
-            PartyInvite = null;
+            OnRejectedPartyInvite?.Invoke(this, _partyInvite);
+            _partyInvite = null;
         }
 
         public void RevokePartyInvite(IPlayer invitedPlayer)
@@ -971,7 +971,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public virtual void SetFlags(params PlayerFlag[] flags)
         {
-            foreach (var flag in flags) this.flags |= (ulong)flag;
+            foreach (var flag in flags) this._flags |= (ulong)flag;
         }
 
         public void ResetMana() => HealMana(MaxMana);
