@@ -43,7 +43,7 @@ namespace NeoServer.OTB.Parsers
                 case "shoottype": return ItemAttribute.ShootType;
                 case "effect": return ItemAttribute.Effect;
                 case "range": return ItemAttribute.Range;
-                case "stopduration": return ItemAttribute.TotalExpireTime;
+                case "stopduration": return ItemAttribute.StopDecaying;
                 case "decayto": return ItemAttribute.ExpireTarget;
                 case "transformequipto": return ItemAttribute.TransformEquipTo;
                 case "transformdeequipto": return ItemAttribute.TransformDequipTo;

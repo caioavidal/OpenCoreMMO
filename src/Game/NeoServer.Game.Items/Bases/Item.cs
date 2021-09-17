@@ -31,30 +31,22 @@ namespace NeoServer.Game.Items.Bases
         #region Decay
 
         public Func<IItemType> DecaysTo { get; init; }
-        public int Duration => Decayable?.Duration ?? default;
+        public uint Duration => Decayable?.Duration ?? default;
         public bool ShouldDisappear => Decayable?.ShouldDisappear ?? false;
         public bool Expired => Decayable?.Expired ?? false;
-        public int Elapsed => Decayable?.Elapsed ?? 0;
-        public int Remaining => Decayable?.Remaining ?? default;
+        public uint Elapsed => Decayable?.Elapsed ?? 0;
+        public uint Remaining => Decayable?.Remaining ?? default;
 
-        public bool TryDecay()
-        {
-            return Decayable?.TryDecay() ?? default;
-        }
+        public bool TryDecay() => Decayable?.TryDecay() ?? default;
 
         public event DecayDelegate OnDecayed;
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
 
-        public void StartDecay()
-        {
-            Decayable?.StartDecay();
-        }
+        public void StartDecay() => Decayable?.StartDecay();
 
-        public void PauseDecay()
-        {
-            Decayable?.PauseDecay();
-        }
+        public void PauseDecay() => Decayable?.PauseDecay();
+        public void SetDuration(ushort duration) => Decayable?.SetDuration(duration);
 
         #endregion
     }

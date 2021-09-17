@@ -11,16 +11,17 @@ namespace NeoServer.Game.Common.Contracts.Items
     public interface IDecayable
     {
         Func<IItemType> DecaysTo { get; }
-        int Duration { get; }
+        uint Duration { get; }
         bool ShouldDisappear { get; }
         bool Expired { get; }
-        int Elapsed { get; }
-        int Remaining { get; }
+        uint Elapsed { get; }
+        uint Remaining { get; }
         bool TryDecay();
         event DecayDelegate OnDecayed;
         event PauseDecay OnPaused;
         event StartDecay OnStarted;
         void StartDecay();
         void PauseDecay();
+        void SetDuration(ushort duration);
     }
 }

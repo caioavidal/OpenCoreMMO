@@ -1,18 +1,27 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {
     public class Decayable : IDecayable
     {
+        private readonly bool _showDuration;
         private bool _isPaused = true;
 
         private int _lastElapsed;
         private long _startedToDecayTime;
 
-        public Decayable(Func<IItemType> decaysTo, int duration)
+        public Decayable(Func<IItemType> decaysTo, uint duration, bool showDuration = true)
         {
+            _showDuration = showDuration;
             DecaysTo = decaysTo;
+            Duration = duration;
+        }
+
+        public void SetDuration(ushort duration)
+        {
+            if (Duration > 0) return;
             Duration = duration;
         }
 
@@ -21,12 +30,13 @@ namespace NeoServer.Game.Items.Items.Attributes
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
         public Func<IItemType> DecaysTo { get; }
-        public int Duration { get; }
-        public int Remaining => Math.Max(0, Duration - Elapsed);
+        public uint Duration { get; private set; }
+        public uint Remaining => (uint) Math.Max(0, Duration - Elapsed);
 
-        public int Elapsed => _isPaused
-            ? _lastElapsed
-            : _lastElapsed + (int) ((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
+        public uint Elapsed =>
+            (uint)Math.Max(0, _isPaused
+                ? _lastElapsed
+                : _lastElapsed + (int) ((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond));
 
         public bool Expired => StartedToDecay && Elapsed >= Duration;
         public bool ShouldDisappear => DecaysTo?.Invoke() is null;
@@ -56,6 +66,7 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public override string ToString()
         {
+            if (!_showDuration) return string.Empty;
             if (Elapsed == 0) return "is brand-new";
 
             var minutes = Remaining / 60;

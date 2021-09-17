@@ -76,12 +76,12 @@ namespace NeoServer.Game.Items.Items
         }
 
         public Func<IItemType> DecaysTo { get; init; }
-        public int Duration => Metadata.Attributes.GetAttribute<int>(ItemAttribute.Duration);
+        public uint Duration => Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration);
         public long StartedToDecayTime { get; private set; }
         public bool StartedToDecay => StartedToDecayTime != default;
         public bool Expired => StartedToDecayTime + TimeSpan.TicksPerSecond * Duration < DateTime.Now.Ticks;
-        public int Elapsed { get; }
-        public int Remaining => Duration - Elapsed;
+        public uint Elapsed { get; }
+        public uint Remaining => Duration - Elapsed;
         public bool ShouldDisappear => DecaysTo?.Invoke() == null;
 
         public bool TryDecay()
@@ -105,6 +105,11 @@ namespace NeoServer.Game.Items.Items
 
         public void PauseDecay()
         {
+        }
+
+        public void SetDuration(ushort duration)
+        {
+            throw new NotImplementedException();
         }
     }
 }
