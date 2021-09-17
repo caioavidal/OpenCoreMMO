@@ -51,7 +51,7 @@ namespace NeoServer.Game.Items.Bases
         }
 
         public IPlayer PlayerDressing { get; private set; }
-        public Func<ushort, ItemType> ItemTypeFinder { get; init; }
+        public Func<ushort, IItemType> ItemTypeFinder { get; init; }
 
         public override string CustomLookText
         {
@@ -175,7 +175,7 @@ namespace NeoServer.Game.Items.Bases
             Decayable?.PauseDecay();
         }
 
-        public void SetDuration(ushort duration) => Decayable?.SetDuration(duration);
+        public void SetDuration(uint duration) => Decayable?.SetDuration(duration);
 
         #endregion
 

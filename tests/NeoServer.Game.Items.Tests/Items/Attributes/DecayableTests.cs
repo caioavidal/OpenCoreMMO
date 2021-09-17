@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -446,6 +448,133 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             sut.SetDuration(200);
             //assert
             sut.Duration.Should().Be(100);
+        }
+
+        [Fact]
+        public void Decay_ExpiredAndDecaysToItem_EmitsEvent()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(id:2);
+
+            var sut = new Decayable(() => item.Metadata, duration: 1);
+
+            IItemType toItem = null;
+            sut.OnDecayed += (to) => toItem = to;
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+            toItem.Should().Be(item.Metadata);
+        }
+        [Fact]
+        public void Decay_ExpiredAndDecaysToItem_ChangesDuration()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100)
+            });
+
+            var sut = new Decayable(() => item.Metadata, duration: 1);
+            
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+            sut.Duration.Should().Be(100);
+        }
+        [Fact]
+        public void Decay_ExpiredAndDecaysToItem_0Elapsed()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100)
+            });
+
+            var sut = new Decayable(() => item.Metadata, duration: 1);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+            sut.Elapsed.Should().Be(0);
+        }
+        [Fact]
+        public void Decay_ExpiredAndDecaysToItemWithStopDecayingTrue_DoNotStart()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.StopDecaying, 1)
+            });
+
+            var sut = new Decayable(() => item.Metadata, duration: 1);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+            sut.Elapsed.Should().Be(0);
+            Thread.Sleep(1500);
+            sut.Elapsed.Should().Be(0);
+        }
+        [Fact]
+        public void Decay_ExpiredAndDecaysToItemWithStopDecayingFalse_Starts()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.StopDecaying, 0)
+            });
+
+            var sut = new Decayable(() => item.Metadata, duration: 1);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+            sut.Elapsed.Should().Be(0);
+            Thread.Sleep(1100);
+            sut.Elapsed.Should().Be(1);
+        }
+
+        [Fact]
+        public void Decay_ExpiredAndDecaysToItem_ChangesDecaysTo()
+        {
+            //arrange
+            var item3 = ItemTestData.CreateDefenseEquipmentItem(id: 3);
+
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1),
+                (ItemAttribute.StopDecaying, 0),
+                (ItemAttribute.DecayTo, 3)
+            });
+
+            var sut = new Decayable(() => item.Metadata, duration: 1)
+            {
+                ItemTypeFinder= (value) => value == 3 ? item3.Metadata : null
+            };
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+            sut.DecaysTo?.Invoke().Should().Be(item3.Metadata);
+            Thread.Sleep(1500);
+            sut.TryDecay();
+            //assert
+            sut.DecaysTo?.Invoke().Should().BeNull();
         }
 
     }

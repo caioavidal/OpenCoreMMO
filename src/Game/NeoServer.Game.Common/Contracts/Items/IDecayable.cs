@@ -22,6 +22,6 @@ namespace NeoServer.Game.Common.Contracts.Items
         event StartDecay OnStarted;
         void StartDecay();
         void PauseDecay();
-        void SetDuration(ushort duration);
+        void SetDuration(uint duration);
     }
 }

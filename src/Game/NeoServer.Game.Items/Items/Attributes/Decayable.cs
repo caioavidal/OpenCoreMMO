@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {
     public class Decayable : IDecayable
     {
-        private readonly bool _showDuration;
+        private bool _showDuration;
         private bool _isPaused = true;
 
         private int _lastElapsed;
@@ -19,19 +20,21 @@ namespace NeoServer.Game.Items.Items.Attributes
             Duration = duration;
         }
 
-        public void SetDuration(ushort duration)
+        public void SetDuration(uint duration)
         {
             if (Duration > 0) return;
             Duration = duration;
         }
 
+        public Func<ushort, IItemType> ItemTypeFinder { get; init; }
+
         public bool StartedToDecay => _startedToDecayTime != default;
         public event DecayDelegate OnDecayed;
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
-        public Func<IItemType> DecaysTo { get; }
+        public Func<IItemType> DecaysTo { get; private set; }
         public uint Duration { get; private set; }
-        public uint Remaining => (uint) Math.Max(0, Duration - Elapsed);
+        public uint Remaining => Math.Max(0, Duration - Elapsed);
 
         public uint Elapsed =>
             (uint)Math.Max(0, _isPaused
@@ -56,11 +59,36 @@ namespace NeoServer.Game.Items.Items.Attributes
             OnPaused?.Invoke(this);
         }
 
+        private void Reset()
+        {
+            Duration = 0;
+            _startedToDecayTime = default;
+        }
+
         public bool TryDecay()
         {
             if (!Expired) return false;
 
-            OnDecayed?.Invoke(DecaysTo?.Invoke());
+            var decaysTo = DecaysTo?.Invoke();
+
+            OnDecayed?.Invoke(decaysTo);
+
+            if (decaysTo is null) return true;
+
+            decaysTo.Attributes.TryGetAttribute<uint>(ItemAttribute.Duration, out var duration);
+            decaysTo.Attributes.TryGetAttribute<byte>(ItemAttribute.ShowDuration, out var showDuration);
+            decaysTo.Attributes.TryGetAttribute<byte>(ItemAttribute.StopDecaying, out var stopDecaying);
+            decaysTo.Attributes.TryGetAttribute<byte>(ItemAttribute.DecayTo, out var decayTo);
+
+
+            Reset();
+
+            SetDuration(duration);
+            _showDuration = showDuration == 1;
+            DecaysTo = () => ItemTypeFinder?.Invoke(decayTo);
+
+            if(stopDecaying == 0) StartDecay();
+            
             return true;
         }
 

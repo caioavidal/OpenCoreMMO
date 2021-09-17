@@ -107,7 +107,7 @@ namespace NeoServer.Game.Items.Items
         {
         }
 
-        public void SetDuration(ushort duration)
+        public void SetDuration(uint duration)
         {
             throw new NotImplementedException();
         }

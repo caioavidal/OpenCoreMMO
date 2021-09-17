@@ -46,7 +46,7 @@ namespace NeoServer.Game.Items.Bases
         public void StartDecay() => Decayable?.StartDecay();
 
         public void PauseDecay() => Decayable?.PauseDecay();
-        public void SetDuration(ushort duration) => Decayable?.SetDuration(duration);
+        public void SetDuration(uint duration) => Decayable?.SetDuration(duration);
 
         #endregion
     }

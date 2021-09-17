@@ -28,7 +28,10 @@ namespace NeoServer.Game.Items.Factories.AttributeFactory
             if (!hasShowDuration) showDuration = 1;
 
             var decaysTo = itemType.Attributes.GetAttribute<ushort>(ItemAttribute.ExpireTarget);
-            return new Decayable(() => _itemTypeStore.Get(decaysTo), duration, showDuration == 1);
+            return new Decayable(() => _itemTypeStore.Get(decaysTo), duration, showDuration == 1)
+            {
+                ItemTypeFinder = _itemTypeStore.Get
+            };
         }
     }
 }

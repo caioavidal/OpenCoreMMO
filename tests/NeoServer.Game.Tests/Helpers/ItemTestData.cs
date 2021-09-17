@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items;
@@ -114,7 +115,7 @@ namespace NeoServer.Game.Tests.Helpers
         public static IDefenseEquipment CreateDefenseEquipmentItem(ushort id, string slot = "", ushort charges = 10,
             (ItemAttribute, IConvertible)[] attributes = null,
             Func<IItemType> transformOnEquipItem = null, Func<IItemType> transformOnDequipItem = null,
-            Func<IItemType> decaysTo = null)
+            Func<IItemType> decaysTo = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -127,16 +128,21 @@ namespace NeoServer.Game.Tests.Helpers
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
 
 
+
             var hasShowDuration = type.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
             var hasDuration = type.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
 
             return new BodyDefenseEquipment(type, new Location(100, 100, 7))
             {
-                Decayable = hasShowDuration || hasDuration ?  new Decayable(decaysTo, duration, showDuration == 1) : null,
+                Decayable = hasShowDuration || hasDuration ?  new Decayable(decaysTo, duration, showDuration == 1)
+                {
+                    ItemTypeFinder = itemTypeFinder
+                } : null,
                 Transformable = new Transformable(type) { TransformEquipItem = transformOnEquipItem, TransformDequipItem = transformOnDequipItem },
                 Protection = type.Attributes.DamageProtection is null ? null : new Protection(type.Attributes.DamageProtection),
                 SkillBonus = type.Attributes.SkillBonuses is null ? null : new SkillBonus(type.Attributes.SkillBonuses),
-                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null
+                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                ItemTypeFinder = itemTypeFinder
             };
         }
 
@@ -210,5 +216,6 @@ namespace NeoServer.Game.Tests.Helpers
 
             return new Item(type, new Location(100, 100, 7));
         }
+
     }
 }
