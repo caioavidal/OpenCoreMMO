@@ -19,10 +19,16 @@ namespace NeoServer.Game.Items.Factories.AttributeFactory
 
         public IDecayable Create(IItemType itemType)
         {
-            if (!itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration)) return null;
+            var hasShowDuration =
+                itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
+            var hasDuration = itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
+
+            if (!hasShowDuration && !hasDuration) return null;
+
+            if (!hasShowDuration) showDuration = 1;
 
             var decaysTo = itemType.Attributes.GetAttribute<ushort>(ItemAttribute.ExpireTarget);
-            return new Decayable(() => _itemTypeStore.Get(decaysTo), duration);
+            return new Decayable(() => _itemTypeStore.Get(decaysTo), duration, showDuration == 1);
         }
     }
 }

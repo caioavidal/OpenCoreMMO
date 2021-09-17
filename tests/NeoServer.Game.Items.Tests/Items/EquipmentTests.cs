@@ -330,5 +330,216 @@ namespace NeoServer.Game.Items.Tests.Items
             sut.CustomLookText.Should().Be(" item that has no charges left");
         }
 
+        [Fact]
+        public void TransformOnEquip_HasDuration_SetsDuration()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot:"ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.AbsorbPercentEnergy, 100),
+                (ItemAttribute.ShowDuration, 1),
+                (ItemAttribute.Duration, 1800)
+            }, decaysTo: () => null);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.AbsorbPercentEnergy, 100),
+                (ItemAttribute.ShowDuration, 1)
+
+            }, decaysTo: () => null, transformOnEquipItem: ()=> transformToItem.Metadata);
+
+            //assert
+            sut.Duration.Should().Be(0);
+            
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+
+            //assert
+            sut.Duration.Should().Be(1800);
+        }
+
+        [Fact]
+        public void StartDecay_NoStopDecayingAttr_Starts()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1000),
+                (ItemAttribute.ShowDuration, false)
+            }, decaysTo: () => null);
+
+            //assert
+            sut.Elapsed.Should().Be(0);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            Thread.Sleep(1500);
+
+            //assert
+            sut.Elapsed.Should().BeGreaterThan(0);
+        }
+
+        [Fact]
+        public void StartDecay_HasStopDecayingTrue_DoNotStart()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1000),
+                (ItemAttribute.ShowDuration, false),
+                (ItemAttribute.StopDecaying, 1),
+            }, decaysTo: () => null);
+
+            //assert
+            sut.Elapsed.Should().Be(0);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            Thread.Sleep(1500);
+
+            //assert
+            sut.Elapsed.Should().Be(0);
+        }
+        [Fact]
+        public void StartDecay_HasStopDecayingFalse_Start()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1000),
+                (ItemAttribute.ShowDuration, false),
+                (ItemAttribute.StopDecaying, 0),
+            }, decaysTo: () => null);
+
+            //assert
+            sut.Elapsed.Should().Be(0);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            Thread.Sleep(1500);
+
+            //assert
+            sut.Elapsed.Should().BeGreaterThan(0);
+        }
+        [Fact]
+        public void PauseDecay_HasNoStopDecayingAttr_DoNotPause()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.ShowDuration, false),
+            }, decaysTo: () => null);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.ShowDuration, false),
+            }, decaysTo: () => null, transformOnEquipItem: ()=> transformToItem.Metadata);
+
+            //assert
+            sut.Elapsed.Should().Be(0);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            Thread.Sleep(1100);
+            player.Inventory.RemoveItemFromSlot(Slot.Ring,1, out _);
+            Thread.Sleep(1100);
+
+            //assert
+            sut.Elapsed.Should().Be(2);
+        }
+        [Fact]
+        public void PauseDecay_HasStopDecayingTrue_Pauses()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.ShowDuration, 1)
+
+            }, decaysTo: () => null);
+
+            var transformToItemDequip = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.ShowDuration, 1),
+                (ItemAttribute.StopDecaying, 1)
+
+            }, decaysTo: () => null);
+
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.ShowDuration, 1),
+                (ItemAttribute.StopDecaying, 1)
+            }, decaysTo: () => null, transformOnEquipItem: ()=>transformToItem.Metadata, transformOnDequipItem: ()=> transformToItemDequip.Metadata);
+
+            //assert
+            sut.Elapsed.Should().Be(0);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            Thread.Sleep(1100);
+            player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+            Thread.Sleep(2000);
+
+            //assert
+            sut.Elapsed.Should().Be(1);
+        }
+        [Fact]
+        public void PauseDecay_HasStopDecayingFalse_DoNotPause()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.ShowDuration, false),
+                (ItemAttribute.StopDecaying, 0),
+
+            }, decaysTo: () => null);
+
+            var transformToItemDequip = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 100),
+                (ItemAttribute.ShowDuration, 1),
+                (ItemAttribute.StopDecaying, 0)
+
+            }, decaysTo: () => null);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.ShowDuration, false),
+                }, decaysTo: () => null, transformOnEquipItem: () => transformToItem.Metadata, transformOnDequipItem: ()=> transformToItemDequip.Metadata);
+
+            //assert
+            sut.Elapsed.Should().Be(0);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            Thread.Sleep(1100);
+            player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+            Thread.Sleep(2000);
+
+            //assert
+            sut.Elapsed.Should().Be(3);
+        }
     }
 }

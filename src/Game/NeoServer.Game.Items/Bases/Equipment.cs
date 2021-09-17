@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -145,11 +146,11 @@ namespace NeoServer.Game.Items.Bases
         #region Decay
 
         public Func<IItemType> DecaysTo => Decayable?.DecaysTo;
-        public int Duration => Decayable?.Duration ?? 0;
+        public uint Duration => Decayable?.Duration ?? 0;
         public bool ShouldDisappear => Decayable?.ShouldDisappear ?? false;
         public bool Expired => Decayable?.Expired ?? false;
-        public int Elapsed => Decayable?.Elapsed ?? 0;
-        public int Remaining => Decayable?.Remaining ?? default;
+        public uint Elapsed => Decayable?.Elapsed ?? 0;
+        public uint Remaining => Decayable?.Remaining ?? default;
 
         public bool TryDecay()
         {
@@ -160,8 +161,21 @@ namespace NeoServer.Game.Items.Bases
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
 
-        public void StartDecay() => Decayable?.StartDecay();
-        public void PauseDecay() => Decayable?.PauseDecay();
+        public void StartDecay()
+        {
+            if (Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying) && stopDecaying == 1) return;
+            Decayable?.StartDecay();
+        }
+
+        public void PauseDecay()
+        {
+            var hasStopDecaying = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying);
+            if (!hasStopDecaying || hasStopDecaying && stopDecaying == 0) return;
+
+            Decayable?.PauseDecay();
+        }
+
+        public void SetDuration(ushort duration) => Decayable?.SetDuration(duration);
 
         #endregion
 
@@ -171,6 +185,7 @@ namespace NeoServer.Game.Items.Bases
         {
             Transformable?.TransformOnEquip();
             ChangeSkillBonuses(Metadata.Attributes.SkillBonuses);
+            SetDuration(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Duration));
         }
 
         public void TransformOnDequip() => Transformable?.TransformOnDequip();
