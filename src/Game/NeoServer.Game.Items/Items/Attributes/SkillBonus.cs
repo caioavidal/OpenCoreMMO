@@ -13,7 +13,15 @@ namespace NeoServer.Game.Items.Items.Attributes
             SkillBonuses = skillBonuses;
         }
 
-        public Dictionary<SkillType, byte> SkillBonuses { get; }
+        public void ChangeSkillBonuses(Dictionary<SkillType, byte> skillBonuses)
+        {
+            if(Guard.AnyNull(skillBonuses)) return;
+
+            SkillBonuses.Clear();
+            foreach (var (skillType, bonus) in skillBonuses) SkillBonuses.TryAdd(skillType, bonus);
+        }
+
+        public Dictionary<SkillType, byte> SkillBonuses { get; private set; }
 
         public void AddSkillBonus(IPlayer player)
         {

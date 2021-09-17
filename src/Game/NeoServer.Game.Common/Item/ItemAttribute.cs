@@ -43,7 +43,7 @@
         Waypoints,
         AvoidDamageTypes,
         ExpireTarget,
-        TotalExpireTime,
+        StopDecaying,
         SourceLiquidType,
         DisguiseTarget,
         Brightness,

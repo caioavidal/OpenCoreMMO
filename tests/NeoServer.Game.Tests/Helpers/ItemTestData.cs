@@ -126,9 +126,13 @@ namespace NeoServer.Game.Tests.Helpers
             attributes ??= new (ItemAttribute, IConvertible)[0];
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
 
+
+            var hasShowDuration = type.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
+            var hasDuration = type.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
+
             return new BodyDefenseEquipment(type, new Location(100, 100, 7))
             {
-                Decayable = type.Attributes.GetAttribute<ushort>(ItemAttribute.Duration) == 0 ? null : new Decayable(decaysTo, type.Attributes.GetAttribute<ushort>(ItemAttribute.Duration)),
+                Decayable = hasShowDuration || hasDuration ?  new Decayable(decaysTo, duration, showDuration == 1) : null,
                 Transformable = new Transformable(type) { TransformEquipItem = transformOnEquipItem, TransformDequipItem = transformOnDequipItem },
                 Protection = type.Attributes.DamageProtection is null ? null : new Protection(type.Attributes.DamageProtection),
                 SkillBonus = type.Attributes.SkillBonuses is null ? null : new SkillBonus(type.Attributes.SkillBonuses),

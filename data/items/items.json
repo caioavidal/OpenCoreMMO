@@ -9347,10 +9347,6 @@
           {
              "key": "showduration",
              "value": "1"
-          },
-		  {
-             "key": "duration",
-             "value": "1800"
           }
        ]
     },
@@ -9451,7 +9447,7 @@
           },
           {
              "key": "duration",
-             "value": "1800"
+             "value": "30"
           },
           {
              "key": "showduration",

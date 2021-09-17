@@ -127,7 +127,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var item = ItemTestData.CreateDefenseEquipmentItem(1);
             var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
 
-            var sut = new Decayable( () => decayToItem.Metadata, 20);
+            var sut = new Decayable(() => decayToItem.Metadata, 20);
 
             //act
             sut.StartDecay();
@@ -315,6 +315,19 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             sut.ToString().Should().Be("will expire in 1 minute and 1 second");
         }
         [Fact]
+        public void ToString_ShowDurationFalse_ReturnEmpty()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(1);
+            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+
+            var sut = new Decayable(() => decayToItem.Metadata, 62, false);
+            //act
+            sut.StartDecay();
+            //assert
+            sut.ToString().Should().BeEmpty();
+        }
+        [Fact]
         public void Decay_DidNotExpire_ReturnsFalse()
         {
             //arrange
@@ -408,6 +421,31 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var actual = sut.TryDecay();
             //assert
             toItem.Should().BeNull();
+        }
+
+        [Fact]
+        public void SetDuration_Duration0_Sets()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(1);
+
+            var sut = new Decayable(() => null, duration: 0);
+            //act
+            sut.SetDuration(100);
+            //assert
+            sut.Duration.Should().Be(100);
+        }
+        [Fact]
+        public void SetDuration_Duration100_DoNotSet()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(1);
+
+            var sut = new Decayable(() => null, duration: 100);
+            //act
+            sut.SetDuration(200);
+            //assert
+            sut.Duration.Should().Be(100);
         }
 
     }
