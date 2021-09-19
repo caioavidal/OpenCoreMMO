@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
@@ -8,20 +9,15 @@ namespace NeoServer.Game.Items.Items.Attributes
 {
     public sealed class SkillBonus: ISkillBonus
     {
-        public SkillBonus(Dictionary<SkillType, byte> skillBonuses)
+        private readonly IItem _item;
+
+        public SkillBonus(IItem item)
         {
-            SkillBonuses = skillBonuses;
+            _item = item;
         }
+        
 
-        public void ChangeSkillBonuses(Dictionary<SkillType, byte> skillBonuses)
-        {
-            if(Guard.AnyNull(skillBonuses)) return;
-
-            SkillBonuses.Clear();
-            foreach (var (skillType, bonus) in skillBonuses) SkillBonuses.TryAdd(skillType, bonus);
-        }
-
-        public Dictionary<SkillType, byte> SkillBonuses { get; private set; }
+        public Dictionary<SkillType, byte> SkillBonuses => _item.Metadata.Attributes.SkillBonuses;
 
         public void AddSkillBonus(IPlayer player)
         {

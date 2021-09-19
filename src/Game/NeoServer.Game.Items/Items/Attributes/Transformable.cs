@@ -14,7 +14,7 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public void TransformOnEquip()
         {
-            if (TransformEquipItem?.Invoke() is not { } itemType) return;
+            if (TransformEquipItem is not { } itemType) return;
             var before = _itemType;
             _itemType = itemType;
 
@@ -24,7 +24,7 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public void TransformOnDequip()
         {
-            if (TransformDequipItem?.Invoke() is not { } itemType) return;
+            if (TransformDequipItem is not { } itemType) return;
 
             var before = _itemType;
             _itemType = itemType;
@@ -32,8 +32,8 @@ namespace NeoServer.Game.Items.Items.Attributes
             OnTransformed?.Invoke(before, itemType);
         }
 
-        public Func<IItemType> TransformEquipItem { get; init; }
-        public Func<IItemType> TransformDequipItem { get; init; }
+        public IItemType TransformEquipItem { get; init; }
+        public IItemType TransformDequipItem { get; init; }
         public event Transform OnTransformed;
     }
 }

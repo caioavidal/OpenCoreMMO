@@ -6,20 +6,14 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Factories.AttributeFactory
 {
-    public class ProtectionFactory : IFactory
+    public class ProtectionFactory 
     {
-        public ProtectionFactory()
+        public static IProtection Create(IItem item)
         {
-        }
-
-        public event CreateItem OnItemCreated;
-
-        public IProtection Create(IItemType itemType)
-        {
-            if (itemType.Attributes.DamageProtection is not { } damageProtection) return null;
+            if (item.Metadata.Attributes.DamageProtection is not { } damageProtection) return null;
             if (!damageProtection.Any()) return null;
 
-            return new Protection(damageProtection);
+            return new Protection(item);
         }
     }
 }

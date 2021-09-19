@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Items
 {
-    public delegate void DecayDelegate(IItemType decaysTo);
+    public delegate void DecayDelegate(ushort decaysTo);
 
     public delegate void PauseDecay(IDecayable item);
 
@@ -10,7 +10,7 @@ namespace NeoServer.Game.Common.Contracts.Items
 
     public interface IDecayable
     {
-        Func<IItemType> DecaysTo { get; }
+        ushort DecaysTo { get; }
         uint Duration { get; }
         bool ShouldDisappear { get; }
         bool Expired { get; }
@@ -22,6 +22,5 @@ namespace NeoServer.Game.Common.Contracts.Items
         event StartDecay OnStarted;
         void StartDecay();
         void PauseDecay();
-        void SetDuration(ushort duration);
     }
 }

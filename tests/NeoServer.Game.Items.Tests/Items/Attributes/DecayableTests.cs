@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -13,8 +15,16 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Expired_DidNotStartToDecay_ReturnsFalse()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var sut = new Decayable(() => item.Metadata, 60);
+
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+            });
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id:1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 60),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //assert
             sut.Expired.Should().BeFalse();
@@ -23,8 +33,15 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Expired_ElapsedLessThanDuration_ReturnsFalse()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var sut = new Decayable(() => item.Metadata, 60);
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+            });
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 60),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -37,8 +54,15 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Expired_ElapsedGreaterThanDuration_ReturnsTrue()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var sut = new Decayable(() => item.Metadata, 2);
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+            });
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 2),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -52,8 +76,15 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void StartedToDecay_CalledStart_ReturnsTrue()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var sut = new Decayable(() => item.Metadata, 2);
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+            });
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 2),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -66,8 +97,12 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void StartedToDecay_DidNotStart_ReturnsFalse()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var sut = new Decayable(() => item.Metadata, 2);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 2),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //assert
             sut.StartedToDecay.Should().BeFalse();
@@ -76,8 +111,12 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Start_IncreaseElapsedTime()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var sut = new Decayable(() => item.Metadata, 20);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -100,8 +139,12 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ShouldDisappear_DecaysToNull_ReturnsTrue()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var sut = new Decayable(() => null, 20);
+            
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+            });
+            var sut = new Decayable(decayableItem);
 
             //assert
             sut.ShouldDisappear.Should().BeTrue();
@@ -110,11 +153,12 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ShouldDisappear_DecaysTo10_ReturnsFalse()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
-
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //assert
             sut.ShouldDisappear.Should().BeFalse();
@@ -124,10 +168,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Elapsed_2Secs_Returns2()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,2)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -141,9 +188,12 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Elapsed_AfterPause_DoNotChange()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,2)
+            });
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -159,10 +209,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Remaining_DidNotStarted_ReturnsDuration()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,2)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var sut = new Decayable(decayableItem);
 
             //assert
             sut.Remaining.Should().Be(20);
@@ -171,10 +224,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Remaining_Elapsed2SecsOf20_Returns18()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,2)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -188,10 +244,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Remaining_Elapsed2SecsOf2_Returns0()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 2),
+                (ItemAttribute.ExpireTarget,2)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 2);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -205,10 +264,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Pause_EmitEvent()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 2),
+                (ItemAttribute.ExpireTarget,2)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 2);
+            var sut = new Decayable(decayableItem);
 
             var emitted = false;
             sut.OnPaused += _ => emitted = true;
@@ -224,10 +286,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Start_EmitEvent()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 2),
+                (ItemAttribute.ExpireTarget,10)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 2);
+            var sut = new Decayable(decayableItem);
 
             var emitted = false;
             sut.OnStarted += _ => emitted = true;
@@ -241,10 +306,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Elapsed_AfterStarted_Changes()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,10)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -258,10 +326,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Remaining_AfterStarted_Changes()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,10)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -276,10 +347,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ToString_DidNotStart_ReturnBrandNewMessage()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 20),
+                (ItemAttribute.ExpireTarget,10)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 20);
+            var sut = new Decayable(decayableItem);
 
             //assert
             sut.ToString().Should().Be("is brand-new");
@@ -288,10 +362,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ToString_DidStart_ReturnTimeRemaining()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 180),
+                (ItemAttribute.ExpireTarget,10)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 180);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -303,10 +380,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ToString_DidStart_ReturnTimeRemainingWellFormatted()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 62),
+                (ItemAttribute.ExpireTarget,10)
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 62);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -318,10 +398,14 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ToString_ShowDurationFalse_ReturnEmpty()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 62),
+                (ItemAttribute.ExpireTarget,10),
+                (ItemAttribute.ShowDuration,0),
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 62, false);
+            var sut = new Decayable(decayableItem);
             //act
             sut.StartDecay();
             //assert
@@ -331,10 +415,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Decay_DidNotExpire_ReturnsFalse()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
-
-            var sut = new Decayable(() => decayToItem.Metadata, 62);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 62),
+                (ItemAttribute.ExpireTarget,10),
+            });
+            
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -348,10 +435,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Decay_DidNotExpire_DoNotEmitEvent()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 62),
+                (ItemAttribute.ExpireTarget,10),
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, 62);
+            var sut = new Decayable(decayableItem);
             var emitted = false;
             sut.OnDecayed += (_) => emitted = true;
 
@@ -367,10 +457,13 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Decay_Expired_ReturnsTrue()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1),
+                (ItemAttribute.ExpireTarget,10),
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, duration: 1);
+            var sut = new Decayable(decayableItem);
 
             //act
             sut.StartDecay();
@@ -383,12 +476,15 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Decay_Expired_EmitEvent()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
-            var decayToItem = ItemTestData.CreateDefenseEquipmentItem(10);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1),
+                (ItemAttribute.ExpireTarget,10),
+            });
 
-            var sut = new Decayable(() => decayToItem.Metadata, duration: 1);
+            var sut = new Decayable(decayableItem);
 
-            IItemType toItem = null;
+            ushort toItem = 0;
             sut.OnDecayed += (to) =>
             {
                 toItem = to;
@@ -399,17 +495,20 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             Thread.Sleep(1500);
             var actual = sut.TryDecay();
             //assert
-            toItem.Should().Be(decayToItem.Metadata);
+            toItem.Should().Be(10);
         }
         [Fact]
         public void Decay_ExpiredAndDecaysToNull_EmitEvent()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1),
+            });
 
-            var sut = new Decayable(() => null, duration: 1);
+            var sut = new Decayable(decayableItem);
 
-            IItemType toItem = null;
+            ushort toItem = 0;
             sut.OnDecayed += (to) =>
             {
                 toItem = to;
@@ -420,33 +519,48 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             Thread.Sleep(1500);
             var actual = sut.TryDecay();
             //assert
-            toItem.Should().BeNull();
+            toItem.Should().Be(0);
         }
-
+        
         [Fact]
-        public void SetDuration_Duration0_Sets()
+        public void Decay_ExpiredAndDecaysToItem_EmitsEvent()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1),
+                (ItemAttribute.ExpireTarget,10)
+            });
+            var sut = new Decayable(decayableItem);
 
-            var sut = new Decayable(() => null, duration: 0);
+            ushort toItem = 0;
+            sut.OnDecayed += (to) => toItem = to;
+
             //act
-            sut.SetDuration(100);
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
             //assert
-            sut.Duration.Should().Be(100);
+            toItem.Should().Be(10);
         }
         [Fact]
-        public void SetDuration_Duration100_DoNotSet()
+        public void Decay_ExpiredAndDecaysToItem_0Elapsed()
         {
             //arrange
-            var item = ItemTestData.CreateDefenseEquipmentItem(1);
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1),
+                (ItemAttribute.ExpireTarget,10),
+            });
 
-            var sut = new Decayable(() => null, duration: 100);
+            var sut = new Decayable(decayableItem);
+
             //act
-            sut.SetDuration(200);
+            sut.StartDecay();
+            Thread.Sleep(1500);
+            sut.TryDecay();
             //assert
-            sut.Duration.Should().Be(100);
+            sut.Elapsed.Should().Be(0);
         }
-
     }
 }

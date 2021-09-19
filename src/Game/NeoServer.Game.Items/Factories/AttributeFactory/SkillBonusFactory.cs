@@ -16,10 +16,11 @@ namespace NeoServer.Game.Items.Factories.AttributeFactory
 
         public ISkillBonus Create(IItemType itemType)
         {
-            if (itemType.Attributes.SkillBonuses is not { } skillBonuses) return null;
-            if (!skillBonuses.Any()) return null;
+            //if (itemType.Attributes.SkillBonuses is not { } skillBonuses) return null;
+            //if (!skillBonuses.Any()) return null;
 
-            return new SkillBonus(skillBonuses);
+            //return new SkillBonus();
+            return null;
         }
     }
 }

@@ -568,30 +568,35 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ToString_ReturnsLookText()
         {
             //arrange
-            var sut = new Protection(new Dictionary<DamageType, sbyte>()
-            {
-                [DamageType.Energy] = 10,
-                [DamageType.Fire] = 20,
-                [DamageType.Death] = -25,
-                [DamageType.ManaDrain] = 30,
-                [DamageType.LifeDrain] = 45,
-                [DamageType.Ice] = 50,
-                [DamageType.Physical] = -65,
-                [DamageType.Drown] = 80,
-                [DamageType.Earth] = 100
-            });
+            var item = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy , 10),
+                        (ItemAttribute.AbsorbPercentFire , 20),
+                        (ItemAttribute.AbsorbPercentDeath , -25),
+                        (ItemAttribute.AbsorbPercentManaDrain , 30),
+                        (ItemAttribute.AbsorbPercentLifeDrain , 45),
+                        (ItemAttribute.AbsorbPercentIce , 50),
+                        (ItemAttribute.AbsorbPercentPhysical,-65),
+                        (ItemAttribute.AbsorbPercentDrown , 80),
+                        (ItemAttribute.AbsorbPercentPoison, 100),
+                        (ItemAttribute.AbsorbPercentHoly, 50)
+                });
 
+            var sut = new Protection(item);
             //assert
-            sut.ToString().Should().Be("protection energy 10%, fire 20%, death -25%, mana drain 30%, life drain 45%, ice 50%, physical -65%, drown 80%, earth 100%");
+            sut.ToString().Should().Be("protection energy 10%, fire 20%, death -25%, mana drain 30%, life drain 45%, ice 50%, physical -65%, drown 80%, earth 100%, holy 50%");
         }
         [Fact]
         public void ToString_AllProtection_ReturnsLookText()
         {
             //arrange
-            var sut = new Protection(new Dictionary<DamageType, sbyte>()
-            {
-                [DamageType.All] = 10
-            });
+            var item = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentAll, 10)
+                });
+            var sut = new Protection(item);
 
             //assert
             sut.ToString().Should().Be("protection all 10%");
@@ -600,10 +605,12 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ToString_ElementalProtection_ReturnsLookText()
         {
             //arrange
-            var sut = new Protection(new Dictionary<DamageType, sbyte>()
-            {
-                [DamageType.Elemental] = 10
-            });
+            var item = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentElements, 10)
+                });
+            var sut = new Protection(item);
 
             //assert
             sut.ToString().Should().Be("protection elemental 10%");
@@ -612,11 +619,14 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void ToString_0Protection_Ignores()
         {
             //arrange
-            var sut = new Protection(new Dictionary<DamageType, sbyte>()
-            {
-                [DamageType.Elemental] = 10,
-                [DamageType.Death] = 0
-            });
+            var item = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentElements, 10),
+                    (ItemAttribute.AbsorbPercentDeath, 0)
+
+                });
+            var sut = new Protection(item);
 
             //assert
             sut.ToString().Should().Be("protection elemental 10%");

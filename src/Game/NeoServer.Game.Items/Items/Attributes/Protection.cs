@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
@@ -14,12 +12,14 @@ namespace NeoServer.Game.Items.Items.Attributes
 {
     public sealed class Protection : IProtection
     {
-        public Protection(Dictionary<DamageType, sbyte> damageProtection)
+        private readonly IItem _item;
+
+        public Protection(IItem item)
         {
-            DamageProtection = damageProtection;
+            _item = item;
         }
 
-        public Dictionary<DamageType, sbyte> DamageProtection { get; }
+        public Dictionary<DamageType, sbyte> DamageProtection => _item.Metadata.Attributes.DamageProtection;
 
         private sbyte GetProtection(CombatDamage combatDamage)
         {

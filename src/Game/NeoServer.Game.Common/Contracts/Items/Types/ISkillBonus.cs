@@ -8,6 +8,5 @@ namespace NeoServer.Game.Common.Contracts.Items.Types
     {
         void AddSkillBonus(IPlayer player);
         void RemoveSkillBonus(IPlayer player);
-        void ChangeSkillBonuses(Dictionary<SkillType, byte> skillBonuses);
     }
 }

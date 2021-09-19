@@ -1,34 +1,40 @@
-﻿using NeoServer.Game.Common.Contracts;
+﻿using System;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Factories.AttributeFactory
 {
-    public class DecayableFactory : IFactory
+    public  class DecayableFactory
     {
-        private readonly ItemTypeStore _itemTypeStore;
-
-        public DecayableFactory(ItemTypeStore itemTypeStore)
+        public static IDecayable Create(IItem item)
         {
-            _itemTypeStore = itemTypeStore;
-        }
+            if (Guard.AnyNull(item)) return null;
 
-        public event CreateItem OnItemCreated;
+            var itemType = item.Metadata;
 
-        public IDecayable Create(IItemType itemType)
-        {
             var hasShowDuration =
                 itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
             var hasDuration = itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
 
             if (!hasShowDuration && !hasDuration) return null;
 
-            if (!hasShowDuration) showDuration = 1;
+            return new Decayable(item);
+        }
+        public static bool HasDecayable(IItemType itemType)
+        {
+            if (Guard.AnyNull(itemType)) return false;
 
-            var decaysTo = itemType.Attributes.GetAttribute<ushort>(ItemAttribute.ExpireTarget);
-            return new Decayable(() => _itemTypeStore.Get(decaysTo), duration, showDuration == 1);
+            var hasShowDuration =
+                itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
+            var hasDuration = itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
+
+            if (!hasShowDuration && !hasDuration) return false;
+
+            return true;
         }
     }
 }

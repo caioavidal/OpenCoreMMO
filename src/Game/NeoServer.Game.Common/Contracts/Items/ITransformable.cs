@@ -7,8 +7,8 @@ namespace NeoServer.Game.Common.Contracts.Items
     {
         void TransformOnEquip();
         void TransformOnDequip();
-        Func<IItemType> TransformEquipItem { get; }
-        Func<IItemType> TransformDequipItem { get; }
+        IItemType TransformEquipItem { get; }
+        IItemType TransformDequipItem { get; }
         event Transform OnTransformed;
     }
 }
