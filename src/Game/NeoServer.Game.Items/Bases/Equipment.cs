@@ -107,6 +107,7 @@ namespace NeoServer.Game.Items.Bases
 
         public void DressedIn(IPlayer player)
         {
+            
             if (Guard.AnyNull(player)) return;
             TransformOnEquip();
 

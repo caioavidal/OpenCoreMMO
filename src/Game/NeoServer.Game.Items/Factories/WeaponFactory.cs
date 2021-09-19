@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Game.Items.Items.Weapons;
 
@@ -14,10 +15,12 @@ namespace NeoServer.Game.Items.Factories
     {
         public event CreateItem OnItemCreated;
         private readonly ChargeableFactory _chargeableFactory;
+        private readonly ItemTypeStore _itemTypeStore;
 
-        public WeaponFactory(ChargeableFactory chargeableFactory)
+        public WeaponFactory(ChargeableFactory chargeableFactory, ItemTypeStore itemTypeStore)
         {
             _chargeableFactory = chargeableFactory;
+            _itemTypeStore = itemTypeStore;
         }
 
         public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
@@ -26,15 +29,18 @@ namespace NeoServer.Game.Items.Factories
 
             if (MeleeWeapon.IsApplicable(itemType)) return new MeleeWeapon(itemType, location)
             {
-                Chargeable = chargeable
+                Chargeable = chargeable,
+                ItemTypeFinder = _itemTypeStore.Get
+
             };
             if (DistanceWeapon.IsApplicable(itemType)) return new DistanceWeapon(itemType, location)
             {
-
+                ItemTypeFinder = _itemTypeStore.Get,
                 Chargeable = chargeable
             };
             if (MagicWeapon.IsApplicable(itemType)) return new MagicWeapon(itemType, location)
             {
+                ItemTypeFinder = _itemTypeStore.Get,
                 Chargeable = chargeable
             };
 
