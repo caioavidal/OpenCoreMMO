@@ -27,14 +27,16 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public ushort DecaysTo => _item.Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.ExpireTarget);
 
-        public uint Duration => _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration);
-        
+        private uint _duration;
+
+        public uint Duration => _duration = _duration == 0 ? _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration) : _duration;
+
         public uint Remaining => Math.Max(0, Duration - Elapsed);
 
         public uint Elapsed =>
-            (uint) Math.Max(0, _isPaused
+            (uint)Math.Max(0, _isPaused
                 ? _lastElapsed
-                : _lastElapsed + (int) ((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond));
+                : _lastElapsed + (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond));
 
         public bool Expired => StartedToDecay && Elapsed >= Duration;
         public bool ShouldDisappear => DecaysTo == default;
@@ -50,7 +52,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         public void PauseDecay()
         {
             _isPaused = true;
-            _lastElapsed += (int) ((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
+            _lastElapsed += (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
             OnPaused?.Invoke(this);
         }
 
@@ -80,7 +82,7 @@ namespace NeoServer.Game.Items.Items.Attributes
             if (Elapsed == 0) return "is brand-new";
 
             var minutes = Remaining / 60;
-            var seconds = (int) Math.Truncate(Remaining % 60d);
+            var seconds = (int)Math.Truncate(Remaining % 60d);
             return
                 $"will expire in {minutes} minute{(minutes > 1 ? "s" : "")} and {seconds} second{(seconds > 1 ? "s" : "")}";
         }

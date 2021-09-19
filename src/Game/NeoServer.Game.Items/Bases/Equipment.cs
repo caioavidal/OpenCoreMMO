@@ -69,7 +69,8 @@ namespace NeoServer.Game.Items.Bases
             }
 
             Metadata = ItemTypeFinder?.Invoke(to);
-            //   Transformable?.Change(to);
+            if (Metadata is null) return;
+
             player.Inventory.AddItem(this, (byte)Metadata.BodyPosition);
         }
 
@@ -160,7 +161,7 @@ namespace NeoServer.Game.Items.Bases
             if (Metadata is null) return;
 
             var hasStopDecaying = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying);
-            if (!hasStopDecaying || hasStopDecaying && stopDecaying == 0) return;
+            if (!hasStopDecaying || stopDecaying == 0) return;
 
             Decayable?.PauseDecay();
         }
@@ -178,7 +179,7 @@ namespace NeoServer.Game.Items.Bases
 
         public void TransformOnDequip()
         {
-            if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformDequipTo, out var dequipTo)) return;
+            if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformDequipTo, out _)) return;
             var before = Metadata;
             Metadata = TransformDequipItem;
             OnTransformed?.Invoke(before, Metadata);
