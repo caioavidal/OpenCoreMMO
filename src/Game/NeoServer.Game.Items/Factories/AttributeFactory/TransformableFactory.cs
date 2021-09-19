@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts;
+﻿using System.Security.Cryptography.X509Certificates;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.DataStore;
@@ -31,8 +32,7 @@ namespace NeoServer.Game.Items.Factories.AttributeFactory
 
             return new Transformable(itemType)
             {
-                TransformEquipItem = () => _itemTypeStore.Get(transformEquipTo),
-                TransformDequipItem = () => _itemTypeStore.Get(transformDequipTo)
+               
             };
         }
     }

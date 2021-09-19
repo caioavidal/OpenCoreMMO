@@ -1,36 +1,29 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Factories.AttributeFactory;
 
 namespace NeoServer.Game.Items.Bases
 {
     public class Item : StaticItem, IDecayable
     {
-        private readonly IDecayable _decayable;
-
         public Item(IItemType metadata, Location location) : base(metadata, location)
         {
+            Decayable = DecayableFactory.Create(this);
+
+            if (Decayable is not null) Decayable.OnDecayed += Decayed;
         }
 
-        public IDecayable Decayable
-        {
-            get => _decayable;
-            init
-            {
-                if (value is null) return;
-                _decayable = value;
-                Decayable.OnDecayed += Decayed;
-            }
-        }
+        public IDecayable Decayable { get; }
 
-        private void Decayed(IItemType to)
+        private void Decayed(ushort to)
         {
             //todo: implement
         }
 
         #region Decay
 
-        public Func<IItemType> DecaysTo { get; init; }
+        public ushort DecaysTo => Decayable?.DecaysTo ?? default;
         public uint Duration => Decayable?.Duration ?? default;
         public bool ShouldDisappear => Decayable?.ShouldDisappear ?? false;
         public bool Expired => Decayable?.Expired ?? false;
@@ -46,8 +39,7 @@ namespace NeoServer.Game.Items.Bases
         public void StartDecay() => Decayable?.StartDecay();
 
         public void PauseDecay() => Decayable?.PauseDecay();
-        public void SetDuration(uint duration) => Decayable?.SetDuration(duration);
-
+        
         #endregion
     }
 }

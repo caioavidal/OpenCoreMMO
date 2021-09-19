@@ -284,52 +284,30 @@ namespace NeoServer.Game.Items
             {
                 var dictionary = new Dictionary<DamageType, sbyte>();
 
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentDeath) ?? false)
-                    dictionary.TryAdd(DamageType.Death, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentDeath));
+                foreach (var (attr, (value, list)) in _defaultAttributes)
+                {
+                    var (damage,protection) = attr switch
+                    {
+                        ItemAttribute.AbsorbPercentDeath => (DamageType.Death, (sbyte) value),
+                        ItemAttribute.AbsorbPercentEnergy => (DamageType.Energy, (sbyte)value),
+                        ItemAttribute.AbsorbPercentPhysical => (DamageType.Physical, (sbyte)value),
+                        ItemAttribute.AbsorbPercentPoison => (DamageType.Earth, (sbyte)value),
+                        ItemAttribute.AbsorbPercentFire => (DamageType.Fire, (sbyte)value),
+                        ItemAttribute.AbsorbPercentDrown => (DamageType.Drown, (sbyte)value),
+                        ItemAttribute.AbsorbPercentHoly => (DamageType.Holy, (sbyte)value),
+                        ItemAttribute.AbsorbPercentIce => (DamageType.Ice, (sbyte)value),
+                        ItemAttribute.AbsorbPercentManaDrain => (DamageType.ManaDrain, (sbyte)value),
+                        ItemAttribute.AbsorbPercentLifeDrain => (DamageType.LifeDrain, (sbyte)value),
+                        ItemAttribute.AbsorbPercentMagic => (DamageType.Elemental, (sbyte)value),
+                        ItemAttribute.AbsorbPercentAll => (DamageType.All, (sbyte)value),
+                        ItemAttribute.AbsorbPercentElements => (DamageType.Elemental, (sbyte)value),
+                        _ => (DamageType.None, (sbyte)0)
+                    };
 
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentEnergy) ?? false)
-                    dictionary.TryAdd(DamageType.Energy, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentEnergy));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPhysical) ?? false)
-                    dictionary.TryAdd(DamageType.Physical, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentPhysical));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentPoison) ?? false)
-                    dictionary.TryAdd(DamageType.Earth, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentPoison));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentFire) ?? false)
-                    dictionary.TryAdd(DamageType.Fire, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentFire));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentDrown) ?? false)
-                    dictionary.TryAdd(DamageType.Drown, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentDrown));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentHoly) ?? false)
-                    dictionary.TryAdd(DamageType.Holy, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentHoly));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentIce) ?? false)
-                    dictionary.TryAdd(DamageType.Ice, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentIce));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentManaDrain) ?? false)
-                    dictionary.TryAdd(DamageType.ManaDrain, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentManaDrain));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentLifeDrain) ?? false)
-                    dictionary.TryAdd(DamageType.LifeDrain, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentLifeDrain));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
-                    dictionary.TryAdd(DamageType.AbsorbPercentMagic,
-                        GetAttribute<sbyte>(ItemAttribute.AbsorbPercentMagic));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentAll) ?? false)
-                    dictionary.TryAdd(DamageType.All, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentAll));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentElements) ?? false)
-                    dictionary.TryAdd(DamageType.Elemental, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentElements));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentMagic) ?? false)
-                    dictionary.TryAdd(DamageType.Elemental, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentMagic));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.AbsorbPercentAll) ?? false)
-                    dictionary.TryAdd(DamageType.Death, GetAttribute<sbyte>(ItemAttribute.AbsorbPercentAll));
-
+                    if (damage == DamageType.None) continue;
+                    dictionary.TryAdd(damage, protection);
+                }
+                
                 return dictionary;
             }
         }

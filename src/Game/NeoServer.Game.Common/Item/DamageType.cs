@@ -12,7 +12,6 @@
         Earth,
         All,
         LifeDrain,
-        AbsorbPercentMagic,
         ManaDrain,
         FireField,
         Melee,

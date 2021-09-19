@@ -91,10 +91,7 @@ namespace NeoServer.Game.Tests.Helpers
             type.Attributes.SetAttribute(ItemAttribute.WeaponType, weaponType);
             type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
 
-            if (twoHanded)
-                type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "two-handed");
-            else
-                type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "weapon");
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
 
             return new MeleeWeapon(type, new Location(100, 100, 7));
         }
@@ -113,9 +110,7 @@ namespace NeoServer.Game.Tests.Helpers
         }
 
         public static IDefenseEquipment CreateDefenseEquipmentItem(ushort id, string slot = "", ushort charges = 10,
-            (ItemAttribute, IConvertible)[] attributes = null,
-            Func<IItemType> transformOnEquipItem = null, Func<IItemType> transformOnDequipItem = null,
-            Func<IItemType> decaysTo = null, Func<ushort, IItemType> itemTypeFinder = null)
+            (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -126,21 +121,9 @@ namespace NeoServer.Game.Tests.Helpers
 
             attributes ??= new (ItemAttribute, IConvertible)[0];
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-
-
-
-            var hasShowDuration = type.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
-            var hasDuration = type.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
-
+         
             return new BodyDefenseEquipment(type, new Location(100, 100, 7))
             {
-                Decayable = hasShowDuration || hasDuration ?  new Decayable(decaysTo, duration, showDuration == 1)
-                {
-                    ItemTypeFinder = itemTypeFinder
-                } : null,
-                Transformable = new Transformable(type) { TransformEquipItem = transformOnEquipItem, TransformDequipItem = transformOnDequipItem },
-                Protection = type.Attributes.DamageProtection is null ? null : new Protection(type.Attributes.DamageProtection),
-                SkillBonus = type.Attributes.SkillBonuses is null ? null : new SkillBonus(type.Attributes.SkillBonuses),
                 Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
                 ItemTypeFinder = itemTypeFinder
             };
@@ -215,6 +198,17 @@ namespace NeoServer.Game.Tests.Helpers
                 type.SetFlag(ItemFlag.Bottom);
 
             return new Item(type, new Location(100, 100, 7));
+        }
+
+        public static ItemTypeStore GetItemTypeStore(params IItemType[] itemTypes)
+        {
+            var itemTypeStore = new ItemTypeStore();
+            foreach (var itemType in itemTypes)
+            {
+                itemTypeStore.Add(itemType.ClientId, itemType);
+            }
+
+            return itemTypeStore;
         }
 
     }

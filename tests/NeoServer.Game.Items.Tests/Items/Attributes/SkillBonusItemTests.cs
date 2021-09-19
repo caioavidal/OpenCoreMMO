@@ -106,17 +106,25 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         }
 
         [Fact]
-        public void ChangeSkillBonus_Changes()
+        public void SkillBonuses_MetadataChanged_Changes()
         {
             //arrange
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
             var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+            
+            var item2 = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillSword,10),
+            });
+
+            var itemStore = ItemTestData.GetItemTypeStore(item2.Metadata);
 
             var item1 = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.SkillAxe, 5),
-            });
-
+                (ItemAttribute.TransformEquipTo, 2)
+            }, itemTypeFinder: itemStore.Get);
+            
             //act
             item1.AddSkillBonus(player);
             
@@ -125,10 +133,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             //act
             item1.RemoveSkillBonus(player);
-            item1.ChangeSkillBonuses(new Dictionary<SkillType, byte>()
-            {
-                [SkillType.Sword] = 10
-            });
+
+            item1.TransformOnEquip();
+            
             item1.AddSkillBonus(player);
 
             //assert
@@ -156,7 +163,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             //act
             item1.RemoveSkillBonus(player);
-            item1.ChangeSkillBonuses(null);
+           // item1.ChangeSkillBonuses(null);
             item1.AddSkillBonus(player);
 
             //assert

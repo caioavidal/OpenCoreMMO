@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 
@@ -7,42 +6,38 @@ namespace NeoServer.Game.Items.Items.Attributes
 {
     public class Decayable : IDecayable
     {
-        private bool _showDuration;
+        private readonly IItem _item;
         private bool _isPaused = true;
 
         private int _lastElapsed;
         private long _startedToDecayTime;
 
-        public Decayable(Func<IItemType> decaysTo, uint duration, bool showDuration = true)
+        public Decayable(IItem item)
         {
-            _showDuration = showDuration;
-            DecaysTo = decaysTo;
-            Duration = duration;
+            _item = item;
         }
 
-        public void SetDuration(uint duration)
-        {
-            if (Duration > 0) return;
-            Duration = duration;
-        }
-
-        public Func<ushort, IItemType> ItemTypeFinder { get; init; }
+        private bool ShowDuration => !_item.Metadata.Attributes.TryGetAttribute<byte>(ItemAttribute.ShowDuration, out var showDuration) || showDuration == 1;
 
         public bool StartedToDecay => _startedToDecayTime != default;
+
         public event DecayDelegate OnDecayed;
         public event PauseDecay OnPaused;
         public event StartDecay OnStarted;
-        public Func<IItemType> DecaysTo { get; private set; }
-        public uint Duration { get; private set; }
+
+        public ushort DecaysTo => _item.Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.ExpireTarget);
+
+        public uint Duration => _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration);
+        
         public uint Remaining => Math.Max(0, Duration - Elapsed);
 
         public uint Elapsed =>
-            (uint)Math.Max(0, _isPaused
+            (uint) Math.Max(0, _isPaused
                 ? _lastElapsed
                 : _lastElapsed + (int) ((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond));
 
         public bool Expired => StartedToDecay && Elapsed >= Duration;
-        public bool ShouldDisappear => DecaysTo?.Invoke() is null;
+        public bool ShouldDisappear => DecaysTo == default;
 
         public void StartDecay()
         {
@@ -59,42 +54,29 @@ namespace NeoServer.Game.Items.Items.Attributes
             OnPaused?.Invoke(this);
         }
 
-        private void Reset()
-        {
-            Duration = 0;
-            _startedToDecayTime = default;
-        }
-
         public bool TryDecay()
         {
             if (!Expired) return false;
 
-            var decaysTo = DecaysTo?.Invoke();
+            var decaysTo = DecaysTo;
 
             OnDecayed?.Invoke(decaysTo);
 
-            if (decaysTo is null) return true;
-
-            decaysTo.Attributes.TryGetAttribute<uint>(ItemAttribute.Duration, out var duration);
-            decaysTo.Attributes.TryGetAttribute<byte>(ItemAttribute.ShowDuration, out var showDuration);
-            decaysTo.Attributes.TryGetAttribute<byte>(ItemAttribute.StopDecaying, out var stopDecaying);
-            decaysTo.Attributes.TryGetAttribute<byte>(ItemAttribute.DecayTo, out var decayTo);
-
+            if (decaysTo == default) return true;
 
             Reset();
 
-            SetDuration(duration);
-            _showDuration = showDuration == 1;
-            DecaysTo = () => ItemTypeFinder?.Invoke(decayTo);
-
-            if(stopDecaying == 0) StartDecay();
-            
             return true;
+        }
+
+        private void Reset()
+        {
+            _startedToDecayTime = default;
         }
 
         public override string ToString()
         {
-            if (!_showDuration) return string.Empty;
+            if (!ShowDuration) return string.Empty;
             if (Elapsed == 0) return "is brand-new";
 
             var minutes = Remaining / 60;

@@ -28,9 +28,6 @@ namespace NeoServer.Game.Items.Factories
 
         public BodyDefenseEquipment Create(IItemType itemType, Location location)
         {
-            var decayable = _decayableFactory.Create(itemType);
-            var skillBonuses = _skillBonusFactory.Create(itemType);
-            var protection = _protectionFactory.Create(itemType);
             var transformable = _transformableFactory.Create(itemType);
             var chargeable = _chargeableFactory.Create(itemType);
 
@@ -38,10 +35,6 @@ namespace NeoServer.Game.Items.Factories
 
             return new BodyDefenseEquipment(itemType, location)
             {
-                Decayable = decayable,
-                SkillBonus = skillBonuses,
-                Protection = protection,
-                Transformable = transformable,
                 Chargeable = chargeable
             };
         }

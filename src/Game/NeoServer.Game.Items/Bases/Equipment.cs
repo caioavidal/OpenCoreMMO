@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 
@@ -17,38 +15,21 @@ namespace NeoServer.Game.Items.Bases
 {
     public abstract class Equipment : MoveableItem, IEquipment
     {
-        private readonly IDecayable _decayable;
         private readonly ITransformable _transformable;
 
         protected Equipment(IItemType type, Location location) : base(type, location)
         {
+            if (type.Attributes.SkillBonuses is not null) SkillBonus = new SkillBonus(this);
+            Decayable = DecayableFactory.Create(this);
+            Protection = ProtectionFactory.Create(this);
+
+            if (Decayable is not null) Decayable.OnDecayed += Decayed;
         }
 
-        public IDecayable Decayable
-        {
-            get => _decayable;
-            init
-            {
-                if (value is null) return;
-                _decayable = value;
-                Decayable.OnDecayed += Decayed;
-            }
-        }
-
-        public IProtection Protection { get; init; }
-        public ISkillBonus SkillBonus { get; init; }
+        public IDecayable Decayable { get; }
+        public IProtection Protection { get; }
+        public ISkillBonus SkillBonus { get; }
         public IChargeable Chargeable { get; init; }
-
-        public ITransformable Transformable
-        {
-            get => _transformable;
-            init
-            {
-                if (value is null) return;
-                _transformable = value;
-                _transformable.OnTransformed += Transformed;
-            }
-        }
 
         public IPlayer PlayerDressing { get; private set; }
         public Func<ushort, IItemType> ItemTypeFinder { get; init; }
@@ -77,10 +58,19 @@ namespace NeoServer.Game.Items.Bases
 
         #endregion
 
-        private void Decayed(IItemType to)
+        private void Decayed(ushort to)
         {
-            if (to is null)
-                PlayerDressing.Inventory.RemoveItem(this, 1, (byte)Metadata.BodyPosition, out var removedThing);
+            var player = PlayerDressing;
+            player.Inventory.RemoveItem(this, 1, (byte)Metadata.BodyPosition, out var removedThing);
+
+            if (to == default)
+            {
+                return;
+            }
+
+            Metadata = ItemTypeFinder?.Invoke(to);
+            //   Transformable?.Change(to);
+            player.Inventory.AddItem(this, (byte)Metadata.BodyPosition);
         }
 
         private void Transformed(IItemType from, IItemType to)
@@ -109,12 +99,8 @@ namespace NeoServer.Game.Items.Bases
             SkillBonus?.AddSkillBonus(player);
         }
 
-        public void RemoveSkillBonus(IPlayer player)
-        {
-            SkillBonus?.RemoveSkillBonus(player);
-        }
+        public void RemoveSkillBonus(IPlayer player) => SkillBonus?.RemoveSkillBonus(player);
 
-        public void ChangeSkillBonuses(Dictionary<SkillType, byte> skillBonuses) => SkillBonus?.ChangeSkillBonuses(skillBonuses);
         #endregion
 
         #region Dressable
@@ -145,7 +131,7 @@ namespace NeoServer.Game.Items.Bases
 
         #region Decay
 
-        public Func<IItemType> DecaysTo => Decayable?.DecaysTo;
+        public ushort DecaysTo => Decayable?.DecaysTo ?? default;
         public uint Duration => Decayable?.Duration ?? 0;
         public bool ShouldDisappear => Decayable?.ShouldDisappear ?? false;
         public bool Expired => Decayable?.Expired ?? false;
@@ -163,34 +149,42 @@ namespace NeoServer.Game.Items.Bases
 
         public void StartDecay()
         {
+            if (Guard.AnyNull(Metadata)) return;
             if (Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying) && stopDecaying == 1) return;
             Decayable?.StartDecay();
         }
 
         public void PauseDecay()
         {
+            if (Metadata is null) return;
+
             var hasStopDecaying = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying);
             if (!hasStopDecaying || hasStopDecaying && stopDecaying == 0) return;
 
             Decayable?.PauseDecay();
         }
-
-        public void SetDuration(uint duration) => Decayable?.SetDuration(duration);
-
         #endregion
 
         #region Transformable
 
         public void TransformOnEquip()
         {
-            Transformable?.TransformOnEquip();
-            ChangeSkillBonuses(Metadata.Attributes.SkillBonuses);
-            SetDuration(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Duration));
+            if (!Metadata.Attributes.HasAttribute(ItemAttribute.TransformEquipTo)) return;
+            var before = Metadata;
+            Metadata = TransformEquipItem;
+            OnTransformed?.Invoke(before, Metadata);
         }
 
-        public void TransformOnDequip() => Transformable?.TransformOnDequip();
-        public Func<IItemType> TransformEquipItem => Transformable?.TransformEquipItem;
-        public Func<IItemType> TransformDequipItem => Transformable?.TransformDequipItem;
+        public void TransformOnDequip()
+        {
+            if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformDequipTo, out var dequipTo)) return;
+            var before = Metadata;
+            Metadata = TransformDequipItem;
+            OnTransformed?.Invoke(before, Metadata);
+        }
+
+        public IItemType TransformEquipItem => ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformEquipTo));
+        public IItemType TransformDequipItem => ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo));
         public event Transform OnTransformed;
 
         #endregion

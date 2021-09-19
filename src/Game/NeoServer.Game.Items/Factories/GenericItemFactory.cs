@@ -8,24 +8,14 @@ namespace NeoServer.Game.Items.Factories
 {
     public class GenericItemFactory : IFactory
     {
-        private readonly DecayableFactory _decayableFactory;
-
-        public GenericItemFactory(DecayableFactory decayableFactory)
-        {
-            _decayableFactory = decayableFactory;
-        }
-
         public event CreateItem OnItemCreated;
 
         public IItem Create(IItemType itemType, Location location)
         {
-            var decayable = _decayableFactory.Create(itemType);
-            if (decayable is null) return new StaticItem(itemType, location);
+            var hasDecayable = DecayableFactory.HasDecayable(itemType);
+            if (!hasDecayable) return new StaticItem(itemType, location);
 
-            return new Item(itemType, location)
-            {
-                Decayable = decayable
-            };
+            return new Item(itemType, location);
         }
     }
 }
