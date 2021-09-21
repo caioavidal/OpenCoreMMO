@@ -631,5 +631,66 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             sut.ToString().Should().Be("protection elemental 10%");
         }
+
+
+        [Fact]
+        public void Protect_NoDamageProtection_DoNotProtect()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1);
+            var combatDamage = new CombatDamage(100, DamageType.Energy);
+
+            var sut = new Protection(item);
+
+            //act
+            sut.Protect(ref combatDamage);
+
+            //assert
+            combatDamage.Damage.Should().Be(100);
+        }
+
+        [Fact]
+        public void Protect_DamageProtectionsNull_DoNotProtect()
+        {
+            //arrange
+            var item = new Mock<IItem>();
+            var itemType = new Mock<IItemType>();
+            var itemAttributeMock = new Mock<IItemAttributeList>();
+
+            itemAttributeMock.SetupGet(x => x.DamageProtection);
+
+            itemType.SetupGet(x => x.Attributes).Returns(itemAttributeMock.Object);
+            item.Setup(x => x.Metadata).Returns(itemType.Object);
+
+            var combatDamage = new CombatDamage(100, DamageType.Energy);
+
+            var sut = new Protection(item.Object);
+
+            //act
+            sut.Protect(ref combatDamage);
+
+            //assert
+            combatDamage.Damage.Should().Be(100);
+        }
+        [Fact]
+        public void Protect_DamageAsNone_DoNotProtect()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.AbsorbPercentElements, 10),
+                (ItemAttribute.AbsorbPercentDeath, 0)
+
+            });
+            var combatDamage = new CombatDamage(100, DamageType.None);
+
+            var sut = new Protection(item);
+
+            //act
+            sut.Protect(ref combatDamage);
+
+            //assert
+            combatDamage.Damage.Should().Be(100);
+        }
     }
 }
