@@ -15,8 +15,7 @@ namespace NeoServer.Game.Items.Bases
 {
     public abstract class Equipment : MoveableItem, IEquipment
     {
-        private readonly ITransformable _transformable;
-
+        
         protected Equipment(IItemType type, Location location) : base(type, location)
         {
             if (type.Attributes.SkillBonuses is not null) SkillBonus = new SkillBonus(this);

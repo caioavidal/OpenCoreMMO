@@ -38,7 +38,7 @@ namespace NeoServer.Game.Items.Items.Attributes
                 ? _lastElapsed
                 : _lastElapsed + (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond));
 
-        public bool Expired => StartedToDecay && Elapsed >= Duration;
+        public bool Expired => Elapsed >= Duration;
         public bool ShouldDisappear => DecaysTo == default;
 
         public void StartDecay()
@@ -81,8 +81,8 @@ namespace NeoServer.Game.Items.Items.Attributes
             if (!ShowDuration) return string.Empty;
             if (Elapsed == 0) return "is brand-new";
 
-            var minutes = Remaining / 60;
-            var seconds = (int)Math.Truncate(Remaining % 60d);
+            var minutes = Math.Max(0,Remaining / 60);
+            var seconds = Math.Max(0,(int)Math.Truncate(Remaining % 60d));
             return
                 $"will expire in {minutes} minute{(minutes > 1 ? "s" : "")} and {seconds} second{(seconds > 1 ? "s" : "")}";
         }
