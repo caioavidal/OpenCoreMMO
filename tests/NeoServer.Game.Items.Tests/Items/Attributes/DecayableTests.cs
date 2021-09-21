@@ -282,6 +282,27 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             emitted.Should().BeTrue();
         }
+
+        [Fact]
+        public void StartDecay_Expired_DoNotStart()
+        {
+            //arrange
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 0),
+                (ItemAttribute.ExpireTarget,10)
+            });
+
+            var sut = new Decayable(decayableItem);
+
+            var emitted = false;
+            sut.OnStarted += _ => emitted = true;
+            //act
+            sut.StartDecay();
+            //assert
+            sut.StartedToDecay.Should().BeFalse();
+            emitted.Should().BeFalse();
+        }
         [Fact]
         public void Start_EmitEvent()
         {
@@ -393,6 +414,24 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             Thread.Sleep(1000);
             //assert
             sut.ToString().Should().Be("will expire in 1 minute and 1 second");
+        }
+        [Fact]
+        public void ToString_Expired_ReturnTimeRemainingWellFormatted()
+        {
+            //arrange
+            var decayableItem = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Duration, 1),
+                (ItemAttribute.ExpireTarget,10)
+            });
+
+            var sut = new Decayable(decayableItem);
+
+            //act
+            sut.StartDecay();
+            Thread.Sleep(1100);
+            //assert
+            sut.ToString().Should().Be("will expire in 0 minute and 0 second");
         }
         [Fact]
         public void ToString_ShowDurationFalse_ReturnEmpty()
