@@ -26,8 +26,8 @@ namespace NeoServer.Game.Items.Bases
         }
 
         public IDecayable Decayable { get; private set; }
-        public IProtection Protection { get; }
-        public ISkillBonus SkillBonus { get; }
+        public IProtection Protection { get; private set; }
+        public ISkillBonus SkillBonus { get; private set; }
         public IChargeable Chargeable { get; init; }
 
         public IPlayer PlayerDressing { get; private set; }
@@ -169,7 +169,10 @@ namespace NeoServer.Game.Items.Bases
             var before = Metadata;
             Metadata = TransformEquipItem;
 
+            if (Metadata.Attributes.SkillBonuses is not null) SkillBonus ??= new SkillBonus(this);
             Decayable ??= DecayableFactory.Create(this);
+            Protection ??= ProtectionFactory.Create(this);
+
             OnTransformed?.Invoke(before, Metadata);
         }
 
