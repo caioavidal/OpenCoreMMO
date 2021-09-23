@@ -9,7 +9,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         private readonly IItem _item;
         private bool _isPaused = true;
 
-        private int _lastElapsed;
+        private long _lastElapsed;
         private long _startedToDecayTime;
 
         public Decayable(IItem item)
@@ -29,7 +29,7 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         private uint _duration;
 
-        public uint Duration => _duration = _duration == 0 ? _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration) : _duration;
+        public uint Duration => _duration = _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration) == 0 ? _duration : _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration);
 
         public uint Remaining => Math.Max(0, Duration - Elapsed);
 
@@ -51,8 +51,9 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public void PauseDecay()
         {
+            if (_startedToDecayTime == 0) return;
             _isPaused = true;
-            _lastElapsed += (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
+            _lastElapsed += (DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond;
             OnPaused?.Invoke(this);
         }
 
@@ -61,12 +62,10 @@ namespace NeoServer.Game.Items.Items.Attributes
             if (!Expired) return false;
 
             var decaysTo = DecaysTo;
+           
+            Reset();
 
             OnDecayed?.Invoke(decaysTo);
-
-            if (decaysTo == default) return true;
-
-            Reset();
 
             return true;
         }
@@ -74,6 +73,8 @@ namespace NeoServer.Game.Items.Items.Attributes
         private void Reset()
         {
             _startedToDecayTime = default;
+            _isPaused = default;
+            _lastElapsed = default;
         }
 
         public override string ToString()

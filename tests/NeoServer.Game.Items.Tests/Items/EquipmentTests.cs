@@ -12,6 +12,7 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
@@ -557,6 +558,163 @@ namespace NeoServer.Game.Items.Tests.Items
 
             //assert
             sut.Elapsed.Should().Be(3);
+        }
+
+        [Fact]
+        public void Decayed_HasExpirationTarget_ChangeItem()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var decaysTo = ItemTestData.CreateDefenseEquipmentItem(id: 3, slot: "ring",
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                });
+            var itemTypeStore = ItemTestData.GetItemTypeStore(decaysTo.Metadata);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 1),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.ExpireTarget, 3),
+                }, itemTypeFinder: itemTypeStore.Get);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            
+            Thread.Sleep(1200);
+            sut.TryDecay();
+            
+            //assert
+            player.Inventory[Slot.Ring].Metadata.Should().Be(decaysTo.Metadata);
+        }
+
+        [Fact]
+        public void TransformOnEquip_OldItemHasNoDecayableButNewHas_CreateDecayableInstance()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var transformOnEquip = ItemTestData.CreateDefenseEquipmentItem(id: 3, slot: "ring",
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.ExpireTarget, 0),
+
+                });
+            var itemTypeStore = ItemTestData.GetItemTypeStore(transformOnEquip.Metadata);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.TransformEquipTo, 3)
+                }, itemTypeFinder: itemTypeStore.Get);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+
+            Thread.Sleep(1200);
+            //assert
+            player.Inventory[Slot.Ring].Metadata.Should().Be(transformOnEquip.Metadata);
+            (player.Inventory[Slot.Ring] as IEquipment).Duration.Should().Be(100);
+        }
+
+
+        [Fact]
+        public void Decayed_Changes3Times_ShouldDecay()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            ItemTypeStore itemTypeStore = ItemTestData.GetItemTypeStore();
+
+            var item3Equipped = ItemTestData.CreateDefenseEquipmentItem(id: 6, slot: "ring",
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 1),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.ExpireTarget, 0),
+                    (ItemAttribute.TransformDequipTo, 5),
+                });
+
+            var item3 = ItemTestData.CreateDefenseEquipmentItem(5, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.TransformEquipTo, 6),
+                    (ItemAttribute.StopDecaying, 1),
+                    (ItemAttribute.ShowDuration, 1)
+                }, itemTypeFinder: itemTypeStore.Get);
+            var item2Equipped = ItemTestData.CreateDefenseEquipmentItem(id: 4, slot: "ring",
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 1),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.ExpireTarget, 5),
+                    (ItemAttribute.TransformDequipTo, 3),
+                });
+
+            var item2 = ItemTestData.CreateDefenseEquipmentItem(3, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.TransformEquipTo, 4),
+                    (ItemAttribute.StopDecaying, 1),
+                    (ItemAttribute.ShowDuration, 1)
+                }, itemTypeFinder: itemTypeStore.Get);
+
+            var item1Equipped = ItemTestData.CreateDefenseEquipmentItem(id: 2, slot: "ring",
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 2),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.ExpireTarget, 3),
+                    (ItemAttribute.TransformDequipTo, 1),
+                });
+
+            var item1 = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.TransformEquipTo, 2),
+                    (ItemAttribute.StopDecaying, 1),
+                    (ItemAttribute.ShowDuration, 1)
+                }, itemTypeFinder: itemTypeStore.Get);
+
+            ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item1Equipped.Metadata, item2.Metadata, item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
+
+            //assert first item
+            item1.Duration.Should().Be(0);
+            item1.Metadata.Should().Be(item1.Metadata);
+
+            //act
+            player.Inventory.AddItem(item1, (byte)Slot.Ring);
+
+            //assert first item equipped
+            item1.Duration.Should().Be(2);
+            item1.Metadata.Should().Be(item1Equipped.Metadata);
+
+            //act
+            Thread.Sleep(2200);
+            item1.TryDecay();
+
+            //assert second item equipped
+            item1.Duration.Should().Be(1);
+            item1.Metadata.Should().Be(item2Equipped.Metadata);
+
+            //act
+            Thread.Sleep(1200);
+            item1.TryDecay();
+
+            //assert third item equipped
+            item1.Duration.Should().Be(1);
+            item1.Metadata.Should().Be(item3Equipped.Metadata);
+
+            //act
+            Thread.Sleep(1200);
+            item1.TryDecay();
+
+            //assert player
+            player.Inventory[Slot.Ring].Should().BeNull();
         }
     }
 }

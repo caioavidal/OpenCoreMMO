@@ -25,7 +25,7 @@ namespace NeoServer.Game.Items.Bases
             if (Decayable is not null) Decayable.OnDecayed += Decayed;
         }
 
-        public IDecayable Decayable { get; }
+        public IDecayable Decayable { get; private set; }
         public IProtection Protection { get; }
         public ISkillBonus SkillBonus { get; }
         public IChargeable Chargeable { get; init; }
@@ -72,13 +72,7 @@ namespace NeoServer.Game.Items.Bases
 
             player.Inventory.AddItem(this, (byte)Metadata.BodyPosition);
         }
-
-        private void Transformed(IItemType from, IItemType to)
-        {
-            Metadata = to;
-            OnTransformed?.Invoke(from, to);
-        }
-
+        
         private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
         {
             Protect(ref damage);
@@ -171,8 +165,11 @@ namespace NeoServer.Game.Items.Bases
         public void TransformOnEquip()
         {
             if (!Metadata.Attributes.HasAttribute(ItemAttribute.TransformEquipTo)) return;
+            
             var before = Metadata;
             Metadata = TransformEquipItem;
+
+            Decayable ??= DecayableFactory.Create(this);
             OnTransformed?.Invoke(before, Metadata);
         }
 
