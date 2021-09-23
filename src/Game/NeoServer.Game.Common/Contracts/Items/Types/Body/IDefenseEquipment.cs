@@ -3,9 +3,8 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IDefenseEquipment : IBodyEquipmentItem ,IChargeable, IEquipment
+    public interface IDefenseEquipment : IBodyEquipmentItem, IEquipment
     {
-        ImmutableDictionary<DamageType, byte> DamageProtection { get; }
 
         ushort DefenseValue => Metadata.Attributes.HasAttribute(ItemAttribute.WeaponDefendValue)
             ? Metadata.Attributes.GetAttribute<byte>(ItemAttribute.WeaponDefendValue)

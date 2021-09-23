@@ -621,6 +621,31 @@ namespace NeoServer.Game.Items.Tests.Items
             (player.Inventory[Slot.Ring] as IEquipment).Duration.Should().Be(100);
         }
 
+        [Fact]
+        public void Decayed_HasExpirationTargetButNoFound_OnlyRemovesItem()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+            
+            var itemTypeStore = ItemTestData.GetItemTypeStore();
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 1),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.ExpireTarget, 5),
+                }, itemTypeFinder: itemTypeStore.Get);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+            Thread.Sleep(1100);
+            sut.TryDecay();
+
+            //assert
+            player.Inventory[Slot.Ring].Should().BeNull();
+        }
+
 
         [Fact]
         public void Decayed_Changes3Times_ShouldDecay()
@@ -715,6 +740,64 @@ namespace NeoServer.Game.Items.Tests.Items
 
             //assert player
             player.Inventory[Slot.Ring].Should().BeNull();
+        }
+
+
+        [Fact]
+        public void TransformOnEquip_OldItemHasNoSkillBonusButNewHas_CreateSkillBonusInstance()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var transformOnEquip = ItemTestData.CreateDefenseEquipmentItem(id: 3, slot: "ring",
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.SkillAxe, 5)
+                });
+            var itemTypeStore = ItemTestData.GetItemTypeStore(transformOnEquip.Metadata);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.TransformEquipTo, 3)
+                }, itemTypeFinder: itemTypeStore.Get);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+
+            //assert
+            player.Inventory[Slot.Ring].Metadata.Should().Be(transformOnEquip.Metadata);
+            player.GetSkillBonus(SkillType.Axe).Should().Be(5);
+        }
+        [Fact]
+        public void TransformOnEquip_OldItemHasNoProtectionButNewHas_CreateProtectionInstance()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+
+            var combatDamage = new CombatDamage(100, DamageType.Death);
+
+            var transformOnEquip = ItemTestData.CreateDefenseEquipmentItem(id: 3, slot: "ring",
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentDeath, 5)
+                });
+            var itemTypeStore = ItemTestData.GetItemTypeStore(transformOnEquip.Metadata);
+
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.TransformEquipTo, 3)
+                }, itemTypeFinder: itemTypeStore.Get);
+
+            //act
+            player.Inventory.AddItem(sut, (byte)Slot.Ring);
+
+            //assert
+            
+            player.Inventory[Slot.Ring].Metadata.Should().Be(transformOnEquip.Metadata);
+            sut.Protect(ref combatDamage);
+            combatDamage.Damage.Should().Be(95);
         }
     }
 }
