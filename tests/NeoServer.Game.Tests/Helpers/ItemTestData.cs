@@ -210,6 +210,15 @@ namespace NeoServer.Game.Tests.Helpers
 
             return itemTypeStore;
         }
+        public static ItemTypeStore AddItemTypeStore(ItemTypeStore itemTypeStore, params IItemType[] itemTypes)
+        {
+            foreach (var itemType in itemTypes)
+            {
+                itemTypeStore.Add(itemType.ClientId, itemType);
+            }
+
+            return itemTypeStore;
+        }
 
     }
 }
