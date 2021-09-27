@@ -38,7 +38,7 @@ namespace NeoServer.Loaders.Items.Parsers
             if (metadata.Flags is not null)
                 foreach (var flagName in metadata.Flags)
                 {
-                    if (!ItemAttributeTranslationMap.TranslateFlagName(flagName, out var flag)) continue;
+                    if (!ItemAttributeTranslation.TranslateFlagName(flagName, out var flag)) continue;
                     itemType.Flags.Add(flag);
                 }
 
@@ -49,7 +49,7 @@ namespace NeoServer.Loaders.Items.Parsers
             if (metadata.OnUse == null) return;
             foreach (var attribute in metadata.OnUse)
             {
-                var itemAttribute = ItemAttributeTranslationMap.TranslateAttributeName(attribute.Key, out var success);
+                var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out var success);
                 itemType.SetOnUse();
 
                 if (itemAttribute == ItemAttribute.None)
@@ -64,7 +64,7 @@ namespace NeoServer.Loaders.Items.Parsers
         {
             foreach (var attribute in metaAttributes)
             {
-                var itemAttribute = ItemAttributeTranslationMap.TranslateAttributeName(attribute.Key, out var success);
+                var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out var success);
 
                 var value = itemAttribute == ItemAttribute.Weight
                     ? (int.Parse(attribute.Value) / 100f).ToString()

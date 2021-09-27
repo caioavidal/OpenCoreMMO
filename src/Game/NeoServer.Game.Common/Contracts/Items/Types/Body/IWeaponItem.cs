@@ -25,18 +25,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
         ushort Attack { get; }
         byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.WeaponDefendValue);
         sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
-
-        private string ExtraDefenseText => ExtraDefense > 0 ? $"+{ExtraDefense}" :
-            ExtraDefense < 0 ? $"-{ExtraDefense}" : string.Empty;
-
-        private string AtkText => $"(Atk:{Attack} physical, {ElementalDamageText} Def: {Defense} {ExtraDefenseText})";
-
-        string ElementalDamageText => ElementalDamage is not null
-            ? $"+ {ElementalDamage.Item2} {DamageTypeParser.Parse(ElementalDamage.Item1)},"
-            : string.Empty;
-
+        
         Tuple<DamageType, byte> ElementalDamage { get; }
-        string IItem.LookText => $"{Metadata.Article} {Metadata.Name} {AtkText}";
-        string IThing.InspectionText => $"{LookText}";
     }
 }

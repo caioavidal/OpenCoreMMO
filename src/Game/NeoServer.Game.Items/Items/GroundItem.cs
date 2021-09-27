@@ -14,8 +14,8 @@ namespace NeoServer.Game.Items.Items
 
         public IItemType Metadata { get; }
         public Location Location { get; set; }
-        public string CustomLookText => null; //todo: revise
-
+        public string GetLookText(bool isClose = false) => this.BuildLookText(isClose);
+        
         public GroundItem(IItemType type, Location location)
         {
             Metadata = type;

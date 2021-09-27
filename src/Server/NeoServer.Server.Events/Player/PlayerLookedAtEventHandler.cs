@@ -7,20 +7,20 @@ namespace NeoServer.Server.Events.Player
 {
     public class PlayerLookedAtEventHandler
     {
-        private readonly IGameServer game;
+        private readonly IGameServer _game;
 
         public PlayerLookedAtEventHandler(IGameServer game)
         {
-            this.game = game;
+            _game = game;
         }
 
         public void Execute(IPlayer player, IThing thing, bool isClose)
         {
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection) is false) return;
+            if (_game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection) is false) return;
 
-            var text = isClose ? thing.CloseInspectionText : thing.InspectionText;
-            var message = $"You see {text}."; //todo 
-            connection.OutgoingPackets.Enqueue(new TextMessagePacket(message, TextMessageOutgoingType.Description));
+            var text = thing.GetLookText(isClose);
+
+            connection.OutgoingPackets.Enqueue(new TextMessagePacket(text, TextMessageOutgoingType.Description));
             connection.Send();
         }
     }

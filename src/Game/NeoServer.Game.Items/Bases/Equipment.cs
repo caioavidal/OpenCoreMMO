@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -30,20 +32,36 @@ namespace NeoServer.Game.Items.Bases
         public ISkillBonus SkillBonus { get; private set; }
         public IChargeable Chargeable { get; init; }
 
+        protected abstract string PartialInspectionText { get; }
+
         public IPlayer PlayerDressing { get; private set; }
         public Func<ushort, IItemType> ItemTypeFinder { get; init; }
 
-        public override string CustomLookText
+        public string InspectionText 
         {
             get
             {
                 var stringBuilder = new StringBuilder();
-                stringBuilder.Append(base.CustomLookText);
+                var attributeStringBuilder = new StringBuilder();
+
+                void AppendAttributes(string attributes)
+                {
+                    if (string.IsNullOrWhiteSpace(attributes)) return;
+                    stringBuilder.Append($"({attributes})");
+                }
+                
+                attributeStringBuilder.Append(PartialInspectionText);
+                if (Protection is not null) attributeStringBuilder.Append($" {Protection}");
+
+                AppendAttributes(attributeStringBuilder.ToString());
+
                 if (Decayable is not null) stringBuilder.Append($" that {Decayable}");
                 if (Chargeable is not null && Chargeable.ShowCharges) stringBuilder.Append($" that {Chargeable}");
                 return stringBuilder.ToString();
             }
         }
+
+        public string CloseInspectionText => InspectionText;
 
         #region Protection
 

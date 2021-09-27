@@ -46,7 +46,8 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
         /// </summary>
         uint TotalFreeSlots { get; }
 
-        string IThing.InspectionText => $"{Metadata.Article} {Name} (Vol:{Capacity})";
+        new string InspectionText => $"(Vol:{Capacity})";
+        new string CloseInspectionText => InspectionText;
 
         event RemoveItem OnItemRemoved;
         event AddItem OnItemAdded;

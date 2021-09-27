@@ -45,5 +45,22 @@ namespace NeoServer.Game.Common.Helpers
             return false;
         }
 
+        public static bool IsNull(object value) => value is null;
+
+        public static bool AnyNullOrEmpty(params string[] values)
+        {
+            foreach (var value in values)
+                if (string.IsNullOrWhiteSpace(value))
+                    return true;
+            return false;
+        }
+        public static bool AllNullOrEmpty(params string[] values)
+        {
+            foreach (var value in values)
+                if (!string.IsNullOrWhiteSpace(value))
+                    return false;
+            return true;
+        }
+
     }
 }

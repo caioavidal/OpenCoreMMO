@@ -15,6 +15,9 @@ namespace NeoServer.Game.Items.Items
         public LiquidColor LiquidColor { get; }
         public Location Location { get; set; }
 
+        public string GetLookText(bool isClose = false) => this.BuildLookText(isClose);
+
+
         public IItemType Metadata { get; private set; }
         public string CustomLookText => "You see a liquid pool"; //todo: revise
         public ushort ClientId => Metadata.ClientId;

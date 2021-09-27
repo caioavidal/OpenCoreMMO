@@ -149,7 +149,7 @@
         LifeLeechAmount,
         ManaLeechAmout,
         ManaLeechChange,
-        MaxManapointsPercent,
+        MaxManaPointsPercent,
         FieldAbsorbPercentEnergy,
         FieldAbsorbEercentFire,
         AbsorbPercentAll,

@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using NeoServer.Game.Common.Item;
+﻿using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
@@ -11,9 +10,5 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
             : Metadata.Attributes.GetAttribute<byte>(ItemAttribute.ArmorValue);
 
         ushort ArmorValue => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.ArmorValue);
-
-        private string DefenseText => ArmorValue > 0 ? $"(Arm:{ArmorValue})" : $"(Def:{DefenseValue})";
-
-        string IThing.InspectionText => $"{LookText} {DefenseText}{RequirementText}";
     }
 }

@@ -84,6 +84,11 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         }
 
+        private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
+
+        protected override string CloseInspectionText => InspectionText;
+        protected override string InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
+
         private bool IsPartyLeader => Party?.IsLeader(this) ?? false;
         private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
         public string CharacterName { get; }
@@ -142,7 +147,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event AddSkillBonus OnAddedSkillBonus;
         public event RemoveSkillBonus OnRemovedSkillBonus;
         #endregion
-        
+
         public ushort GuildId { get; init; }
         public bool HasGuild => GuildId > 0;
         public IGuild Guild => GuildStore.Data.Get(GuildId);
@@ -289,8 +294,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             if (increase == 0) return;
             if (Skills is null) return;
-            if (!Skills.TryGetValue(skillType, out _)) Skills.Add(skillType, new Skill(skillType,1,1,0)); //todo: review those skill values
-            
+            if (!Skills.TryGetValue(skillType, out _)) Skills.Add(skillType, new Skill(skillType, 1, 1, 0)); //todo: review those skill values
+
             Skills[skillType]?.AddBonus(increase);
             OnAddedSkillBonus?.Invoke(this, skillType, increase);
         }

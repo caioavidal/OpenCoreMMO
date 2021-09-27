@@ -4,10 +4,11 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Bases;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items.Cumulatives
 {
-    public class Cumulative : MoveableItem, ICumulative, IItem
+    public class Cumulative : MoveableItem, ICumulative
     {
         public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
             base(type, location)
@@ -127,9 +128,6 @@ namespace NeoServer.Game.Items.Items
             return true;
         }
 
-        public override string ToString()
-        {
-            return $"{Amount} {Metadata.Name}";
-        }
+ 
     }
 }

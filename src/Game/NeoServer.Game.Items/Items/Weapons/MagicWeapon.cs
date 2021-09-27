@@ -50,10 +50,12 @@ namespace NeoServer.Game.Items.Items.Weapons
             return false;
         }
 
+        protected override string PartialInspectionText => string.Empty;
+
+
         public static bool IsApplicable(IItemType type)
         {
-            return type.Attributes.GetAttribute(ItemAttribute.WeaponType) is string weaponName &&
-                   (weaponName == "wand" || weaponName == "rod");
+            return type.Attributes.GetAttribute(ItemAttribute.WeaponType) is { } and ("wand" or "rod");
         }
     }
 }

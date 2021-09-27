@@ -331,7 +331,7 @@ namespace NeoServer.Game.Items.Tests.Items
         }
 
         [Fact]
-        public void CustomLookText_HasCharges_ShowChargesCount()
+        public void InspectionText_HasCharges_ShowChargesCount()
         {
             //arrange
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 2, attributes: new (ItemAttribute, IConvertible)[]
@@ -340,11 +340,11 @@ namespace NeoServer.Game.Items.Tests.Items
             });
 
             //assert
-            sut.CustomLookText.Should().Be(" item that has 2 charges left");
+            sut.InspectionText.Should().Be(" that has 2 charges left");
             sut.DecreaseCharges();
-            sut.CustomLookText.Should().Be(" item that has 1 charge left");
+            sut.InspectionText.Should().Be(" that has 1 charge left");
             sut.DecreaseCharges();
-            sut.CustomLookText.Should().Be(" item that has no charges left");
+            sut.InspectionText.Should().Be(" that has no charges left");
         }
 
         [Fact]

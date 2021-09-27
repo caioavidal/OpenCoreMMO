@@ -10,17 +10,18 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Containers
 {
-    public class Container : MoveableItem, IContainer, IItem
+    public class Container : MoveableItem, IContainer
     {
-        private readonly ContainerStore Store;
+        private readonly ContainerStore _store;
 
         public Container(IItemType type, Location location) : base(type, location)
         {
             Items = new List<IItem>(Capacity);
-            Store = new ContainerStore(this);
+            _store = new ContainerStore(this);
         }
 
         public byte? Id { get; private set; }
@@ -45,7 +46,7 @@ namespace NeoServer.Game.Items.Items.Containers
             get
             {
                 IThing root = this;
-                while (root is IContainer container && container.Parent is not null) root = container.Parent;
+                while (root is IContainer { Parent: { } } container) root = container.Parent;
                 return root;
             }
         }
@@ -111,7 +112,6 @@ namespace NeoServer.Game.Items.Items.Containers
 
                 if (item.Amount > amount)
                 {
-                    amount = 0;
                     break;
                 }
 
@@ -190,14 +190,15 @@ namespace NeoServer.Game.Items.Items.Containers
             Result<OperationResult<IItem>> result = new(TryAddItem(item).Error);
             if (result.IsSuccess) return result;
 
-            if (includeChildren)
-                foreach (var currentItem in Items)
-                {
-                    if (currentItem is not IContainer container) continue;
-                    result = container.AddItem(item, includeChildren);
+            if (!includeChildren) return result;
 
-                    if (result.IsSuccess) return result;
-                }
+            foreach (var currentItem in Items)
+            {
+                if (currentItem is not IContainer container) continue;
+                result = container.AddItem(item, true);
+
+                if (result.IsSuccess) return result;
+            }
 
             return result;
         }
@@ -219,7 +220,7 @@ namespace NeoServer.Game.Items.Items.Containers
 
         public Result<OperationResult<IItem>> AddItem(IItem item, byte? position = null)
         {
-            return new(TryAddItem(item, position).Error);
+            return new Result<OperationResult<IItem>>(TryAddItem(item, position).Error);
         }
 
         public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
@@ -238,19 +239,18 @@ namespace NeoServer.Game.Items.Items.Containers
                 GetContainerAt(toPosition.Value, out var container))
                 return SendTo(container, thing, amount, fromPosition, null);
 
-            return Store.SendTo(destination, thing, amount, fromPosition, toPosition);
+            return _store.SendTo(destination, thing, amount, fromPosition, toPosition);
         }
 
         public Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
         {
-            return Store.ReceiveFrom(source, thing, toPosition);
+            return _store.ReceiveFrom(source, thing, toPosition);
         }
 
         /// <summary>
         ///     Checks if item cam be added to any containers within current container
         /// </summary>
         /// <param name="itemType"></param>
-        /// <param name="amount"></param>
         /// <returns>Returns true when any amount is possible to add</returns>
         public Result<uint> CanAddItem(IItemType itemType)
         {
@@ -281,8 +281,8 @@ namespace NeoServer.Game.Items.Items.Containers
         private IDictionary<ushort, uint> GetContainerMap(IContainer container = null,
             Dictionary<ushort, uint> map = null)
         {
-            map = map ?? new Dictionary<ushort, uint>();
-            if (container is null) container = this;
+            map ??= new Dictionary<ushort, uint>();
+            container ??= this;
 
             foreach (var item in container.Items)
             {
@@ -321,18 +321,16 @@ namespace NeoServer.Game.Items.Items.Containers
 
         private Result AddItem(IItem item, byte slot)
         {
-            if (Capacity <= slot) throw new ArgumentOutOfRangeException("Slot is bigger than capacity");
+            if (Capacity <= slot) throw new ArgumentOutOfRangeException("Slot is greater than capacity");
 
-            if (item is not ICumulative) return AddItemToFront(item);
-
-            var cumulativeItem = item as ICumulative;
+            if (item is not ICumulative cumulativeItem) return AddItemToFront(item);
 
             var itemToJoinSlot = GetSlotOfFirstItemNotFully(cumulativeItem);
 
-            if (itemToJoinSlot >= 0 && item is ICumulative cumulative)
+            if (itemToJoinSlot >= 0 && cumulativeItem is { } cumulative)
                 return TryJoinCumulativeItems(cumulative, (byte) itemToJoinSlot);
 
-            return AddItemToFront(item);
+            return AddItemToFront(cumulativeItem);
         }
 
         private int GetSlotOfFirstItemNotFully(ICumulative? cumulativeItem)
@@ -391,19 +389,19 @@ namespace NeoServer.Game.Items.Items.Containers
             var index = 0;
             foreach (var i in Items)
             {
-                containerId = containerId ?? Id ?? 0;
+                containerId ??= Id ?? 0;
                 var newLocation = Location.Container(containerId.Value, (byte) index++);
                 if (i is IPickupable pickupable) pickupable.SetNewLocation(newLocation);
             }
         }
 
-        public void OnItemReduced(ICumulative item, byte amount)
+        private void OnItemReduced(ICumulative item, byte amount)
         {
             if (item.Amount == 0) RemoveItem((byte) item.Location.ContainerSlot);
             if (item.Amount > 0) OnItemUpdated?.Invoke((byte) item.Location.ContainerSlot, item, (sbyte) item.Amount);
         }
 
-        public Result CanAddItem(IItem item, byte? slot = null)
+        private Result CanAddItem(IItem item, byte? slot = null)
         {
             if (item == this) return new Result(InvalidOperation.Impossible);
 
@@ -425,7 +423,7 @@ namespace NeoServer.Game.Items.Items.Containers
             var validation = CanAddItem(item, slot);
             if (!validation.IsSuccess) return validation;
 
-            slot = slot ?? LastFreeSlot;
+            slot ??= LastFreeSlot;
 
             if (GetContainerAt(slot.Value, out var container)) return container.AddItem(item).ResultValue;
 
