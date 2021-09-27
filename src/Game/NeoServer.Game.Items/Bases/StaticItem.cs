@@ -3,18 +3,11 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Bases
 {
-    public class StaticItem : IItem
+    public class StaticItem : BaseItem
     {
-        public StaticItem(IItemType metadata, Location location)
+        public StaticItem(IItemType metadata, Location location): base(metadata)
         {
-            Metadata = metadata;
-            Location = location;
         }
-
-        public string CustomLookText => null; //todo: revise
-
-        public IItemType Metadata { get; }
-
-        public Location Location { get; set; }
+        
     }
 }

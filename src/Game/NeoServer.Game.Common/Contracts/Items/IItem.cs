@@ -11,8 +11,10 @@ namespace NeoServer.Game.Common.Contracts.Items
         /// </summary>
         IItemType Metadata { get; }
 
-        string CustomLookText {  get; }
-        protected string LookText => CustomLookText ?? $"{Metadata.Article} {Metadata.Name}";
+        string InspectionText => string.Empty;
+        string CloseInspectionText => string.Empty;
+
+
         string Plural => Metadata.Plural;
 
         ushort ClientId => Metadata.ClientId;
@@ -34,8 +36,7 @@ namespace NeoServer.Game.Common.Contracts.Items
         bool IsContainer => Metadata.Group == ItemGroup.GroundContainer;
         FloorChangeDirection FloorDirection => Metadata.Attributes.GetFloorChangeDirection();
         string IThing.Name => Metadata.Name;
-        string IThing.InspectionText => $"{LookText}";
-
+    
         Span<byte> GetRaw()
         {
             return BitConverter.GetBytes(ClientId);

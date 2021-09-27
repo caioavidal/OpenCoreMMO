@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Immutable;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Weapons
@@ -19,7 +18,23 @@ namespace NeoServer.Game.Items.Items.Weapons
             //AllowedVocations  todo
         }
 
-        public ImmutableHashSet<VocationType> AllowedVocations { get; }
+        protected override string PartialInspectionText
+        {
+            get
+            {
+                var defense = Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
+                var extraDefense = Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
+
+                var extraDefenseText = extraDefense > 0 ? $" +{extraDefense}" :
+                    extraDefense < 0 ? $" -{extraDefense}" : string.Empty;
+
+                var elementalDamageText = ElementalDamage is not null && ElementalDamage.Item2 > 0
+                    ? $" + {ElementalDamage.Item2} {DamageTypeParser.Parse(ElementalDamage.Item1)},"
+                    : ",";
+
+                return $"Atk: {Attack}{elementalDamageText} Def: {defense}{extraDefenseText}";
+            }
+        }
 
         public ushort Attack => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
 
@@ -31,7 +46,7 @@ namespace NeoServer.Game.Items.Items.Weapons
         {
             combatType = new CombatAttackType(DamageType.Melee);
 
-            if (!(actor is IPlayer player)) return false;
+            if (actor is not IPlayer player) return false;
 
             var result = false;
 
@@ -46,7 +61,8 @@ namespace NeoServer.Game.Items.Items.Weapons
                 }
             }
 
-            if (ElementalDamage != null)
+            if (ElementalDamage is null) return result;
+
             {
                 var combat = new CombatAttackValue(actor.MinimumAttackPower,
                     player.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);

@@ -93,7 +93,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool HasDepotOpened { get; }
 
         byte VocationType { get; }
-        private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
 
         uint TotalCapacity { get; }
         bool Recovering { get; }
@@ -111,8 +110,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool IsInParty { get; }
         IParty Party { get; }
         byte MaxSoulPoints { get; }
-
-        string IThing.InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
+        
         HashSet<uint> VipList { get; set; }
         event UseSpell OnUsedSpell;
         event SendMessageTo OnSentMessage;

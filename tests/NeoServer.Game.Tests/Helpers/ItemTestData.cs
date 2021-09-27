@@ -13,6 +13,7 @@ using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
 using NeoServer.Game.Items.Items.Weapons;
 
@@ -82,7 +83,8 @@ namespace NeoServer.Game.Tests.Helpers
             return new MeleeWeapon(type, new Location(100, 100, 7));
         }
 
-        public static IPickupable CreateWeaponItem(ushort id, string weaponType, bool twoHanded = false)
+        public static IPickupable CreateWeaponItem(ushort id, string weaponType="sword", bool twoHanded = false, byte charges = 0,
+            (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -93,10 +95,40 @@ namespace NeoServer.Game.Tests.Helpers
 
             type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
 
-            return new MeleeWeapon(type, new Location(100, 100, 7));
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+         
+            return new MeleeWeapon(type, new Location(100, 100, 7))
+            {
+                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                ItemTypeFinder = itemTypeFinder
+            };
+        }
+        
+        public static IPickupable CreateDistanceWeapon(ushort id, bool twoHanded = false, byte charges = 0,
+            (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
+        {
+            var type = new ItemType();
+            type.SetClientId(id);
+            type.SetId(id);
+            type.SetName("item");
+            type.Attributes.SetAttribute(ItemAttribute.WeaponType, "distance");
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
+
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
+
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+         
+            return new DistanceWeapon(type, new Location(100, 100, 7))
+            {
+                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                ItemTypeFinder = itemTypeFinder
+            };
         }
 
-        public static IPickupable CreateThrowableDistanceItem(ushort id, byte amount, bool twoHanded = false)
+        public static IPickupable CreateThrowableDistanceItem(ushort id, byte amount = 1, bool twoHanded = false,
+            (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -105,8 +137,15 @@ namespace NeoServer.Game.Tests.Helpers
 
             type.Attributes.SetAttribute(ItemAttribute.WeaponType, "distance");
             type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
-
-            return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount);
+            
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+         
+            return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount)
+            {
+                Chargeable = null,
+                ItemTypeFinder = itemTypeFinder
+            };
         }
 
         public static IDefenseEquipment CreateDefenseEquipmentItem(ushort id, string slot = "", ushort charges = 10,
@@ -119,7 +158,7 @@ namespace NeoServer.Game.Tests.Helpers
             type.Attributes.SetAttribute(ItemAttribute.Charges, charges);
             type.SetName("item");
 
-            attributes ??= new (ItemAttribute, IConvertible)[0];
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
          
             return new BodyDefenseEquipment(type, new Location(100, 100, 7))

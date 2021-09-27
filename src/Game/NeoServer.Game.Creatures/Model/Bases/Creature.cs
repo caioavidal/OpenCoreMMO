@@ -58,6 +58,14 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public uint HealthPoints { get; protected set; }
         public uint MaxHealthPoints { get; protected set; }
         public string Name => CreatureType.Name;
+        public string GetLookText(bool isClose = false)
+        {
+            return $"You see {(isClose ? CloseInspectionText : InspectionText)}";
+        }
+
+        protected virtual string InspectionText => $"{Name}.";
+        protected virtual string CloseInspectionText => $"{Name}.";
+
         public uint CreatureId { get; }
         public ushort CorpseType => CreatureType.Look[LookType.Corpse];
         public IThing Corpse { get; set; }

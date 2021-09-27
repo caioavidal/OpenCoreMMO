@@ -17,10 +17,10 @@ namespace NeoServer.Server.Standalone.IoC.Modules
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{environmentName}.json", true, true)
-                .AddEnvironmentVariables(); //.Build();
+                .AddEnvironmentVariables();
 
             //only add secrets in development
-            if (environmentName.Equals("Local", StringComparison.InvariantCultureIgnoreCase))
+            if (environmentName != null && environmentName.Equals("Local", StringComparison.InvariantCultureIgnoreCase))
                 builder.AddUserSecrets<Program>();
             return builder.Build();
         }

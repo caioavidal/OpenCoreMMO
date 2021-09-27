@@ -241,7 +241,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
                 });
             GameToolStore.WalkToMechanism = walkMechanismMock.Object;
 
-            // Build our player, used item, and targetTile. Each should have a different location.
+            // BuildLookText our player, used item, and targetTile. Each should have a different location.
             var player = PlayerTestDataBuilder.BuildPlayer(1);
 
             var itemLocation = new Location(105, 105, 7);

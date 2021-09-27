@@ -4,12 +4,13 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Useables;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Bases;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items.UsableItems
 {
     public abstract class UseableOnItem : MoveableItem, IPickupable, IUseableOnItem
     {
-        public UseableOnItem(IItemType type, Location location) : base(type, location)
+        protected UseableOnItem(IItemType type, Location location) : base(type, location)
         {
         }
 

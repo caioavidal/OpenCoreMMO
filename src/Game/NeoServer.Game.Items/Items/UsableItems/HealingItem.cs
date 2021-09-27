@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Useables;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Items.Cumulatives;
 
 namespace NeoServer.Game.Items.Items.UsableItems
 {

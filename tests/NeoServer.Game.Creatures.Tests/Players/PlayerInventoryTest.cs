@@ -14,6 +14,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map.Tiles;
@@ -385,7 +386,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.TryAddItemToSlot(slot, newItem);
 
             Assert.Equal(sut[slot], item);
-            Assert.Equal((sut[slot] as Cumulative).Amount, resultItem.Amount);
+            Assert.Equal((sut[slot] as ICumulative).Amount, resultItem.Amount);
         }
 
         [Fact]
