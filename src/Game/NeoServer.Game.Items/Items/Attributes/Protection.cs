@@ -19,7 +19,7 @@ namespace NeoServer.Game.Items.Items.Attributes
             _item = item;
         }
 
-        public Dictionary<DamageType, sbyte> DamageProtection => _item.Metadata.Attributes.DamageProtection;
+        private Dictionary<DamageType, sbyte> DamageProtection => _item.Metadata.Attributes.DamageProtection;
 
         private sbyte GetProtection(CombatDamage combatDamage)
         {

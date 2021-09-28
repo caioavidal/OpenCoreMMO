@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -171,6 +172,60 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             player.GetSkillBonus(SkillType.Sword).Should().Be(0);
 
         }
+        [Fact]
+        public void ToString_NoAttribute_ReturnsEmpty()
+        {
+            //arrange
+            var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+            });
 
+            //act
+            var actual = sut.ToString();
+
+            //assert
+            actual.Should().BeEmpty();
+        }
+        [Fact]
+        public void ToString_ReturnsText()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, 5),
+                (ItemAttribute.SkillClub, 15),
+                (ItemAttribute.SkillSword, 25),
+                (ItemAttribute.SkillDistance, 35),
+                (ItemAttribute.SkillFist, 45),
+                (ItemAttribute.SkillShield, 55),
+                (ItemAttribute.MagicPoints, 3),
+                (ItemAttribute.SkillFishing, 10),
+                (ItemAttribute.Speed, 20)
+            });
+            var sut = new SkillBonus(item);
+
+            //act
+            var actual = sut.ToString();
+
+            //assert
+            actual.Should().Be("axe fighting +5, club fighting +15, sword fighting +25, distance fighting +35, fist fighting +45, shielding +55, magic level +3, fishing +10, speed +20");
+        }
+        [Fact]
+        public void ToString_0Bonus_DoNotAddToText()
+        {
+            //arrange
+            var item = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, 5),
+                (ItemAttribute.Speed, 0)
+            });
+            var sut = new SkillBonus(item);
+
+            //act
+            var actual = sut.ToString();
+
+            //assert
+            actual.Should().Be("axe fighting +5");
+        }
     }
 }

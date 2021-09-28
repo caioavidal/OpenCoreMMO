@@ -247,32 +247,25 @@ namespace NeoServer.Game.Items
             {
                 var dictionary = new Dictionary<SkillType, byte>();
 
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillAxe) ?? false)
-                    dictionary.TryAdd(SkillType.Axe, GetAttribute<byte>(ItemAttribute.SkillAxe));
+                foreach (var (attr, (value, list)) in _defaultAttributes)
+                {
+                    var (skillType, bonus) = attr switch
+                    {
+                        ItemAttribute.SkillAxe => (SkillType.Axe, (byte)value),
+                        ItemAttribute.SkillClub => (SkillType.Club, (byte)value),
+                        ItemAttribute.SkillDistance => (SkillType.Distance, (byte)value),
+                        ItemAttribute.SkillFishing => (SkillType.Fishing, (byte)value),
+                        ItemAttribute.SkillFist => (SkillType.Fist, (byte)value),
+                        ItemAttribute.SkillShield => (SkillType.Shielding, (byte)value),
+                        ItemAttribute.SkillSword => (SkillType.Sword, (byte)value),
+                        ItemAttribute.Speed => (SkillType.Speed, (byte)value),
+                        ItemAttribute.MagicPoints => (SkillType.Magic, (byte)value),
+                        _ => (SkillType.None, (byte)0)
+                    };
 
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillClub) ?? false)
-                    dictionary.TryAdd(SkillType.Club, GetAttribute<byte>(ItemAttribute.SkillClub));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillDistance) ?? false)
-                    dictionary.TryAdd(SkillType.Distance, GetAttribute<byte>(ItemAttribute.SkillDistance));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillFishing) ?? false)
-                    dictionary.TryAdd(SkillType.Fishing, GetAttribute<byte>(ItemAttribute.SkillFishing));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillFist) ?? false)
-                    dictionary.TryAdd(SkillType.Fist, GetAttribute<byte>(ItemAttribute.SkillFist));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillShield) ?? false)
-                    dictionary.TryAdd(SkillType.Shielding, GetAttribute<byte>(ItemAttribute.SkillShield));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillSword) ?? false)
-                    dictionary.TryAdd(SkillType.Sword, GetAttribute<byte>(ItemAttribute.SkillSword));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.Speed) ?? false)
-                    dictionary.TryAdd(SkillType.Speed, GetAttribute<byte>(ItemAttribute.Speed));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.MagicPoints) ?? false)
-                    dictionary.TryAdd(SkillType.Magic, GetAttribute<byte>(ItemAttribute.MagicPoints));
+                    if (skillType == SkillType.None) continue;
+                    dictionary.TryAdd(skillType, bonus);
+                }
 
                 return dictionary;
             }
@@ -286,9 +279,9 @@ namespace NeoServer.Game.Items
 
                 foreach (var (attr, (value, list)) in _defaultAttributes)
                 {
-                    var (damage,protection) = attr switch
+                    var (damage, protection) = attr switch
                     {
-                        ItemAttribute.AbsorbPercentDeath => (DamageType.Death, (sbyte) value),
+                        ItemAttribute.AbsorbPercentDeath => (DamageType.Death, (sbyte)value),
                         ItemAttribute.AbsorbPercentEnergy => (DamageType.Energy, (sbyte)value),
                         ItemAttribute.AbsorbPercentPhysical => (DamageType.Physical, (sbyte)value),
                         ItemAttribute.AbsorbPercentPoison => (DamageType.Earth, (sbyte)value),
@@ -307,7 +300,7 @@ namespace NeoServer.Game.Items
                     if (damage == DamageType.None) continue;
                     dictionary.TryAdd(damage, protection);
                 }
-                
+
                 return dictionary;
             }
         }
