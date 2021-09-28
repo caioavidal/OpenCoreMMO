@@ -247,32 +247,26 @@ namespace NeoServer.Game.Items
             {
                 var dictionary = new Dictionary<SkillType, byte>();
 
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillAxe) ?? false)
-                    dictionary.TryAdd(SkillType.Axe, GetAttribute<byte>(ItemAttribute.SkillAxe));
+                foreach (var (attr, (value, list)) in _defaultAttributes)
+                {
+                    var type = typeof(byte);
+                    var (skillType, bonus) = attr switch
+                    {
+                        ItemAttribute.SkillAxe => (SkillType.Axe, Convert.ChangeType(value,type)),
+                        ItemAttribute.SkillClub => (SkillType.Club, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillDistance => (SkillType.Distance, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillFishing => (SkillType.Fishing, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillFist => (SkillType.Fist, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillShield => (SkillType.Shielding, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillSword => (SkillType.Sword, Convert.ChangeType(value, type)),
+                        ItemAttribute.Speed => (SkillType.Speed, Convert.ChangeType(value, type)),
+                        ItemAttribute.MagicPoints => (SkillType.Magic, Convert.ChangeType(value, type)),
+                        _ => (SkillType.None, (byte)0)
+                    };
 
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillClub) ?? false)
-                    dictionary.TryAdd(SkillType.Club, GetAttribute<byte>(ItemAttribute.SkillClub));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillDistance) ?? false)
-                    dictionary.TryAdd(SkillType.Distance, GetAttribute<byte>(ItemAttribute.SkillDistance));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillFishing) ?? false)
-                    dictionary.TryAdd(SkillType.Fishing, GetAttribute<byte>(ItemAttribute.SkillFishing));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillFist) ?? false)
-                    dictionary.TryAdd(SkillType.Fist, GetAttribute<byte>(ItemAttribute.SkillFist));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillShield) ?? false)
-                    dictionary.TryAdd(SkillType.Shielding, GetAttribute<byte>(ItemAttribute.SkillShield));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.SkillSword) ?? false)
-                    dictionary.TryAdd(SkillType.Sword, GetAttribute<byte>(ItemAttribute.SkillSword));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.Speed) ?? false)
-                    dictionary.TryAdd(SkillType.Speed, GetAttribute<byte>(ItemAttribute.Speed));
-
-                if (_defaultAttributes?.ContainsKey(ItemAttribute.MagicPoints) ?? false)
-                    dictionary.TryAdd(SkillType.Magic, GetAttribute<byte>(ItemAttribute.MagicPoints));
+                    if (skillType == SkillType.None) continue;
+                    dictionary.TryAdd(skillType, bonus);
+                }
 
                 return dictionary;
             }
@@ -286,28 +280,29 @@ namespace NeoServer.Game.Items
 
                 foreach (var (attr, (value, list)) in _defaultAttributes)
                 {
-                    var (damage,protection) = attr switch
+                    var type = typeof(sbyte);
+                    var (damage, protection) = attr switch
                     {
-                        ItemAttribute.AbsorbPercentDeath => (DamageType.Death, (sbyte) value),
-                        ItemAttribute.AbsorbPercentEnergy => (DamageType.Energy, (sbyte)value),
-                        ItemAttribute.AbsorbPercentPhysical => (DamageType.Physical, (sbyte)value),
-                        ItemAttribute.AbsorbPercentPoison => (DamageType.Earth, (sbyte)value),
-                        ItemAttribute.AbsorbPercentFire => (DamageType.Fire, (sbyte)value),
-                        ItemAttribute.AbsorbPercentDrown => (DamageType.Drown, (sbyte)value),
-                        ItemAttribute.AbsorbPercentHoly => (DamageType.Holy, (sbyte)value),
-                        ItemAttribute.AbsorbPercentIce => (DamageType.Ice, (sbyte)value),
-                        ItemAttribute.AbsorbPercentManaDrain => (DamageType.ManaDrain, (sbyte)value),
-                        ItemAttribute.AbsorbPercentLifeDrain => (DamageType.LifeDrain, (sbyte)value),
-                        ItemAttribute.AbsorbPercentMagic => (DamageType.Elemental, (sbyte)value),
-                        ItemAttribute.AbsorbPercentAll => (DamageType.All, (sbyte)value),
-                        ItemAttribute.AbsorbPercentElements => (DamageType.Elemental, (sbyte)value),
+                        ItemAttribute.AbsorbPercentDeath => (DamageType.Death,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentEnergy => (DamageType.Energy,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentPhysical => (DamageType.Physical,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentPoison => (DamageType.Earth,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentFire => (DamageType.Fire,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentDrown => (DamageType.Drown,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentHoly => (DamageType.Holy,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentIce => (DamageType.Ice,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentManaDrain => (DamageType.ManaDrain,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentLifeDrain => (DamageType.LifeDrain,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentMagic => (DamageType.Elemental,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentAll => (DamageType.All,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentElements => (DamageType.Elemental,  Convert.ChangeType(value, type)),
                         _ => (DamageType.None, (sbyte)0)
                     };
 
                     if (damage == DamageType.None) continue;
                     dictionary.TryAdd(damage, protection);
                 }
-                
+
                 return dictionary;
             }
         }

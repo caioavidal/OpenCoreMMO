@@ -585,7 +585,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             var sut = new Protection(item);
             //assert
-            sut.ToString().Should().Be("protection energy 10%, fire 20%, death -25%, mana drain 30%, life drain 45%, ice 50%, physical -65%, drown 80%, earth 100%, holy 50%");
+            sut.ToString().Should().Be("protection energy +10%, fire +20%, death -25%, mana drain +30%, life drain +45%, ice +50%, physical -65%, drown +80%, earth +100%, holy +50%");
         }
         [Fact]
         public void ToString_AllProtection_ReturnsLookText()
@@ -599,7 +599,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Protection(item);
 
             //assert
-            sut.ToString().Should().Be("protection all 10%");
+            sut.ToString().Should().Be("protection all +10%");
         }
         [Fact]
         public void ToString_ElementalProtection_ReturnsLookText()
@@ -613,7 +613,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Protection(item);
 
             //assert
-            sut.ToString().Should().Be("protection elemental 10%");
+            sut.ToString().Should().Be("protection elemental +10%");
         }
         [Fact]
         public void ToString_0Protection_Ignores()
@@ -629,7 +629,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var sut = new Protection(item);
 
             //assert
-            sut.ToString().Should().Be("protection elemental 10%");
+            sut.ToString().Should().Be("protection elemental +10%");
         }
 
 

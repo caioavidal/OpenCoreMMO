@@ -11,6 +11,7 @@ namespace NeoServer.Game.Common.Creatures
         Shielding = 5,
         Distance = 4,
         Fishing = 6,
-        Speed = 9
+        Speed = 9,
+        None
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NeoServer.Game.Common.Helpers
@@ -46,7 +47,13 @@ namespace NeoServer.Game.Common.Helpers
         }
 
         public static bool IsNull(object value) => value is null;
-
+        public static bool AnyNullOrEmpty(params ICollection[] values)
+        {
+            foreach (var value in values)
+                if (value is null || value.Count == 0)
+                    return true;
+            return false;
+        }
         public static bool AnyNullOrEmpty(params string[] values)
         {
             foreach (var value in values)

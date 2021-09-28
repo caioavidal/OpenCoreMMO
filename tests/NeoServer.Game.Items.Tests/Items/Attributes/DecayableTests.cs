@@ -339,9 +339,9 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             sut.StartDecay();
             Thread.Sleep(1000);
             //assert
-            sut.Elapsed.Should().Be(1);
-            Thread.Sleep(1000);
             sut.Elapsed.Should().Be(2);
+            Thread.Sleep(1000);
+            sut.Elapsed.Should().Be(3);
         }
         [Fact]
         public void Remaining_AfterStarted_Changes()
@@ -357,7 +357,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             //act
             sut.StartDecay();
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             //assert
             sut.Remaining.Should().Be(19);
             Thread.Sleep(1000);
@@ -393,7 +393,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             //act
             sut.StartDecay();
-            Thread.Sleep(2000);
+            Thread.Sleep(1200);
             //assert
             sut.ToString().Should().Be("will expire in 2 minutes and 58 seconds");
         }
@@ -411,7 +411,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             //act
             sut.StartDecay();
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             //assert
             sut.ToString().Should().Be("will expire in 1 minute and 1 second");
         }

@@ -13,6 +13,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.DataStore;
+using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
@@ -29,6 +30,7 @@ namespace NeoServer.Game.Items.Tests.Items
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
             sut.DressedIn(null);
         }
+
         [Fact]
         public void DressedIn_Player_AddSkillBonus()
         {
@@ -58,6 +60,7 @@ namespace NeoServer.Game.Items.Tests.Items
             //act
             sut.UndressFrom(null);
         }
+
         [Fact]
         public void UndressFrom_Player_RemoveSkillBonus()
         {
@@ -90,6 +93,7 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             sut.NoCharges.Should().BeFalse();
         }
+
         [Fact]
         public void NoCharges_0Charges_ReturnsTrue()
         {
@@ -114,16 +118,18 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             sut.NoCharges.Should().BeFalse();
         }
+
         [Fact]
         public void TransformOnEquip_NoItemToTransformTo_DoNotTransform()
         {
             //arrange
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.Duration, 100)
-            });
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.Duration, 100)
+                });
 
             var metadata = sut.Metadata;
 
@@ -132,7 +138,6 @@ namespace NeoServer.Game.Items.Tests.Items
 
             //assert
             metadata.Should().BeEquivalentTo(sut.Metadata);
-
         }
 
         [Fact]
@@ -145,13 +150,13 @@ namespace NeoServer.Game.Items.Tests.Items
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItem.Metadata);
 
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.Duration, 100),
-                (ItemAttribute.TransformEquipTo,2),
-
-            }, itemTypeFinder: itemTypeStore.Get);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.TransformEquipTo, 2),
+                }, itemTypeFinder: itemTypeStore.Get);
 
             var metadata = sut.Metadata;
 
@@ -169,11 +174,12 @@ namespace NeoServer.Game.Items.Tests.Items
             var itemTypeStore = ItemTestData.GetItemTypeStore();
 
             //arrange
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.Duration, 100)
-            }, itemTypeFinder: itemTypeStore.Get);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.Duration, 100)
+                }, itemTypeFinder: itemTypeStore.Get);
 
             var metadata = sut.Metadata;
 
@@ -183,6 +189,7 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             metadata.Should().BeEquivalentTo(sut.Metadata);
         }
+
         [Fact]
         public void TransformOnDequip_HasItemToTransformTo_Transform()
         {
@@ -191,13 +198,13 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItem.Metadata);
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.Duration, 100),
-                (ItemAttribute.TransformDequipTo,2),
-
-            }, itemTypeFinder: itemTypeStore.Get);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.TransformDequipTo, 2),
+                }, itemTypeFinder: itemTypeStore.Get);
 
             var metadata = sut.Metadata;
 
@@ -245,27 +252,30 @@ namespace NeoServer.Game.Items.Tests.Items
             itemBefore.Should().BeEquivalentTo(metadata);
             itemNow.Should().BeEquivalentTo(sut.Metadata);
         }
+
         [Fact]
         public void UndressFrom_HasItemToTransformTo_Transform()
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
 
-            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.TransformDequipTo,3)
-            });
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.TransformDequipTo, 3)
+                });
 
             var transformOnDequipItem = ItemTestData.CreateDefenseEquipmentItem(3);
 
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItem.Metadata, transformOnDequipItem.Metadata);
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-               {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.Duration, 100),
-                (ItemAttribute.TransformEquipTo,2)
-               }, itemTypeFinder: itemTypeStore.Get);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.TransformEquipTo, 2)
+                }, itemTypeFinder: itemTypeStore.Get);
 
             IItemType itemBefore = null;
             IItemType itemNow = null;
@@ -304,11 +314,12 @@ namespace NeoServer.Game.Items.Tests.Items
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.Duration, 1),
-            });
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.Duration, 1),
+                });
 
             var slotRemoved = Slot.None;
             IPickupable itemRemoved = null;
@@ -330,14 +341,17 @@ namespace NeoServer.Game.Items.Tests.Items
             itemRemoved.Should().Be(sut);
         }
 
+        #region InspectionText
+
         [Fact]
         public void InspectionText_HasCharges_ShowChargesCount()
         {
             //arrange
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 2, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.ShowCharges, true)
-            });
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 2,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.ShowCharges, true)
+                });
 
             //assert
             sut.InspectionText.Should().Be(" that has 2 charges left");
@@ -348,27 +362,128 @@ namespace NeoServer.Game.Items.Tests.Items
         }
 
         [Fact]
+        public void InspectionText_HasAttribute_ReturnText()
+        {
+            //arrange
+            var sut = ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Attack, 50),
+                (ItemAttribute.Defense, 20)
+            });
+
+            //assert
+            sut.InspectionText.Should().Be("(Atk: 50, Def: 20)");
+        }
+
+        [Fact]
+        public void InspectionText_HasAttributesAndSkillBonus_ReturnText()
+        {
+            //arrange
+            var sut = ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Attack, 50),
+                (ItemAttribute.Defense, 20),
+                (ItemAttribute.SkillAxe, 30),
+                (ItemAttribute.SkillClub, 10)
+            });
+
+            //assert
+            sut.InspectionText.Should().Be("(Atk: 50, Def: 20, axe fighting +30, club fighting +10)");
+        }
+
+        [Fact]
+        public void InspectionText_HasAttributesAndSkillBonusAndProtection_ReturnText()
+        {
+            //arrange
+            var sut = ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Attack, 50),
+                (ItemAttribute.Defense, 20),
+                (ItemAttribute.SkillAxe, 30),
+                (ItemAttribute.SkillClub, 10),
+                (ItemAttribute.AbsorbPercentDeath, 60),
+                (ItemAttribute.AbsorbPercentEnergy, 70)
+            });
+
+            //assert
+            sut.InspectionText.Should()
+                .Be("(Atk: 50, Def: 20, axe fighting +30, club fighting +10, protection death +60%, energy +70%)");
+        }
+
+        [Fact]
+        public void InspectionText_AllAttributesAndDecay_ReturnText()
+        {
+            //arrange
+            var sut = ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Attack, 50),
+                (ItemAttribute.Defense, 20),
+                (ItemAttribute.SkillAxe, 30),
+                (ItemAttribute.SkillClub, 10),
+                (ItemAttribute.AbsorbPercentDeath, 60),
+                (ItemAttribute.AbsorbPercentEnergy, 70),
+                (ItemAttribute.Duration, 50),
+                (ItemAttribute.ShowDuration, 1),
+                (ItemAttribute.StopDecaying, 0)
+            });
+
+            //assert
+            sut.InspectionText.Should()
+                .Be(
+                    "(Atk: 50, Def: 20, axe fighting +30, club fighting +10, protection death +60%, energy +70%) that is brand-new");
+
+            (sut as IEquipment).StartDecay();
+            sut.InspectionText.Should()
+                .Be(
+                    "(Atk: 50, Def: 20, axe fighting +30, club fighting +10, protection death +60%, energy +70%) that will expire in 0 minute and 49 seconds");
+        }
+
+        [Fact]
+        public void InspectionText_AllAttributesAndCharges_ReturnText()
+        {
+            //arrange
+            var sut = ItemTestData.CreateWeaponItem(1, charges:10, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Attack, 50),
+                (ItemAttribute.Defense, 20),
+                (ItemAttribute.SkillAxe, 30),
+                (ItemAttribute.SkillClub, 10),
+                (ItemAttribute.AbsorbPercentDeath, 60),
+                (ItemAttribute.AbsorbPercentEnergy, 70),
+                (ItemAttribute.ShowCharges, 1)
+            });
+
+            //assert
+            sut.InspectionText.Should()
+                .Be(
+                    "(Atk: 50, Def: 20, axe fighting +30, club fighting +10, protection death +60%, energy +70%) that has 10 charges left");
+        }
+
+        #endregion
+
+        [Fact]
         public void TransformOnEquip_HasDuration_SetsDuration()
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
 
-            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.ShowDuration, 1),
-                (ItemAttribute.Duration, 1800)
-            });
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.Duration, 1800)
+                });
 
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItem.Metadata);
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.AbsorbPercentEnergy, 100),
-                (ItemAttribute.ShowDuration, 1),
-                (ItemAttribute.TransformEquipTo,2)
-
-            }, itemTypeFinder: itemTypeStore.Get);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.AbsorbPercentEnergy, 100),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.TransformEquipTo, 2)
+                }, itemTypeFinder: itemTypeStore.Get);
 
             //assert
             sut.Duration.Should().Be(0);
@@ -386,11 +501,12 @@ namespace NeoServer.Game.Items.Tests.Items
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Duration, 1000),
-                (ItemAttribute.ShowDuration, false)
-            });
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 1000),
+                    (ItemAttribute.ShowDuration, false)
+                });
 
             //assert
             sut.Elapsed.Should().Be(0);
@@ -409,12 +525,13 @@ namespace NeoServer.Game.Items.Tests.Items
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Duration, 1000),
-                (ItemAttribute.ShowDuration, false),
-                (ItemAttribute.StopDecaying, 1),
-            });
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 1000),
+                    (ItemAttribute.ShowDuration, false),
+                    (ItemAttribute.StopDecaying, 1),
+                });
 
             //assert
             sut.Elapsed.Should().Be(0);
@@ -426,18 +543,20 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             sut.Elapsed.Should().Be(0);
         }
+
         [Fact]
         public void StartDecay_HasStopDecayingFalse_Start()
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Duration, 1000),
-                (ItemAttribute.ShowDuration, false),
-                (ItemAttribute.StopDecaying, 0),
-            });
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 1000),
+                    (ItemAttribute.ShowDuration, false),
+                    (ItemAttribute.StopDecaying, 0),
+                });
 
             //assert
             sut.Elapsed.Should().Be(0);
@@ -449,26 +568,29 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             sut.Elapsed.Should().BeGreaterThan(0);
         }
+
         [Fact]
         public void PauseDecay_HasNoStopDecayingAttr_DoNotPause()
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
 
-            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Duration, 100),
-                (ItemAttribute.ShowDuration, false),
-            });
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.ShowDuration, false),
+                });
 
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItem.Metadata);
 
-            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Duration, 100),
-                (ItemAttribute.ShowDuration, false),
-                (ItemAttribute.TransformEquipTo, 2),
-            }, itemTypeFinder: itemTypeStore.Get);
+            var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.ShowDuration, false),
+                    (ItemAttribute.TransformEquipTo, 2),
+                }, itemTypeFinder: itemTypeStore.Get);
 
             //assert
             sut.Elapsed.Should().Be(0);
@@ -480,8 +602,9 @@ namespace NeoServer.Game.Items.Tests.Items
             Thread.Sleep(1100);
 
             //assert
-            sut.Elapsed.Should().Be(2);
+            sut.Elapsed.Should().Be(3);
         }
+
         [Fact]
         public void PauseDecay_HasStopDecayingTrue_Pauses()
         {
@@ -515,26 +638,27 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             sut.Elapsed.Should().Be(1);
         }
+
         [Fact]
         public void PauseDecay_HasStopDecayingFalse_DoNotPause()
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
-            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Duration, 100),
-                (ItemAttribute.ShowDuration, false),
-                (ItemAttribute.StopDecaying, 0),
+            var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.ShowDuration, false),
+                    (ItemAttribute.StopDecaying, 0),
+                });
 
-            });
-
-            var transformToItemDequip = ItemTestData.CreateDefenseEquipmentItem(3, slot: "ring", charges: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Duration, 100),
-                (ItemAttribute.ShowDuration, 1),
-                (ItemAttribute.StopDecaying, 0)
-
-            });
+            var transformToItemDequip = ItemTestData.CreateDefenseEquipmentItem(3, slot: "ring", charges: 1,
+                attributes: new (ItemAttribute, IConvertible)[]
+                {
+                    (ItemAttribute.Duration, 100),
+                    (ItemAttribute.ShowDuration, 1),
+                    (ItemAttribute.StopDecaying, 0)
+                });
 
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItemDequip.Metadata, transformToItem.Metadata);
 
@@ -557,7 +681,7 @@ namespace NeoServer.Game.Items.Tests.Items
             Thread.Sleep(2000);
 
             //assert
-            sut.Elapsed.Should().Be(3);
+            sut.Elapsed.Should().Be(4);
         }
 
         [Fact]
@@ -582,10 +706,10 @@ namespace NeoServer.Game.Items.Tests.Items
 
             //act
             player.Inventory.AddItem(sut, (byte)Slot.Ring);
-            
+
             Thread.Sleep(1200);
             sut.TryDecay();
-            
+
             //assert
             player.Inventory[Slot.Ring].Metadata.Should().Be(decaysTo.Metadata);
         }
@@ -602,7 +726,6 @@ namespace NeoServer.Game.Items.Tests.Items
                     (ItemAttribute.Duration, 100),
                     (ItemAttribute.ShowDuration, 1),
                     (ItemAttribute.ExpireTarget, 0),
-
                 });
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformOnEquip.Metadata);
 
@@ -626,7 +749,7 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer();
-            
+
             var itemTypeStore = ItemTestData.GetItemTypeStore();
 
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
@@ -705,7 +828,8 @@ namespace NeoServer.Game.Items.Tests.Items
                     (ItemAttribute.ShowDuration, 1)
                 }, itemTypeFinder: itemTypeStore.Get);
 
-            ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item1Equipped.Metadata, item2.Metadata, item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
+            ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item1Equipped.Metadata, item2.Metadata,
+                item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
 
             //assert first item
             item1.Duration.Should().Be(0);
@@ -769,6 +893,7 @@ namespace NeoServer.Game.Items.Tests.Items
             player.Inventory[Slot.Ring].Metadata.Should().Be(transformOnEquip.Metadata);
             player.GetSkillBonus(SkillType.Axe).Should().Be(5);
         }
+
         [Fact]
         public void TransformOnEquip_OldItemHasNoProtectionButNewHas_CreateProtectionInstance()
         {
@@ -794,7 +919,7 @@ namespace NeoServer.Game.Items.Tests.Items
             player.Inventory.AddItem(sut, (byte)Slot.Ring);
 
             //assert
-            
+
             player.Inventory[Slot.Ring].Metadata.Should().Be(transformOnEquip.Metadata);
             sut.Protect(ref combatDamage);
             combatDamage.Damage.Should().Be(95);

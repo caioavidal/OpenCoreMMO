@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Parsers
 {
-    public class ConditionIconParser
+    public static class ConditionIconParser
     {
         public static ConditionIcon Parse(ConditionType type)
         {

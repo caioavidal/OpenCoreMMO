@@ -19,7 +19,7 @@ namespace NeoServer.Game.Items.Items.Attributes
             _item = item;
         }
 
-        public Dictionary<DamageType, sbyte> DamageProtection => _item.Metadata.Attributes.DamageProtection;
+        private Dictionary<DamageType, sbyte> DamageProtection => _item.Metadata.Attributes.DamageProtection;
 
         private sbyte GetProtection(CombatDamage combatDamage)
         {
@@ -68,7 +68,7 @@ namespace NeoServer.Game.Items.Items.Attributes
                 if (damageType == DamageType.LifeDrain) damage = "life drain";
                 if (damageType == DamageType.ManaDrain) damage = "mana drain";
 
-                stringBuilder.Append($"{damage} {protectionValue}%, ");
+                stringBuilder.Append($"{damage} {(protectionValue >= 0 ? "+" : string.Empty)}{protectionValue}%, ");
             }
 
             stringBuilder.Remove(stringBuilder.Length - 2, 2);

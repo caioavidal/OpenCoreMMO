@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -17,10 +18,9 @@ namespace NeoServer.Game.Items.Bases
 {
     public abstract class Equipment : MoveableItem, IEquipment
     {
-        
         protected Equipment(IItemType type, Location location) : base(type, location)
         {
-            if (type.Attributes.SkillBonuses is not null) SkillBonus = new SkillBonus(this);
+            if (type.Attributes.SkillBonuses?.Any() ?? false) SkillBonus = new SkillBonus(this);
             Decayable = DecayableFactory.Create(this);
             Protection = ProtectionFactory.Create(this);
 
@@ -34,10 +34,10 @@ namespace NeoServer.Game.Items.Bases
 
         protected abstract string PartialInspectionText { get; }
 
-        public IPlayer PlayerDressing { get; private set; }
+        private IPlayer PlayerDressing { get; set; }
         public Func<ushort, IItemType> ItemTypeFinder { get; init; }
 
-        public string InspectionText 
+        public string InspectionText
         {
             get
             {
@@ -46,14 +46,14 @@ namespace NeoServer.Game.Items.Bases
 
                 void AppendAttributes(string attributes)
                 {
-                    if (string.IsNullOrWhiteSpace(attributes)) return;
-                    stringBuilder.Append($"({attributes})");
+                    if (!string.IsNullOrWhiteSpace(attributes)) attributeStringBuilder.Append($", {attributes}");
                 }
                 
-                attributeStringBuilder.Append(PartialInspectionText);
-                if (Protection is not null) attributeStringBuilder.Append($" {Protection}");
+                AppendAttributes(PartialInspectionText);
+                AppendAttributes($"{SkillBonus}");
+                AppendAttributes($"{Protection}");
 
-                AppendAttributes(attributeStringBuilder.ToString());
+                if(attributeStringBuilder.Length > 0) stringBuilder.Append($"({attributeStringBuilder.Remove(0,2)})");
 
                 if (Decayable is not null) stringBuilder.Append($" that {Decayable}");
                 if (Chargeable is not null && Chargeable.ShowCharges) stringBuilder.Append($" that {Chargeable}");
@@ -90,7 +90,7 @@ namespace NeoServer.Game.Items.Bases
 
             player.Inventory.AddItem(this, (byte)Metadata.BodyPosition);
         }
-        
+
         private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
         {
             Protect(ref damage);
@@ -102,9 +102,11 @@ namespace NeoServer.Game.Items.Bases
         public bool NoCharges => Chargeable?.NoCharges ?? false;
         public bool ShowCharges => Chargeable?.ShowCharges ?? false;
         public void DecreaseCharges() => Chargeable?.DecreaseCharges();
+
         #endregion
 
         #region Skill Bonus
+
         public void AddSkillBonus(IPlayer player)
         {
             if (Expired) return;
@@ -119,7 +121,6 @@ namespace NeoServer.Game.Items.Bases
 
         public void DressedIn(IPlayer player)
         {
-            
             if (Guard.AnyNull(player)) return;
             TransformOnEquip();
 
@@ -163,7 +164,8 @@ namespace NeoServer.Game.Items.Bases
         public void StartDecay()
         {
             if (Guard.AnyNull(Metadata)) return;
-            if (Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying) && stopDecaying == 1) return;
+            if (Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying) &&
+                stopDecaying == 1) return;
             Decayable?.StartDecay();
         }
 
@@ -171,11 +173,13 @@ namespace NeoServer.Game.Items.Bases
         {
             if (Metadata is null) return;
 
-            var hasStopDecaying = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying);
+            var hasStopDecaying =
+                Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying);
             if (!hasStopDecaying || stopDecaying == 0) return;
 
             Decayable?.PauseDecay();
         }
+
         #endregion
 
         #region Transformable
@@ -183,7 +187,7 @@ namespace NeoServer.Game.Items.Bases
         public void TransformOnEquip()
         {
             if (!Metadata.Attributes.HasAttribute(ItemAttribute.TransformEquipTo)) return;
-            
+
             var before = Metadata;
             Metadata = TransformEquipItem;
 
@@ -202,8 +206,12 @@ namespace NeoServer.Game.Items.Bases
             OnTransformed?.Invoke(before, Metadata);
         }
 
-        public IItemType TransformEquipItem => ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformEquipTo));
-        public IItemType TransformDequipItem => ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo));
+        public IItemType TransformEquipItem =>
+            ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformEquipTo));
+
+        public IItemType TransformDequipItem =>
+            ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo));
+
         public event Transform OnTransformed;
 
         #endregion
