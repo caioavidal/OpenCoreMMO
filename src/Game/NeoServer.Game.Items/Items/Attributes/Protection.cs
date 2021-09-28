@@ -68,7 +68,7 @@ namespace NeoServer.Game.Items.Items.Attributes
                 if (damageType == DamageType.LifeDrain) damage = "life drain";
                 if (damageType == DamageType.ManaDrain) damage = "mana drain";
 
-                stringBuilder.Append($"{damage} {protectionValue}%, ");
+                stringBuilder.Append($"{damage} {(protectionValue >= 0 ? "+" : string.Empty)}{protectionValue}%, ");
             }
 
             stringBuilder.Remove(stringBuilder.Length - 2, 2);

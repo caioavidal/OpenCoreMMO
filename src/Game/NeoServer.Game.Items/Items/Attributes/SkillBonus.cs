@@ -42,6 +42,8 @@ namespace NeoServer.Game.Items.Items.Attributes
                 stringBuilder.Append($"{SkillTypeParser.Parse(skillType).ToLower()} +{value}, ");
             }
 
+            if (stringBuilder.Length < 2) return string.Empty;
+            
             stringBuilder.Remove(stringBuilder.Length - 2, 2);
             return stringBuilder.ToString();
         }

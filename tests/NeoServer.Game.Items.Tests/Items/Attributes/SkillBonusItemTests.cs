@@ -181,7 +181,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             });
 
             //act
-            var actual = sut.ToString();
+            var actual = new SkillBonus(sut).ToString();
 
             //assert
             actual.Should().BeEmpty();

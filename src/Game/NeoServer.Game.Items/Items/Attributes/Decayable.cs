@@ -9,8 +9,8 @@ namespace NeoServer.Game.Items.Items.Attributes
         private readonly IItem _item;
         private bool _isPaused = true;
 
-        private long _lastElapsed;
-        private long _startedToDecayTime;
+        private uint _lastElapsed;
+        private ulong _startedToDecayTime;
 
         public Decayable(IItem item)
         {
@@ -31,12 +31,22 @@ namespace NeoServer.Game.Items.Items.Attributes
 
         public uint Duration => _duration = _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration) == 0 ? _duration : _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration);
 
-        public uint Remaining => Math.Max(0, Duration - Elapsed);
+        public uint Remaining => Duration <= Elapsed ? 0 : Math.Max(0, Duration - Elapsed);
 
-        public uint Elapsed =>
-            (uint)Math.Max(0, _isPaused
-                ? _lastElapsed
-                : _lastElapsed + (int)((DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond));
+        public uint Elapsed
+        {
+            get
+            {
+                if (_isPaused) return _lastElapsed;
+                var elapsedSeconds = _startedToDecayTime == 0 ? 0 : (uint)Math.Ceiling(((ulong)DateTime.Now.Ticks - _startedToDecayTime) / (decimal)TimeSpan.TicksPerSecond);
+
+                return _lastElapsed + elapsedSeconds;
+            }
+        }
+            // (uint)Math.Max(0, _isPaused
+            //     ? _lastElapsed
+            //     : _lastElapsed +
+            //       (int)Math.Ceiling((DateTime.Now.Ticks - _startedToDecayTime) / (decimal)TimeSpan.TicksPerSecond));
 
         public bool Expired => Elapsed >= Duration;
         public bool ShouldDisappear => DecaysTo == default;
@@ -45,7 +55,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         {
             if (Expired) return;
             _isPaused = false;
-            _startedToDecayTime = DateTime.Now.Ticks;
+            _startedToDecayTime = (ulong)DateTime.Now.Ticks;
             OnStarted?.Invoke(this);
         }
 
@@ -53,7 +63,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         {
             if (_startedToDecayTime == 0) return;
             _isPaused = true;
-            _lastElapsed += (DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond;
+            _lastElapsed += (uint)(((ulong)DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
             OnPaused?.Invoke(this);
         }
 

@@ -249,17 +249,18 @@ namespace NeoServer.Game.Items
 
                 foreach (var (attr, (value, list)) in _defaultAttributes)
                 {
+                    var type = typeof(byte);
                     var (skillType, bonus) = attr switch
                     {
-                        ItemAttribute.SkillAxe => (SkillType.Axe, (byte)value),
-                        ItemAttribute.SkillClub => (SkillType.Club, (byte)value),
-                        ItemAttribute.SkillDistance => (SkillType.Distance, (byte)value),
-                        ItemAttribute.SkillFishing => (SkillType.Fishing, (byte)value),
-                        ItemAttribute.SkillFist => (SkillType.Fist, (byte)value),
-                        ItemAttribute.SkillShield => (SkillType.Shielding, (byte)value),
-                        ItemAttribute.SkillSword => (SkillType.Sword, (byte)value),
-                        ItemAttribute.Speed => (SkillType.Speed, (byte)value),
-                        ItemAttribute.MagicPoints => (SkillType.Magic, (byte)value),
+                        ItemAttribute.SkillAxe => (SkillType.Axe, Convert.ChangeType(value,type)),
+                        ItemAttribute.SkillClub => (SkillType.Club, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillDistance => (SkillType.Distance, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillFishing => (SkillType.Fishing, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillFist => (SkillType.Fist, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillShield => (SkillType.Shielding, Convert.ChangeType(value, type)),
+                        ItemAttribute.SkillSword => (SkillType.Sword, Convert.ChangeType(value, type)),
+                        ItemAttribute.Speed => (SkillType.Speed, Convert.ChangeType(value, type)),
+                        ItemAttribute.MagicPoints => (SkillType.Magic, Convert.ChangeType(value, type)),
                         _ => (SkillType.None, (byte)0)
                     };
 
