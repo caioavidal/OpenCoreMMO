@@ -133,7 +133,7 @@ namespace NeoServer.Game.Items.Factories
             if (MagicField.IsApplicable(itemType)) return new MagicField(itemType, location);
             if (FloorChanger.IsApplicable(itemType)) return new FloorChanger(itemType, location);
 
-            if (UseableOnItem.IsApplicable(itemType))
+            if (UsableOnItem.IsApplicable(itemType))
             {
                 if (FloorChangerUsableItem.IsApplicable(itemType))
                     return new FloorChangerUsableItem(itemType, location);

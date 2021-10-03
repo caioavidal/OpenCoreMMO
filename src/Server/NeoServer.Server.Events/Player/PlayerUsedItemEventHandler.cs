@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Server.Common.Contracts;
@@ -16,7 +16,7 @@ namespace NeoServer.Server.Events.Player
             this.game = game;
         }
 
-        public void Execute(IPlayer player, IThing onThing, IUseableOn item)
+        public void Execute(IPlayer player, IThing onThing, IUsableOn item)
         {
             if (item.Effect == EffectT.None) return;
 

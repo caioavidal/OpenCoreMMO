@@ -14,7 +14,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 {
     public abstract class Rune : Cumulative, IRune
     {
-        public Rune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type,
+        protected Rune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type,
             location, attributes)
         {
         }

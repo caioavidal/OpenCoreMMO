@@ -181,7 +181,7 @@ namespace NeoServer.Game.Tests.Helpers
             return new BodyDefenseEquipment(type, new Location(100, 100, 7));
         }
 
-        public static IPickupable CreateAmmoItem(ushort id, byte amount)
+        public static IPickupable CreateAmmoItem(ushort id, byte amount,(ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -192,7 +192,14 @@ namespace NeoServer.Game.Tests.Helpers
             type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
             type.Flags.Add(ItemFlag.Stackable);
 
-            return new Ammo(type, new Location(100, 100, 7), amount);
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+         
+            return new Ammo(type, new Location(100, 100, 7), amount)
+            {
+                Chargeable = null,
+                ItemTypeFinder = itemTypeFinder
+            };
         }
 
         public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)

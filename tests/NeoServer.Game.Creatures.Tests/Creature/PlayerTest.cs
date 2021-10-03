@@ -1,7 +1,7 @@
 ﻿using Moq;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
@@ -245,7 +245,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
             var player = PlayerTestDataBuilder.BuildPlayer(1);
 
             var itemLocation = new Location(105, 105, 7);
-            var usedItemMock = new Mock<IUseableOn>();
+            var usedItemMock = new Mock<IUsableOn>();
             usedItemMock.Setup(x => x.Location).Returns(itemLocation);
 
             var tileLocation = new Location(101, 101, 7);

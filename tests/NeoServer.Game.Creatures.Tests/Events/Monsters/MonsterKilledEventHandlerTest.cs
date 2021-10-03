@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NeoServer.Game.DataStore;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Events.Monsters
@@ -195,7 +196,11 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
                 return mock.Object;
             });
 
-            VocationStore.Load(mockedVocations);
+            foreach (var vocation in mockedVocations)
+            {
+                VocationStore.Data.Add(vocation.VocationType, vocation);    
+            }
+            
         }
     }
 }

@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -116,7 +116,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             OnStoppedAttack?.Invoke(this);
         }
 
-        public bool Attack(ICreature creature, IUseableAttackOnCreature item)
+        public bool Attack(ICreature creature, IUsableAttackOnCreature item)
         {
             if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
                 creature.Equals(this)) return false;
@@ -266,7 +266,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
 
-        public bool Attack(ITile tile, IUseableAttackOnTile item)
+        public bool Attack(ITile tile, IUsableAttackOnTile item)
         {
             if (!CanSee(tile.Location)) return false;
 

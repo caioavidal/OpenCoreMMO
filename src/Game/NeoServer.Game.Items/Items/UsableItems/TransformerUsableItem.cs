@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.UsableItems
 {
-    public class TransformerUsableItem : UseableOnItem
+    public class TransformerUsableItem : UsableOnItem
     {
         public TransformerUsableItem(IItemType type, Location location) : base(type, location)
         {
@@ -33,7 +33,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
 
         public new static bool IsApplicable(IItemType type)
         {
-            return UseableOnItem.IsApplicable(type) &&
+            return UsableOnItem.IsApplicable(type) &&
                    (type.OnUse?.HasAttribute(ItemAttribute.TransformTo) ?? false);
         }
     }

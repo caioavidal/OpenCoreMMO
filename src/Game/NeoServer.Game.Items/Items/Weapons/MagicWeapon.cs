@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
@@ -51,6 +52,17 @@ namespace NeoServer.Game.Items.Items.Weapons
         }
 
         protected override string PartialInspectionText => string.Empty;
+        public override bool CanBeDressed(IPlayer player)
+        {
+            if (Guard.IsNullOrEmpty(Vocations)) return true;
+            
+            foreach (var vocation in Vocations)
+            {
+                if (vocation == player.VocationType) return true;
+            }
+
+            return false;
+        }
 
 
         public static bool IsApplicable(IItemType type)

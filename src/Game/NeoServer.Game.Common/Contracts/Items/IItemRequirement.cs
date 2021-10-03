@@ -5,11 +5,22 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items
 {
-    public interface IItemRequirement : IItem
+    public interface IRequirement: IItem
     {
         public byte[] Vocations => Metadata.Attributes.GetRequiredVocations();
         public ushort MinLevel => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
+    }
 
+    public interface IConsumableRequirement:IRequirement
+    {
+        
+    }
+    public interface IUsableRequirement:IRequirement
+    {
+        
+    }
+    public interface IItemRequirement :IRequirement
+    {
         public string ValidationError
         {
             get
@@ -29,6 +40,8 @@ namespace NeoServer.Game.Common.Contracts.Items
                 return text.ToString();
             }
         }
+
+        public bool CanBeDressed(IPlayer player);
 
         public bool CanBeUsed(IPlayer player)
         {

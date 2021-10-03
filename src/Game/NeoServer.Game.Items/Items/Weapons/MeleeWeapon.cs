@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
@@ -34,6 +35,18 @@ namespace NeoServer.Game.Items.Items.Weapons
 
                 return $"Atk: {Attack}{elementalDamageText} Def: {defense}{extraDefenseText}";
             }
+        }
+        
+        public override bool CanBeDressed(IPlayer player)
+        {
+            if (Guard.IsNullOrEmpty(Vocations)) return true;
+            
+            foreach (var vocation in Vocations)
+            {
+                if (vocation == player.VocationType) return true;
+            }
+
+            return false;
         }
 
         public ushort Attack => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);

@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
@@ -53,9 +53,9 @@ namespace NeoServer.Server.Commands.Player.UseItem
             if (item is IContainer container)
                 action = () =>
                     player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
-            else if (item is IUseable useable)
+            else if (item is IUsable useable)
                 action = () => player.Use(useable);
-            else if (item is IUseableOn useableOn) action = () => player.Use(useableOn, player);
+            else if (item is IUsableOn useableOn) action = () => player.Use(useableOn, player);
 
             if (action is null) return;
 

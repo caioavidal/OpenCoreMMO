@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -28,7 +28,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
     public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
 
-    public delegate void UseItem(IPlayer player, IThing thing, IUseableOn item);
+    public delegate void UseItem(IPlayer player, IThing thing, IUsableOn item);
 
     public delegate void LogIn(IPlayer player);
 
@@ -210,10 +210,10 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition,
             byte? toPosition);
 
-        void Use(IUseableOn item, ITile tile);
-        void Use(IUseableOn item, ICreature onCreature);
-        void Use(IUseable item);
-        void Use(IUseableOn item, IItem onItem);
+        void Use(IUsableOn item, ITile tile);
+        void Use(IUsableOn item, ICreature onCreature);
+        void Use(IUsable item);
+        void Use(IUsableOn item, IItem onItem);
         bool Login();
 
         bool CastSpell(string message);

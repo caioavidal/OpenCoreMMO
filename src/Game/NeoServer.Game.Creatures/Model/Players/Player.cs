@@ -13,7 +13,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -183,7 +183,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public IShopperNpc TradingWithNpc { get; private set; }
-        public IVocation Vocation => VocationStore.TryGetValue(VocationType, out var vocation) ? vocation : null;
+        public IVocation Vocation => VocationStore.Data.TryGetValue(VocationType, out var vocation) ? vocation : null;
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
         public ushort Level => Skills[SkillType.Level].Level;
@@ -537,7 +537,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
         }
 
-        public void Use(IUseable item)
+        public void Use(IUsable item)
         {
             if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location))
             {
@@ -549,7 +549,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             item.Use(this);
         }
 
-        public void Use(IUseableOn item, ICreature onCreature)
+        public void Use(IUsableOn item, ICreature onCreature)
         {
             if (!Cooldowns.Expired(CooldownType.UseItem))
             {
@@ -574,16 +574,16 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (onCreature is ICombatActor enemy)
             {
-                if (item is IUseableAttackOnCreature useableAttackOnCreature)
+                if (item is IUsableAttackOnCreature useableAttackOnCreature)
                 {
                     result = Attack(enemy, useableAttackOnCreature);
                 }
-                else if (item is IUseableOnCreature useableOnCreature)
+                else if (item is IUsableOnCreature useableOnCreature)
                 {
                     useableOnCreature.Use(this, onCreature);
                     result = true;
                 }
-                else if (item is IUseableOnTile useableOnTile)
+                else if (item is IUsableOnTile useableOnTile)
                 {
                     result = useableOnTile.Use(this, onCreature.Tile);
                 }
@@ -593,7 +593,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
         }
 
-        public void Use(IUseableOn item, IItem onItem)
+        public void Use(IUsableOn item, IItem onItem)
         {
             if (!Cooldowns.Expired(CooldownType.UseItem))
             {
@@ -607,14 +607,14 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            if (item is not IUseableOnItem useableOnItem) return;
+            if (item is not IUsableOnItem useableOnItem) return;
 
             useableOnItem.Use(this, onItem);
             OnUsedItem?.Invoke(this, onItem, item);
             Cooldowns.Start(CooldownType.UseItem, 1000);
         }
 
-        public void Use(IUseableOn item, ITile targetTile)
+        public void Use(IUsableOn item, ITile targetTile)
         {
             if (!Cooldowns.Expired(CooldownType.UseItem))
             {
@@ -634,9 +634,9 @@ namespace NeoServer.Game.Creatures.Model.Players
 
                 var result = false;
 
-                if (item is IUseableAttackOnTile useableAttackOnTile) result = Attack(targetTile, useableAttackOnTile);
-                else if (item is IUseableOnTile useableOnTile) result = useableOnTile.Use(this, targetTile);
-                else if (item is IUseableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
+                if (item is IUsableAttackOnTile useableAttackOnTile) result = Attack(targetTile, useableAttackOnTile);
+                else if (item is IUsableOnTile useableOnTile) result = useableOnTile.Use(this, targetTile);
+                else if (item is IUsableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
 
                 if (result) OnUsedItem?.Invoke(this, onItem, item);
                 Cooldowns.Start(CooldownType.UseItem, 1000);

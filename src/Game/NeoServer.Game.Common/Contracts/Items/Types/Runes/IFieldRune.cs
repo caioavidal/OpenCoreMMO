@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+﻿using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Runes
 {
-    public interface IFieldRune : IUseableOnTile, IRune
+    public interface IFieldRune : IUsableOnTile, IRune
     {
         string Area { get; }
         ushort Field { get; }

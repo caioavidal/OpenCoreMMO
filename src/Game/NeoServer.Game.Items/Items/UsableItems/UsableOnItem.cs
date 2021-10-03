@@ -1,16 +1,16 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.UsableItems
 {
-    public abstract class UseableOnItem : MoveableItem, IPickupable, IUseableOnItem
+    public abstract class UsableOnItem : MoveableItem, IPickupable, IUsableOnItem
     {
-        protected UseableOnItem(IItemType type, Location location) : base(type, location)
+        protected UsableOnItem(IItemType type, Location location) : base(type, location)
         {
         }
 

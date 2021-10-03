@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Server.Events.Items;
 
 namespace NeoServer.Server.Events.Subscribers
@@ -15,12 +15,12 @@ namespace NeoServer.Server.Events.Subscribers
 
         public void Subscribe(IItem item)
         {
-            if (item is IUseableOnTile useableOnTile) useableOnTile.OnUsedOnTile += itemUsedOnTileEventHandler.Execute;
+            if (item is IUsableOnTile useableOnTile) useableOnTile.OnUsedOnTile += itemUsedOnTileEventHandler.Execute;
         }
 
         public void Unsubscribe(IItem item)
         {
-            if (item is IUseableOnTile useableOnTile) useableOnTile.OnUsedOnTile -= itemUsedOnTileEventHandler.Execute;
+            if (item is IUsableOnTile useableOnTile) useableOnTile.OnUsedOnTile -= itemUsedOnTileEventHandler.Execute;
         }
     }
 }

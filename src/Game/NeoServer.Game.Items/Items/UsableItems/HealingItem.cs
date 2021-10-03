@@ -4,7 +4,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -48,7 +48,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
         public static bool IsApplicable(IItemType type)
         {
             return (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && ICumulative.IsApplicable(type) &&
-                   UseableOnItem.IsApplicable(type);
+                   UsableOnItem.IsApplicable(type);
         }
     }
 }

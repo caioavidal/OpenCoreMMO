@@ -7,6 +7,7 @@ using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.DataStore;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Helpers.JsonConverters;
@@ -35,7 +36,10 @@ namespace NeoServer.Loaders.Vocations
             logger.Step("Loading vocations...", "{n} vocations loaded", () =>
             {
                 var vocations = GetVocations();
-                VocationStore.Load(vocations);
+                foreach (var vocation in vocations)
+                {
+                    VocationStore.Data.Add(vocation.VocationType, vocation);
+                }
                 return new object[] {vocations.Count};
             });
         }

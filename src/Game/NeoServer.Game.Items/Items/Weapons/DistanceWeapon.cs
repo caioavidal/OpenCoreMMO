@@ -39,6 +39,18 @@ namespace NeoServer.Game.Items.Items.Weapons
                 return stringBuilder.ToString();
             }
         }
+        
+        public override bool CanBeDressed(IPlayer player)
+        {
+            if (Guard.IsNullOrEmpty(Vocations)) return true;
+            
+            foreach (var vocation in Vocations)
+            {
+                if (vocation == player.VocationType) return true;
+            }
+
+            return false;
+        }
 
         public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
         public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);

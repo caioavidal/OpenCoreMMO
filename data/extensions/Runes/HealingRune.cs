@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -11,7 +11,7 @@ using NeoServer.Game.Items.Items.UsableItems.Runes;
 
 namespace NeoServer.Extensions.Runes
 {
-    public class HealingRune : Rune, IConsumable, IUseableOnCreature, IUseableOn
+    public class HealingRune : Rune, IConsumable, IUsableOnCreature, IUsableOn
     {
         public HealingRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
             base(type, location, attributes)
