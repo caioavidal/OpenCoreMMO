@@ -38,7 +38,3 @@ steps:
     command: 'test '
     arguments: '--no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
     projects: '$(solution)'
-
-- script: |
-    %USERPROFILE%\.nuget\packages\codecov\$(codecovVersion)\tools\codecov.exe -t $(CODECOV_TOKEN)
-  displayName: 'Upload to codecov.io'
