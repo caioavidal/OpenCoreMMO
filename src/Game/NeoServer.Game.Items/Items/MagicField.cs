@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Items.Inspection;
 
 namespace NeoServer.Game.Items.Items
 {

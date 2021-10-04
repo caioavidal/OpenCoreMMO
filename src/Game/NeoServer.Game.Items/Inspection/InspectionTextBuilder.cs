@@ -1,11 +1,9 @@
-﻿using System.Globalization;//i
+﻿using System.Globalization;
 using System.Text;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.DataStore;
 
-namespace NeoServer.Game.Items
+namespace NeoServer.Game.Items.Inspection
 {
     public static class InspectionTextBuilder
     {
@@ -17,7 +15,7 @@ namespace NeoServer.Game.Items
             AddEquipmentAttributes(item, inspectionText);
             inspectionText.AppendLine();
             
-            AddItemRequirementText(item,inspectionText);
+            RequirementInspectionTextBuilder.Add(item,inspectionText);
             AddWeight(item, isClose, inspectionText);
             AddDescription(item, inspectionText);
 
@@ -56,46 +54,6 @@ namespace NeoServer.Game.Items
             {
                 inspectionText.Append($" {item.InspectionText}");
             }
-        }
-
-        private static void AddItemRequirementText(IItem item, StringBuilder inspectionText)
-        {
-            if (item is not IItemRequirement itemRequirement) return;
-
-            var vocations = itemRequirement.Vocations;
-            var minLevel = itemRequirement.MinLevel;
-            
-            if (Guard.IsNullOrEmpty(vocations) && minLevel == 0) return;
-
-            string FormatVocations(byte[] allVocations)
-            {
-                if (Guard.IsNullOrEmpty(allVocations)) return "Players";
-                var text = new StringBuilder();
-                for (var i = 0; i < allVocations.Length; i++)
-                {
-                    if (!VocationStore.Data.TryGetValue(allVocations[i], out var vocation)) continue;
-                    text.Append($"{vocation.Name}s");
-
-                    var lastItem = i == allVocations.Length - 1;
-                    var penultimate = i == allVocations.Length - 2;
-
-                    if (lastItem) continue;
-                    if (penultimate)
-                    {
-                        text.Append(" and ");
-                        continue;
-                    }
-
-                    text.Append(", ");
-                }
-
-                var finalText = text.ToString();
-                return string.IsNullOrWhiteSpace(finalText) ? "Players" : text.ToString();
-            }
-
-            var vocationsText = FormatVocations(vocations);
-
-            inspectionText.AppendLine($"It can only be wielded properly by {vocationsText}{(minLevel > 0 ? $" of level {minLevel} or higher" : string.Empty)}.");
         }
     }
 }
