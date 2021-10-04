@@ -17,10 +17,6 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '$(sdk)'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
