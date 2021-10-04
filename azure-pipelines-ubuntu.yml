@@ -40,5 +40,5 @@ steps:
     projects: '$(solution)'
 
 - script: |
-    bash <(curl -s https://codecov.io/bash)
+    %USERPROFILE%\.nuget\packages\codecov\$(codecovVersion)\tools\codecov.exe
   displayName: 'Upload to codecov.io'
