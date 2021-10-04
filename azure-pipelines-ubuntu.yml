@@ -40,5 +40,5 @@ steps:
     projects: '$(solution)'
 
 - script: |
-    %USERPROFILE%\.nuget\packages\codecov\$(codecovVersion)\tools\codecov.exe
+    %USERPROFILE%\.nuget\packages\codecov\$(codecovVersion)\tools\codecov.exe -t $(CODECOV_TOKEN)
   displayName: 'Upload to codecov.io'
