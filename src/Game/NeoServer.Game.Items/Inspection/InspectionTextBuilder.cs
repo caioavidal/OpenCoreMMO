@@ -2,26 +2,33 @@
 using System.Text;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Items.Inspection
 {
     public static class InspectionTextBuilder
     {
-        public static string BuildLookText(this IItem item, bool isClose = false)
+        public static string Build(this IItem item, bool isClose = false)
         {
             var inspectionText = new StringBuilder();
 
             AddItemName(item, inspectionText);
             AddEquipmentAttributes(item, inspectionText);
             inspectionText.AppendLine();
+            AddRequirement(item, inspectionText);
             
-            RequirementInspectionTextBuilder.Add(item,inspectionText);
             AddWeight(item, isClose, inspectionText);
             AddDescription(item, inspectionText);
 
             return inspectionText.ToString();
         }
 
+        private static void AddRequirement(IItem item, StringBuilder inspectionText)
+        {
+            var result = RequirementInspectionTextBuilder.Build(item);
+            if (string.IsNullOrWhiteSpace(result)) return;
+            inspectionText.AppendLine(result);
+        }
         private static void AddDescription(IItem item, StringBuilder inspectionText)
         {
             if (!string.IsNullOrWhiteSpace(item.Metadata.Description))

@@ -22,7 +22,7 @@ namespace NeoServer.Game.Items.Items
         }
 
         public Location Location { get; set; }
-        public string GetLookText(bool isClose = false) => this.BuildLookText(isClose);
+        public string GetLookText(bool isClose = false) => this.Build(isClose);
 
         public IItemType Metadata { get; }
 

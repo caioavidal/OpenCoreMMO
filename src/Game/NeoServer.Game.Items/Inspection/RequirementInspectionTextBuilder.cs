@@ -7,18 +7,18 @@ namespace NeoServer.Game.Items.Inspection
 {
     public static class RequirementInspectionTextBuilder
     {
-        public static void Add(IItem item, StringBuilder inspectionText)
+        public static string Build(IItem item)
         {
-            if (item is not IItemRequirement itemRequirement) return;
+            if (item is not IItemRequirement itemRequirement) return string.Empty;
 
             var vocations = itemRequirement.Vocations;
             var minLevel = itemRequirement.MinLevel;
 
-            if (Guard.IsNullOrEmpty(vocations) && minLevel == 0) return;
+            if (Guard.IsNullOrEmpty(vocations) && minLevel == 0) return string.Empty;
             var vocationsText = FormatVocations(vocations);
 
-            inspectionText.AppendLine(
-                $"It can only be wielded properly by {vocationsText}{(minLevel > 0 ? $" of level {minLevel} or higher" : string.Empty)}.");
+            return
+                $"It can only be wielded properly by {vocationsText}{(minLevel > 0 ? $" of level {minLevel} or higher" : string.Empty)}.";
         }
 
         private static string FormatVocations(byte[] allVocations)
