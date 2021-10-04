@@ -557,7 +557,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
+            if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
             {
                 OperationFailService.Display(CreatureId, requirement.ValidationError);
                 return;
@@ -601,7 +601,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
+            if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
             {
                 OperationFailService.Display(CreatureId, requirement.ValidationError);
                 return;
@@ -622,7 +622,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return;
             }
 
-            if (item is IItemRequirement requirement && !requirement.CanBeUsed(this))
+            if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
             {
                 OperationFailService.Display(CreatureId, requirement.ValidationError);
                 return;

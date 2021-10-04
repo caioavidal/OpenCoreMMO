@@ -16,7 +16,7 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases
 {
-    public abstract class Equipment : MoveableItem, IEquipment, IItemRequirement
+    public abstract class Equipment : MoveableItem, IEquipment, IEquipmentRequirement
     {
         protected Equipment(IItemType type, Location location) : base(type, location)
         {

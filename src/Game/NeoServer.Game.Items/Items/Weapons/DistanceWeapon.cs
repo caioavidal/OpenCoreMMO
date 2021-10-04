@@ -63,7 +63,7 @@ namespace NeoServer.Game.Items.Items.Weapons
 
             if (actor is not IPlayer player) return false;
 
-            if (player?.Inventory[Slot.Ammo] is not IAmmoItem ammo) return false;
+            if (player?.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return false;
 
             if (ammo.AmmoType != Metadata.AmmoType) return false;
 
@@ -109,7 +109,7 @@ namespace NeoServer.Game.Items.Items.Weapons
         }
 
         private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackType combatType,
-            ref bool result, IPlayer player, IAmmoItem ammo, ref ushort maxDamage, ref CombatAttackValue combat)
+            ref bool result, IPlayer player, IAmmoEquipment ammo, ref ushort maxDamage, ref CombatAttackValue combat)
         {
             if (!ammo.HasElementalDamage) return;
 

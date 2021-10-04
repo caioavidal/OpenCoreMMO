@@ -9,7 +9,7 @@ namespace NeoServer.Game.Items.Inspection
     {
         public static string Build(IItem item)
         {
-            if (item is not IItemRequirement itemRequirement) return string.Empty;
+            if (item is not IRequirement itemRequirement) return string.Empty;
 
             var vocations = itemRequirement.Vocations;
             var minLevel = itemRequirement.MinLevel;
@@ -17,8 +17,16 @@ namespace NeoServer.Game.Items.Inspection
             if (Guard.IsNullOrEmpty(vocations) && minLevel == 0) return string.Empty;
             var vocationsText = FormatVocations(vocations);
 
+            var verb = itemRequirement switch
+            {
+                IEquipmentRequirement => "wielded",
+                IConsumableRequirement => "consumed",
+                IUsableRequirement => "used",
+                _ => "wielded"
+            };
+
             return
-                $"It can only be wielded properly by {vocationsText}{(minLevel > 0 ? $" of level {minLevel} or higher" : string.Empty)}.";
+                $"It can only be {verb} properly by {vocationsText}{(minLevel > 0 ? $" of level {minLevel} or higher" : string.Empty)}.";
         }
 
         private static string FormatVocations(byte[] allVocations)

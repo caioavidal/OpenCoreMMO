@@ -33,7 +33,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             var actual = RequirementInspectionTextBuilder.Build(item);
             
             //assert
-            actual.ToString().Should().Be(expected);
+            actual.Should().Be(expected);
         }
 
         [Theory]
@@ -50,7 +50,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             var actual = RequirementInspectionTextBuilder.Build(item);
             
             //assert
-            actual.ToString().Should().Be(expected);
+            actual.Should().Be(expected);
         }
 
         [Theory]
@@ -75,7 +75,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             var actual = RequirementInspectionTextBuilder.Build(item);
             
             //assert
-            actual.ToString().Should().Be(expected);
+            actual.Should().Be(expected);
         }
         
         [Fact]
@@ -86,7 +86,57 @@ namespace NeoServer.Game.Items.Tests.Inspection
             var actual = RequirementInspectionTextBuilder.Build(item);
             
             //assert
-            actual.ToString().Should().BeEmpty();
+            actual.Should().BeEmpty();
+        }
+        
+        [Theory]
+        [InlineData("It can only be used properly by knights of level 10 or higher.", 10, 1)]
+        [InlineData("It can only be used properly by knights and paladins of level 1 or higher.", 1, 1, 2)]
+        [InlineData("It can only be used properly by knights, paladins and sorcerers of level 200 or higher.", 200, 1, 2, 3)]
+        [InlineData("", 0)]
+        public void Build_UsableHasLevelAndVocations_ReturnText(string expected, int level, params int[] vocations)
+        {
+            VocationStore.Data.Add(1, new Vocation() { Name = "Knight" });
+            VocationStore.Data.Add(2, new Vocation() { Name = "Paladin" });
+            VocationStore.Data.Add(3, new Vocation() { Name = "Sorcerer" });
+            VocationStore.Data.Add(4, new Vocation() { Name = "Druid" });
+
+            var input = vocations.Select(x => (byte)x).ToArray();
+
+            var item = ItemTestData.CreateAttackRune(1);
+            item.Metadata.Attributes.SetAttribute(ItemAttribute.MinimumLevel, level);
+            item.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, input);
+            
+            //act
+            var actual = RequirementInspectionTextBuilder.Build(item);
+            
+            //assert
+            actual.Should().Be(expected);
+        }
+        
+        [Theory]
+        [InlineData("It can only be consumed properly by knights of level 10 or higher.", 10, 1)]
+        [InlineData("It can only be consumed properly by knights and paladins of level 1 or higher.", 1, 1, 2)]
+        [InlineData("It can only be consumed properly by knights, paladins and sorcerers of level 200 or higher.", 200, 1, 2, 3)]
+        [InlineData("", 0)]
+        public void Build_ConsumableHasLevelAndVocations_ReturnText(string expected, int level, params int[] vocations)
+        {
+            VocationStore.Data.Add(1, new Vocation() { Name = "Knight" });
+            VocationStore.Data.Add(2, new Vocation() { Name = "Paladin" });
+            VocationStore.Data.Add(3, new Vocation() { Name = "Sorcerer" });
+            VocationStore.Data.Add(4, new Vocation() { Name = "Druid" });
+
+            var input = vocations.Select(x => (byte)x).ToArray();
+
+            var item = ItemTestData.CreatePot(1);
+            item.Metadata.Attributes.SetAttribute(ItemAttribute.MinimumLevel, level);
+            item.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, input);
+            
+            //act
+            var actual = RequirementInspectionTextBuilder.Build(item);
+            
+            //assert
+            actual.Should().Be(expected);
         }
     }
 }

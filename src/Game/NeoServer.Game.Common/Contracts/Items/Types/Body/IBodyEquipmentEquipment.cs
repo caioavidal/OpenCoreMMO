@@ -6,12 +6,12 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IInventoryItem : IItemRequirement
+    public interface IInventoryEquipment : IEquipmentRequirement
     {
         public Slot Slot => Metadata.BodyPosition;
     }
 
-    public interface IBodyEquipmentItem : IDressable, IPickupable, IInventoryItem
+    public interface IBodyEquipmentEquipment : IDressable, IPickupable, IInventoryEquipment
     {
         bool Pickupable => true;
 

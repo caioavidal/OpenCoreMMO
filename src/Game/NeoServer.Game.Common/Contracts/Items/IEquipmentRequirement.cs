@@ -19,7 +19,7 @@ namespace NeoServer.Game.Common.Contracts.Items
     {
         
     }
-    public interface IItemRequirement :IRequirement
+    public interface IEquipmentRequirement :IRequirement
     {
         public string ValidationError
         {

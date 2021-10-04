@@ -15,7 +15,7 @@ using NeoServer.Game.Items.Items.Cumulatives;
 
 namespace NeoServer.Game.Items.Items.Weapons
 {
-    public class Ammo : CumulativeEquipment, IAmmoItem
+    public class Ammo : CumulativeEquipment, IAmmoEquipment
     {
         public Ammo(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type,
             location, attributes)
