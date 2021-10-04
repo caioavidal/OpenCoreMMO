@@ -35,6 +35,5 @@ steps:
     projects: '$(solution)'
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'test '
-    arguments: '--no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
+    command: 'test'
     projects: '$(solution)'
