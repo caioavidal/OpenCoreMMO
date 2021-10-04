@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Creatures.Structs;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Runes
 {
-    public interface IRune : IItemRequirement, IPickupable, IFormula
+    public interface IRune : IUsableRequirement, IPickupable, IFormula
     {
         public CooldownTime Cooldown { get; }
 

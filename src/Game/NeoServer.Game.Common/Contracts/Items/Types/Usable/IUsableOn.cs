@@ -1,9 +1,9 @@
 ﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
+namespace NeoServer.Game.Common.Contracts.Items.Types.Usable
 {
-    public interface IUseableOn : IItem
+    public interface IUsableOn : IItem
     {
         public EffectT Effect => Metadata.Attributes.GetEffect();
 

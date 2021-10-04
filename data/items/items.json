@@ -8967,6 +8967,30 @@
              "key": "absorbPercentMagic",
              "value": "5"
           },
+		   {
+             "key": "absorbPercentFire",
+             "value": "5"
+          },
+		   {
+             "key": "absorbPercentEarth",
+             "value": "5"
+          },
+		  {
+             "key": "absorbPercentEnergy",
+             "value": "5"
+          },
+		  {
+             "key": "absorbPercentIce",
+             "value": "5"
+          },
+		  {
+             "key": "absorbPercentHoly",
+             "value": "5"
+          },
+		  {
+             "key": "absorbPercentDeath",
+             "value": "5"
+          },
           {
              "key": "showattributes",
              "value": "1"
@@ -9435,7 +9459,7 @@
           },
           {
              "key": "decayTo",
-             "value": "0"
+             "value": "2213"
           },
           {
              "key": "transformDeEquipTo",
@@ -9447,7 +9471,7 @@
           },
           {
              "key": "duration",
-             "value": "1800"
+             "value": "10"
           },
           {
              "key": "showduration",
@@ -9536,7 +9560,7 @@
           },
           {
              "key": "duration",
-             "value": "3600"
+             "value": "20"
           },
           {
              "key": "showduration",
@@ -15014,6 +15038,11 @@
           {
              "key": "skillDist",
              "value": "3"
+          },
+		    
+          {
+            "key":"vocations",
+            "value":["paladin"]
           },
           {
              "key": "slotType",

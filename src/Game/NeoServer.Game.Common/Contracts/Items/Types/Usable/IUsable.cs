@@ -1,8 +1,8 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
+namespace NeoServer.Game.Common.Contracts.Items.Types.Usable
 {
-    public interface IUseable : IThing
+    public interface IUsable : IThing
     {
         void Use(IPlayer player);
     }

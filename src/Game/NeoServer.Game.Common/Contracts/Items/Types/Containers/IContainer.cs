@@ -11,7 +11,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
 
     public delegate void Move(IContainer container);
 
-    public interface IContainer : IInventoryItem, IStore
+    public interface IContainer : IInventoryEquipment, IStore
     {
         IItem this[int index] { get; }
 

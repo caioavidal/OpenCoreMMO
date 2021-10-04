@@ -18,7 +18,19 @@ namespace NeoServer.Server.Standalone.IoC
 {
     public static class Container
     {
-        public static IContainer CompositionRoot()
+        public static IContainer BuildConfigurations()
+        {
+            var builder = new ContainerBuilder();
+
+            var configuration = ConfigurationInjection.GetConfiguration();
+
+            builder
+                .AddConfigurations(configuration)
+                .AddLogger(configuration);
+            
+            return builder.Build();
+        }
+        public static IContainer BuildAll()
         {
             var builder = new ContainerBuilder();
 
@@ -56,7 +68,7 @@ namespace NeoServer.Server.Standalone.IoC
             builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
             builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
-
+            
             return builder.Build();
         }
 

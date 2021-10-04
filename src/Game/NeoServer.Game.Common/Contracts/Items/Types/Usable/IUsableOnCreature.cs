@@ -1,9 +1,9 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
+namespace NeoServer.Game.Common.Contracts.Items.Types.Usable
 {
-    public interface IUseableOnCreature : IUseableOn
+    public interface IUsableOnCreature : IUsableOn
     {
         /// <summary>
         ///     Useable by players on creatures
@@ -13,7 +13,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
         public void Use(IPlayer usedBy, ICreature creature);
     }
 
-    public interface IUseableAttackOnCreature : IUseableOn
+    public interface IUsableAttackOnCreature : IUsableOn
     {
         /// <summary>
         ///     Useable by creatures to attack creatures

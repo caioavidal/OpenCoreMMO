@@ -32,8 +32,8 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
         private IEnumerable<IPickupable> InventoryCollection => Inventory.Select(x => x.Value.Item1).ToList();
 
 
-        public IAmmoItem Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoItem ammo
-            ? Inventory[Slot.Ammo].Item1 as IAmmoItem
+        public IAmmoEquipment Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoEquipment ammo
+            ? Inventory[Slot.Ammo].Item1 as IAmmoEquipment
             : null;
 
         public IDefenseEquipment Shield => Inventory.ContainsKey(Slot.Right)
@@ -174,11 +174,11 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 var rangeRight = 0;
                 const int twoHanded = 0;
 
-                if (Inventory.ContainsKey(Slot.Left) && Inventory[Slot.Left] is IAmmoItem leftWeapon)
+                if (Inventory.ContainsKey(Slot.Left) && Inventory[Slot.Left] is IAmmoEquipment leftWeapon)
                     rangeLeft = leftWeapon.Range;
-                if (Inventory.ContainsKey(Slot.Right) && Inventory[Slot.Right] is IAmmoItem rightWeapon)
+                if (Inventory.ContainsKey(Slot.Right) && Inventory[Slot.Right] is IAmmoEquipment rightWeapon)
                     rangeRight = rightWeapon.Range;
-                if (Inventory.ContainsKey(Slot.TwoHanded) && Inventory[Slot.TwoHanded] is IAmmoItem twoHandedWeapon)
+                if (Inventory.ContainsKey(Slot.TwoHanded) && Inventory[Slot.TwoHanded] is IAmmoEquipment twoHandedWeapon)
                     rangeRight = twoHandedWeapon.Range;
 
                 return (byte)Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
@@ -309,7 +309,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 return Inventory.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
             }
 
-            if (item is not IInventoryItem inventoryItem) return cannotDressFail;
+            if (item is not IInventoryEquipment inventoryItem) return cannotDressFail;
 
             if (inventoryItem is IWeapon weapon)
             {

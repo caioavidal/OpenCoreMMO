@@ -47,6 +47,8 @@ namespace NeoServer.Game.Common.Helpers
         }
 
         public static bool IsNull(object value) => value is null;
+
+        public static bool IsNullOrEmpty(ICollection value) => value is null || value.Count == 0;
         public static bool AnyNullOrEmpty(params ICollection[] values)
         {
             foreach (var value in values)

@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Items.Inspection;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -21,7 +22,7 @@ namespace NeoServer.Game.Items.Items
         }
 
         public Location Location { get; set; }
-        public string GetLookText(bool isClose = false) => this.BuildLookText(isClose);
+        public string GetLookText(bool isClose = false) => this.Build(isClose);
 
         public IItemType Metadata { get; }
 

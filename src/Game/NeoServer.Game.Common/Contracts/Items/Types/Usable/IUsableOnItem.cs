@@ -2,11 +2,11 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
+namespace NeoServer.Game.Common.Contracts.Items.Types.Usable
 {
-    public delegate void UseOnTile(ICreature usedBy, ITile tile, IUseableOnTile item);
+    public delegate void UseOnTile(ICreature usedBy, ITile tile, IUsableOnTile item);
 
-    public interface IUseableOnItem : IUseableOn
+    public interface IUsableOnItem : IUsableOn
     {
         /// <summary>
         ///     Useable by creatures on items (ground, weapon, stairs..)
@@ -16,7 +16,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
         public bool Use(ICreature usedBy, IItem item);
     }
 
-    public interface IUseableOnTile : IUseableOn
+    public interface IUsableOnTile : IUsableOn
     {
         event UseOnTile OnUsedOnTile;
 
@@ -28,7 +28,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Useables
         public bool Use(ICreature usedBy, ITile item);
     }
 
-    public interface IUseableAttackOnTile : IUseableOn
+    public interface IUsableAttackOnTile : IUsableOn
     {
         /// <summary>
         ///     Useable by creatures on items (ground, weapon, stairs..)

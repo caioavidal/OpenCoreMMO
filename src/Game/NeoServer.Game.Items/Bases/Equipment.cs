@@ -16,7 +16,7 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases
 {
-    public abstract class Equipment : MoveableItem, IEquipment
+    public abstract class Equipment : MoveableItem, IEquipment, IEquipmentRequirement
     {
         protected Equipment(IItemType type, Location location) : base(type, location)
         {
@@ -215,5 +215,10 @@ namespace NeoServer.Game.Items.Bases
         public event Transform OnTransformed;
 
         #endregion
+
+        public abstract bool CanBeDressed(IPlayer player);
+        public byte[] Vocations => Metadata.Attributes.GetRequiredVocations();
+        public ushort MinLevel => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
+
     }
 }

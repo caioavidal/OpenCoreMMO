@@ -87,7 +87,7 @@ namespace NeoServer.Game.Items
             Name = name;
         }
 
-        public void SetRequirements(IItemRequirement[] requirements)
+        public void SetRequirements(IEquipmentRequirement[] requirements)
         {
             ThrowIfLocked();
         }

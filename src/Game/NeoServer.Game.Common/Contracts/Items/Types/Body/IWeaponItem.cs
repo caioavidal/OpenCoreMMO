@@ -10,7 +10,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body
     public delegate bool AttackEnemy(ICombatActor actor, ICombatActor enemy, DamageType damageType, int minDamage,
         int maxDamage, out CombatDamage damage);
 
-    public interface IWeapon : IBodyEquipmentItem
+    public interface IWeapon : IBodyEquipmentEquipment
     {
         bool TwoHanded => Metadata.BodyPosition == Slot.TwoHanded;
 

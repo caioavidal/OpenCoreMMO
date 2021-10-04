@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IDefenseEquipment : IBodyEquipmentItem, IEquipment
+    public interface IDefenseEquipment : IBodyEquipmentEquipment, IEquipment
     {
 
         ushort DefenseValue => Metadata.Attributes.HasAttribute(ItemAttribute.WeaponDefendValue)

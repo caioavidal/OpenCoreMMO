@@ -512,5 +512,7 @@ namespace NeoServer.Game.Items.Items.Containers
 
             return stringBuilder.ToString();
         }
+
+        public bool CanBeDressed(IPlayer player) => true;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
@@ -68,7 +68,7 @@ namespace NeoServer.Server.Commands.Player.UseItem
                     player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
             }
 
-            if (thingToUse is not IUseableOn itemToUse) return;
+            if (thingToUse is not IUsableOn itemToUse) return;
 
             action = onTile is not null ? () => player.Use(itemToUse, onTile) : () => player.Use(itemToUse, onItem);
 

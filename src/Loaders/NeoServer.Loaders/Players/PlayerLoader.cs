@@ -15,6 +15,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 
 namespace NeoServer.Loaders.Players
@@ -40,7 +41,7 @@ namespace NeoServer.Loaders.Players
 
         public virtual IPlayer Load(PlayerModel playerModel)
         {
-            if (!VocationStore.TryGetValue(playerModel.Vocation, out var vocation))
+            if (!VocationStore.Data.TryGetValue(playerModel.Vocation, out var vocation))
                 throw new Exception("Player vocation not found");
 
             var player = new Player(
@@ -101,7 +102,7 @@ namespace NeoServer.Loaders.Players
 
         protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
         {
-            VocationStore.TryGetValue(playerRecord.Vocation, out var vocation);
+            VocationStore.Data.TryGetValue(playerRecord.Vocation, out var vocation);
 
             Func<SkillType, float> skillRate = skill =>
                 vocation.Skill?.ContainsKey((byte) skill) ?? false ? vocation.Skill[(byte) skill] : 1;

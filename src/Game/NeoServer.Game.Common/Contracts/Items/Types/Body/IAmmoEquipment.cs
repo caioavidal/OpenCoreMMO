@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IAmmoItem : ICumulative, IBodyEquipmentItem
+    public interface IAmmoEquipment : ICumulative, IBodyEquipmentEquipment
     {
         byte Range { get; }
         byte Attack { get; }

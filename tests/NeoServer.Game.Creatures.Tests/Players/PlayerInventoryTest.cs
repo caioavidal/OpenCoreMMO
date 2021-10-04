@@ -281,8 +281,10 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             Assert.True(result.IsSuccess);
 
+            //act
             result = sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmoItem(105, 20));
 
+            //assert
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.TooHeavy, result.Error);
         }
@@ -563,7 +565,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 });
 
             var item = ItemTestData.CreateAmmoItem(100, 100);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), new IItem[] { item });
 
             var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte)Slot.Ammo);
 

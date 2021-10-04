@@ -4,14 +4,14 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items.Bases;
 
-namespace NeoServer.Game.Items.Items.Cumulatives
+namespace NeoServer.Game.Items.Bases
 {
-    public class Cumulative : MoveableItem, ICumulative
+    //todo: code duplicated from cumulative class
+    public abstract class CumulativeEquipment : Equipment, ICumulative
     {
-        public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
-            base(type, location)
+        protected CumulativeEquipment(IItemType type, Location location,
+            IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
         {
             Amount = 1;
             if (attributes != null && attributes.TryGetValue(ItemAttribute.Count, out var count))
@@ -21,7 +21,7 @@ namespace NeoServer.Game.Items.Items.Cumulatives
             }
         }
 
-        public Cumulative(IItemType type, Location location, byte amount) : base(type, location)
+        protected CumulativeEquipment(IItemType type, Location location, byte amount) : base(type, location)
         {
             Amount = Math.Min((byte) 100, amount);
         }
@@ -49,7 +49,7 @@ namespace NeoServer.Game.Items.Items.Cumulatives
 
         public ICumulative Clone(byte amount)
         {
-            var clone = (ICumulative) MemberwiseClone();
+            var clone = (ICumulative)MemberwiseClone();
             clone.Amount = amount;
             clone.ClearSubscribers();
             return clone;
@@ -78,10 +78,10 @@ namespace NeoServer.Game.Items.Items.Cumulatives
 
         public void Increase(byte amount)
         {
-            Amount = (byte) (amount + Amount > 100 ? 100 : amount + Amount);
+            Amount = (byte)(amount + Amount > 100 ? 100 : amount + Amount);
         }
 
-        public byte AmountToComplete => (byte) (100 - Amount);
+        public byte AmountToComplete => (byte)(100 - Amount);
 
         public bool TryJoin(ref ICumulative item)
         {
@@ -92,14 +92,14 @@ namespace NeoServer.Game.Items.Items.Cumulatives
 
             if (totalAmount <= 100)
             {
-                Amount = (byte) totalAmount;
+                Amount = (byte)totalAmount;
                 item = null;
                 return true;
             }
 
             Amount = 100;
 
-            item.Amount = (byte) (totalAmount - Amount);
+            item.Amount = (byte)(totalAmount - Amount);
 
             return true;
         }

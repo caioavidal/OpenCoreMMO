@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using System.Linq;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
@@ -26,6 +28,20 @@ namespace NeoServer.Game.Items.Items
                 return hasDefenseValue ? $"Def: {defenseValue}" : string.Empty;
             }
         }
+
+        public override bool CanBeDressed(IPlayer player)
+        {
+            var hasRequiredVocation = Guard.IsNullOrEmpty(Vocations);
+            var hasMinimumLevel = MinLevel == 0;
+            foreach (var vocation in Vocations)
+            {
+                if (vocation == player.VocationType && player.Level >= MinLevel) hasRequiredVocation = true;
+            }
+
+            if (player.Level < MinLevel) hasMinimumLevel = false;
+            return hasRequiredVocation && hasMinimumLevel;
+        }
+
         public bool Pickupable => true;
 
         public Slot Slot => Metadata.WeaponType == WeaponType.Shield ? Slot.Right : Metadata.BodyPosition;

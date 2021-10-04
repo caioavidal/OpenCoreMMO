@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Items.Inspection;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -14,7 +15,7 @@ namespace NeoServer.Game.Items.Items
 
         public IItemType Metadata { get; }
         public Location Location { get; set; }
-        public string GetLookText(bool isClose = false) => this.BuildLookText(isClose);
+        public string GetLookText(bool isClose = false) => this.Build(isClose);
         
         public GroundItem(IItemType type, Location location)
         {

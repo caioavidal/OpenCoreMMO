@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.UsableItems
 {
-    public class FloorChangerUsableItem : UseableOnItem
+    public class FloorChangerUsableItem : UsableOnItem
     {
         public FloorChangerUsableItem(IItemType type, Location location) : base(type, location)
         {
@@ -30,7 +30,7 @@ namespace NeoServer.Game.Items.Items.UsableItems
 
         public new static bool IsApplicable(IItemType type)
         {
-            return UseableOnItem.IsApplicable(type) &&
+            return UsableOnItem.IsApplicable(type) &&
                    (type.OnUse?.HasAttribute(ItemAttribute.FloorChange) ?? false);
         }
     }

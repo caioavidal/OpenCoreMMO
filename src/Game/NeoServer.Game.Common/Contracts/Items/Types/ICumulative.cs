@@ -7,10 +7,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types
     public interface ICumulative : IPickupable
     {
         public new byte Amount { get; set; }
-
-        new float Weight { get; }
         byte AmountToComplete { get; }
-
         event ItemReduce OnReduced;
 
         bool TryJoin(ref ICumulative item);
@@ -23,5 +20,11 @@ namespace NeoServer.Game.Common.Contracts.Items.Types
         {
             return type.Flags.Contains(ItemFlag.Stackable);
         }
+
+        /// <summary>
+        ///     Reduce amount from item
+        /// </summary>
+        /// <param name="amount">Amount to be reduced</param>
+        void Reduce(byte amount = 1);
     }
 }

@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
@@ -84,7 +84,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
         bool Attack(ICreature creature);
         void PropagateAttack(Coordinate[] area, CombatDamage damage);
-        bool Attack(ICreature creature, IUseableAttackOnCreature item);
+        bool Attack(ICreature creature, IUsableAttackOnCreature item);
 
         /// <summary>
         ///     Set creature as enemy. If monster can't see creature it will be forgotten

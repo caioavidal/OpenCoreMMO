@@ -1,7 +1,7 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
@@ -27,7 +27,7 @@ namespace NeoServer.Server.Commands.Player.UseItem
 
             var itemToUse = GetItem(player, useItemPacket);
 
-            if (itemToUse is not IUseableOn useableOn) return;
+            if (itemToUse is not IUsableOn useableOn) return;
 
             Action action = () => player.Use(useableOn, creature);
 

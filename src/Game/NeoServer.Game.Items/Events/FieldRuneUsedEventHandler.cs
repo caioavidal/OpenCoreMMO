@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Effects.Magical;
@@ -23,7 +23,7 @@ namespace NeoServer.Game.Items.Events
             this.itemFactory = itemFactory;
         }
 
-        public void Execute(ICreature usedBy, ITile onTile, IUseableOnTile item)
+        public void Execute(ICreature usedBy, ITile onTile, IUsableOnTile item)
         {
             if (item is not IFieldRune rune) return;
 

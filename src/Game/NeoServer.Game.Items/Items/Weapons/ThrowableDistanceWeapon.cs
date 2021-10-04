@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
@@ -16,19 +17,27 @@ using NeoServer.Game.Items.Items.Cumulatives;
 
 namespace NeoServer.Game.Items.Items.Weapons
 {
-    public class ThrowableDistanceWeapon : Equipment, IThrowableDistanceWeaponItem
+    public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWeaponItem
     {
-        private readonly ICumulative _cumulativeImplementation;
-
         public ThrowableDistanceWeapon(IItemType type, Location location,
-            IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
+            IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location,attributes)
         {
-            _cumulativeImplementation = new Cumulative(type, location, attributes);
         }
 
-        public ThrowableDistanceWeapon(IItemType type, Location location, byte amount) : base(type, location)
+        public ThrowableDistanceWeapon(IItemType type, Location location, byte amount) : base(type, location,amount)
         {
-            _cumulativeImplementation = new Cumulative(type, location, amount);
+        }
+        
+        public override bool CanBeDressed(IPlayer player)
+        {
+            if (Guard.IsNullOrEmpty(Vocations)) return true;
+            
+            foreach (var vocation in Vocations)
+            {
+                if (vocation == player.VocationType) return true;
+            }
+
+            return false;
         }
 
         private byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
@@ -93,30 +102,5 @@ namespace NeoServer.Game.Items.Items.Weapons
         public static bool IsApplicable(IItemType type) =>
             type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "distance" &&
             type.HasFlag(ItemFlag.Stackable);
-
-        public byte AmountToComplete => _cumulativeImplementation.AmountToComplete;
-
-        public event ItemReduce OnReduced
-        {
-            add => _cumulativeImplementation.OnReduced += value;
-            remove => _cumulativeImplementation.OnReduced -= value;
-        }
-
-        public bool TryJoin(ref ICumulative item) => _cumulativeImplementation.TryJoin(ref item);
-
-        public float CalculateWeight(byte amount) => _cumulativeImplementation.CalculateWeight(amount);
-
-        public ICumulative Clone(byte amount) => _cumulativeImplementation.Clone(amount);
-
-        public ICumulative Split(byte amount) => _cumulativeImplementation.Split(amount);
-
-        public void ClearSubscribers() => _cumulativeImplementation.ClearSubscribers();
-
-        public Span<byte> GetRaw() => _cumulativeImplementation.GetRaw();
-        public new byte Amount
-        {
-            get => _cumulativeImplementation.Amount;
-            set => _cumulativeImplementation.Amount = value;
-        }
     }
 }

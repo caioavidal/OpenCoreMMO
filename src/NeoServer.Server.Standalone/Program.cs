@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.World.Spawns;
+using NeoServer.Loaders;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -47,7 +50,7 @@ namespace NeoServer.Server.Standalone
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
-            var container = Container.CompositionRoot();
+            var container = Container.BuildConfigurations();
 
             var (serverConfiguration, _, logConfiguration) = (container.Resolve<ServerConfiguration>(),
                 container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
@@ -60,12 +63,14 @@ namespace NeoServer.Server.Standalone
 
             logger.Step("Building extensions...", "{files} extensions builded",
                 () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
+            
+            container = Container.BuildAll();
 
             var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
             var context = container.Resolve<NeoContext>();
 
             logger.Step("Loading database: {db}", "{db} database loaded",
-                action: () => context.Database.EnsureCreatedAsync(),
+                action: () => context.Database.EnsureCreatedAsync(cancellationToken),
                 databaseConfiguration.Active);
 
             RSA.LoadPem(serverConfiguration.Data);
@@ -101,6 +106,8 @@ namespace NeoServer.Server.Standalone
             container.Resolve<LuaGlobalRegister>().Register();
 
             var listeningTask = StartListening(container, cancellationToken);
+
+            container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
 
             container.Resolve<IGameServer>().Open();
 

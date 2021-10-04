@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NeoServer.Game.DataStore
 {
@@ -24,7 +25,6 @@ namespace NeoServer.Game.DataStore
         {
             values.TryAdd(key, value);
         }
-
         public virtual TValue Get(TKey key)
         {
             return values.TryGetValue(key, out var value) ? value : default;

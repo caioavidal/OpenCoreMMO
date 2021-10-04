@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
@@ -14,6 +15,7 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Cumulatives;
+using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
 using NeoServer.Game.Items.Items.Weapons;
 
@@ -82,7 +84,20 @@ namespace NeoServer.Game.Tests.Helpers
 
             return new MeleeWeapon(type, new Location(100, 100, 7));
         }
+        public static IPickupable CreatePot(ushort id,
+            (ItemAttribute, IConvertible)[] attributes = null)
+        {
+            var type = new ItemType();
+            type.SetClientId(id);
+            type.SetId(id);
+            type.SetName("pot");
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 10);
 
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+
+            return new HealingItem(type, new Location(100, 100, 7), attributes.ToDictionary(x=>x.Item1, x=>x.Item2));
+        }
         public static IPickupable CreateWeaponItem(ushort id, string weaponType="sword", bool twoHanded = false, byte charges = 0,
             (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
@@ -181,7 +196,7 @@ namespace NeoServer.Game.Tests.Helpers
             return new BodyDefenseEquipment(type, new Location(100, 100, 7));
         }
 
-        public static IPickupable CreateAmmoItem(ushort id, byte amount)
+        public static IPickupable CreateAmmoItem(ushort id, byte amount,(ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -192,7 +207,14 @@ namespace NeoServer.Game.Tests.Helpers
             type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
             type.Flags.Add(ItemFlag.Stackable);
 
-            return new Ammo(type, new Location(100, 100, 7), amount);
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+         
+            return new Ammo(type, new Location(100, 100, 7), amount)
+            {
+                Chargeable = null,
+                ItemTypeFinder = itemTypeFinder
+            };
         }
 
         public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)

@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types.Useables;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Server.Common.Contracts;
@@ -15,7 +15,7 @@ namespace NeoServer.Server.Events.Items
             this.game = game;
         }
 
-        public void Execute(ICreature usedBy, ITile onTile, IUseableOnTile item)
+        public void Execute(ICreature usedBy, ITile onTile, IUsableOnTile item)
         {
             foreach (var spectator in game.Map.GetPlayersAtPositionZone(usedBy.Location))
             {
