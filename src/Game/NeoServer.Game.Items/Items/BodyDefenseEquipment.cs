@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items
@@ -33,12 +34,16 @@ namespace NeoServer.Game.Items.Items
         {
             var hasRequiredVocation = Guard.IsNullOrEmpty(Vocations);
             var hasMinimumLevel = MinLevel == 0;
-            foreach (var vocation in Vocations)
+
+            if (Vocations is not null)
             {
-                if (vocation == player.VocationType && player.Level >= MinLevel) hasRequiredVocation = true;
+                foreach (var vocation in Vocations)
+                {
+                    if (vocation == player.VocationType && player.Level >= MinLevel) hasRequiredVocation = true;
+                }
             }
 
-            if (player.Level < MinLevel) hasMinimumLevel = false;
+            if (player.Level >= MinLevel) hasMinimumLevel = true;
             return hasRequiredVocation && hasMinimumLevel;
         }
 
