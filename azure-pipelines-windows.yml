@@ -31,12 +31,8 @@ steps:
     command: 'test'
     arguments: '--no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
     projects: '$(solution)'
-
-- script: |
-    dotnet tool install --global Codecov.Tool
-  displayName: 'Upload to codecov.io'
   
 - script: |
     dotnet tool install Codecov.Tool
-    codecov -t $(CODECOV_TOKEN)
+    codecov -t $(CODECOV_TOKEN) -f '$(solution)/**/coverage.opencover.xml'
   displayName: 'Upload to codecov.io'
