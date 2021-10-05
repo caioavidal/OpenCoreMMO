@@ -33,5 +33,10 @@ steps:
     projects: '$(solution)'
 
 - script: |
-    %USERPROFILE%\.nuget\packages\codecov\$(codecovVersion)\tools\codecov.exe -t $(CODECOV_TOKEN)
+    dotnet tool install --global Codecov.Tool
+  displayName: 'Upload to codecov.io'
+  
+- script: |
+    dotnet tool install Codecov.Tool
+    codecov -t $(CODECOV_TOKEN)
   displayName: 'Upload to codecov.io'
