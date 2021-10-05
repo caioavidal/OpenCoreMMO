@@ -33,6 +33,6 @@ steps:
     projects: '$(solution)'
   
 - script: |
-    dotnet tool install Codecov.Tool
+    dotnet tool install --global Codecov.Tool
     codecov -t $(CODECOV_TOKEN) -f '$(solution)/**/coverage.opencover.xml'
   displayName: 'Upload to codecov.io'
