@@ -210,14 +210,14 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
-            var itemToBuy = ItemTestData.CreateAmmoItem(1, bought);
+            var itemToBuy = ItemTestData.CreateAmmo(1, bought);
 
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
             var player = PlayerTestDataBuilder.BuildPlayer(capacity:1000,
                 inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
-                    {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(1, current), 1)},
+                    {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmo(1, current), 1)},
                     {Slot.Backpack, new Tuple<IPickupable, ushort>(ItemTestData.CreateBackpack(), 2)}
                 });
 
@@ -331,7 +331,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var sut = new DealTransaction(itemFactoryMock.Object, coinTransaction.Object);
 
-            var itemToBuy = ItemTestData.CreateAmmoItem(10, bought);
+            var itemToBuy = ItemTestData.CreateAmmo(10, bought);
 
             itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null)).Returns(itemToBuy);
 
@@ -343,7 +343,7 @@ namespace NeoServer.Game.Creatures.Tests.Services
                     {Slot.Backpack, new Tuple<IPickupable, ushort>(container, 2)},
                     {
                         itemToBuy.Metadata.BodyPosition,
-                        new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmoItem(10, currentOnInventory), 10)
+                        new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmo(10, currentOnInventory), 10)
                     }
                 });
 

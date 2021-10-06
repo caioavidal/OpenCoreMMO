@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Creatures.Model.Players;
@@ -11,57 +12,33 @@ using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items
 {
-    public class AmmoTests
+    public class MagicWeaponTests
     {
-        [Theory]
-        [InlineData(6, "(Atk: 6)")]
-        [InlineData(10, "(Atk: 10)")]
-        [InlineData(1, "(Atk: 1)")]
-        public void InspectionText_ReturnsText(int attack, string expected)
+        [Fact]
+        public void InspectionText_NoAttributeFound_ReturnsText()
         {
-            var sut = ItemTestData.CreateAmmo(id: 1, amount: 10, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
-                (ItemAttribute.Attack, attack)
             });
-
+        
             //assert
-            sut.InspectionText.Should().Be(expected);
+            sut.InspectionText.Should().BeEmpty();
         }
-
-        [Theory]
-        [InlineData(ItemAttribute.ElementFire, 5, "(Atk: 6 + 5 fire)")]
-        [InlineData(ItemAttribute.ElementEarth, 10, "(Atk: 6 + 10 earth)")]
-        [InlineData(ItemAttribute.ElementEnergy, 1, "(Atk: 6 + 1 energy)")]
-        [InlineData(ItemAttribute.ElementIce, 23, "(Atk: 6 + 23 ice)")]
-        [InlineData(ItemAttribute.ElementIce, 0, "(Atk: 6)")]
-        public void InspectionText_HasElementalDamage_ReturnsText(ItemAttribute itemAttribute, int elementalDamage,
-            string expected)
-        {
-            var sut = (IEquipment) ItemTestData.CreateAmmo(id: 1, amount: 10, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Attack, 6),
-                (itemAttribute, elementalDamage),
-            });
-
-            //assert
-            sut.InspectionText.Should().Be(expected);
-        }
-
         #region CanBeDressed Tests
 
-        [InlineData(2, 1)]
-        [InlineData(2, 3)]
+        [InlineData(2,  1)]
+        [InlineData(2,  3)]
         [Theory]
         public void CanBeDressed_PlayerHasNotRequiredVocation_ReturnsFalse(int playerVocation,
             int requiredVocation)
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation);
-            var sut = (IEquipment)ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),
             });
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, new[] { (byte)requiredVocation });
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, new[]{(byte)requiredVocation});
 
             //act
             var actual = sut.CanBeDressed(player);
@@ -69,14 +46,12 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             actual.Should().BeFalse();
         }
-
         [InlineData(2, 1, 2, 10)]
         [InlineData(2, 8, 2, 10)]
         [InlineData(5, 0, 5, 0)]
         [InlineData(5, 1, 5, 1)]
         [Theory]
-        public void CanBeDressed_PlayerHasVocationAndNoMinimumLevel_ReturnsTrue(int playerVocation, int playerLevel,
-            int requiredVocation, int minLevel)
+        public void CanBeDressed_PlayerHasVocationAndNoMinimumLevel_ReturnsTrue(int playerVocation, int playerLevel, int requiredVocation, int minLevel)
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation,
@@ -84,12 +59,12 @@ namespace NeoServer.Game.Items.Tests.Items
                 {
                     [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
                 });
-            var sut =(IEquipment) ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),
                 (ItemAttribute.MinimumLevel, minLevel),
             });
-            sut.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, new[] { (byte)requiredVocation });
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, new[]{(byte)requiredVocation});
 
             //act
             var actual = sut.CanBeDressed(player);
@@ -97,13 +72,13 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             actual.Should().BeTrue();
         }
-
+        
         [Fact]
         public void CanBeDressed_ItemHasNoRequiredVocation_ReturnsTrue()
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)1);
-            var sut = (IEquipment)ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),
             });

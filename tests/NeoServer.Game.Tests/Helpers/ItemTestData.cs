@@ -98,6 +98,27 @@ namespace NeoServer.Game.Tests.Helpers
 
             return new HealingItem(type, new Location(100, 100, 7), attributes.ToDictionary(x=>x.Item1, x=>x.Item2));
         }
+        
+        public static IEquipment CreateMagicWeapon(ushort id, bool twoHanded = false, byte charges = 0,
+            (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
+        {
+            var type = new ItemType();
+            type.SetClientId(id);
+            type.SetId(id);
+            type.SetName("magic weapon");
+            type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
+
+            type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
+
+            attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
+            foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+         
+            return new MagicWeapon(type, new Location(100, 100, 7))
+            {
+                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                ItemTypeFinder = itemTypeFinder
+            };
+        }
         public static IPickupable CreateWeaponItem(ushort id, string weaponType="sword", bool twoHanded = false, byte charges = 0,
             (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
@@ -142,7 +163,7 @@ namespace NeoServer.Game.Tests.Helpers
             };
         }
 
-        public static IPickupable CreateThrowableDistanceItem(ushort id, byte amount = 1, bool twoHanded = false,
+        public static IEquipment CreateThrowableDistanceItem(ushort id, byte amount = 1, bool twoHanded = false,
             (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
@@ -196,7 +217,7 @@ namespace NeoServer.Game.Tests.Helpers
             return new BodyDefenseEquipment(type, new Location(100, 100, 7));
         }
 
-        public static IPickupable CreateAmmoItem(ushort id, byte amount,(ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
+        public static IPickupable CreateAmmo(ushort id, byte amount,(ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);

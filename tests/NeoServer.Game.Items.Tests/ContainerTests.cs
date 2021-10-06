@@ -134,7 +134,7 @@ namespace NeoServer.Game.Items.Tests
         public void PossibleAmountToAdd_When_Passing_Cumulative_Item_Should_Return_Amount_Count()
         {
             var sut = CreateContainer(3);
-            var item = ItemTestData.CreateAmmoItem(100, 100);
+            var item = ItemTestData.CreateAmmo(100, 100);
 
             var result = sut.PossibleAmountToAdd(item);
             Assert.Equal(300u, result);
@@ -144,19 +144,19 @@ namespace NeoServer.Game.Items.Tests
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(200u, result);
 
-            var item2 = ItemTestData.CreateAmmoItem(100, 30);
+            var item2 = ItemTestData.CreateAmmo(100, 30);
 
             sut.AddItem(item2);
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(170u, result);
 
-            var item3 = ItemTestData.CreateAmmoItem(200, 100);
+            var item3 = ItemTestData.CreateAmmo(200, 100);
 
             sut.AddItem(item3);
             result = sut.PossibleAmountToAdd(item);
             Assert.Equal(70u, result);
 
-            var item4 = ItemTestData.CreateAmmoItem(100, 70);
+            var item4 = ItemTestData.CreateAmmo(100, 70);
 
             sut.AddItem(item4);
             result = sut.PossibleAmountToAdd(item);
@@ -738,7 +738,7 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(1);
 
-            var item = ItemTestData.CreateAmmoItem(1, 100);
+            var item = ItemTestData.CreateAmmo(1, 100);
 
             var result = sut.CanAddItem(item.Metadata);
 
@@ -750,9 +750,9 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(1);
 
-            sut.AddItem(ItemTestData.CreateAmmoItem(1, 50));
+            sut.AddItem(ItemTestData.CreateAmmo(1, 50));
 
-            var item = ItemTestData.CreateAmmoItem(1, 100);
+            var item = ItemTestData.CreateAmmo(1, 100);
 
             var result = sut.CanAddItem(item.Metadata);
 
@@ -764,9 +764,9 @@ namespace NeoServer.Game.Items.Tests
         {
             var sut = CreateContainer(1);
 
-            sut.AddItem(ItemTestData.CreateAmmoItem(2, 50));
+            sut.AddItem(ItemTestData.CreateAmmo(2, 50));
 
-            var item = ItemTestData.CreateAmmoItem(1, 100);
+            var item = ItemTestData.CreateAmmo(1, 100);
 
             var result = sut.CanAddItem(item.Metadata);
 
