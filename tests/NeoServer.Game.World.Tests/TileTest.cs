@@ -225,7 +225,7 @@ namespace NeoServer.Game.World.Tests
             ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
             ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
-            var item = ItemTestData.CreateAmmoItem(100, 100);
+            var item = ItemTestData.CreateAmmo(100, 100);
 
             sut.AddItem(item);
 
@@ -246,7 +246,7 @@ namespace NeoServer.Game.World.Tests
             ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
             ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
-            var item = ItemTestData.CreateAmmoItem(100, 100);
+            var item = ItemTestData.CreateAmmo(100, 100);
 
             sut.AddItem(item);
 
@@ -266,9 +266,9 @@ namespace NeoServer.Game.World.Tests
         {
             ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
             ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0],
-                new IItem[1] {ItemTestData.CreateAmmoItem(100, 50)});
+                new IItem[1] {ItemTestData.CreateAmmo(100, 50)});
 
-            var item = ItemTestData.CreateAmmoItem(100, 100);
+            var item = ItemTestData.CreateAmmo(100, 100);
             sut.AddItem(item);
 
             var result = sut.SendTo(dest, item, 40, 0, 0);

@@ -55,7 +55,7 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
                 {
                     case IWeaponItem weapon:
                         return weapon.Attack;
-                    case IDistanceWeaponItem distance:
+                    case IDistanceWeapon distance:
                         {
                             attack += distance.ExtraAttack;
                             if (Ammo != null) attack += distance.ExtraAttack;

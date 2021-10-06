@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
@@ -11,43 +12,19 @@ using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items
 {
-    public class DistanceWeaponTests
+    public class MagicWeaponTests
     {
         [Fact]
         public void InspectionText_NoAttributeFound_ReturnsText()
         {
-            var sut = ItemTestData.CreateDistanceWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
             });
-
+        
             //assert
             sut.InspectionText.Should().BeEmpty();
         }
-        
-        
-        [Theory]
-        [InlineData(6,7,3,"(Range: 6, Atk: +7, Hit% +3)")]
-        [InlineData(6,0,3,"(Range: 6, Hit% +3)")]
-        [InlineData(6,7,0,"(Range: 6, Atk: +7)")]
-        [InlineData(6,0,0,"(Range: 6)")]
-        [InlineData(0,7,3,"(Atk: +7, Hit% +3)")]
-        [InlineData(0,7,0,"(Atk: +7)")]
-        [InlineData(0,0,3,"(Hit% +3)")]
-        [InlineData(0,0,0,"")]
-        public void InspectionText_AttributeFound_ReturnsText(int range, int attack, int chance, string expected)
-        {
-            var sut = ItemTestData.CreateDistanceWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.Range, range),
-                (ItemAttribute.Attack,attack),
-                (ItemAttribute.HitChance,chance)
-            });
-
-            //assert
-            sut.InspectionText.Should().Be(expected);
-        }
-        
-         #region CanBeDressed Tests
+        #region CanBeDressed Tests
 
         [InlineData(2,  1)]
         [InlineData(2,  3)]
@@ -57,7 +34,7 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation);
-            var sut = (IDistanceWeapon) ItemTestData.CreateDistanceWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),
             });
@@ -82,7 +59,7 @@ namespace NeoServer.Game.Items.Tests.Items
                 {
                     [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
                 });
-            var sut = (IDistanceWeapon) ItemTestData.CreateDistanceWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),
                 (ItemAttribute.MinimumLevel, minLevel),
@@ -101,7 +78,7 @@ namespace NeoServer.Game.Items.Tests.Items
         {
             //arrange
             var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)1);
-            var sut = (IDistanceWeapon) ItemTestData.CreateDistanceWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateMagicWeapon(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),
             });

@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {
-    public interface IDistanceWeaponItem : IWeapon
+    public interface IDistanceWeapon : IWeapon
     {
         byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
         byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);

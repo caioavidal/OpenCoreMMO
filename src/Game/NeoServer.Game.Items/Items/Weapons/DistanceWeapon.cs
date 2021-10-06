@@ -13,7 +13,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Weapons
 {
-    public class DistanceWeapon : Equipment, IDistanceWeaponItem
+    public class DistanceWeapon : Equipment, IDistanceWeapon
     {
         public DistanceWeapon(IItemType type, Location location) : base(type, location)
         {

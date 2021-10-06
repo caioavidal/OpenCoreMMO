@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -14,7 +19,7 @@ namespace NeoServer.Game.Items.Tests.Items
         [InlineData(1, "(Atk: 1)")]
         public void InspectionText_ReturnsText(int attack, string expected)
         {
-            var sut = ItemTestData.CreateAmmoItem(id: 1, amount:10, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = ItemTestData.CreateAmmo(id: 1, amount: 10, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.Attack, attack)
             });
@@ -32,7 +37,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void InspectionText_HasElementalDamage_ReturnsText(ItemAttribute itemAttribute, int elementalDamage,
             string expected)
         {
-            var sut = ItemTestData.CreateAmmoItem(id: 1, amount:10, attributes: new (ItemAttribute, IConvertible)[]
+            var sut = (IEquipment) ItemTestData.CreateAmmo(id: 1, amount: 10, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.Attack, 6),
                 (itemAttribute, elementalDamage),
@@ -41,5 +46,75 @@ namespace NeoServer.Game.Items.Tests.Items
             //assert
             sut.InspectionText.Should().Be(expected);
         }
+
+        #region CanBeDressed Tests
+
+        [InlineData(2, 1)]
+        [InlineData(2, 3)]
+        [Theory]
+        public void CanBeDressed_PlayerHasNotRequiredVocation_ReturnsFalse(int playerVocation,
+            int requiredVocation)
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation);
+            var sut = (IEquipment)ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.BodyPosition, "body"),
+            });
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, new[] { (byte)requiredVocation });
+
+            //act
+            var actual = sut.CanBeDressed(player);
+
+            //assert
+            actual.Should().BeFalse();
+        }
+
+        [InlineData(2, 1, 2, 10)]
+        [InlineData(2, 8, 2, 10)]
+        [InlineData(5, 0, 5, 0)]
+        [InlineData(5, 1, 5, 1)]
+        [Theory]
+        public void CanBeDressed_PlayerHasVocationAndNoMinimumLevel_ReturnsTrue(int playerVocation, int playerLevel,
+            int requiredVocation, int minLevel)
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation,
+                skills: new Dictionary<SkillType, ISkill>()
+                {
+                    [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
+                });
+            var sut =(IEquipment) ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.BodyPosition, "body"),
+                (ItemAttribute.MinimumLevel, minLevel),
+            });
+            sut.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, new[] { (byte)requiredVocation });
+
+            //act
+            var actual = sut.CanBeDressed(player);
+
+            //assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public void CanBeDressed_ItemHasNoRequiredVocation_ReturnsTrue()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)1);
+            var sut = (IEquipment)ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.BodyPosition, "body"),
+            });
+
+            //act
+            var actual = sut.CanBeDressed(player);
+
+            //assert
+            actual.Should().BeTrue();
+        }
+
+        #endregion
     }
 }
