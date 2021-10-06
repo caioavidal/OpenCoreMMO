@@ -110,7 +110,7 @@ namespace NeoServer.Game.Items.Tests.Items
         [InlineData(2, 9, 2, 10)]
         [InlineData(2, 10, 1, 10)]
         [Theory]
-        public void CanBeDressed_PlayerHasNoLevelOrNoVocation_ReturnsFalse(int playerVocation, int playerLevel,
+        public void CanBeDressed_PlayerHasNeitherLevelNorVocation_ReturnsFalse(int playerVocation, int playerLevel,
             int requiredVocation, int minLevel)
         {
             //arrange

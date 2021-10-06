@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -12,7 +13,7 @@ using Xunit;
 
 namespace NeoServer.Game.Items.Tests
 {
-    public class ContainerTest
+    public class ContainerTests
     {
         private IContainer CreateContainer(byte capacity = 6, string name = "")
         {
@@ -770,6 +771,19 @@ namespace NeoServer.Game.Items.Tests
             var result = sut.CanAddItem(item.Metadata);
 
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
+        }
+
+        [Fact]
+        public void CanBeDressed_ReturnsTrue()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.BuildPlayer();
+            var sut = CreateContainer(1);
+            
+            //act
+            var actual = sut.CanBeDressed(player);
+            //assert
+            actual.Should().BeTrue();
         }
     }
 }
