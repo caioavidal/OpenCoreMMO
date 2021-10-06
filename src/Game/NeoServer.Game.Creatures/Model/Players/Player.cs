@@ -271,7 +271,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public override ushort ArmorRating => Inventory.TotalArmor;
         public byte SecureMode { get; private set; }
         public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
-        public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeaponItem;
+        public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeapon;
         public bool Recovering { get; private set; }
 
         public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);

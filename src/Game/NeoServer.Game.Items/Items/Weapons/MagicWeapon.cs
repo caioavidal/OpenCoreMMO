@@ -13,7 +13,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Weapons
 {
-    public class MagicWeapon : Equipment, IDistanceWeaponItem
+    public class MagicWeapon : Equipment, IDistanceWeapon
     {
         public MagicWeapon(IItemType type, Location location) : base(type, location)
         {
