@@ -11,16 +11,17 @@ using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Npcs
 {
     public class NpcLoader : IStartupLoader
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly ServerConfiguration serverConfiguration;
 
-        public NpcLoader(ServerConfiguration serverConfiguration, Logger logger)
+        public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;

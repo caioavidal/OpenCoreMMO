@@ -11,20 +11,21 @@ using NeoServer.OTB.Parsers;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Items
 {
     public class ItemTypeLoader
     {
-        private readonly Logger logger;
-        private readonly ServerConfiguration serverConfiguration;
+        private readonly ILogger _logger;
+        private readonly ServerConfiguration _serverConfiguration;
         private readonly ItemTypeStore _itemTypeStore;
 
-        public ItemTypeLoader(Logger logger, ServerConfiguration serverConfiguration, ItemTypeStore itemTypeStore)
+        public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, ItemTypeStore itemTypeStore)
         {
-            this.logger = logger;
-            this.serverConfiguration = serverConfiguration;
+            this._logger = logger;
+            this._serverConfiguration = serverConfiguration;
             _itemTypeStore = itemTypeStore;
         }
 
@@ -33,10 +34,10 @@ namespace NeoServer.Loaders.Items
         /// </summary>
         public void Load()
         {
-            logger.Step("Loading items", "{n} items loaded", () =>
+            _logger.Step("Loading items", "{n} items loaded", () =>
             {
-                var basePath = $"{serverConfiguration.Data}/items/";
-                var itemTypes = LoadOTB(basePath);
+                var basePath = $"{_serverConfiguration.Data}/items/";
+                var itemTypes = LoadOtb(basePath);
 
                 LoadItemsJson(basePath, itemTypes);
 
@@ -54,7 +55,7 @@ namespace NeoServer.Loaders.Items
             });
         }
 
-        private Dictionary<ushort, IItemType> LoadOTB(string basePath)
+        private Dictionary<ushort, IItemType> LoadOtb(string basePath)
         {
             var fileStream = File.ReadAllBytes(Path.Combine(basePath, "items.otb"));
             var otbNode = OTBBinaryTreeBuilder.Deserialize(fileStream);

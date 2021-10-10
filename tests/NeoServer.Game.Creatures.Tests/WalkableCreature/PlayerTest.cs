@@ -124,8 +124,9 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         }
 
         [Fact]
-        public void StopFollowing_Should_Stop_Following()
+        public void Stop_following_interrupts_player_walk()
         {
+            //arrange
             var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300);
             var stoppedWalkEventEmitted = false;
 
@@ -148,8 +149,10 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             sut.SetCurrentTile(tile.Object);
             sut.Follow(creature.Object);
 
+            //act
             sut.StopFollowing();
 
+            //assert
             Assert.False(sut.IsFollowing);
             Assert.Null(sut.Following);
             Assert.True(stoppedWalkEventEmitted);

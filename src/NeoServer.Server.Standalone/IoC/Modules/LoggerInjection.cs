@@ -15,7 +15,7 @@ namespace NeoServer.Server.Standalone.IoC.Modules
 
             var logger = loggerConfig.CreateLogger();
 
-            builder.RegisterInstance(logger).SingleInstance();
+            builder.RegisterInstance(logger).As<ILogger>().SingleInstance();
             builder.RegisterInstance(loggerConfig).SingleInstance();
             return builder;
         }

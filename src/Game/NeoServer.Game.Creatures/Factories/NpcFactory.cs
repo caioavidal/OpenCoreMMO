@@ -6,23 +6,22 @@ using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Shop;
 using NeoServer.Game.DataStore;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Game.Creatures.Factories
 {
     public class NpcFactory : INpcFactory
     {
-        private readonly ICreatureGameInstance creatureGameInstance;
-        private readonly IItemFactory itemFactory;
-        private readonly Logger logger;
+        private readonly IItemFactory _itemFactory;
+        private readonly ILogger _logger;
 
         public NpcFactory(
-            Logger logger, IItemFactory itemFactory, ICreatureGameInstance creatureGameInstance)
+            ILogger logger, IItemFactory itemFactory, ICreatureGameInstance creatureGameInstance)
         {
-            this.logger = logger;
+            this._logger = logger;
             Instance = this;
-            this.itemFactory = itemFactory;
-            this.creatureGameInstance = creatureGameInstance;
+            this._itemFactory = itemFactory;
         }
 
         public static INpcFactory Instance { get; private set; }
@@ -32,7 +31,7 @@ namespace NeoServer.Game.Creatures.Factories
             var npcType = NpcStore.Data.Get(name);
             if (npcType is null)
             {
-                logger.Warning($"Given npc name: {name} is not loaded");
+                _logger.Warning($"Given npc name: {name} is not loaded");
                 return null;
             }
 
@@ -49,7 +48,7 @@ namespace NeoServer.Game.Creatures.Factories
             if (npcType.CustomAttributes.ContainsKey("shop"))
                 return new ShopperNpc(npcType, spawn, outfit, npcType.MaxHealth)
                 {
-                    CreateNewItem = itemFactory.Create
+                    CreateNewItem = _itemFactory.Create
                 };
 
             return new Npc(npcType, spawn, outfit, npcType.MaxHealth);

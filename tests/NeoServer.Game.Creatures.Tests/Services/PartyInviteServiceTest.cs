@@ -4,6 +4,7 @@ using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.DataStore;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services
@@ -21,7 +22,8 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             var chatChannelFactory = new ChatChannelFactory()
             {
-                ChannelEventSubscribers = new List<IChatChannelEventSubscriber>()
+                ChannelEventSubscribers = new List<IChatChannelEventSubscriber>(),
+                ChatChannelStore = new ChatChannelStore()
             };
             var partyInviteService = new PartyInviteService(chatChannelFactory);
 

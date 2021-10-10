@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Server.Managers
@@ -17,12 +18,12 @@ namespace NeoServer.Server.Managers
     public class GameCreatureManager : IGameCreatureManager
     {
         private readonly ICreatureGameInstance creatureInstances;
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly IMap map;
 
         private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
 
-        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, Logger logger)
+        public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, ILogger logger)
         {
             this.creatureInstances = creatureInstances;
             this.map = map;

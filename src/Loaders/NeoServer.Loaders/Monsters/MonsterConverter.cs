@@ -8,14 +8,15 @@ using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Monsters.Combats;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Monsters.Converters;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Monsters
 {
-    public class MonsterConverter
+    public static class MonsterConverter
     {
         public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration,
-            IMonsterDataManager monsters, Logger logger, ItemTypeStore itemTypeStore)
+            IMonsterDataManager monsters, ILogger logger, ItemTypeStore itemTypeStore)
         {
             var data = monsterData;
             var monster = new MonsterType
@@ -32,11 +33,10 @@ namespace NeoServer.Loaders.Monsters
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defense = ushort.Parse(data.Defense.Defense),
                 Experience = (uint) (data.Experience * configuration.ExperienceRate),
-                Race = ParseRace(data.Race)
+                Race = ParseRace(data.Race),
+                TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval),
+                    System.Convert.ToByte(data.Targetchange.Chance))
             };
-
-            monster.TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval),
-                System.Convert.ToByte(data.Targetchange.Chance));
 
             if (data.Voices != null)
             {

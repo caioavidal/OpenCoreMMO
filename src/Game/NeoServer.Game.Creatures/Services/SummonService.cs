@@ -3,33 +3,34 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Monsters;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Game.Creatures.Services
 {
     public class SummonService : ISummonService
     {
-        private readonly ICreatureFactory creatureFactory;
-        private readonly Logger logger;
-        private readonly IMap map;
+        private readonly ICreatureFactory _creatureFactory;
+        private readonly ILogger _logger;
+        private readonly IMap _map;
 
-        public SummonService(ICreatureFactory creatureFactory, IMap map, Logger logger)
+        public SummonService(ICreatureFactory creatureFactory, IMap map, ILogger logger)
         {
-            this.creatureFactory = creatureFactory;
-            this.map = map;
-            this.logger = logger;
+            this._creatureFactory = creatureFactory;
+            this._map = map;
+            this._logger = logger;
         }
 
         public IMonster Summon(IMonster master, string summonName)
         {
-            if (creatureFactory.CreateSummon(summonName, master) is not Summon summon)
+            if (_creatureFactory.CreateSummon(summonName, master) is not Summon summon)
             {
-                logger.Error($"Summon with name: {summonName} does not exists");
+                _logger.Error($"Summon with name: {summonName} does not exists");
                 return null;
             }
 
             foreach (var neighbour in master.Location.Neighbours)
-                if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
+                if (_map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
                 {
                     summon.Born(toTile.Location);
                     return summon;

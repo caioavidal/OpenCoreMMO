@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming.Chat;
 using NeoServer.Server.Common.Contracts;
@@ -10,30 +11,30 @@ namespace NeoServer.Networking.Handlers.Chat
 {
     public class PlayerCloseChannelHandler : PacketHandler
     {
-        private readonly IGameServer game;
+        private readonly IGameServer _game;
+        private readonly IChatChannelStore _chatChannelStore;
 
-        public PlayerCloseChannelHandler(IGameServer game)
+        public PlayerCloseChannelHandler(IGameServer game, IChatChannelStore chatChannelStore)
         {
-            this.game = game;
+            _game = game;
+            _chatChannelStore = chatChannelStore;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
             var channelPacket = new OpenChannelPacket(message);
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+            if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             IChatChannel channel = null;
 
-            if (ChatChannelStore.Data.Get(channelPacket.ChannelId) is IChatChannel publicChannel)
+            if (_chatChannelStore.Get(channelPacket.ChannelId) is { } publicChannel)
                 channel = publicChannel;
-            if (player.PersonalChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is IChatChannel
-                personalChannel) channel = personalChannel;
-            if (player.PrivateChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is IChatChannel
-                privateChannel) channel = privateChannel;
+            if (player.PersonalChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } personalChannel) channel = personalChannel;
+            if (player.PrivateChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } privateChannel) channel = privateChannel;
 
             if (channel is null) return;
 
-            game.Dispatcher.AddEvent(new Event(() => player.ExitChannel(channel)));
+            _game.Dispatcher.AddEvent(new Event(() => player.ExitChannel(channel)));
         }
     }
 }

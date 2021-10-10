@@ -6,8 +6,8 @@ using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Chats
 {
@@ -15,6 +15,7 @@ namespace NeoServer.Game.Chats
     {
         //injected
         public IEnumerable<IChatChannelEventSubscriber> ChannelEventSubscribers { get; set; }
+        public IChatChannelStore ChatChannelStore { get; set; }
 
         public IChatChannel Create(Type type, string name, IPlayer player = null)
         {
@@ -72,18 +73,18 @@ namespace NeoServer.Game.Chats
             return channel;
         }
 
-        private static ushort GenerateUniqueId()
+        private ushort GenerateUniqueId()
         {
             ushort id;
             do
             {
                 id = RandomIdGenerator.Generate(ushort.MaxValue);
-            } while (ChatChannelStore.Data.Contains(id));
+            } while (ChatChannelStore.Contains(id));
 
             return id;
         }
 
-        private static ushort GeneratePlayerUniqueId(IPlayer player)
+        private ushort GeneratePlayerUniqueId(IPlayer player)
         {
             ushort id;
             do

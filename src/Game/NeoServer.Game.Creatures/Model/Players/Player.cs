@@ -81,8 +81,9 @@ namespace NeoServer.Game.Creatures.Model.Players
                 skill.OnAdvance += OnLevelAdvance;
                 skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
             }
-
         }
+
+        public Func<ushort,IChatChannel> GetChatChannelFunc { get; init; }
 
         private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
 
@@ -1066,8 +1067,8 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public bool CanEnterOnChannel(ushort channelId)
         {
-            var channel = ChatChannelStore.Data.Get(channelId);
-            return channel.PlayerCanJoin(this);
+            var channel = GetChatChannelFunc?.Invoke(channelId);
+            return channel?.PlayerCanJoin(this) ?? false;
         }
 
         public void PartyEmptyHandler()

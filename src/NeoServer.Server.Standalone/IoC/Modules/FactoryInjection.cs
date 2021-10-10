@@ -3,6 +3,7 @@ using Autofac;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Model.Players;
@@ -12,6 +13,7 @@ using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Networking.Handlers;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Server.Standalone.IoC.Modules
@@ -48,7 +50,12 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<ChargeableFactory>().SingleInstance();
             
             builder.RegisterType<ChatChannelFactory>().OnActivated(e =>
-                    e.Instance.ChannelEventSubscribers = e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>())
+                {
+                    e.Instance.ChannelEventSubscribers =
+                        e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>();
+                    e.Instance.ChatChannelStore =
+                        e.Context.Resolve<IChatChannelStore>();
+                })
                 .SingleInstance();
             builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
 
@@ -73,16 +80,16 @@ namespace NeoServer.Server.Standalone.IoC.Modules
                 if (!conn.Disconnected) packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
 
                 if (!InputHandlerMap.Data.TryGetValue(packet, out var handlerType))
-                    return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());
+                    return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
 
                 if (c.TryResolve(handlerType, out var instance))
                 {
-                    c.Resolve<Logger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
+                    c.Resolve<ILogger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
 
                     return (IPacketHandler) instance;
                 }
 
-                return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());
+                return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
             });
         }
 

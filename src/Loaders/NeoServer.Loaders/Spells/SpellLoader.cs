@@ -8,16 +8,17 @@ using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Spells
 {
     public class SpellLoader
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly ServerConfiguration serverConfiguration;
 
-        public SpellLoader(ServerConfiguration serverConfiguration, Logger logger)
+        public SpellLoader(ServerConfiguration serverConfiguration, ILogger logger)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;

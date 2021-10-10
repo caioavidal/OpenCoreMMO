@@ -12,6 +12,7 @@ using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Helpers.JsonConverters;
 using Newtonsoft.Json;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Vocations
@@ -20,10 +21,10 @@ namespace NeoServer.Loaders.Vocations
     {
         private readonly GameConfiguration gameConfiguration;
 
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly ServerConfiguration serverConfiguration;
 
-        public VocationLoader(GameConfiguration gameConfiguration, Logger logger,
+        public VocationLoader(GameConfiguration gameConfiguration, ILogger logger,
             ServerConfiguration serverConfiguration)
         {
             this.gameConfiguration = gameConfiguration;

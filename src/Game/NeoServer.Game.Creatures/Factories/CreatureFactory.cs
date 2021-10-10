@@ -10,17 +10,17 @@ namespace NeoServer.Game.Creatures.Factories
     {
         //factories
         private readonly IMonsterFactory _monsterFactory;
-        private readonly IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers;
-        private readonly INpcFactory npcFactory;
+        private readonly IEnumerable<ICreatureEventSubscriber> _creatureEventSubscribers;
+        private readonly INpcFactory _npcFactory;
 
         public CreatureFactory(
             IMonsterFactory monsterFactory,
             IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers, INpcFactory npcFactory)
         {
             _monsterFactory = monsterFactory;
-            this.creatureEventSubscribers = creatureEventSubscribers;
+            _creatureEventSubscribers = creatureEventSubscribers;
             Instance = this;
-            this.npcFactory = npcFactory;
+            _npcFactory = npcFactory;
         }
 
         public static ICreatureFactory Instance { get; private set; }
@@ -45,7 +45,7 @@ namespace NeoServer.Game.Creatures.Factories
 
         public INpc CreateNpc(string name, ISpawnPoint spawn = null)
         {
-            var npc = npcFactory.Create(name, spawn);
+            var npc = _npcFactory.Create(name, spawn);
             if (npc is null) return null;
 
             AttachEvents(npc);
@@ -59,11 +59,11 @@ namespace NeoServer.Game.Creatures.Factories
 
         private ICreature AttachEvents(ICreature creature)
         {
-            foreach (var gameSubscriber in creatureEventSubscribers.Where(x =>
+            foreach (var gameSubscriber in _creatureEventSubscribers.Where(x =>
                 x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
                 gameSubscriber?.Subscribe(creature);
 
-            foreach (var subscriber in creatureEventSubscribers.Where(x =>
+            foreach (var subscriber in _creatureEventSubscribers.Where(x =>
                 !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
                 subscriber?.Subscribe(creature);
 

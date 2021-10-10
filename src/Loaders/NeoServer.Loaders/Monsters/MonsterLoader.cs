@@ -8,6 +8,7 @@ using NeoServer.Game.DataStore;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Monsters
@@ -16,11 +17,11 @@ namespace NeoServer.Loaders.Monsters
     {
         private readonly IMonsterDataManager _monsterManager;
         private readonly GameConfiguration _gameConfiguration;
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
         private readonly ServerConfiguration _serverConfiguration;
         private readonly ItemTypeStore _itemTypeStore;
 
-        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, Logger logger,
+        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, ILogger logger,
             ServerConfiguration serverConfiguration, ItemTypeStore itemTypeStore)
         {
             _monsterManager = monsterManager;

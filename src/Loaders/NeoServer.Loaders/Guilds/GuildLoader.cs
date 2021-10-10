@@ -6,24 +6,25 @@ using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Guilds
 {
     public class GuildLoader : ICustomLoader
     {
-        private readonly ChatChannelFactory chatChannelFactory;
-        private readonly Logger logger;
+        private readonly ChatChannelFactory _chatChannelFactory;
+        private readonly ILogger _logger;
 
-        public GuildLoader(Logger logger, ChatChannelFactory chatChannelFactory)
+        public GuildLoader(ILogger logger, ChatChannelFactory chatChannelFactory)
         {
-            this.logger = logger;
-            this.chatChannelFactory = chatChannelFactory;
+            _logger = logger;
+            _chatChannelFactory = chatChannelFactory;
         }
 
         public void Load(GuildModel guildModel)
         {
-            if (guildModel is not GuildModel) return;
+            if (guildModel is not { }) return;
 
             var guild = GuildStore.Data.Get((ushort) guildModel.Id);
 
@@ -34,7 +35,7 @@ namespace NeoServer.Loaders.Guilds
                 guild = new Guild
                 {
                     Id = (ushort) guildModel.Id,
-                    Channel = chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel",
+                    Channel = _chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel",
                         (ushort) guildModel.Id)
                 };
             }
@@ -48,7 +49,7 @@ namespace NeoServer.Loaders.Guilds
             foreach (var member in guildModel.Members)
             {
                 if (member.Rank is null) continue;
-                guild.GuildLevels.Add((ushort) member.Rank.Id,
+                guild.GuildLevels?.Add((ushort) member.Rank.Id,
                     new GuildLevel((GuildRank) (member.Rank?.Level ?? (int) GuildRank.Member), member.Rank?.Name));
             }
 
@@ -58,7 +59,7 @@ namespace NeoServer.Loaders.Guilds
                 return;
             }
 
-            logger.Debug("Guild {guild} loaded", guildModel.Name);
+            _logger.Debug("Guild {guild} loaded", guildModel.Name);
         }
     }
 }

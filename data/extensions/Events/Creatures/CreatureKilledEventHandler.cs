@@ -3,6 +3,7 @@ using NeoServer.Extensions.Chat;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.DataStore;
 
@@ -10,14 +11,20 @@ namespace NeoServer.Extensions.Events.Creatures
 {
     public class CreatureKilledEventHandler : IGameEventHandler
     {
+        private readonly IChatChannelStore _chatChannelStore;
+
+        public CreatureKilledEventHandler(IChatChannelStore chatChannelStore)
+        {
+            _chatChannelStore = chatChannelStore;
+        }
         public void Execute(ICombatActor actor, IThing by, ILoot loot)
         {
             AddDeathMessageToChannel(actor, by);
         }
 
-        private static void AddDeathMessageToChannel(ICombatActor actor, IThing by)
+        private void AddDeathMessageToChannel(ICombatActor actor, IThing by)
         {
-            if (ChatChannelStore.Data.All.FirstOrDefault(x => x is DeathChannel) is not { } deathChannel)
+            if (_chatChannelStore.All.FirstOrDefault(x => x is DeathChannel) is not { } deathChannel)
                 return;
             if (actor is not IPlayer player) return;
 

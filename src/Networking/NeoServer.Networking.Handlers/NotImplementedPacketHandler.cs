@@ -1,16 +1,17 @@
 ﻿using System;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Networking.Handlers
 {
     public class NotImplementedPacketHandler : PacketHandler
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly GameIncomingPacketType packet;
 
-        public NotImplementedPacketHandler(GameIncomingPacketType packet, Logger logger)
+        public NotImplementedPacketHandler(GameIncomingPacketType packet, ILogger logger)
         {
             this.packet = packet;
             this.logger = logger;

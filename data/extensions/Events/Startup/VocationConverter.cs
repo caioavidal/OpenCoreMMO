@@ -4,6 +4,7 @@ using System.Linq;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.DataStore;
 using NeoServer.Server.Common.Contracts;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Extensions.Events.Startup
@@ -14,9 +15,9 @@ namespace NeoServer.Extensions.Events.Startup
     public class VocationConverter : IStartup
     {
         private readonly ItemTypeStore _itemTypeStore;
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
 
-        public VocationConverter(ItemTypeStore itemTypeStore, Logger logger)
+        public VocationConverter(ItemTypeStore itemTypeStore, ILogger logger)
         {
             _itemTypeStore = itemTypeStore;
             _logger = logger;

@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.World.Spawns;
-using NeoServer.Loaders;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -34,7 +31,6 @@ using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Server.Standalone
 {
@@ -54,7 +50,7 @@ namespace NeoServer.Server.Standalone
 
             var (serverConfiguration, _, logConfiguration) = (container.Resolve<ServerConfiguration>(),
                 container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
-            var (logger, _) = (container.Resolve<Logger>(), container.Resolve<LoggerConfiguration>());
+            var (logger, _) = (container.Resolve<ILogger>(), container.Resolve<LoggerConfiguration>());
 
             logger.Information("Welcome to OpenCoreMMO Server!");
 

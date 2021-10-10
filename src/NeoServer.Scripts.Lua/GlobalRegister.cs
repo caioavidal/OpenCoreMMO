@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Scripts.Lua
@@ -17,12 +18,12 @@ namespace NeoServer.Scripts.Lua
         private readonly ICreatureFactory creatureFactory;
         private readonly IGameServer gameServer;
         private readonly IItemFactory itemFactory;
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly NLua.Lua lua;
         private readonly ServerConfiguration serverConfiguration;
 
         public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            NLua.Lua lua, ServerConfiguration serverConfiguration, Logger logger, ICoinTransaction coinTransaction)
+            NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction)
         {
             this.gameServer = gameServer;
             this.itemFactory = itemFactory;

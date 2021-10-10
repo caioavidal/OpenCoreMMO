@@ -8,15 +8,16 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Monsters.Converters
 {
     internal class MonsterAttackConverter
     {
-        public static IMonsterCombatAttack[] Convert(MonsterData data, Logger logger)
+        public static IMonsterCombatAttack[] Convert(MonsterData data, ILogger logger)
         {
-            if (data.Attacks is null) return new IMonsterCombatAttack[0];
+            if (data.Attacks is null) return Array.Empty<IMonsterCombatAttack>();
 
             var attacks = new List<IMonsterCombatAttack>();
 

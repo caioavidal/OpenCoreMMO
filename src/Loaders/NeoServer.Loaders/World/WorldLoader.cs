@@ -19,6 +19,7 @@ using NeoServer.OTBM.Structure;
 using NeoServer.OTBM.Structure.TileArea;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.World
@@ -26,11 +27,11 @@ namespace NeoServer.Loaders.World
     public class WorldLoader
     {
         private readonly IItemFactory itemFactory;
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly ServerConfiguration serverConfiguration;
         private readonly Game.World.World world;
 
-        public WorldLoader(IMap map, Game.World.World world, Logger logger, IItemFactory itemFactory,
+        public WorldLoader(IMap map, Game.World.World world, ILogger logger, IItemFactory itemFactory,
             ServerConfiguration serverConfiguration)
         {
             this.world = world;

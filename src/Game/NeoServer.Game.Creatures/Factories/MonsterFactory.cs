@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Monsters;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Game.Creatures.Factories
@@ -9,10 +10,10 @@ namespace NeoServer.Game.Creatures.Factories
     {
         private readonly IMonsterDataManager _monsterManager;
 
-        private readonly Logger logger;
+        private readonly ILogger logger;
 
         public MonsterFactory(IMonsterDataManager monsterManager,
-            Logger logger)
+            ILogger logger)
         {
             _monsterManager = monsterManager;
 

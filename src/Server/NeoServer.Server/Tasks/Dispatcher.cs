@@ -3,20 +3,21 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using NeoServer.Server.Common.Contracts.Tasks;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Server.Tasks
 {
     public class Dispatcher : IDispatcher
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly ChannelReader<IEvent> reader;
         private readonly ChannelWriter<IEvent> writer;
 
         /// <summary>
         ///     A queue responsible for process events
         /// </summary>
-        public Dispatcher(Logger logger)
+        public Dispatcher(ILogger logger)
         {
             var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions {SingleReader = true});
             reader = channel.Reader;

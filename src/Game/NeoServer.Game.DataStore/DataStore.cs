@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.DataStores;
 
 namespace NeoServer.Game.DataStore
 {
-    public class DataStore<TStore, TKey, TValue> where TStore : DataStore<TStore, TKey, TValue>
+    public class DataStore<TStore, TKey, TValue> : IDataStore<TKey, TValue> where TStore : DataStore<TStore, TKey, TValue>
     {
         private static DataStore<TStore, TKey, TValue> data;
 
