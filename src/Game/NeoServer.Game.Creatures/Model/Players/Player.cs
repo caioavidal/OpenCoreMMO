@@ -186,7 +186,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public IVocation Vocation => VocationStore.Data.TryGetValue(VocationType, out var vocation) ? vocation : null;
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
-        public ushort Level => Skills[SkillType.Level].Level;
+        public ushort Level => (ushort)(Skills.TryGetValue(SkillType.Level, out var level) ? level?.Level ?? 1 : 1);
         public byte VocationType { get; }
         public ushort Mana { get; private set; }
         public ushort MaxMana { get; private set; }
@@ -283,7 +283,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public ushort GetSkillLevel(SkillType skillType)
         {
             var hasSkill = Skills.TryGetValue(skillType, out var skill);
-            return (ushort)((hasSkill ? skill.Level : 1) * (100 + (skill?.Bonus ?? 0)) / 100);
+            return (ushort)((hasSkill ? skill.Level : 1) + (skill?.Bonus ?? 0));
         }
 
         public byte GetSkillTries(SkillType skillType) => (byte)(Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);

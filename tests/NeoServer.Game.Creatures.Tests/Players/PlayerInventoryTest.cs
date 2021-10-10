@@ -8,9 +8,12 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
@@ -18,6 +21,7 @@ using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map.Tiles;
+using Org.BouncyCastle.Asn1.Cms;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
@@ -800,6 +804,26 @@ namespace NeoServer.Game.Creatures.Tests.Players
             Assert.False(result.IsSuccess);
             Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
         }
+        
+        [Fact]
+        public void CanAddItem_When_PlayerHasNoRequiredLevel_ReturnsFalse()
+        {
+            //arrange
+            var skills = PlayerTestDataBuilder.GenerateSkills(10);
+            var sut = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+
+            var bodyItemToAdd = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.MinimumLevel, 1000)
+            });
+
+            //act
+            var actual = sut.Inventory.AddItem(bodyItemToAdd, (byte)Slot.Body);
+
+            //assert
+             actual.Error.Should().Be(InvalidOperation.CannotDress);
+        }
+        
         [Fact]
 
         public void DressingItems_PlayerHasAllItems_ReturnAllExceptBag()

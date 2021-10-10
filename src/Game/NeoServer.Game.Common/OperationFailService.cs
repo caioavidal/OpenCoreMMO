@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common
 {
-    public class OperationFailService
+    public static class OperationFailService
     {
         public static event Action<uint, string> OnOperationFailed;
 
