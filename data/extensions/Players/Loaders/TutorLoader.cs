@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 
@@ -11,13 +12,13 @@ namespace NeoServer.Extensions.Players.Loaders
 {
     public class TutorLoader : PlayerLoader, IPlayerLoader
     {
-        private readonly ICreatureFactory creatureFactory;
+        private readonly ICreatureFactory _creatureFactory;
 
         public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory
-        ) : base(itemFactory, creatureFactory, chatChannelFactory)
+            ChatChannelFactory chatChannelFactory,ChatChannelStore chatChannelStore
+        ) : base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore)
         {
-            this.creatureFactory = creatureFactory;
+            this._creatureFactory = creatureFactory;
         }
 
         public override bool IsApplicable(PlayerModel player)
@@ -50,7 +51,7 @@ namespace NeoServer.Extensions.Players.Loaders
                 GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0)
             };
 
-            var tutor = creatureFactory.CreatePlayer(newPlayer);
+            var tutor = _creatureFactory.CreatePlayer(newPlayer);
 
             return tutor;
         }
