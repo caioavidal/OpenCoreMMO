@@ -27,15 +27,15 @@ namespace NeoServer.Game.Common.Contracts.Items
             {
                 var text = new StringBuilder();
                 text.Append("Only ");
-
-                //for (int i = 0; i < Vocations.Length; i++)
-                //{
-                //    text.Append($"{VocationTypeParser.Parse(Vocations[i]).ToLower()}s");
-                //    if (i + 1 < Vocations.Length)
-                //    {
-                //        text.Append(", ");
-                //    }
-                //}
+                //
+                // for (int i = 0; i < Vocations.Length; i++)
+                // {
+                //     text.Append($"{VocationStore.Parse(Vocations[i]).ToLower()}s");
+                //     if (i + 1 < Vocations.Length)
+                //     {
+                //         text.Append(", ");
+                //     }
+                // }
                 text.Append($" of level {MinLevel} or above may use or consume this item");
                 return text.ToString();
             }

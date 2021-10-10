@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Bases;
@@ -29,14 +28,11 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
 
         private IDictionary<Slot, Tuple<IPickupable, ushort>> Inventory { get; }
 
-        private IEnumerable<IPickupable> InventoryCollection => Inventory.Select(x => x.Value.Item1).ToList();
-
-
-        public IAmmoEquipment Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoEquipment ammo
+        private IAmmoEquipment Ammo => Inventory.ContainsKey(Slot.Ammo) && Inventory[Slot.Ammo].Item1 is IAmmoEquipment ammo
             ? Inventory[Slot.Ammo].Item1 as IAmmoEquipment
             : null;
 
-        public IDefenseEquipment Shield => Inventory.ContainsKey(Slot.Right)
+        private IDefenseEquipment Shield => Inventory.ContainsKey(Slot.Right)
             ? Inventory[Slot.Right].Item1 as IDefenseEquipment
             : null;
 
@@ -310,6 +306,12 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             }
 
             if (item is not IInventoryEquipment inventoryItem) return cannotDressFail;
+            
+            if (item is IEquipmentRequirement requirement && !requirement.CanBeDressed(Owner))
+            {
+              //  OperationFailService.Display(Owner.CreatureId, requirement.ValidationError);
+                return cannotDressFail;
+            }
 
             if (inventoryItem is IWeapon weapon)
             {
@@ -467,6 +469,8 @@ namespace NeoServer.Game.Creatures.Model.Players.Inventory
             position ??= (byte)thing.Metadata.BodyPosition;
 
             var swappedItem = TryAddItemToSlot((Slot)position, item);
+
+            if (!swappedItem.IsSuccess) return new Result<OperationResult<IItem>>(swappedItem.Error);
 
             if (swappedItem.Value is null) return Result<OperationResult<IItem>>.Success;
 

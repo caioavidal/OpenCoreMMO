@@ -12,7 +12,7 @@ using NeoServer.Game.Creatures.Model.Players;
 
 namespace NeoServer.Game.Tests.Helpers
 {
-    public class PlayerTestDataBuilder
+    public static class PlayerTestDataBuilder
     {
         public static IPlayer BuildPlayer(uint id = 1, string name = "PlayerA", uint capacity = 100, ushort hp = 100,
             ushort mana = 30, ushort speed = 200,
@@ -36,15 +36,15 @@ namespace NeoServer.Game.Tests.Helpers
             new()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Sword] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Club] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Distance] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Fishing] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Fist] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Level] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Magic] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Shielding] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Speed] = new Skill(SkillType.Axe, 1, level, 0)
+                [SkillType.Sword] = new Skill(SkillType.Sword, 1, level, 0),
+                [SkillType.Club] = new Skill(SkillType.Club, 1, level, 0),
+                [SkillType.Distance] = new Skill(SkillType.Distance, 1, level, 0),
+                [SkillType.Fishing] = new Skill(SkillType.Fishing, 1, level, 0),
+                [SkillType.Fist] = new Skill(SkillType.Fist, 1, level, 0),
+                [SkillType.Level] = new Skill(SkillType.Level, 1, level, 0),
+                [SkillType.Magic] = new Skill(SkillType.Magic, 1, level, 0),
+                [SkillType.Shielding] = new Skill(SkillType.Shielding, 1, level, 0),
+                [SkillType.Speed] = new Skill(SkillType.Speed, 1, level, 0)
             };
 
         public static Dictionary<Slot, Tuple<IPickupable, ushort>> GenerateInventory() =>

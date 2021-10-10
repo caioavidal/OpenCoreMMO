@@ -47,11 +47,6 @@ namespace NeoServer.Game.Items.Items.Weapons
         public ShootType ShootType => Metadata.ShootType;
         public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
         public bool HasElementalDamage => ElementalDamage is not null;
-
-        public ushort MinimumLevelRequired { get; }
-
-        public ImmutableDictionary<SkillType, byte> SkillBonus { get; }
-
         protected override string PartialInspectionText
         {
             get
