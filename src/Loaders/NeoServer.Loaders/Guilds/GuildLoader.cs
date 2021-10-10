@@ -2,6 +2,7 @@
 using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.DataStore;
@@ -14,19 +15,21 @@ namespace NeoServer.Loaders.Guilds
     public class GuildLoader : ICustomLoader
     {
         private readonly ChatChannelFactory _chatChannelFactory;
+        private readonly IGuildStore _guildStore;
         private readonly ILogger _logger;
 
-        public GuildLoader(ILogger logger, ChatChannelFactory chatChannelFactory)
+        public GuildLoader(ILogger logger, ChatChannelFactory chatChannelFactory, IGuildStore guildStore)
         {
             _logger = logger;
             _chatChannelFactory = chatChannelFactory;
+            _guildStore = guildStore;
         }
 
         public void Load(GuildModel guildModel)
         {
             if (guildModel is not { }) return;
 
-            var guild = GuildStore.Data.Get((ushort) guildModel.Id);
+            var guild = _guildStore.Get((ushort) guildModel.Id);
 
             var shouldAddToStore = false;
             if (guild is null)
@@ -55,7 +58,7 @@ namespace NeoServer.Loaders.Guilds
 
             if (shouldAddToStore)
             {
-                GuildStore.Data.Add(guild.Id, guild);
+                _guildStore.Add(guild.Id, guild);
                 return;
             }
 

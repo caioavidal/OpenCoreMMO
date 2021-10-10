@@ -1,20 +1,22 @@
-﻿using NeoServer.Game.Common.Chats;
+﻿using System;
+using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Guilds;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Chats
 {
     public class GuildChatChannel : ChatChannel, IChatChannel
     {
-        public GuildChatChannel(ushort id, string name, ushort guildId) : base(id, name)
+        internal GuildChatChannel(ushort id, string name, ushort guildId) : base(id, name)
         {
             GuildId = guildId;
         }
 
+        public Func<ushort, IGuild> GetGuildFunc { get; init; }
+
         public ushort GuildId { get; }
-        public IGuild Guild => GuildStore.Data.Get(GuildId);
+        public IGuild Guild => GetGuildFunc?.Invoke(GuildId);
 
         public override bool Opened
         {

@@ -84,6 +84,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public Func<ushort,IChatChannel> GetChatChannelFunc { get; init; }
+        public Func<ushort,IGuild> GetGuildFunc { get; init; }
+
 
         private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
 
@@ -151,7 +153,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public ushort GuildId { get; init; }
         public bool HasGuild => GuildId > 0;
-        public IGuild Guild => GuildStore.Data.Get(GuildId);
+        public IGuild Guild => GetGuildFunc?.Invoke(GuildId);
         public ulong BankAmount { get; private set; }
         public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
         public IParty Party { get; private set; }

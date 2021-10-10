@@ -55,6 +55,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
                         e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>();
                     e.Instance.ChatChannelStore =
                         e.Context.Resolve<IChatChannelStore>();
+                    e.Instance.GuildStore =
+                        e.Context.Resolve<IGuildStore>();
                 })
                 .SingleInstance();
             builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();

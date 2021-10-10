@@ -16,6 +16,8 @@ namespace NeoServer.Game.Chats
         //injected
         public IEnumerable<IChatChannelEventSubscriber> ChannelEventSubscribers { get; set; }
         public IChatChannelStore ChatChannelStore { get; set; }
+        public IGuildStore GuildStore { get; set; }
+
 
         public IChatChannel Create(Type type, string name, IPlayer player = null)
         {
@@ -35,7 +37,10 @@ namespace NeoServer.Game.Chats
         public IChatChannel CreateGuildChannel(string name, ushort guildId)
         {
             var id = GenerateUniqueId();
-            var channel = new GuildChatChannel(id, name, guildId);
+            var channel = new GuildChatChannel(id, name, guildId)
+            {
+                GetGuildFunc = GuildStore.Get
+            };
             SubscribeEvents(channel);
             return channel;
         }

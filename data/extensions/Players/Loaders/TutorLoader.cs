@@ -1,6 +1,7 @@
 ﻿using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
@@ -15,8 +16,9 @@ namespace NeoServer.Extensions.Players.Loaders
         private readonly ICreatureFactory _creatureFactory;
 
         public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory,ChatChannelStore chatChannelStore
-        ) : base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore)
+            ChatChannelFactory chatChannelFactory,IChatChannelStore chatChannelStore,
+            IGuildStore guildStore
+        ) : base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore)
         {
             this._creatureFactory = creatureFactory;
         }

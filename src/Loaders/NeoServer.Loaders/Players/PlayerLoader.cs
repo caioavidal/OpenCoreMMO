@@ -4,6 +4,7 @@ using System.Linq;
 using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -21,17 +22,19 @@ namespace NeoServer.Loaders.Players
     public class PlayerLoader : IPlayerLoader
     {
         private readonly ChatChannelFactory _chatChannelFactory;
-        private readonly ChatChannelStore _chatChannelStore;
+        private readonly IChatChannelStore _chatChannelStore;
+        private readonly IGuildStore _guildStore;
         private readonly ICreatureFactory _creatureFactory;
         private readonly IItemFactory _itemFactory;
 
         public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory, ChatChannelStore chatChannelStore)
+            ChatChannelFactory chatChannelFactory, IChatChannelStore chatChannelStore, IGuildStore guildStore)
         {
             _itemFactory = itemFactory;
             _creatureFactory = creatureFactory;
             _chatChannelFactory = chatChannelFactory;
             _chatChannelStore = chatChannelStore;
+            _guildStore = guildStore;
         }
 
         public virtual bool IsApplicable(PlayerModel player)
@@ -75,7 +78,8 @@ namespace NeoServer.Loaders.Players
                 AccountId = (uint) playerModel.AccountId,
                 GuildId = (ushort) (playerModel?.GuildMember?.GuildId ?? 0),
                 GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0),
-                GetChatChannelFunc = _chatChannelStore.Get
+                GetChatChannelFunc = _chatChannelStore.Get,
+                GetGuildFunc = _guildStore.Get
             };
 
             AddExistingPersonalChannels(player);

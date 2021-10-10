@@ -15,6 +15,10 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<ChatChannelStore>()
                 .As<IChatChannelStore>()
                 .SingleInstance();
+            
+            builder.RegisterType<GuildStore>()
+                .As<IGuildStore>()
+                .SingleInstance();
 
             return builder;
         }
