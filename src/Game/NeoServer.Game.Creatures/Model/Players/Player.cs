@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
@@ -26,11 +25,10 @@ using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
 using NeoServer.Game.Creatures.Model.Players.Inventory;
-using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
+    public delegate bool TryGetVocation(byte type, out IVocation vocation);
     public class Player : CombatActor, IPlayer
     {
         private const int KnownCreatureLimit = 250; //todo: for version 8.60
@@ -85,6 +83,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public Func<ushort,IChatChannel> GetChatChannelFunc { get; init; }
         public Func<ushort,IGuild> GetGuildFunc { get; init; }
+        public TryGetVocation TryGetVocationDel { get; init; }
 
 
         private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
@@ -186,7 +185,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public IShopperNpc TradingWithNpc { get; private set; }
-        public IVocation Vocation => VocationStore.Data.TryGetValue(VocationType, out var vocation) ? vocation : null;
+        public IVocation Vocation => TryGetVocationDel is null ? null : TryGetVocationDel.Invoke(VocationType, out var vocation) ? vocation : null;
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
         public ushort Level => (ushort)(Skills.TryGetValue(SkillType.Level, out var level) ? level?.Level ?? 1 : 1);

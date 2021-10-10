@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Shop;
@@ -19,24 +20,26 @@ namespace NeoServer.Loaders.Npcs
     public class NpcLoader : IStartupLoader
     {
         private readonly ILogger logger;
+        private readonly INpcStore _npcStore;
         private readonly ServerConfiguration serverConfiguration;
 
-        public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger)
+        public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger, INpcStore npcStore)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
+            _npcStore = npcStore;
         }
 
         public void Load()
         {
             logger.Step("Loading npcs...", "{n} npcs loaded", () =>
             {
-                var npcs = ConvertNpcs();
+                var npcs = ConvertNpcs().ToArray();
 
                 foreach (var npcLoaded in npcs)
                 {
                     var (jsonContent, npc) = npcLoaded;
-                    NpcStore.Data.Add(npc.Name, npc);
+                    _npcStore.Add(npc.Name, npc);
                     OnLoad?.Invoke(npc, jsonContent);
                 }
 

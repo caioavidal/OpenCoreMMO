@@ -17,8 +17,8 @@ namespace NeoServer.Extensions.Players.Loaders
 
         public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
             ChatChannelFactory chatChannelFactory, IChatChannelStore chatChannelStore,
-            IGuildStore guildStore) 
-            : base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore)
+            IGuildStore guildStore, IVocationStore vocationStore) 
+            : base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore,vocationStore)
         {
             this._creatureFactory = creatureFactory;
         }

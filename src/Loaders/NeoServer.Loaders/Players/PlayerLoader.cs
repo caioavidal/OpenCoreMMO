@@ -24,17 +24,22 @@ namespace NeoServer.Loaders.Players
         private readonly ChatChannelFactory _chatChannelFactory;
         private readonly IChatChannelStore _chatChannelStore;
         private readonly IGuildStore _guildStore;
+        private readonly IVocationStore _vocationStore;
         private readonly ICreatureFactory _creatureFactory;
         private readonly IItemFactory _itemFactory;
 
         public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory, IChatChannelStore chatChannelStore, IGuildStore guildStore)
+            ChatChannelFactory chatChannelFactory, 
+            IChatChannelStore chatChannelStore, 
+            IGuildStore guildStore,
+            IVocationStore vocationStore)
         {
             _itemFactory = itemFactory;
             _creatureFactory = creatureFactory;
             _chatChannelFactory = chatChannelFactory;
             _chatChannelStore = chatChannelStore;
             _guildStore = guildStore;
+            _vocationStore = vocationStore;
         }
 
         public virtual bool IsApplicable(PlayerModel player)
@@ -44,7 +49,7 @@ namespace NeoServer.Loaders.Players
 
         public virtual IPlayer Load(PlayerModel playerModel)
         {
-            if (!VocationStore.Data.TryGetValue(playerModel.Vocation, out var vocation))
+            if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
                 throw new Exception("Player vocation not found");
 
             var player = new Player(
@@ -79,7 +84,8 @@ namespace NeoServer.Loaders.Players
                 GuildId = (ushort) (playerModel?.GuildMember?.GuildId ?? 0),
                 GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0),
                 GetChatChannelFunc = _chatChannelStore.Get,
-                GetGuildFunc = _guildStore.Get
+                GetGuildFunc = _guildStore.Get,
+                TryGetVocationDel = _vocationStore.TryGetValue
             };
 
             AddExistingPersonalChannels(player);
@@ -107,7 +113,7 @@ namespace NeoServer.Loaders.Players
 
         protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
         {
-            VocationStore.Data.TryGetValue(playerRecord.Vocation, out var vocation);
+            _vocationStore.TryGetValue(playerRecord.Vocation, out var vocation);
 
             Func<SkillType, float> skillRate = skill =>
                 vocation.Skill?.ContainsKey((byte) skill) ?? false ? vocation.Skill[(byte) skill] : 1;

@@ -2,6 +2,10 @@
 
 namespace NeoServer.Game.Common.Contracts.DataStores
 {
+    public interface IDataStore
+    {
+    }
+
     public interface IDataStore<TKey, TValue>
     {
         IEnumerable<TValue> All { get; }

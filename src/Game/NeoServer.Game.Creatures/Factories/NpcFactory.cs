@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
@@ -14,21 +15,24 @@ namespace NeoServer.Game.Creatures.Factories
     public class NpcFactory : INpcFactory
     {
         private readonly IItemFactory _itemFactory;
+        private readonly INpcStore _npcStore;
         private readonly ILogger _logger;
-
+        
         public NpcFactory(
-            ILogger logger, IItemFactory itemFactory, ICreatureGameInstance creatureGameInstance)
+            ILogger logger, IItemFactory itemFactory,
+            INpcStore npcStore)
         {
-            this._logger = logger;
+            _logger = logger;
+            _itemFactory = itemFactory;
+            _npcStore = npcStore;
             Instance = this;
-            this._itemFactory = itemFactory;
         }
 
         public static INpcFactory Instance { get; private set; }
 
         public INpc Create(string name, ISpawnPoint spawn = null)
         {
-            var npcType = NpcStore.Data.Get(name);
+            var npcType = _npcStore.Get(name);
             if (npcType is null)
             {
                 _logger.Warning($"Given npc name: {name} is not loaded");
