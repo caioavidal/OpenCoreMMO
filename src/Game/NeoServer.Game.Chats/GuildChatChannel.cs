@@ -8,15 +8,12 @@ namespace NeoServer.Game.Chats
 {
     public class GuildChatChannel : ChatChannel, IChatChannel
     {
-        internal GuildChatChannel(ushort id, string name, ushort guildId) : base(id, name)
+        internal GuildChatChannel(ushort id, string name, IGuild guild) : base(id, name)
         {
-            GuildId = guildId;
+            Guild = guild;
         }
 
-        public Func<ushort, IGuild> GetGuildFunc { get; init; }
-
-        public ushort GuildId { get; }
-        public IGuild Guild => GetGuildFunc?.Invoke(GuildId);
+        private IGuild Guild { get; }
 
         public override bool Opened
         {

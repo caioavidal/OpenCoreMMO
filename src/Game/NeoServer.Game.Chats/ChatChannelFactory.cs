@@ -37,10 +37,8 @@ namespace NeoServer.Game.Chats
         public IChatChannel CreateGuildChannel(string name, ushort guildId)
         {
             var id = GenerateUniqueId();
-            var channel = new GuildChatChannel(id, name, guildId)
-            {
-                GetGuildFunc = GuildStore.Get
-            };
+            var guid = GuildStore.Get(guildId);
+            var channel = new GuildChatChannel(id, name, guid);
             SubscribeEvents(channel);
             return channel;
         }
