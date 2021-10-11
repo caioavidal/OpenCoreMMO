@@ -14,11 +14,13 @@ namespace NeoServer.Server.Commands.Player
     {
         private readonly IGameServer _game;
         private readonly IChatChannelStore _chatChannelStore;
+        private readonly IGuildStore _guildStore;
 
-        public PlayerSayCommand(IGameServer game, IChatChannelStore chatChannelStore)
+        public PlayerSayCommand(IGameServer game, IChatChannelStore chatChannelStore, IGuildStore guildStore)
         {
             _game = game;
             _chatChannelStore = chatChannelStore;
+            _guildStore = guildStore;
         }
 
         public void Execute(IPlayer player, IConnection connection, PlayerSayPacket playerSayPacket)
@@ -106,7 +108,7 @@ namespace NeoServer.Server.Commands.Player
         {
             var channel = _chatChannelStore.Get(channelId);
 
-            if (channel is not { }) channel = player.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
+            if (channel is not { }) channel = player.GetPrivateChannels(_guildStore).FirstOrDefault(x => x.Id == channelId);
 
             if (channel is not { }) return;
 

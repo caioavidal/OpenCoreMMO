@@ -91,7 +91,6 @@ namespace NeoServer.Loaders.Players
                 AccountId = (uint) playerModel.AccountId,
                 GuildId = (ushort) (playerModel?.GuildMember?.GuildId ?? 0),
                 GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0),
-                GetChatChannelFunc = _chatChannelStore.Get,
                 GetGuildFunc = _guildStore.Get,
                 TryGetVocationDel = _vocationStore.TryGetValue,
             };

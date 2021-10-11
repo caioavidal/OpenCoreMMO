@@ -26,6 +26,7 @@ namespace NeoServer.Server.Tests.Commands
             playerSayPacket.SetupGet(x => x.Message).Returns("hello");
 
             var chatChannelStore = new ChatChannelStore();
+            var guidStore = new GuildStore();
 
             var receiverMock = new Mock<IPlayer>();
             var receiver = receiverMock.Object;
@@ -33,7 +34,7 @@ namespace NeoServer.Server.Tests.Commands
             var game = new Mock<IGameServer>();
             game.Setup(x => x.CreatureManager.TryGetPlayer("receiver", out receiver)).Returns(true);
         
-            var sut = new PlayerSayCommand(game.Object, chatChannelStore);
+            var sut = new PlayerSayCommand(game.Object, chatChannelStore, guidStore);
             
             //act
             sut.Execute(player.Object, connection.Object, playerSayPacket.Object);

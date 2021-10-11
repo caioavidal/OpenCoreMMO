@@ -101,8 +101,13 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         IEnumerable<IChatChannel> PersonalChannels { get; }
         uint AccountId { get; init; }
         ushort GuildId { get; init; }
-        IEnumerable<IChatChannel> PrivateChannels { get; }
-        IGuild Guild { get; }
+        /// <summary>
+        /// Get all player private channels
+        /// </summary>
+        /// <param name="guildStore">Guild store is needed to get the player's guild channel</param>
+        /// <returns>All player chat channels</returns>
+        IEnumerable<IChatChannel> GetPrivateChannels(IGuildStore guildStore);
+        IGuild GetGuild(IGuildStore guildStore);
         bool HasGuild { get; }
         bool Shopping { get; }
         ulong BankAmount { get; }

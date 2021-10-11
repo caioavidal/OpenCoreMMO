@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 
@@ -8,10 +11,12 @@ namespace NeoServer.Game.Creatures.Events.Players
     public class PlayerLoggedOutEventHandler : IGameEventHandler
     {
         private readonly IChatChannelStore _chatChannelStore;
+        private readonly IGuildStore _guildStore;
 
-        public PlayerLoggedOutEventHandler(IChatChannelStore chatChannelStore)
+        public PlayerLoggedOutEventHandler(IChatChannelStore chatChannelStore, IGuildStore guildStore)
         {
             _chatChannelStore = chatChannelStore;
+            _guildStore = guildStore;
         }
         public void Execute(IPlayer player)
         {
@@ -26,9 +31,10 @@ namespace NeoServer.Game.Creatures.Events.Players
             if (player.PersonalChannels is not null)
                 foreach (var channel in player.PersonalChannels)
                     player.ExitChannel(channel);
-            if (player.PrivateChannels is null) return;
+            
+            if (player.GetPrivateChannels(_guildStore) is not { } privateChatChannels) return;
             {
-                foreach (var channel in player.PrivateChannels)
+                foreach (var channel in privateChatChannels)
                     player.ExitChannel(channel);
             }
         }
